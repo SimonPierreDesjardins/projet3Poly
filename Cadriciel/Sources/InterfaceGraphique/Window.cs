@@ -12,10 +12,10 @@ using System.Runtime.InteropServices;
 
 namespace InterfaceGraphique
 {
-    public partial class Exemple : Form
+    public partial class Window : Form
     {
 
-        public Exemple()
+        public Window()
         {
             this.KeyPress += new KeyPressEventHandler(ToucheEnfonce);
             InitializeComponent();
@@ -70,6 +70,11 @@ namespace InterfaceGraphique
                 FonctionsNatives.libererOpenGL();
                 Program.peutAfficher = false;
             }
+        }
+
+        private void Window_Load(object sender, EventArgs e)
+        {
+
         }
     }
 
