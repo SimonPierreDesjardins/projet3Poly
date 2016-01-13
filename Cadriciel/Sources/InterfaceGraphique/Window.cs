@@ -47,6 +47,9 @@ namespace InterfaceGraphique
 
         private void ToucheEnfonce(Object o, KeyPressEventArgs e)
         {
+
+            //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
+
             if (e.KeyChar == (char)Keys.Space)
             {
                 System.Console.WriteLine("Barre d'espacement appuyée.");
@@ -89,22 +92,22 @@ namespace InterfaceGraphique
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void buttonSimulation_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void buttonEditeur_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void buttonConfiguration_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void buttonQuitter_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("Êtes-vous sûr de vouloir quitter l'application?",
             "Simulation de robot",
