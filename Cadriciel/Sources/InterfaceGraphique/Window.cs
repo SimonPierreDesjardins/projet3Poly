@@ -47,13 +47,60 @@ namespace InterfaceGraphique
 
         private void ToucheEnfonce(Object o, KeyPressEventArgs e)
         {
-
             //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
+            
+            switch(e.KeyChar)
+            {
+                case (char)Keys.Space:
+                    System.Console.WriteLine("Barre d'espacement appuyée.");
+                    break;
 
+                case (char)Keys.Up:
+                    System.Console.WriteLine("La fleche du haut est appuyée.");
+                    break;
+
+                case (char)Keys.Down:
+                    System.Console.WriteLine("La fleche du bas est appuyée.");
+                    break;
+
+                case (char)Keys.Left:
+                    System.Console.WriteLine("La fleche de gauche est appuyée.");
+                    break;
+
+                case (char)Keys.Right:
+                    System.Console.WriteLine("la fleche de droite est appuyée.");
+                    break;
+
+                case (char)Keys.Tab:
+                    System.Console.WriteLine("Le boutton tab est appuyé.");
+                    break;
+
+                case (char)Keys.Back:
+                    System.Console.WriteLine("La touche de retour appuyée.");
+                    break;
+
+                case (char)Keys.ControlKey:
+                    System.Console.WriteLine("La touche CTRL est appuyée.");
+                    break;
+
+                case (char)Keys.XButton1:
+                    System.Console.WriteLine("Click gauche de la souris est appuyé.");
+                    break;
+
+                case (char)Keys.XButton2:
+                    System.Console.WriteLine("Click droit de la souris est appuyé.");
+                    break;
+
+                default:
+                    break;
+            }
+                
+            /*
             if (e.KeyChar == (char)Keys.Space)
             {
                 System.Console.WriteLine("Barre d'espacement appuyée.");
             }
+             */
         }
         
 
@@ -119,6 +166,11 @@ namespace InterfaceGraphique
             {
                 Application.Exit();
             }
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 
