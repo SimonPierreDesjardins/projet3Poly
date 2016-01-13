@@ -33,26 +33,22 @@
             this.bouttonConfiguration_ = new System.Windows.Forms.Button();
             this.bouttonEditeur_ = new System.Windows.Forms.Button();
             this.bouttonSimulation_ = new System.Windows.Forms.Button();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
             // 
             this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel1.Controls.Add(this.bouttonEditeur_);
-            this.panel1.Controls.Add(this.bouttonConfiguration_);
-            this.panel1.Controls.Add(this.bouttonSimulation_);
-            this.panel1.Controls.Add(this.bouttonQuitter_);
-            this.panel1.Location = new System.Drawing.Point(-3, -1);
+            this.panel1.Location = new System.Drawing.Point(-4, -2);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(626, 429);
+            this.panel1.Size = new System.Drawing.Size(627, 430);
             this.panel1.TabIndex = 0;
+            this.panel1.Visible = false;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // bouttonQuitter_
             // 
-            this.bouttonQuitter_.Location = new System.Drawing.Point(234, 250);
+            this.bouttonQuitter_.Location = new System.Drawing.Point(225, 247);
             this.bouttonQuitter_.Name = "bouttonQuitter_";
             this.bouttonQuitter_.Size = new System.Drawing.Size(175, 23);
             this.bouttonQuitter_.TabIndex = 4;
@@ -62,7 +58,7 @@
             // 
             // bouttonConfiguration_
             // 
-            this.bouttonConfiguration_.Location = new System.Drawing.Point(234, 204);
+            this.bouttonConfiguration_.Location = new System.Drawing.Point(225, 201);
             this.bouttonConfiguration_.Name = "bouttonConfiguration_";
             this.bouttonConfiguration_.Size = new System.Drawing.Size(175, 23);
             this.bouttonConfiguration_.TabIndex = 3;
@@ -72,7 +68,7 @@
             // 
             // bouttonEditeur_
             // 
-            this.bouttonEditeur_.Location = new System.Drawing.Point(234, 156);
+            this.bouttonEditeur_.Location = new System.Drawing.Point(225, 153);
             this.bouttonEditeur_.Name = "bouttonEditeur_";
             this.bouttonEditeur_.Size = new System.Drawing.Size(175, 23);
             this.bouttonEditeur_.TabIndex = 2;
@@ -82,7 +78,7 @@
             // 
             // bouttonSimulation_
             // 
-            this.bouttonSimulation_.Location = new System.Drawing.Point(234, 112);
+            this.bouttonSimulation_.Location = new System.Drawing.Point(225, 109);
             this.bouttonSimulation_.Name = "bouttonSimulation_";
             this.bouttonSimulation_.Size = new System.Drawing.Size(175, 23);
             this.bouttonSimulation_.TabIndex = 1;
@@ -95,12 +91,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 428);
+            this.Controls.Add(this.bouttonSimulation_);
+            this.Controls.Add(this.bouttonQuitter_);
+            this.Controls.Add(this.bouttonEditeur_);
+            this.Controls.Add(this.bouttonConfiguration_);
             this.Controls.Add(this.panel1);
             this.Name = "Window";
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
