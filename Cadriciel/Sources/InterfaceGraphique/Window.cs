@@ -46,6 +46,10 @@ namespace InterfaceGraphique
                     System.Console.WriteLine("La touche de retour appuyée.");
                     break;
 
+                case Keys.Escape:
+                    System.Console.WriteLine("La touche esc est appuyée.");
+                    break;
+
                 case Keys.ControlKey:
                     System.Console.WriteLine("La touche CTRL est appuyée.");
                     break;
