@@ -14,10 +14,74 @@ namespace InterfaceGraphique
 {
     public partial class Window : Form
     {
+        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            if ((keyData == Keys.Right) || (keyData == Keys.Left) ||
+                (keyData == Keys.Up) || (keyData == Keys.Down))
+            {
+                //Do custom stuff or nothing.
+                //true if key was processed by control, false otherwise
+                return true;
+            }
+            else
+            {
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
+        }*/
+
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            switch (keyData)
+            {
+                case Keys.Space:
+                    System.Console.WriteLine("Barre d'espacement appuyée.");
+                    break;
+
+                case Keys.Up:
+                    System.Console.WriteLine("La fleche du haut est appuyée.");
+                    break;
+
+                case Keys.Down:
+                    System.Console.WriteLine("La fleche du bas est appuyée.");
+                    break;
+
+                case Keys.Left:
+                    System.Console.WriteLine("La fleche de gauche est appuyée.");
+                    break;
+
+                case Keys.Right:
+                    System.Console.WriteLine("la fleche de droite est appuyée.");
+                    break;
+
+                case Keys.Tab:
+                    System.Console.WriteLine("Le boutton tab est appuyé.");
+                    break;
+
+                case Keys.Back:
+                    System.Console.WriteLine("La touche de retour appuyée.");
+                    break;
+
+                case Keys.ControlKey:
+                    System.Console.WriteLine("La touche CTRL est appuyée.");
+                    break;
+
+                case Keys.XButton1:
+                    System.Console.WriteLine("Click gauche de la souris est appuyé.");
+                    break;
+
+                case Keys.XButton2:
+                    System.Console.WriteLine("Click droit de la souris est appuyé.");
+                    break;
+
+                default:
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         public Window()
         {
-            this.KeyPress += new KeyPressEventHandler(ToucheEnfonce);
+            //this.KeyPress += new KeyPressEventHandler(ToucheEnfonce);
             InitializeComponent();
             InitialiserAnimation();
         }
@@ -45,10 +109,10 @@ namespace InterfaceGraphique
             
         }
 
-        private void ToucheEnfonce(Object o, KeyPressEventArgs e)
+        /*private void ToucheEnfonce(Object o, KeyPressEventArgs e)
         {
             //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
-            
+
             switch(e.KeyChar)
             {
                 case (char)Keys.Space:
@@ -94,14 +158,8 @@ namespace InterfaceGraphique
                 default:
                     break;
             }
-                
-            /*
-            if (e.KeyChar == (char)Keys.Space)
-            {
-                System.Console.WriteLine("Barre d'espacement appuyée.");
-            }
-             */
-        }
+
+        }*/
        
 
         private void Window_Load(object sender, EventArgs e)
@@ -126,13 +184,14 @@ namespace InterfaceGraphique
 
         private void buttonSimulation_Click(object sender, EventArgs e)
         {
-
+           
         }
 
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
             menuEdition_.Visible = true;
+            
         }
 
         private void buttonConfiguration_Click(object sender, EventArgs e)
@@ -178,6 +237,13 @@ namespace InterfaceGraphique
             afficherMenuPrincipal(true);
             menuEdition_.Visible = false;
         }
+
+        private void viewPort__VisibleChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+
 }
 
     static partial class FonctionsNatives
