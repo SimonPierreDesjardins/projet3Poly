@@ -14,21 +14,6 @@ namespace InterfaceGraphique
 {
     public partial class Window : Form
     {
-        /*protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            if ((keyData == Keys.Right) || (keyData == Keys.Left) ||
-                (keyData == Keys.Up) || (keyData == Keys.Down))
-            {
-                //Do custom stuff or nothing.
-                //true if key was processed by control, false otherwise
-                return true;
-            }
-            else
-            {
-                return base.ProcessCmdKey(ref msg, keyData);
-            }
-        }*/
-
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             switch (keyData)
@@ -117,45 +102,6 @@ namespace InterfaceGraphique
             {
                 case (char)Keys.Space:
                     System.Console.WriteLine("Barre d'espacement appuyée.");
-                    break;
-
-                case (char)Keys.Up:
-                    System.Console.WriteLine("La fleche du haut est appuyée.");
-                    break;
-
-                case (char)Keys.Down:
-                    System.Console.WriteLine("La fleche du bas est appuyée.");
-                    break;
-
-                case (char)Keys.Left:
-                    System.Console.WriteLine("La fleche de gauche est appuyée.");
-                    break;
-
-                case (char)Keys.Right:
-                    System.Console.WriteLine("la fleche de droite est appuyée.");
-                    break;
-
-                case (char)Keys.Tab:
-                    System.Console.WriteLine("Le boutton tab est appuyé.");
-                    break;
-
-                case (char)Keys.Back:
-                    System.Console.WriteLine("La touche de retour appuyée.");
-                    break;
-
-                case (char)Keys.ControlKey:
-                    System.Console.WriteLine("La touche CTRL est appuyée.");
-                    break;
-
-                case (char)Keys.XButton1:
-                    System.Console.WriteLine("Click gauche de la souris est appuyé.");
-                    break;
-
-                case (char)Keys.XButton2:
-                    System.Console.WriteLine("Click droit de la souris est appuyé.");
-                    break;
-
-                default:
                     break;
             }
 
