@@ -52,16 +52,9 @@ namespace InterfaceGraphique
                 System.Console.WriteLine("Barre d'espacement appuyée.");
             }
         }
-
-        private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            System.Console.WriteLine("Nouveau");            
-        }
         
-        private void quitterToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            System.Console.WriteLine("Quitter");
-        }
+
+
 
         private void Exemple_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -75,6 +68,25 @@ namespace InterfaceGraphique
         private void Window_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void Window_FormClosing(object sender, FormClosingEventArgs e)
+        {
+
+        }
+
+
+        private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Êtes-vous sûr de vouloir quitter l'application?", 
+                "Simulation de robot", 
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question,
+                MessageBoxDefaultButton.Button1);
+            if (result == DialogResult.Yes)
+            {
+                Application.Exit();
+            }
         }
     }
 
