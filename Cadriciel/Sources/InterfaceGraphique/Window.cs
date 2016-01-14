@@ -156,6 +156,17 @@ namespace InterfaceGraphique
 
         private void afficherMenuPrincipal(bool afficherMenu)
         {
+            //TODO: Libérer le viewport au menu prinnci
+            /*
+            if (afficherMenu)
+            {
+                FonctionsNatives.libererOpenGL();
+            }
+            else
+            {
+                InitialiserAnimation();
+            }
+             * */
             bouttonConfiguration_.Visible = afficherMenu;
             bouttonEditeur_.Visible = afficherMenu;
             bouttonQuitter_.Visible = afficherMenu;
@@ -178,7 +189,59 @@ namespace InterfaceGraphique
             afficherMenuPrincipal(true);
             menuEdition_.Visible = false;
         }
-}
+
+        private void selectionMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.SELECTION);
+        }
+
+        private void deplacementMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+        }
+
+        private void rotationMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ROTATION);
+        }
+
+        private void miseAEchelleMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+        }
+
+        private void duplicationMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+        }
+
+        private void poteauMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+        }
+
+        private void murMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+        }
+
+        private void ligneNoireMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+        }
+    }
+
+    enum Etat
+    {
+        SELECTION,
+        DEPLACEMENT,
+        ROTATION,
+        MISE_A_ECHELLE,
+        DUPLICATION,
+        CREATION_POTEAU,
+        CREATION_MUR,
+        CREATION_LIGNE_NOIRE
+    }
 
     static partial class FonctionsNatives
     {
@@ -193,5 +256,8 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void animer(double temps);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerEtat(Etat etat);
     }
 }

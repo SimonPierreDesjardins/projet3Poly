@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Tests">
       <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MachineAEtats">
+      <UniqueIdentifier>{48f0b7e7-fdbd-4be6-91ff-baed38fc0647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MachineAEtats">
+      <UniqueIdentifier>{407dfefc-fb04-44e6-8113-adada4c82f72}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -95,6 +101,9 @@
     </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudRobot.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAEtats\EtatAbstrait.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +151,9 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudRobot.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAEtats\EtatAbstrait.h">
+      <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

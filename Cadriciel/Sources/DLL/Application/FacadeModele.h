@@ -92,7 +92,6 @@ private:
    vue::Vue* vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
    ArbreRenduINF2990* arbre_{ nullptr };
-
 };
 
 

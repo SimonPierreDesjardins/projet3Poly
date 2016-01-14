@@ -9,7 +9,22 @@
 #ifndef __FACADE_INTERFACE_NATIVE_H__
 #define __FACADE_INTERFACE_NATIVE_H__
 
-extern "C" {
+
+
+enum Etat
+{
+	SELECTION,
+	DEPLACEMENT,
+	ROTATION,
+	MISE_A_ECHELLE,
+	DUPLICATION,
+	CREATION_POTEAU,
+	CREATION_MUR,
+	CREATION_LIGNE_NOIRE
+};
+
+extern "C" 
+{
 
 	__declspec(dllexport) void initialiserOpenGL(int * handle);
 	__declspec(dllexport) void libererOpenGL();
@@ -20,7 +35,7 @@ extern "C" {
 	__declspec(dllexport) void zoomOut();
 	__declspec(dllexport) int obtenirAffichagesParSeconde();
 	__declspec(dllexport) bool executerTests();
-
+	__declspec(dllexport) void assignerEtat(int etat);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
