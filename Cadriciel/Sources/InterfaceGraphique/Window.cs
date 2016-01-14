@@ -25,7 +25,7 @@ namespace InterfaceGraphique
         public void InitialiserAnimation()
         {
             this.DoubleBuffered = false;
-            FonctionsNatives.initialiserOpenGL(panel1.Handle);
+            FonctionsNatives.initialiserOpenGL(menuPrincipal.Handle);
             FonctionsNatives.dessinerOpenGL();
         }
 
@@ -78,15 +78,7 @@ namespace InterfaceGraphique
 
         private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Êtes-vous sûr de vouloir quitter l'application?", 
-                "Simulation de robot", 
-                MessageBoxButtons.YesNo,
-                MessageBoxIcon.Question,
-                MessageBoxDefaultButton.Button1);
-            if (result == DialogResult.Yes)
-            {
-                Application.Exit();
-            }
+        Application.Exit();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -116,6 +108,11 @@ namespace InterfaceGraphique
             {
                 Application.Exit();
             }
+        }
+
+        private void informationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 
