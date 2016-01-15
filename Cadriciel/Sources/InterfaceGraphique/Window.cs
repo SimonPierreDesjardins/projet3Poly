@@ -50,7 +50,7 @@ namespace InterfaceGraphique
                     System.Console.WriteLine("La touche esc est appuyée.");
                     break;
 
-                case Keys.ControlKey:
+                case Keys.LMenu:
                     System.Console.WriteLine("La touche CTRL est appuyée.");
                     break;
 

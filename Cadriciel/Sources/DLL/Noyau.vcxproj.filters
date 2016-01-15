@@ -105,6 +105,30 @@
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
+    <ClCompile Include="EtatSelection.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="EtatDeplacement.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="EtatRotation.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="EtatMiseAEchelle.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="EtatDuplication.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="EtatCreationPoteau.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="EtatCreationMur.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="EtatCreationLigneNoire.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -153,6 +177,30 @@
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatAbstrait.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatSelection.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatDeplacement.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatRotation.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatMiseAEchelle.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatDuplication.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatCreationPoteau.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatCreationMur.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="EtatCreationLigneNoire.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
   </ItemGroup>
