@@ -47,7 +47,7 @@ ArbreRendu::~ArbreRendu()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* ArbreRendu::creerNoeud(const std::string& typeNouveauNoeud) const
+/// @fn shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(const std::string& typeNouveauNoeud) const
 ///
 /// Cette fonction permet de créer un nouveau noeud, sans l'ajouter
 /// directement à l'arbre de rendu.
@@ -57,7 +57,7 @@ ArbreRendu::~ArbreRendu()
 /// @return Le noeud nouvellement créé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* ArbreRendu::creerNoeud(
+shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(
 	const std::string& typeNouveauNoeud
 	) const
 {
@@ -74,7 +74,7 @@ NoeudAbstrait* ArbreRendu::creerNoeud(
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* ArbreRendu::ajouterNouveauNoeud(const std::string& typeParent, const std::string& typeNouveauNoeud)
+/// @fn shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(const std::string& typeParent, const std::string& typeNouveauNoeud)
 ///
 /// Cette fonction permet d'ajouter un nouveau noeud dans l'arbre de
 /// rendu.
@@ -85,18 +85,18 @@ NoeudAbstrait* ArbreRendu::creerNoeud(
 /// @return Le noeud nouvellement créé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* ArbreRendu::ajouterNouveauNoeud(
+shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(
 	const std::string& typeParent,
 	const std::string& typeNouveauNoeud
 	)
 {
-	NoeudAbstrait* parent{ chercher(typeParent) };
+	shared_ptr<NoeudAbstrait> parent{ chercher(typeParent) };
 	if (parent == nullptr) {
 		// Incapable de trouver le parent
 		return nullptr;
 	}
 
-	NoeudAbstrait* nouveauNoeud{ creerNoeud(typeNouveauNoeud) };
+	shared_ptr<NoeudAbstrait> nouveauNoeud{ creerNoeud(typeNouveauNoeud) };
 	if (nouveauNoeud)
 		parent->ajouter(nouveauNoeud);
 

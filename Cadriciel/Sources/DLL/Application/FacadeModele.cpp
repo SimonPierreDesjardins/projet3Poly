@@ -98,7 +98,7 @@ void FacadeModele::libererInstance()
 ////////////////////////////////////////////////////////////////////////
 FacadeModele::~FacadeModele()
 {
-	delete arbre_;
+	arbre_ = nullptr;
 	delete vue_;
 }
 
@@ -164,7 +164,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
 	// l'arbre après avoir créé le contexte OpenGL.
-	arbre_ = new ArbreRenduINF2990;
+	arbre_ = make_shared<ArbreRenduINF2990>();
 	arbre_->initialiser();
 
 	// On crée une vue par défaut.

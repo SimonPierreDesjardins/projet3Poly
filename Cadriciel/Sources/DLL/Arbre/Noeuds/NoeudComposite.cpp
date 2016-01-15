@@ -63,7 +63,7 @@ unsigned int NoeudComposite::calculerProfondeur() const
 {
 	unsigned int profondeurEnfantMax{ 0 };
 
-	for (NoeudAbstrait const* enfant : enfants_)
+	for (shared_ptr<NoeudAbstrait> const enfant : enfants_)
 	{
 		const unsigned int profondeurEnfant{ enfant->calculerProfondeur() };
 		if (profondeurEnfantMax < profondeurEnfant)
@@ -94,17 +94,17 @@ void NoeudComposite::vider()
 	// le desctructeur d'un noeud modifie l'arbre, par exemple en retirant
 	// d'autres noeuds.  Il pourrait y avoir une boucle infinie si la
 	// desctruction d'un enfant entraînerait l'ajout d'un autre.
+	
 	while (!enfants_.empty()) {
-		NoeudAbstrait* enfantAEffacer{ enfants_.front() };
+		shared_ptr<NoeudAbstrait> enfantAEffacer{ enfants_.front() };
 		enfants_.erase(enfants_.begin());
-		delete enfantAEffacer;
 	}
-}
+}	
 
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudComposite::effacer( const NoeudAbstrait* noeud )
+/// @fn void NoeudComposite::effacer( const shared_ptr<NoeudAbstrait> noeud )
 ///
 /// Efface un noeud qui est un enfant ou qui est contenu dans un des
 /// enfants.
@@ -114,16 +114,15 @@ void NoeudComposite::vider()
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudComposite::effacer(const NoeudAbstrait* noeud)
+void NoeudComposite::effacer(shared_ptr<const NoeudAbstrait> noeud)
 {
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
 		it++) {
 		if (*it == noeud) {
 			// On a trouvé le noeud à effacer
-			NoeudAbstrait* noeudAEffacer{ (*it) };
+			shared_ptr<NoeudAbstrait> noeudAEffacer{ (*it) };
 			enfants_.erase(it);
-			delete noeudAEffacer;
 			return;
 		}
 		else {
@@ -136,7 +135,7 @@ void NoeudComposite::effacer(const NoeudAbstrait* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn const NoeudAbstrait* NoeudComposite::chercher( const std::string& typeNoeud ) const
+/// @fn const shared_ptr<NoeudAbstrait> NoeudComposite::chercher( const std::string& typeNoeud ) const
 ///
 /// Recherche un noeud d'un type donné parmi le noeud courant et ses
 /// enfants.  Version constante de la fonction.
@@ -146,17 +145,17 @@ void NoeudComposite::effacer(const NoeudAbstrait* noeud)
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-const NoeudAbstrait* NoeudComposite::chercher(
+shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(
 	const std::string& typeNoeud
 	) const
 {
 	if (typeNoeud == type_) {
-		return this;
+		return shared_ptr<const NoeudAbstrait>(this);
 	}
 	else {
-		for (NoeudAbstrait const* enfant : enfants_)
+		for (shared_ptr<NoeudAbstrait> const enfant : enfants_)
 		{
-			NoeudAbstrait const* noeud{ enfant->chercher(typeNoeud) };
+			shared_ptr<NoeudAbstrait> const noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
 				return noeud;
 			}
@@ -169,7 +168,7 @@ const NoeudAbstrait* NoeudComposite::chercher(
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* NoeudComposite::chercher( const std::string& typeNoeud )
+/// @fn shared_ptr<NoeudAbstrait> NoeudComposite::chercher( const std::string& typeNoeud )
 ///
 /// Recherche un noeud d'un type donné parmi le noeud courant et ses
 /// enfants.
@@ -179,15 +178,15 @@ const NoeudAbstrait* NoeudComposite::chercher(
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
+shared_ptr<NoeudAbstrait> NoeudComposite::chercher(const std::string& typeNoeud)
 {
 	if (typeNoeud == type_) {
-		return this;
+		return shared_ptr<NoeudAbstrait>(this);
 	}
 	else {
-		for (NoeudAbstrait * enfant : enfants_)
+		for (shared_ptr<NoeudAbstrait> enfant : enfants_)
 		{
-			NoeudAbstrait * noeud{ enfant->chercher(typeNoeud) };
+			shared_ptr<NoeudAbstrait> noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
 				return noeud;
 			}
@@ -200,7 +199,7 @@ NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn const NoeudAbstrait* NoeudComposite::chercher( unsigned int indice ) const
+/// @fn const shared_ptr<NoeudAbstrait> NoeudComposite::chercher( unsigned int indice ) const
 ///
 /// Retourne le i-ème enfant, où i est l'indice passé à la fonction.
 /// Version constante de la fonction.
@@ -210,7 +209,7 @@ NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
+shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(unsigned int indice) const
 {
 	if ((indice >= 0) && (indice < enfants_.size())) {
 		return enfants_[indice];
@@ -223,7 +222,7 @@ const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* NoeudComposite::chercher( unsigned int indice )
+/// @fn shared_ptr<NoeudAbstrait> NoeudComposite::chercher( unsigned int indice )
 ///
 /// Retourne le i-ème enfant, où i est l'indice passé à la fonction.
 ///
@@ -232,7 +231,7 @@ const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* NoeudComposite::chercher(unsigned int indice)
+shared_ptr<NoeudAbstrait> NoeudComposite::chercher(unsigned int indice)
 {
 	if ((indice >= 0) && (indice < enfants_.size())) {
 		return enfants_[indice];
@@ -245,7 +244,7 @@ NoeudAbstrait* NoeudComposite::chercher(unsigned int indice)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn bool NoeudComposite::ajouter( NoeudAbstrait* enfant )
+/// @fn bool NoeudComposite::ajouter( shared_ptr<NoeudAbstrait> enfant )
 ///
 /// Ajoute un noeud enfant au noeud courant.
 ///
@@ -254,9 +253,9 @@ NoeudAbstrait* NoeudComposite::chercher(unsigned int indice)
 /// @return Vrai si l'ajout a réussi, donc en tout temps pour cette classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-bool NoeudComposite::ajouter(NoeudAbstrait* enfant)
+bool NoeudComposite::ajouter(shared_ptr<NoeudAbstrait> enfant)
 {
-	enfant->assignerParent(this);
+	enfant->assignerParent(shared_from_this());
 	enfants_.push_back(enfant);
 
 	return true;
@@ -298,7 +297,7 @@ unsigned int NoeudComposite::obtenirNombreEnfants() const
 void NoeudComposite::effacerSelection()
 {
 	// On efface tous les noeuds sélectionnés descendants des enfants.
-	for (NoeudAbstrait * enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> enfant : enfants_){
 		enfant->effacerSelection();
 	}
 
@@ -310,9 +309,8 @@ void NoeudComposite::effacerSelection()
 		it != enfants_.end();
 		) {
 		if ((*it)->estSelectionne()) {
-			NoeudAbstrait* enfant{ (*it) };
+			shared_ptr<NoeudAbstrait> enfant{ (*it) };
 			enfants_.erase(it);
-			delete enfant;
 
 			// On ramène l'itération au début de la boucle, car le destructeur
 			// de l'enfant pourrait éventuellement avoir retiré d'autres
@@ -342,7 +340,7 @@ void NoeudComposite::selectionnerTout()
 {
 	NoeudAbstrait::selectionnerTout();
 
-	for (NoeudAbstrait * enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> enfant : enfants_){
 		enfant->selectionnerTout();
 	}
 }
@@ -362,7 +360,7 @@ void NoeudComposite::deselectionnerTout()
 {
 	selectionne_ = false;
 
-	for (NoeudAbstrait * enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> enfant : enfants_){
 		enfant->deselectionnerTout();
 	}
 }
@@ -384,7 +382,7 @@ bool NoeudComposite::selectionExiste() const
 		return true;
 	}
 
-	for (NoeudAbstrait const* enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> const enfant : enfants_){
 		if (enfant->selectionExiste())
 			return true;
 	}
@@ -413,7 +411,7 @@ void NoeudComposite::changerModePolygones(bool estForce)
 	const bool forceEnfant = ((estForce) || (estSelectionne()));
 
 	// Applique le changement récursivement aux enfants.
-	for (NoeudAbstrait * enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> enfant : enfants_){
 		enfant->changerModePolygones(forceEnfant);
 	}
 }
@@ -435,7 +433,7 @@ void NoeudComposite::assignerModePolygones(GLenum modePolygones)
 	NoeudAbstrait::assignerModePolygones(modePolygones);
 
 	// Applique le changement récursivement aux enfants.
-	for (NoeudAbstrait * enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> enfant : enfants_){
 		enfant->assignerModePolygones(modePolygones);
 	}
 }
@@ -458,7 +456,7 @@ void NoeudComposite::afficherConcret() const
 {
 	NoeudAbstrait::afficherConcret();
 
-	for (NoeudAbstrait const* enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> const enfant : enfants_){
 		enfant->afficher();
 	}
 }
@@ -477,7 +475,7 @@ void NoeudComposite::afficherConcret() const
 ////////////////////////////////////////////////////////////////////////
 void NoeudComposite::animer(float dt)
 {
-	for (NoeudAbstrait * enfant : enfants_){
+	for (shared_ptr<NoeudAbstrait> enfant : enfants_){
 		enfant->animer(dt);
 	}
 }

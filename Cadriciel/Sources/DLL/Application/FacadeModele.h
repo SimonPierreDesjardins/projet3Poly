@@ -13,6 +13,10 @@
 
 #include <windows.h>
 #include <string>
+#include <memory>
+
+
+using namespace std;
 
 class NoeudAbstrait;
 class ArbreRenduINF2990;
@@ -54,9 +58,9 @@ public:
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
    /// Retourne l'arbre de rendu.
-   inline const ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
+   inline shared_ptr<ArbreRenduINF2990> obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
-   inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
+   inline shared_ptr<ArbreRenduINF2990> obtenirArbreRenduINF2990();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -91,7 +95,7 @@ private:
    /// Vue courante de la scène.
    vue::Vue* vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
-   ArbreRenduINF2990* arbre_{ nullptr };
+   shared_ptr<ArbreRenduINF2990> arbre_{ nullptr };
 
 };
 
@@ -116,7 +120,7 @@ inline vue::Vue* FacadeModele::obtenirVue()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
+/// @fn inline const shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
 ///
 /// Cette fonction retourne l'arbre de rendu de la scène (version constante
 /// de la fonction).
@@ -124,7 +128,7 @@ inline vue::Vue* FacadeModele::obtenirVue()
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
+inline shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
 {
    return arbre_;
 }
@@ -132,7 +136,7 @@ inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
+/// @fn inline shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990()
 ///
 /// Cette fonction retourne l'arbre de rendu de la scène (version non constante
 /// de la fonction).
@@ -140,7 +144,7 @@ inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
+inline shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990()
 {
    return arbre_;
 }

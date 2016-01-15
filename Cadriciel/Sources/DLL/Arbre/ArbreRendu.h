@@ -15,7 +15,7 @@
 
 #include <string>
 #include <map>
-
+#include <memory>
 
 class NoeudAbstrait;
 class UsineAbstraite;
@@ -51,12 +51,12 @@ public:
       );
 
    /// Crée un nouveau noeud.
-   NoeudAbstrait* creerNoeud(
+   shared_ptr<NoeudAbstrait> creerNoeud(
       const std::string& typeNouveauNoeud
       ) const;
 
    /// Crée et ajoute un nouveau noeud à l'arbre.
-   NoeudAbstrait* ajouterNouveauNoeud(
+   shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(
       const std::string& nomParent,
       const std::string& typeNouveauNoeud
       );
