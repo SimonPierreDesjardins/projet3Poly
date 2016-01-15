@@ -96,6 +96,9 @@
     <ClCompile Include="Arbre\Noeuds\NoeudRobot.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -141,6 +144,9 @@
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudRobot.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>

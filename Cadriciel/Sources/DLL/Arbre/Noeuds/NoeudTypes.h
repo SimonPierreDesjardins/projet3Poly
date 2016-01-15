@@ -4,5 +4,6 @@
 #include "NoeudAraignee.h"
 #include "NoeudConeCube.h"
 #include "NoeudRobot.h"
+#include "NoeudTable.h"
 
 #endif /// __NOEUD_TYPES_H__

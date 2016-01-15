@@ -19,6 +19,8 @@ const std::string ArbreRenduINF2990::NOM_ARAIGNEE{ "araignee" };
 const std::string ArbreRenduINF2990::NOM_CONECUBE{ "conecube" };
 /// La chaîne représentant le type du robot.
 const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
+/// La chaîne représentant le type de la table.
+const std::string ArbreRenduINF2990::NOM_TABLE{ "table" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -35,6 +37,7 @@ const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
 ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
+	ajouterUsine(NOM_TABLE, new UsineNoeud <NoeudTable> {NOM_TABLE, std::string{ "media/modeles/table.obj" } });
 	ajouterUsine(NOM_ARAIGNEE, new UsineNoeud<NoeudAraignee>{ NOM_ARAIGNEE, std::string{ "media/spider.obj" } });
 	ajouterUsine(NOM_CONECUBE, new UsineNoeud<NoeudConeCube>{ NOM_CONECUBE, std::string{ "media/cubecone.obj" } });
 	ajouterUsine(NOM_ROBOT, new UsineNoeud<NoeudRobot>{ NOM_ROBOT, std::string{ "media/robot.obj" } });
@@ -72,11 +75,11 @@ void ArbreRenduINF2990::initialiser()
 	vider();
 
 	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
-	NoeudAbstrait* noeudAraignee{ creerNoeud(NOM_ARAIGNEE) };
+	NoeudAbstrait* noeudTable{ creerNoeud(NOM_TABLE) };
 	NoeudAbstrait* noeudRobot{ creerNoeud(NOM_ROBOT) };
-	noeudRobot->ajouter(creerNoeud(NOM_CONECUBE));
-	noeudAraignee->ajouter(noeudRobot);
-	ajouter(noeudAraignee);
+	//NoeudAbstrait* noeudAraignee{ creerNoeud(NOM_ARAIGNEE) };
+	noeudTable->ajouter(noeudRobot);
+	ajouter(noeudTable);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

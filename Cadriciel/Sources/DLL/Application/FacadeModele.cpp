@@ -158,7 +158,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Lumière ambiante "globale"
 	// Attention :
 	//La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	glm::vec4 ambiant{ 0.2f, 0.2, 0.2f, 1.0f };
+	glm::vec4 ambiant{ 0.2f, 0.2f, 0.2f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambiant));
 
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
@@ -170,7 +170,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// On crée une vue par défaut.
 	vue_ = new vue::VueOrtho{
 		vue::Camera{ 
-			glm::dvec3(0, 0, 200), glm::dvec3(0, 0, 0),
+			glm::dvec3(200, 200, 200), glm::dvec3(0, 0, 0),
 			glm::dvec3(0, 1, 0),   glm::dvec3(0, 1, 0)},
 		vue::ProjectionOrtho{ 
 				0, 500, 0, 500,
