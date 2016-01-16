@@ -137,33 +137,33 @@ public:
 
 protected:
 	/// Type du noeud.
-	std::string      type_;
+	std::string				type_;
 
 	/// Mode d'affichage des polygones.
-	GLenum           modePolygones_{ GL_FILL };
+	GLenum					modePolygones_{ GL_FILL };
 
 	/// Position relative du noeud.
-	glm::dvec3         positionRelative_;
+	glm::dvec3				positionRelative_;
 
 	/// Vrai si on doit afficher le noeud.
-	bool             affiche_{ true };
+	bool					affiche_{ true };
 
 	/// Sélection du noeud.
-	bool             selectionne_{ false };
+	bool					selectionne_{ false };
 
 	/// Vrai si le noeud est sélectionnable.
-	bool             selectionnable_{ true };
+	bool					selectionnable_{ true };
 
 	/// Détermine si l'objet peut être sauvegardé en XML.
-	bool             enregistrable_{ true };
+	bool					enregistrable_{ true };
 
 	/// Pointeur vers le parent.
-	weak_ptr<NoeudAbstrait>   parent_;
+	weak_ptr<NoeudAbstrait> parent_;
 
 	/// Modèle 3D correspondant à ce noeud.
 	modele::Modele3D const* modele_;
 	/// Storage pour le dessin du modèle
-	opengl::VBO const* vbo_;
+	opengl::VBO const*		vbo_;
 };
 
 

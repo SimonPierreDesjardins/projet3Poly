@@ -111,7 +111,6 @@ template <typename Noeud>
 shared_ptr<NoeudAbstrait> UsineNoeud<Noeud>::creerNoeud() const
 {
 	static_assert(std::is_base_of<NoeudAbstrait, Noeud>::value, R"(Une usine de noeuds ne peut creer que des types de noeuds dérivant de NoeudAbstrait.)");
-	//auto noeud = shared_ptr<NoeudAbstrait>(new Noeud{ obtenirNom() });
 	shared_ptr<NoeudAbstrait> noeud = make_shared<Noeud>(obtenirNom());
 	noeud->assignerObjetRendu(&modele_, &vbo_);
 	return noeud;
