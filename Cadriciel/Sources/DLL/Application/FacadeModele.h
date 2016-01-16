@@ -60,7 +60,7 @@ public:
    void afficherBase() const;
  
    /// Retourne la vue courante.
-   inline vue::Vue* obtenirVue();
+   inline shared_ptr<vue::Vue> obtenirVue();
    /// Retourne l'arbre de rendu.
    inline shared_ptr<ArbreRenduINF2990> obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
@@ -96,7 +96,7 @@ private:
    HDC   hDC_{ nullptr };
 
    /// Vue courante de la scène.
-   vue::Vue* vue_{ nullptr };
+   shared_ptr<vue::Vue> vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
    shared_ptr<ArbreRenduINF2990> arbre_{ nullptr };
 
@@ -115,7 +115,7 @@ private:
 /// @return La vue courante.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline vue::Vue* FacadeModele::obtenirVue()
+inline shared_ptr<vue::Vue> FacadeModele::obtenirVue()
 {
    return vue_;
 }

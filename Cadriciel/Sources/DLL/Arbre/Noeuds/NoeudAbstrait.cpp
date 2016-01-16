@@ -119,7 +119,7 @@ void NoeudAbstrait::effacer(shared_ptr<const NoeudAbstrait> noeud)
 shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeNoeud) const
 {
 	if (typeNoeud == type_)
-		return shared_ptr<const NoeudAbstrait>(this);
+		return shared_from_this();
 	else
 		return nullptr;
 }
@@ -143,7 +143,7 @@ shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeN
 shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeNoeud)
 {
 	if (typeNoeud == type_)
-		return shared_ptr<NoeudAbstrait>(this);
+		return shared_from_this();
 	else
 		return nullptr;
 }

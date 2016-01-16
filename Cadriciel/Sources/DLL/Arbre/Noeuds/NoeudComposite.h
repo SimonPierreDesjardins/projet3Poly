@@ -27,7 +27,7 @@
 /// @author DGI-2990
 /// @date 2007-01-24
 ///////////////////////////////////////////////////////////////////////////
-class NoeudComposite : public NoeudAbstrait, public enable_shared_from_this<NoeudComposite>
+class NoeudComposite : public NoeudAbstrait
 {
 public:
 	/// Constructeur.

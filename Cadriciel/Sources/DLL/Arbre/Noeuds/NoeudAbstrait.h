@@ -40,7 +40,7 @@ namespace opengl{
 /// @author DGI-2990
 /// @date 2007-01-24
 ///////////////////////////////////////////////////////////////////////////
-class NoeudAbstrait
+class NoeudAbstrait : public enable_shared_from_this<NoeudAbstrait>
 {
 public:
 	/// Constructeur.
@@ -51,13 +51,13 @@ public:
 	virtual ~NoeudAbstrait();
 
 	/// Obtient le parent de ce noeud.
-	inline weak_ptr<NoeudAbstrait> obtenirParent();
+	inline shared_ptr<NoeudAbstrait> obtenirParent();
 
 	/// Obtient le parent de ce noeud (version constante).
-	inline weak_ptr<const NoeudAbstrait> obtenirParent() const;
+	inline shared_ptr<const NoeudAbstrait> obtenirParent() const;
 
 	/// Assigne le parent de ce noeud.
-	inline void assignerParent(weak_ptr<NoeudAbstrait> parent);
+	inline void assignerParent(shared_ptr<NoeudAbstrait> parent);
 
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
@@ -178,9 +178,9 @@ protected:
 /// @return Le pointeur vers le parent.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline weak_ptr<NoeudAbstrait> NoeudAbstrait::obtenirParent()
+inline shared_ptr<NoeudAbstrait> NoeudAbstrait::obtenirParent()
 {
-	return parent_;
+	return parent_.lock();
 }
 
 
@@ -193,9 +193,9 @@ inline weak_ptr<NoeudAbstrait> NoeudAbstrait::obtenirParent()
 /// @return Le pointeur constant vers le parent.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline weak_ptr<const NoeudAbstrait> NoeudAbstrait::obtenirParent() const
+inline shared_ptr<const NoeudAbstrait> NoeudAbstrait::obtenirParent() const
 {
-	return parent_;
+	return parent_.lock();
 }
 
 
@@ -212,7 +212,7 @@ inline weak_ptr<const NoeudAbstrait> NoeudAbstrait::obtenirParent() const
 ///
 ////////////////////////////////////////////////////////////////////////
 inline void NoeudAbstrait::assignerParent(
-	weak_ptr<NoeudAbstrait> parent
+	shared_ptr<NoeudAbstrait> parent
 	)
 {
 	parent_ = parent;

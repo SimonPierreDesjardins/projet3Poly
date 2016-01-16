@@ -99,7 +99,7 @@ void FacadeModele::libererInstance()
 FacadeModele::~FacadeModele()
 {
 	arbre_ = nullptr;
-	delete vue_;
+	vue_ = nullptr;
 }
 
 
@@ -168,15 +168,15 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	arbre_->initialiser();
 
 	// On crée une vue par défaut.
-	vue_ = new vue::VueOrtho{
-		vue::Camera{ 
+	vue_ = make_shared<vue::VueOrtho>(
+		vue::Camera{
 			glm::dvec3(0, 0, 200), glm::dvec3(0, 0, 0),
-			glm::dvec3(0, 1, 0),   glm::dvec3(0, 1, 0)},
-		vue::ProjectionOrtho{ 
-				0, 500, 0, 500,
-				1, 1000, 1, 10000, 1.25,
-				-100, 100, -100, 100 }
-	};
+			glm::dvec3(0, 1, 0), glm::dvec3(0, 1, 0) },
+		vue::ProjectionOrtho{
+			0, 500, 0, 500,
+			1, 1000, 1, 10000, 1.25,
+			-100, 100, -100, 100 }
+	);
 }
 
 

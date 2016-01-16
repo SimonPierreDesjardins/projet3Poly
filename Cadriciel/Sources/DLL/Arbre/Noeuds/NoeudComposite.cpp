@@ -181,7 +181,7 @@ shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(
 shared_ptr<NoeudAbstrait> NoeudComposite::chercher(const std::string& typeNoeud)
 {
 	if (typeNoeud == type_) {
-		return shared_ptr<NoeudAbstrait>(this);
+		return shared_from_this();
 	}
 	else {
 		for (shared_ptr<NoeudAbstrait> enfant : enfants_)
@@ -211,7 +211,10 @@ shared_ptr<NoeudAbstrait> NoeudComposite::chercher(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(unsigned int indice) const
 {
-	if ((indice >= 0) && (indice < enfants_.size())) {
+	if ((indice >= 0) && (indice < enfants_.size())) {		/*
+		 
+		shared_ptr<vue::VueOrtho>(new vue::VueOrtho);
+	*/
 		return enfants_[indice];
 	}
 	else {
@@ -232,7 +235,10 @@ shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(unsigned int indice) co
 ///
 ////////////////////////////////////////////////////////////////////////
 shared_ptr<NoeudAbstrait> NoeudComposite::chercher(unsigned int indice)
-{
+{		/*
+		 
+		shared_ptr<vue::VueOrtho>(new vue::VueOrtho);
+	*/
 	if ((indice >= 0) && (indice < enfants_.size())) {
 		return enfants_[indice];
 	}
