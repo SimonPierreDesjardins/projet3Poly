@@ -66,7 +66,7 @@ shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(
 		return nullptr;
 	}
 
-	const UsineAbstraite* usine{ (*(usines_.find(typeNouveauNoeud))).second };
+	shared_ptr<const UsineAbstraite> usine{ (*(usines_.find(typeNouveauNoeud))).second };
 
 	return usine->creerNoeud();
 }

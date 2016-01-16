@@ -37,8 +37,12 @@ namespace vue {
 class FacadeModele
 {
 public:
+
+   /// Destructeur.
+   ~FacadeModele();
+
    /// Obtient l'instance unique de la classe.
-   static FacadeModele* obtenirInstance();
+   static shared_ptr<FacadeModele> obtenirInstance();
    /// Libère l'instance unique de la classe.
    static void libererInstance();
 
@@ -72,8 +76,7 @@ public:
 private:
    /// Constructeur par défaut.
    FacadeModele() = default;
-   /// Destructeur.
-   ~FacadeModele();
+
    /// Constructeur copie désactivé.
    FacadeModele(const FacadeModele&) = delete;
    /// Opérateur d'assignation désactivé.
@@ -83,7 +86,7 @@ private:
    static const std::string FICHIER_CONFIGURATION;
 
    /// Pointeur vers l'instance unique de la classe.
-   static FacadeModele* instance_;
+   static shared_ptr<FacadeModele> instance_;
 
    /// Poignée ("handle") vers la fenêtre où l'affichage se fait.
    HWND  hWnd_{ nullptr };

@@ -47,7 +47,7 @@ public:
 
    /// Ajoute une usine associée à un type de noeud.
    inline void ajouterUsine(
-      const std::string& type, const UsineAbstraite* usine
+      const std::string& type, shared_ptr<const UsineAbstraite> usine
       );
 
    /// Crée un nouveau noeud.
@@ -68,7 +68,7 @@ public:
 private:
    /// Définition du type pour l'association du nom d'un type vers l'usine
    /// correspondante.
-	using RegistreUsines = std::map< std::string, const UsineAbstraite* >;
+	using RegistreUsines = std::map<std::string, shared_ptr<const UsineAbstraite>>;
    /// Association du nom d'un type vers l'usine correspondante.
    RegistreUsines usines_;
 
@@ -90,7 +90,7 @@ private:
 ///
 ////////////////////////////////////////////////////////////////////////
 inline void ArbreRendu::ajouterUsine(
-   const std::string& type, const UsineAbstraite* usine
+   const std::string& type, shared_ptr<const UsineAbstraite> usine
    )
 {
    usines_[type] = usine;
