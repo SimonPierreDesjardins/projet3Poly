@@ -15,7 +15,7 @@
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "CompteurAffichage.h"
-
+#include "EtatTypes.h"
 #include "BancTests.h"
 
 
@@ -196,39 +196,38 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl assignerEtat(int etat)
 	{
-		std::cout << "etat selection" << std::endl;
 		switch (etat)
 		{
 			case SELECTION :
-				std::cout << 0 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatSelection>());
 				break;
 
 			case DEPLACEMENT :
-				std::cout << 1 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDeplacement>());
 				break;
 
 			case ROTATION :
-				std::cout << 2 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatRotation>());
 				break;
 
 			case MISE_A_ECHELLE :
-				std::cout << 3 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatMiseAEchelle>());
 				break;
 
 			case DUPLICATION :
-				std::cout << 4 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDuplication>());
 				break;
 
 			case CREATION_POTEAU :
-				std::cout << 5 << std::endl;			
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationPoteau>());
 				break;
 
 			case CREATION_MUR :
-				std::cout << 6 << std::endl;			
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationMur>());
 				break;
 
 			case CREATION_LIGNE_NOIRE :
-				std::cout << 7 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationLigneNoire>());
 				break;
 			
 			default:

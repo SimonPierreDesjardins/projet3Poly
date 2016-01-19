@@ -1,8 +1,9 @@
 #ifndef ETAT_CREATION_MUR_H
 #define ETAT_CREATION_MUR_H
 
+#include "EtatAbstrait.h"
 
-class EtatCreationMur
+class EtatCreationMur : public EtatAbstrait
 {
 public:
 	EtatCreationMur();

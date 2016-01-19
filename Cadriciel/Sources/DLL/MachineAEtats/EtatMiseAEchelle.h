@@ -1,8 +1,9 @@
 #ifndef ETAT_MISE_A_ECHELLE_H
 #define ETAT_MISE_A_ECHELLE_H
 
+#include "EtatAbstrait.h"
 
-class EtatMiseAEchelle
+class EtatMiseAEchelle : public EtatAbstrait
 {
 public:
 	EtatMiseAEchelle();

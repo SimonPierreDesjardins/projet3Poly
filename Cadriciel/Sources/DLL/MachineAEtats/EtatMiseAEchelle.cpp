@@ -1,4 +1,5 @@
 #include "EtatMiseAEchelle.h"
+#include <iostream>
 
 
 EtatMiseAEchelle::EtatMiseAEchelle()

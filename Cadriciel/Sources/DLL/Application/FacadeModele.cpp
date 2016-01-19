@@ -362,6 +362,23 @@ void FacadeModele::animer(float temps)
 	vue_->animer(temps);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::modifierEtat (EtatAbstrait* etat)
+///
+/// Cette fonction change l'attribut etat_ pour la valeur de l'état en paramètre.
+///
+/// @param[in] etat : Nouvel état à traiter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+
+void FacadeModele::modifierEtat(std::shared_ptr<EtatAbstrait> etat)
+{
+	etat_ = etat;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

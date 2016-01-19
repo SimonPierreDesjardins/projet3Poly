@@ -1,8 +1,9 @@
 #ifndef ETAT_CREATION_LIGNE_H
 #define ETAT_CREATION_LIGNE_H
 
+#include "EtatAbstrait.h"
 
-class EtatCreationLigneNoire
+class EtatCreationLigneNoire : public EtatAbstrait
 {
 public:
 	EtatCreationLigneNoire();

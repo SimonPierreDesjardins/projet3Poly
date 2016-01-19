@@ -1,8 +1,9 @@
 #ifndef ETAT_DEPLACEMENT_H
 #define ETAT_DEPLACEMENT_H
 
+#include "EtatAbstrait.h"
 
-class EtatDeplacement
+class EtatDeplacement : public EtatAbstrait
 {
 public:
 	EtatDeplacement();

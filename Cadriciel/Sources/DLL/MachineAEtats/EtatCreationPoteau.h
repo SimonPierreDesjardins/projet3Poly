@@ -1,8 +1,9 @@
 #ifndef ETAT_CREATION_POTEAU_H
 #define ETAT_CREATION_POTEAU_H
 
+#include "EtatAbstrait.h"
 
-class EtatCreationPoteau
+class EtatCreationPoteau : public EtatAbstrait
 {
 public:
 	EtatCreationPoteau();

@@ -13,9 +13,11 @@
 
 #include <windows.h>
 #include <string>
+#include <memory>
 
 class NoeudAbstrait;
 class ArbreRenduINF2990;
+class EtatAbstrait;
 
 namespace vue {
    class Vue;
@@ -50,6 +52,9 @@ public:
    void afficher() const;
    /// Affiche la base du contenu du modèle.
    void afficherBase() const;
+
+   /// Modifie l'attribut etat_
+   void modifierEtat(std::shared_ptr<EtatAbstrait> etat);
  
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
@@ -92,6 +97,8 @@ private:
    vue::Vue* vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
    ArbreRenduINF2990* arbre_{ nullptr };
+
+   std::shared_ptr<EtatAbstrait> etat_{ nullptr };
 };
 
 
