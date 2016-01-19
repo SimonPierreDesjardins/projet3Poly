@@ -114,7 +114,11 @@ namespace vue {
 	void ProjectionOrtho::redimensionnerFenetre(const glm::ivec2& coinMin,
 		const glm::ivec2& coinMax)
 	{
-		// À IMPLANTER.
+		xMinFenetre_ = coinMin.x;
+		yMinFenetre_ = coinMin.y;
+		xMaxFenetre_ = coinMax.x;
+		yMaxFenetre_ = coinMax.y;
+		mettreAJourProjection();
 	}
 
 
