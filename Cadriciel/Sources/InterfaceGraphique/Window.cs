@@ -199,7 +199,7 @@ namespace InterfaceGraphique
         private void Window_Resize(object sender, EventArgs e)
         {
             //FonctionsNatives.redimensionnerFenetre(this.Height, this.Width);
-            FonctionsNatives.dessinerOpenGL(); 
+            FonctionsNatives.dessinerOpenGL();
         }
 
 

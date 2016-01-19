@@ -320,6 +320,8 @@
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulateur de robot";
+
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
