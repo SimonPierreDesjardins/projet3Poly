@@ -16,51 +16,57 @@ namespace InterfaceGraphique
     {
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
+            //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
+
             switch (keyData)
             {
                 case Keys.Space:
                     System.Console.WriteLine("Barre d'espacement appuyée.");
-                    break;
+                    return true;
 
                 case Keys.Up:
                     System.Console.WriteLine("La fleche du haut est appuyée.");
-                    break;
+                    return true;
 
                 case Keys.Down:
                     System.Console.WriteLine("La fleche du bas est appuyée.");
-                    break;
+                    return true;
 
                 case Keys.Left:
                     System.Console.WriteLine("La fleche de gauche est appuyée.");
-                    break;
+                    return true;
 
                 case Keys.Right:
                     System.Console.WriteLine("la fleche de droite est appuyée.");
-                    break;
+                    return true;
 
                 case Keys.Tab:
-                    System.Console.WriteLine("Le boutton tab est appuyé.");
-                    break;
+                    System.Console.WriteLine("La touche tab est appuyée.");
+                    return true;
 
                 case Keys.Back:
                     System.Console.WriteLine("La touche de retour appuyée.");
-                    break;
+                    return true;
 
                 case Keys.Escape:
                     System.Console.WriteLine("La touche esc est appuyée.");
-                    break;
+                    return true;
 
-                case Keys.LMenu:
-                    System.Console.WriteLine("La touche CTRL est appuyée.");
-                    break;
+                case Keys.Control | Keys.F4:
+                    System.Console.WriteLine("La touche CTRL+F4 est appuyée.");
+                    return true;
+
+                case Keys.CapsLock:
+                    System.Console.WriteLine("La touche CapsLock est appuyée.");
+                    return true;
 
                 case Keys.XButton1:
                     System.Console.WriteLine("Click gauche de la souris est appuyé.");
-                    break;
+                    return true;
 
                 case Keys.XButton2:
                     System.Console.WriteLine("Click droit de la souris est appuyé.");
-                    break;
+                    return true;
 
                 default:
                     break;
@@ -70,9 +76,9 @@ namespace InterfaceGraphique
 
         public Window()
         {
-            //this.KeyPress += new KeyPressEventHandler(ToucheEnfonce);
             InitializeComponent();
             InitialiserAnimation();
+            menuEdition_.Visible = false;
         }
 
         public void InitialiserAnimation()
@@ -97,26 +103,7 @@ namespace InterfaceGraphique
             }
             
         }
-
-        /*private void ToucheEnfonce(Object o, KeyPressEventArgs e)
-        {
-            //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
-
-            switch(e.KeyChar)
-            {
-                case (char)Keys.Space:
-                    System.Console.WriteLine("Barre d'espacement appuyée.");
-                    break;
-            }
-
-        }*/
        
-
-        private void Window_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
             lock(Program.unLock)
@@ -132,21 +119,11 @@ namespace InterfaceGraphique
             Application.Exit();
         }
 
-        private void buttonSimulation_Click(object sender, EventArgs e)
-        {
-           
-        }
-
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
             menuEdition_.Visible = true;
             
-        }
-
-        private void buttonConfiguration_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -181,63 +158,58 @@ namespace InterfaceGraphique
             bouttonQuitter_.Visible = afficherMenu;
             bouttonSimulation_.Visible = afficherMenu;
             viewPort_.Visible = !afficherMenu;
+            menuEdition_.Visible = !afficherMenu;
         }
 
-        private void viewPort_Paint(object sender, PaintEventArgs e)
+        private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
         }
 
-        private void orthographiqueToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuPrincipalMenuEdition__Click(object sender, EventArgs e)
+        private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(true);
             menuEdition_.Visible = false;
         }
 
-
-        private void selectionMenuEdition__Click(object sender, EventArgs e)
+        private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
         }
 
-        private void deplacementMenuEdition__Click(object sender, EventArgs e)
+        private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
         }
 
-        private void rotationMenuEdition__Click(object sender, EventArgs e)
+        private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
         }
 
-        private void miseAEchelleMenuEdition__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
-        }
-
-        private void duplicationMenuEdition__Click(object sender, EventArgs e)
+        private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
         }
 
-        private void poteauMenuEdition__Click(object sender, EventArgs e)
+        private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
         }
 
-        private void murMenuEdition__Click(object sender, EventArgs e)
+        private void murToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
         }
 
-        private void ligneNoireMenuEdition__Click(object sender, EventArgs e)
+        private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+        }
+
+        private void Window_Load(object sender, EventArgs e)
+        {
+            //FonctionsNatives.redimensionnerFenetre(this.Height, this.Width);
         }
 
     }
@@ -271,5 +243,18 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerEtat(Etat etat);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void redimensionnerFenetre(int largeur, int hauteur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void zoomIn();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void zoomOut();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirAffichagesParSeconde();
+
     }
 }
