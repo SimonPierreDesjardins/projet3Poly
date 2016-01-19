@@ -252,7 +252,6 @@ namespace vue {
 		xMinFenetre_ *= ratio;
 		yMaxFenetre_ /= ratio;
 		yMinFenetre_ /= ratio;
-		// À IMPLANTER.
 	}
 
 }; // Fin du namespace vue.

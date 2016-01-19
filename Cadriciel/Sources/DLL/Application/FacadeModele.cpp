@@ -175,7 +175,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 		vue::ProjectionOrtho{ 
 				0, 500, 0, 500,
 				1, 1000, 1, 10000, 1.25,
-				-150, 150, -100, 100 }
+				-100, 100, -100, 100 }
 	};
 }
 
