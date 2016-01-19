@@ -18,6 +18,12 @@
 
 #include "BancTests.h"
 
+
+
+#include <iostream>
+
+
+
 extern "C"
 {
 	////////////////////////////////////////////////////////////////////////
@@ -186,7 +192,56 @@ extern "C"
 		bool reussite = BancTests::obtenirInstance()->executer();
 		return reussite ? 0 : 1;
 	}
+
+
+	__declspec(dllexport) void __cdecl assignerEtat(int etat)
+	{
+		std::cout << "etat selection" << std::endl;
+		switch (etat)
+		{
+			case SELECTION :
+				std::cout << 0 << std::endl;
+				break;
+
+			case DEPLACEMENT :
+				std::cout << 1 << std::endl;
+				break;
+
+			case ROTATION :
+				std::cout << 2 << std::endl;
+				break;
+
+			case MISE_A_ECHELLE :
+				std::cout << 3 << std::endl;
+				break;
+
+			case DUPLICATION :
+				std::cout << 4 << std::endl;
+				break;
+
+			case CREATION_POTEAU :
+				std::cout << 5 << std::endl;			
+				break;
+
+			case CREATION_MUR :
+				std::cout << 6 << std::endl;			
+				break;
+
+			case CREATION_LIGNE_NOIRE :
+				std::cout << 7 << std::endl;
+				break;
+			
+			default:
+				break;
+		}
+	}
 }
+
+
+
+
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////

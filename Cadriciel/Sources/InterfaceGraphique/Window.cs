@@ -14,12 +14,72 @@ namespace InterfaceGraphique
 {
     public partial class Window : Form
     {
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
+
+            switch (keyData)
+            {
+                case Keys.Space:
+                    System.Console.WriteLine("Barre d'espacement appuyée.");
+                    return true;
+
+                case Keys.Up:
+                    System.Console.WriteLine("La fleche du haut est appuyée.");
+                    return true;
+
+                case Keys.Down:
+                    System.Console.WriteLine("La fleche du bas est appuyée.");
+                    return true;
+
+                case Keys.Left:
+                    System.Console.WriteLine("La fleche de gauche est appuyée.");
+                    return true;
+
+                case Keys.Right:
+                    System.Console.WriteLine("la fleche de droite est appuyée.");
+                    return true;
+
+                case Keys.Tab:
+                    System.Console.WriteLine("La touche tab est appuyée.");
+                    return true;
+
+                case Keys.Back:
+                    System.Console.WriteLine("La touche de retour appuyée.");
+                    return true;
+
+                case Keys.Escape:
+                    System.Console.WriteLine("La touche esc est appuyée.");
+                    return true;
+
+                case Keys.Control | Keys.F4:
+                    System.Console.WriteLine("La touche CTRL+F4 est appuyée.");
+                    Application.Exit();
+                    return true;
+
+                case Keys.CapsLock:
+                    System.Console.WriteLine("La touche CapsLock est appuyée.");
+                    return true;
+
+                case Keys.XButton1:
+                    System.Console.WriteLine("Click gauche de la souris est appuyé.");
+                    return true;
+
+                case Keys.XButton2:
+                    System.Console.WriteLine("Click droit de la souris est appuyé.");
+                    return true;
+
+                default:
+                    break;
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
 
         public Window()
         {
-            this.KeyPress += new KeyPressEventHandler(ToucheEnfonce);
             InitializeComponent();
             InitialiserAnimation();
+            menuEdition_.Visible = false;
         }
 
         public void InitialiserAnimation()
@@ -44,71 +104,7 @@ namespace InterfaceGraphique
             }
             
         }
-
-        private void ToucheEnfonce(Object o, KeyPressEventArgs e)
-        {
-            //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
-            
-            switch(e.KeyChar)
-            {
-                case (char)Keys.Space:
-                    System.Console.WriteLine("Barre d'espacement appuyée.");
-                    break;
-
-                case (char)Keys.Up:
-                    System.Console.WriteLine("La fleche du haut est appuyée.");
-                    break;
-
-                case (char)Keys.Down:
-                    System.Console.WriteLine("La fleche du bas est appuyée.");
-                    break;
-
-                case (char)Keys.Left:
-                    System.Console.WriteLine("La fleche de gauche est appuyée.");
-                    break;
-
-                case (char)Keys.Right:
-                    System.Console.WriteLine("la fleche de droite est appuyée.");
-                    break;
-
-                case (char)Keys.Tab:
-                    System.Console.WriteLine("Le boutton tab est appuyé.");
-                    break;
-
-                case (char)Keys.Back:
-                    System.Console.WriteLine("La touche de retour appuyée.");
-                    break;
-
-                case (char)Keys.ControlKey:
-                    System.Console.WriteLine("La touche CTRL est appuyée.");
-                    break;
-
-                case (char)Keys.XButton1:
-                    System.Console.WriteLine("Click gauche de la souris est appuyé.");
-                    break;
-
-                case (char)Keys.XButton2:
-                    System.Console.WriteLine("Click droit de la souris est appuyé.");
-                    break;
-
-                default:
-                    break;
-            }
-                
-            /*
-            if (e.KeyChar == (char)Keys.Space)
-            {
-                System.Console.WriteLine("Barre d'espacement appuyée.");
-            }
-             */
-        }
        
-
-        private void Window_Load(object sender, EventArgs e)
-        {
-
-        }
-
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
             lock(Program.unLock)
@@ -124,61 +120,105 @@ namespace InterfaceGraphique
             Application.Exit();
         }
 
-        private void buttonSimulation_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
             menuEdition_.Visible = true;
-        }
-
-        private void buttonConfiguration_Click(object sender, EventArgs e)
-        {
-
+            
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Êtes-vous sûr de vouloir quitter l'application?",
-            "Simulation de robot",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question,
-            MessageBoxDefaultButton.Button1);
-
-            if (result == DialogResult.Yes)
-            {
                 Application.Exit();
-            }
         }
 
         private void afficherMenuPrincipal(bool afficherMenu)
         {
+            //TODO: Libérer le viewport au menu prinnci
+            /*
+            if (afficherMenu)
+            {
+                FonctionsNatives.libererOpenGL();
+            }
+            else
+            {
+                InitialiserAnimation();
+            }
+             * */
             bouttonConfiguration_.Visible = afficherMenu;
             bouttonEditeur_.Visible = afficherMenu;
             bouttonQuitter_.Visible = afficherMenu;
             bouttonSimulation_.Visible = afficherMenu;
             viewPort_.Visible = !afficherMenu;
+            menuEdition_.Visible = !afficherMenu;
         }
 
-        private void viewPort_Paint(object sender, PaintEventArgs e)
+        private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
         }
 
-        private void orthographiqueToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuPrincipalMenuEdition__Click(object sender, EventArgs e)
+        private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(true);
             menuEdition_.Visible = false;
         }
-}
+
+        private void sToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.SELECTION);
+        }
+
+        private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+        }
+
+        private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ROTATION);
+        }
+
+        private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+        }
+
+        private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+        }
+
+        private void murToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+        }
+
+        private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+        }
+
+        private void Window_Resize(object sender, EventArgs e)
+        {
+            FonctionsNatives.redimensionnerFenetre(this.Height, this.Width);
+            FonctionsNatives.dessinerOpenGL();
+        }
+
+    }
+
+    enum Etat
+    {
+        SELECTION,
+        DEPLACEMENT,
+        ROTATION,
+        MISE_A_ECHELLE,
+        DUPLICATION,
+        CREATION_POTEAU,
+        CREATION_MUR,
+        CREATION_LIGNE_NOIRE
+    }
+
 
     static partial class FonctionsNatives
     {
@@ -193,5 +233,21 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void animer(double temps);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerEtat(Etat etat);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void redimensionnerFenetre(int largeur, int hauteur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void zoomIn();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void zoomOut();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirAffichagesParSeconde();
+
     }
 }
