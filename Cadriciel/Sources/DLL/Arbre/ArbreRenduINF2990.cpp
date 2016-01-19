@@ -35,9 +35,9 @@ const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
 ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
-	ajouterUsine(NOM_ARAIGNEE, new UsineNoeud<NoeudAraignee>{ NOM_ARAIGNEE, std::string{ "media/spider.obj" } });
-	ajouterUsine(NOM_CONECUBE, new UsineNoeud<NoeudConeCube>{ NOM_CONECUBE, std::string{ "media/cubecone.obj" } });
-	ajouterUsine(NOM_ROBOT, new UsineNoeud<NoeudRobot>{ NOM_ROBOT, std::string{ "media/robot.obj" } });
+	ajouterUsine(NOM_ARAIGNEE, make_shared<UsineNoeud<NoeudAraignee>>(NOM_ARAIGNEE, std::string{ "media/spider.obj" }));
+	ajouterUsine(NOM_CONECUBE, make_shared<UsineNoeud<NoeudConeCube>>(NOM_CONECUBE, std::string{ "media/cubecone.obj" }));
+	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/robot.obj" }));
 }
 
 
@@ -72,8 +72,8 @@ void ArbreRenduINF2990::initialiser()
 	vider();
 
 	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
-	NoeudAbstrait* noeudAraignee{ creerNoeud(NOM_ARAIGNEE) };
-	NoeudAbstrait* noeudRobot{ creerNoeud(NOM_ROBOT) };
+	shared_ptr<NoeudAbstrait> noeudAraignee{ creerNoeud(NOM_ARAIGNEE) };
+	shared_ptr<NoeudAbstrait> noeudRobot{ creerNoeud(NOM_ROBOT) };
 	noeudRobot->ajouter(creerNoeud(NOM_CONECUBE));
 	noeudAraignee->ajouter(noeudRobot);
 	ajouter(noeudAraignee);

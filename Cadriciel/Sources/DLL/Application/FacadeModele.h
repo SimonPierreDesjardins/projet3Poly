@@ -13,6 +13,10 @@
 
 #include <windows.h>
 #include <string>
+#include <memory>
+
+
+using namespace std;
 
 class NoeudAbstrait;
 class ArbreRenduINF2990;
@@ -33,8 +37,12 @@ namespace vue {
 class FacadeModele
 {
 public:
+
+   /// Destructeur.
+   ~FacadeModele();
+
    /// Obtient l'instance unique de la classe.
-   static FacadeModele* obtenirInstance();
+   static shared_ptr<FacadeModele> obtenirInstance();
    /// Libère l'instance unique de la classe.
    static void libererInstance();
 
@@ -52,11 +60,11 @@ public:
    void afficherBase() const;
  
    /// Retourne la vue courante.
-   inline vue::Vue* obtenirVue();
+   inline shared_ptr<vue::Vue> obtenirVue();
    /// Retourne l'arbre de rendu.
-   inline const ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
+   inline shared_ptr<ArbreRenduINF2990> obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
-   inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
+   inline shared_ptr<ArbreRenduINF2990> obtenirArbreRenduINF2990();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -68,8 +76,7 @@ public:
 private:
    /// Constructeur par défaut.
    FacadeModele() = default;
-   /// Destructeur.
-   ~FacadeModele();
+
    /// Constructeur copie désactivé.
    FacadeModele(const FacadeModele&) = delete;
    /// Opérateur d'assignation désactivé.
@@ -79,7 +86,7 @@ private:
    static const std::string FICHIER_CONFIGURATION;
 
    /// Pointeur vers l'instance unique de la classe.
-   static FacadeModele* instance_;
+   static shared_ptr<FacadeModele> instance_;
 
    /// Poignée ("handle") vers la fenêtre où l'affichage se fait.
    HWND  hWnd_{ nullptr };
@@ -89,9 +96,9 @@ private:
    HDC   hDC_{ nullptr };
 
    /// Vue courante de la scène.
-   vue::Vue* vue_{ nullptr };
+   shared_ptr<vue::Vue> vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
-   ArbreRenduINF2990* arbre_{ nullptr };
+   shared_ptr<ArbreRenduINF2990> arbre_{ nullptr };
 };
 
 
@@ -107,7 +114,7 @@ private:
 /// @return La vue courante.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline vue::Vue* FacadeModele::obtenirVue()
+inline shared_ptr<vue::Vue> FacadeModele::obtenirVue()
 {
    return vue_;
 }
@@ -115,7 +122,7 @@ inline vue::Vue* FacadeModele::obtenirVue()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
+/// @fn inline const shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
 ///
 /// Cette fonction retourne l'arbre de rendu de la scène (version constante
 /// de la fonction).
@@ -123,7 +130,7 @@ inline vue::Vue* FacadeModele::obtenirVue()
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
+inline shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
 {
    return arbre_;
 }
@@ -131,7 +138,7 @@ inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
+/// @fn inline shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990()
 ///
 /// Cette fonction retourne l'arbre de rendu de la scène (version non constante
 /// de la fonction).
@@ -139,7 +146,7 @@ inline const ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
+inline shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990()
 {
    return arbre_;
 }
