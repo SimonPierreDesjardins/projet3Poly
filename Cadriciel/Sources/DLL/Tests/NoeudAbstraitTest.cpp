@@ -145,7 +145,7 @@ void NoeudAbstraitTest::testEnfants()
 	CPPUNIT_ASSERT(noeud->calculerProfondeur() == 1);
 
 	// Essaie d'ajouter un noeud
-	NoeudAbstrait* nouveauNoeud{ new NoeudConeCube{ ArbreRenduINF2990::NOM_CONECUBE } };
+	shared_ptr<NoeudAbstrait> nouveauNoeud(new NoeudConeCube{ ArbreRenduINF2990::NOM_CONECUBE });
 	bool ajout{ noeud->ajouter(nouveauNoeud) };
 
 	// L'ajout devrait avoir échoué puisqu'il s'agit d'un noeud abstrait...
@@ -154,9 +154,6 @@ void NoeudAbstraitTest::testEnfants()
 	// Assurons-nous que le noeud ne possède pas d'enfant...
 	CPPUNIT_ASSERT(noeud->obtenirNombreEnfants() == 0);
 	CPPUNIT_ASSERT(noeud->calculerProfondeur() == 1);
-
-	// Nettoyage
-	delete nouveauNoeud;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
