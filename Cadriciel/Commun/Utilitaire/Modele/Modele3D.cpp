@@ -178,7 +178,7 @@ namespace modele{
 				itr++;
 
 				// Charger la texture
-				aidegl::glLoadTexture(std::string{ "media/" } +nomFichier, identificateursTextures_[j], false);
+				aidegl::glLoadTexture(std::string{ "media/textures/" } +nomFichier, identificateursTextures_[j], false);
 			}
 		}
 	}

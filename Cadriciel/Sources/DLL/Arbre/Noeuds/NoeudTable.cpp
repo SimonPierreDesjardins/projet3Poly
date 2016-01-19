@@ -63,11 +63,14 @@ void NoeudTable::afficherConcret() const
 	NoeudComposite::afficherConcret();
 
 	// Sauvegarde de la matrice.
-	//glPushMatrix();
+	glPushMatrix();
 	// Affichage du modèle.
+	
+	glRotatef(90, 1, 0, 0);
+	glRotatef(90, 0, 1, 0);
 	vbo_->dessiner();
 	// Restauration de la matrice.
-	//glPopMatrix();
+	glPopMatrix();
 }
 
 

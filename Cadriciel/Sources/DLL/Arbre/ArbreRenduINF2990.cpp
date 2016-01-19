@@ -38,9 +38,9 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
 	ajouterUsine(NOM_TABLE, new UsineNoeud <NoeudTable> {NOM_TABLE, std::string{ "media/modeles/table.obj" } });
-	ajouterUsine(NOM_ARAIGNEE, new UsineNoeud<NoeudAraignee>{ NOM_ARAIGNEE, std::string{ "media/spider.obj" } });
-	ajouterUsine(NOM_CONECUBE, new UsineNoeud<NoeudConeCube>{ NOM_CONECUBE, std::string{ "media/cubecone.obj" } });
-	ajouterUsine(NOM_ROBOT, new UsineNoeud<NoeudRobot>{ NOM_ROBOT, std::string{ "media/robot.obj" } });
+	ajouterUsine(NOM_ARAIGNEE, new UsineNoeud<NoeudAraignee>{ NOM_ARAIGNEE, std::string{ "media/modeles/spider.obj" } });
+	ajouterUsine(NOM_CONECUBE, new UsineNoeud<NoeudConeCube>{ NOM_CONECUBE, std::string{ "media/modeles/cubecone.obj" } });
+	ajouterUsine(NOM_ROBOT, new UsineNoeud<NoeudRobot>{ NOM_ROBOT, std::string{ "media/modeles/robot.obj" } });
 }
 
 
