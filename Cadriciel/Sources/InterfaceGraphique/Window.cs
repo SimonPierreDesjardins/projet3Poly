@@ -9,7 +9,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-
 namespace InterfaceGraphique
 {
     public partial class Window : Form
@@ -54,6 +53,7 @@ namespace InterfaceGraphique
 
                 case Keys.Control | Keys.F4:
                     System.Console.WriteLine("La touche CTRL+F4 est appuyée.");
+                    Application.Exit();
                     return true;
 
                 case Keys.CapsLock:
@@ -113,7 +113,6 @@ namespace InterfaceGraphique
             }
         }
 
-
         private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -123,26 +122,16 @@ namespace InterfaceGraphique
         {
             afficherMenuPrincipal(false);
             menuEdition_.Visible = true;
-            
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Êtes-vous sûr de vouloir quitter l'application?",
-            "Simulation de robot",
-            MessageBoxButtons.YesNo,
-            MessageBoxIcon.Question,
-            MessageBoxDefaultButton.Button1);
-
-            if (result == DialogResult.Yes)
-            {
                 Application.Exit();
-            }
         }
 
         private void afficherMenuPrincipal(bool afficherMenu)
         {
-            //TODO: Libérer le viewport au menu prinnci
+            //TODO: Libérer le viewport au menu principal
             /*
             if (afficherMenu)
             {
@@ -207,10 +196,12 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
         }
 
-        private void Window_Load(object sender, EventArgs e)
+        private void Window_Resize(object sender, EventArgs e)
         {
             //FonctionsNatives.redimensionnerFenetre(this.Height, this.Width);
+            FonctionsNatives.dessinerOpenGL(); 
         }
+
 
     }
 
@@ -225,7 +216,6 @@ namespace InterfaceGraphique
         CREATION_MUR,
         CREATION_LIGNE_NOIRE
     }
-
 
     static partial class FonctionsNatives
     {
