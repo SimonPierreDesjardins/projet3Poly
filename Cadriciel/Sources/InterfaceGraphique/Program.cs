@@ -15,7 +15,7 @@ namespace InterfaceGraphique
         public static Object unLock = new Object();
         public static bool peutAfficher = true;
 
-        private static Window exemple;
+        private static Window window;
         private static TimeSpan dernierTemps;
         private static TimeSpan tempsAccumule;
         private static Stopwatch chrono = Stopwatch.StartNew();
@@ -42,8 +42,8 @@ namespace InterfaceGraphique
             Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            exemple = new Window();
-            Application.Run(exemple);
+            window = new Window();
+            Application.Run(window);
         }
 
         static void ExecuterQuandInactif(object sender, EventArgs e)
@@ -62,8 +62,8 @@ namespace InterfaceGraphique
                 {
                     lock (unLock)
                     {
-                        if (exemple != null && peutAfficher)
-                            exemple.MettreAJour((double)tempsAccumule.Ticks / TimeSpan.TicksPerSecond);
+                        if (window != null && peutAfficher)
+                            window.MettreAJour((double)tempsAccumule.Ticks / TimeSpan.TicksPerSecond);
                     }
                     tempsAccumule = TimeSpan.Zero;
                 }

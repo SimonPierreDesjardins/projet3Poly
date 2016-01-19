@@ -99,7 +99,6 @@ private:
    shared_ptr<vue::Vue> vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
    shared_ptr<ArbreRenduINF2990> arbre_{ nullptr };
-
 };
 
 
