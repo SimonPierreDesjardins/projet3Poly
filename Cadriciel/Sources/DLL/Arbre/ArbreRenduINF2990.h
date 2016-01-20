@@ -47,6 +47,8 @@ public:
    static const std::string NOM_CONECUBE;
    /// La chaîne représentant le type du robot.
    static const std::string NOM_ROBOT;
+   /// La chaîne représentant le type de la table.
+   static const std::string NOM_TABLE;
 };
 
 

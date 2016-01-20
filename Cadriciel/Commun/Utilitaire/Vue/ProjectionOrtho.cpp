@@ -251,7 +251,11 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::ajusterRapportAspect()
 	{
-		// À IMPLANTER.
+		double ratio = (xMaxCloture_ - xMinCloture_) / (yMaxCloture_ - yMinCloture_);
+		xMaxFenetre_ *= ratio;
+		xMinFenetre_ *= ratio;
+		yMaxFenetre_ /= ratio;
+		yMinFenetre_ /= ratio;
 	}
 
 }; // Fin du namespace vue.
