@@ -61,6 +61,12 @@
     <Filter Include="Source Files\MachineAEtats">
       <UniqueIdentifier>{407dfefc-fb04-44e6-8113-adada4c82f72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Visiteur">
+      <UniqueIdentifier>{a16986f4-afe7-4f55-9e18-ba69b5acbc13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visiteur">
+      <UniqueIdentifier>{2fad78a4-29b7-4c18-9af9-dada4c0963c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -102,9 +108,6 @@
     <ClCompile Include="Arbre\Noeuds\NoeudRobot.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
-    <ClCompile Include="Visiteur\VisteurAbstrait.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
@@ -131,6 +134,12 @@
     </ClCompile>
     <ClCompile Include="MachineAEtats\EtatSelection.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisteurAbstrait.cpp">
+      <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -179,9 +188,6 @@
     <ClInclude Include="Arbre\Noeuds\NoeudRobot.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurAbstrait.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MachineAEtats\EtatAbstrait.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
@@ -211,6 +217,12 @@
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurAbstrait.h">
+      <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

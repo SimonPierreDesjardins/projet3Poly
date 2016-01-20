@@ -14,6 +14,9 @@ EtatCreationMur::~EtatCreationMur()
 
 }
 
+
+
+
 void EtatCreationMur::effectuerOperation()
 {
 

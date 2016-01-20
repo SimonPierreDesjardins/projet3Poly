@@ -72,6 +72,8 @@
             this.viewPort_.Size = new System.Drawing.Size(623, 432);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
+            this.viewPort_.MouseDown += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseDown);
+            this.viewPort_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
             // 
             // bouttonSimulation_
             // 
@@ -320,7 +322,6 @@
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulateur de robot";
-
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);

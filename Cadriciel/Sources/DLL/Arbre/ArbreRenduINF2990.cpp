@@ -39,6 +39,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	// Construction des usines
 	ajouterUsine(NOM_TABLE, make_shared<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robot.obj" }));
+	ajouterUsine(NOM_CONECUBE, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robot.obj" }));
 }
 
 

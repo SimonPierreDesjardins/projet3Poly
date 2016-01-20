@@ -9,7 +9,7 @@
 #ifndef __FACADE_INTERFACE_NATIVE_H__
 #define __FACADE_INTERFACE_NATIVE_H__
 
-
+#include <Windows.h>
 
 enum Etat
 {
@@ -36,6 +36,10 @@ extern "C"
 	__declspec(dllexport) int obtenirAffichagesParSeconde();
 	__declspec(dllexport) bool executerTests();
 	__declspec(dllexport) void assignerEtat(int etat);
+	__declspec(dllexport) void gererClicGaucheEnfonce(int x, int y);
+	__declspec(dllexport) void gererClicDroitEnfonce(int x, int y);
+	__declspec(dllexport) void gererClicGaucheRelache(int x, int y);
+	__declspec(dllexport) void gererClicDroitRelache(int x, int y);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

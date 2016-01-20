@@ -18,8 +18,6 @@
 #include "EtatTypes.h"
 #include "BancTests.h"
 
-
-
 #include <iostream>
 
 
@@ -233,6 +231,33 @@ extern "C"
 			default:
 				break;
 		}
+	}
+
+
+	__declspec(dllexport) void __cdecl gererClicGaucheEnfonce(int x, int y)
+	{
+		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(x, y);
+	}
+
+
+
+	__declspec(dllexport) void __cdecl gererClicDroitEnfonce(int x, int y)
+	{
+		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(x, y);
+	}
+
+
+
+	__declspec(dllexport) void __cdecl gererClicGaucheRelache(int x, int y)
+	{
+		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(x, y);
+	}
+
+
+
+	__declspec(dllexport) void __cdecl gererClicDroitRelache(int x, int y)
+	{
+		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(x, y);
 	}
 }
 

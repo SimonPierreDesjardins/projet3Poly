@@ -57,9 +57,11 @@ public:
    /// Affiche la base du contenu du modèle.
    void afficherBase() const;
 
-   /// Modifie l'attribut etat_
+   /// Modifie l'etat courant.
    void modifierEtat(std::shared_ptr<EtatAbstrait> etat);
- 
+   // Obtenir l'etat courant.
+   inline std::shared_ptr<EtatAbstrait> obtenirEtat();
+
    /// Retourne la vue courante.
    inline std::shared_ptr<vue::Vue> obtenirVue();
    /// Retourne l'arbre de rendu.
@@ -105,8 +107,20 @@ private:
   
 };
 
-
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline std::shared_ptr<EtatAbstrait> FacadeModele::obtenirEtat()
+///
+/// Cette fonction retourne l'état dans lequel se trouve présentement
+/// le modèle.
+///
+/// @return L'état courant.
+///
+////////////////////////////////////////////////////////////////////////
+inline std::shared_ptr<EtatAbstrait> FacadeModele::obtenirEtat()
+{
+	return etat_;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

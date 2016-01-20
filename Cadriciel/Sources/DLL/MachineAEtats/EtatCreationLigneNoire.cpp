@@ -14,6 +14,7 @@ EtatCreationLigneNoire::~EtatCreationLigneNoire()
 
 }
 
+
 void EtatCreationLigneNoire::effectuerOperation()
 {
 

@@ -9,10 +9,22 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
+
+
+
+
 namespace InterfaceGraphique
-{
+{    
     public partial class Window : Form
-    {
+    {        
+        
+        private const int WM_KEYDOWN =      0x100;
+        private const int WM_LBUTTONDOWN =  0x0201;
+        private const int WM_LBUTTONUP =    0x0202;
+        private const int WM_RBUTTONDOWN =  0x0204;
+        private const int WM_RBUTTONUP =    0x0205;
+
+
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
@@ -60,11 +72,11 @@ namespace InterfaceGraphique
                     System.Console.WriteLine("La touche CapsLock est appuyée.");
                     return true;
 
-                case Keys.XButton1:
+                case Keys.LButton:
                     System.Console.WriteLine("Click gauche de la souris est appuyé.");
                     return true;
 
-                case Keys.XButton2:
+                case Keys.RButton:
                     System.Console.WriteLine("Click droit de la souris est appuyé.");
                     return true;
 
@@ -122,6 +134,7 @@ namespace InterfaceGraphique
         {
             afficherMenuPrincipal(false);
             menuEdition_.Visible = true;
+            FonctionsNatives.assignerEtat(Etat.SELECTION);
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -202,7 +215,37 @@ namespace InterfaceGraphique
             FonctionsNatives.dessinerOpenGL();
         }
 
+        private void viewPort__Click(object sender, EventArgs e)
+        {
 
+        }
+        
+        private void viewPort__MouseDown(object sender, MouseEventArgs e)
+        {
+            Point p = viewPort_.PointToClient(Cursor.Position);
+            if (e.Button == MouseButtons.Right)
+            {
+                FonctionsNatives.gererClicDroitEnfonce(p.X, p.Y);
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                FonctionsNatives.gererClicGaucheEnfonce(p.X, p.Y);
+            }
+        }
+
+        private void viewPort__MouseUp(object sender, MouseEventArgs e)
+        {
+            Point p = viewPort_.PointToClient(Cursor.Position);
+            if (e.Button == MouseButtons.Right)
+            {
+                FonctionsNatives.gererClicDroitRelache(p.X, p.Y);
+            }
+            else if (e.Button == MouseButtons.Left)
+            {
+                FonctionsNatives.gererClicGaucheRelache(p.X, p.Y);
+            }
+        }
+         
     }
 
     enum Etat
@@ -214,7 +257,10 @@ namespace InterfaceGraphique
         DUPLICATION,
         CREATION_POTEAU,
         CREATION_MUR,
-        CREATION_LIGNE_NOIRE
+        CREATION_LIGNE_NOIRE,
+        MENU_PRINCIPALE,
+        SIMULATION,
+        TEST
     }
 
     static partial class FonctionsNatives
@@ -245,6 +291,18 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirAffichagesParSeconde();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+	    public static extern void gererClicGaucheEnfonce(int x, int y);
+        
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void gererClicDroitEnfonce(int x, int y);
+        
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void gererClicGaucheRelache(int x, int y);
+	   
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void gererClicDroitRelache(int x, int y);
 
     }
 }
