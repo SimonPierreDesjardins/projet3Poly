@@ -49,6 +49,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
 	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
 	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/mur.obj" }));
+
 }
 
 
@@ -90,6 +91,9 @@ void ArbreRenduINF2990::initialiser()
 
 	//shared_ptr<NoeudAbstrait> noeudMur{ creerNoeud(NOM_MUR) };
 	//noeudTable->ajouter(noeudMur);
+
+	//shared_ptr<NoeudAbstrait> noeudPoteau{ creerNoeud(NOM_POTEAU) };
+	//noeudTable->ajouter(noeudPoteau);
 
 	//shared_ptr<NoeudAbstrait> noeudLigneNoire{ creerNoeud(NOM_LIGNENOIRE) };
 	//noeudTable->ajouter(noeudLigneNoire);
