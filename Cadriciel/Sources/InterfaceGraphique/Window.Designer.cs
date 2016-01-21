@@ -62,11 +62,11 @@
             // 
             // viewPort_
             // 
-            this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            //this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            //| System.Windows.Forms.AnchorStyles.Left) 
+            //| System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort_.AutoSize = true;
-            this.viewPort_.BackColor = System.Drawing.SystemColors.Info;
+            //this.viewPort_.BackColor = System.Drawing.SystemColors.Info;
             this.viewPort_.Location = new System.Drawing.Point(0, 0);
             this.viewPort_.Name = "viewPort_";
             this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;

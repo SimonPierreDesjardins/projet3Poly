@@ -201,6 +201,9 @@ namespace InterfaceGraphique
 
         private void Window_Resize(object sender, EventArgs e)
         {
+            // On rajuste le viewport pour prendre le panel interieur.
+            this.viewPort_.Size = new System.Drawing.Size(this.Width, this.Height);
+            // On gère cetter redimension dans openGL
             FonctionsNatives.redimensionnerFenetre(this.Height, this.Width);
             FonctionsNatives.dessinerOpenGL();
         }
