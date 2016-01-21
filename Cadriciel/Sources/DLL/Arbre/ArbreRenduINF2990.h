@@ -49,6 +49,12 @@ public:
    static const std::string NOM_ROBOT;
    /// La chaîne représentant le type de la table.
    static const std::string NOM_TABLE;
+   /// La chaîne représentant le type de la table.
+   static const std::string NOM_POTEAU;
+   /// La chaîne représentant le type de la table.
+   static const std::string NOM_MUR;
+   /// La chaîne représentant le type de la table.
+   static const std::string NOM_LIGNENOIRE;
 };
 
 

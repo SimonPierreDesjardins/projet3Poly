@@ -66,10 +66,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort_.BackColor = System.Drawing.SystemColors.Info;
-            this.viewPort_.Location = new System.Drawing.Point(0, 0);
+            this.viewPort_.Location = new System.Drawing.Point(0, 27);
             this.viewPort_.Name = "viewPort_";
             this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort_.Size = new System.Drawing.Size(623, 432);
+            this.viewPort_.Size = new System.Drawing.Size(623, 405);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
             this.viewPort_.MouseDown += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseDown);
