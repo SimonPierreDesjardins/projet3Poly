@@ -8,6 +8,8 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 #include "NoeudTable.h"
+#include "VisiteurAbstrait.h"
+
 #include "Utilitaire.h"
 
 #include "GL/glew.h"
@@ -71,6 +73,12 @@ void NoeudTable::afficherConcret() const
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+
+void NoeudTable::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
 }
 
 

@@ -145,7 +145,7 @@ void NoeudAbstraitTest::testEnfants()
 	CPPUNIT_ASSERT(noeud->calculerProfondeur() == 1);
 
 	// Essaie d'ajouter un noeud
-	shared_ptr<NoeudAbstrait> nouveauNoeud(new NoeudConeCube{ ArbreRenduINF2990::NOM_CONECUBE });
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud(new NoeudConeCube{ ArbreRenduINF2990::NOM_CONECUBE });
 	bool ajout{ noeud->ajouter(nouveauNoeud) };
 
 	// L'ajout devrait avoir échoué puisqu'il s'agit d'un noeud abstrait...

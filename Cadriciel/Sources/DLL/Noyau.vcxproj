@@ -59,7 +59,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>MachineAEtats;X:\inf2990-06\Cadriciel\Sources\DLL\MachineAEtats;../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Configuration;Interface;Tests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>X:\inf2990-06\Cadriciel\Sources\DLL\MachineAEtats;../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Configuration;Interface;Tests;Visiteur;MachineAEtats;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;GLEW_BUILD;_DEBUG;_WINDOWS;_USRDLL;INF2990_EXPORTS;FTGL_LIBRARY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -155,6 +155,7 @@
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
+    <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +189,8 @@
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
+    <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
+    <ClInclude Include="Visiteur\VisiteurTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commun\Utilitaire\Utilitaire.vcxproj">

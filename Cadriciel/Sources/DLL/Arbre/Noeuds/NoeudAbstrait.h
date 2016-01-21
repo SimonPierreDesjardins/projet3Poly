@@ -17,9 +17,6 @@
 
 #include "glm\glm.hpp"
 
-
-using namespace std;
-
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 namespace modele{
 	class Modele3D;
@@ -27,6 +24,8 @@ namespace modele{
 namespace opengl{
 	class VBO;
 }
+
+class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudAbstrait
@@ -40,7 +39,7 @@ namespace opengl{
 /// @author DGI-2990
 /// @date 2007-01-24
 ///////////////////////////////////////////////////////////////////////////
-class NoeudAbstrait : public enable_shared_from_this<NoeudAbstrait>
+class NoeudAbstrait : public std::enable_shared_from_this<NoeudAbstrait>
 {
 public:
 	/// Constructeur.
@@ -51,13 +50,13 @@ public:
 	virtual ~NoeudAbstrait();
 
 	/// Obtient le parent de ce noeud.
-	inline shared_ptr<NoeudAbstrait> obtenirParent();
+	inline std::shared_ptr<NoeudAbstrait> obtenirParent();
 
 	/// Obtient le parent de ce noeud (version constante).
-	inline shared_ptr<const NoeudAbstrait> obtenirParent() const;
+	inline std::shared_ptr<const NoeudAbstrait> obtenirParent() const;
 
 	/// Assigne le parent de ce noeud.
-	inline void assignerParent(shared_ptr<NoeudAbstrait> parent);
+	inline void assignerParent(std::shared_ptr<NoeudAbstrait> parent);
 
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
@@ -97,19 +96,19 @@ public:
 	/// Vide le noeud de ses enfants.
 	virtual void vider();
 	/// Efface le noeud passé en paramètre.
-	virtual void effacer(shared_ptr<const NoeudAbstrait> noeud);
+	virtual void effacer(std::shared_ptr<const NoeudAbstrait> noeud);
 
 	/// Cherche un noeud par le type (sur un noeud constant).
-	virtual shared_ptr<const NoeudAbstrait> chercher(const std::string& typeNoeud) const;
+	virtual std::shared_ptr<const NoeudAbstrait> chercher(const std::string& typeNoeud) const;
 	/// Cherche un noeud par le type.
-	virtual shared_ptr<NoeudAbstrait> chercher(const std::string& typeNoeud);
+	virtual std::shared_ptr<NoeudAbstrait> chercher(const std::string& typeNoeud);
 	/// Cherche un noeud enfant selon l'indice (sur un noeud constant).
-	virtual shared_ptr<const NoeudAbstrait> chercher(unsigned int indice) const;
+	virtual std::shared_ptr<const NoeudAbstrait> chercher(unsigned int indice) const;
 	/// Cherche un noeud enfant selon l'indice.
-	virtual shared_ptr<NoeudAbstrait> chercher(unsigned int indice);
+	virtual std::shared_ptr<NoeudAbstrait> chercher(unsigned int indice);
 
 	/// Ajoute un noeud enfant.
-	virtual bool ajouter(shared_ptr<NoeudAbstrait> enfant);
+	virtual bool ajouter(std::shared_ptr<NoeudAbstrait> enfant);
 	/// Obtient le nombre d'enfants du noeud.
 	virtual unsigned int obtenirNombreEnfants() const;
 
@@ -135,6 +134,9 @@ public:
 	/// Anime le noeud.
 	virtual void animer(float dt);
 
+	/// Accepter un visiteur.
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
 protected:
 	/// Type du noeud.
 	std::string				type_;
@@ -158,7 +160,7 @@ protected:
 	bool					enregistrable_{ true };
 
 	/// Pointeur vers le parent.
-	weak_ptr<NoeudAbstrait> parent_;
+	std::weak_ptr<NoeudAbstrait> parent_;
 
 	/// Modèle 3D correspondant à ce noeud.
 	modele::Modele3D const* modele_;
@@ -178,7 +180,7 @@ protected:
 /// @return Le pointeur vers le parent.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline shared_ptr<NoeudAbstrait> NoeudAbstrait::obtenirParent()
+inline std::shared_ptr<NoeudAbstrait> NoeudAbstrait::obtenirParent()
 {
 	return parent_.lock();
 }
@@ -193,7 +195,7 @@ inline shared_ptr<NoeudAbstrait> NoeudAbstrait::obtenirParent()
 /// @return Le pointeur constant vers le parent.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline shared_ptr<const NoeudAbstrait> NoeudAbstrait::obtenirParent() const
+inline std::shared_ptr<const NoeudAbstrait> NoeudAbstrait::obtenirParent() const
 {
 	return parent_.lock();
 }
@@ -212,7 +214,7 @@ inline shared_ptr<const NoeudAbstrait> NoeudAbstrait::obtenirParent() const
 ///
 ////////////////////////////////////////////////////////////////////////
 inline void NoeudAbstrait::assignerParent(
-	shared_ptr<NoeudAbstrait> parent
+	std::shared_ptr<NoeudAbstrait> parent
 	)
 {
 	parent_ = parent;

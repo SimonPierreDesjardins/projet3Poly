@@ -13,9 +13,13 @@
 
 
 #include "NoeudComposite.h"
+#include "VisiteurAbstrait.h"
 #include "GL/glew.h"
 
-class NoeudTable : public NoeudComposite{
+class VisiteurAbstrait;
+
+class NoeudTable : public NoeudComposite
+{
 
 	public:
 
@@ -23,9 +27,10 @@ class NoeudTable : public NoeudComposite{
 	NoeudTable(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudTable();
-
 	/// Affiche la table.
 	virtual void afficherConcret() const;
+	/// Accepter un visiteur.
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 
 #endif

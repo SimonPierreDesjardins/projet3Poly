@@ -12,11 +12,10 @@
 
 
 #include "ArbreRendu.h"
-
 #include <map>
 #include <string>
 
-using namespace std;
+class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRenduINF2990
@@ -39,7 +38,6 @@ public:
 
    /// Initialise l'arbre de rendu à son état initial.
    void initialiser();
-
 
 	/// La chaîne représentant le type des araignées.
    static const std::string NOM_ARAIGNEE;

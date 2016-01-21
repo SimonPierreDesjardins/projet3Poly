@@ -43,7 +43,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 /// Pointeur vers l'instance unique de la classe.
-shared_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
+std::shared_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 
 /// Chaîne indiquant le nom du fichier de configuration du projet.
 const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
@@ -63,11 +63,11 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 /// @return Un pointeur vers l'instance unique de cette classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-shared_ptr<FacadeModele> FacadeModele::obtenirInstance()
+std::shared_ptr<FacadeModele> FacadeModele::obtenirInstance()
 {
 	if (instance_ == nullptr)
 	{
-		instance_ = shared_ptr<FacadeModele>(new FacadeModele());
+		instance_ = std::shared_ptr<FacadeModele>(new FacadeModele());
 	}
 	return instance_;
 }
@@ -164,13 +164,13 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
 	// l'arbre après avoir créé le contexte OpenGL.
-	arbre_ = make_shared<ArbreRenduINF2990>();
+	arbre_ = std::make_shared<ArbreRenduINF2990>();
 	arbre_->initialiser();
 
 	// On crée une vue par défaut.
-	vue_ = make_shared<vue::VueOrtho>(
+	vue_ = std::make_shared<vue::VueOrtho>(
 		vue::Camera{
-			glm::dvec3(-10, -30, 0), glm::dvec3(0, 0, 0),
+			glm::dvec3(0, 0, 200), glm::dvec3(0, 0, 0),
 			glm::dvec3(0, 1, 0), glm::dvec3(0, 1, 0) },
 		vue::ProjectionOrtho{
 			0, 500, 0, 500,

@@ -19,7 +19,7 @@
 
 class NoeudAbstrait;
 class UsineAbstraite;
-
+class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRendu
@@ -47,16 +47,16 @@ public:
 
    /// Ajoute une usine associée à un type de noeud.
    inline void ajouterUsine(
-      const std::string& type, shared_ptr<const UsineAbstraite> usine
+      const std::string& type, std::shared_ptr<const UsineAbstraite> usine
       );
 
    /// Crée un nouveau noeud.
-   shared_ptr<NoeudAbstrait> creerNoeud(
+   std::shared_ptr<NoeudAbstrait> creerNoeud(
       const std::string& typeNouveauNoeud
       ) const;
 
    /// Crée et ajoute un nouveau noeud à l'arbre.
-   shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(
+   std::shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(
       const std::string& nomParent,
       const std::string& typeNouveauNoeud
       );
@@ -64,11 +64,14 @@ public:
    /// Calcule la profondeur maximale possible pour l'arbre de rendu.
    static unsigned int calculerProfondeurMaximale();
 
+	/// Accepter un visiteur.
+	void accepterVisiteur(VisiteurAbstrait* visiteur);
+
 
 private:
    /// Définition du type pour l'association du nom d'un type vers l'usine
    /// correspondante.
-	using RegistreUsines = std::map<std::string, shared_ptr<const UsineAbstraite>>;
+	using RegistreUsines = std::map<std::string, std::shared_ptr<const UsineAbstraite>>;
    /// Association du nom d'un type vers l'usine correspondante.
    RegistreUsines usines_;
 
@@ -90,7 +93,7 @@ private:
 ///
 ////////////////////////////////////////////////////////////////////////
 inline void ArbreRendu::ajouterUsine(
-   const std::string& type, shared_ptr<const UsineAbstraite> usine
+   const std::string& type, std::shared_ptr<const UsineAbstraite> usine
    )
 {
    usines_[type] = usine;

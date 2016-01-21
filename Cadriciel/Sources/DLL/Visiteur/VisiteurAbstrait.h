@@ -10,8 +10,16 @@
 #ifndef VISITEUR_ABSTRAIT_H
 #define VISITEUR_ABSTRAIT_H
 
-#include "NoeudTypes.h"
+#include "FacadeModele.h"
+#include "glm\glm.hpp"
 
+class ArbreRendu;
+class NoeudPoteau;
+class NoeudTable;
+class NoeudMur;
+class NoeudLigneNoire;
+class NoeudRobot;
+class NoeudAraignee;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurAbstrait
@@ -29,13 +37,23 @@ class VisiteurAbstrait
 public:
 	/// Constructeur par défaut.
 	VisiteurAbstrait();
-	
+	//
+	VisiteurAbstrait(const int& x, const int& y);
 	/// Destructeur.
 	virtual ~VisiteurAbstrait();
 
 	/// Fonctionnalité effectuée sur un noeud de type NoeudRobot.
-	virtual void visiter(NoeudRobot* noeud) = 0;
-	// TODO:: Ajouter les méthodes pour les différents types de noeuds.
+	virtual void visiter(ArbreRendu* noeud);
+	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudPoteau* noeud);
+	virtual void visiter(NoeudMur* noeud);
+	virtual void visiter(NoeudLigneNoire* noeud);
+
+	void changerPointdeRepere(int& x, int& y);
+
+private:
+	int x_, y_;
+	glm::ivec2 dimensionsCloture_;
 };
 
 

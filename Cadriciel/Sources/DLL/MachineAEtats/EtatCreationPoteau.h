@@ -2,6 +2,7 @@
 #define ETAT_CREATION_POTEAU_H
 
 #include "EtatAbstrait.h"
+#include "VisiteurTypes.h"
 #include <iostream>
 
 class EtatCreationPoteau : public EtatAbstrait

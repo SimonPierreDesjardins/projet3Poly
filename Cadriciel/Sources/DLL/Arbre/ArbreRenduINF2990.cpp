@@ -11,6 +11,7 @@
 #include "Usines/UsineNoeud.h"
 #include "EtatOpenGL.h"
 #include "NoeudTypes.h"
+#include "VisiteurTypes.h"
 
 
 /// La chaîne représentant le type des araignées.
@@ -44,11 +45,10 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
 	ajouterUsine(NOM_TABLE, make_shared<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
-	
-	//ajouterUsine(NOM_LIGNENOIRE, make_shared<UsineNoeud<NoeudRobot>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
-	//ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
+	ajouterUsine(NOM_LIGNENOIRE, make_shared<UsineNoeud<NoeudRobot>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
+	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
 	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
-
+	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/mur.obj" }));
 }
 
 
@@ -88,11 +88,22 @@ void ArbreRenduINF2990::initialiser()
 	//shared_ptr<NoeudAbstrait> noeudRobot{ creerNoeud(NOM_ROBOT) };
 	//noeudTable->ajouter(noeudRobot);
 
-	shared_ptr<NoeudAbstrait> noeudPoteau{ creerNoeud(NOM_POTEAU) };
-	noeudTable->ajouter(noeudPoteau);
+	//shared_ptr<NoeudAbstrait> noeudMur{ creerNoeud(NOM_MUR) };
+	//noeudTable->ajouter(noeudMur);
 
 	//shared_ptr<NoeudAbstrait> noeudLigneNoire{ creerNoeud(NOM_LIGNENOIRE) };
 	//noeudTable->ajouter(noeudLigneNoire);
+
+	shared_ptr<NoeudAbstrait> noeudPoteau{ creerNoeud(NOM_POTEAU) };
+	noeudTable->ajouter(noeudPoteau);
+
+	glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
+	position[2] += 5;
+	noeudPoteau->assignerPositionRelative(position);
+	
+
+
+
 
 	ajouter(noeudTable);
 }

@@ -8,6 +8,8 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 #include "NoeudAraignee.h"
+#include "VisiteurAbstrait.h"
+
 #include "Utilitaire.h"
 
 #include "GL/glew.h"
@@ -15,6 +17,8 @@
 
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
+
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -95,7 +99,6 @@ void NoeudAraignee::animer(float temps)
 	positionRelative_[0] = 5 * cos(utilitaire::DEG_TO_RAD(angle_));
 	positionRelative_[1] = 40 * sin(utilitaire::DEG_TO_RAD(angle_));
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
