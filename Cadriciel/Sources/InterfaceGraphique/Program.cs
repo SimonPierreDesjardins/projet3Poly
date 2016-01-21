@@ -43,6 +43,7 @@ namespace InterfaceGraphique
             Application.SetCompatibleTextRenderingDefault(false);
             window = new Window();
             Application.Idle += ExecuterQuandInactif;
+            Application.AddMessageFilter(window);
             Application.Run(window);
         }
         

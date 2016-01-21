@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 
 namespace InterfaceGraphique
 {    
-    public partial class Window : Form
+    public partial class Window : Form, IMessageFilter
     {        
         
         private const int WM_KEYDOWN =      0x100;
@@ -23,8 +23,28 @@ namespace InterfaceGraphique
         private const int WM_LBUTTONUP =    0x0202;
         private const int WM_RBUTTONDOWN =  0x0204;
         private const int WM_RBUTTONUP =    0x0205;
+        private const int WM_MOUSEMOVE =    0x0200;
 
 
+        public bool PreFilterMessage(ref Message m)
+        {
+            // On veut seulement traiter les inputs sur le view_port.
+            if (m.HWnd != viewPort_.Handle) return false;
+
+            if (m.Msg == WM_LBUTTONDOWN ||
+                m.Msg == WM_LBUTTONUP   ||
+                m.Msg == WM_RBUTTONDOWN ||
+                m.Msg == WM_RBUTTONUP   || 
+                m.Msg == WM_MOUSEMOVE   ||
+                m.Msg == WM_KEYDOWN)
+            {
+                FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
+            }
+            // Permet le traitement du message par l'interface.
+            return false;
+        }
+        
+        /*
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
@@ -85,7 +105,7 @@ namespace InterfaceGraphique
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }
-
+        */
         public Window()
         {
             InitializeComponent();
@@ -293,6 +313,9 @@ namespace InterfaceGraphique
         public static extern int obtenirAffichagesParSeconde();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void gererMessage(Message m);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
 	    public static extern void gererClicGaucheEnfonce(int x, int y);
         
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -303,6 +326,8 @@ namespace InterfaceGraphique
 	   
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void gererClicDroitRelache(int x, int y);
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void repartirMessage(int msg, IntPtr wParam, IntPtr lParam);
 
     }
 }

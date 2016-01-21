@@ -233,6 +233,10 @@ extern "C"
 		}
 	}
 
+	__declspec(dllexport) void __cdecl gererMessage(MSG m)
+	{
+
+	}
 
 	__declspec(dllexport) void __cdecl gererClicGaucheEnfonce(int x, int y)
 	{
@@ -259,6 +263,33 @@ extern "C"
 	{
 		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(x, y);
 	}
+
+	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+	{		
+		switch (msg)
+		{
+			case WM_LBUTTONDOWN :
+				std::cout << "LBUTTONDOWN" << std::endl;
+				break;
+			
+			case WM_LBUTTONUP :
+				std::cout << "LBUTTONUP" << std::endl;
+				break;
+			
+			case WM_RBUTTONDOWN :
+				std::cout << "RBUTTONDOWN" << std::endl;
+				break;
+			
+			case WM_RBUTTONUP :
+				std::cout << "RBUTTONUP" << std::endl;
+				break;
+
+			case WM_MOUSEMOVE :
+				std::cout << "MOUSEMOVE :" << GET_X_LPARAM(lParam) << " " << GET_Y_LPARAM(lParam) << std::endl;
+		}
+	}
+
+
 }
 
 
