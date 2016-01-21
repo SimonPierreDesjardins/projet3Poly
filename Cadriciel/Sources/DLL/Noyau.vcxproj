@@ -132,6 +132,9 @@
     <ClCompile Include="Application\FacadeModele.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudAraignee.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudConeCube.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudLigneNoire.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudPoteau.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudRobot.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
@@ -149,9 +152,6 @@
     <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp" />
     <ClCompile Include="MachineAEtats\EtatRotation.cpp" />
     <ClCompile Include="MachineAEtats\EtatSelection.cpp" />
-    <ClCompile Include="NoeudLigneNoire.cpp" />
-    <ClCompile Include="NoeudMur.cpp" />
-    <ClCompile Include="NoeudPoteau.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
@@ -161,6 +161,9 @@
     <ClInclude Include="Application\FacadeModele.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudAraignee.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudConeCube.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudLigneNoire.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudMur.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudPoteau.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudRobot.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
@@ -181,9 +184,6 @@
     <ClInclude Include="MachineAEtats\EtatRotation.h" />
     <ClInclude Include="MachineAEtats\EtatSelection.h" />
     <ClInclude Include="MachineAEtats\EtatTypes.h" />
-    <ClInclude Include="NoeudLigneNoire.h" />
-    <ClInclude Include="NoeudMur.h" />
-    <ClInclude Include="NoeudPoteau.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />

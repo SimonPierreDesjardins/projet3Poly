@@ -141,13 +141,13 @@
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
-    <ClCompile Include="NoeudPoteau.cpp">
+    <ClCompile Include="Arbre\Noeuds\NoeudLigneNoire.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
-    <ClCompile Include="NoeudMur.cpp">
+    <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
-    <ClCompile Include="NoeudLigneNoire.cpp">
+    <ClCompile Include="Arbre\Noeuds\NoeudPoteau.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
   </ItemGroup>
@@ -233,13 +233,13 @@
     <ClInclude Include="Visiteur\VisiteurAbstrait.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
-    <ClInclude Include="NoeudPoteau.h">
+    <ClInclude Include="Arbre\Noeuds\NoeudLigneNoire.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="NoeudMur.h">
+    <ClInclude Include="Arbre\Noeuds\NoeudMur.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="NoeudLigneNoire.h">
+    <ClInclude Include="Arbre\Noeuds\NoeudPoteau.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>

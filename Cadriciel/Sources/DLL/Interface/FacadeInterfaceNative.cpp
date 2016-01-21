@@ -257,8 +257,7 @@ extern "C"
 				break;
 
 			case WM_MOUSEMOVE :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				std::cout << "X :" << GET_X_LPARAM(lParam) << " Y :" << GET_Y_LPARAM(lParam) << std::endl;
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));	
 				break;
 		}
 	}
