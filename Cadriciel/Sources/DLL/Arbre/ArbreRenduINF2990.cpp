@@ -45,8 +45,8 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	// Construction des usines
 	ajouterUsine(NOM_TABLE, make_shared<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	
-	ajouterUsine(NOM_LIGNENOIRE, make_shared<UsineNoeud<NoeudRobot>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
-	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
+	//ajouterUsine(NOM_LIGNENOIRE, make_shared<UsineNoeud<NoeudRobot>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
+	//ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
 	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
 
 }
@@ -88,11 +88,11 @@ void ArbreRenduINF2990::initialiser()
 	//shared_ptr<NoeudAbstrait> noeudRobot{ creerNoeud(NOM_ROBOT) };
 	//noeudTable->ajouter(noeudRobot);
 
-	//shared_ptr<NoeudAbstrait> noeudPoteau{ creerNoeud(NOM_POTEAU) };
-	//noeudTable->ajouter(noeudPoteau);
+	shared_ptr<NoeudAbstrait> noeudPoteau{ creerNoeud(NOM_POTEAU) };
+	noeudTable->ajouter(noeudPoteau);
 
-	shared_ptr<NoeudAbstrait> noeudLigneNoire{ creerNoeud(NOM_LIGNENOIRE) };
-	noeudTable->ajouter(noeudLigneNoire);
+	//shared_ptr<NoeudAbstrait> noeudLigneNoire{ creerNoeud(NOM_LIGNENOIRE) };
+	//noeudTable->ajouter(noeudLigneNoire);
 
 	ajouter(noeudTable);
 }

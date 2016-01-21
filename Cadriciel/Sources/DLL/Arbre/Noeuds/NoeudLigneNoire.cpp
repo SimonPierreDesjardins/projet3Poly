@@ -64,10 +64,8 @@ void NoeudLigneNoire::afficherConcret() const
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
-	// Affichage du modèle.
 
-	glRotatef(90, 1, 0, 0);
-	glRotatef(90, 0, 1, 0);
+	// Affichage du modèle.
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();

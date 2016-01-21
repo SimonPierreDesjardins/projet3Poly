@@ -12,6 +12,7 @@
 #define __ARBRE_NOEUDS_NOEUDPOTEAU_H__
 
 #include "NoeudComposite.h"
+#include "GL/glew.h"
 
 class NoeudPoteau : public NoeudComposite{
 

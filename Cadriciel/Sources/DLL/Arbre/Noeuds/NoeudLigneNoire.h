@@ -12,6 +12,7 @@
 #define __ARBRE_NOEUDS_NOEUDLIGNENOIRE_H__
 
 #include "NoeudComposite.h"
+#include "GL/glew.h"
 
 class NoeudLigneNoire : public NoeudComposite{
 

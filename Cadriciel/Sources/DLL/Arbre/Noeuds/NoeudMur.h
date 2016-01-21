@@ -12,6 +12,7 @@
 #define __ARBRE_NOEUDS_NOEUDMUR_H__
 
 #include "NoeudComposite.h"
+#include "GL/glew.h"
 
 class NoeudMur : public NoeudComposite{
 
