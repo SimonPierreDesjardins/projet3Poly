@@ -32,6 +32,13 @@ public:
 
 	/// Affiche le cube.
 	virtual void afficherConcret() const;
+
+	/// On tourne
+	virtual void animer(float temps);
+
+private:
+	//test stuff
+	float angle_{ 0 };
 };
 
 

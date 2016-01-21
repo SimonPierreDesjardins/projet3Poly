@@ -114,10 +114,11 @@ namespace vue {
 	void ProjectionOrtho::redimensionnerFenetre(const glm::ivec2& coinMin,
 		const glm::ivec2& coinMax)
 	{
-		xMinFenetre_ = coinMin.x;
-		yMinFenetre_ = coinMin.y;
-		xMaxFenetre_ = coinMax.x;
-		yMaxFenetre_ = coinMax.y;
+		xMinCloture_ = -0.5*(coinMax.x - coinMin.x);
+		yMinCloture_ = -0.5*(coinMax.y - coinMin.y);
+		xMaxCloture_ = 0.5*(coinMax.x - coinMin.x);
+		yMaxCloture_ = 0.5*(coinMax.y - coinMin.y);
+		ajusterRapportAspect();
 		mettreAJourProjection();
 	}
 
@@ -251,11 +252,21 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::ajusterRapportAspect()
 	{
-		double ratio = (xMaxCloture_ - xMinCloture_) / (yMaxCloture_ - yMinCloture_);
-		xMaxFenetre_ *= ratio;
-		xMinFenetre_ *= ratio;
-		yMaxFenetre_ /= ratio;
-		yMinFenetre_ /= ratio;
+		GLdouble fx, fy, cx, cy, ajout;
+		fx = (xMaxFenetre_ - xMinFenetre_);
+		fy = (yMaxFenetre_ - yMinFenetre_);
+		cx = (xMaxCloture_ - xMinCloture_);
+		cy = (yMaxCloture_ - yMinCloture_);
+		if (fx*cy < cx*fy){
+			ajout = ((cx / cy) - (fx / fy))*cx;
+			xMinFenetre_ -= ajout*0.5;
+			xMaxFenetre_ += ajout*0.5;
+		}
+		else{
+			ajout = ((fx / fy) - (cx / cy))*cy;
+			yMinFenetre_ -= ajout*0.5;
+			yMaxFenetre_ += ajout*0.5;
+		}
 	}
 
 }; // Fin du namespace vue.
