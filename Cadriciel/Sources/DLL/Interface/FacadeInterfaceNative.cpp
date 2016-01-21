@@ -232,71 +232,39 @@ extern "C"
 				break;
 		}
 	}
-
-	__declspec(dllexport) void __cdecl gererMessage(MSG m)
-	{
-
-	}
-
-	__declspec(dllexport) void __cdecl gererClicGaucheEnfonce(int x, int y)
-	{
-		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(x, y);
-	}
-
-
-
-	__declspec(dllexport) void __cdecl gererClicDroitEnfonce(int x, int y)
-	{
-		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(x, y);
-	}
-
-
-
-	__declspec(dllexport) void __cdecl gererClicGaucheRelache(int x, int y)
-	{
-		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(x, y);
-	}
-
-
-
-	__declspec(dllexport) void __cdecl gererClicDroitRelache(int x, int y)
-	{
-		FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(x, y);
-	}
-
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{		
 		switch (msg)
 		{
 			case WM_LBUTTONDOWN :
-				std::cout << "LBUTTONDOWN" << std::endl;
+				
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 			
 			case WM_LBUTTONUP :
-				std::cout << "LBUTTONUP" << std::endl;
+			
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 			
 			case WM_RBUTTONDOWN :
-				std::cout << "RBUTTONDOWN" << std::endl;
+		
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 			
 			case WM_RBUTTONUP :
-				std::cout << "RBUTTONUP" << std::endl;
+	
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 
 			case WM_MOUSEMOVE :
-				std::cout << "MOUSEMOVE :" << GET_X_LPARAM(lParam) << " " << GET_Y_LPARAM(lParam) << std::endl;
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				std::cout << "X :" << GET_X_LPARAM(lParam) << " Y :" << GET_Y_LPARAM(lParam) << std::endl;
+				break;
 		}
 	}
 
 
 }
-
-
-
-
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////

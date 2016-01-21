@@ -12,8 +12,13 @@ public:
 	virtual void gererClicDroitRelache(const int& x, const int& y);
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int & x, const int& y);
+
+
 
 	virtual void effectuerOperation() = 0;
+
+
 };
 
 

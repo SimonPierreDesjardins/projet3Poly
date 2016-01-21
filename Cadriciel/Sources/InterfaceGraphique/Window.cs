@@ -43,69 +43,7 @@ namespace InterfaceGraphique
             // Permet le traitement du message par l'interface.
             return false;
         }
-        
-        /*
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
-
-            switch (keyData)
-            {
-                case Keys.Space:
-                    System.Console.WriteLine("Barre d'espacement appuyée.");
-                    return true;
-
-                case Keys.Up:
-                    System.Console.WriteLine("La fleche du haut est appuyée.");
-                    return true;
-
-                case Keys.Down:
-                    System.Console.WriteLine("La fleche du bas est appuyée.");
-                    return true;
-
-                case Keys.Left:
-                    System.Console.WriteLine("La fleche de gauche est appuyée.");
-                    return true;
-
-                case Keys.Right:
-                    System.Console.WriteLine("la fleche de droite est appuyée.");
-                    return true;
-
-                case Keys.Tab:
-                    System.Console.WriteLine("La touche tab est appuyée.");
-                    return true;
-
-                case Keys.Back:
-                    System.Console.WriteLine("La touche de retour appuyée.");
-                    return true;
-
-                case Keys.Escape:
-                    System.Console.WriteLine("La touche esc est appuyée.");
-                    return true;
-
-                case Keys.Control | Keys.F4:
-                    System.Console.WriteLine("La touche CTRL+F4 est appuyée.");
-                    Application.Exit();
-                    return true;
-
-                case Keys.CapsLock:
-                    System.Console.WriteLine("La touche CapsLock est appuyée.");
-                    return true;
-
-                case Keys.LButton:
-                    System.Console.WriteLine("Click gauche de la souris est appuyé.");
-                    return true;
-
-                case Keys.RButton:
-                    System.Console.WriteLine("Click droit de la souris est appuyé.");
-                    return true;
-
-                default:
-                    break;
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
-        }
-        */
+       
         public Window()
         {
             InitializeComponent();
@@ -233,39 +171,7 @@ namespace InterfaceGraphique
         {
             //FonctionsNatives.redimensionnerFenetre(this.Height, this.Width);
             FonctionsNatives.dessinerOpenGL();
-        }
-
-        private void viewPort__Click(object sender, EventArgs e)
-        {
-
-        }
-        
-        private void viewPort__MouseDown(object sender, MouseEventArgs e)
-        {
-            Point p = viewPort_.PointToClient(Cursor.Position);
-            if (e.Button == MouseButtons.Right)
-            {
-                FonctionsNatives.gererClicDroitEnfonce(p.X, p.Y);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                FonctionsNatives.gererClicGaucheEnfonce(p.X, p.Y);
-            }
-        }
-
-        private void viewPort__MouseUp(object sender, MouseEventArgs e)
-        {
-            Point p = viewPort_.PointToClient(Cursor.Position);
-            if (e.Button == MouseButtons.Right)
-            {
-                FonctionsNatives.gererClicDroitRelache(p.X, p.Y);
-            }
-            else if (e.Button == MouseButtons.Left)
-            {
-                FonctionsNatives.gererClicGaucheRelache(p.X, p.Y);
-            }
-        }
-         
+        }     
     }
 
     enum Etat
@@ -311,21 +217,7 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirAffichagesParSeconde();
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void gererMessage(Message m);
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-	    public static extern void gererClicGaucheEnfonce(int x, int y);
-        
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void gererClicDroitEnfonce(int x, int y);
-        
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void gererClicGaucheRelache(int x, int y);
-	   
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void gererClicDroitRelache(int x, int y);
+ 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void repartirMessage(int msg, IntPtr wParam, IntPtr lParam);
 
