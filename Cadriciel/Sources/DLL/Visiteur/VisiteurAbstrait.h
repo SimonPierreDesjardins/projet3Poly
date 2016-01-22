@@ -49,10 +49,8 @@ public:
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigneNoire* noeud);
 
-	void changerPointdeRepere(int& x, int& y);
-
-private:
-	glm::ivec3 positionVirtuelleClic_;
+protected:
+	glm::dvec3 positionVirtuelleClic_;
 };
 
 

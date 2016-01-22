@@ -65,7 +65,7 @@ void NoeudPoteau::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	glRotatef(90, 1, 0, 0);
+	//glRotatef(90, 1, 0, 0);
 	//glRotatef(90, 0, 1, 0);
 	
 	// Affichage du modèle.

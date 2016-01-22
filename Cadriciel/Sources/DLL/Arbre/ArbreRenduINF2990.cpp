@@ -101,9 +101,9 @@ void ArbreRenduINF2990::initialiser()
 	shared_ptr<NoeudAbstrait> noeudPoteau{ creerNoeud(NOM_POTEAU) };
 	noeudTable->ajouter(noeudPoteau);
 
-	glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
-	position[2] += 5;
-	noeudPoteau->assignerPositionRelative(position);
+	//glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
+	//position[2] += 5;
+	//noeudPoteau->assignerPositionRelative(position);
 	
 
 

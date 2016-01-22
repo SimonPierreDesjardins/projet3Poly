@@ -25,13 +25,12 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurAbstrait::VisiteurAbstrait()
 {
-	glm::vec2 dimensionsCloture_ = FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().obtenirDimensionCloture();
 }
 
 
 VisiteurAbstrait::VisiteurAbstrait(const int& x, const int& y)
 {
-	//FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelleClic_);
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelleClic_);
 }
 ////////////////////////////////////////////////////////////////////////
 ///
