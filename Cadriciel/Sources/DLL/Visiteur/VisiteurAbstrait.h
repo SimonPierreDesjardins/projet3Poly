@@ -52,8 +52,7 @@ public:
 	void changerPointdeRepere(int& x, int& y);
 
 private:
-	int x_, y_;
-	glm::ivec2 dimensionsCloture_;
+	glm::ivec3 positionVirtuelleClic_;
 };
 
 

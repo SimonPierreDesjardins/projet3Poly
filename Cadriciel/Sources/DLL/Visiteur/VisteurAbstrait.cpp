@@ -29,10 +29,9 @@ VisiteurAbstrait::VisiteurAbstrait()
 }
 
 
-VisiteurAbstrait::VisiteurAbstrait(const int& x, const int& y) : x_(x), y_(y)
+VisiteurAbstrait::VisiteurAbstrait(const int& x, const int& y)
 {
-	glm::vec2 dimensionsCloture_ = FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().obtenirDimensionCloture();
-	changerPointdeRepere(x_, y_);
+	//FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelleClic_);
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -68,11 +67,4 @@ void VisiteurAbstrait::visiter(NoeudMur* noeud)
 void VisiteurAbstrait::visiter(NoeudLigneNoire* noeud)
 {
 
-}
-
-void VisiteurAbstrait::changerPointdeRepere(int& x, int& y)
-{
-	// Déplacer l'origine au milieu de l'écran.
-	x = x - dimensionsCloture_[0] / 2;
-	y = y - dimensionsCloture_[1] / 2;
 }
