@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurCreationPoteau.h
-/// @author Olivier St-Amour
+/// @file VisiteurCreationLigne.h
+/// @author Frederic Gregoire
 /// @date 2016-01-22
 /// @version 1.0
 ///
@@ -8,22 +8,22 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef VISITEUR_CREATION_POTEAU_H
-#define VISITEUR_CREATION_POTEAU_H
+#ifndef VISITEUR_CREATION_LIGNE_H
+#define VISITEUR_CREATION_LIGNE_H
 
 #include "VisiteurAbstrait.h"
 
-class VisiteurCreationPoteau : public VisiteurAbstrait
+class VisiteurCreationLigne : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurCreationPoteau();
+	VisiteurCreationLigne();
 
 	// Constructeur par paramètre.
-	VisiteurCreationPoteau(const int& x, const int& y);
-	
+	VisiteurCreationLigne(const int& x, const int& y);
+
 	/// Destructeur.
-	virtual ~VisiteurCreationPoteau();
+	virtual ~VisiteurCreationLigne();
 
 	/// Creation de poteau sur l'arbre de rendu.
 	virtual void visiter(ArbreRendu* noeud);

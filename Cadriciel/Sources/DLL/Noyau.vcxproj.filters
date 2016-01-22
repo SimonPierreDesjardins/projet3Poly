@@ -153,6 +153,12 @@
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurCreationMur.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -249,6 +255,12 @@
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurTypes.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurCreationMur.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurCreationLigne.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>

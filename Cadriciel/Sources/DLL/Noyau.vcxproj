@@ -155,6 +155,8 @@
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
+    <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
+    <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
@@ -189,6 +191,8 @@
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
+    <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
+    <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
     <ClInclude Include="Visiteur\VisiteurTypes.h" />
   </ItemGroup>

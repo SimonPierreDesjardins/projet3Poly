@@ -7,12 +7,10 @@
 /// @{
 ////////////////////////////////////////////////
 
-
 #include "VisiteurAbstrait.h"
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -27,11 +25,11 @@ VisiteurAbstrait::VisiteurAbstrait()
 {
 }
 
-
 VisiteurAbstrait::VisiteurAbstrait(const int& x, const int& y)
 {
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelleClic_);
 }
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn  VisiteurAbstrait::~VisiteurAbstrait()
@@ -46,11 +44,11 @@ VisiteurAbstrait::~VisiteurAbstrait()
 
 }
 
-
 void VisiteurAbstrait::visiter(ArbreRendu* noeud)
 {
 
 }
+
 void VisiteurAbstrait::visiter(NoeudTable* noeud)
 {
 
@@ -59,10 +57,12 @@ void VisiteurAbstrait::visiter(NoeudPoteau* noeud)
 {
 
 }
+
 void VisiteurAbstrait::visiter(NoeudMur* noeud)
 {
 
 }
+
 void VisiteurAbstrait::visiter(NoeudLigneNoire* noeud)
 {
 

@@ -47,11 +47,10 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_TABLE, make_shared<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(NOM_LIGNENOIRE, make_shared<UsineNoeud<NoeudRobot>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
 	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
-	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
-	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/mur.obj" }));
+	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteauNoir.obj" }));	
+	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murNoir.obj" }));
 
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -96,10 +95,10 @@ void ArbreRenduINF2990::initialiser()
 	//noeudTable->ajouter(noeudPoteau);
 
 	//shared_ptr<NoeudAbstrait> noeudLigneNoire{ creerNoeud(NOM_LIGNENOIRE) };
-	//noeudTable->ajouter(noeudLigneNoire);
+	//noeudTable->ajouter(noeudLigneNoire);a
 
-	shared_ptr<NoeudAbstrait> noeudPoteau{ creerNoeud(NOM_POTEAU) };
-	noeudTable->ajouter(noeudPoteau);
+	shared_ptr<NoeudAbstrait> noeudLigneNoire{ creerNoeud(NOM_LIGNENOIRE) };
+	noeudTable->ajouter(noeudLigneNoire);
 
 	//glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
 	//position[2] += 5;
