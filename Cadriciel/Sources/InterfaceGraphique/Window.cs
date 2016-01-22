@@ -9,15 +9,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-
-
-
-
 namespace InterfaceGraphique
 {    
     public partial class Window : Form, IMessageFilter
     {        
-        
         private const int WM_KEYDOWN =      0x100;
         private const int WM_LBUTTONDOWN =  0x0201;
         private const int WM_LBUTTONUP =    0x0202;
@@ -25,22 +20,13 @@ namespace InterfaceGraphique
         private const int WM_RBUTTONUP =    0x0205;
         private const int WM_MOUSEMOVE =    0x0200;
 
-
         public bool PreFilterMessage(ref Message m)
         {
             // On veut seulement traiter les inputs sur le view_port.
-            if (m.HWnd != viewPort_.Handle) return false;
-
-            if (m.Msg == WM_LBUTTONDOWN ||
-                m.Msg == WM_LBUTTONUP   ||
-                m.Msg == WM_RBUTTONDOWN ||
-                m.Msg == WM_RBUTTONUP   || 
-                m.Msg == WM_MOUSEMOVE   ||
-                m.Msg == WM_KEYDOWN)
+            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN)
             {
                 FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
             }
-            // Permet le traitement du message par l'interface.
             return false;
         }
        
