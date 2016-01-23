@@ -118,12 +118,12 @@ namespace vue {
 		std::cout << "Dimension en x : " << coinMin.x << "\t" << coinMax.x << std::endl
 			<< "Dimension en y : " << coinMin.y << "\t" << coinMax.y << std::endl;
 		//if (xMinCloture_ > coinMin.x)
-		//xMinCloture_ = -0.5*(coinMax.x - coinMin.x);
-		//yMinCloture_ = -0.5*(coinMax.y - coinMin.y);
-		//xMaxCloture_ = 0.5*(coinMax.x - coinMin.x);
-		//yMaxCloture_ = 0.5*(coinMax.y - coinMin.y);
+		xMinCloture_ = coinMin.x;
+		yMinCloture_ = coinMin.y;
+		xMaxCloture_ = coinMax.x;
+		yMaxCloture_ = coinMax.y;
 		ajusterRapportAspect();
-		//mettreAJourCloture();
+		mettreAJourCloture();
 		mettreAJourProjection();
 	}
 
@@ -257,11 +257,13 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::ajusterRapportAspect()
 	{
+
 		GLdouble fx, fy, cx, cy, ratioFenetre, ratioCloture, ajout;
 		fx = (xMaxFenetre_ - xMinFenetre_);
 		fy = (yMaxFenetre_ - yMinFenetre_);
 		cx = (xMaxCloture_ - xMinCloture_);
 		cy = (yMaxCloture_ - yMinCloture_);
+
 		ratioFenetre = fx / fy;
 		ratioCloture = cx / cy;
 		if (fx*cy < cx*fy){

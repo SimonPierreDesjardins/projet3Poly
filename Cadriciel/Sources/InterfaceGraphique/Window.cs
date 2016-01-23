@@ -203,7 +203,7 @@ namespace InterfaceGraphique
         {
             Control control = (Control)sender;
             // On rajuste le viewport pour prendre le panel interieur.
-            //control.Size = new System.Drawing.Size(control.Size.Width, control.Height);
+            control.Size = new System.Drawing.Size(control.Size.Width, control.Height);
             // On gère cette redimension dans openGL
             FonctionsNatives.redimensionnerFenetre(control.Size.Height, control.Size.Width);
             //FonctionsNatives.dessinerOpenGL();
