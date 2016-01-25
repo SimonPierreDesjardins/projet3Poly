@@ -37,14 +37,15 @@ class VisiteurAbstrait
 public:
 	/// Constructeur par défaut.
 	VisiteurAbstrait();
-	//
+	// Constructeur par paramètre.
 	VisiteurAbstrait(const int& x, const int& y);
 	/// Destructeur.
 	virtual ~VisiteurAbstrait();
 
-	void assignerPositionRelative(glm::dvec3 positionRelative);
+	inline void assignerPositionRelative(glm::dvec3 positionRelative);
+	inline void assignerAngleRotation(float angleRotation);
+	inline void assignerFacteurDimension(float facteurDimension);
 
-	/// Fonctionnalité effectuée sur un noeud de type NoeudRobot.
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
@@ -52,11 +53,26 @@ public:
 	virtual void visiter(NoeudLigneNoire* noeud);
 
 protected:
-
 	glm::dvec3 positionRelative_;
 	float angleRotation_;
 	float facteurDimension_;
 };
+
+
+inline void VisiteurAbstrait::assignerPositionRelative(glm::dvec3 positionRelative)
+{
+	positionRelative_ = positionRelative;
+}
+
+inline void VisiteurAbstrait::assignerAngleRotation(float angleRotation)
+{
+	angleRotation_ = angleRotation;
+}
+
+inline void VisiteurAbstrait::assignerFacteurDimension(float facteurDimension)
+{
+	facteurDimension_ = facteurDimension;
+}
 
 
 #endif // VISITEUR_ABSTRAIT_H

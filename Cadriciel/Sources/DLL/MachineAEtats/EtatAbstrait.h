@@ -11,6 +11,8 @@
 #ifndef ETAT_ABSTRAIT_H
 #define ETAT_ABSTRAIT_H
 
+#include <memory>
+#include "VisiteurAbstrait.h"
 
 class EtatAbstrait
 {
@@ -24,18 +26,11 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
 
-
-
 	virtual void effectuerOperation() = 0;
 
+protected:
+	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
 };
-
-
-
-
-
-
-
 
 #endif

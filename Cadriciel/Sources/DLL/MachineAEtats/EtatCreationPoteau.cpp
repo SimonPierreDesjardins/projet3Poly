@@ -10,13 +10,16 @@
 
 #include "EtatCreationPoteau.h"
 #include "FacadeModele.h"
+#include "Vue.h"
 #include "ArbreRenduINF2990.h"
+#include "glm\glm.hpp"
 
 #include <iostream> 
 
 EtatCreationPoteau::EtatCreationPoteau()
 {
 	std::cout << "Creation de poteau" << std::endl;
+	visiteur_ = std::make_unique<VisiteurCreationPoteau>();
 }
 
 
@@ -34,9 +37,10 @@ void EtatCreationPoteau::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 {
-	//std::cout << x << " " << y << std::endl;
-	std::unique_ptr<VisiteurCreationPoteau> visiteur = std::make_unique<VisiteurCreationPoteau>(x, y);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
+	glm::dvec3 positionRelative;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
+	visiteur_->assignerPositionRelative(positionRelative);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 }
 
 void EtatCreationPoteau::effectuerOperation()

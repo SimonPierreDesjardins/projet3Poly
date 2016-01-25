@@ -10,6 +10,7 @@
 
 #include "EtatCreationLigneNoire.h"
 #include "FacadeModele.h"
+#include "Vue.h"
 #include "ArbreRenduINF2990.h"
 
 #include <iostream> 
@@ -17,6 +18,7 @@
 EtatCreationLigneNoire::EtatCreationLigneNoire()
 {
 	std::cout << "Creation de poteau" << std::endl;
+	visiteur_ = std::make_unique<VisiteurCreationLigne>();
 }
 
 EtatCreationLigneNoire::~EtatCreationLigneNoire()
@@ -31,9 +33,10 @@ void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 {
-	//std::cout << x << " " << y << std::endl;
-	std::unique_ptr<VisiteurCreationLigne> visiteur = std::make_unique<VisiteurCreationLigne>(x, y);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
+	glm::dvec3 positionRelative;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
+	visiteur_->assignerPositionRelative(positionRelative);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 }
 
 void EtatCreationLigneNoire::effectuerOperation()

@@ -10,6 +10,7 @@
 
 #include "EtatCreationMur.h"
 #include "FacadeModele.h"
+#include "Vue.h"
 #include "ArbreRenduINF2990.h"
 
 #include <iostream> 
@@ -17,6 +18,7 @@
 EtatCreationMur::EtatCreationMur()
 {
 	std::cout << "Creation de poteau" << std::endl;
+	visiteur_ = std::make_unique<VisiteurCreationMur>();
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -31,9 +33,10 @@ void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
-	//std::cout << x << " " << y << std::endl;
-	std::unique_ptr<VisiteurCreationMur> visiteur = std::make_unique<VisiteurCreationMur>(x, y);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
+	glm::dvec3 positionRelative;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
+	visiteur_->assignerPositionRelative(positionRelative);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 }
 
 void EtatCreationMur::effectuerOperation()
