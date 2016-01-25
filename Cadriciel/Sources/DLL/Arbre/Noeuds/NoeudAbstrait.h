@@ -162,7 +162,7 @@ protected:
 	glm::dvec3				positionRelative_;
 
 	/// Angle de rotation sur le plan xy
-	float					angleRotation_;
+	float					angleRotationRelatif_;
 
 	/// Facteur de dimension sur le plan xy
 	float					facteurDimension_;
@@ -279,12 +279,12 @@ inline void NoeudAbstrait::assignerPositionRelative(
 //TODO: Documentation.	
 inline float NoeudAbstrait::obtenirAngleRotation() const
 {
-
+	return angleRotationRelatif_;
 }
 //TODO: Documentation.
 inline void NoeudAbstrait::assignerAngleRotation(float angleRotation)
 {
-	angleRotation_ = angleRotation;
+	angleRotationRelatif_ = angleRotation;
 }
 //TODO: Documentation.
 inline float NoeudAbstrait::obtenirFacteurDimension() const

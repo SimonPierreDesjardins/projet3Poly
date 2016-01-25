@@ -13,6 +13,7 @@
 
 #include <memory>
 #include "VisiteurAbstrait.h"
+#include "glm\glm.hpp"
 
 class EtatAbstrait
 {
@@ -26,11 +27,17 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
 
+	float calculerAngleRotation(double dx, double dy);
+
+
 	virtual void effectuerOperation() = 0;
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
+	bool estPremierClic_{ false };
+	glm::dvec3 positionPremierClic_;
+	glm::dvec3 positionDeuxiemeClic_;
 };
 
 #endif
