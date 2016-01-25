@@ -23,8 +23,8 @@ VisiteurCreationMur::VisiteurCreationMur()
 VisiteurCreationMur::VisiteurCreationMur(const int& x, const int& y)
 : VisiteurAbstrait(x, y)
 {
-}
 
+}
 
 VisiteurCreationMur::~VisiteurCreationMur()
 {
@@ -38,11 +38,13 @@ void VisiteurCreationMur::visiter(ArbreRendu* noeud)
 
 void VisiteurCreationMur::visiter(NoeudTable* noeud)
 {
-	std::cout << "nouveau mur à la position: " << positionRelative_[0] << " : " << positionRelative_[1];
+	std::cout << "Debut de mur a la position: " << positionRelative_[0] << " : " << positionRelative_[1];
 	std::cout << " : " << positionRelative_[2] << std::endl;
+
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_MUR);
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
 	noeud->ajouter(nouveauNoeud);
+	referenceNoeud_ = nouveauNoeud;
 }
 
 void VisiteurCreationMur::visiter(NoeudPoteau* noeud)

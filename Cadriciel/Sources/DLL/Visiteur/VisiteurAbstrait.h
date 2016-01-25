@@ -42,6 +42,8 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurAbstrait();
 
+	std::shared_ptr<const NoeudAbstrait> getReferenceNoeud();
+
 	inline void assignerPositionRelative(glm::dvec3 positionRelative);
 	inline void assignerAngleRotation(float angleRotation);
 	inline void assignerFacteurDimension(float facteurDimension);
@@ -56,6 +58,7 @@ protected:
 	glm::dvec3 positionRelative_;
 	float angleRotation_;
 	float facteurDimension_;
+	std::shared_ptr<const NoeudAbstrait> referenceNoeud_;
 };
 
 

@@ -30,6 +30,8 @@ public:
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
+	glm::dvec3 positionPremierClic_;
+	glm::dvec3 positionDeuxiemeClic_;
 
 };
 

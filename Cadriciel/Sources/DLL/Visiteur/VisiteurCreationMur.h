@@ -30,6 +30,7 @@ public:
 	/// Creation de poteau sur la table.
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
+
 };
 
 

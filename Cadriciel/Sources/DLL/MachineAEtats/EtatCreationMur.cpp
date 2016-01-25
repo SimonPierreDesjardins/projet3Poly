@@ -19,6 +19,7 @@ EtatCreationMur::EtatCreationMur()
 {
 	std::cout << "Creation de poteau" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationMur>();
+	premierclic_ = false;
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -33,10 +34,13 @@ void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
-	glm::dvec3 positionRelative;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
-	visiteur_->assignerPositionRelative(positionRelative);
+	glm::dvec3 positionVirutelle;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirutelle);
+	positionPremierClic_ = positionVirutelle;
+	visiteur_->assignerPositionRelative(positionVirutelle);
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+	//FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(visiteur_.get()->getReferenceNoeud());
+	
 }
 
 void EtatCreationMur::effectuerOperation()

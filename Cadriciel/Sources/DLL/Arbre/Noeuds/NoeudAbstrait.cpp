@@ -259,7 +259,6 @@ void NoeudAbstrait::effacerSelection()
 {
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudAbstrait::selectionnerTout()
@@ -277,7 +276,6 @@ void NoeudAbstrait::selectionnerTout()
 	assignerSelection(true);
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudAbstrait::deselectionnerTout()
@@ -294,7 +292,6 @@ void NoeudAbstrait::deselectionnerTout()
 {
 	selectionne_ = false;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -340,7 +337,6 @@ void NoeudAbstrait::changerModePolygones(bool estForce)
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudAbstrait::assignerModePolygones( GLenum modePolygones )
@@ -361,7 +357,6 @@ void NoeudAbstrait::assignerModePolygones(GLenum modePolygones)
 
 	modePolygones_ = modePolygones;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -411,7 +406,6 @@ void NoeudAbstrait::afficher() const
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudAbstrait::afficherConcret() const
@@ -426,7 +420,6 @@ void NoeudAbstrait::afficher() const
 void NoeudAbstrait::afficherConcret() const
 {
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -447,14 +440,11 @@ void NoeudAbstrait::animer(float dt)
 {
 }
 
-
-
 /// Accepter un visiteur
 void NoeudAbstrait::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 
 }
-
 
 ////////////////////////////////////////////////
 /// @}
