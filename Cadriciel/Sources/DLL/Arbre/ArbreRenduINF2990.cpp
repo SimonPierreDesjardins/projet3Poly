@@ -85,6 +85,10 @@ void ArbreRenduINF2990::initialiser()
 	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
 	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
 
+
+	shared_ptr<NoeudAbstrait> noeudMur{ creerNoeud(NOM_MUR) };
+
+	noeudTable->ajouter(noeudMur);
 	//glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
 	//position[2] += 5;
 	//noeudPoteau->assignerPositionRelative(position);
