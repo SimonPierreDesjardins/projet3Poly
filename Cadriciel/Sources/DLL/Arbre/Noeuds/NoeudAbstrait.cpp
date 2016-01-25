@@ -395,6 +395,10 @@ void NoeudAbstrait::afficher() const
 			positionRelative_[0], positionRelative_[1], positionRelative_[2]
 			);
 
+		// La rotation du noeud
+		//TODO: Ajouter glRotate(...);
+		// Facteur de dimension
+		//TODO: Ajouter glScalef(...);
 		// Assignation du mode d'affichage des polygones
 		glPolygonMode(GL_FRONT_AND_BACK, modePolygones_);
 

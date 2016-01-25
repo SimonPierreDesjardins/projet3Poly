@@ -58,11 +58,25 @@ public:
 	/// Assigne le parent de ce noeud.
 	inline void assignerParent(std::shared_ptr<NoeudAbstrait> parent);
 
+
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 
 	/// Assigne la position relative du noeud.
 	inline void assignerPositionRelative(const glm::dvec3& positionRelative);
+	
+	/// Obtient l'angle de rotation du noeud.
+	inline float obtenirAngleRotation() const;
+
+	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
+	inline void assignerAngleRotation(float angleRotation);
+
+	/// Obtient le facteur de dimension du noeud.
+	inline float obtenirFacteurDimension() const;
+
+	/// Assigne le facteur de dimension
+	inline void assignerFacteurDimension(float facteurDimension);
+
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -146,6 +160,12 @@ protected:
 
 	/// Position relative du noeud.
 	glm::dvec3				positionRelative_;
+
+	/// Angle de rotation sur le plan xy
+	float					angleRotation_;
+
+	/// Facteur de dimension sur le plan xy
+	float					facteurDimension_;
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -256,7 +276,26 @@ inline void NoeudAbstrait::assignerPositionRelative(
 	positionRelative_ = positionRelative;
 }
 
+//TODO: Documentation.	
+inline float NoeudAbstrait::obtenirAngleRotation() const
+{
 
+}
+//TODO: Documentation.
+inline void NoeudAbstrait::assignerAngleRotation(float angleRotation)
+{
+	angleRotation_ = angleRotation;
+}
+//TODO: Documentation.
+inline float NoeudAbstrait::obtenirFacteurDimension() const
+{
+	return facteurDimension_;
+}
+//TODO: Documentation.
+inline void NoeudAbstrait::assignerFacteurDimension(float facteurDimension)
+{
+	facteurDimension_ = facteurDimension;
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline const std::string& NoeudAbstrait::obtenirType() const

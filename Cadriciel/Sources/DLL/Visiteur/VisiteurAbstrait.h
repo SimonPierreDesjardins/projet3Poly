@@ -42,6 +42,8 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurAbstrait();
 
+	void assignerPositionRelative(glm::dvec3 positionRelative);
+
 	/// Fonctionnalité effectuée sur un noeud de type NoeudRobot.
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
@@ -50,7 +52,10 @@ public:
 	virtual void visiter(NoeudLigneNoire* noeud);
 
 protected:
-	glm::dvec3 positionVirtuelleClic_;
+
+	glm::dvec3 positionRelative_;
+	float angleRotation_;
+	float facteurDimension_;
 };
 
 
