@@ -34,7 +34,8 @@ namespace vue {
 	{
 	public:
 		/// Constructeur.
-		ProjectionOrtho(int xMinCloture, int xMaxCloture,
+		ProjectionOrtho(int xMin
+			, int xMaxCloture,
 			int yMinCloture, int yMaxCloture,
 			double zAvant, double zArriere,
 			double zoomInMax, double zoomOutMax,
@@ -74,7 +75,7 @@ namespace vue {
 
 	private:
 		/// Ajuste la fenêtre virtuelle pour respecter le rapport d'aspect.
-		void ajusterRapportAspect();
+		void ajusterRapportAspect(bool changementEstEnX, bool changementEstEnY);
 
 		/// Borne inférieure en X de la fenêtre virtuelle.
 		double xMinFenetre_;

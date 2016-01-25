@@ -59,7 +59,7 @@ namespace vue {
 		yMinFenetre_{ yMinFenetre },
 		yMaxFenetre_{ yMaxFenetre }
 	{
-		ajusterRapportAspect();
+		ajusterRapportAspect(false, false);
 	}
 
 
@@ -115,14 +115,17 @@ namespace vue {
 	void ProjectionOrtho::redimensionnerFenetre(const glm::ivec2& coinMin,
 		const glm::ivec2& coinMax)
 	{
-		std::cout << "Dimension en x : " << coinMin.x << "\t" << coinMax.x << std::endl
-			<< "Dimension en y : " << coinMin.y << "\t" << coinMax.y << std::endl;
-		//if (xMinCloture_ > coinMin.x)
-		xMinCloture_ = coinMin.x;
-		yMinCloture_ = coinMin.y;
-		xMaxCloture_ = coinMax.x;
-		yMaxCloture_ = coinMax.y;
-		ajusterRapportAspect();
+		
+
+		//translater(glm::ivec2(-(coinMax.y - xMaxCloture_), -(coinMax.x - yMaxCloture_)));
+		bool changementEstEnX, changementEstEnY;
+		changementEstEnX = coinMax.y - xMaxCloture_ != 0;
+		changementEstEnY = coinMax.x - yMaxCloture_ != 0;
+		xMaxCloture_ = coinMax.y;
+		yMaxCloture_ = coinMax.x;
+		ajusterRapportAspect(changementEstEnX, changementEstEnY);
+		std::cout << coinMax.y << " x " << coinMax.x << std::endl;
+		std::cout << xMaxFenetre_ - xMinFenetre_ << " x " << yMaxFenetre_ - yMinFenetre_ << std::endl;
 		mettreAJourCloture();
 		mettreAJourProjection();
 	}
@@ -204,7 +207,10 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::translater(double deplacementX, double deplacementY)
 	{
-		// À IMPLANTER.
+		xMinFenetre_ += deplacementX;
+		xMaxFenetre_ += deplacementX;
+		yMinFenetre_ += deplacementY;
+		yMaxFenetre_ += deplacementY;
 	}
 
 
@@ -222,7 +228,15 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::translater(const glm::ivec2& deplacement)
 	{
-		// À IMPLANTER.
+		double deplacementX, deplacementY, fx, fy, cx, cy;
+		fx = (xMaxFenetre_ - xMinFenetre_);
+		fy = (yMaxFenetre_ - yMinFenetre_);
+		cx = (xMaxCloture_ - xMinCloture_);
+		cy = (yMaxCloture_ - yMinCloture_);
+		deplacementX = ((deplacement.x - xMaxCloture_) / cx*fx);
+		deplacementY = ((deplacement.y - yMaxCloture_) / cy*fy);
+
+		translater(deplacementX, deplacementY);
 	}
 
 
@@ -255,7 +269,7 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::ajusterRapportAspect()
+	void ProjectionOrtho::ajusterRapportAspect(bool changementEstEnX, bool changementEstEnY)
 	{
 
 		GLdouble fx, fy, cx, cy, ratioFenetre, ratioCloture, ajout;
@@ -267,14 +281,29 @@ namespace vue {
 		ratioFenetre = fx / fy;
 		ratioCloture = cx / cy;
 		if (fx*cy < cx*fy){
-			ajout = ((ratioCloture) - (ratioFenetre))*fx;
-			xMinFenetre_ -= ajout*0.5;
-			xMaxFenetre_ += ajout*0.5;
+			if (!changementEstEnX){
+				
+				ajout = 1 / ratioCloture*fx*0.5;
+				yMinFenetre_ = -ajout;
+				yMaxFenetre_ = ajout;
+			}
+			else{
+				ajout = ratioCloture*fy*0.5;
+				xMinFenetre_ = -ajout;
+				xMaxFenetre_ = ajout;
+			}
 		}
 		else{
-			ajout = ((ratioFenetre)-(ratioCloture))*fy;
-			yMinFenetre_ -= ajout*0.5;
-			yMaxFenetre_ += ajout*0.5;
+			if (changementEstEnY){
+				ajout = 1 / ratioCloture*fx*0.5;
+				yMinFenetre_ = -ajout;
+				yMaxFenetre_ = ajout;
+			}
+			else{
+				ajout = ratioCloture*fy*0.5;
+				xMinFenetre_ = -ajout;
+				xMaxFenetre_ = ajout;
+			}
 		}
 	}
 
