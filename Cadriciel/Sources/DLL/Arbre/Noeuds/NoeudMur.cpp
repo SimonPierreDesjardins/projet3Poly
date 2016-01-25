@@ -31,8 +31,9 @@
 NoeudMur::NoeudMur(const std::string& typeNoeud)
 : NoeudComposite{ typeNoeud }
 {
+	angleRotation_ = 0;
+	facteurDimension_ = 1;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -45,8 +46,8 @@ NoeudMur::NoeudMur(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 NoeudMur::~NoeudMur()
 {
-}
 
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -64,13 +65,16 @@ void NoeudMur::afficherConcret() const
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
+	//Ajustement du mur avant la création
+	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+	glScalef(1.0, facteurDimension_, 1.0);
+	
 
 	// Affichage du modèle.
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

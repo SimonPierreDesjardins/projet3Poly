@@ -23,8 +23,10 @@ public:
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
-
+	
 	virtual void effectuerOperation();
+
+	bool premierclic_;
 };
 
 #endif

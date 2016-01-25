@@ -34,6 +34,8 @@ public:
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
+	glm::dvec3 positionPremierClic_;
+	glm::dvec3 positionDeuxiemeClic_;
 
 	bool estPremierClic_{ false };
 	glm::dvec3 positionPremierClic_;
