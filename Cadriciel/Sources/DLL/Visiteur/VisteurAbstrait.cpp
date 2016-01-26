@@ -11,6 +11,7 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
+#include "Modele3D.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -58,6 +59,7 @@ void VisiteurAbstrait::visiter(NoeudTable* noeud)
 {
 
 }
+
 void VisiteurAbstrait::visiter(NoeudPoteau* noeud)
 {
 

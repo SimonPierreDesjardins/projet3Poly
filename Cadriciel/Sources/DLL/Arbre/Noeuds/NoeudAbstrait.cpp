@@ -257,6 +257,7 @@ void NoeudAbstrait::inverserSelection()
 ////////////////////////////////////////////////////////////////////////
 void NoeudAbstrait::effacerSelection()
 {
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -444,6 +445,14 @@ void NoeudAbstrait::animer(float dt)
 void NoeudAbstrait::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 
+}
+
+
+//Get le modele dun noeud
+
+modele::Modele3D const* NoeudAbstrait::getModele()
+{
+	return modele_;
 }
 
 ////////////////////////////////////////////////

@@ -85,6 +85,10 @@ public:
    /// Anime le noeud.
    virtual void animer( float dt );
 
+   //Recherche un enfant par indice
+   std::shared_ptr<const NoeudAbstrait> getEnfant(int indice) const;
+
+
 protected:
    /// Le choix du conteneur pour les enfants.
 	using conteneur_enfants = std::vector<std::shared_ptr<NoeudAbstrait>>;

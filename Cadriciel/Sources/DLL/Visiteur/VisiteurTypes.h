@@ -15,5 +15,6 @@
 #include "VisiteurCreationPoteau.h"
 #include "VisiteurCreationMur.h"
 #include "VisiteurCreationLigne.h"
+#include "VisiteurSelection.h"
 
 #endif /// Header pour les états

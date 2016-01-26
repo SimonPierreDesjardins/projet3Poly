@@ -486,6 +486,24 @@ void NoeudComposite::animer(float dt)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant( int indice ) const
+///
+/// Retourne un std::shared_ptr<const NoeudAbstrait>
+///
+/// @param[in] int : Indice du noeud enfant.
+///
+/// @return Le noeud a l'indice donne
+///
+////////////////////////////////////////////////////////////////////////
+
+std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant(int indice) const
+{
+	return enfants_[indice];
+}
+
+
 
 ////////////////////////////////////////////////
 /// @}

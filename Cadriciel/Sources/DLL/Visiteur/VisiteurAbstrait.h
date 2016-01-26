@@ -13,6 +13,7 @@
 #include "FacadeModele.h"
 #include "glm\glm.hpp"
 
+
 class ArbreRendu;
 class NoeudPoteau;
 class NoeudTable;
@@ -20,6 +21,10 @@ class NoeudMur;
 class NoeudLigneNoire;
 class NoeudRobot;
 class NoeudAraignee;
+
+namespace modele{
+	class Modele3D;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurAbstrait
@@ -59,7 +64,9 @@ protected:
 	float angleRotation_;
 	float facteurDimension_;
 	std::shared_ptr<const NoeudAbstrait> referenceNoeud_;
+	modele::Modele3D* referenceModele_;
 };
+
 
 
 inline void VisiteurAbstrait::assignerPositionRelative(glm::dvec3 positionRelative)

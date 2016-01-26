@@ -158,6 +158,7 @@
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
+    <ClCompile Include="Visiteur\VisiteurSelection.cpp" />
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +195,7 @@
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
+    <ClInclude Include="Visiteur\VisiteurSelection.h" />
     <ClInclude Include="Visiteur\VisiteurTypes.h" />
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 /// @file EtatTypes.h
-/// @author 
+/// @authors Ulric Villeneuve et Simon-Pierre Desjardins
 /// @date 2016-01-22
 /// @version 1.0
 ///

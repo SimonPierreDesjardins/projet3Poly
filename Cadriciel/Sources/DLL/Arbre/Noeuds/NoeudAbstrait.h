@@ -151,6 +151,8 @@ public:
 	/// Accepter un visiteur.
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+	virtual modele::Modele3D const* getModele();
+
 protected:
 	/// Type du noeud.
 	std::string				type_;
