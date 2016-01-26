@@ -135,8 +135,6 @@ namespace vue {
 		xMaxFenetre_ += ajoutX;
 		xMinFenetre_ -= ajoutX;
 
-		std::cout << coinMax.y << " x " << coinMax.x << std::endl;
-		std::cout << xMaxFenetre_ - xMinFenetre_ << " x " << yMaxFenetre_ - yMinFenetre_ << std::endl;
 		ajusterRapportAspect();
 		mettreAJourCloture();
 		mettreAJourProjection();

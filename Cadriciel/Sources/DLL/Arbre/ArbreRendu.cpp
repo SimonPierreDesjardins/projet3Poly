@@ -10,9 +10,9 @@
 #include "ArbreRendu.h"
 #include "UsineNoeud.h"
 #include "NoeudAbstrait.h"
+#include "VisiteurAbstrait.h"
 
 #include "GL/glew.h"
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -47,7 +47,7 @@ ArbreRendu::~ArbreRendu()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* ArbreRendu::creerNoeud(const std::string& typeNouveauNoeud) const
+/// @fn shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(const std::string& typeNouveauNoeud) const
 ///
 /// Cette fonction permet de créer un nouveau noeud, sans l'ajouter
 /// directement à l'arbre de rendu.
@@ -57,7 +57,7 @@ ArbreRendu::~ArbreRendu()
 /// @return Le noeud nouvellement créé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* ArbreRendu::creerNoeud(
+std::shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(
 	const std::string& typeNouveauNoeud
 	) const
 {
@@ -66,7 +66,7 @@ NoeudAbstrait* ArbreRendu::creerNoeud(
 		return nullptr;
 	}
 
-	const UsineAbstraite* usine{ (*(usines_.find(typeNouveauNoeud))).second };
+	std::shared_ptr<const UsineAbstraite> usine{ (*(usines_.find(typeNouveauNoeud))).second };
 
 	return usine->creerNoeud();
 }
@@ -74,7 +74,7 @@ NoeudAbstrait* ArbreRendu::creerNoeud(
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* ArbreRendu::ajouterNouveauNoeud(const std::string& typeParent, const std::string& typeNouveauNoeud)
+/// @fn shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(const std::string& typeParent, const std::string& typeNouveauNoeud)
 ///
 /// Cette fonction permet d'ajouter un nouveau noeud dans l'arbre de
 /// rendu.
@@ -85,18 +85,18 @@ NoeudAbstrait* ArbreRendu::creerNoeud(
 /// @return Le noeud nouvellement créé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* ArbreRendu::ajouterNouveauNoeud(
+std::shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(
 	const std::string& typeParent,
 	const std::string& typeNouveauNoeud
 	)
 {
-	NoeudAbstrait* parent{ chercher(typeParent) };
+	std::shared_ptr<NoeudAbstrait> parent{ chercher(typeParent) };
 	if (parent == nullptr) {
 		// Incapable de trouver le parent
 		return nullptr;
 	}
 
-	NoeudAbstrait* nouveauNoeud{ creerNoeud(typeNouveauNoeud) };
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud{ creerNoeud(typeNouveauNoeud) };
 	if (nouveauNoeud)
 		parent->ajouter(nouveauNoeud);
 
@@ -131,6 +131,12 @@ unsigned int ArbreRendu::calculerProfondeurMaximale()
 	return (profondeurPileMatrice < profondeurPileNoms) ? profondeurPileMatrice : profondeurPileNoms;
 }
 
+
+
+void ArbreRendu::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
+}
 
 ////////////////////////////////////////////////
 /// @}

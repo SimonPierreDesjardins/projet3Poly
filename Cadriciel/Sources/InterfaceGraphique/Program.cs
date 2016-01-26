@@ -39,13 +39,14 @@ namespace InterfaceGraphique
                 }
 
             chrono.Start();
-            Application.Idle += ExecuterQuandInactif;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             window = new Window();
+            Application.Idle += ExecuterQuandInactif;
+            Application.AddMessageFilter(window);
             Application.Run(window);
         }
-
+        
         static void ExecuterQuandInactif(object sender, EventArgs e)
         {
             FonctionsNatives.Message message;
@@ -70,6 +71,7 @@ namespace InterfaceGraphique
             }
         }
     }
+
     static partial class FonctionsNatives
     {
         [StructLayout(LayoutKind.Sequential)]

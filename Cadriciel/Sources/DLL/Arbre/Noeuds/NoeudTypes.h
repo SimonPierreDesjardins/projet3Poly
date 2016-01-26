@@ -5,5 +5,8 @@
 #include "NoeudConeCube.h"
 #include "NoeudRobot.h"
 #include "NoeudTable.h"
+#include "NoeudPoteau.h"
+#include "NoeudMur.h"
+#include "NoeudLigneNoire.h"
 
 #endif /// __NOEUD_TYPES_H__

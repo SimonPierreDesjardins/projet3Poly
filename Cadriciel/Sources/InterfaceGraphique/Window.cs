@@ -9,72 +9,27 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-
 namespace InterfaceGraphique
-{
-    public partial class Window : Form
-    {
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+{    
+    public partial class Window : Form, IMessageFilter
+    {        
+        private const int WM_KEYDOWN =      0x100;
+        private const int WM_LBUTTONDOWN =  0x0201;
+        private const int WM_LBUTTONUP =    0x0202;
+        private const int WM_RBUTTONDOWN =  0x0204;
+        private const int WM_RBUTTONUP =    0x0205;
+        private const int WM_MOUSEMOVE =    0x0200;
+
+        public bool PreFilterMessage(ref Message m)
         {
-            //Voir https://msdn.microsoft.com/fr-fr/library/system.windows.forms.keys%28v=vs.110%29.aspx
-
-            switch (keyData)
+            // On veut seulement traiter les inputs sur le view_port.
+            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN)
             {
-                case Keys.Space:
-                    System.Console.WriteLine("Barre d'espacement appuyée.");
-                    return true;
-
-                case Keys.Up:
-                    System.Console.WriteLine("La fleche du haut est appuyée.");
-                    return true;
-
-                case Keys.Down:
-                    System.Console.WriteLine("La fleche du bas est appuyée.");
-                    return true;
-
-                case Keys.Left:
-                    System.Console.WriteLine("La fleche de gauche est appuyée.");
-                    return true;
-
-                case Keys.Right:
-                    System.Console.WriteLine("la fleche de droite est appuyée.");
-                    return true;
-
-                case Keys.Tab:
-                    System.Console.WriteLine("La touche tab est appuyée.");
-                    return true;
-
-                case Keys.Back:
-                    System.Console.WriteLine("La touche de retour appuyée.");
-                    return true;
-
-                case Keys.Escape:
-                    System.Console.WriteLine("La touche esc est appuyée.");
-                    return true;
-
-                case Keys.Control | Keys.F4:
-                    System.Console.WriteLine("La touche CTRL+F4 est appuyée.");
-                    Application.Exit();
-                    return true;
-
-                case Keys.CapsLock:
-                    System.Console.WriteLine("La touche CapsLock est appuyée.");
-                    return true;
-
-                case Keys.XButton1:
-                    System.Console.WriteLine("Click gauche de la souris est appuyé.");
-                    return true;
-
-                case Keys.XButton2:
-                    System.Console.WriteLine("Click droit de la souris est appuyé.");
-                    return true;
-
-                default:
-                    break;
+                FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
             }
-            return base.ProcessCmdKey(ref msg, keyData);
+            return false;
         }
-
+       
         public Window()
         {
             InitializeComponent();
@@ -114,7 +69,6 @@ namespace InterfaceGraphique
             }
         }
 
-
         private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -124,7 +78,7 @@ namespace InterfaceGraphique
         {
             afficherMenuPrincipal(false);
             menuEdition_.Visible = true;
-            
+            FonctionsNatives.assignerEtat(Etat.SELECTION);
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -134,7 +88,7 @@ namespace InterfaceGraphique
 
         private void afficherMenuPrincipal(bool afficherMenu)
         {
-            //TODO: Libérer le viewport au menu prinnci
+            //TODO: Libérer le viewport au menu principal
             /*
             if (afficherMenu)
             {
@@ -216,7 +170,6 @@ namespace InterfaceGraphique
             // On gère cette redimension dans openGL
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
-
     }
 
     enum Etat
@@ -228,9 +181,11 @@ namespace InterfaceGraphique
         DUPLICATION,
         CREATION_POTEAU,
         CREATION_MUR,
-        CREATION_LIGNE_NOIRE
+        CREATION_LIGNE_NOIRE,
+        MENU_PRINCIPALE,
+        SIMULATION,
+        TEST
     }
-
 
     static partial class FonctionsNatives
     {
@@ -260,6 +215,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirAffichagesParSeconde();
+ 
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void repartirMessage(int msg, IntPtr wParam, IntPtr lParam);
 
     }
 }

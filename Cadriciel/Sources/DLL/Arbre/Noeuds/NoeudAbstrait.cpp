@@ -83,7 +83,7 @@ void NoeudAbstrait::vider()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudAbstrait::effacer( const NoeudAbstrait* noeud )
+/// @fn void NoeudAbstrait::effacer( const shared_ptr<NoeudAbstrait> noeud )
 ///
 /// Cette fonction efface le noeud s'il fait partie des enfants de
 /// ce noeud.
@@ -96,14 +96,14 @@ void NoeudAbstrait::vider()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::effacer(const NoeudAbstrait* noeud)
+void NoeudAbstrait::effacer(std::shared_ptr<const NoeudAbstrait> noeud)
 {
 }
 
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn const NoeudAbstrait* NoeudAbstrait::chercher( const std::string& typeNoeud ) const
+/// @fn const shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher( const std::string& typeNoeud ) const
 ///
 /// Cette fonction cherche un noeud d'un type donné parmi le noeud
 /// lui-même et ses enfants.
@@ -116,10 +116,10 @@ void NoeudAbstrait::effacer(const NoeudAbstrait* noeud)
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-const NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud) const
+std::shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeNoeud) const
 {
 	if (typeNoeud == type_)
-		return this;
+		return shared_from_this();
 	else
 		return nullptr;
 }
@@ -127,7 +127,7 @@ const NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud) const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* NoeudAbstrait::chercher( const std::string& typeNoeud )
+/// @fn shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher( const std::string& typeNoeud )
 ///
 /// Cette fonction cherche un noeud d'un type donné parmi le noeud
 /// lui-même et ses enfants.
@@ -140,10 +140,10 @@ const NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud) const
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud)
+std::shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeNoeud)
 {
 	if (typeNoeud == type_)
-		return this;
+		return shared_from_this();
 	else
 		return nullptr;
 }
@@ -151,7 +151,7 @@ NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn const NoeudAbstrait* NoeudAbstrait::chercher( unsigned int indice ) const
+/// @fn const shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher( unsigned int indice ) const
 ///
 /// Cette fonction cherche le i-ème enfant d'un noeud.
 ///
@@ -163,7 +163,7 @@ NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud)
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-const NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice) const
+std::shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(unsigned int indice) const
 {
 	return nullptr;
 }
@@ -171,7 +171,7 @@ const NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice) const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudAbstrait* NoeudAbstrait::chercher( unsigned int indice )
+/// @fn shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher( unsigned int indice )
 ///
 /// Cette fonction cherche le i-ème enfant d'un noeud.
 ///
@@ -183,7 +183,7 @@ const NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice) const
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice)
+std::shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher(unsigned int indice)
 {
 	return nullptr;
 }
@@ -191,7 +191,7 @@ NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn bool NoeudAbstrait::ajouter(NoeudAbstrait* enfant)
+/// @fn bool NoeudAbstrait::ajouter(shared_ptr<NoeudAbstrait> enfant)
 ///
 /// Cette fonction ajoute un enfant à ce noeud.
 ///
@@ -203,7 +203,7 @@ NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice)
 /// @return Vrai si l'ajout a bien été effectué, faux autrement.
 ///
 ////////////////////////////////////////////////////////////////////////
-bool NoeudAbstrait::ajouter(NoeudAbstrait* enfant)
+bool NoeudAbstrait::ajouter(std::shared_ptr<NoeudAbstrait> enfant)
 {
 	return false;
 }
@@ -259,7 +259,6 @@ void NoeudAbstrait::effacerSelection()
 {
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudAbstrait::selectionnerTout()
@@ -277,7 +276,6 @@ void NoeudAbstrait::selectionnerTout()
 	assignerSelection(true);
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudAbstrait::deselectionnerTout()
@@ -294,7 +292,6 @@ void NoeudAbstrait::deselectionnerTout()
 {
 	selectionne_ = false;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -340,7 +337,6 @@ void NoeudAbstrait::changerModePolygones(bool estForce)
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudAbstrait::assignerModePolygones( GLenum modePolygones )
@@ -361,7 +357,6 @@ void NoeudAbstrait::assignerModePolygones(GLenum modePolygones)
 
 	modePolygones_ = modePolygones;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -395,6 +390,10 @@ void NoeudAbstrait::afficher() const
 			positionRelative_[0], positionRelative_[1], positionRelative_[2]
 			);
 
+		// La rotation du noeud
+		//TODO: Ajouter glRotate(...);
+		// Facteur de dimension
+		//TODO: Ajouter glScalef(...);
 		// Assignation du mode d'affichage des polygones
 		glPolygonMode(GL_FRONT_AND_BACK, modePolygones_);
 
@@ -406,7 +405,6 @@ void NoeudAbstrait::afficher() const
 		glPopMatrix();
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -422,7 +420,6 @@ void NoeudAbstrait::afficher() const
 void NoeudAbstrait::afficherConcret() const
 {
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -443,6 +440,11 @@ void NoeudAbstrait::animer(float dt)
 {
 }
 
+/// Accepter un visiteur
+void NoeudAbstrait::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+
+}
 
 ////////////////////////////////////////////////
 /// @}

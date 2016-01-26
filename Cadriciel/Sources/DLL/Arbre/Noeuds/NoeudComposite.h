@@ -46,19 +46,19 @@ public:
    /// Vide le noeud de ses enfants.
    virtual void vider();
    /// Efface le noeud passé en paramètre.
-   virtual void effacer( const NoeudAbstrait* noeud );
+   virtual void effacer( std::shared_ptr<const NoeudAbstrait> noeud );
 
    /// Cherche un noeud par le type (sur un noeud constant).
-   virtual const NoeudAbstrait* chercher( const std::string& typeNoeud ) const;
+   virtual std::shared_ptr<const NoeudAbstrait> chercher( const std::string& typeNoeud ) const;
    /// Cherche un noeud par le type.
-   virtual NoeudAbstrait* chercher( const std::string& typeNoeud );
+   virtual std::shared_ptr<NoeudAbstrait> chercher( const std::string& typeNoeud );
    /// Cherche un noeud enfant selon l'indice (sur un noeud constant).
-   virtual const NoeudAbstrait* chercher( unsigned int indice ) const;
+   virtual std::shared_ptr<const NoeudAbstrait> chercher( unsigned int indice ) const;
    /// Cherche un noeud enfant selon l'indice.
-   virtual NoeudAbstrait* chercher( unsigned int indice );
+   virtual std::shared_ptr<NoeudAbstrait> chercher( unsigned int indice );
 
    /// Ajoute un noeud enfant.
-   virtual bool ajouter( NoeudAbstrait* enfant );
+   virtual bool ajouter( std::shared_ptr<NoeudAbstrait> enfant );
    /// Obtient le nombre d'enfants du noeud.
    virtual unsigned int obtenirNombreEnfants() const;
 
@@ -85,10 +85,9 @@ public:
    /// Anime le noeud.
    virtual void animer( float dt );
 
-
 protected:
    /// Le choix du conteneur pour les enfants.
-	using conteneur_enfants = std::vector<NoeudAbstrait*>;
+	using conteneur_enfants = std::vector<std::shared_ptr<NoeudAbstrait>>;
    /// La liste des enfants.
    conteneur_enfants enfants_;
 

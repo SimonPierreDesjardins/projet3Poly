@@ -59,7 +59,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Configuration;Interface;Tests;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>X:\inf2990-06\Cadriciel\Sources\DLL\MachineAEtats;../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Configuration;Interface;Tests;Visiteur;MachineAEtats;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;GLEW_BUILD;_DEBUG;_WINDOWS;_USRDLL;INF2990_EXPORTS;FTGL_LIBRARY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -136,6 +136,9 @@
     <ClCompile Include="Application\FacadeModele.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudAraignee.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudConeCube.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudLigneNoire.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudPoteau.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudRobot.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
@@ -143,24 +146,31 @@
     <ClCompile Include="Arbre\ArbreRenduINF2990.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudAbstrait.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudComposite.cpp" />
-    <ClCompile Include="EtatCreationLigneNoire.cpp" />
-    <ClCompile Include="EtatCreationMur.cpp" />
-    <ClCompile Include="EtatCreationPoteau.cpp" />
-    <ClCompile Include="EtatDeplacement.cpp" />
-    <ClCompile Include="EtatDuplication.cpp" />
-    <ClCompile Include="EtatMiseAEchelle.cpp" />
-    <ClCompile Include="EtatRotation.cpp" />
-    <ClCompile Include="EtatSelection.cpp" />
     <ClCompile Include="Interface\FacadeInterfaceNative.cpp" />
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp" />
+    <ClCompile Include="MachineAEtats\EtatCreationLigneNoire.cpp" />
+    <ClCompile Include="MachineAEtats\EtatCreationMur.cpp" />
+    <ClCompile Include="MachineAEtats\EtatCreationPoteau.cpp" />
+    <ClCompile Include="MachineAEtats\EtatDeplacement.cpp" />
+    <ClCompile Include="MachineAEtats\EtatDuplication.cpp" />
+    <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp" />
+    <ClCompile Include="MachineAEtats\EtatRotation.cpp" />
+    <ClCompile Include="MachineAEtats\EtatSelection.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
+    <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
+    <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
+    <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
+    <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudAraignee.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudConeCube.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudLigneNoire.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudMur.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudPoteau.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudRobot.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
@@ -170,19 +180,25 @@
     <ClInclude Include="Arbre\Usines\UsineNoeud.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudAbstrait.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudComposite.h" />
-    <ClInclude Include="EtatCreationLigneNoire.h" />
-    <ClInclude Include="EtatCreationMur.h" />
-    <ClInclude Include="EtatCreationPoteau.h" />
-    <ClInclude Include="EtatDeplacement.h" />
-    <ClInclude Include="EtatDuplication.h" />
-    <ClInclude Include="EtatMiseAEchelle.h" />
-    <ClInclude Include="EtatRotation.h" />
-    <ClInclude Include="EtatSelection.h" />
     <ClInclude Include="Interface\FacadeInterfaceNative.h" />
     <ClInclude Include="MachineAEtats\EtatAbstrait.h" />
+    <ClInclude Include="MachineAEtats\EtatCreationLigneNoire.h" />
+    <ClInclude Include="MachineAEtats\EtatCreationMur.h" />
+    <ClInclude Include="MachineAEtats\EtatCreationPoteau.h" />
+    <ClInclude Include="MachineAEtats\EtatDeplacement.h" />
+    <ClInclude Include="MachineAEtats\EtatDuplication.h" />
+    <ClInclude Include="MachineAEtats\EtatMiseAEchelle.h" />
+    <ClInclude Include="MachineAEtats\EtatRotation.h" />
+    <ClInclude Include="MachineAEtats\EtatSelection.h" />
+    <ClInclude Include="MachineAEtats\EtatTypes.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
+    <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
+    <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
+    <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
+    <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
+    <ClInclude Include="Visiteur\VisiteurTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commun\Utilitaire\Utilitaire.vcxproj">

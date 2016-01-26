@@ -10,7 +10,8 @@
 #include "ArbreRenduINF2990.h"
 #include "Usines/UsineNoeud.h"
 #include "EtatOpenGL.h"
-#include "Noeuds/NoeudTypes.h"
+#include "NoeudTypes.h"
+#include "VisiteurTypes.h"
 
 
 /// La chaîne représentant le type des araignées.
@@ -21,6 +22,12 @@ const std::string ArbreRenduINF2990::NOM_CONECUBE{ "conecube" };
 const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
 /// La chaîne représentant le type de la table.
 const std::string ArbreRenduINF2990::NOM_TABLE{ "table" };
+/// La chaîne représentant le type de la table.
+const std::string ArbreRenduINF2990::NOM_POTEAU{ "poteau" };
+/// La chaîne représentant le type de la table.
+const std::string ArbreRenduINF2990::NOM_MUR{ "mur" };
+/// La chaîne représentant le type de la table.
+const std::string ArbreRenduINF2990::NOM_LIGNENOIRE{ "ligneNoire" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -37,12 +44,13 @@ const std::string ArbreRenduINF2990::NOM_TABLE{ "table" };
 ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
-	ajouterUsine(NOM_TABLE, new UsineNoeud <NoeudTable> {NOM_TABLE, std::string{ "media/modeles/table.obj" } });
-	ajouterUsine(NOM_ARAIGNEE, new UsineNoeud<NoeudAraignee>{ NOM_ARAIGNEE, std::string{ "media/modeles/spider.obj" } });
-	ajouterUsine(NOM_CONECUBE, new UsineNoeud<NoeudConeCube>{ NOM_CONECUBE, std::string{ "media/modeles/cubecone.obj" } });
-	ajouterUsine(NOM_ROBOT, new UsineNoeud<NoeudRobot>{ NOM_ROBOT, std::string{ "media/modeles/robot.obj" } });
-}
+	ajouterUsine(NOM_TABLE, make_shared<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
+	ajouterUsine(NOM_LIGNENOIRE, make_shared<UsineNoeud<NoeudLigneNoire>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
+	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
+	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteauNoir.obj" }));	
+	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murNoir.obj" }));
 
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -75,10 +83,16 @@ void ArbreRenduINF2990::initialiser()
 	vider();
 
 	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
-	NoeudAbstrait* noeudTable{ creerNoeud(NOM_TABLE) };
-	NoeudAbstrait* noeudRobot{ creerNoeud(NOM_ROBOT) };
-	//NoeudAbstrait* noeudAraignee{ creerNoeud(NOM_ARAIGNEE) };
-	noeudTable->ajouter(noeudRobot);
+	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
+
+
+	//shared_ptr<NoeudAbstrait> noeud{ creerNoeud(NOM_MUR) };
+	//noeud->assignerPositionRelative({ 0, 0, 0 });
+	//noeudTable->ajouter(noeud);
+
+	//glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
+	//position[2] += 5;
+	//noeudPoteau->assignerPositionRelative(position);
 	ajouter(noeudTable);
 }
 ///////////////////////////////////////////////////////////////////////////////

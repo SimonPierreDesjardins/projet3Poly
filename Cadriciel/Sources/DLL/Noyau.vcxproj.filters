@@ -61,6 +61,12 @@
     <Filter Include="Source Files\MachineAEtats">
       <UniqueIdentifier>{407dfefc-fb04-44e6-8113-adada4c82f72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Visiteur">
+      <UniqueIdentifier>{a16986f4-afe7-4f55-9e18-ba69b5acbc13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visiteur">
+      <UniqueIdentifier>{2fad78a4-29b7-4c18-9af9-dada4c0963c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -105,32 +111,57 @@
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatSelection.cpp">
+    <ClCompile Include="MachineAEtats\EtatCreationLigneNoire.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatDeplacement.cpp">
+    <ClCompile Include="MachineAEtats\EtatCreationMur.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatRotation.cpp">
+    <ClCompile Include="MachineAEtats\EtatCreationPoteau.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatMiseAEchelle.cpp">
+    <ClCompile Include="MachineAEtats\EtatDeplacement.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatDuplication.cpp">
+    <ClCompile Include="MachineAEtats\EtatDuplication.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatCreationPoteau.cpp">
+    <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatCreationMur.cpp">
+    <ClCompile Include="MachineAEtats\EtatRotation.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="EtatCreationLigneNoire.cpp">
+    <ClCompile Include="MachineAEtats\EtatSelection.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp">
+<<<<<<< HEAD
       <Filter>Source Files</Filter>
+=======
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisteurAbstrait.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudLigneNoire.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudPoteau.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurCreationMur.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+>>>>>>> origin/creation
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,32 +213,64 @@
     <ClInclude Include="MachineAEtats\EtatAbstrait.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatSelection.h">
+    <ClInclude Include="MachineAEtats\EtatCreationLigneNoire.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatDeplacement.h">
+    <ClInclude Include="MachineAEtats\EtatCreationMur.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatRotation.h">
+    <ClInclude Include="MachineAEtats\EtatCreationPoteau.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatMiseAEchelle.h">
+    <ClInclude Include="MachineAEtats\EtatDeplacement.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatDuplication.h">
+    <ClInclude Include="MachineAEtats\EtatDuplication.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatCreationPoteau.h">
+    <ClInclude Include="MachineAEtats\EtatMiseAEchelle.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatCreationMur.h">
+    <ClInclude Include="MachineAEtats\EtatRotation.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="EtatCreationLigneNoire.h">
+    <ClInclude Include="MachineAEtats\EtatSelection.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files</Filter>
+=======
+    <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurAbstrait.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudLigneNoire.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudMur.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudPoteau.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurCreationPoteau.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurTypes.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurCreationMur.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurCreationLigne.h">
+      <Filter>Header Files\Visiteur</Filter>
+>>>>>>> origin/creation
     </ClInclude>
   </ItemGroup>
 </Project>

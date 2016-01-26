@@ -13,12 +13,11 @@
 #include "FacadeModele.h"
 #include "AideGL.h"
 #include "Vue.h"
+#include "Camera.h"
 #include "ArbreRenduINF2990.h"
 #include "CompteurAffichage.h"
-
+#include "EtatTypes.h"
 #include "BancTests.h"
-
-
 
 #include <iostream>
 
@@ -196,39 +195,38 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl assignerEtat(int etat)
 	{
-		std::cout << "etat selection" << std::endl;
 		switch (etat)
 		{
 			case SELECTION :
-				std::cout << 0 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatSelection>());
 				break;
 
 			case DEPLACEMENT :
-				std::cout << 1 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDeplacement>());
 				break;
 
 			case ROTATION :
-				std::cout << 2 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatRotation>());
 				break;
 
 			case MISE_A_ECHELLE :
-				std::cout << 3 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatMiseAEchelle>());
 				break;
 
 			case DUPLICATION :
-				std::cout << 4 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDuplication>());
 				break;
 
 			case CREATION_POTEAU :
-				std::cout << 5 << std::endl;			
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationPoteau>());
 				break;
 
 			case CREATION_MUR :
-				std::cout << 6 << std::endl;			
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationMur>());
 				break;
 
 			case CREATION_LIGNE_NOIRE :
-				std::cout << 7 << std::endl;
+				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationLigneNoire>());
 				break;
 			
 			default:
@@ -236,13 +234,96 @@ extern "C"
 		}
 	}
 
+	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+	{	
+		if (msg == WM_KEYDOWN)
+		{
+			switch (wParam)
+			{
+				// voir https://msdn.microsoft.com/en-us/library/ms927178.aspx 
+
+				case VK_LEFT:
+					std::cout << "La fleche de gauche est appuyee" << std::endl;
+					break;
+
+				case VK_RIGHT:
+					std::cout << "La fleche de droite est appuyee" << std::endl;
+					break;
+
+				case VK_UP:
+					std::cout << "La fleche du haut est appuyee" << std::endl;
+					break;
+
+				case VK_DOWN:
+					std::cout << "La fleche du bas est appuyee" << std::endl;
+					break;
+
+				case VK_TAB:
+					std::cout << "La touche tab est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({0, 0, 10});
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({0, 1, 0});
+					break;
+
+				case VK_BACK:
+					std::cout << "La touche de retour est appuyee" << std::endl;
+					break;
+
+				case VK_SHIFT:
+					std::cout << "La touche shift est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({0, 10, 0});
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({0, 0, 1});
+					break;
+
+				case VK_RMENU:
+				case VK_LMENU:
+					std::cout << "La touche alt est appuyee" << std::endl;
+					break;
+
+				case VK_RCONTROL:
+				case VK_LCONTROL:
+					std::cout << "La touche control est appuyee" << std::endl;
+					break;
+
+				case VK_ESCAPE:
+					std::cout << "La touche escape est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheEchappe();
+					break;
+
+				default:
+					break;
+			}
+		}
+		
+		switch (msg)
+		{
+			case WM_LBUTTONDOWN :
+				
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
+			
+			case WM_LBUTTONUP :
+			
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
+			
+			case WM_RBUTTONDOWN :
+		
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
+			
+			case WM_RBUTTONUP :
+	
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
+
+			case WM_MOUSEMOVE :
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));	
+				break;
+		}
+	}
+
+
 }
-
-
-
-
-
-
 
 
 ///////////////////////////////////////////////////////////////////////////////
