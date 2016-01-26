@@ -52,3 +52,13 @@ void EtatAbstrait::gererToucheEchappe()
 {
 
 }
+
+void EtatAbstrait::gererToucheControlEnfoncee()
+{
+
+}
+
+void EtatAbstrait::gererToucheControlRelachee()
+{
+
+}

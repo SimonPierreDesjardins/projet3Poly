@@ -18,9 +18,8 @@
 
 EtatCreationMur::EtatCreationMur()
 {
-	std::cout << "Creation de poteau" << std::endl;
+	std::cout << "Creation de mur" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationMur>();
-	estPremierClic_ = false;
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -36,14 +35,14 @@ void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
 	//Deuxieme clic
-	if (estPremierClic_)
+	if (enCreation_)
 	{
-		estPremierClic_ = false;
+		enCreation_ = false;
 	}
 	//Premier clic
 	else
 	{
-		estPremierClic_ = true;
+		enCreation_ = true;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
 		visiteur_->assignerPositionRelative(positionPremierClic_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
@@ -55,10 +54,10 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 
 void EtatCreationMur::gererToucheEchappe()
 {
-	if (estPremierClic_)
+	if (enCreation_)
 	{
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(referenceNoeud_);
-		estPremierClic_ = false;
+		enCreation_ = false;
 	}
 }
 
@@ -69,7 +68,7 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 	float angle = 0;
 	double distance = 0;
 
-	if (estPremierClic_)
+	if (enCreation_)
 	{
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);

@@ -282,6 +282,7 @@ extern "C"
 				case VK_RCONTROL:
 				case VK_LCONTROL:
 					std::cout << "La touche control est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlEnfoncee();
 					break;
 
 				case VK_ESCAPE:
@@ -294,25 +295,37 @@ extern "C"
 			}
 		}
 		
+		if (msg == WM_KEYUP)
+		{
+			switch (wParam)
+			{
+				case VK_CONTROL:
+				case VK_LCONTROL:
+				case VK_RCONTROL:
+					std::cout << "La touche control est relachee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
+					break;
+
+				default:
+					break;
+			}
+		}
+
 		switch (msg)
 		{
 			case WM_LBUTTONDOWN :
-				
 				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 			
 			case WM_LBUTTONUP :
-			
 				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 			
 			case WM_RBUTTONDOWN :
-		
 				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 			
 			case WM_RBUTTONUP :
-	
 				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 

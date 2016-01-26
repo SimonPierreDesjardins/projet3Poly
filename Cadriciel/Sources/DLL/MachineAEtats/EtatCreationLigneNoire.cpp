@@ -18,9 +18,8 @@
 
 EtatCreationLigneNoire::EtatCreationLigneNoire()
 {
-	std::cout << "Creation de poteau" << std::endl;
+	std::cout << "Creation de ligne" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationLigne>();
-	estPremierClic_ = false;
 }
 
 EtatCreationLigneNoire::~EtatCreationLigneNoire()
@@ -35,29 +34,35 @@ void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 {
-	//Deuxieme clic
-	if (estPremierClic_)
-	{
-		estPremierClic_ = false;
-	}
 	//Premier clic
-	else
+	if (!enCreation_)
 	{
-		estPremierClic_ = true;
+		enCreation_ = true;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
 		visiteur_->assignerPositionRelative(positionPremierClic_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 
 		referenceNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
 	}
+	//Clic avec CTRL enfoncee
+	else if (enCreation_ && toucheCtrlEnfonce_)
+	{
+
+	}
+	//Clic avec CTRL relachee
+	else
+	{
+		enCreation_ = false;
+
+	}
 }
 
 void EtatCreationLigneNoire::gererToucheEchappe()
 {
-	if (estPremierClic_)
+	if (enCreation_)
 	{
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(referenceNoeud_);
-		estPremierClic_ = false;
+		enCreation_ = false;
 	}
 }
 
@@ -68,7 +73,7 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 	float angle = 0;
 	double distance = 0;
 
-	if (estPremierClic_)
+	if (enCreation_)
 	{
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
@@ -78,6 +83,19 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
 		referenceNoeud_->assignerPositionRelative(nouvellePosition);
 	}
+}
+
+void EtatCreationLigneNoire::gererToucheControlEnfoncee()
+{
+	if (!toucheCtrlEnfonce_)
+	{
+		toucheCtrlEnfonce_ = true;
+	}
+}
+
+void EtatCreationLigneNoire::gererToucheControlRelachee()
+{
+	toucheCtrlEnfonce_ = false;
 }
 
 void EtatCreationLigneNoire::effectuerOperation()
