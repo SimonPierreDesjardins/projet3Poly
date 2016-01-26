@@ -257,6 +257,7 @@ namespace utilitaire {
    }
 
    float calculerAngleRotation(glm::dvec3 pointUn, glm::dvec3 pointDeux);
+   double distanceHypothenuse(glm::dvec3 pointUn, glm::dvec3 pointDeux);
 
 } // Fin du namespace utilitaire.
 

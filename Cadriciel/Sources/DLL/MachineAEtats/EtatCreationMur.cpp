@@ -35,20 +35,13 @@ void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
-	/*
-	glm::dvec3 positionVirutelle;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirutelle);
-	positionPremierClic_ = positionVirutelle;
-	visiteur_->assignerPositionRelative(positionVirutelle);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-	*/
-	//FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(visiteur_.get()->getReferenceNoeud());
-
-	if (estPremierClic_) //Deuxieme clic
+	//Deuxieme clic
+	if (estPremierClic_)
 	{
 		estPremierClic_ = false;
 	}
-	else //Premier clic
+	//Premier clic
+	else
 	{
 		estPremierClic_ = true;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
@@ -72,16 +65,17 @@ void EtatCreationMur::gererToucheEchappe()
 void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 {
 	glm::dvec3 positionVirtuelle;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-
 	float angle = 0;
+	double distance = 0;
+
 	if (estPremierClic_)
 	{
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
 		referenceNoeud_->assignerAngleRotation(angle);
+		distance = utilitaire::distanceHypothenuse(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerFacteurDimension(distance);
 	}
-	//std::cout << "x: " << positionVirtuelle[0] << " y: " << positionVirtuelle[1] << " z: " << positionVirtuelle[2] << std::endl;
-	std::cout << "angle: " << angle << std::endl;
 }
 
 void EtatCreationMur::effectuerOperation()

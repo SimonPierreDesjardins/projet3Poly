@@ -558,6 +558,14 @@ namespace utilitaire {
 		return RAD_TO_DEG(angle);
 	}
 
+	double distanceHypothenuse(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	{
+		double distanceX = pointUn[0] - pointDeux[0];
+		double distanceY = pointUn[1] - pointDeux[1];
+		double distance = sqrt(pow(distanceX, 2.0) + pow(distanceY, 2.0));
+		return distance;
+	}
+
 }; // Fin de l'espace de nom utilitaire.
 
 
