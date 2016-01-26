@@ -286,6 +286,7 @@ extern "C"
 
 				case VK_ESCAPE:
 					std::cout << "La touche escape est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheEchappe();
 					break;
 
 				default:

@@ -26,9 +26,7 @@ public:
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
-
-	float calculerAngleRotation(double dx, double dy);
-
+	virtual void gererToucheEchappe();
 
 	virtual void effectuerOperation() = 0;
 
@@ -38,6 +36,7 @@ protected:
 	bool estPremierClic_{ false };
 	glm::dvec3 positionPremierClic_;
 	glm::dvec3 positionDeuxiemeClic_;
+
 };
 
 #endif

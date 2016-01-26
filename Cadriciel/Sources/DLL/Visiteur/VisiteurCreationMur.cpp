@@ -45,7 +45,8 @@ void VisiteurCreationMur::visiter(NoeudTable* noeud)
 	positionRelative_[2] = 0;
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
 	noeud->ajouter(nouveauNoeud);
-	//referenceNoeud_ = nouveauNoeud;
+	referenceNoeud_ = nouveauNoeud;
+
 }
 
 void VisiteurCreationMur::visiter(NoeudPoteau* noeud)

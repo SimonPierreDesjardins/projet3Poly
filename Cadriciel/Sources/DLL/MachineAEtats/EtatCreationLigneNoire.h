@@ -25,6 +25,9 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
 	virtual void effectuerOperation();
+
+	std::shared_ptr<const NoeudAbstrait> referenceNoeud_;
+
 };
 
 

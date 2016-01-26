@@ -256,6 +256,7 @@ namespace utilitaire {
       return succes;
    }
 
+   float calculerAngleRotation(glm::dvec3 pointUn, glm::dvec3 pointDeux);
 
 } // Fin du namespace utilitaire.
 
