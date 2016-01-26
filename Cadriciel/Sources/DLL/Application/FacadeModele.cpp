@@ -171,11 +171,11 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	vue_ = std::make_shared<vue::VueOrtho>(
 		vue::Camera{
 			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-			glm::dvec3(0, 1, 0), glm::dvec3(0, 1, 0) },
+			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
 		vue::ProjectionOrtho{
 			0, 500, 0, 500,
 			1, 1000, 1, 10000, 1.25,
-			-100, 100, -100, 100 }
+			-50, 50, -50, 50 }
 	);
 }
 

@@ -86,9 +86,10 @@ void ArbreRenduINF2990::initialiser()
 	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
 
 
-	shared_ptr<NoeudAbstrait> noeudMur{ creerNoeud(NOM_MUR) };
+	shared_ptr<NoeudAbstrait> noeud{ creerNoeud(NOM_MUR) };
 
-	noeudTable->ajouter(noeudMur);
+
+	noeudTable->ajouter(noeud);
 	//glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
 	//position[2] += 5;
 	//noeudPoteau->assignerPositionRelative(position);

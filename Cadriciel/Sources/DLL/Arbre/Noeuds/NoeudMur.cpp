@@ -66,10 +66,9 @@ void NoeudMur::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	//Ajustement du mur avant la création
-	glRotatef(angleRotationRelatif_, 0.0, 0.0, 1.0);
-	glScalef(1.0, facteurDimension_, 1.0);
-	
-
+	//glRotatef(angleRotationRelatif_, 0.0, 0.0, 1.0);
+	//glScalef(1.0, facteurDimension_, 1.0);
+	glTranslatef(0, 0, -2);
 	// Affichage du modèle.
 	vbo_->dessiner();
 	// Restauration de la matrice.

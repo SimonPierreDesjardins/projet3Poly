@@ -13,6 +13,7 @@
 #include "FacadeModele.h"
 #include "AideGL.h"
 #include "Vue.h"
+#include "Camera.h"
 #include "ArbreRenduINF2990.h"
 #include "CompteurAffichage.h"
 #include "EtatTypes.h"
@@ -259,6 +260,8 @@ extern "C"
 
 				case VK_TAB:
 					std::cout << "La touche tab est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({0, 0, 10});
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({0, 1, 0});
 					break;
 
 				case VK_BACK:
@@ -267,6 +270,8 @@ extern "C"
 
 				case VK_SHIFT:
 					std::cout << "La touche shift est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({0, 10, 0});
+					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({0, 0, 1});
 					break;
 
 				case VK_RMENU:
