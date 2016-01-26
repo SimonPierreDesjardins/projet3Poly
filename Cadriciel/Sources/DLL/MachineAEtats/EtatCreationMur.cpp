@@ -12,6 +12,7 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
+#include "Utilitaire.h"
 
 #include <iostream> 
 
@@ -19,7 +20,7 @@ EtatCreationMur::EtatCreationMur()
 {
 	std::cout << "Creation de poteau" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationMur>();
-	premierclic_ = false;
+	estPremierClic_ = false;
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -34,13 +35,50 @@ void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
-	glm::dvec3 positionVirutelle;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirutelle);
-	positionPremierClic_ = positionVirutelle;
-	visiteur_->assignerPositionRelative(positionVirutelle);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-	//FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(visiteur_.get()->getReferenceNoeud());
+	//Deuxieme clic
+	if (estPremierClic_)
+	{
+		estPremierClic_ = false;
+	}
+	//Premier clic
+	else
+	{
+		estPremierClic_ = true;
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
+		visiteur_->assignerPositionRelative(positionPremierClic_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+
+		referenceNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
+	}
 	
+}
+
+void EtatCreationMur::gererToucheEchappe()
+{
+	if (estPremierClic_)
+	{
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(referenceNoeud_);
+		estPremierClic_ = false;
+	}
+}
+
+void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
+{
+	glm::dvec3 positionVirtuelle;
+	glm::dvec3 nouvellePosition;
+	float angle = 0;
+	double distance = 0;
+
+	if (estPremierClic_)
+	{
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerAngleRotation(angle);
+		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerFacteurDimension(distance);
+		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerPositionRelative(nouvellePosition);
+	}
 }
 
 void EtatCreationMur::effectuerOperation()

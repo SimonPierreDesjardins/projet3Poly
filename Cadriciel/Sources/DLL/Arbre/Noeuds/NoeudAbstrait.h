@@ -66,10 +66,10 @@ public:
 	inline void assignerPositionRelative(const glm::dvec3& positionRelative);
 	
 	/// Obtient l'angle de rotation du noeud.
-	inline float obtenirAngleRotation() const;
+	inline double obtenirAngleRotation() const;
 
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
-	inline void assignerAngleRotation(float angleRotation);
+	inline void assignerAngleRotation(double angleRotation);
 
 	/// Obtient le facteur de dimension du noeud.
 	inline float obtenirFacteurDimension() const;
@@ -279,12 +279,12 @@ inline void NoeudAbstrait::assignerPositionRelative(
 }
 
 //TODO: Documentation.	
-inline float NoeudAbstrait::obtenirAngleRotation() const
+inline double NoeudAbstrait::obtenirAngleRotation() const
 {
 	return angleRotationRelatif_;
 }
 //TODO: Documentation.
-inline void NoeudAbstrait::assignerAngleRotation(float angleRotation)
+inline void NoeudAbstrait::assignerAngleRotation(double angleRotation)
 {
 	angleRotationRelatif_ = angleRotation;
 }

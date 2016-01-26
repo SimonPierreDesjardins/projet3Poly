@@ -48,7 +48,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_LIGNENOIRE, make_shared<UsineNoeud<NoeudLigneNoire>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
 	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
 	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteauNoir.obj" }));	
-	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murNoir.obj" }));
+	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry.obj" }));
 
 }
 
@@ -84,20 +84,6 @@ void ArbreRenduINF2990::initialiser()
 
 	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
 	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
-
-
-	shared_ptr<NoeudAbstrait> noeud{ creerNoeud(NOM_MUR) };
-
-
-	noeudTable->ajouter(noeud);
-	//glm::dvec3 position = noeudPoteau->obtenirPositionRelative();
-	//position[2] += 5;
-	//noeudPoteau->assignerPositionRelative(position);
-	
-
-
-
-
 	ajouter(noeudTable);
 }
 ///////////////////////////////////////////////////////////////////////////////

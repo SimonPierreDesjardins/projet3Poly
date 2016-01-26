@@ -24,6 +24,7 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurAbstrait::VisiteurAbstrait()
 {
+
 }
 
 VisiteurAbstrait::VisiteurAbstrait(const int& x, const int& y)

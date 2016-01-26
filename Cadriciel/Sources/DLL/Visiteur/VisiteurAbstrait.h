@@ -52,6 +52,7 @@ public:
 	inline void assignerPositionRelative(glm::dvec3 positionRelative);
 	inline void assignerAngleRotation(float angleRotation);
 	inline void assignerFacteurDimension(float facteurDimension);
+	inline std::shared_ptr<NoeudAbstrait> obtenirReferenceNoeud();
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
@@ -59,12 +60,14 @@ public:
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigneNoire* noeud);
 
+
+
 protected:
 	glm::dvec3 positionRelative_;
 	float angleRotation_;
 	float facteurDimension_;
-	std::shared_ptr<const NoeudAbstrait> referenceNoeud_;
 	modele::Modele3D* referenceModele_;
+	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
 };
 
 
@@ -82,6 +85,11 @@ inline void VisiteurAbstrait::assignerAngleRotation(float angleRotation)
 inline void VisiteurAbstrait::assignerFacteurDimension(float facteurDimension)
 {
 	facteurDimension_ = facteurDimension;
+}
+
+inline std::shared_ptr<NoeudAbstrait> VisiteurAbstrait::obtenirReferenceNoeud()
+{
+	return referenceNoeud_;
 }
 
 

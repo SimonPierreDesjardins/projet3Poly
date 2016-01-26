@@ -517,6 +517,63 @@ namespace utilitaire {
 		}
 	}
 
+	float calculerAngleRotation(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	{
+		double dx = pointDeux[0] - pointUn[0];
+		double dy = pointDeux[1] - pointUn[1];
+
+		if (EGAL_ZERO(dx) && EGAL_ZERO(dy))
+		{
+			return 0.0;
+		}
+
+		if (EGAL_ZERO(dy) && dx < 0)
+		{
+			return RAD_TO_DEG(PI);
+		}
+
+		else if (EGAL_ZERO(dx) && dy > 0)
+		{
+			return RAD_TO_DEG((PI / 2.0));
+		}
+
+		else if (EGAL_ZERO(dx) && dy < 0)
+		{
+			return RAD_TO_DEG(3.0 * PI / 2.0);
+		}
+
+		float angle = atan(dy / dx);
+		if (dy < 0 && dx > 0)
+		{
+			angle += 2 * PI;
+		}
+		else if (dy > 0 && dx < 0)
+		{
+			angle += PI;
+		}
+		else if (dy < 0 && dx < 0)
+		{
+			angle += PI;
+		}
+		return RAD_TO_DEG(angle);
+	}
+
+	double calculerDistanceHypothenuse(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	{
+		double distanceX = pointUn[0] - pointDeux[0];
+		double distanceY = pointUn[1] - pointDeux[1];
+		double distance = sqrt(pow(distanceX, 2.0) + pow(distanceY, 2.0));
+		return distance;
+	}
+
+	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	{
+		glm::dvec3 nouvellePosition;
+		nouvellePosition[0] = (pointDeux[0] - pointUn[0])* 0.5 + pointUn[0];
+		nouvellePosition[1] = (pointDeux[1] - pointUn[1])* 0.5 + pointUn[1];
+		return nouvellePosition;
+	}
+
 }; // Fin de l'espace de nom utilitaire.
 
 
