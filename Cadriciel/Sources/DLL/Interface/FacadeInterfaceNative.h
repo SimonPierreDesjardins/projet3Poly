@@ -36,6 +36,7 @@ extern "C"
 	__declspec(dllexport) int obtenirAffichagesParSeconde();
 	__declspec(dllexport) bool executerTests();
 	__declspec(dllexport) void assignerEtat(int etat);
+
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

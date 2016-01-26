@@ -59,7 +59,7 @@ namespace vue {
 		yMinFenetre_{ yMinFenetre },
 		yMaxFenetre_{ yMaxFenetre }
 	{
-		ajusterRapportAspect(false, false);
+		ajusterRapportAspect();
 	}
 
 
@@ -118,14 +118,26 @@ namespace vue {
 		
 
 		//translater(glm::ivec2(-(coinMax.y - xMaxCloture_), -(coinMax.x - yMaxCloture_)));
-		bool changementEstEnX, changementEstEnY;
-		changementEstEnX = coinMax.y - xMaxCloture_ != 0;
-		changementEstEnY = coinMax.x - yMaxCloture_ != 0;
-		xMaxCloture_ = coinMax.y;
-		yMaxCloture_ = coinMax.x;
-		ajusterRapportAspect(changementEstEnX, changementEstEnY);
+		double dx, dy;
+		dx = double(coinMax.x - xMaxCloture_) / xMaxCloture_;
+		dy = double(coinMax.y - yMaxCloture_) / yMaxCloture_;
+		xMaxCloture_ = coinMax.x;
+		yMaxCloture_ = coinMax.y;
+
+		//Redimensionnement fenetre virtuelle
+		double ajoutX, ajoutY;
+
+		ajoutX = dx*xMaxFenetre_;
+		ajoutY = dy*yMaxFenetre_;
+
+		yMinFenetre_ -= ajoutY;
+		yMaxFenetre_ += ajoutY;
+		xMaxFenetre_ += ajoutX;
+		xMinFenetre_ -= ajoutX;
+
 		std::cout << coinMax.y << " x " << coinMax.x << std::endl;
 		std::cout << xMaxFenetre_ - xMinFenetre_ << " x " << yMaxFenetre_ - yMinFenetre_ << std::endl;
+		ajusterRapportAspect();
 		mettreAJourCloture();
 		mettreAJourProjection();
 	}
@@ -269,41 +281,25 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::ajusterRapportAspect(bool changementEstEnX, bool changementEstEnY)
+	void ProjectionOrtho::ajusterRapportAspect()
 	{
 
-		GLdouble fx, fy, cx, cy, ratioFenetre, ratioCloture, ajout;
+		GLdouble fx, fy, cx, cy, ratioCloture, ajout;
 		fx = (xMaxFenetre_ - xMinFenetre_);
 		fy = (yMaxFenetre_ - yMinFenetre_);
 		cx = (xMaxCloture_ - xMinCloture_);
 		cy = (yMaxCloture_ - yMinCloture_);
 
-		ratioFenetre = fx / fy;
 		ratioCloture = cx / cy;
-		if (fx*cy < cx*fy){
-			if (!changementEstEnX){
-				
-				ajout = 1 / ratioCloture*fx*0.5;
-				yMinFenetre_ = -ajout;
-				yMaxFenetre_ = ajout;
-			}
-			else{
-				ajout = ratioCloture*fy*0.5;
-				xMinFenetre_ = -ajout;
-				xMaxFenetre_ = ajout;
-			}
+		if (fx * cy < fy * cx){
+			ajout = 1 / ratioCloture*fx*0.5;
+			yMinFenetre_ = -ajout;
+			yMaxFenetre_ = ajout;
 		}
 		else{
-			if (changementEstEnY){
-				ajout = 1 / ratioCloture*fx*0.5;
-				yMinFenetre_ = -ajout;
-				yMaxFenetre_ = ajout;
-			}
-			else{
-				ajout = ratioCloture*fy*0.5;
-				xMinFenetre_ = -ajout;
-				xMaxFenetre_ = ajout;
-			}
+			ajout = ratioCloture*fy*0.5;
+			xMinFenetre_ = -ajout;
+			xMaxFenetre_ = ajout;
 		}
 	}
 
