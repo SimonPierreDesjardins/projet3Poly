@@ -20,6 +20,7 @@ EtatCreationLigneNoire::EtatCreationLigneNoire()
 {
 	std::cout << "Creation de poteau" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationLigne>();
+	estPremierClic_ = false;
 }
 
 EtatCreationLigneNoire::~EtatCreationLigneNoire()
@@ -29,43 +30,54 @@ EtatCreationLigneNoire::~EtatCreationLigneNoire()
 
 void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
 {
-	std::cout << x << " " << y << std::endl;
+	//std::cout << x << " " << y << std::endl;
 }
 
 void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 {
-	
-	glm::dvec3 positionRelative;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
-	visiteur_->assignerPositionRelative(positionRelative);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-	
-	/*
+	//Deuxieme clic
 	if (estPremierClic_)
 	{
 		estPremierClic_ = false;
 	}
+	//Premier clic
 	else
 	{
 		estPremierClic_ = true;
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);	
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
+		visiteur_->assignerPositionRelative(positionPremierClic_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+
+		referenceNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
 	}
-	*/
 }
 
+void EtatCreationLigneNoire::gererToucheEchappe()
+{
+	if (estPremierClic_)
+	{
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(referenceNoeud_);
+		estPremierClic_ = false;
+	}
+}
 
 void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 {
 	glm::dvec3 positionVirtuelle;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-
+	glm::dvec3 nouvellePosition;
 	float angle = 0;
+	double distance = 0;
+
 	if (estPremierClic_)
 	{
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerAngleRotation(angle);
+		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerFacteurDimension(distance);
+		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerPositionRelative(nouvellePosition);
 	}
-	//std::cout << "x: " << positionVirtuelle[0] << " y: " << positionVirtuelle[1] << " z: " << positionVirtuelle[2] << std::endl;
-	std::cout << "angle: " << angle << std::endl;
 }
 
 void EtatCreationLigneNoire::effectuerOperation()

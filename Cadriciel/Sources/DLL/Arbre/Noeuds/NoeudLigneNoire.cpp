@@ -65,10 +65,13 @@ void NoeudLigneNoire::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-//	glRotatef(90, 0, 0, 1);
-//	glScalef(1.0, 5.0, 1.0);
+	//Ajustement du mur avant la création
+	glRotated(angleRotationRelatif_, 0, 0, 1);
+	glScaled(facteurDimension_, 1, 1);
+
 	// Affichage du modèle.
 	vbo_->dessiner();
+
 	// Restauration de la matrice.
 	glPopMatrix();
 }

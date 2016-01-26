@@ -20,7 +20,7 @@ EtatCreationMur::EtatCreationMur()
 {
 	std::cout << "Creation de poteau" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationMur>();
-	premierclic_ = false;
+	estPremierClic_ = false;
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -65,6 +65,7 @@ void EtatCreationMur::gererToucheEchappe()
 void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 {
 	glm::dvec3 positionVirtuelle;
+	glm::dvec3 nouvellePosition;
 	float angle = 0;
 	double distance = 0;
 
@@ -73,8 +74,10 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
 		referenceNoeud_->assignerAngleRotation(angle);
-		distance = utilitaire::distanceHypothenuse(positionPremierClic_, positionVirtuelle);
+		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
 		referenceNoeud_->assignerFacteurDimension(distance);
+		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
+		referenceNoeud_->assignerPositionRelative(nouvellePosition);
 	}
 }
 

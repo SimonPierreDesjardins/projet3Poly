@@ -558,12 +558,20 @@ namespace utilitaire {
 		return RAD_TO_DEG(angle);
 	}
 
-	double distanceHypothenuse(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	double calculerDistanceHypothenuse(glm::dvec3 pointUn, glm::dvec3 pointDeux)
 	{
 		double distanceX = pointUn[0] - pointDeux[0];
 		double distanceY = pointUn[1] - pointDeux[1];
 		double distance = sqrt(pow(distanceX, 2.0) + pow(distanceY, 2.0));
 		return distance;
+	}
+
+	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	{
+		glm::dvec3 nouvellePosition;
+		nouvellePosition[0] = (pointDeux[0] - pointUn[0])* 0.5 + pointUn[0];
+		nouvellePosition[1] = (pointDeux[1] - pointUn[1])* 0.5 + pointUn[1];
+		return nouvellePosition;
 	}
 
 }; // Fin de l'espace de nom utilitaire.

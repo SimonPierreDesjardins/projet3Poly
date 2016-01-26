@@ -72,6 +72,7 @@ void NoeudMur::afficherConcret() const
 
 	// Affichage du modèle.
 	vbo_->dessiner();
+
 	// Restauration de la matrice.
 	glPopMatrix();
 }

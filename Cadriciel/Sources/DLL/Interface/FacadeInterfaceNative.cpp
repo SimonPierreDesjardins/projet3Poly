@@ -240,8 +240,7 @@ extern "C"
 		{
 			switch (wParam)
 			{
-				// voir https://msdn.microsoft.com/en-us/library/ms927178.aspx 
-
+				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
 					std::cout << "La fleche de gauche est appuyee" << std::endl;
 					break;
@@ -279,6 +278,7 @@ extern "C"
 					std::cout << "La touche alt est appuyee" << std::endl;
 					break;
 
+				case VK_CONTROL:
 				case VK_RCONTROL:
 				case VK_LCONTROL:
 					std::cout << "La touche control est appuyee" << std::endl;

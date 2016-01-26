@@ -28,8 +28,6 @@ public:
 
 	virtual void effectuerOperation();
 
-	bool premierclic_;
-
 	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
 
 };
