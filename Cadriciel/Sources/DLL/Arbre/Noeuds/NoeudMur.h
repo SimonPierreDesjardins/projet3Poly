@@ -26,10 +26,6 @@ public:
 
 	/// Affiche la table.
 	virtual void afficherConcret() const;
-
-	//TODO:
-	//Voir s'il faut un pointInitial et un pointFinale
-	//Pour savoir si un mur est deja present sur ses coordonnes
 };
 
 #endif

@@ -12,7 +12,8 @@ using System.Runtime.InteropServices;
 namespace InterfaceGraphique
 {    
     public partial class Window : Form, IMessageFilter
-    {        
+    {
+        private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
         private const int WM_LBUTTONDOWN =  0x0201;
         private const int WM_LBUTTONUP =    0x0202;
@@ -23,7 +24,7 @@ namespace InterfaceGraphique
         public bool PreFilterMessage(ref Message m)
         {
             // On veut seulement traiter les inputs sur le view_port.
-            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN)
+            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN || m.Msg == WM_KEYUP)
             {
                 FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
             }

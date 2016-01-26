@@ -72,10 +72,10 @@ public:
 	inline void assignerAngleRotation(double angleRotation);
 
 	/// Obtient le facteur de dimension du noeud.
-	inline float obtenirFacteurDimension() const;
+	inline double obtenirFacteurDimension() const;
 
 	/// Assigne le facteur de dimension
-	inline void assignerFacteurDimension(float facteurDimension);
+	inline void assignerFacteurDimension(double facteurDimension);
 
 
 	/// Obtient le type du noeud.
@@ -164,10 +164,10 @@ protected:
 	glm::dvec3				positionRelative_;
 
 	/// Angle de rotation sur le plan xy
-	float					angleRotationRelatif_;
+	double					angleRotationRelatif_;
 
 	/// Facteur de dimension sur le plan xy
-	float					facteurDimension_;
+	double					facteurDimension_;
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -289,12 +289,12 @@ inline void NoeudAbstrait::assignerAngleRotation(double angleRotation)
 	angleRotationRelatif_ = angleRotation;
 }
 //TODO: Documentation.
-inline float NoeudAbstrait::obtenirFacteurDimension() const
+inline double NoeudAbstrait::obtenirFacteurDimension() const
 {
 	return facteurDimension_;
 }
 //TODO: Documentation.
-inline void NoeudAbstrait::assignerFacteurDimension(float facteurDimension)
+inline void NoeudAbstrait::assignerFacteurDimension(double facteurDimension)
 {
 	facteurDimension_ = facteurDimension;
 }

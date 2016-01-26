@@ -27,13 +27,16 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererToucheEchappe();
+	virtual void gererToucheControlEnfoncee();
+	virtual void gererToucheControlRelachee();
 
 	virtual void effectuerOperation() = 0;
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
-	bool estPremierClic_{ false };
+	bool toucheCtrlEnfonce_{ false };
+	bool enCreation_{ false };
 	glm::dvec3 positionPremierClic_;
 	glm::dvec3 positionDeuxiemeClic_;
 
