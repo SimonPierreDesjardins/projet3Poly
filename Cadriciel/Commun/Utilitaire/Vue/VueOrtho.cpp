@@ -205,7 +205,11 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrtho::deplacerXY(double deplacementX, double deplacementY)
 	{
-		projection_.translater(deplacementX, deplacementY);
+		double tx, ty, xMaxFenetre, xMinFenetre, yMaxFenetre, yMinFenetre;
+		projection_.obtenirCoordonneesFenetreVirtuelle(xMaxFenetre, xMinFenetre, yMaxFenetre, yMinFenetre);
+		tx = deplacementX*0.01*(xMaxFenetre - xMinFenetre);
+		ty = deplacementY*0.01*(yMaxFenetre - yMinFenetre);
+		projection_.translater(tx, ty);
 	}
 
 

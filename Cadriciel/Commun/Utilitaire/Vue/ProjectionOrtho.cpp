@@ -74,7 +74,19 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::zoomerIn()
 	{
-		// À IMPLANTER.
+		if (currentZoom_ > zoomInMax_){
+			double ajoutX, ajoutY, fx, fy;
+			fx = xMaxFenetre_ - xMinFenetre_;
+			fy = yMaxFenetre_ - yMinFenetre_;
+			ajoutX = ((1 / incrementZoom_)*fx - fx)*0.5;
+			ajoutY = ((1 / incrementZoom_)*fy - fy)*0.5;
+			xMinFenetre_ -= ajoutX;
+			xMaxFenetre_ += ajoutX;
+			yMinFenetre_ -= ajoutY;
+			yMaxFenetre_ += ajoutY;
+
+			currentZoom_ -= 1 / incrementZoom_;
+		}
 	}
 
 
@@ -82,14 +94,26 @@ namespace vue {
 	///
 	/// @fn void ProjectionOrtho::zoomerOut()
 	///
-	/// Permet de faire un zoom out selon l'incrément de zoom.
+	/// Permet de faire un zoom out de 10% selon l'incrément de zoom.
 	///
 	/// @return Aucune.
 	///
 	//////////////////////////////////////////////////////////////////////// 
 	void ProjectionOrtho::zoomerOut()
 	{
-		// À IMPLANTER.
+		if (currentZoom_ < zoomOutMax_){
+			double ajoutX, ajoutY, fx, fy;
+			fx = xMaxFenetre_ - xMinFenetre_;
+			fy = yMaxFenetre_ - yMinFenetre_;
+			ajoutX = (fx*incrementZoom_ - fx)*0.5;
+			ajoutY = (fy*incrementZoom_ - fy)*0.5;
+			xMinFenetre_ -= ajoutX;
+			xMaxFenetre_ += ajoutX;
+			yMinFenetre_ -= ajoutY;
+			yMaxFenetre_ += ajoutY;
+
+			currentZoom_ += incrementZoom_;
+		}
 	}
 
 
@@ -127,8 +151,8 @@ namespace vue {
 		//Redimensionnement fenetre virtuelle
 		double ajoutX, ajoutY;
 
-		ajoutX = dx*xMaxFenetre_;
-		ajoutY = dy*yMaxFenetre_;
+		ajoutX = dx*(xMaxFenetre_-xMinFenetre_)*0.5;
+		ajoutY = dy*(yMaxFenetre_-yMinFenetre_)*0.5;
 
 		yMinFenetre_ -= ajoutY;
 		yMaxFenetre_ += ajoutY;
@@ -243,8 +267,8 @@ namespace vue {
 		fy = (yMaxFenetre_ - yMinFenetre_);
 		cx = (xMaxCloture_ - xMinCloture_);
 		cy = (yMaxCloture_ - yMinCloture_);
-		deplacementX = ((deplacement.x - xMaxCloture_) / cx*fx);
-		deplacementY = ((deplacement.y - yMaxCloture_) / cy*fy);
+		deplacementX = (double(deplacement.x) / cx*fx);
+		deplacementY = (double(deplacement.y) / cy*fy);
 
 		translater(deplacementX, deplacementY);
 	}
@@ -282,22 +306,23 @@ namespace vue {
 	void ProjectionOrtho::ajusterRapportAspect()
 	{
 
-		GLdouble fx, fy, cx, cy, ratioCloture, ajout;
+		GLdouble fx, fy, cx, cy, ratioCloture, ratioFenetre, ajout;
 		fx = (xMaxFenetre_ - xMinFenetre_);
 		fy = (yMaxFenetre_ - yMinFenetre_);
 		cx = (xMaxCloture_ - xMinCloture_);
 		cy = (yMaxCloture_ - yMinCloture_);
 
 		ratioCloture = cx / cy;
+		ratioFenetre = fx / fy;
 		if (fx * cy < fy * cx){
-			ajout = 1 / ratioCloture*fx*0.5;
-			yMinFenetre_ = -ajout;
-			yMaxFenetre_ = ajout;
+			ajout = (ratioCloture - ratioFenetre)*fx*0.5;
+			xMinFenetre_ -= ajout;
+			xMaxFenetre_ += ajout;
 		}
 		else{
-			ajout = ratioCloture*fy*0.5;
-			xMinFenetre_ = -ajout;
-			xMaxFenetre_ = ajout;
+			ajout = (1 /ratioCloture - 1 / ratioFenetre)*fy*0.5;
+			yMinFenetre_ -= ajout;
+			yMaxFenetre_ += ajout;
 		}
 	}
 

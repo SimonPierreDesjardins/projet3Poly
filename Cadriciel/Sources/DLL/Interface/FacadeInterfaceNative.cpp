@@ -244,18 +244,22 @@ extern "C"
 
 				case VK_LEFT:
 					std::cout << "La fleche de gauche est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
 					break;
 
 				case VK_RIGHT:
 					std::cout << "La fleche de droite est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
 					break;
 
 				case VK_UP:
 					std::cout << "La fleche du haut est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
 					break;
 
 				case VK_DOWN:
 					std::cout << "La fleche du bas est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
 					break;
 
 				case VK_TAB:
@@ -288,16 +292,20 @@ extern "C"
 					std::cout << "La touche escape est appuyee" << std::endl;
 					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheEchappe();
 					break;
-
+				case VK_OEM_PLUS:
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererTouchePlus();
+					break;
+				case VK_OEM_MINUS:
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheMoins();
+					break;
 				default:
 					break;
 			}
 		}
-		
+
 		switch (msg)
 		{
 			case WM_LBUTTONDOWN :
-				
 				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 			
@@ -313,11 +321,15 @@ extern "C"
 			
 			case WM_RBUTTONUP :
 	
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 				break;
 
 			case WM_MOUSEMOVE :
 				FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));	
+				break;
+
+			case WM_MOUSEWHEEL:
+				FacadeModele::obtenirInstance()->obtenirEtat()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
 				break;
 		}
 	}

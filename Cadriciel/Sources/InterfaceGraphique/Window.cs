@@ -19,11 +19,12 @@ namespace InterfaceGraphique
         private const int WM_RBUTTONDOWN =  0x0204;
         private const int WM_RBUTTONUP =    0x0205;
         private const int WM_MOUSEMOVE =    0x0200;
+        private const int WM_MOUSEWHEEL =    0x020A;
 
         public bool PreFilterMessage(ref Message m)
         {
             // On veut seulement traiter les inputs sur le view_port.
-            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN)
+            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN || m.Msg == WM_MOUSEWHEEL)
             {
                 FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
             }
