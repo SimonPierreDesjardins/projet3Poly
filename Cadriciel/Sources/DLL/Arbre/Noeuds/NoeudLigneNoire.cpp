@@ -65,6 +65,7 @@ void NoeudLigneNoire::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
+	glColor4f(1.0, 0.0, 0.0, 0.5);
 	//Ajustement du mur avant la création
 	glRotated(angleRotationRelatif_, 0, 0, 1);
 	glScaled(facteurDimension_, 1, 1);

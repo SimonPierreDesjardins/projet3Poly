@@ -39,6 +39,37 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 	{
 		modele::Modele3D const* modeleEnfant = noeud->chercher(i)->getModele();
 		utilitaire::BoiteEnglobante boite = utilitaire::calculerBoiteEnglobante(*modeleEnfant);
+		/*
+		float boiteMinX = boite.coinMin[0], boiteMinY = boite.coinMin[1], boiteMinZ = boite.coinMin[2], boiteMaxX = boite.coinMax[0], boiteMaxY = boite.coinMax[1], boiteMaxZ = boite.coinMax[2];
+
+		glm::dvec3 origine, pointLigne;
+		origine[0] = 0.0;
+		origine[1] = 0.0;
+		origine[2] = 0.0;
+
+		pointLigne[0] = noeud->chercher(i)->obtenirPositionRelative()[0];
+		pointLigne[1] = noeud->chercher(i)->obtenirPositionRelative()[1];
+		pointLigne[2] = noeud->chercher(i)->obtenirPositionRelative()[2];
+
+		double r;
+		r = utilitaire::calculerDistanceHypothenuse(origine, pointLigne);
+
+		double angleRotation = noeud->chercher(i)->obtenirAngleRotation();
+
+		boiteMinX = r*cos(angleRotation);
+		boiteMinY = r*sin(angleRotation);
+
+		boiteMaxX = 
+
+		boite.coinMin[0] *= noeud->chercher(i)->obtenirFacteurDimension();
+		boite.coinMin[1] *= noeud->chercher(i)->obtenirFacteurDimension();
+		boite.coinMin[2] *= noeud->chercher(i)->obtenirFacteurDimension();
+
+		boite.coinMax[0] *= noeud->chercher(i)->obtenirFacteurDimension();
+		boite.coinMax[1] *= noeud->chercher(i)->obtenirFacteurDimension();
+		boite.coinMax[2] *= noeud->chercher(i)->obtenirFacteurDimension();
+		*/
+		
 
 		if (positionRelative_[0] < boite.coinMin[0] + noeud->chercher(i)->obtenirPositionRelative()[0] || positionRelative_[0] > boite.coinMax[0] + noeud->chercher(i)->obtenirPositionRelative()[0] || positionRelative_[1] < boite.coinMin[1] + noeud->chercher(i)->obtenirPositionRelative()[1] || positionRelative_[1] > boite.coinMax[1] + noeud->chercher(i)->obtenirPositionRelative()[1])
 		{
