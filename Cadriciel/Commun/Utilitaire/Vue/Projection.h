@@ -89,6 +89,9 @@ namespace vue {
 		const double zoomOutMax_;
 		/// Incrément des zooms.
 		const double incrementZoom_;
+		/// Zoom présent
+		//TODO Demander au chargé
+		double currentZoom_{ 100 };
 		/// Vrai si la projection est perspective.
 		const bool   estPerspective_;
 	};

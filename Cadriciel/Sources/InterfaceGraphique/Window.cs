@@ -20,11 +20,12 @@ namespace InterfaceGraphique
         private const int WM_RBUTTONDOWN =  0x0204;
         private const int WM_RBUTTONUP =    0x0205;
         private const int WM_MOUSEMOVE =    0x0200;
+        private const int WM_MOUSEWHEEL =    0x020A;
 
         public bool PreFilterMessage(ref Message m)
         {
             // On veut seulement traiter les inputs sur le view_port.
-            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN || m.Msg == WM_KEYUP)
+            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN || m.Msg == WM_KEYUP || m.Msg == WM_MOUSEWHEEL)
             {
                 FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
             }
@@ -156,9 +157,21 @@ namespace InterfaceGraphique
 
         private void Window_Resize(object sender, EventArgs e)
         {
-            //FonctionsNatives.redimensionnerFenetre(this.Height, this.Width);
+            // On gère cette redimension dans openGL
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
             FonctionsNatives.dessinerOpenGL();
-        }     
+        }
+
+        private void viewPort__Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void Window_Load(object sender, EventArgs e)
+        {
+            // On gère cette redimension dans openGL
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
     }
 
     enum Etat

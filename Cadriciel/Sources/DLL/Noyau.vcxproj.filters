@@ -136,6 +136,8 @@
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp">
+
+    <Filter>Source Files</Filter> 
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp">
@@ -236,6 +238,9 @@
     <ClInclude Include="MachineAEtats\EtatSelection.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files</Filter>
+	</ClInclude>
     <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>

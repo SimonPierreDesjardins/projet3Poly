@@ -157,7 +157,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 
 	// Lumière ambiante "globale"
 	// Attention :
-	//La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
+	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
 	glm::vec4 ambiant{ 0.2f, 0.2f, 0.2f, 1.0f };
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambiant));
 

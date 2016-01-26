@@ -41,6 +41,7 @@ extern "C"
 	__declspec(dllexport) bool executerTests();
 	__declspec(dllexport) void assignerEtat(int etat);
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
