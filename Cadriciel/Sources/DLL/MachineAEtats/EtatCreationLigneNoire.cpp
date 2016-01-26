@@ -47,7 +47,11 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	//Clic avec CTRL enfoncee
 	else if (enCreation_ && toucheCtrlEnfonce_)
 	{
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
+		visiteur_->assignerPositionRelative(positionPremierClic_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 
+		referenceNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
 	}
 	//Clic avec CTRL relachee
 	else
