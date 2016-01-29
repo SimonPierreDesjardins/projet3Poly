@@ -110,7 +110,7 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 
 		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
 
-		//distance = distance / referenceDernierNoeud_->obtenirParent()->obtenirFacteurDimension();
+		//distance = referenceDernierNoeud_->obtenirParent()->obtenirFacteurDimension();
 		referenceDernierNoeud_->assignerFacteurDimension(distance);
 
 		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
@@ -118,6 +118,7 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 
 		nouvellePosition =  nouvellePosition - referenceDernierNoeud_->obtenirParent()->obtenirPositionRelative();
 		referenceDernierNoeud_->assignerPositionRelative(nouvellePosition);
+		std::cout << nouvellePosition[0] << " : " << nouvellePosition[1] << " : " << nouvellePosition[2] << " : " << angle << " : " << distance << std::endl;
 	}
 }
 
