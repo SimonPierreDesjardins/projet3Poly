@@ -30,8 +30,13 @@ public:
 	/// Creation de poteau sur la table.
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
+private:
+	std::shared_ptr<NoeudLigneNoire> referenceNoeudLigne_;
 };
 
 
 #endif // VISITEUR_CREATION_POTEAU_H
 
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

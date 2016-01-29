@@ -163,7 +163,7 @@
     <ClCompile Include="Visiteur\VisiteurSelection.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
-    <ClCompile Include="NoeudSegment.cpp">
+    <ClCompile Include="Arbre\Noeuds\NoeudSegment.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
   </ItemGroup>
@@ -276,7 +276,7 @@
     <ClInclude Include="Visiteur\VisiteurSelection.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
-    <ClInclude Include="NoeudSegment.h">
+    <ClInclude Include="Arbre\Noeuds\NoeudSegment.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>

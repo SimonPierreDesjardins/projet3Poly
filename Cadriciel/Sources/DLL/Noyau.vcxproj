@@ -140,6 +140,7 @@
     <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudPoteau.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudRobot.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudSegment.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
     <ClCompile Include="Arbre\ArbreRendu.cpp" />
@@ -156,7 +157,6 @@
     <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp" />
     <ClCompile Include="MachineAEtats\EtatRotation.cpp" />
     <ClCompile Include="MachineAEtats\EtatSelection.cpp" />
-    <ClCompile Include="NoeudSegment.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
@@ -174,6 +174,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudMur.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudPoteau.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudRobot.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudSegment.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
     <ClInclude Include="Configuration\ConfigScene.h" />
@@ -193,7 +194,6 @@
     <ClInclude Include="MachineAEtats\EtatRotation.h" />
     <ClInclude Include="MachineAEtats\EtatSelection.h" />
     <ClInclude Include="MachineAEtats\EtatTypes.h" />
-    <ClInclude Include="NoeudSegment.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />

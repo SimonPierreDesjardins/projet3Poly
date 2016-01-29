@@ -69,4 +69,8 @@ inline bool EtatAbstrait::estSurTable(const glm::dvec3& position)
 	return (MIN_X <= position[0] && position[0] <= MAX_X && MIN_Y <= position[1] && position[1] <= MAX_Y);
 }
 
-#endif
+#endif /// ETAT_ABSTRAIT_H
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

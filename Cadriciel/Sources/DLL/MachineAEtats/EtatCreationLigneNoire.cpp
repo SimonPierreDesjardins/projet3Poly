@@ -24,8 +24,15 @@ EtatCreationLigneNoire::EtatCreationLigneNoire()
 
 EtatCreationLigneNoire::~EtatCreationLigneNoire()
 {
-	HCURSOR handle = GetCursor();
+	//HCURSOR handle = GetCursor();
 	//SetSystemCursor(handle, 32650);
+
+	// Effacer la ligne si on change d'outil lors d'une création.
+	if (enCreation_ && ligne_ != nullptr && segment_ != nullptr)
+	{
+		NoeudAbstrait* table = ligne_->obtenirParent().get();
+		table->effacer(ligne_);
+	}
 }
 
 void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
@@ -92,6 +99,7 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 			{
 				segment_->assignerAffiche(true);
 			}
+			// TODO: Ajouter changement de curseur ici.
 			//HCURSOR handle = GetCursor();
 			//SetSystemCursor(handle, 32650);
 			std::cout << "in" << std::endl;
@@ -105,6 +113,7 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 			segment_->assignerAffiche(false);
 		}
 		std::cout << "out" << std::endl;
+		//TODO: Ajouter changement de curseur ici.
 		//HCURSOR handle = GetCursor();
 		//SetSystemCursor(handle, 32648);
 	}
@@ -121,7 +130,7 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 		
 		// Calculer et assigner le facteur de dimension.
 		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionCurseur);
-		segment_->assignerFacteurDimension(distance);
+		segment_->assignerFacteurMiseAEchelle(distance);
 
 		// Calculer et assigner la position relative.
 		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionCurseur);

@@ -74,7 +74,7 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
 		referenceNoeud_->assignerAngleRotation(angle);
 		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
-		referenceNoeud_->assignerFacteurDimension(distance);
+		referenceNoeud_->assignerFacteurMiseAEchelle(distance);
 		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
 		referenceNoeud_->assignerPositionRelative(nouvellePosition);
 	}

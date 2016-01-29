@@ -72,11 +72,10 @@ public:
 	inline void assignerAngleRotation(double angleRotation);
 
 	/// Obtient le facteur de dimension du noeud.
-	inline double obtenirFacteurDimension() const;
+	inline double obtenirFacteurMiseAEchelle() const;
 
 	/// Assigne le facteur de dimension
-	inline void assignerFacteurDimension(double facteurDimension);
-
+	inline void assignerFacteurMiseAEchelle(double facteurDimension);
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -167,7 +166,7 @@ protected:
 	double					angleRotationRelatif_{ 0 };
 
 	/// Facteur de dimension sur le plan xy
-	double					facteurDimension_{ 1 };
+	double					facteurMiseAEchelle_{ 1 };
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -289,14 +288,14 @@ inline void NoeudAbstrait::assignerAngleRotation(double angleRotation)
 	angleRotationRelatif_ = angleRotation;
 }
 //TODO: Documentation.
-inline double NoeudAbstrait::obtenirFacteurDimension() const
+inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 {
-	return facteurDimension_;
+	return facteurMiseAEchelle_;
 }
 //TODO: Documentation.
-inline void NoeudAbstrait::assignerFacteurDimension(double facteurDimension)
+inline void NoeudAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
 {
-	facteurDimension_ = facteurDimension;
+	facteurMiseAEchelle_ = facteurDimension;
 }
 ////////////////////////////////////////////////////////////////////////
 ///

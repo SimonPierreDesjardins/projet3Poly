@@ -16,15 +16,12 @@
 
 class NoeudSegment : public NoeudAbstrait
 {
-
 public:
-
-	/// Constructeur
 	NoeudSegment(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudSegment();
 
-	/// Affiche la table.
+	/// Affiche le segment.
 	virtual void afficherConcret() const;
 };
 

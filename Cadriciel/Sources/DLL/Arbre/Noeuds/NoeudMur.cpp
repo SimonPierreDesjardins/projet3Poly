@@ -32,7 +32,7 @@ NoeudMur::NoeudMur(const std::string& typeNoeud)
 : NoeudAbstrait{ typeNoeud }
 {
 	angleRotationRelatif_ = 0;
-	facteurDimension_ = 1;
+	facteurMiseAEchelle_ = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -68,7 +68,7 @@ void NoeudMur::afficherConcret() const
 
 	//Ajustement du mur avant la création
 	glRotated(angleRotationRelatif_, 0, 0, 1);
-	glScaled(facteurDimension_, 1, 1);
+	glScaled(facteurMiseAEchelle_, 1, 1);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
