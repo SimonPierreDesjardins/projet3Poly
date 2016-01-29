@@ -30,8 +30,8 @@ public:
 
 	virtual void effectuerOperation();
 
-	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
-
+	std::shared_ptr<NoeudAbstrait> referencePremierNoeud_;
+	std::shared_ptr<NoeudAbstrait> referenceDernierNoeud_;
 };
 
 

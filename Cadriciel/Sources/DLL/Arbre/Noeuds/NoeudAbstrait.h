@@ -161,13 +161,13 @@ protected:
 	GLenum					modePolygones_{ GL_FILL };
 
 	/// Position relative du noeud.
-	glm::dvec3				positionRelative_;
+	glm::dvec3				positionRelative_{ 0, 0, 0 };
 
 	/// Angle de rotation sur le plan xy
-	double					angleRotationRelatif_;
+	double					angleRotationRelatif_{ 0 };
 
 	/// Facteur de dimension sur le plan xy
-	double					facteurDimension_;
+	double					facteurDimension_{ 1 };
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };

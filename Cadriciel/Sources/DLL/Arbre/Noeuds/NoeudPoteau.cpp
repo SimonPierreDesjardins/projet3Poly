@@ -65,7 +65,7 @@ void NoeudPoteau::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	
+
 	glColor3f(1.0 , 0.0, 0.0);
 	
 
