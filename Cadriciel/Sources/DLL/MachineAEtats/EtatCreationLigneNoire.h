@@ -30,6 +30,7 @@ public:
 
 	std::shared_ptr<NoeudAbstrait> ligne_;
 	std::shared_ptr<NoeudAbstrait> segment_;
+	bool curseurEstSurTable_;
 };
 
 

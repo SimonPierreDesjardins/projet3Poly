@@ -24,7 +24,8 @@ EtatCreationLigneNoire::EtatCreationLigneNoire()
 
 EtatCreationLigneNoire::~EtatCreationLigneNoire()
 {
-
+	HCURSOR handle = GetCursor();
+	//SetSystemCursor(handle, 32650);
 }
 
 void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
@@ -37,7 +38,7 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	FacadeModele* facade = FacadeModele::obtenirInstance().get();
 	ArbreRenduINF2990* arbre = facade->obtenirArbreRenduINF2990().get();
 	//Premier clic
-	if (!enCreation_)
+	if (!enCreation_ && curseurEstSurTable_)
 	{
 		enCreation_ = true;
 		facade->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_); 
@@ -48,7 +49,7 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 
 	}
 	//Clic avec CTRL enfoncee
-	else if (enCreation_ && toucheCtrlEnfonce_)
+	else if (enCreation_ && toucheCtrlEnfonce_ && curseurEstSurTable_)
 	{
 		// Création du nouveau noeud et assignation au parent.
 		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
@@ -81,6 +82,32 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 {
 	glm::dvec3 positionCurseur;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionCurseur);
+	if (estSurTable(positionCurseur))
+	{
+		if (!curseurEstSurTable_)
+		{
+			curseurEstSurTable_ = true;
+			if (segment_ != nullptr)
+			{
+				segment_->assignerAffiche(true);
+			}
+			//HCURSOR handle = GetCursor();
+			//SetSystemCursor(handle, 32650);
+			std::cout << "in" << std::endl;
+		}
+	}
+	else if (curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = false;
+		if (segment_ != nullptr)
+		{
+			segment_->assignerAffiche(false);
+		}
+		std::cout << "out" << std::endl;
+		//HCURSOR handle = GetCursor();
+		//SetSystemCursor(handle, 32648);
+	}
 	glm::dvec3 nouvellePosition;
 	double angle = 0;
 	double distance = 0;
@@ -88,8 +115,6 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 	if (enCreation_)
 	{
 		assert(segment_ != nullptr);
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionCurseur);
-		
 		// Calculer et assigner l'angle relatif.
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionCurseur);
 		segment_->assignerAngleRotation(angle);
@@ -116,3 +141,4 @@ void EtatCreationLigneNoire::gererToucheControlRelachee()
 {
 	toucheCtrlEnfonce_ = false;
 }
+
