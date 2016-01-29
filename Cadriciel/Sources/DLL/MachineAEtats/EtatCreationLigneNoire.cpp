@@ -72,6 +72,7 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 
 void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 {
+	EtatAbstrait::gererMouvementSouris(x, y);
 	glm::dvec3 positionVirtuelle;
 	glm::dvec3 nouvellePosition;
 	float angle = 0;
