@@ -22,12 +22,14 @@ const std::string ArbreRenduINF2990::NOM_CONECUBE{ "conecube" };
 const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
 /// La chaîne représentant le type de la table.
 const std::string ArbreRenduINF2990::NOM_TABLE{ "table" };
-/// La chaîne représentant le type de la table.
+/// La chaîne représentant le type des poteeaux.
 const std::string ArbreRenduINF2990::NOM_POTEAU{ "poteau" };
-/// La chaîne représentant le type de la table.
+/// La chaîne représentant le type des murs.
 const std::string ArbreRenduINF2990::NOM_MUR{ "mur" };
-/// La chaîne représentant le type de la table.
+/// La chaîne représentant le type des lignes.
 const std::string ArbreRenduINF2990::NOM_LIGNENOIRE{ "ligneNoire" };
+/// La chaîne représentant le type des segments.
+const std::string ArbreRenduINF2990::NOM_SEGMENT{ "segment" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -49,6 +51,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_ROBOT, make_shared<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
 	ajouterUsine(NOM_POTEAU, make_shared<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
 	ajouterUsine(NOM_MUR, make_shared<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry.obj" }));
+	ajouterUsine(NOM_SEGMENT, make_shared<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/ligneNoire.obj" }));
 
 }
 

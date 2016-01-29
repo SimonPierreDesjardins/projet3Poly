@@ -29,7 +29,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudMur::NoeudMur(const std::string& typeNoeud)
-: NoeudComposite{ typeNoeud }
+: NoeudAbstrait{ typeNoeud }
 {
 	angleRotationRelatif_ = 0;
 	facteurDimension_ = 1;
@@ -61,7 +61,7 @@ NoeudMur::~NoeudMur()
 void NoeudMur::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
-	NoeudComposite::afficherConcret();
+//	NoeudComposite::afficherConcret();
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();

@@ -106,3 +106,9 @@ void EtatAbstrait::gererMoletteSouris(const int & delta){
 	}
 		
 }
+
+
+void EtatAbstrait::effectuerOperation()
+{
+
+}

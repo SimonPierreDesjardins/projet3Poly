@@ -61,7 +61,7 @@ void NoeudLigneNoire::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
-
+	/*
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
@@ -74,6 +74,7 @@ void NoeudLigneNoire::afficherConcret() const
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
+	*/
 }
 
 

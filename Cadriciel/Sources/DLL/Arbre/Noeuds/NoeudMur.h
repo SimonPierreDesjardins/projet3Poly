@@ -14,7 +14,7 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
-class NoeudMur : public NoeudComposite
+class NoeudMur : public NoeudAbstrait
 {
 
 public:

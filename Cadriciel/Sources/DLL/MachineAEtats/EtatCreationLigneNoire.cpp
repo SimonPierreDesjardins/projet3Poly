@@ -34,38 +34,34 @@ void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 {
+	FacadeModele* facade = FacadeModele::obtenirInstance().get();
+	ArbreRenduINF2990* arbre = facade->obtenirArbreRenduINF2990().get();
 	//Premier clic
 	if (!enCreation_)
 	{
 		enCreation_ = true;
-		dernierePositionLigne_ = { 0, 0, 0 };
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
-		visiteur_->assignerPositionRelative(positionPremierClic_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-		
-		referencePremierNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
-		referenceDernierNoeud_ = referencePremierNoeud_;
+		facade->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_); 
+		arbre->accepterVisiteur(visiteur_.get());
+		ligne_ = visiteur_->obtenirReferenceNoeud();
+		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+		ligne_->ajouter(segment_);
+
 	}
 	//Clic avec CTRL enfoncee
 	else if (enCreation_ && toucheCtrlEnfonce_)
 	{
 		// Création du nouveau noeud et assignation au parent.
-		std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
-		referenceDernierNoeud_->ajouter(nouveauNoeud);
-		referenceDernierNoeud_ = nouveauNoeud;
+		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+		ligne_->ajouter(segment_);
 
-		// Assigner la position relative au nouveau noeud.
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionDeuxiemeClic_);
-		dernierePositionLigne_ = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionDeuxiemeClic_);
-		positionPremierClic_ = positionDeuxiemeClic_;
-
+		// Assigner la position
+		facade->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
 	}
 	// Dernier Clic avec CTRL relachee
 	else
 	{
-		dernierePositionLigne_ = { 0, 0, 0 };
-		referencePremierNoeud_ = nullptr;
-		referenceDernierNoeud_ = nullptr;
+		ligne_ = nullptr;
+		segment_ = nullptr;
 		enCreation_ = false;
 	}
 }
@@ -74,11 +70,10 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(referencePremierNoeud_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(ligne_);
 		
-		dernierePositionLigne_ = { 0, 0, 0 };
-		referencePremierNoeud_ = nullptr;
-		referenceDernierNoeud_ = nullptr;
+		ligne_ = nullptr;
+		segment_ = nullptr;
 		enCreation_ = false;
 	}
 }
@@ -86,28 +81,26 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 {
 	glm::dvec3 positionCurseur;
-	glm::dvec3 nouvellePositionLigne;
-	glm::dvec3 positionRelativeLigne;
+	glm::dvec3 nouvellePosition;
 	double angle = 0;
 	double distance = 0;
 
 	if (enCreation_)
 	{
+		assert(segment_ != nullptr);
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionCurseur);
-
+		
+		// Calculer et assigner l'angle relatif.
 		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionCurseur);
-		//angle = angle - referenceDernierNoeud_->obtenirParent()->obtenirAngleRotation();
-
-		referenceDernierNoeud_->assignerAngleRotation(angle);
-
+		segment_->assignerAngleRotation(angle);
+		
+		// Calculer et assigner le facteur de dimension.
 		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionCurseur);
-		//distance = distance / referenceDernierNoeud_->obtenirParent()->obtenirFacteurDimension();
+		segment_->assignerFacteurDimension(distance);
 
-		referenceDernierNoeud_->assignerFacteurDimension(distance);
-
-		nouvellePositionLigne = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionCurseur);		
-		positionRelativeLigne = nouvellePositionLigne - dernierePositionLigne_;
-		referenceDernierNoeud_->assignerPositionRelative(positionRelativeLigne);
+		// Calculer et assigner la position relative.
+		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionCurseur);
+		segment_->assignerPositionRelative(nouvellePosition);
 	}
 }
 
@@ -122,9 +115,4 @@ void EtatCreationLigneNoire::gererToucheControlEnfoncee()
 void EtatCreationLigneNoire::gererToucheControlRelachee()
 {
 	toucheCtrlEnfonce_ = false;
-}
-
-void EtatCreationLigneNoire::effectuerOperation()
-{
-
 }

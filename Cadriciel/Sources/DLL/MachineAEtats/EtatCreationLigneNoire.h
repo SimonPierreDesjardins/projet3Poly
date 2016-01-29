@@ -28,11 +28,8 @@ public:
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
 
-	virtual void effectuerOperation();
-
-	glm::dvec3 dernierePositionLigne_{ 0 };
-	std::shared_ptr<NoeudAbstrait> referencePremierNoeud_;
-	std::shared_ptr<NoeudAbstrait> referenceDernierNoeud_;
+	std::shared_ptr<NoeudAbstrait> ligne_;
+	std::shared_ptr<NoeudAbstrait> segment_;
 };
 
 

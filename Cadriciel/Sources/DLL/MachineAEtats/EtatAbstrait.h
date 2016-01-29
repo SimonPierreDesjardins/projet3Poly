@@ -37,7 +37,7 @@ public:
 	virtual void gererToucheMoins();
 
 
-	virtual void effectuerOperation() = 0;
+	virtual void effectuerOperation();
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;

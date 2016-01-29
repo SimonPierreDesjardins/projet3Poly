@@ -29,7 +29,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
-: NoeudComposite{ typeNoeud }
+: NoeudAbstrait{ typeNoeud }
 {
 }
 
@@ -60,7 +60,7 @@ NoeudPoteau::~NoeudPoteau()
 void NoeudPoteau::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
-	NoeudComposite::afficherConcret();
+//	NoeudComposite::afficherConcret();
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();

@@ -156,6 +156,7 @@
     <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp" />
     <ClCompile Include="MachineAEtats\EtatRotation.cpp" />
     <ClCompile Include="MachineAEtats\EtatSelection.cpp" />
+    <ClCompile Include="NoeudSegment.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="MachineAEtats\EtatRotation.h" />
     <ClInclude Include="MachineAEtats\EtatSelection.h" />
     <ClInclude Include="MachineAEtats\EtatTypes.h" />
+    <ClInclude Include="NoeudSegment.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
