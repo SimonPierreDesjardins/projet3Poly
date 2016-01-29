@@ -38,44 +38,35 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	if (!enCreation_)
 	{
 		enCreation_ = true;
+		dernierePositionLigne_ = { 0, 0, 0 };
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
 		visiteur_->assignerPositionRelative(positionPremierClic_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-
+		
 		referencePremierNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
 		referenceDernierNoeud_ = referencePremierNoeud_;
 	}
 	//Clic avec CTRL enfoncee
 	else if (enCreation_ && toucheCtrlEnfonce_)
 	{
-
 		// Création du nouveau noeud et assignation au parent.
 		std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
 		referenceDernierNoeud_->ajouter(nouveauNoeud);
 		referenceDernierNoeud_ = nouveauNoeud;
 
 		// Assigner la position relative au nouveau noeud.
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
-		glm::dvec3 positionRelative;
-		for (int i = 0; i < 3; i++)
-		{
-			positionRelative[i] = referenceDernierNoeud_->obtenirParent()->obtenirPositionRelative()[i] - positionPremierClic_[i];
-		}
-		nouveauNoeud->assignerPositionRelative(positionRelative);
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionDeuxiemeClic_);
+		dernierePositionLigne_ = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionDeuxiemeClic_);
+		positionPremierClic_ = positionDeuxiemeClic_;
 
-		/*
-		visiteur_->assignerPositionRelative(positionPremierClic_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-
-		referenceDernierNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
-		*/
 	}
 	// Dernier Clic avec CTRL relachee
 	else
 	{
-		enCreation_ = false;
+		dernierePositionLigne_ = { 0, 0, 0 };
 		referencePremierNoeud_ = nullptr;
 		referenceDernierNoeud_ = nullptr;
+		enCreation_ = false;
 	}
 }
 
@@ -83,42 +74,40 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
-		//TODO: Changer pour reference premier Noeud.
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(referencePremierNoeud_);
+		
+		dernierePositionLigne_ = { 0, 0, 0 };
+		referencePremierNoeud_ = nullptr;
+		referenceDernierNoeud_ = nullptr;
 		enCreation_ = false;
 	}
 }
 
 void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 {
-	glm::dvec3 positionVirtuelle;
-	glm::dvec3 nouvellePosition;
+	glm::dvec3 positionCurseur;
+	glm::dvec3 nouvellePositionLigne;
+	glm::dvec3 positionRelativeLigne;
 	double angle = 0;
 	double distance = 0;
 
 	if (enCreation_)
 	{
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionCurseur);
 
-
-
-		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
-		angle = angle - referenceDernierNoeud_->obtenirParent()->obtenirAngleRotation();
-
+		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionCurseur);
+		//angle = angle - referenceDernierNoeud_->obtenirParent()->obtenirAngleRotation();
 
 		referenceDernierNoeud_->assignerAngleRotation(angle);
 
-		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
+		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionCurseur);
+		//distance = distance / referenceDernierNoeud_->obtenirParent()->obtenirFacteurDimension();
 
-		//distance = referenceDernierNoeud_->obtenirParent()->obtenirFacteurDimension();
 		referenceDernierNoeud_->assignerFacteurDimension(distance);
 
-		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
-		
-
-		nouvellePosition =  nouvellePosition - referenceDernierNoeud_->obtenirParent()->obtenirPositionRelative();
-		referenceDernierNoeud_->assignerPositionRelative(nouvellePosition);
-		std::cout << nouvellePosition[0] << " : " << nouvellePosition[1] << " : " << nouvellePosition[2] << " : " << angle << " : " << distance << std::endl;
+		nouvellePositionLigne = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionCurseur);		
+		positionRelativeLigne = nouvellePositionLigne - dernierePositionLigne_;
+		referenceDernierNoeud_->assignerPositionRelative(positionRelativeLigne);
 	}
 }
 

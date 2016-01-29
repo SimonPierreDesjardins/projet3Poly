@@ -30,6 +30,7 @@ public:
 
 	virtual void effectuerOperation();
 
+	glm::dvec3 dernierePositionLigne_{ 0 };
 	std::shared_ptr<NoeudAbstrait> referencePremierNoeud_;
 	std::shared_ptr<NoeudAbstrait> referenceDernierNoeud_;
 };
