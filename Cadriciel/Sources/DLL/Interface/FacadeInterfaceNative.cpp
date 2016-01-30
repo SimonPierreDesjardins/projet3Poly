@@ -195,43 +195,7 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl assignerEtat(int etat)
 	{
-		switch (etat)
-		{
-			case SELECTION :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatSelection>());
-				break;
-
-			case DEPLACEMENT :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDeplacement>());
-				break;
-
-			case ROTATION :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatRotation>());
-				break;
-
-			case MISE_A_ECHELLE :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatMiseAEchelle>());
-				break;
-
-			case DUPLICATION :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDuplication>());
-				break;
-
-			case CREATION_POTEAU :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationPoteau>());
-				break;
-
-			case CREATION_MUR :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationMur>());
-				break;
-
-			case CREATION_LIGNE_NOIRE :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationLigneNoire>());
-				break;
-			
-			default:
-				break;
-		}
+		FacadeModele::obtenirInstance()->assignerEtat((Etat)etat);
 	}
 
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)

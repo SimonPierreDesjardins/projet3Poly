@@ -10,11 +10,11 @@
 #ifndef VISITEUR_ABSTRAIT_H
 #define VISITEUR_ABSTRAIT_H
 
-#include "FacadeModele.h"
 #include "glm\glm.hpp"
 
-
 class ArbreRendu;
+
+class NoeudAbstrait;
 class NoeudPoteau;
 class NoeudTable;
 class NoeudMur;

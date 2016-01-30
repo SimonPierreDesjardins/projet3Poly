@@ -8,6 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
+#include "FacadeModele.h"
 #include "EtatRotation.h"
 #include "VisiteurRotation.h"
 #include "ArbreRenduINF2990.h"

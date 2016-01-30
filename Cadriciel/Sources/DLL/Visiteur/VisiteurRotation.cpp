@@ -1,13 +1,14 @@
+#include <iostream>
 #include "VisiteurRotation.h"
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
-#include <iostream>
+
 
 VisiteurRotation::VisiteurRotation()
 {
-	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0).get();
+	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	calculerCentreSelection(noeud);
 }
 
@@ -31,7 +32,7 @@ void VisiteurRotation::visiter(ArbreRendu* noeud)
 
 void VisiteurRotation::visiter(NoeudTable* noeud)
 {
-	std::shared_ptr<NoeudAbstrait> enfant;
+	NoeudAbstrait* enfant;
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i);
@@ -70,7 +71,7 @@ void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		//TODO: à mettre dans une méthode visiter pour un segment.
-		enfant = noeud->chercher(i).get();
+		enfant = noeud->chercher(i);
 		utilitaire::calculerPositionApresRotation(enfant->obtenirPositionRelative(), nouvellePositionRelative, angleRotation_);
 		enfant->assignerPositionRelative(nouvellePositionRelative);
 		angle = enfant->obtenirAngleRotation() + angleRotation_;
@@ -84,7 +85,7 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 	int nSelections = 0;
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
-		enfant = noeud->chercher(i).get();
+		enfant = noeud->chercher(i);
 		//TODO: à décommenter quand la sélection sera implémentée.
 		//if (enfant->estSelectionne())
 		{

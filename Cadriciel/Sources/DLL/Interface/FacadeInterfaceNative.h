@@ -12,20 +12,6 @@
 #include <Windows.h>
 #include <Windowsx.h>
 
-enum Etat
-{
-	SELECTION,
-	DEPLACEMENT,
-	ROTATION,
-	MISE_A_ECHELLE,
-	DUPLICATION,
-	CREATION_POTEAU,
-	CREATION_MUR,
-	CREATION_LIGNE_NOIRE,
-	MENU_PRINCIPAL,
-	SIMULATION,
-	TEST
-};
 
 extern "C" 
 {

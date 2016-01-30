@@ -49,13 +49,13 @@ public:
    virtual void effacer( const NoeudAbstrait* noeud );
 
    /// Cherche un noeud par le type (sur un noeud constant).
-   virtual std::shared_ptr<const NoeudAbstrait> chercher( const std::string& typeNoeud ) const;
+   virtual const NoeudAbstrait* chercher( const std::string& typeNoeud ) const;
    /// Cherche un noeud par le type.
-   virtual std::shared_ptr<NoeudAbstrait> chercher( const std::string& typeNoeud );
+   virtual NoeudAbstrait* chercher( const std::string& typeNoeud );
    /// Cherche un noeud enfant selon l'indice (sur un noeud constant).
-   virtual std::shared_ptr<const NoeudAbstrait> chercher( unsigned int indice ) const;
+   virtual const NoeudAbstrait* chercher( unsigned int indice ) const;
    /// Cherche un noeud enfant selon l'indice.
-   virtual std::shared_ptr<NoeudAbstrait> chercher( unsigned int indice );
+   virtual NoeudAbstrait* chercher( unsigned int indice );
 
    /// Ajoute un noeud enfant.
    virtual bool ajouter( std::shared_ptr<NoeudAbstrait> enfant );

@@ -116,10 +116,10 @@ void NoeudAbstrait::effacer(const NoeudAbstrait* noeud)
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeNoeud) const
+const NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud) const
 {
 	if (typeNoeud == type_)
-		return shared_from_this();
+		return this;
 	else
 		return nullptr;
 }
@@ -140,10 +140,10 @@ std::shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(const std::string& 
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeNoeud)
+NoeudAbstrait* NoeudAbstrait::chercher(const std::string& typeNoeud)
 {
 	if (typeNoeud == type_)
-		return shared_from_this();
+		return this;
 	else
 		return nullptr;
 }
@@ -163,7 +163,7 @@ std::shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher(const std::string& typeNo
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(unsigned int indice) const
+const NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice) const
 {
 	return nullptr;
 }
@@ -183,7 +183,7 @@ std::shared_ptr<const NoeudAbstrait> NoeudAbstrait::chercher(unsigned int indice
 /// @return Le pointeur vers le noeud s'il est trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<NoeudAbstrait> NoeudAbstrait::chercher(unsigned int indice)
+NoeudAbstrait* NoeudAbstrait::chercher(unsigned int indice)
 {
 	return nullptr;
 }

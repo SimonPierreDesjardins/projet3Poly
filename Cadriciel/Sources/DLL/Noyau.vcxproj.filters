@@ -243,9 +243,6 @@
     <ClInclude Include="MachineAEtats\EtatSelection.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
@@ -284,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurRotation.h">
       <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
