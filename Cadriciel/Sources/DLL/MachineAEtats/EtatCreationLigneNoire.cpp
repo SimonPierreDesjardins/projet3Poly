@@ -97,6 +97,7 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 
 void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 {
+	EtatAbstrait::gererMouvementSouris(x, y);
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	

@@ -517,7 +517,7 @@ namespace utilitaire {
 		}
 	}
 
-	float calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux)
+	double calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		double dx = pointDeux[0] - pointUn[0];
 		double dy = pointDeux[1] - pointUn[1];
@@ -542,7 +542,7 @@ namespace utilitaire {
 			return RAD_TO_DEG(3.0 * PI / 2.0);
 		}
 
-		float angle = atan(dy / dx);
+		double angle = atan(dy / dx);
 		if (dy < 0 && dx > 0)
 		{
 			angle += 2 * PI;
