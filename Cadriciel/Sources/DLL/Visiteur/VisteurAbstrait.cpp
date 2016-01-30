@@ -46,11 +46,6 @@ VisiteurAbstrait::~VisiteurAbstrait()
 
 }
 
-std::shared_ptr<const NoeudAbstrait> VisiteurAbstrait::getReferenceNoeud()
-{
-	return referenceNoeud_;
-}
-
 void VisiteurAbstrait::visiter(ArbreRendu* noeud)
 {
 

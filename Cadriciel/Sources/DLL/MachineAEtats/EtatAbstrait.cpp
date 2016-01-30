@@ -112,3 +112,19 @@ void EtatAbstrait::effectuerOperation()
 {
 
 }
+
+void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
+{
+	// TODO: Changer les constantes pour les dimensions dynamiques de la table.
+	const int MIN_X = -48;
+	const int MAX_X =  48;
+	const int MIN_Y = -24;
+	const int MAX_Y =  24;
+	bool positionEstSurTable = (MIN_X <= position[0] && position[0] <= MAX_X && MIN_Y <= position[1] && position[1] <= MAX_Y);
+	gererEstSurTableConcret(positionEstSurTable);
+}
+
+void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
+{
+
+}

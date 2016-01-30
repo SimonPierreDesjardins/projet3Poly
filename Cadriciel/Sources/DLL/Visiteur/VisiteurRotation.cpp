@@ -32,7 +32,7 @@ void VisiteurRotation::visiter(ArbreRendu* noeud)
 void VisiteurRotation::visiter(NoeudTable* noeud)
 {
 	std::shared_ptr<NoeudAbstrait> enfant;
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i);
 		// TODO: à décommenter quand la sélection sera implémentée.
@@ -67,7 +67,7 @@ void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
 	NoeudAbstrait* enfant;
 	double angle;
 	glm::dvec3 nouvellePositionRelative;
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		//TODO: à mettre dans une méthode visiter pour un segment.
 		enfant = noeud->chercher(i).get();
@@ -82,7 +82,7 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 {
 	NoeudAbstrait* enfant;
 	int nSelections = 0;
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i).get();
 		//TODO: à décommenter quand la sélection sera implémentée.

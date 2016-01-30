@@ -37,13 +37,36 @@ void EtatCreationPoteau::gererClicGaucheEnfonce(const int& x, const int& y)
 
 void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 {
-	glm::dvec3 positionRelative;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
-	visiteur_->assignerPositionRelative(positionRelative);
+	if (!curseurEstSurTable_) return;
+	glm::dvec3 positionVirtuelle;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	visiteur_->assignerPositionRelative(positionVirtuelle);
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 }
 
-void EtatCreationPoteau::effectuerOperation()
+void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)
 {
+	glm::dvec3 positionVirtuelle;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	gererEstSurTable(positionVirtuelle);
+}
 
+void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
+{
+	if (positionEstSurTable && !curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = true;
+		// TODO: Ajouter changement de curseur ici.
+		//HCURSOR handle = GetCursor();
+		//SetSystemCursor(handle, 32650);
+		std::cout << "in" << std::endl;
+	}
+	else if (!positionEstSurTable && curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = false;
+		std::cout << "out" << std::endl;
+		//TODO: Ajouter changement de curseur ici.
+		//HCURSOR handle = GetCursor();
+		//SetSystemCursor(handle, 32648);
+	}
 }

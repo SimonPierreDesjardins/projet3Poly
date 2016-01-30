@@ -39,39 +39,22 @@ public:
 
 	virtual void effectuerOperation();
 
-	inline bool estSurTable(const glm::dvec3& position);
+	void gererEstSurTable(const glm::dvec3& position);
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 
+	void modifierSymbolePointeur();
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
 	bool toucheCtrlEnfonce_{ false };
-
-	bool clicGaucheEnfonce_{false};
-	bool clicDroitEnfonce_{false};
+	bool clicGaucheEnfonce_{ false };
+	bool clicDroitEnfonce_{ false };
+	bool curseurEstSurTable_{ false };
 	int ancienX_;
 	int ancienY_;
-	bool estPremierClic_{ false };
-
-	glm::dvec3 positionPremierClic_;
-	glm::dvec3 positionDeuxiemeClic_;
-
 };
 
-
-
-
-
-inline bool EtatAbstrait::estSurTable(const glm::dvec3& position)
-{
-	// TODO: Changer les constantes pour les dimensions dynamiques de la table.
-	const int MIN_X = -48;
-	const int MAX_X =  48;
-	const int MIN_Y = -24;
-	const int MAX_Y =  24;
-
-	return (MIN_X <= position[0] && position[0] <= MAX_X && MIN_Y <= position[1] && position[1] <= MAX_Y);
-}
 
 #endif /// ETAT_ABSTRAIT_H
 

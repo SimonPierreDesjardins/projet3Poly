@@ -20,7 +20,7 @@ EtatDuplication::~EtatDuplication()
 
 }
 
-void EtatDuplication::effectuerOperation()
+void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 {
 
 }

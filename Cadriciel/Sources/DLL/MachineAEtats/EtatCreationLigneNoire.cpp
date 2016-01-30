@@ -40,40 +40,43 @@ EtatCreationLigneNoire::~EtatCreationLigneNoire()
 
 void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
 {
-	//std::cout << x << " " << y << std::endl;
 }
 
 void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 {
+	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
+	if (!curseurEstSurTable_) return;
+	
 	FacadeModele* facade = FacadeModele::obtenirInstance().get();
 	ArbreRenduINF2990* arbre = facade->obtenirArbreRenduINF2990().get();
+	vue::Vue* vue = facade->obtenirVue().get();
+
+	// Calcul et assignation de la position virtuelle.
+	glm::dvec3 positionVirtuelle;
+	vue->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	positionsClic_.push_back(positionVirtuelle);
+
 	// Premier clic avec ou sans CTRL enfoncee.
-	if (!enCreation_ && curseurEstSurTable_)
+	if (!enCreation_)
 	{
 		enCreation_ = true;
-		facade->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_); 
+
 		arbre->accepterVisiteur(visiteur_.get());
 		ligne_ = visiteur_->obtenirReferenceNoeud();
-		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
-		ligne_->ajouter(segment_);
-		positionsClic_.push_back(positionPremierClic_);
-	}
-	// Clic subsequent avec CTRL enfoncee.
-	else if (enCreation_ && toucheCtrlEnfonce_ && curseurEstSurTable_)
-	{
-		// Création du nouveau noeud et assignation au parent.
+
 		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 		ligne_->ajouter(segment_);
 
-		// Assigner la position
-		facade->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
-		positionsClic_.push_back(positionPremierClic_);
+	}
+	// Clic subsequent avec CTRL enfoncee.
+	else if (enCreation_ && toucheCtrlEnfonce_)
+	{
+		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+		ligne_->ajouter(segment_);
 	}
 	// Clic subsequent sans CTRL enfoncee (dernier clic).
-	else if (enCreation_ && !toucheCtrlEnfonce_ && curseurEstSurTable_)
+	else if (enCreation_ && !toucheCtrlEnfonce_)
 	{
-		facade->obtenirVue()->convertirClotureAVirtuelle(x, y, positionDeuxiemeClic_);
-		positionsClic_.push_back(positionDeuxiemeClic_);
 		calculerPositionCentreLigne();
 		ligne_ = nullptr;
 		segment_ = nullptr;
@@ -96,55 +99,26 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 
 void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 {
-	glm::dvec3 positionCurseur;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionCurseur);
+	glm::dvec3 positionVirtuelle;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	
-	if (estSurTable(positionCurseur))
-	{
-		if (!curseurEstSurTable_)
-		{
-			curseurEstSurTable_ = true;
-			if (segment_ != nullptr)
-			{
-				segment_->assignerAffiche(true);
-			}
-			// TODO: Ajouter changement de curseur ici.
-			//HCURSOR handle = GetCursor();
-			//SetSystemCursor(handle, 32650);
-			std::cout << "in" << std::endl;
-		}
-	}
-	else if (curseurEstSurTable_)
-	{
-		curseurEstSurTable_ = false;
-		if (segment_ != nullptr)
-		{
-			segment_->assignerAffiche(false);
-		}
-		std::cout << "out" << std::endl;
-		//TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32648);
-	}
-
-	glm::dvec3 nouvellePosition;
-	double angle = 0;
-	double distance = 0;
+	gererEstSurTable(positionVirtuelle);
 
 	if (enCreation_)
 	{
 		assert(segment_ != nullptr);
-		// Calculer et assigner l'angle relatif.
-		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionCurseur);
+
+		// Calculer et assigner l'angle de rotation.
+		double angle = utilitaire::calculerAngleRotation(positionsClic_.back(), positionVirtuelle);
 		segment_->assignerAngleRotation(angle);
 		
-		// Calculer et assigner le facteur de dimension.
-		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionCurseur);
+		// Calculer et assigner le facteur de mise à échelle.
+		double distance = utilitaire::calculerDistanceHypothenuse(positionsClic_.back(), positionVirtuelle);
 		segment_->assignerFacteurMiseAEchelle(distance);
 
 		// Calculer et assigner la position relative.
-		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionCurseur);
-		segment_->assignerPositionRelative(nouvellePosition);
+		glm::dvec3 positionRelative = utilitaire::calculerPositionEntreDeuxPoints(positionsClic_.back(), positionVirtuelle);
+		segment_->assignerPositionRelative(positionRelative);
 	}
 }
 
@@ -164,7 +138,7 @@ void EtatCreationLigneNoire::gererToucheControlRelachee()
 
 void EtatCreationLigneNoire::calculerPositionCentreLigne()
 {
-	// Si le vecteur de clic est vide on sort.
+	// Si le vecteur de positions est vide, on sort.
 	if (positionsClic_.empty()) return;
 
 	// Initialiser les minimums et les maximums 
@@ -199,12 +173,41 @@ void EtatCreationLigneNoire::calculerPositionCentreLigne()
 
 	// Ajuster la position relative des segments.
 	glm::dvec3 positionEnfant;
-	for (int i = 0; i < ligne_->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < ligne_->obtenirNombreEnfants(); i++)
 	{
 		positionEnfant = ligne_->chercher(i)->obtenirPositionRelative();
 		positionEnfant -= centre;
 		ligne_->chercher(i)->assignerPositionRelative(positionEnfant);
 	}
 	std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
+}
+
+void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
+{
+	if (positionEstSurTable && !curseurEstSurTable_)
+	{
+
+		curseurEstSurTable_ = true;
+		if (segment_ != nullptr)
+		{
+			segment_->assignerAffiche(true);
+		}
+		// TODO: Ajouter changement de curseur ici.
+		//HCURSOR handle = GetCursor();
+		//SetSystemCursor(handle, 32650);
+		std::cout << "in" << std::endl;
+	}
+	else if (!positionEstSurTable && curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = false;
+		if (segment_ != nullptr)
+		{
+			segment_->assignerAffiche(false);
+		}
+		std::cout << "out" << std::endl;
+		//TODO: Ajouter changement de curseur ici.
+		//HCURSOR handle = GetCursor();
+		//SetSystemCursor(handle, 32648);
+	}
 }
 

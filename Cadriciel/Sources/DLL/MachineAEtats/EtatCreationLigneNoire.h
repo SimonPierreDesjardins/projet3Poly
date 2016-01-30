@@ -28,6 +28,7 @@ public:
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 
 private:
 	void calculerPositionCentreLigne();
@@ -35,7 +36,7 @@ private:
 	
 	std::shared_ptr<NoeudAbstrait> ligne_;
 	std::shared_ptr<NoeudAbstrait> segment_;
-	bool curseurEstSurTable_;
+	
 	bool enCreation_{ false };
 	std::vector<glm::dvec3> positionsClic_;
 
