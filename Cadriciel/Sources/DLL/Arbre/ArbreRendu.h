@@ -16,9 +16,9 @@
 #include <string>
 #include <map>
 #include <memory>
+#include "UsineNoeud.h"
 
 class NoeudAbstrait;
-class UsineAbstraite;
 class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -47,7 +47,7 @@ public:
 
    /// Ajoute une usine associée à un type de noeud.
    inline void ajouterUsine(
-      const std::string& type, std::shared_ptr<const UsineAbstraite> usine
+      const std::string& type, std::unique_ptr<const UsineAbstraite> usine
       );
 
    /// Crée un nouveau noeud.
@@ -71,7 +71,7 @@ public:
 private:
    /// Définition du type pour l'association du nom d'un type vers l'usine
    /// correspondante.
-	using RegistreUsines = std::map<std::string, std::shared_ptr<const UsineAbstraite>>;
+	using RegistreUsines = std::map<std::string, std::unique_ptr<const UsineAbstraite>>;
    /// Association du nom d'un type vers l'usine correspondante.
    RegistreUsines usines_;
 
@@ -93,10 +93,10 @@ private:
 ///
 ////////////////////////////////////////////////////////////////////////
 inline void ArbreRendu::ajouterUsine(
-   const std::string& type, std::shared_ptr<const UsineAbstraite> usine
+   const std::string& type, std::unique_ptr<const UsineAbstraite> usine
    )
 {
-   usines_[type] = usine;
+   usines_[type].swap(usine);
 }
 
 

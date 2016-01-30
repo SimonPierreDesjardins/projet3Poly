@@ -100,7 +100,6 @@ private:
    /// Constructeur copie déclaré privé mais non défini pour éviter le
    /// constructeur copie généré par le compilateur.
    NoeudComposite(const NoeudComposite&);
-
 };
 
 
