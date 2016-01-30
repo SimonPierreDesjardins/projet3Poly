@@ -14,6 +14,8 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
+//class VisiteurAbstrait;
+
 class NoeudPoteau : public NoeudAbstrait
 {
 
@@ -26,6 +28,8 @@ public:
 
 	/// Affiche la table.
 	virtual void afficherConcret() const;
+
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 
 #endif

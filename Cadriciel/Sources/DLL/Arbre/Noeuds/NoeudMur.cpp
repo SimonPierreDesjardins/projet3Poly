@@ -16,6 +16,8 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+#include "VisiteurAbstrait.h"
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudMur::NoeudMur(const std::string& typeNoeud)
@@ -75,6 +77,11 @@ void NoeudMur::afficherConcret() const
 
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

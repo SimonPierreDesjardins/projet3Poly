@@ -16,6 +16,8 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+#include "VisiteurAbstrait.h"
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
@@ -78,6 +80,11 @@ void NoeudPoteau::afficherConcret() const
 
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
 }
 
 

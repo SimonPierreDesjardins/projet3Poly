@@ -58,7 +58,6 @@ public:
 	/// Assigne le parent de ce noeud.
 	inline void assignerParent(std::shared_ptr<NoeudAbstrait> parent);
 
-
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 

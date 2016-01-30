@@ -14,9 +14,10 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
+class VisiteurAbstrait;
+
 class NoeudLigneNoire : public NoeudComposite
 {
-
 public:
 
 	/// Constructeur
@@ -27,8 +28,10 @@ public:
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
 private:
-	std::vector<glm::dvec3> points_;
+
 };
 
 #endif

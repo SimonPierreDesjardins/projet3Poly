@@ -53,7 +53,6 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 		ligne_ = visiteur_->obtenirReferenceNoeud();
 		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 		ligne_->ajouter(segment_);
-
 	}
 	//Clic avec CTRL enfoncee
 	else if (enCreation_ && toucheCtrlEnfonce_ && curseurEstSurTable_)

@@ -26,6 +26,8 @@ public:
 
 	/// Affiche la table.
 	virtual void afficherConcret() const;
+
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 
 #endif

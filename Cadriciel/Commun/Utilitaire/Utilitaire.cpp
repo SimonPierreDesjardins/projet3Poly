@@ -517,7 +517,7 @@ namespace utilitaire {
 		}
 	}
 
-	float calculerAngleRotation(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	float calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		double dx = pointDeux[0] - pointUn[0];
 		double dy = pointDeux[1] - pointUn[1];
@@ -558,7 +558,7 @@ namespace utilitaire {
 		return RAD_TO_DEG(angle);
 	}
 
-	double calculerDistanceHypothenuse(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		double distanceX = pointUn[0] - pointDeux[0];
 		double distanceY = pointUn[1] - pointDeux[1];
@@ -566,7 +566,7 @@ namespace utilitaire {
 		return distance;
 	}
 
-	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3 pointUn, glm::dvec3 pointDeux)
+	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		glm::dvec3 nouvellePosition;
 		nouvellePosition[0] = (pointDeux[0] - pointUn[0])* 0.5 + pointUn[0];
@@ -574,6 +574,11 @@ namespace utilitaire {
 		return nouvellePosition;
 	}
 
+	void calculerPositionApresRotation(const glm::dvec3& positionInitiale, glm::dvec3& positionFinale, const double& theta)
+	{
+		positionFinale[0] = positionInitiale[0] * cos(DEG_TO_RAD(theta)) - positionInitiale[1] * sin(DEG_TO_RAD(theta));
+		positionFinale[1] = positionInitiale[0] * sin(DEG_TO_RAD(theta)) + positionInitiale[1] * cos(DEG_TO_RAD(theta));
+	}
 }; // Fin de l'espace de nom utilitaire.
 
 

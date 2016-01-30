@@ -88,6 +88,24 @@ void ArbreRenduINF2990::initialiser()
 	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
 	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
 	ajouter(noeudTable);
+
+	shared_ptr<NoeudAbstrait> noeudMur{ creerNoeud(NOM_MUR) };
+	noeudTable->ajouter(noeudMur);
+
+	shared_ptr<NoeudAbstrait> noeudMur2{ creerNoeud(NOM_MUR) };
+	noeudTable->ajouter(noeudMur2);
+
+	noeudMur->assignerFacteurMiseAEchelle(20);
+	noeudMur->assignerAngleRotation(20);
+	noeudMur->assignerSelection(true);
+	noeudMur->assignerPositionRelative({ 10, 10, 0 });
+
+	noeudMur2->assignerFacteurMiseAEchelle(20);
+	noeudMur2->assignerAngleRotation(-20);
+	noeudMur2->assignerSelection(true);
+	noeudMur2->assignerPositionRelative({ -10, -10, 0 });
+
+
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -18,7 +18,12 @@ class EtatRotation : public EtatAbstrait
 public:
 	EtatRotation();
 	virtual ~EtatRotation();
-	virtual void effectuerOperation();
+	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
+	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int& x, const int& y);
+
+private:
+	int dernierePositionY_;
 };
 
 #endif

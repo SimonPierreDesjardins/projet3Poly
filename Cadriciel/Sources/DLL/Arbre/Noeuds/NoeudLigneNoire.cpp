@@ -16,6 +16,8 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+#include "VisiteurAbstrait.h"
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudLigneNoire::NoeudLigneNoire(const std::string& typeNoeud)
@@ -61,22 +63,25 @@ void NoeudLigneNoire::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
-	/*
+	
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
 
 	//Ajustement du mur avant la création
-	glRotated(angleRotationRelatif_, 0, 0, 1);
-	glScaled(facteurDimension_, 1, 1);
+	//glScaled(facteurDimension_, 1, 1);
 
 	// Affichage du modèle.
-	vbo_->dessiner();
+	//vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
-	*/
+	
 }
 
+void NoeudLigneNoire::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
