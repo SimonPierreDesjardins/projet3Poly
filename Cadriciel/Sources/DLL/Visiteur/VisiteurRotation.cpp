@@ -9,7 +9,6 @@ VisiteurRotation::VisiteurRotation()
 {
 	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0).get();
 	calculerCentreSelection(noeud);
-	std::cout << "Centre: " << centreSelection_[0] << " : " << centreSelection_[1] << std::endl;
 }
 
 
@@ -36,6 +35,7 @@ void VisiteurRotation::visiter(NoeudTable* noeud)
 	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i);
+		// TODO: à décommenter quand la sélection sera implémentée.
 		//if (enfant->estSelectionne())
 		{
 			enfant->accepterVisiteur(this);
@@ -46,26 +46,36 @@ void VisiteurRotation::visiter(NoeudTable* noeud)
 
 void VisiteurRotation::visiter(NoeudPoteau* noeud)
 {
-	glm::dvec3 nouvellePosition;
-	utilitaire::calculerPositionApresRotation(noeud->obtenirPositionRelative() - centreSelection_, nouvellePosition, angleRotation_);
-	noeud->assignerPositionRelative(nouvellePosition);
+	assignerNouvellePositionRelative(noeud);
 }
 
 
 void VisiteurRotation::visiter(NoeudMur* noeud)
 {
-	glm::dvec3 nouvellePosition;
+	// Assigner le nouvel angle de rotation.
 	double angle = noeud->obtenirAngleRotation() + angleRotation_;
 	noeud->assignerAngleRotation(angle);
-	utilitaire::calculerPositionApresRotation(noeud->obtenirPositionRelative() - centreSelection_, nouvellePosition, angleRotation_);
-	noeud->assignerPositionRelative(nouvellePosition);
+	
+	assignerNouvellePositionRelative(noeud);
 }
 
 
 void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
 {
-	double angle = noeud->obtenirAngleRotation() + angleRotation_;
-	noeud->assignerAngleRotation(angle);
+	assignerNouvellePositionRelative(noeud);
+
+	NoeudAbstrait* enfant;
+	double angle;
+	glm::dvec3 nouvellePositionRelative;
+	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	{
+		//TODO: à mettre dans une méthode visiter pour un segment.
+		enfant = noeud->chercher(i).get();
+		utilitaire::calculerPositionApresRotation(enfant->obtenirPositionRelative(), nouvellePositionRelative, angleRotation_);
+		enfant->assignerPositionRelative(nouvellePositionRelative);
+		angle = enfant->obtenirAngleRotation() + angleRotation_;
+		enfant->assignerAngleRotation(angle);
+	}
 }
 
 void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
@@ -75,11 +85,21 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i).get();
+		//TODO: à décommenter quand la sélection sera implémentée.
 		//if (enfant->estSelectionne())
 		{
-			centreSelection_ += noeud->obtenirPositionRelative();
+			centreSelection_ += enfant->obtenirPositionRelative();
 			nSelections++;
 		}
 	}
 	centreSelection_ /= nSelections;
+	std::cout << "calcul centre selection:" << centreSelection_[0] << " : " << centreSelection_[1] << std::endl;
+}
+
+void VisiteurRotation::assignerNouvellePositionRelative(NoeudAbstrait* noeud)
+{
+	glm::dvec3 distanceCentreSelection = noeud->obtenirPositionRelative() - centreSelection_;
+	glm::dvec3 nouvelleDistanceCentreSelection;
+	utilitaire::calculerPositionApresRotation(distanceCentreSelection, nouvelleDistanceCentreSelection, angleRotation_);
+	noeud->assignerPositionRelative(nouvelleDistanceCentreSelection + centreSelection_);
 }

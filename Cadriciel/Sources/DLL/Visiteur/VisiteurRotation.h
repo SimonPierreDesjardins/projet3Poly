@@ -30,9 +30,10 @@ public:
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigneNoire* noeud);
-	//virtual void visiter(NoeudSegment* noeud);
 
 private:
+	void assignerNouvellePositionRelative(NoeudAbstrait* noeud);
+	
 	void calculerCentreSelection(NoeudAbstrait* noeud);
 	glm::dvec3 centreSelection_;
 };

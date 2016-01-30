@@ -42,7 +42,6 @@ void EtatRotation::gererMouvementSouris(const int& x, const int& y)
 	EtatAbstrait::gererMouvementSouris(x, y);
 	if (clicGaucheEnfonce_)
 	{
-		std::cout << "angle:" << y - dernierePositionY_ << std::endl;
 		visiteur_->assignerAngleRotation((double)y - dernierePositionY_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 		dernierePositionY_ = y;
