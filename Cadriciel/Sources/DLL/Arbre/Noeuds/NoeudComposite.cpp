@@ -114,12 +114,12 @@ void NoeudComposite::vider()
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudComposite::effacer(std::shared_ptr<const NoeudAbstrait> noeud)
+void NoeudComposite::effacer(const NoeudAbstrait* noeud)
 {
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
 		it++) {
-		if (*it == noeud) {
+		if ((*it).get() == noeud) {
 			// On a trouvé le noeud à effacer
 			std::shared_ptr<NoeudAbstrait> noeudAEffacer{ (*it) };
 			enfants_.erase(it);

@@ -40,7 +40,7 @@ public:
    ~FacadeModele();
 
    /// Obtient l'instance unique de la classe.
-   static std::shared_ptr<FacadeModele> obtenirInstance();
+   static FacadeModele* obtenirInstance();
    /// Libère l'instance unique de la classe.
    static void libererInstance();
 
@@ -89,7 +89,7 @@ private:
    static const std::string FICHIER_CONFIGURATION;
 
    /// Pointeur vers l'instance unique de la classe.
-   static std::shared_ptr<FacadeModele> instance_;
+   static std::unique_ptr<FacadeModele> instance_;
 
    /// Poignée ("handle") vers la fenêtre où l'affichage se fait.
    HWND  hWnd_{ nullptr };

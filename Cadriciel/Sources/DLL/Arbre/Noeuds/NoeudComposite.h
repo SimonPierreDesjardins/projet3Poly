@@ -46,7 +46,7 @@ public:
    /// Vide le noeud de ses enfants.
    virtual void vider();
    /// Efface le noeud passé en paramètre.
-   virtual void effacer( std::shared_ptr<const NoeudAbstrait> noeud );
+   virtual void effacer( const NoeudAbstrait* noeud );
 
    /// Cherche un noeud par le type (sur un noeud constant).
    virtual std::shared_ptr<const NoeudAbstrait> chercher( const std::string& typeNoeud ) const;

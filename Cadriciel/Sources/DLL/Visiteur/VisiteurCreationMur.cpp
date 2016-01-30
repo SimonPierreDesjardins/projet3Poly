@@ -42,11 +42,10 @@ void VisiteurCreationMur::visiter(NoeudTable* noeud)
 	std::cout << " : " << positionRelative_[2] << std::endl;
 
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_MUR);
+	referenceNoeud_ = nouveauNoeud.get();
 	positionRelative_[2] = 0;
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
 	noeud->ajouter(nouveauNoeud);
-	referenceNoeud_ = nouveauNoeud;
-
 }
 
 void VisiteurCreationMur::visiter(NoeudPoteau* noeud)

@@ -42,12 +42,13 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
 		visiteur_->assignerPositionRelative(positionPremierClic_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-		table_ = visiteur_.get()->obtenirReferenceNoeud();
+		mur_ = visiteur_.get()->obtenirReferenceNoeud();
 	}
 	//Deuxieme clic
 	else
 	{
 		enCreation_ = false;
+		mur_ = nullptr;
 	}
 }
 
@@ -55,8 +56,9 @@ void EtatCreationMur::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(table_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(mur_);
 		enCreation_ = false;
+		mur_ = nullptr;
 	}
 }
 
@@ -73,15 +75,15 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 	{		
 		// Calculer et assigner de l'angle de rotation.
 		double angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
-		table_->assignerAngleRotation(angle);
+		mur_->assignerAngleRotation(angle);
 		
 		// Calculer et assigner le facteur de mise à échelle.
 		double distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
-		table_->assignerFacteurMiseAEchelle(distance);
+		mur_->assignerFacteurMiseAEchelle(distance);
 
 		// Calculer et assigner la position relative.
 		glm::dvec3 nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
-		table_->assignerPositionRelative(nouvellePosition);
+		mur_->assignerPositionRelative(nouvellePosition);
 	}
 }
 
@@ -90,18 +92,18 @@ void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = true;
-		if (table_ != nullptr)
+		if (mur_ != nullptr)
 		{
-			table_->assignerAffiche(true);
+			mur_->assignerAffiche(true);
 		}
 		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = false;
-		if (table_ != nullptr)
+		if (mur_ != nullptr)
 		{
-			table_->assignerAffiche(false);
+			mur_->assignerAffiche(false);
 		}
 		assignerSymbolePointeur(curseurEstSurTable_);
 	}

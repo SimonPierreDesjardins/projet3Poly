@@ -96,7 +96,7 @@ void NoeudAbstrait::vider()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::effacer(std::shared_ptr<const NoeudAbstrait> noeud)
+void NoeudAbstrait::effacer(const NoeudAbstrait* noeud)
 {
 }
 

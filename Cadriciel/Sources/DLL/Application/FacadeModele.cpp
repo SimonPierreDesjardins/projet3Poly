@@ -43,7 +43,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 /// Pointeur vers l'instance unique de la classe.
-std::shared_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
+std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 
 /// Chaîne indiquant le nom du fichier de configuration du projet.
 const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
@@ -63,13 +63,13 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 /// @return Un pointeur vers l'instance unique de cette classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<FacadeModele> FacadeModele::obtenirInstance()
+FacadeModele* FacadeModele::obtenirInstance()
 {
-	if (instance_ == nullptr)
+	if (instance_.get() == nullptr)
 	{
-		instance_ = std::shared_ptr<FacadeModele>(new FacadeModele());
+		instance_ = std::unique_ptr<FacadeModele>(new FacadeModele());
 	}
-	return instance_;
+	return instance_.get();
 }
 
 
