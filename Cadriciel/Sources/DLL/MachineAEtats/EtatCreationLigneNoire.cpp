@@ -24,9 +24,6 @@ EtatCreationLigneNoire::EtatCreationLigneNoire()
 
 EtatCreationLigneNoire::~EtatCreationLigneNoire()
 {
-	//HCURSOR handle = GetCursor();
-	//SetSystemCursor(handle, 32650);
-
 	// Effacer la ligne si on change d'outil lors d'une création.
 	if (enCreation_ && ligne_ != nullptr && segment_ != nullptr)
 	{
@@ -36,6 +33,7 @@ EtatCreationLigneNoire::~EtatCreationLigneNoire()
 	ligne_ = nullptr;
 	segment_ = nullptr;
 	positionsClic_.clear();
+	assignerSymbolePointeur(true);
 }
 
 void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
@@ -186,16 +184,12 @@ void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
-
 		curseurEstSurTable_ = true;
 		if (segment_ != nullptr)
 		{
 			segment_->assignerAffiche(true);
 		}
-		// TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32650);
-		std::cout << "in" << std::endl;
+		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
@@ -204,10 +198,7 @@ void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			segment_->assignerAffiche(false);
 		}
-		std::cout << "out" << std::endl;
-		//TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32648);
+		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 }
 

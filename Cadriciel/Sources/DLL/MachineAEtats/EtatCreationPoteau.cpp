@@ -32,7 +32,6 @@ EtatCreationPoteau::~EtatCreationPoteau()
 
 void EtatCreationPoteau::gererClicGaucheEnfonce(const int& x, const int& y)
 {
-	std::cout << x << " " << y << std::endl;
 }
 
 void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
@@ -56,17 +55,11 @@ void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = true;
-		// TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32650);
-		std::cout << "in" << std::endl;
+		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = false;
-		std::cout << "out" << std::endl;
-		//TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32648);
+		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 }

@@ -29,7 +29,6 @@ EtatCreationMur::~EtatCreationMur()
 
 void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 {
-	std::cout << x << " " << y << std::endl;
 }
 
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
@@ -95,10 +94,7 @@ void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			table_->assignerAffiche(true);
 		}
-		// TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32650);
-		std::cout << "in" << std::endl;
+		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
@@ -107,9 +103,6 @@ void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			table_->assignerAffiche(false);
 		}
-		std::cout << "out" << std::endl;
-		//TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32648);
+		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 }

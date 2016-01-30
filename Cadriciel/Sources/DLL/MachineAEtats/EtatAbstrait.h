@@ -36,13 +36,9 @@ public:
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 
-
-	virtual void effectuerOperation();
-
 	void gererEstSurTable(const glm::dvec3& position);
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
-
-	void modifierSymbolePointeur();
+	void assignerSymbolePointeur(bool estSymboleStandard);
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;

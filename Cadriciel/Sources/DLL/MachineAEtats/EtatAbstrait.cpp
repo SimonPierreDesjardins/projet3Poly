@@ -107,12 +107,6 @@ void EtatAbstrait::gererMoletteSouris(const int & delta){
 		
 }
 
-
-void EtatAbstrait::effectuerOperation()
-{
-
-}
-
 void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 {
 	// TODO: Changer les constantes pour les dimensions dynamiques de la table.
@@ -127,4 +121,22 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
 {
 
+}
+
+void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+{
+	if (estSymboleStandard) 
+	{
+		// TODO: Ajouter changement de curseur ici.
+		//HCURSOR handle = GetCursor();
+		//SetSystemCursor(handle, 32650);
+		std::cout << "in" << std::endl;
+	} 
+	else
+	{
+		//TODO: Ajouter changement de curseur ici.
+		//HCURSOR handle = GetCursor();
+		//SetSystemCursor(handle, 32648);
+		std::cout << "out" << std::endl;
+	}
 }
