@@ -46,7 +46,7 @@ protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
 	bool toucheCtrlEnfonce_{ false };
-	bool enCreation_{ false };
+
 	bool clicGaucheEnfonce_{false};
 	bool clicDroitEnfonce_{false};
 	int ancienX_;
@@ -57,6 +57,10 @@ protected:
 	glm::dvec3 positionDeuxiemeClic_;
 
 };
+
+
+
+
 
 inline bool EtatAbstrait::estSurTable(const glm::dvec3& position)
 {

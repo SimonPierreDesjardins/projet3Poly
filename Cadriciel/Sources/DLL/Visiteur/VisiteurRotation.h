@@ -30,6 +30,7 @@ public:
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigneNoire* noeud);
+	//virtual void visiter(NoeudSegment* noeud);
 
 private:
 	void calculerCentreSelection(NoeudAbstrait* noeud);

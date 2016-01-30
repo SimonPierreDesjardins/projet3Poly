@@ -24,7 +24,6 @@ public:
 	NoeudLigneNoire(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudLigneNoire();
-	inline void ajouterPoint(glm::dvec3 point);
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 

@@ -28,6 +28,8 @@ public:
 
 	virtual void effectuerOperation();
 
+private:
+	bool enCreation_{ false };
 	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
 
 };
