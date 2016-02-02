@@ -38,6 +38,7 @@ namespace InterfaceGraphique
             InitialiserAnimation();
             menuEdition_.Visible = false;
             barreOutils_.Visible = false;
+            panneauOperation_.Visible = false;
         }
 
         public void InitialiserAnimation()
@@ -81,6 +82,7 @@ namespace InterfaceGraphique
         {
             afficherMenuPrincipal(false);
             FonctionsNatives.assignerEtat(Etat.SELECTION);
+            //FonctionsNatives.assignerMode(Mode.EDITION);
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -108,6 +110,7 @@ namespace InterfaceGraphique
             viewPort_.Visible = !afficherMenu;
             menuEdition_.Visible = !afficherMenu;
             barreOutils_.Visible = !afficherMenu;
+            panneauOperation_.Visible = !afficherMenu;
         }
 
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -118,6 +121,7 @@ namespace InterfaceGraphique
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(true);
+            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
@@ -212,6 +216,29 @@ namespace InterfaceGraphique
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
         }
+
+        private void modeTestModeEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerMode(Mode.TEST);
+        }
+
+        private void bouttonSimulation__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerMode(Mode.SIMULATION);
+        }
+
+        private void bouttonConfiguration__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerMode(Mode.CONFIGURE);
+        }
+
+        private void panneauOperation__VisibleChanged(object sender, EventArgs e)
+        {
+            textboxDimension_.Text = "Test Ici";
+            textBoxRotation_.Text = "Test Ici";
+            textBoxPositionX_.Text = "Test Ici";
+            textBoxPositionY_.Text = "Test Ici";
+        }
     }
 
     enum Etat
@@ -229,6 +256,15 @@ namespace InterfaceGraphique
         TEST
     }
 
+    enum Mode
+    {
+        MENU_PRINCIPAL,
+        SIMULATION,
+        EDITION,
+        CONFIGURE,
+        TEST
+    };
+
     static partial class FonctionsNatives
     {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -245,6 +281,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerEtat(Etat etat);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerMode(Mode mode);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void redimensionnerFenetre(int largeur, int hauteur);

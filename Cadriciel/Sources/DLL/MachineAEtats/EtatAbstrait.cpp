@@ -77,22 +77,8 @@ void EtatAbstrait::gererToucheControlRelachee()
 
 }
 
-void EtatAbstrait::gererTouchePlus(){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		;
-	else
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-
-}
-
-void EtatAbstrait::gererToucheMoins(){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		;
-	else
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-}
-
-void EtatAbstrait::gererMoletteSouris(const int & delta){
+void EtatAbstrait::gererMoletteSouris(const int & delta)
+{
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
 		;
 	else{

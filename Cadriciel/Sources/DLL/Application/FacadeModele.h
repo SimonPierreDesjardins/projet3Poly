@@ -18,6 +18,7 @@
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "EtatAbstrait.h"
+#include "ModeAbstrait.h"
 
 class NoeudAbstrait;
 
@@ -58,6 +59,11 @@ public:
    void assignerEtat(Etat etat);
    // Obtenir l'etat courant.
    inline EtatAbstrait* obtenirEtat();
+
+   /// Modifie l'etat courant.
+   void assignerMode(Mode mode);
+   // Obtenir l'etat courant.
+   inline ModeAbstrait* obtenirMode();
 
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
@@ -101,6 +107,7 @@ private:
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
    
    std::unique_ptr<EtatAbstrait> etat_{ nullptr };
+   std::unique_ptr<ModeAbstrait> mode_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -116,6 +123,21 @@ private:
 inline EtatAbstrait* FacadeModele::obtenirEtat()
 {
 	return etat_.get();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline std::shared_ptr<ModeAbstrait> FacadeModele::obtenirMode()
+///
+/// Cette fonction retourne le mode dans lequel se trouve présentement
+/// le modèle.
+///
+/// @return le mode courant.
+///
+////////////////////////////////////////////////////////////////////////
+inline ModeAbstrait* FacadeModele::obtenirMode()
+{
+	return mode_.get();
 }
 
 ////////////////////////////////////////////////////////////////////////

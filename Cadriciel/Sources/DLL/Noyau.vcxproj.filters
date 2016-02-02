@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Visiteur">
       <UniqueIdentifier>{2fad78a4-29b7-4c18-9af9-dada4c0963c0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\MachineAModes">
+      <UniqueIdentifier>{466be5c9-3bec-481f-b206-4bd812a4e86a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\MachineAMode">
+      <UniqueIdentifier>{09293064-47cf-4e37-b7ff-074d481561cd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -169,6 +175,24 @@
     <ClCompile Include="Visiteur\VisiteurRotation.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
+    <ClCompile Include="MachineAModes\ModeAbstrait.cpp">
+      <Filter>Source Files\MachineAMode</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAModes\ModeConfigure.cpp">
+      <Filter>Source Files\MachineAMode</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAModes\ModeEdition.cpp">
+      <Filter>Source Files\MachineAMode</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAModes\ModeMenuPrincipal.cpp">
+      <Filter>Source Files\MachineAMode</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAModes\ModeSimulation.cpp">
+      <Filter>Source Files\MachineAMode</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAModes\ModeTest.cpp">
+      <Filter>Source Files\MachineAMode</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -243,6 +267,9 @@
     <ClInclude Include="MachineAEtats\EtatSelection.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
@@ -282,8 +309,26 @@
     <ClInclude Include="Visiteur\VisiteurRotation.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
-      <Filter>Header Files\Arbre\Noeuds</Filter>
+    <ClInclude Include="MachineAModes\ModeAbstrait.h">
+      <Filter>Header Files\MachineAModes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAModes\ModeConfigure.h">
+      <Filter>Header Files\MachineAModes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAModes\ModeEdition.h">
+      <Filter>Header Files\MachineAModes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAModes\ModeMenuPrincipal.h">
+      <Filter>Header Files\MachineAModes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAModes\ModeSimulation.h">
+      <Filter>Header Files\MachineAModes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAModes\ModeTest.h">
+      <Filter>Header Files\MachineAModes</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAModes\ModeTypes.h">
+      <Filter>Header Files\MachineAModes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

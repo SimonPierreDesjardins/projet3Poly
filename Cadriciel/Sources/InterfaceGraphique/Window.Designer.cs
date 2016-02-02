@@ -67,8 +67,18 @@
             this.outilsCreationPoteau_ = new System.Windows.Forms.ToolStripButton();
             this.outilsCreationMurs_ = new System.Windows.Forms.ToolStripButton();
             this.outilsCreationLigne_ = new System.Windows.Forms.ToolStripButton();
+            this.panneauOperation_ = new System.Windows.Forms.Panel();
+            this.textBoxPositionY_ = new System.Windows.Forms.TextBox();
+            this.textBoxPositionX_ = new System.Windows.Forms.TextBox();
+            this.textBoxRotation_ = new System.Windows.Forms.TextBox();
+            this.textboxDimension_ = new System.Windows.Forms.TextBox();
+            this.panneauPositionY_ = new System.Windows.Forms.Label();
+            this.panneauPositionX_ = new System.Windows.Forms.Label();
+            this.panneauDimension_ = new System.Windows.Forms.Label();
+            this.panneauRotation_ = new System.Windows.Forms.Label();
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
+            this.panneauOperation_.SuspendLayout();
             this.SuspendLayout();
             // 
             // viewPort_
@@ -95,6 +105,7 @@
             this.bouttonSimulation_.TabStop = false;
             this.bouttonSimulation_.Text = "Simulation";
             this.bouttonSimulation_.UseVisualStyleBackColor = true;
+            this.bouttonSimulation_.Click += new System.EventHandler(this.bouttonSimulation__Click);
             // 
             // bouttonEditeur_
             // 
@@ -119,6 +130,7 @@
             this.bouttonConfiguration_.TabStop = false;
             this.bouttonConfiguration_.Text = "Configuration";
             this.bouttonConfiguration_.UseVisualStyleBackColor = true;
+            this.bouttonConfiguration_.Click += new System.EventHandler(this.bouttonConfiguration__Click);
             // 
             // bouttonQuitter_
             // 
@@ -188,6 +200,7 @@
             this.modeTestModeEdition_.Name = "modeTestModeEdition_";
             this.modeTestModeEdition_.Size = new System.Drawing.Size(158, 22);
             this.modeTestModeEdition_.Text = "Mode test";
+            this.modeTestModeEdition_.Click += new System.EventHandler(this.modeTestModeEdition__Click);
             // 
             // menuPrincipalMenuEdition
             // 
@@ -334,7 +347,7 @@
             this.outilsCreationLigne_});
             this.barreOutils_.Location = new System.Drawing.Point(201, 394);
             this.barreOutils_.Name = "barreOutils_";
-            this.barreOutils_.Size = new System.Drawing.Size(250, 25);
+            this.barreOutils_.Size = new System.Drawing.Size(219, 25);
             this.barreOutils_.Stretch = true;
             this.barreOutils_.TabIndex = 7;
             this.barreOutils_.Text = "toolStrip1";
@@ -429,11 +442,95 @@
             this.outilsCreationLigne_.Text = "Création de lignes";
             this.outilsCreationLigne_.Click += new System.EventHandler(this.outilsCreationLigne__Click);
             // 
+            // panneauOperation_
+            // 
+            this.panneauOperation_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panneauOperation_.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panneauOperation_.Controls.Add(this.textBoxPositionY_);
+            this.panneauOperation_.Controls.Add(this.textBoxPositionX_);
+            this.panneauOperation_.Controls.Add(this.textBoxRotation_);
+            this.panneauOperation_.Controls.Add(this.textboxDimension_);
+            this.panneauOperation_.Controls.Add(this.panneauPositionY_);
+            this.panneauOperation_.Controls.Add(this.panneauPositionX_);
+            this.panneauOperation_.Controls.Add(this.panneauDimension_);
+            this.panneauOperation_.Controls.Add(this.panneauRotation_);
+            this.panneauOperation_.Location = new System.Drawing.Point(495, 27);
+            this.panneauOperation_.Name = "panneauOperation_";
+            this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
+            this.panneauOperation_.TabIndex = 8;
+            this.panneauOperation_.VisibleChanged += new System.EventHandler(this.panneauOperation__VisibleChanged);
+            // 
+            // textBoxPositionY_
+            // 
+            this.textBoxPositionY_.Location = new System.Drawing.Point(18, 190);
+            this.textBoxPositionY_.Name = "textBoxPositionY_";
+            this.textBoxPositionY_.Size = new System.Drawing.Size(84, 20);
+            this.textBoxPositionY_.TabIndex = 7;
+            // 
+            // textBoxPositionX_
+            // 
+            this.textBoxPositionX_.Location = new System.Drawing.Point(18, 132);
+            this.textBoxPositionX_.Name = "textBoxPositionX_";
+            this.textBoxPositionX_.Size = new System.Drawing.Size(84, 20);
+            this.textBoxPositionX_.TabIndex = 6;
+            // 
+            // textBoxRotation_
+            // 
+            this.textBoxRotation_.Location = new System.Drawing.Point(18, 81);
+            this.textBoxRotation_.Name = "textBoxRotation_";
+            this.textBoxRotation_.Size = new System.Drawing.Size(84, 20);
+            this.textBoxRotation_.TabIndex = 5;
+            // 
+            // textboxDimension_
+            // 
+            this.textboxDimension_.Location = new System.Drawing.Point(18, 30);
+            this.textboxDimension_.Name = "textboxDimension_";
+            this.textboxDimension_.Size = new System.Drawing.Size(84, 20);
+            this.textboxDimension_.TabIndex = 4;
+            // 
+            // panneauPositionY_
+            // 
+            this.panneauPositionY_.AutoSize = true;
+            this.panneauPositionY_.Location = new System.Drawing.Point(15, 174);
+            this.panneauPositionY_.Name = "panneauPositionY_";
+            this.panneauPositionY_.Size = new System.Drawing.Size(69, 13);
+            this.panneauPositionY_.TabIndex = 3;
+            this.panneauPositionY_.Text = "Position en Y";
+            // 
+            // panneauPositionX_
+            // 
+            this.panneauPositionX_.AutoSize = true;
+            this.panneauPositionX_.Location = new System.Drawing.Point(15, 116);
+            this.panneauPositionX_.Name = "panneauPositionX_";
+            this.panneauPositionX_.Size = new System.Drawing.Size(69, 13);
+            this.panneauPositionX_.TabIndex = 2;
+            this.panneauPositionX_.Text = "Position en X";
+            // 
+            // panneauDimension_
+            // 
+            this.panneauDimension_.AutoSize = true;
+            this.panneauDimension_.Location = new System.Drawing.Point(15, 14);
+            this.panneauDimension_.Name = "panneauDimension_";
+            this.panneauDimension_.Size = new System.Drawing.Size(108, 13);
+            this.panneauDimension_.TabIndex = 1;
+            this.panneauDimension_.Text = "Facteur de dimension";
+            // 
+            // panneauRotation_
+            // 
+            this.panneauRotation_.AutoSize = true;
+            this.panneauRotation_.Location = new System.Drawing.Point(15, 65);
+            this.panneauRotation_.Name = "panneauRotation_";
+            this.panneauRotation_.Size = new System.Drawing.Size(87, 13);
+            this.panneauRotation_.TabIndex = 0;
+            this.panneauRotation_.Text = "Angle de rotation";
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 428);
+            this.Controls.Add(this.panneauOperation_);
             this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuEdition_);
             this.Controls.Add(this.bouttonSimulation_);
@@ -452,6 +549,8 @@
             this.menuEdition_.PerformLayout();
             this.barreOutils_.ResumeLayout(false);
             this.barreOutils_.PerformLayout();
+            this.panneauOperation_.ResumeLayout(false);
+            this.panneauOperation_.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -499,6 +598,15 @@
         private System.Windows.Forms.ToolStripButton outilsCreationPoteau_;
         private System.Windows.Forms.ToolStripButton outilsCreationMurs_;
         private System.Windows.Forms.ToolStripButton outilsCreationLigne_;
+        private System.Windows.Forms.Panel panneauOperation_;
+        private System.Windows.Forms.Label panneauRotation_;
+        private System.Windows.Forms.Label panneauPositionY_;
+        private System.Windows.Forms.Label panneauPositionX_;
+        private System.Windows.Forms.Label panneauDimension_;
+        private System.Windows.Forms.TextBox textBoxPositionY_;
+        private System.Windows.Forms.TextBox textBoxPositionX_;
+        private System.Windows.Forms.TextBox textBoxRotation_;
+        private System.Windows.Forms.TextBox textboxDimension_;
     }
 }
 

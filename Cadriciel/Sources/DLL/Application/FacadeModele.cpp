@@ -8,7 +8,6 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-
 // Commentaire Doxygen mis sur la première page de la documentation Doxygen.
 /**
 
@@ -43,6 +42,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include "EtatTypes.h"
+#include "ModeTypes.h"
 
 /// Pointeur vers l'instance unique de la classe.
 std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
@@ -417,7 +417,34 @@ void FacadeModele::assignerEtat(Etat etat)
 		}
 }
 
+void FacadeModele::assignerMode(Mode mode)
+{
+	switch (mode)
+	{
+		case MENU_PRINCIPAL:
+			mode_ = std::make_unique<ModeMenuPrincipal>();
+			break;
 
+		case SIMULATION:
+			mode_ = std::make_unique<ModeSimulation>();
+			break;
+
+		case EDITION:
+			mode_ = std::make_unique<ModeEdition>();
+			break;
+
+		case CONFIGURE:
+			mode_ = std::make_unique<ModeConfigure>();
+			break;
+
+		case TEST:
+			mode_ = std::make_unique<ModeTest>();
+			break;
+
+		default:
+			break;
+	}
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
