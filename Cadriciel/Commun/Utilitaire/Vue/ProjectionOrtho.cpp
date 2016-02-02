@@ -225,12 +225,19 @@ namespace vue {
 			H = h / yMaxCloture_*H;
 			// Deduire W
 			W = R*H;
+
+			//On rajuste les decalages pour centrer
+			decalageX -= (R - r)*W / 2;
 		}
 		else{
 			W = w / xMaxCloture_*W;
 			// Deduire H
 			H = W / R;
+
+			//On rajuste les decalages pour centrer
+			decalageY -= (1/R - 1/r)*H / 2;
 		}
+		//On rajuste les decalages pour les centrer
 
 		//Appliquer les transformations a la fenetre
 		yMaxFenetre_ -= decalageY;
