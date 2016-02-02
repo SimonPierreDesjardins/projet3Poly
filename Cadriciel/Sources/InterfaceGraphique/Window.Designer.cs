@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Window));
             this.viewPort_ = new System.Windows.Forms.Panel();
+            this.barreOutils_ = new System.Windows.Forms.ToolStrip();
             this.bouttonSimulation_ = new System.Windows.Forms.Button();
             this.bouttonEditeur_ = new System.Windows.Forms.Button();
             this.bouttonConfiguration_ = new System.Windows.Forms.Button();
@@ -57,6 +59,17 @@
             this.orbiteMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.informationsMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.aideMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.outilsSelection_ = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.outilsRotation_ = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.outilsZoom_ = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
+            this.viewPort_.SuspendLayout();
+            this.barreOutils_.SuspendLayout();
             this.menuEdition_.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,13 +79,35 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort_.AutoSize = true;
+            this.viewPort_.Controls.Add(this.barreOutils_);
             this.viewPort_.Location = new System.Drawing.Point(0, 27);
             this.viewPort_.Name = "viewPort_";
             this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.viewPort_.Size = new System.Drawing.Size(623, 400);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
-            this.viewPort_.Paint += new System.Windows.Forms.PaintEventHandler(this.viewPort__Paint);
+            // 
+            // barreOutils_
+            // 
+            this.barreOutils_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.barreOutils_.BackColor = System.Drawing.Color.Transparent;
+            this.barreOutils_.Dock = System.Windows.Forms.DockStyle.None;
+            this.barreOutils_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.outilsSelection_,
+            this.toolStripButton2,
+            this.outilsRotation_,
+            this.toolStripButton4,
+            this.toolStripButton5,
+            this.outilsZoom_,
+            this.toolStripButton7,
+            this.toolStripButton8,
+            this.toolStripButton9});
+            this.barreOutils_.Location = new System.Drawing.Point(200, 317);
+            this.barreOutils_.Name = "barreOutils_";
+            this.barreOutils_.Size = new System.Drawing.Size(219, 25);
+            this.barreOutils_.TabIndex = 0;
+            this.barreOutils_.Text = "toolStrip1";
             // 
             // bouttonSimulation_
             // 
@@ -306,6 +341,87 @@
             this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
             this.aideMenuEdition_.Text = "Aide";
             // 
+            // outilsSelection_
+            // 
+            this.outilsSelection_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsSelection_.Image = global::InterfaceGraphique.Properties.Resources.ic_near_me_white_48dp_2x;
+            this.outilsSelection_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsSelection_.Name = "outilsSelection_";
+            this.outilsSelection_.Size = new System.Drawing.Size(23, 22);
+            this.outilsSelection_.Text = "outilsSelection_";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
+            // 
+            // outilsRotation_
+            // 
+            this.outilsRotation_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsRotation_.Image = global::InterfaceGraphique.Properties.Resources.ic_loop_white_48dp_2x;
+            this.outilsRotation_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsRotation_.Name = "outilsRotation_";
+            this.outilsRotation_.Size = new System.Drawing.Size(23, 22);
+            this.outilsRotation_.Text = "outilsRotation_";
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = global::InterfaceGraphique.Properties.Resources.ic_settings_overscan_white_48dp_2x;
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Text = "toolStripButton4";
+            // 
+            // toolStripButton5
+            // 
+            this.toolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton5.Image = global::InterfaceGraphique.Properties.Resources.editcopy;
+            this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton5.Name = "toolStripButton5";
+            this.toolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton5.Text = "toolStripButton5";
+            // 
+            // outilsZoom_
+            // 
+            this.outilsZoom_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsZoom_.Image = global::InterfaceGraphique.Properties.Resources.ic_search_white_48dp_2x;
+            this.outilsZoom_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsZoom_.Name = "outilsZoom_";
+            this.outilsZoom_.Size = new System.Drawing.Size(23, 22);
+            this.outilsZoom_.Text = "outilsZoom_";
+            // 
+            // toolStripButton7
+            // 
+            this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton7.Name = "toolStripButton7";
+            this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton7.Text = "toolStripButton7";
+            // 
+            // toolStripButton8
+            // 
+            this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
+            this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton8.Name = "toolStripButton8";
+            this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton8.Text = "toolStripButton8";
+            // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 20);
+            this.toolStripButton9.Text = "toolStripButton9";
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -324,6 +440,10 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
             this.Resize += new System.EventHandler(this.Window_Resize);
+            this.viewPort_.ResumeLayout(false);
+            this.viewPort_.PerformLayout();
+            this.barreOutils_.ResumeLayout(false);
+            this.barreOutils_.PerformLayout();
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
             this.ResumeLayout(false);
@@ -363,6 +483,16 @@
         private System.Windows.Forms.ToolStripMenuItem poteauMenuEdition_;
         private System.Windows.Forms.ToolStripMenuItem murMenuEdition_;
         private System.Windows.Forms.ToolStripMenuItem ligneNoireMenuEdition_;
+        private System.Windows.Forms.ToolStrip barreOutils_;
+        private System.Windows.Forms.ToolStripButton outilsSelection_;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripButton outilsRotation_;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
+        private System.Windows.Forms.ToolStripButton toolStripButton5;
+        private System.Windows.Forms.ToolStripButton outilsZoom_;
+        private System.Windows.Forms.ToolStripButton toolStripButton7;
+        private System.Windows.Forms.ToolStripButton toolStripButton8;
+        private System.Windows.Forms.ToolStripButton toolStripButton9;
     }
 }
 

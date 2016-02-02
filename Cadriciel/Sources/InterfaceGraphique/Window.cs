@@ -162,11 +162,6 @@ namespace InterfaceGraphique
             FonctionsNatives.dessinerOpenGL();
         }
 
-        private void viewPort__Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void Window_Load(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL

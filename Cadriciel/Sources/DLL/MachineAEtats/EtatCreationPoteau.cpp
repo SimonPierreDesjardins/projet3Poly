@@ -53,6 +53,8 @@ void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)
 
 void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
 {
+	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
+
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = true;

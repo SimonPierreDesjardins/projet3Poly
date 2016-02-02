@@ -87,6 +87,8 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 
 void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 {
+	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
+
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = true;
