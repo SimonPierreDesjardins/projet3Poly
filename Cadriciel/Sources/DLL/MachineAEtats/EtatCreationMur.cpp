@@ -63,6 +63,7 @@ void EtatCreationMur::gererToucheEchappe()
 void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
+
 	// Calculer la position virtuelle.
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
@@ -96,7 +97,6 @@ void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			table_->assignerAffiche(true);
 		}
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
@@ -105,6 +105,5 @@ void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			table_->assignerAffiche(false);
 		}
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 }

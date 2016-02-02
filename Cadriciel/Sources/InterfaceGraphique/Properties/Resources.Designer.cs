@@ -93,6 +93,16 @@ namespace InterfaceGraphique.Properties {
         /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ic_open_with {
+            get {
+                object obj = ResourceManager.GetObject("ic_open_with", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ic_search_white_48dp_2x {
             get {
                 object obj = ResourceManager.GetObject("ic_search_white_48dp_2x", resourceCulture);
@@ -106,6 +116,36 @@ namespace InterfaceGraphique.Properties {
         internal static System.Drawing.Bitmap ic_settings_overscan_white_48dp_2x {
             get {
                 object obj = ResourceManager.GetObject("ic_settings_overscan_white_48dp_2x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ionic {
+            get {
+                object obj = ResourceManager.GetObject("ionic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap line2 {
+            get {
+                object obj = ResourceManager.GetObject("line2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap walls1 {
+            get {
+                object obj = ResourceManager.GetObject("walls1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

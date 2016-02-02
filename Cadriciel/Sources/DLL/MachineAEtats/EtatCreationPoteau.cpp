@@ -58,11 +58,9 @@ void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = true;
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = false;
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 }

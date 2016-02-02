@@ -37,6 +37,7 @@ namespace InterfaceGraphique
             InitializeComponent();
             InitialiserAnimation();
             menuEdition_.Visible = false;
+            barreOutils_.Visible = false;
         }
 
         public void InitialiserAnimation()
@@ -79,7 +80,6 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
-            menuEdition_.Visible = true;
             FonctionsNatives.assignerEtat(Etat.SELECTION);
         }
 
@@ -107,6 +107,7 @@ namespace InterfaceGraphique
             bouttonSimulation_.Visible = afficherMenu;
             viewPort_.Visible = !afficherMenu;
             menuEdition_.Visible = !afficherMenu;
+            barreOutils_.Visible = !afficherMenu;
         }
 
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -117,7 +118,6 @@ namespace InterfaceGraphique
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(true);
-            menuEdition_.Visible = false;
         }
 
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
@@ -166,6 +166,51 @@ namespace InterfaceGraphique
         {
             // On gère cette redimension dans openGL
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void outilsSelection__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.SELECTION);
+        }
+
+        private void outilsDéplacement__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+        }
+
+        private void outilsRotation__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ROTATION);
+        }
+
+        private void outilsMiseAEchelle__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+        }
+
+        private void outilsDuplication__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+        }
+
+        private void outilsZoom__Click(object sender, EventArgs e)
+        {
+            //FonctionsNatives.assignerEtat(Etat.ZOOM);
+        }
+
+        private void outilsCreationPoteau__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+        }
+
+        private void outilsCreationMurs__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+        }
+
+        private void outilsCreationLigne__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
         }
     }
 

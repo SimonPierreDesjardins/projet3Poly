@@ -290,12 +290,15 @@ extern "C"
 				case VK_ESCAPE:
 					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheEchappe();
 					break;
+
 				case VK_OEM_PLUS:
 					FacadeModele::obtenirInstance()->obtenirEtat()->gererTouchePlus();
 					break;
+
 				case VK_OEM_MINUS:
 					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheMoins();
 					break;
+
 				default:
 					break;
 			}
