@@ -15,6 +15,7 @@
 #include "Modele3D.h"
 #include "AideGL.h"
 #include "Utilitaire.h"
+#include "Mesh.h"
 
 namespace opengl{
 	////////////////////////////////////////////////////////////////////////
@@ -165,8 +166,13 @@ namespace opengl{
 
 			/// Pour une raison ou une autre, il faut la désactiver après le dessin 
 			/// si le modèle possède des couleurs de vertex.
+
 			if (possedeCouleurs)
+			{
 				glDisable(GL_COLOR_MATERIAL);
+				mesh::Couleur couleur = mesh.obtenirCouleurs();
+				glColor4f(couleur[0], couleur[1], couleur[2], couleur[3]);
+			}
 			if (possedeNormales)
 				glDisable(GL_LIGHTING);
 

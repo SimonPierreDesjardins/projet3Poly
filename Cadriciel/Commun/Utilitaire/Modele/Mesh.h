@@ -75,6 +75,10 @@ namespace modele{
 		/// Vérifier si le mesh contient des faces
 		inline bool possedeFaces() const;
 
+		inline void ajouterCouleur(glm::vec4 couleur);
+
+		inline Couleur obtenirCouleurVec();
+
 	private:
 		/// Permet d'allouer la mémoire nécessaire pour contenir le mesh
 		void reserverMemoire(aiMesh const* mesh);
@@ -263,6 +267,17 @@ namespace modele{
 	inline bool Mesh::possedeFaces() const
 	{
 		return !faces_.empty();
+	}
+
+	inline void Mesh::ajouterCouleur(glm::vec4 couleur)
+	{
+		couleurs_.push_back(couleur);
+	}
+
+	inline Mesh::Couleur Mesh::obtenirCouleurVec()
+	{
+		Couleur couleurVec = couleurs_.pop_back();
+		return couleurVec;
 	}
 
 } /// fin de rendering
