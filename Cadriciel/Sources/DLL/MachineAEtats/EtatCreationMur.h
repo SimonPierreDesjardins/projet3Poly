@@ -25,11 +25,17 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int&y);
 	virtual void gererToucheEchappe();
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 
-	virtual void effectuerOperation();
-
-	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
+private:
+	bool enCreation_{ false };
+	glm::dvec3 positionPremierClic_;
+	std::shared_ptr<NoeudAbstrait> table_;
 
 };
 
 #endif
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

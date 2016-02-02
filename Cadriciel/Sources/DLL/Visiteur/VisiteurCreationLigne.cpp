@@ -45,8 +45,3 @@ void VisiteurCreationLigne::visiter(NoeudTable* noeud)
 	noeud->ajouter(nouveauNoeud);
 	referenceNoeud_ = nouveauNoeud;
 }
-
-void VisiteurCreationLigne::visiter(NoeudPoteau* noeud)
-{
-
-}

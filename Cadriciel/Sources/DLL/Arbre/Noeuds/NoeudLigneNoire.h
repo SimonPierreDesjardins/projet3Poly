@@ -14,18 +14,23 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
+class VisiteurAbstrait;
+
 class NoeudLigneNoire : public NoeudComposite
 {
-
 public:
 
 	/// Constructeur
 	NoeudLigneNoire(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudLigneNoire();
-
 	/// Affiche la table.
 	virtual void afficherConcret() const;
+
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+private:
+
 };
 
 #endif

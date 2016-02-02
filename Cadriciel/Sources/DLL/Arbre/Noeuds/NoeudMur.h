@@ -14,7 +14,7 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
-class NoeudMur : public NoeudComposite
+class NoeudMur : public NoeudAbstrait
 {
 
 public:
@@ -27,9 +27,7 @@ public:
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 
-	//TODO:
-	//Voir s'il faut un pointInitial et un pointFinale
-	//Pour savoir si un mur est deja present sur ses coordonnes
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 
 #endif

@@ -1,39 +1,45 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurCreationPoteau.h
+/// @file VisiteurRotation.h
 /// @author Olivier St-Amour
-/// @date 2016-01-22
+/// @date 2016-01-29
 /// @version 1.0
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef VISITEUR_CREATION_POTEAU_H
-#define VISITEUR_CREATION_POTEAU_H
+#ifndef VISITEUR_ROTATION_H
+#define VISITEUR_ROTATION_H
 
 #include "VisiteurAbstrait.h"
 
-class VisiteurCreationPoteau : public VisiteurAbstrait
+class VisiteurRotation : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurCreationPoteau();
+	VisiteurRotation();
 
 	// Constructeur par paramètre.
-	VisiteurCreationPoteau(const int& x, const int& y);
-	
-	/// Destructeur.
-	virtual ~VisiteurCreationPoteau();
+	VisiteurRotation(const int& x, const int& y);
 
-	/// Creation de poteau sur l'arbre de rendu.
+	/// Destructeur.
+	virtual ~VisiteurRotation();
+
 	virtual void visiter(ArbreRendu* noeud);
-	/// Creation de poteau sur la table.
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
+	virtual void visiter(NoeudMur* noeud);
+	virtual void visiter(NoeudLigneNoire* noeud);
+
+private:
+	void assignerNouvellePositionRelative(NoeudAbstrait* noeud);
+	
+	void calculerCentreSelection(NoeudAbstrait* noeud);
+	glm::dvec3 centreSelection_;
 };
 
 
-#endif // VISITEUR_CREATION_POTEAU_H
+#endif // VISITEUR_ROTATION_H
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

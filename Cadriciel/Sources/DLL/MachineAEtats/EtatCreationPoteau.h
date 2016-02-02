@@ -23,9 +23,13 @@ public:
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
-
-	virtual void effectuerOperation();
+	virtual void gererMouvementSouris(const int& x, const int& y);
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);	
 };
 
 
 #endif
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

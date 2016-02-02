@@ -14,6 +14,7 @@
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
 #include <iostream>
+#include <vector>
 
 class EtatCreationLigneNoire : public EtatAbstrait
 {
@@ -25,18 +26,24 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
 	virtual void gererToucheEchappe();
+	virtual void gererToucheControlEnfoncee();
+	virtual void gererToucheControlRelachee();
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 
-	virtual void effectuerOperation();
-
-	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
+private:
+	void calculerPositionCentreLigne();
+	
+	
+	std::shared_ptr<NoeudAbstrait> ligne_;
+	std::shared_ptr<NoeudAbstrait> segment_;
+	
+	bool enCreation_{ false };
+	std::vector<glm::dvec3> positionsClic_;
 
 };
 
-
-
-
-
-
-
-
 #endif
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

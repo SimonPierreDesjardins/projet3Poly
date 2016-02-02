@@ -18,9 +18,8 @@
 
 EtatCreationMur::EtatCreationMur()
 {
-	std::cout << "Creation de poteau" << std::endl;
+	std::cout << "Creation de mur" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationMur>();
-	estPremierClic_ = false;
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -30,58 +29,80 @@ EtatCreationMur::~EtatCreationMur()
 
 void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 {
-	std::cout << x << " " << y << std::endl;
 }
 
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
-	//Deuxieme clic
-	if (estPremierClic_)
-	{
-		estPremierClic_ = false;
-	}
+	if (!curseurEstSurTable_) return;
+	
 	//Premier clic
-	else
+	if (!enCreation_)
 	{
-		estPremierClic_ = true;
+		enCreation_ = true;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
 		visiteur_->assignerPositionRelative(positionPremierClic_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-
-		referenceNoeud_ = visiteur_.get()->obtenirReferenceNoeud();
+		table_ = visiteur_.get()->obtenirReferenceNoeud();
 	}
-	
+	//Deuxieme clic
+	else
+	{
+		enCreation_ = false;
+	}
 }
 
 void EtatCreationMur::gererToucheEchappe()
 {
-	if (estPremierClic_)
+	if (enCreation_)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(referenceNoeud_);
-		estPremierClic_ = false;
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(table_);
+		enCreation_ = false;
 	}
 }
 
 void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 {
+	EtatAbstrait::gererMouvementSouris(x, y);
+	// Calculer la position virtuelle.
 	glm::dvec3 positionVirtuelle;
-	glm::dvec3 nouvellePosition;
-	float angle = 0;
-	double distance = 0;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	
+	gererEstSurTable(positionVirtuelle);
 
-	if (estPremierClic_)
-	{
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-		angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
-		referenceNoeud_->assignerAngleRotation(angle);
-		distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
-		referenceNoeud_->assignerFacteurDimension(distance);
-		nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
-		referenceNoeud_->assignerPositionRelative(nouvellePosition);
+	if (enCreation_)
+	{		
+		// Calculer et assigner de l'angle de rotation.
+		double angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
+		table_->assignerAngleRotation(angle);
+		
+		// Calculer et assigner le facteur de mise à échelle.
+		double distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
+		table_->assignerFacteurMiseAEchelle(distance);
+
+		// Calculer et assigner la position relative.
+		glm::dvec3 nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
+		table_->assignerPositionRelative(nouvellePosition);
 	}
 }
 
-void EtatCreationMur::effectuerOperation()
+void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 {
-
+	if (positionEstSurTable && !curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = true;
+		if (table_ != nullptr)
+		{
+			table_->assignerAffiche(true);
+		}
+		assignerSymbolePointeur(curseurEstSurTable_);
+	}
+	else if (!positionEstSurTable && curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = false;
+		if (table_ != nullptr)
+		{
+			table_->assignerAffiche(false);
+		}
+		assignerSymbolePointeur(curseurEstSurTable_);
+	}
 }

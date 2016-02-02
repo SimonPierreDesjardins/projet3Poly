@@ -16,6 +16,8 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+#include "VisiteurAbstrait.h"
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
@@ -29,7 +31,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
-: NoeudComposite{ typeNoeud }
+: NoeudAbstrait{ typeNoeud }
 {
 }
 
@@ -60,12 +62,12 @@ NoeudPoteau::~NoeudPoteau()
 void NoeudPoteau::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
-	NoeudComposite::afficherConcret();
+//	NoeudComposite::afficherConcret();
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	
+
 	glColor3f(1.0 , 0.0, 0.0);
 	
 
@@ -78,6 +80,11 @@ void NoeudPoteau::afficherConcret() const
 
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
 }
 
 

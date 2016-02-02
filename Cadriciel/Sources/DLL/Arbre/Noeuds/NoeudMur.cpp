@@ -16,6 +16,8 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+#include "VisiteurAbstrait.h"
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudMur::NoeudMur(const std::string& typeNoeud)
@@ -29,10 +31,10 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudMur::NoeudMur(const std::string& typeNoeud)
-: NoeudComposite{ typeNoeud }
+: NoeudAbstrait{ typeNoeud }
 {
 	angleRotationRelatif_ = 0;
-	facteurDimension_ = 1;
+	facteurMiseAEchelle_ = 1;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -61,20 +63,25 @@ NoeudMur::~NoeudMur()
 void NoeudMur::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
-	NoeudComposite::afficherConcret();
+//	NoeudComposite::afficherConcret();
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
 	//Ajustement du mur avant la création
 	glRotated(angleRotationRelatif_, 0, 0, 1);
-	glScaled(facteurDimension_, 1, 1);
-
+	glScaled(facteurMiseAEchelle_, 1, 1);
+	
 	// Affichage du modèle.
 	vbo_->dessiner();
 
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

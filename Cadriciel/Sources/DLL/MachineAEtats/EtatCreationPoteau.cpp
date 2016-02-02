@@ -32,18 +32,35 @@ EtatCreationPoteau::~EtatCreationPoteau()
 
 void EtatCreationPoteau::gererClicGaucheEnfonce(const int& x, const int& y)
 {
-	std::cout << x << " " << y << std::endl;
 }
 
 void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 {
-	glm::dvec3 positionRelative;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
-	visiteur_->assignerPositionRelative(positionRelative);
+	if (!curseurEstSurTable_) return;
+	glm::dvec3 positionVirtuelle;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	visiteur_->assignerPositionRelative(positionVirtuelle);
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 }
 
-void EtatCreationPoteau::effectuerOperation()
+void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)
 {
+	EtatAbstrait::gererMouvementSouris(x, y);
+	glm::dvec3 positionVirtuelle;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	gererEstSurTable(positionVirtuelle);
+}
 
+void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
+{
+	if (positionEstSurTable && !curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = true;
+		assignerSymbolePointeur(curseurEstSurTable_);
+	}
+	else if (!positionEstSurTable && curseurEstSurTable_)
+	{
+		curseurEstSurTable_ = false;
+		assignerSymbolePointeur(curseurEstSurTable_);
+	}
 }

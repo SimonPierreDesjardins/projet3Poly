@@ -18,14 +18,11 @@ class EtatDuplication : public EtatAbstrait
 public:
 	EtatDuplication();
 	virtual ~EtatDuplication();
-	virtual void effectuerOperation();
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 };
 
-
-
-
-
-
-
-
 #endif
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

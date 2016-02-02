@@ -58,7 +58,6 @@ public:
 	/// Assigne le parent de ce noeud.
 	inline void assignerParent(std::shared_ptr<NoeudAbstrait> parent);
 
-
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 
@@ -72,11 +71,10 @@ public:
 	inline void assignerAngleRotation(double angleRotation);
 
 	/// Obtient le facteur de dimension du noeud.
-	inline float obtenirFacteurDimension() const;
+	inline double obtenirFacteurMiseAEchelle() const;
 
 	/// Assigne le facteur de dimension
-	inline void assignerFacteurDimension(float facteurDimension);
-
+	inline void assignerFacteurMiseAEchelle(double facteurDimension);
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -161,13 +159,13 @@ protected:
 	GLenum					modePolygones_{ GL_FILL };
 
 	/// Position relative du noeud.
-	glm::dvec3				positionRelative_;
+	glm::dvec3				positionRelative_{ 0, 0, 0 };
 
 	/// Angle de rotation sur le plan xy
-	float					angleRotationRelatif_;
+	double					angleRotationRelatif_{ 0 };
 
 	/// Facteur de dimension sur le plan xy
-	float					facteurDimension_;
+	double					facteurMiseAEchelle_{ 1 };
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -289,14 +287,14 @@ inline void NoeudAbstrait::assignerAngleRotation(double angleRotation)
 	angleRotationRelatif_ = angleRotation;
 }
 //TODO: Documentation.
-inline float NoeudAbstrait::obtenirFacteurDimension() const
+inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 {
-	return facteurDimension_;
+	return facteurMiseAEchelle_;
 }
 //TODO: Documentation.
-inline void NoeudAbstrait::assignerFacteurDimension(float facteurDimension)
+inline void NoeudAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
 {
-	facteurDimension_ = facteurDimension;
+	facteurMiseAEchelle_ = facteurDimension;
 }
 ////////////////////////////////////////////////////////////////////////
 ///

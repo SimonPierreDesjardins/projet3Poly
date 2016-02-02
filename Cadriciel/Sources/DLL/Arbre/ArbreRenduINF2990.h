@@ -47,17 +47,17 @@ public:
    static const std::string NOM_ROBOT;
    /// La chaîne représentant le type de la table.
    static const std::string NOM_TABLE;
-   /// La chaîne représentant le type de la table.
+   /// La chaîne représentant le type des poteaux.
    static const std::string NOM_POTEAU;
-   /// La chaîne représentant le type de la table.
+   /// La chaîne représentant le type des murs.
    static const std::string NOM_MUR;
-   /// La chaîne représentant le type de la table.
+   /// La chaîne représentant le type des lignes.
    static const std::string NOM_LIGNENOIRE;
+   /// La chaîne représentant le type des segments.
+   static const std::string NOM_SEGMENT;
 };
 
-
 #endif // __ARBRE_ARBRERENDUINF2990_H__
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

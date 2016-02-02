@@ -10,6 +10,7 @@
 
 #include "GL/glew.h"
 #include "ProjectionOrtho.h"
+#include <iostream>
 
 
 namespace vue {
@@ -73,7 +74,19 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::zoomerIn()
 	{
-		// À IMPLANTER.
+		if (currentZoom_ > zoomInMax_){
+			double ajoutX, ajoutY, fx, fy;
+			fx = xMaxFenetre_ - xMinFenetre_;
+			fy = yMaxFenetre_ - yMinFenetre_;
+			ajoutX = ((1 / incrementZoom_)*fx - fx)*0.5;
+			ajoutY = ((1 / incrementZoom_)*fy - fy)*0.5;
+			xMinFenetre_ -= ajoutX;
+			xMaxFenetre_ += ajoutX;
+			yMinFenetre_ -= ajoutY;
+			yMaxFenetre_ += ajoutY;
+
+			currentZoom_ -= 1 / incrementZoom_;
+		}
 	}
 
 
@@ -81,14 +94,26 @@ namespace vue {
 	///
 	/// @fn void ProjectionOrtho::zoomerOut()
 	///
-	/// Permet de faire un zoom out selon l'incrément de zoom.
+	/// Permet de faire un zoom out de 10% selon l'incrément de zoom.
 	///
 	/// @return Aucune.
 	///
 	//////////////////////////////////////////////////////////////////////// 
 	void ProjectionOrtho::zoomerOut()
 	{
-		// À IMPLANTER.
+		if (currentZoom_ < zoomOutMax_){
+			double ajoutX, ajoutY, fx, fy;
+			fx = xMaxFenetre_ - xMinFenetre_;
+			fy = yMaxFenetre_ - yMinFenetre_;
+			ajoutX = (fx*incrementZoom_ - fx)*0.5;
+			ajoutY = (fy*incrementZoom_ - fy)*0.5;
+			xMinFenetre_ -= ajoutX;
+			xMaxFenetre_ += ajoutX;
+			yMinFenetre_ -= ajoutY;
+			yMaxFenetre_ += ajoutY;
+
+			currentZoom_ += incrementZoom_;
+		}
 	}
 
 
@@ -114,10 +139,28 @@ namespace vue {
 	void ProjectionOrtho::redimensionnerFenetre(const glm::ivec2& coinMin,
 		const glm::ivec2& coinMax)
 	{
-		xMinFenetre_ = coinMin.x;
-		yMinFenetre_ = coinMin.y;
-		xMaxFenetre_ = coinMax.x;
-		yMaxFenetre_ = coinMax.y;
+		
+
+		//translater(glm::ivec2(-(coinMax.y - xMaxCloture_), -(coinMax.x - yMaxCloture_)));
+		double dx, dy;
+		dx = double(coinMax.x - xMaxCloture_) / xMaxCloture_;
+		dy = double(coinMax.y - yMaxCloture_) / yMaxCloture_;
+		xMaxCloture_ = coinMax.x;
+		yMaxCloture_ = coinMax.y;
+
+		//Redimensionnement fenetre virtuelle
+		double ajoutX, ajoutY;
+
+		ajoutX = dx*(xMaxFenetre_-xMinFenetre_)*0.5;
+		ajoutY = dy*(yMaxFenetre_-yMinFenetre_)*0.5;
+
+		yMinFenetre_ -= ajoutY;
+		yMaxFenetre_ += ajoutY;
+		xMaxFenetre_ += ajoutX;
+		xMinFenetre_ -= ajoutX;
+
+		ajusterRapportAspect();
+		mettreAJourCloture();
 		mettreAJourProjection();
 	}
 
@@ -198,7 +241,10 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::translater(double deplacementX, double deplacementY)
 	{
-		// À IMPLANTER.
+		xMinFenetre_ += deplacementX;
+		xMaxFenetre_ += deplacementX;
+		yMinFenetre_ += deplacementY;
+		yMaxFenetre_ += deplacementY;
 	}
 
 
@@ -216,7 +262,15 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::translater(const glm::ivec2& deplacement)
 	{
-		// À IMPLANTER.
+		double deplacementX, deplacementY, fx, fy, cx, cy;
+		fx = (xMaxFenetre_ - xMinFenetre_);
+		fy = (yMaxFenetre_ - yMinFenetre_);
+		cx = (xMaxCloture_ - xMinCloture_);
+		cy = (yMaxCloture_ - yMinCloture_);
+		deplacementX = (double(deplacement.x) / cx*fx);
+		deplacementY = (double(deplacement.y) / cy*fy);
+
+		translater(deplacementX, deplacementY);
 	}
 
 
@@ -251,11 +305,25 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::ajusterRapportAspect()
 	{
-		double ratio = (xMaxCloture_ - xMinCloture_) / (yMaxCloture_ - yMinCloture_);
-		xMaxFenetre_ *= ratio;
-		xMinFenetre_ *= ratio;
-		yMaxFenetre_ /= ratio;
-		yMinFenetre_ /= ratio;
+
+		GLdouble fx, fy, cx, cy, ratioCloture, ratioFenetre, ajout;
+		fx = (xMaxFenetre_ - xMinFenetre_);
+		fy = (yMaxFenetre_ - yMinFenetre_);
+		cx = (xMaxCloture_ - xMinCloture_);
+		cy = (yMaxCloture_ - yMinCloture_);
+
+		ratioCloture = cx / cy;
+		ratioFenetre = fx / fy;
+		if (fx * cy < fy * cx){
+			ajout = (ratioCloture - ratioFenetre)*fx*0.5;
+			xMinFenetre_ -= ajout;
+			xMaxFenetre_ += ajout;
+		}
+		else{
+			ajout = (1 /ratioCloture - 1 / ratioFenetre)*fy*0.5;
+			yMinFenetre_ -= ajout;
+			yMaxFenetre_ += ajout;
+		}
 	}
 
 }; // Fin du namespace vue.

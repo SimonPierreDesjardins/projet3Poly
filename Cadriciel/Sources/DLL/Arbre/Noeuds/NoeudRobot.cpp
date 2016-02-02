@@ -72,6 +72,17 @@ void NoeudRobot::afficherConcret() const
 }
 
 
+void NoeudRobot::animer(float temps)
+{
+	// Appel à la version de la classe de base pour l'animation des enfants.
+	NoeudComposite::animer(temps);
+
+	// L'araignée oscille selon une période de 4 secondes.
+	angle_ = fmod(angle_ + temps / 4.0f * 360.0f, 360.0f);
+	positionRelative_[0] = 100 * cos(utilitaire::DEG_TO_RAD(angle_));
+	positionRelative_[1] = 60 * sin(utilitaire::DEG_TO_RAD(angle_));
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

@@ -69,6 +69,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <AdditionalDependencies>opengl32.lib;glu32.lib;freetype246_D_x64.lib;glew32s.lib;tinyxml_D_x64.lib;assimp.lib;cppunit_D_x64.lib;ftgl.lib;fmodexL64_vc.lib;FreeImage.lib;Box2D_D_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -90,6 +91,9 @@
       <Message>
       </Message>
     </PostBuildEvent>
+    <Bscmake>
+      <PreserveSbr>true</PreserveSbr>
+    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Midl>
@@ -136,6 +140,7 @@
     <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudPoteau.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudRobot.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudSegment.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
     <ClCompile Include="Arbre\ArbreRendu.cpp" />
@@ -158,6 +163,7 @@
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
+    <ClCompile Include="Visiteur\VisiteurRotation.cpp" />
     <ClCompile Include="Visiteur\VisiteurSelection.cpp" />
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
@@ -169,6 +175,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudMur.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudPoteau.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudRobot.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudSegment.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
     <ClInclude Include="Configuration\ConfigScene.h" />
@@ -195,6 +202,7 @@
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
+    <ClInclude Include="Visiteur\VisiteurRotation.h" />
     <ClInclude Include="Visiteur\VisiteurSelection.h" />
     <ClInclude Include="Visiteur\VisiteurTypes.h" />
   </ItemGroup>

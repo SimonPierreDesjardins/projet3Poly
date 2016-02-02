@@ -21,22 +21,39 @@ public:
 	EtatAbstrait();
 	virtual ~EtatAbstrait();
 
+	// Gestion de la souris
 	virtual void gererClicDroitEnfonce(const int& x, const int& y);
 	virtual void gererClicDroitRelache(const int& x, const int& y);
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
-	virtual void gererToucheEchappe();
+	virtual void gererMoletteSouris(const int & delta);
 
-	virtual void effectuerOperation() = 0;
+	// Gestion de touches
+	virtual void gererToucheEchappe();
+	virtual void gererToucheControlEnfoncee();
+	virtual void gererToucheControlRelachee();
+	virtual void gererTouchePlus();
+	virtual void gererToucheMoins();
+
+	void gererEstSurTable(const glm::dvec3& position);
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	void assignerSymbolePointeur(bool estSymboleStandard);
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
-	bool estPremierClic_{ false };
-	glm::dvec3 positionPremierClic_;
-	glm::dvec3 positionDeuxiemeClic_;
-
+	bool toucheCtrlEnfonce_{ false };
+	bool clicGaucheEnfonce_{ false };
+	bool clicDroitEnfonce_{ false };
+	bool curseurEstSurTable_{ false };
+	int ancienX_;
+	int ancienY_;
 };
 
-#endif
+
+#endif /// ETAT_ABSTRAIT_H
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

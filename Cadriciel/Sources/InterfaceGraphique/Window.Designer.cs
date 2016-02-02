@@ -62,14 +62,17 @@
             // 
             // viewPort_
             // 
-            this.viewPort_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.viewPort_.BackColor = System.Drawing.SystemColors.Info;
+            this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewPort_.AutoSize = true;
             this.viewPort_.Location = new System.Drawing.Point(0, 27);
             this.viewPort_.Name = "viewPort_";
             this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort_.Size = new System.Drawing.Size(623, 405);
+            this.viewPort_.Size = new System.Drawing.Size(623, 400);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
+            this.viewPort_.Paint += new System.Windows.Forms.PaintEventHandler(this.viewPort__Paint);
             // 
             // bouttonSimulation_
             // 
@@ -319,6 +322,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
+            this.Load += new System.EventHandler(this.Window_Load);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
