@@ -140,6 +140,8 @@ namespace vue {
 		const glm::ivec2& coinMax)
 	{
 		
+		if (coinMax.x < 100 || coinMax.y < 100)
+			return;
 
 		//translater(glm::ivec2(-(coinMax.y - xMaxCloture_), -(coinMax.x - yMaxCloture_)));
 		double dx, dy;
@@ -201,7 +203,41 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::zoomerIn(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
-		// À IMPLANTER.
+		//dimensions du rectum
+		double w = coin2.x - coin1.x;
+		double h = coin2.y - coin1.y;
+
+		//dimensions de la fenetre
+		double W = (xMaxFenetre_ - xMinFenetre_);
+		double H = (yMaxFenetre_ - yMinFenetre_);
+
+		//ratio fenetre
+		double R = W / H;
+		//ratio rectangle
+		double r = w / h;
+		
+		// convertir coin1 en position fenetre virtuelle
+		double decalageX = double(coin1.x) / xMaxCloture_*W;
+		double decalageY = double(coin1.y) / yMaxCloture_*H;
+
+		//Trouver nouvelles dimensions de la fenetre
+		if (R < r){
+			H = h / yMaxCloture_*H;
+			// Deduire W
+			W = R*H;
+		}
+		else{
+			W = w / xMaxCloture_*W;
+			// Deduire H
+			H = W / R;
+		}
+
+		//Appliquer les transformations a la fenetre
+		yMinFenetre_ += decalageY;
+		yMaxFenetre_ = yMinFenetre_ + H;
+		
+		xMinFenetre_ += decalageX;
+		xMaxFenetre_ = xMinFenetre_ + W;
 	}
 
 

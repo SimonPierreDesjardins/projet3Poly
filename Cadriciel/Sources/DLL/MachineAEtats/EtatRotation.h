@@ -18,7 +18,6 @@ class EtatRotation : public EtatAbstrait
 public:
 	EtatRotation();
 	virtual ~EtatRotation();
-	virtual void effectuerOperation();
 };
 
 

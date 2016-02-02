@@ -77,6 +77,16 @@ void EtatAbstrait::gererToucheControlRelachee()
 
 }
 
+void EtatAbstrait::gererToucheAltEnfoncee()
+{
+	toucheAltEnfonce_ = true;
+}
+
+void EtatAbstrait::gererToucheAltRelachee()
+{
+	toucheAltEnfonce_ = false;
+}
+
 void EtatAbstrait::gererTouchePlus(){
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
 		//TODO Gérer le zoom plus pour une camera

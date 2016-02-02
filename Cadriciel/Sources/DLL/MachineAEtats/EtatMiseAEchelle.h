@@ -18,7 +18,6 @@ class EtatMiseAEchelle : public EtatAbstrait
 public:
 	EtatMiseAEchelle();
 	virtual ~EtatMiseAEchelle();
-	virtual void effectuerOperation();
 };
 
 

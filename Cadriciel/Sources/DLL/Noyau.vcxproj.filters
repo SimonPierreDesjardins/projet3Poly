@@ -136,8 +136,7 @@
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp">
-
-    <Filter>Source Files</Filter> 
+      <Filter>Source Files</Filter>
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp">
@@ -163,6 +162,9 @@
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurSelection.cpp">
       <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAEtats\EtatLoupe.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,7 +242,7 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
       <Filter>Header Files</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
@@ -273,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurSelection.h">
       <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAEtats\EtatLoupe.h">
+      <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

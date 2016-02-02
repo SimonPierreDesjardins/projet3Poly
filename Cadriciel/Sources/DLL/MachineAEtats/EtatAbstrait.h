@@ -35,14 +35,14 @@ public:
 	virtual void gererToucheControlRelachee();
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
-
-
-	virtual void effectuerOperation() = 0;
+	virtual void gererToucheAltEnfoncee();
+	virtual void gererToucheAltRelachee();
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
 	bool toucheCtrlEnfonce_{ false };
+	bool toucheAltEnfonce_{ false };
 	bool enCreation_{ false };
 	bool clicGaucheEnfonce_{false};
 	bool clicDroitEnfonce_{false};

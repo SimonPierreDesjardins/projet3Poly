@@ -81,7 +81,3 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 	}
 }
 
-void EtatCreationMur::effectuerOperation()
-{
-
-}

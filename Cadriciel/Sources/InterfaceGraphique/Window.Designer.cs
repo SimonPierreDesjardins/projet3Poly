@@ -57,6 +57,7 @@
             this.orbiteMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.informationsMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.aideMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEdition_.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -200,7 +201,8 @@
             this.rotationMenuEdition_,
             this.miseAEchelleMenuEdition_,
             this.duplicationMenuEdition_,
-            this.creationMenuEdition_});
+            this.creationMenuEdition_,
+            this.zoomToolStripMenuItem});
             this.outilsMenuEdition_.Name = "outilsMenuEdition_";
             this.outilsMenuEdition_.Size = new System.Drawing.Size(50, 20);
             this.outilsMenuEdition_.Text = "Outils";
@@ -306,6 +308,13 @@
             this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
             this.aideMenuEdition_.Text = "Aide";
             // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.zoomToolStripMenuItem.Text = "Zoom";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -363,6 +372,7 @@
         private System.Windows.Forms.ToolStripMenuItem poteauMenuEdition_;
         private System.Windows.Forms.ToolStripMenuItem murMenuEdition_;
         private System.Windows.Forms.ToolStripMenuItem ligneNoireMenuEdition_;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
     }
 }
 

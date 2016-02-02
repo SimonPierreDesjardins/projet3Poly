@@ -18,7 +18,6 @@ class EtatDeplacement : public EtatAbstrait
 public:
 	EtatDeplacement();
 	virtual ~EtatDeplacement();
-	virtual void effectuerOperation();
 };
 
 

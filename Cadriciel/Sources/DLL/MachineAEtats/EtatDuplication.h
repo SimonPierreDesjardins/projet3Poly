@@ -18,7 +18,6 @@ class EtatDuplication : public EtatAbstrait
 public:
 	EtatDuplication();
 	virtual ~EtatDuplication();
-	virtual void effectuerOperation();
 };
 
 

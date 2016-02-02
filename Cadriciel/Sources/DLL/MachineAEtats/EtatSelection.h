@@ -29,8 +29,6 @@ public:
 
 	void gererDragGauche(const int& xAvant, const int& yAvant, const int& xApres, const int& yApres);
 
-	virtual void effectuerOperation();
-
 private : 
 	int xEnfonce;
 	int yEnfonce;

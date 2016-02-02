@@ -172,6 +172,11 @@ namespace InterfaceGraphique
             // On gère cette redimension dans openGL
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
+
+        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ZOOM);
+        }
     }
 
     enum Etat
@@ -181,6 +186,7 @@ namespace InterfaceGraphique
         ROTATION,
         MISE_A_ECHELLE,
         DUPLICATION,
+        ZOOM,
         CREATION_POTEAU,
         CREATION_MUR,
         CREATION_LIGNE_NOIRE,

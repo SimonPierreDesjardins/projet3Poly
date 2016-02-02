@@ -43,7 +43,3 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
 }
 
-void EtatCreationPoteau::effectuerOperation()
-{
-
-}

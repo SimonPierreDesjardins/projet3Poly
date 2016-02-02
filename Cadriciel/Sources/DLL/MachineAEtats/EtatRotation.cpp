@@ -20,7 +20,3 @@ EtatRotation::~EtatRotation()
 
 }
 
-void EtatRotation::effectuerOperation()
-{
-
-}

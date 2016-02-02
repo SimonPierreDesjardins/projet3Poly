@@ -26,8 +26,6 @@ public:
 	virtual void gererMouvementSouris(const int& x, const int&y);
 	virtual void gererToucheEchappe();
 
-	virtual void effectuerOperation();
-
 	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
 
 };

@@ -103,7 +103,3 @@ void EtatCreationLigneNoire::gererToucheControlRelachee()
 	toucheCtrlEnfonce_ = false;
 }
 
-void EtatCreationLigneNoire::effectuerOperation()
-{
-
-}

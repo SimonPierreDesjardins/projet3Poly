@@ -19,8 +19,3 @@ EtatDeplacement::~EtatDeplacement()
 {
 
 }
-
-void EtatDeplacement::effectuerOperation()
-{
-
-}

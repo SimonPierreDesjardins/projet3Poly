@@ -77,8 +77,3 @@ void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const 
 {
 	std::cout << "Drag gauche : " << xAvant << " " << yAvant << " a " << xApres << " " << yApres << std::endl;
 }
-
-void EtatSelection::effectuerOperation()
-{
-
-}

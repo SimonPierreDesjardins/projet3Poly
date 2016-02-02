@@ -19,8 +19,3 @@ EtatDuplication::~EtatDuplication()
 {
 
 }
-
-void EtatDuplication::effectuerOperation()
-{
-
-}

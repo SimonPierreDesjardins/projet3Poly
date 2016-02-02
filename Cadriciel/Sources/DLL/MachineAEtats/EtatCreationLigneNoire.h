@@ -28,8 +28,6 @@ public:
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
 
-	virtual void effectuerOperation();
-
 	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
 
 };
