@@ -114,12 +114,12 @@ void NoeudComposite::vider()
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudComposite::effacer(std::shared_ptr<const NoeudAbstrait> noeud)
+void NoeudComposite::effacer(const NoeudAbstrait* noeud)
 {
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
 		it++) {
-		if (*it == noeud) {
+		if ((*it).get() == noeud) {
 			// On a trouvé le noeud à effacer
 			std::shared_ptr<NoeudAbstrait> noeudAEffacer{ (*it) };
 			enfants_.erase(it);
@@ -145,19 +145,19 @@ void NoeudComposite::effacer(std::shared_ptr<const NoeudAbstrait> noeud)
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(
+const NoeudAbstrait* NoeudComposite::chercher(
 	const std::string& typeNoeud
 	) const
 {
 	if (typeNoeud == type_) {
-		return std::shared_ptr<const NoeudAbstrait>(this);
+		return this;
 	}
 	else {
 		for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_)
 		{
 			std::shared_ptr<NoeudAbstrait> const noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
-				return noeud;
+				return noeud.get();
 			}
 		}
 	}
@@ -178,17 +178,17 @@ std::shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<NoeudAbstrait> NoeudComposite::chercher(const std::string& typeNoeud)
+NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
 {
 	if (typeNoeud == type_) {
-		return shared_from_this();
+		return this;
 	}
 	else {
 		for (std::shared_ptr<NoeudAbstrait> enfant : enfants_)
 		{
 			std::shared_ptr<NoeudAbstrait> noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
-				return noeud;
+				return noeud.get();
 			}
 		}
 	}
@@ -209,13 +209,13 @@ std::shared_ptr<NoeudAbstrait> NoeudComposite::chercher(const std::string& typeN
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(unsigned int indice) const
+const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
 {
 	if ((indice >= 0) && (indice < enfants_.size())) {		/*
 		 
 		shared_ptr<vue::VueOrtho>(new vue::VueOrtho);
 	*/
-		return enfants_[indice];
+		return enfants_[indice].get();
 	}
 	else {
 		return nullptr;
@@ -234,13 +234,13 @@ std::shared_ptr<const NoeudAbstrait> NoeudComposite::chercher(unsigned int indic
 /// @return Noeud recherché ou 0 si le noeud n'est pas trouvé.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<NoeudAbstrait> NoeudComposite::chercher(unsigned int indice)
+NoeudAbstrait* NoeudComposite::chercher(unsigned int indice)
 {		/*
 		 
 		shared_ptr<vue::VueOrtho>(new vue::VueOrtho);
 	*/
 	if ((indice >= 0) && (indice < enfants_.size())) {
-		return enfants_[indice];
+		return enfants_[indice].get();
 	}
 	else {
 		return nullptr;
@@ -261,7 +261,7 @@ std::shared_ptr<NoeudAbstrait> NoeudComposite::chercher(unsigned int indice)
 ////////////////////////////////////////////////////////////////////////
 bool NoeudComposite::ajouter(std::shared_ptr<NoeudAbstrait> enfant)
 {
-	enfant->assignerParent(shared_from_this());
+	enfant->assignerParent(this);
 	enfants_.push_back(enfant);
 
 	return true;

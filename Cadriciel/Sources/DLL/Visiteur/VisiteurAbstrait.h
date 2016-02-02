@@ -10,11 +10,11 @@
 #ifndef VISITEUR_ABSTRAIT_H
 #define VISITEUR_ABSTRAIT_H
 
-#include "FacadeModele.h"
 #include "glm\glm.hpp"
 
-
 class ArbreRendu;
+
+class NoeudAbstrait;
 class NoeudPoteau;
 class NoeudTable;
 class NoeudMur;
@@ -50,7 +50,7 @@ public:
 	inline void assignerPositionRelative(glm::dvec3 positionRelative);
 	inline void assignerAngleRotation(double angleRotation);
 	inline void assignerFacteurDimension(double facteurDimension);
-	inline std::shared_ptr<NoeudAbstrait> obtenirReferenceNoeud();
+	inline NoeudAbstrait* obtenirReferenceNoeud();
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
@@ -63,7 +63,7 @@ protected:
 	double angleRotation_;
 	double facteurDimension_;
 	modele::Modele3D* referenceModele_;
-	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
+	NoeudAbstrait* referenceNoeud_;
 };
 
 
@@ -83,7 +83,7 @@ inline void VisiteurAbstrait::assignerFacteurDimension(double facteurDimension)
 	facteurDimension_ = facteurDimension;
 }
 
-inline std::shared_ptr<NoeudAbstrait> VisiteurAbstrait::obtenirReferenceNoeud()
+inline NoeudAbstrait* VisiteurAbstrait::obtenirReferenceNoeud()
 {
 	return referenceNoeud_;
 }

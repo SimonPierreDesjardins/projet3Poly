@@ -15,6 +15,21 @@
 #include "VisiteurAbstrait.h"
 #include "glm\glm.hpp"
 
+enum Etat
+{
+	SELECTION,
+	DEPLACEMENT,
+	ROTATION,
+	MISE_A_ECHELLE,
+	DUPLICATION,
+	CREATION_POTEAU,
+	CREATION_MUR,
+	CREATION_LIGNE_NOIRE,
+	MENU_PRINCIPAL,
+	SIMULATION,
+	TEST
+};
+
 class EtatAbstrait
 {
 public:

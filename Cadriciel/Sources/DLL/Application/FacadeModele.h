@@ -15,14 +15,11 @@
 #include <string>
 #include <memory>
 
+#include "Vue.h"
+#include "ArbreRenduINF2990.h"
+#include "EtatAbstrait.h"
+
 class NoeudAbstrait;
-class ArbreRenduINF2990;
-class EtatAbstrait;
-
-namespace vue {
-   class Vue;
-}
-
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class FacadeModele
@@ -40,7 +37,7 @@ public:
    ~FacadeModele();
 
    /// Obtient l'instance unique de la classe.
-   static std::shared_ptr<FacadeModele> obtenirInstance();
+   static FacadeModele* obtenirInstance();
    /// Libère l'instance unique de la classe.
    static void libererInstance();
 
@@ -58,16 +55,16 @@ public:
    void afficherBase() const;
 
    /// Modifie l'etat courant.
-   void modifierEtat(std::shared_ptr<EtatAbstrait> etat);
+   void assignerEtat(Etat etat);
    // Obtenir l'etat courant.
-   inline std::shared_ptr<EtatAbstrait> obtenirEtat();
+   inline EtatAbstrait* obtenirEtat();
 
    /// Retourne la vue courante.
-   inline std::shared_ptr<vue::Vue> obtenirVue();
+   inline vue::Vue* obtenirVue();
    /// Retourne l'arbre de rendu.
-   inline std::shared_ptr<ArbreRenduINF2990> obtenirArbreRenduINF2990() const;
+   inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
-   inline std::shared_ptr<ArbreRenduINF2990> obtenirArbreRenduINF2990();
+   inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -89,7 +86,7 @@ private:
    static const std::string FICHIER_CONFIGURATION;
 
    /// Pointeur vers l'instance unique de la classe.
-   static std::shared_ptr<FacadeModele> instance_;
+   static std::unique_ptr<FacadeModele> instance_;
 
    /// Poignée ("handle") vers la fenêtre où l'affichage se fait.
    HWND  hWnd_{ nullptr };
@@ -99,12 +96,11 @@ private:
    HDC   hDC_{ nullptr };
 
    /// Vue courante de la scène.
-   std::shared_ptr<vue::Vue> vue_{ nullptr };
+   std::unique_ptr<vue::Vue> vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
-   std::shared_ptr<ArbreRenduINF2990> arbre_{ nullptr };
+   std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
    
-   std::shared_ptr<EtatAbstrait> etat_{ nullptr };
-  
+   std::unique_ptr<EtatAbstrait> etat_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -117,9 +113,9 @@ private:
 /// @return L'état courant.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline std::shared_ptr<EtatAbstrait> FacadeModele::obtenirEtat()
+inline EtatAbstrait* FacadeModele::obtenirEtat()
 {
-	return etat_;
+	return etat_.get();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -132,9 +128,9 @@ inline std::shared_ptr<EtatAbstrait> FacadeModele::obtenirEtat()
 /// @return La vue courante.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline std::shared_ptr<vue::Vue> FacadeModele::obtenirVue()
+inline vue::Vue* FacadeModele::obtenirVue()
 {
-   return vue_;
+   return vue_.get();
 }
 
 
@@ -148,9 +144,9 @@ inline std::shared_ptr<vue::Vue> FacadeModele::obtenirVue()
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline std::shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
+inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 {
-   return arbre_;
+   return arbre_.get();
 }
 
 
@@ -164,9 +160,9 @@ inline std::shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline std::shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990()
+inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 {
-   return arbre_;
+   return arbre_.get();
 }
 
 

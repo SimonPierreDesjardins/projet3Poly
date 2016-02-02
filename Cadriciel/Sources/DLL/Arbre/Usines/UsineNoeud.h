@@ -32,10 +32,10 @@ class NoeudAbstrait;
 class UsineAbstraite{
 public:
 	virtual shared_ptr<NoeudAbstrait> creerNoeud() const = 0;
-
+	virtual ~UsineAbstraite() = default;
 protected:
 	UsineAbstraite(std::string nom) : nom_(nom) {}
-	virtual ~UsineAbstraite() = default;
+
 
 	/// Retourne le nom associé à l'usine
 	inline const std::string& obtenirNom() const;

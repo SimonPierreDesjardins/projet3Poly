@@ -42,8 +42,10 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "EtatTypes.h"
+
 /// Pointeur vers l'instance unique de la classe.
-std::shared_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
+std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 
 /// Chaîne indiquant le nom du fichier de configuration du projet.
 const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
@@ -63,13 +65,13 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 /// @return Un pointeur vers l'instance unique de cette classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<FacadeModele> FacadeModele::obtenirInstance()
+FacadeModele* FacadeModele::obtenirInstance()
 {
-	if (instance_ == nullptr)
+	if (instance_.get() == nullptr)
 	{
-		instance_ = std::shared_ptr<FacadeModele>(new FacadeModele());
+		instance_ = std::unique_ptr<FacadeModele>(new FacadeModele());
 	}
-	return instance_;
+	return instance_.get();
 }
 
 
@@ -164,11 +166,11 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
 	// l'arbre après avoir créé le contexte OpenGL.
-	arbre_ = std::make_shared<ArbreRenduINF2990>();
+	arbre_ = std::make_unique<ArbreRenduINF2990>();
 	arbre_->initialiser();
 
 	// On crée une vue par défaut.
-	vue_ = std::make_shared<vue::VueOrtho>(
+	vue_ = std::make_unique<vue::VueOrtho>(
 		vue::Camera{
 			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
@@ -374,9 +376,45 @@ void FacadeModele::animer(float temps)
 ///
 ////////////////////////////////////////////////////////////////////////
 
-void FacadeModele::modifierEtat(std::shared_ptr<EtatAbstrait> etat)
+void FacadeModele::assignerEtat(Etat etat)
 {
-	etat_ = etat;
+		switch (etat)
+		{
+			case SELECTION :
+				etat_ = std::make_unique<EtatSelection>();
+				break;
+
+			case DEPLACEMENT :
+				etat_ = std::make_unique<EtatDeplacement>();
+				break;
+
+			case ROTATION :
+				etat_ = std::make_unique<EtatRotation>();
+				break;
+
+			case MISE_A_ECHELLE :
+				etat_ = std::make_unique<EtatMiseAEchelle>();
+				break;
+
+			case DUPLICATION :
+				etat_ = std::make_unique<EtatDuplication>();
+				break;
+
+			case CREATION_POTEAU :
+				etat_ = std::make_unique<EtatCreationPoteau>();
+				break;
+
+			case CREATION_MUR :
+				etat_ = std::make_unique<EtatCreationMur>();
+				break;
+
+			case CREATION_LIGNE_NOIRE :
+				etat_ = std::make_unique<EtatCreationLigneNoire>();
+				break;
+			
+			default:
+				break;
+		}
 }
 
 
