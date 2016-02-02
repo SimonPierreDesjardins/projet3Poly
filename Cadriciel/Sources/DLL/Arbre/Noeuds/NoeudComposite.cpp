@@ -465,6 +465,7 @@ void NoeudComposite::afficherConcret() const
 	for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_){
 		enfant->afficher();
 	}
+		
 }
 
 

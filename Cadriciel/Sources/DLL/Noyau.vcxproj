@@ -201,11 +201,11 @@
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
-    <ClInclude Include="VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
+    <ClInclude Include="Visiteur\VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurRotation.h" />
     <ClInclude Include="Visiteur\VisiteurSelection.h" />
     <ClInclude Include="Visiteur\VisiteurTypes.h" />

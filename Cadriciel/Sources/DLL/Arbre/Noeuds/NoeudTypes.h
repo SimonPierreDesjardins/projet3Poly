@@ -9,5 +9,6 @@
 #include "NoeudMur.h"
 #include "NoeudLigneNoire.h"
 #include "NoeudSegment.h"
+#include "NoeudDuplication.h"
 
 #endif /// __NOEUD_TYPES_H__

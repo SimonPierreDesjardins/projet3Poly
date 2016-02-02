@@ -25,12 +25,26 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurDuplication();
 
-	/// Creation de poteau sur l'arbre de rendu.
+	inline void assignerDuplication(bool enDuplication);
+
+
 	virtual void visiter(ArbreRendu* noeud);
-	/// Creation de poteau sur la table.
-	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudTable* noeud);	
+	virtual void visiter(NoeudPoteau* noeud);
+	virtual void visiter(NoeudMur* noeud);
+	virtual void visiter(NoeudLigneNoire* noeud);
+	virtual void visiter(NoeudSegment* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
+
+private:
+	int nNoeuds_{ 0 };
+	bool enDuplication_{ false };
 };
 
+inline void VisiteurDuplication::assignerDuplication(bool enDuplication)
+{
+	enDuplication_ = enDuplication;
+}
 
 #endif // VISITEUR_DUPLICATION_H
 

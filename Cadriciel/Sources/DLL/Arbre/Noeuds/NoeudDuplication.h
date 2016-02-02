@@ -26,14 +26,26 @@ public:
 	~NoeudDuplication();
 	/// Affiche la table.
 	virtual void afficherConcret() const;
-
+	inline std::shared_ptr<NoeudAbstrait> obtenirDuplication(int indice);
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
 
 };
 
-#endif
+inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(int indice)
+{
+	if ((indice >= 0) && (indice < enfants_.size())) 	
+	{		 
+		return enfants_[indice];
+	}
+	else 
+	{
+		return nullptr;
+	}
+}
+
+#endif // __ARBRE_NOEUDS_NOEUDDUPLICATION_H__
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

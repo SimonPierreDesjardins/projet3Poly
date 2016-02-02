@@ -20,17 +20,35 @@ EtatDuplication::EtatDuplication()
 
 EtatDuplication::~EtatDuplication()
 {
-
 }
 
 void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 {
-
 }
-
 
 
 void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	if (!enDuplication_)
+	{
+		enDuplication_ = true;
+		arbre->accepterVisiteur(visiteur_.get());
+		
+	}
+	else
+	{
+		enDuplication_ = false;
+	}
+}
+
+
+void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
+{
+	if (enDuplication_)
+	{
+		glm::dvec3 positionVirtuelle;
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+		visiteur_->obtenirReferenceNoeud()->assignerPositionRelative(positionVirtuelle);
+	}
 }

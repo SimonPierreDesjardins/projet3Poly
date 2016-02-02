@@ -294,7 +294,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="VisiteurDuplication.h">
+    <ClInclude Include="Visiteur\VisiteurDuplication.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>

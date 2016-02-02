@@ -30,6 +30,8 @@ const std::string ArbreRenduINF2990::NOM_MUR{ "mur" };
 const std::string ArbreRenduINF2990::NOM_LIGNENOIRE{ "ligneNoire" };
 /// La chaîne représentant le type des segments.
 const std::string ArbreRenduINF2990::NOM_SEGMENT{ "segment" };
+/// La chaîne représentant le type des duplications.
+const std::string ArbreRenduINF2990::NOM_DUPLICATION{ "duplication" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -46,12 +48,13 @@ const std::string ArbreRenduINF2990::NOM_SEGMENT{ "segment" };
 ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
-	ajouterUsine(NOM_TABLE, make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
-	ajouterUsine(NOM_LIGNENOIRE, make_unique<UsineNoeud<NoeudLigneNoire>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
-	ajouterUsine(NOM_ROBOT, make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
-	ajouterUsine(NOM_POTEAU, make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
-	ajouterUsine(NOM_MUR, make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry.obj" }));
-	ajouterUsine(NOM_SEGMENT, make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/ligneNoire.obj" }));
+	ajouterUsine(NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
+	ajouterUsine(NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigneNoire>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
+	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
+	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
+	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry.obj" }));
+	ajouterUsine(NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/ligneNoire.obj" }));
+	ajouterUsine(NOM_DUPLICATION, std::make_unique<UsineNoeud<NoeudDuplication>>(NOM_DUPLICATION, std::string{ "media/modeles/table.obj" }));
 }
 
 ////////////////////////////////////////////////////////////////////////

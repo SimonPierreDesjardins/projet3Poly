@@ -8,8 +8,8 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef ETAT_Duplication_H
-#define ETAT_Duplication_H
+#ifndef ETAT_DUPLICATION_H
+#define ETAT_DUPLICATION_H
 
 #include "EtatAbstrait.h"
 
@@ -20,6 +20,12 @@ public:
 	virtual ~EtatDuplication();
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int& x, const int& y);
+
+private:
+	NoeudAbstrait* duplication_{ nullptr };
+	bool enDuplication_{ false };
+
 };
 
 #endif
