@@ -221,7 +221,7 @@ namespace vue {
 		double decalageY = double(coin1.y) / yMaxCloture_*H;
 
 		//Trouver nouvelles dimensions de la fenetre
-		if (R < r){
+		if (R > r){
 			H = h / yMaxCloture_*H;
 			// Deduire W
 			W = R*H;
@@ -233,8 +233,8 @@ namespace vue {
 		}
 
 		//Appliquer les transformations a la fenetre
-		yMinFenetre_ += decalageY;
-		yMaxFenetre_ = yMinFenetre_ + H;
+		yMaxFenetre_ -= decalageY;
+		yMinFenetre_ = yMaxFenetre_ - H;
 		
 		xMinFenetre_ += decalageX;
 		xMaxFenetre_ = xMinFenetre_ + W;
