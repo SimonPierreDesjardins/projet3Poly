@@ -31,7 +31,6 @@ private:
 	bool enCreation_{ false };
 	glm::dvec3 positionPremierClic_;
 	NoeudAbstrait* mur_{ nullptr };
-
 };
 
 #endif

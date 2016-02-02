@@ -19,6 +19,7 @@ public:
 	EtatDuplication();
 	virtual ~EtatDuplication();
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	virtual void gererClicGaucheRelache(const int& x, const int& y);
 };
 
 #endif

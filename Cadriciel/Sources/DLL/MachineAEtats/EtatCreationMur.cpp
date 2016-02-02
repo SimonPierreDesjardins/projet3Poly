@@ -10,6 +10,7 @@
 
 #include "EtatCreationMur.h"
 #include "FacadeModele.h"
+
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "Utilitaire.h"
