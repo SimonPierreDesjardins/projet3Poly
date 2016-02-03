@@ -98,6 +98,7 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 	const int MIN_Y = -24;
 	const int MAX_Y =  24;
 	bool positionEstSurTable = (MIN_X <= position[0] && position[0] <= MAX_X && MIN_Y <= position[1] && position[1] <= MAX_Y);
+	
 	gererEstSurTableConcret(positionEstSurTable);
 }
 
@@ -113,18 +114,9 @@ void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
 void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 {
 	//Pour forme de cursor voir http://msdn.microsoft.com/en-us/library/ms648391%28v=vs.85%29.aspx
-	if (estSymboleStandard) 
+	if (!estSymboleStandard) 
 	{
-		HCURSOR Cursor = LoadCursor(NULL, IDC_ARROW);
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
 		SetCursor(Cursor);
-
-		std::cout << "in" << std::endl;
-	} 
-	else
-	{
-		HCURSOR Cursor = LoadCursor(NULL, IDC_NO); 
-		SetCursor(Cursor);
-
-		std::cout << "out" << std::endl;
 	}
 }

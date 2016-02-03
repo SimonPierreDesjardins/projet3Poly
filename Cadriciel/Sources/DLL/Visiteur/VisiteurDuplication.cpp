@@ -103,19 +103,17 @@ void VisiteurDuplication::visiter(NoeudLigneNoire* noeud)
 	referenceNoeud_->ajouter(nouvelleLigne);
 }
 
-
-void VisiteurDuplication::visiter(NoeudSegment* noeud)
-{
-
-}
-
 void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	// Ajouter les noeuds sur la table, puis détruire la duplication.
+	std::shared_ptr<NoeudAbstrait> enfant;
 	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
-		table->ajouter(noeud->obtenirDuplication(i));
+		enfant = noeud->obtenirDuplication(i);
+		// Assigner la position relative du noeud à la table avant de l'ajouter.
+		enfant->assignerPositionRelative(noeud->obtenirPositionRelative() + enfant->obtenirPositionRelative());
+		table->ajouter(enfant);
 	}
 	table->effacer(noeud);
 }

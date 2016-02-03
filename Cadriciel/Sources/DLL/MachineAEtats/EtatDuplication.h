@@ -18,9 +18,10 @@ class EtatDuplication : public EtatAbstrait
 public:
 	EtatDuplication();
 	virtual ~EtatDuplication();
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
+	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	virtual void gererToucheEchappe();
 
 private:
 	NoeudAbstrait* duplication_{ nullptr };
