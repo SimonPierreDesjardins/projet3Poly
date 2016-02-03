@@ -14,6 +14,7 @@
 #include "GL/glew.h"
 #include <string>
 #include <memory>
+#include <iterator>
 
 #include "glm\glm.hpp"
 
@@ -26,7 +27,6 @@ namespace opengl{
 }
 
 class VisiteurAbstrait;
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudAbstrait
 /// @brief Classe de base du patron composite utilisée pour créer l'arbre
@@ -118,7 +118,6 @@ public:
 	virtual const NoeudAbstrait* chercher(unsigned int indice) const;
 	/// Cherche un noeud enfant selon l'indice.
 	virtual NoeudAbstrait* chercher(unsigned int indice);
-
 	/// Ajoute un noeud enfant.
 	virtual bool ajouter(std::shared_ptr<NoeudAbstrait> enfant);
 	/// Obtient le nombre d'enfants du noeud.

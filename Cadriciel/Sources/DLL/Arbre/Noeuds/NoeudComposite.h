@@ -15,7 +15,6 @@
 
 #include <vector>
 
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudComposite
 /// @brief Implantation d'un noeud du patron composite qui peut posséder
@@ -56,7 +55,6 @@ public:
    virtual const NoeudAbstrait* chercher( unsigned int indice ) const;
    /// Cherche un noeud enfant selon l'indice.
    virtual NoeudAbstrait* chercher( unsigned int indice );
-
    /// Ajoute un noeud enfant.
    virtual bool ajouter( std::shared_ptr<NoeudAbstrait> enfant );
    /// Obtient le nombre d'enfants du noeud.

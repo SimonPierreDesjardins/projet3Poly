@@ -25,6 +25,7 @@ VisiteurDuplication::VisiteurDuplication(const int& x, const int& y)
 
 VisiteurDuplication::~VisiteurDuplication()
 {
+	
 }
 
 void VisiteurDuplication::visiter(ArbreRendu* noeud)

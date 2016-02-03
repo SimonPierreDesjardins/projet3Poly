@@ -37,7 +37,7 @@ void VisiteurRotation::visiter(NoeudTable* noeud)
 	{
 		enfant = noeud->chercher(i);
 		// TODO: à décommenter quand la sélection sera implémentée.
-		//if (enfant->estSelectionne())
+		if (enfant->estSelectionne())
 		{
 			enfant->accepterVisiteur(this);
 		}
@@ -81,20 +81,38 @@ void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
 
 void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 {
-	NoeudAbstrait* enfant;
-	int nSelections = 0;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	if (noeud->obtenirNombreEnfants() < 1) return;
+	// Initialiser les minimums et les maximums 
+	double minX = noeud->chercher(0)->obtenirPositionRelative()[0];
+	double maxX = noeud->chercher(0)->obtenirPositionRelative()[0];
+	double minY = noeud->chercher(0)->obtenirPositionRelative()[1];
+	double maxY = noeud->chercher(0)->obtenirPositionRelative()[1];
+	double x = 0;
+	double y = 0;
+	// Trouver les min / max dans les positions des noeuds sur la table.
+	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
-		enfant = noeud->chercher(i);
-		//TODO: à décommenter quand la sélection sera implémentée.
-		//if (enfant->estSelectionne())
+		x = noeud->chercher(i)->obtenirPositionRelative()[0];
+		y = noeud->chercher(i)->obtenirPositionRelative()[1];
+		if (x > maxX)
 		{
-			centreSelection_ += enfant->obtenirPositionRelative();
-			nSelections++;
+			maxX = x;
+		}
+		else if (x < minX)
+		{
+			minX = x;
+		}
+		if (y > maxY)
+		{
+			maxY = y; 
+		}
+		else if (y < minY)
+		{
+			minY = y;
 		}
 	}
-	centreSelection_ /= nSelections;
-	std::cout << "calcul centre selection:" << centreSelection_[0] << " : " << centreSelection_[1] << std::endl;
+	// Calculer et assigner la position relative à la ligne
+	 centreSelection_= { (minX + maxX) / 2, (minY + maxY) / 2, 0 };
 }
 
 void VisiteurRotation::assignerNouvellePositionRelative(NoeudAbstrait* noeud)

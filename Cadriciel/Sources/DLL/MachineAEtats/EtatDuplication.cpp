@@ -20,6 +20,9 @@ EtatDuplication::EtatDuplication()
 
 EtatDuplication::~EtatDuplication()
 {
+	enDuplication_ = false;
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->effacer(duplication_);
+	duplication_ = nullptr;
 }
 
 void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
