@@ -82,7 +82,7 @@ namespace InterfaceGraphique
         {
             afficherMenuPrincipal(false);
             FonctionsNatives.assignerEtat(Etat.SELECTION);
-            //FonctionsNatives.assignerMode(Mode.EDITION);
+            FonctionsNatives.assignerMode(Mode.EDITION);
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -234,7 +234,7 @@ namespace InterfaceGraphique
 
         private void panneauOperation__VisibleChanged(object sender, EventArgs e)
         {
-            textboxDimension_.Text = "Test Ici";
+            textboxDimension_.Text = "";
             textBoxRotation_.Text = "Test Ici";
             textBoxPositionX_.Text = "Test Ici";
             textBoxPositionY_.Text = "Test Ici";

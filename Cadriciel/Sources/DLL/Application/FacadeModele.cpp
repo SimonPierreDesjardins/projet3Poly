@@ -121,6 +121,9 @@ FacadeModele::~FacadeModele()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::initialiserOpenGL(HWND hWnd)
 {
+	assignerEtat(SELECTION);
+	assignerMode(MENU_PRINCIPAL);
+
 	hWnd_ = hWnd;
 	bool succes{ aidegl::creerContexteGL(hWnd_, hDC_, hGLRC_) };
 	assert(succes && "Le contexte OpenGL n'a pu être créé.");

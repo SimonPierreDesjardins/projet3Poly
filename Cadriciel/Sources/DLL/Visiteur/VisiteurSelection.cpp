@@ -69,7 +69,6 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 		boite.coinMax[1] *= noeud->chercher(i)->obtenirFacteurDimension();
 		boite.coinMax[2] *= noeud->chercher(i)->obtenirFacteurDimension();
 		*/
-		
 
 		if (positionRelative_[0] < boite.coinMin[0] + noeud->chercher(i)->obtenirPositionRelative()[0] || positionRelative_[0] > boite.coinMax[0] + noeud->chercher(i)->obtenirPositionRelative()[0] || positionRelative_[1] < boite.coinMin[1] + noeud->chercher(i)->obtenirPositionRelative()[1] || positionRelative_[1] > boite.coinMax[1] + noeud->chercher(i)->obtenirPositionRelative()[1])
 		{
