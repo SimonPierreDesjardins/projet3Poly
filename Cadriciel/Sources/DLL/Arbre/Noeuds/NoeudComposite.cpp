@@ -96,7 +96,7 @@ void NoeudComposite::vider()
 	// desctruction d'un enfant entraînerait l'ajout d'un autre.
 	
 	while (!enfants_.empty()) {
-		std::shared_ptr<NoeudAbstrait> enfantAEffacer{ enfants_.front() };
+		NoeudAbstrait* enfantAEffacer{ enfants_.front().get() };
 		enfants_.erase(enfants_.begin());
 	}
 }	
@@ -121,7 +121,7 @@ void NoeudComposite::effacer(const NoeudAbstrait* noeud)
 		it++) {
 		if ((*it).get() == noeud) {
 			// On a trouvé le noeud à effacer
-			std::shared_ptr<NoeudAbstrait> noeudAEffacer{ (*it) };
+			NoeudAbstrait* noeudAEffacer{ (*it).get() };
 			enfants_.erase(it);
 			return;
 		}
@@ -155,9 +155,9 @@ const NoeudAbstrait* NoeudComposite::chercher(
 	else {
 		for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_)
 		{
-			std::shared_ptr<NoeudAbstrait> const noeud{ enfant->chercher(typeNoeud) };
+			NoeudAbstrait* const noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
-				return noeud.get();
+				return noeud;
 			}
 		}
 	}
@@ -186,9 +186,9 @@ NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
 	else {
 		for (std::shared_ptr<NoeudAbstrait> enfant : enfants_)
 		{
-			std::shared_ptr<NoeudAbstrait> noeud{ enfant->chercher(typeNoeud) };
+			NoeudAbstrait* noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
-				return noeud.get();
+				return noeud;
 			}
 		}
 	}
@@ -211,10 +211,7 @@ NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
 {
-	if ((indice >= 0) && (indice < enfants_.size())) {		/*
-		 
-		shared_ptr<vue::VueOrtho>(new vue::VueOrtho);
-	*/
+	if ((indice >= 0) && (indice < enfants_.size())) {
 		return enfants_[indice].get();
 	}
 	else {
@@ -235,10 +232,7 @@ const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudAbstrait* NoeudComposite::chercher(unsigned int indice)
-{		/*
-		 
-		shared_ptr<vue::VueOrtho>(new vue::VueOrtho);
-	*/
+{		
 	if ((indice >= 0) && (indice < enfants_.size())) {
 		return enfants_[indice].get();
 	}
@@ -315,7 +309,7 @@ void NoeudComposite::effacerSelection()
 		it != enfants_.end();
 		) {
 		if ((*it)->estSelectionne()) {
-			std::shared_ptr<NoeudAbstrait> enfant{ (*it) };
+			NoeudAbstrait* enfant{ (*it).get() };
 			enfants_.erase(it);
 
 			// On ramène l'itération au début de la boucle, car le destructeur
