@@ -21,8 +21,7 @@ class VisiteurAbstrait;
 class NoeudTable : public NoeudComposite
 {
 
-	public:
-
+public:
 	/// Constructeur
 	NoeudTable(const std::string& typeNoeud);
 	/// Destructeur.

@@ -186,6 +186,8 @@ void EtatCreationLigneNoire::calculerPositionCentreLigne()
 
 void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 {
+	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
+
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = true;
@@ -193,7 +195,6 @@ void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			segment_->assignerAffiche(true);
 		}
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
@@ -202,7 +203,6 @@ void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			segment_->assignerAffiche(false);
 		}
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 }
 

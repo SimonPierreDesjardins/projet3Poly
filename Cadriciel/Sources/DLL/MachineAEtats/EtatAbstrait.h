@@ -25,9 +25,6 @@ enum Etat
 	CREATION_POTEAU,
 	CREATION_MUR,
 	CREATION_LIGNE_NOIRE,
-	MENU_PRINCIPAL,
-	SIMULATION,
-	TEST
 };
 
 class EtatAbstrait
@@ -48,8 +45,6 @@ public:
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-	virtual void gererTouchePlus();
-	virtual void gererToucheMoins();
 
 	void gererEstSurTable(const glm::dvec3& position);
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);

@@ -74,7 +74,7 @@ void NoeudPoteau::afficherConcret() const
 	
 	//glRotatef(90, 1, 0, 0);
 	//glRotatef(90, 0, 1, 0);
-	glTranslatef(0, 0, -2);
+
 	// Affichage du modèle.
 	vbo_->dessiner();
 

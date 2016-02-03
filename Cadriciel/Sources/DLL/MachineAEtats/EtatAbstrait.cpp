@@ -77,26 +77,9 @@ void EtatAbstrait::gererToucheControlRelachee()
 
 }
 
-void EtatAbstrait::gererTouchePlus(){
+void EtatAbstrait::gererMoletteSouris(const int & delta)
+{
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		//TODO Gérer le zoom plus pour une camera
-		;
-	else
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-
-}
-
-void EtatAbstrait::gererToucheMoins(){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		//TODO Gérer le zoom moins pour une camera
-		;
-	else
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-}
-
-void EtatAbstrait::gererMoletteSouris(const int & delta){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		//TODO Gérer le zoom moins pour une camera
 		;
 	else{
 		if (delta>0)
@@ -120,23 +103,28 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 
 void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
 {
-
+	if (!positionEstSurTable)
+	{
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
+	}
 }
 
 void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 {
+	//Pour forme de cursor voir http://msdn.microsoft.com/en-us/library/ms648391%28v=vs.85%29.aspx
 	if (estSymboleStandard) 
 	{
-		// TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32650);
+		HCURSOR Cursor = LoadCursor(NULL, IDC_ARROW);
+		SetCursor(Cursor);
+
 		std::cout << "in" << std::endl;
 	} 
 	else
 	{
-		//TODO: Ajouter changement de curseur ici.
-		//HCURSOR handle = GetCursor();
-		//SetSystemCursor(handle, 32648);
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO); 
+		SetCursor(Cursor);
+
 		std::cout << "out" << std::endl;
 	}
 }

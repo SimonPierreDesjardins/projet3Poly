@@ -41,6 +41,9 @@
   <PropertyGroup>
     <RunPostBuildEvent>Always</RunPostBuildEvent>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -87,6 +90,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_search_white_48dp_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_loop_white_48dp_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_near_me_white_48dp_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_settings_overscan_white_48dp_2x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\editcopy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ionic.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ic_open_with.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\walls1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\line2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

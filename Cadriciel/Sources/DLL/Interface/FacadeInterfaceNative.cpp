@@ -21,7 +21,13 @@
 
 #include <iostream>
 
-
+#define VK_KEY_D 0x44
+#define VK_KEY_S 0x53
+#define VK_KEY_R 0x52
+#define VK_KEY_E 0x45
+#define VK_KEY_C 0x43
+#define VK_KEY_Z 0x5A
+#define VK_KEY_T 0x54
 
 extern "C"
 {
@@ -192,37 +198,38 @@ extern "C"
 		return reussite ? 0 : 1;
 	}
 
-
 	__declspec(dllexport) void __cdecl assignerEtat(int etat)
 	{
 		FacadeModele::obtenirInstance()->assignerEtat((Etat)etat);
 	}
 
+	__declspec(dllexport) void __cdecl assignerMode(int mode)
+	{
+		FacadeModele::obtenirInstance()->assignerMode((Mode)mode);
+	}
+	
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
-	{	
+	{
+
 		if (msg == WM_KEYDOWN)
 		{
 			switch (wParam)
 			{
 				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
-					std::cout << "La fleche de gauche est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
 					break;
 
 				case VK_RIGHT:
-					std::cout << "La fleche de droite est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
 					break;
 
 				case VK_UP:
-					std::cout << "La fleche du haut est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheHaut();
 					break;
 
 				case VK_DOWN:
-					std::cout << "La fleche du bas est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
 					break;
 
 				case VK_TAB:
@@ -247,18 +254,49 @@ extern "C"
 				case VK_CONTROL:
 				case VK_RCONTROL:
 				case VK_LCONTROL:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlEnfoncee();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
 					break;
 
 				case VK_ESCAPE:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheEchappe();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheEchappe();
 					break;
+
 				case VK_OEM_PLUS:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererTouchePlus();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererTouchePlus();
 					break;
+
 				case VK_OEM_MINUS:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheMoins();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheMoins();
 					break;
+
+				case VK_KEY_D:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheD();
+					break;
+
+				case VK_KEY_S:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheS();
+					break;
+
+				case VK_KEY_R:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheR();
+					break;
+
+				case VK_KEY_E:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheE();
+					break;
+
+				case VK_KEY_C:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheC();
+					break;
+
+				case VK_KEY_Z:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheZ();
+					break;
+
+				case VK_KEY_T:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheT();
+					break;
+
 				default:
 					break;
 			}
@@ -271,7 +309,7 @@ extern "C"
 				case VK_CONTROL:
 				case VK_LCONTROL:
 				case VK_RCONTROL:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
 					break;
 
 				default:
@@ -281,29 +319,32 @@ extern "C"
 
 		switch (msg)
 		{
-			case WM_LBUTTONDOWN :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
-			
-			case WM_LBUTTONUP :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
-			
-			case WM_RBUTTONDOWN :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
-			
-			case WM_RBUTTONUP :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
+		case WM_LBUTTONDOWN:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
 
-			case WM_MOUSEMOVE :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));	
-				break;
+		case WM_LBUTTONUP:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
 
-			case WM_MOUSEWHEEL:
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
-				break;
+		case WM_RBUTTONDOWN:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_RBUTTONUP:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEMOVE:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEWHEEL:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			break;
+
+		//case WM_SETCURSOR:
+			//FacadeModele::obtenirInstance()->obtenirEtat()->assignerSymbolePointeur();
 		}
 	}
 

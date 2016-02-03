@@ -37,6 +37,8 @@ namespace InterfaceGraphique
             InitializeComponent();
             InitialiserAnimation();
             menuEdition_.Visible = false;
+            barreOutils_.Visible = false;
+            panneauOperation_.Visible = false;
         }
 
         public void InitialiserAnimation()
@@ -79,8 +81,8 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
-            menuEdition_.Visible = true;
             FonctionsNatives.assignerEtat(Etat.SELECTION);
+            FonctionsNatives.assignerMode(Mode.EDITION);
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -107,6 +109,8 @@ namespace InterfaceGraphique
             bouttonSimulation_.Visible = afficherMenu;
             viewPort_.Visible = !afficherMenu;
             menuEdition_.Visible = !afficherMenu;
+            barreOutils_.Visible = !afficherMenu;
+            panneauOperation_.Visible = !afficherMenu;
         }
 
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -117,7 +121,7 @@ namespace InterfaceGraphique
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(true);
-            menuEdition_.Visible = false;
+            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
@@ -162,15 +166,78 @@ namespace InterfaceGraphique
             FonctionsNatives.dessinerOpenGL();
         }
 
-        private void viewPort__Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         private void Window_Load(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void outilsSelection__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.SELECTION);
+        }
+
+        private void outilsDéplacement__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+        }
+
+        private void outilsRotation__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ROTATION);
+        }
+
+        private void outilsMiseAEchelle__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+        }
+
+        private void outilsDuplication__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+        }
+
+        private void outilsZoom__Click(object sender, EventArgs e)
+        {
+            //FonctionsNatives.assignerEtat(Etat.ZOOM);
+        }
+
+        private void outilsCreationPoteau__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+        }
+
+        private void outilsCreationMurs__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+        }
+
+        private void outilsCreationLigne__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+        }
+
+        private void modeTestModeEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerMode(Mode.TEST);
+        }
+
+        private void bouttonSimulation__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerMode(Mode.SIMULATION);
+        }
+
+        private void bouttonConfiguration__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerMode(Mode.CONFIGURE);
+        }
+
+        private void panneauOperation__VisibleChanged(object sender, EventArgs e)
+        {
+            textboxDimension_.Text = "";
+            textBoxRotation_.Text = "Test Ici";
+            textBoxPositionX_.Text = "Test Ici";
+            textBoxPositionY_.Text = "Test Ici";
         }
     }
 
@@ -189,6 +256,15 @@ namespace InterfaceGraphique
         TEST
     }
 
+    enum Mode
+    {
+        MENU_PRINCIPAL,
+        SIMULATION,
+        EDITION,
+        CONFIGURE,
+        TEST
+    };
+
     static partial class FonctionsNatives
     {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -205,6 +281,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerEtat(Etat etat);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerMode(Mode mode);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void redimensionnerFenetre(int largeur, int hauteur);

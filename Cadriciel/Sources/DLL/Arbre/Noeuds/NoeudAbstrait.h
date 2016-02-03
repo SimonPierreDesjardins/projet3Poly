@@ -151,6 +151,15 @@ public:
 
 	virtual modele::Modele3D const* getModele();
 
+	glm::dvec3 getPositionRelatif() { return positionRelative_; };
+	void setPositionRelatif(double x, double y, double z) { positionRelative_ = { x, y, z }; };
+
+	double getAngleRotationRelatif() { return angleRotationRelatif_; };
+	void setAngleRotationRelatif(double angle) { angleRotationRelatif_ = angle; };
+
+	double getfacteurMiseAEchelle() { return facteurMiseAEchelle_; };
+	void setFacteurMiseEchelle(double facteur) { facteurMiseAEchelle_ = facteur; };
+
 protected:
 	/// Type du noeud.
 	std::string				type_;

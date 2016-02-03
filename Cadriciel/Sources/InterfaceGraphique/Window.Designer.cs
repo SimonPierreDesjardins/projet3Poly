@@ -57,7 +57,28 @@
             this.orbiteMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.informationsMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.aideMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.barreOutils_ = new System.Windows.Forms.ToolStrip();
+            this.outilsSelection_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsDéplacement_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsRotation_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsMiseAEchelle_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsDuplication_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsZoom_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsCreationPoteau_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsCreationMurs_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsCreationLigne_ = new System.Windows.Forms.ToolStripButton();
+            this.panneauOperation_ = new System.Windows.Forms.Panel();
+            this.textBoxPositionY_ = new System.Windows.Forms.TextBox();
+            this.textBoxPositionX_ = new System.Windows.Forms.TextBox();
+            this.textBoxRotation_ = new System.Windows.Forms.TextBox();
+            this.textboxDimension_ = new System.Windows.Forms.TextBox();
+            this.panneauPositionY_ = new System.Windows.Forms.Label();
+            this.panneauPositionX_ = new System.Windows.Forms.Label();
+            this.panneauDimension_ = new System.Windows.Forms.Label();
+            this.panneauRotation_ = new System.Windows.Forms.Label();
             this.menuEdition_.SuspendLayout();
+            this.barreOutils_.SuspendLayout();
+            this.panneauOperation_.SuspendLayout();
             this.SuspendLayout();
             // 
             // viewPort_
@@ -69,10 +90,9 @@
             this.viewPort_.Location = new System.Drawing.Point(0, 27);
             this.viewPort_.Name = "viewPort_";
             this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort_.Size = new System.Drawing.Size(623, 400);
+            this.viewPort_.Size = new System.Drawing.Size(623, 402);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
-            this.viewPort_.Paint += new System.Windows.Forms.PaintEventHandler(this.viewPort__Paint);
             // 
             // bouttonSimulation_
             // 
@@ -85,6 +105,7 @@
             this.bouttonSimulation_.TabStop = false;
             this.bouttonSimulation_.Text = "Simulation";
             this.bouttonSimulation_.UseVisualStyleBackColor = true;
+            this.bouttonSimulation_.Click += new System.EventHandler(this.bouttonSimulation__Click);
             // 
             // bouttonEditeur_
             // 
@@ -109,6 +130,7 @@
             this.bouttonConfiguration_.TabStop = false;
             this.bouttonConfiguration_.Text = "Configuration";
             this.bouttonConfiguration_.UseVisualStyleBackColor = true;
+            this.bouttonConfiguration_.Click += new System.EventHandler(this.bouttonConfiguration__Click);
             // 
             // bouttonQuitter_
             // 
@@ -178,6 +200,7 @@
             this.modeTestModeEdition_.Name = "modeTestModeEdition_";
             this.modeTestModeEdition_.Size = new System.Drawing.Size(158, 22);
             this.modeTestModeEdition_.Text = "Mode test";
+            this.modeTestModeEdition_.Click += new System.EventHandler(this.modeTestModeEdition__Click);
             // 
             // menuPrincipalMenuEdition
             // 
@@ -306,11 +329,209 @@
             this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
             this.aideMenuEdition_.Text = "Aide";
             // 
+            // barreOutils_
+            // 
+            this.barreOutils_.AllowMerge = false;
+            this.barreOutils_.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.barreOutils_.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.barreOutils_.Dock = System.Windows.Forms.DockStyle.None;
+            this.barreOutils_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.outilsSelection_,
+            this.outilsDéplacement_,
+            this.outilsRotation_,
+            this.outilsMiseAEchelle_,
+            this.outilsDuplication_,
+            this.outilsZoom_,
+            this.outilsCreationPoteau_,
+            this.outilsCreationMurs_,
+            this.outilsCreationLigne_});
+            this.barreOutils_.Location = new System.Drawing.Point(201, 394);
+            this.barreOutils_.Name = "barreOutils_";
+            this.barreOutils_.Size = new System.Drawing.Size(219, 25);
+            this.barreOutils_.Stretch = true;
+            this.barreOutils_.TabIndex = 7;
+            this.barreOutils_.Text = "toolStrip1";
+            // 
+            // outilsSelection_
+            // 
+            this.outilsSelection_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsSelection_.Image = global::InterfaceGraphique.Properties.Resources.ic_near_me_white_48dp_2x;
+            this.outilsSelection_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsSelection_.Name = "outilsSelection_";
+            this.outilsSelection_.Size = new System.Drawing.Size(23, 22);
+            this.outilsSelection_.Text = "Sélection";
+            this.outilsSelection_.Click += new System.EventHandler(this.outilsSelection__Click);
+            // 
+            // outilsDéplacement_
+            // 
+            this.outilsDéplacement_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsDéplacement_.Image = global::InterfaceGraphique.Properties.Resources.ic_open_with;
+            this.outilsDéplacement_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsDéplacement_.Name = "outilsDéplacement_";
+            this.outilsDéplacement_.Size = new System.Drawing.Size(23, 22);
+            this.outilsDéplacement_.Text = "Déplacement";
+            this.outilsDéplacement_.Click += new System.EventHandler(this.outilsDéplacement__Click);
+            // 
+            // outilsRotation_
+            // 
+            this.outilsRotation_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsRotation_.Image = global::InterfaceGraphique.Properties.Resources.ic_loop_white_48dp_2x;
+            this.outilsRotation_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsRotation_.Name = "outilsRotation_";
+            this.outilsRotation_.Size = new System.Drawing.Size(23, 22);
+            this.outilsRotation_.Text = "Rotation";
+            this.outilsRotation_.Click += new System.EventHandler(this.outilsRotation__Click);
+            // 
+            // outilsMiseAEchelle_
+            // 
+            this.outilsMiseAEchelle_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsMiseAEchelle_.Image = global::InterfaceGraphique.Properties.Resources.ic_settings_overscan_white_48dp_2x;
+            this.outilsMiseAEchelle_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsMiseAEchelle_.Name = "outilsMiseAEchelle_";
+            this.outilsMiseAEchelle_.Size = new System.Drawing.Size(23, 22);
+            this.outilsMiseAEchelle_.Text = "Mise à échelle";
+            this.outilsMiseAEchelle_.Click += new System.EventHandler(this.outilsMiseAEchelle__Click);
+            // 
+            // outilsDuplication_
+            // 
+            this.outilsDuplication_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsDuplication_.Image = global::InterfaceGraphique.Properties.Resources.editcopy;
+            this.outilsDuplication_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsDuplication_.Name = "outilsDuplication_";
+            this.outilsDuplication_.Size = new System.Drawing.Size(23, 22);
+            this.outilsDuplication_.Text = "Duplication";
+            this.outilsDuplication_.Click += new System.EventHandler(this.outilsDuplication__Click);
+            // 
+            // outilsZoom_
+            // 
+            this.outilsZoom_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsZoom_.Image = global::InterfaceGraphique.Properties.Resources.ic_search_white_48dp_2x;
+            this.outilsZoom_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsZoom_.Name = "outilsZoom_";
+            this.outilsZoom_.Size = new System.Drawing.Size(23, 22);
+            this.outilsZoom_.Text = "Zoom";
+            this.outilsZoom_.Click += new System.EventHandler(this.outilsZoom__Click);
+            // 
+            // outilsCreationPoteau_
+            // 
+            this.outilsCreationPoteau_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsCreationPoteau_.Image = global::InterfaceGraphique.Properties.Resources.ionic;
+            this.outilsCreationPoteau_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsCreationPoteau_.Name = "outilsCreationPoteau_";
+            this.outilsCreationPoteau_.Size = new System.Drawing.Size(23, 22);
+            this.outilsCreationPoteau_.Text = "Création de poteaux";
+            this.outilsCreationPoteau_.Click += new System.EventHandler(this.outilsCreationPoteau__Click);
+            // 
+            // outilsCreationMurs_
+            // 
+            this.outilsCreationMurs_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsCreationMurs_.Image = global::InterfaceGraphique.Properties.Resources.walls1;
+            this.outilsCreationMurs_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsCreationMurs_.Name = "outilsCreationMurs_";
+            this.outilsCreationMurs_.Size = new System.Drawing.Size(23, 22);
+            this.outilsCreationMurs_.Text = "Céreation de murs";
+            this.outilsCreationMurs_.Click += new System.EventHandler(this.outilsCreationMurs__Click);
+            // 
+            // outilsCreationLigne_
+            // 
+            this.outilsCreationLigne_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsCreationLigne_.Image = global::InterfaceGraphique.Properties.Resources.line2;
+            this.outilsCreationLigne_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsCreationLigne_.Name = "outilsCreationLigne_";
+            this.outilsCreationLigne_.Size = new System.Drawing.Size(23, 22);
+            this.outilsCreationLigne_.Text = "Création de lignes";
+            this.outilsCreationLigne_.Click += new System.EventHandler(this.outilsCreationLigne__Click);
+            // 
+            // panneauOperation_
+            // 
+            this.panneauOperation_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panneauOperation_.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.panneauOperation_.Controls.Add(this.textBoxPositionY_);
+            this.panneauOperation_.Controls.Add(this.textBoxPositionX_);
+            this.panneauOperation_.Controls.Add(this.textBoxRotation_);
+            this.panneauOperation_.Controls.Add(this.textboxDimension_);
+            this.panneauOperation_.Controls.Add(this.panneauPositionY_);
+            this.panneauOperation_.Controls.Add(this.panneauPositionX_);
+            this.panneauOperation_.Controls.Add(this.panneauDimension_);
+            this.panneauOperation_.Controls.Add(this.panneauRotation_);
+            this.panneauOperation_.Location = new System.Drawing.Point(495, 27);
+            this.panneauOperation_.Name = "panneauOperation_";
+            this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
+            this.panneauOperation_.TabIndex = 8;
+            this.panneauOperation_.VisibleChanged += new System.EventHandler(this.panneauOperation__VisibleChanged);
+            // 
+            // textBoxPositionY_
+            // 
+            this.textBoxPositionY_.Location = new System.Drawing.Point(18, 190);
+            this.textBoxPositionY_.Name = "textBoxPositionY_";
+            this.textBoxPositionY_.Size = new System.Drawing.Size(84, 20);
+            this.textBoxPositionY_.TabIndex = 7;
+            // 
+            // textBoxPositionX_
+            // 
+            this.textBoxPositionX_.Location = new System.Drawing.Point(18, 132);
+            this.textBoxPositionX_.Name = "textBoxPositionX_";
+            this.textBoxPositionX_.Size = new System.Drawing.Size(84, 20);
+            this.textBoxPositionX_.TabIndex = 6;
+            // 
+            // textBoxRotation_
+            // 
+            this.textBoxRotation_.Location = new System.Drawing.Point(18, 81);
+            this.textBoxRotation_.Name = "textBoxRotation_";
+            this.textBoxRotation_.Size = new System.Drawing.Size(84, 20);
+            this.textBoxRotation_.TabIndex = 5;
+            // 
+            // textboxDimension_
+            // 
+            this.textboxDimension_.Location = new System.Drawing.Point(18, 30);
+            this.textboxDimension_.Name = "textboxDimension_";
+            this.textboxDimension_.Size = new System.Drawing.Size(84, 20);
+            this.textboxDimension_.TabIndex = 4;
+            // 
+            // panneauPositionY_
+            // 
+            this.panneauPositionY_.AutoSize = true;
+            this.panneauPositionY_.Location = new System.Drawing.Point(15, 174);
+            this.panneauPositionY_.Name = "panneauPositionY_";
+            this.panneauPositionY_.Size = new System.Drawing.Size(69, 13);
+            this.panneauPositionY_.TabIndex = 3;
+            this.panneauPositionY_.Text = "Position en Y";
+            // 
+            // panneauPositionX_
+            // 
+            this.panneauPositionX_.AutoSize = true;
+            this.panneauPositionX_.Location = new System.Drawing.Point(15, 116);
+            this.panneauPositionX_.Name = "panneauPositionX_";
+            this.panneauPositionX_.Size = new System.Drawing.Size(69, 13);
+            this.panneauPositionX_.TabIndex = 2;
+            this.panneauPositionX_.Text = "Position en X";
+            // 
+            // panneauDimension_
+            // 
+            this.panneauDimension_.AutoSize = true;
+            this.panneauDimension_.Location = new System.Drawing.Point(15, 14);
+            this.panneauDimension_.Name = "panneauDimension_";
+            this.panneauDimension_.Size = new System.Drawing.Size(108, 13);
+            this.panneauDimension_.TabIndex = 1;
+            this.panneauDimension_.Text = "Facteur de dimension";
+            // 
+            // panneauRotation_
+            // 
+            this.panneauRotation_.AutoSize = true;
+            this.panneauRotation_.Location = new System.Drawing.Point(15, 65);
+            this.panneauRotation_.Name = "panneauRotation_";
+            this.panneauRotation_.Size = new System.Drawing.Size(87, 13);
+            this.panneauRotation_.TabIndex = 0;
+            this.panneauRotation_.Text = "Angle de rotation";
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 428);
+            this.Controls.Add(this.panneauOperation_);
+            this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuEdition_);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);
@@ -326,6 +547,10 @@
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
+            this.barreOutils_.ResumeLayout(false);
+            this.barreOutils_.PerformLayout();
+            this.panneauOperation_.ResumeLayout(false);
+            this.panneauOperation_.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -363,6 +588,25 @@
         private System.Windows.Forms.ToolStripMenuItem poteauMenuEdition_;
         private System.Windows.Forms.ToolStripMenuItem murMenuEdition_;
         private System.Windows.Forms.ToolStripMenuItem ligneNoireMenuEdition_;
+        private System.Windows.Forms.ToolStrip barreOutils_;
+        private System.Windows.Forms.ToolStripButton outilsSelection_;
+        private System.Windows.Forms.ToolStripButton outilsDéplacement_;
+        private System.Windows.Forms.ToolStripButton outilsRotation_;
+        private System.Windows.Forms.ToolStripButton outilsMiseAEchelle_;
+        private System.Windows.Forms.ToolStripButton outilsDuplication_;
+        private System.Windows.Forms.ToolStripButton outilsZoom_;
+        private System.Windows.Forms.ToolStripButton outilsCreationPoteau_;
+        private System.Windows.Forms.ToolStripButton outilsCreationMurs_;
+        private System.Windows.Forms.ToolStripButton outilsCreationLigne_;
+        private System.Windows.Forms.Panel panneauOperation_;
+        private System.Windows.Forms.Label panneauRotation_;
+        private System.Windows.Forms.Label panneauPositionY_;
+        private System.Windows.Forms.Label panneauPositionX_;
+        private System.Windows.Forms.Label panneauDimension_;
+        private System.Windows.Forms.TextBox textBoxPositionY_;
+        private System.Windows.Forms.TextBox textBoxPositionX_;
+        private System.Windows.Forms.TextBox textBoxRotation_;
+        private System.Windows.Forms.TextBox textboxDimension_;
     }
 }
 
