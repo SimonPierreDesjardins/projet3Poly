@@ -61,19 +61,46 @@ void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 	{
 		nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative());
 	}
-	
 	referenceNoeud_->ajouter(nouveauNoeud);
 }
 
 
 void VisiteurDuplication::visiter(NoeudMur* noeud)
 {
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_MUR);
+
+	nouveauNoeud->assignerAngleRotation(noeud->obtenirAngleRotation());
+	nouveauNoeud->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
+	if (nNoeuds_ > 1)
+	{
+		nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative());
+	}
+	referenceNoeud_->ajouter(nouveauNoeud);
 }
 
 
 void VisiteurDuplication::visiter(NoeudLigneNoire* noeud)
 {
-
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	//Créer une nouvelle ligne et assigner ses attributs.
+	shared_ptr<NoeudAbstrait> nouvelleLigne = arbre->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
+	nouvelleLigne->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
+	if (nNoeuds_ > 1)
+	{
+		nouvelleLigne->assignerPositionRelative(noeud->obtenirPositionRelative());
+	}
+	//Créer une copie des segments.
+	shared_ptr<NoeudAbstrait> nouveauSegment;
+	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	{
+		nouveauSegment = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+		nouveauSegment->assignerFacteurMiseAEchelle(noeud->chercher(i)->obtenirFacteurMiseAEchelle());
+		nouveauSegment->assignerAngleRotation(noeud->chercher(i)->obtenirAngleRotation());
+		nouveauSegment->assignerPositionRelative(noeud->chercher(i)->obtenirPositionRelative());
+		nouvelleLigne->ajouter(nouveauSegment);
+	}
+	referenceNoeud_->ajouter(nouvelleLigne);
 }
 
 
@@ -85,7 +112,7 @@ void VisiteurDuplication::visiter(NoeudSegment* noeud)
 void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-	// Ajouter les noeuds 
+	// Ajouter les noeuds sur la table, puis détruire la duplication.
 	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		table->ajouter(noeud->obtenirDuplication(i));

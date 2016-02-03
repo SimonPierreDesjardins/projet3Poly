@@ -179,6 +179,7 @@ void EtatCreationLigneNoire::calculerPositionCentreLigne()
 		positionEnfant = ligne_->chercher(i)->obtenirPositionRelative();
 		positionEnfant -= centre;
 		ligne_->chercher(i)->assignerPositionRelative(positionEnfant);
+		ligne_->assignerSelection(true);
 	}
 	std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
 }

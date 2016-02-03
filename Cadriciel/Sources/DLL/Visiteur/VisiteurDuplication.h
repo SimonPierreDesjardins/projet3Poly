@@ -27,7 +27,6 @@ public:
 
 	inline void assignerDuplication(bool enDuplication);
 
-
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);	
 	virtual void visiter(NoeudPoteau* noeud);
