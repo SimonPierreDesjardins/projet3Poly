@@ -35,7 +35,7 @@ VisiteurSelection::~VisiteurSelection()
 
 void VisiteurSelection::visiter(NoeudTable* noeud)
 {
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		modele::Modele3D const* modeleEnfant = noeud->chercher(i)->getModele();
 		utilitaire::BoiteEnglobante boite = utilitaire::calculerBoiteEnglobante(*modeleEnfant);

@@ -8,7 +8,7 @@
 VisiteurDuplication::VisiteurDuplication()
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-	for (int i = 0; i < table->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
 		if (table->chercher(0)->estSelectionne())
 		{
@@ -41,7 +41,7 @@ void VisiteurDuplication::visiter(NoeudTable* noeud)
 	referenceNoeud_ = nouveauNoeud.get();
 	NoeudAbstrait* enfant;
 	
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i);
 		if (enfant->estSelectionne())
@@ -93,7 +93,7 @@ void VisiteurDuplication::visiter(NoeudLigneNoire* noeud)
 	}
 	//Créer une copie des segments.
 	shared_ptr<NoeudAbstrait> nouveauSegment;
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		nouveauSegment = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 		nouveauSegment->assignerFacteurMiseAEchelle(noeud->chercher(i)->obtenirFacteurMiseAEchelle());
@@ -109,7 +109,7 @@ void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	// Ajouter les noeuds sur la table, puis détruire la duplication.
 	std::shared_ptr<NoeudAbstrait> enfant;
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->obtenirDuplication(i);
 		// Assigner la position relative du noeud à la table avant de l'ajouter.
