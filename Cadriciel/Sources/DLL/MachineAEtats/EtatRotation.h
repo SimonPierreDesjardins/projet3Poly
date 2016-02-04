@@ -24,6 +24,7 @@ public:
 
 private:
 	int dernierePositionY_;
+	int positionYInitiale_;
 };
 
 #endif

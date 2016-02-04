@@ -9,14 +9,31 @@
 ///////////////////////////////////////////////////////////////////////////
 
 #include "EtatMiseAEchelle.h"
+#include "VisiteurMiseAEchelle.h"
 #include <iostream>
 
 EtatMiseAEchelle::EtatMiseAEchelle()
 {
-
+	visiteur_ = std::make_unique<VisiteurMiseAEchelle>();
 }
 
 EtatMiseAEchelle::~EtatMiseAEchelle()
+{
+
+}
+
+void EtatMiseAEchelle::gererClicGaucheEnfonce(const int& x, const int& y)
+{
+	clicGaucheEnfonce_ = true;
+	dernierePositionY_ = y;
+}
+
+void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
+{
+	clicGaucheEnfonce_ = false;
+}
+
+void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
 {
 
 }

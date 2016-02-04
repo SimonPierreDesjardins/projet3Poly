@@ -36,7 +36,6 @@ void VisiteurRotation::visiter(NoeudTable* noeud)
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i);
-		// TODO: à décommenter quand la sélection sera implémentée.
 		if (enfant->estSelectionne())
 		{
 			enfant->accepterVisiteur(this);

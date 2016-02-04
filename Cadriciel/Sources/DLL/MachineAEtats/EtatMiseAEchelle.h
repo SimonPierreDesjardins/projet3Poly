@@ -18,6 +18,12 @@ class EtatMiseAEchelle : public EtatAbstrait
 public:
 	EtatMiseAEchelle();
 	virtual ~EtatMiseAEchelle();
+	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
+	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int& x, const int& y);
+private:
+	int dernierePositionX_;
+	int dernierePositionY_;
 };
 
 #endif
