@@ -433,22 +433,27 @@ void FacadeModele::assignerMode(Mode mode)
 	switch (mode)
 	{
 		case MENU_PRINCIPAL:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
 			break;
 
 		case SIMULATION:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>();
 			break;
 
 		case EDITION:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeEdition>();
 			break;
 
 		case CONFIGURE:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeConfigure>();
 			break;
 
 		case TEST:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeTest>();
 			break;
 

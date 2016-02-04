@@ -70,7 +70,7 @@ void NoeudPoteau::afficherConcret() const
 
 	glColor3f(1.0 , 0.0, 0.0);
 	
-
+	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
 	
 	//glRotatef(90, 1, 0, 0);
 	//glRotatef(90, 0, 1, 0);
