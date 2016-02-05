@@ -345,11 +345,6 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			break;
 		}
 	}
-
-	for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
-		std::cout << noeud->chercher(i)->obtenirType() << " : " << noeud->chercher(i)->estSelectionne() << std::endl;
-	}
 }
 
 void VisiteurSelection::assignerControl(bool estControl)
