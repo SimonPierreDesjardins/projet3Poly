@@ -33,7 +33,7 @@
 NoeudMur::NoeudMur(const std::string& typeNoeud)
 : NoeudAbstrait{ typeNoeud }
 {
-	angleRotationRelatif_ = 0;
+	angleRotation_ = 0;
 	facteurMiseAEchelle_ = 1;
 }
 
@@ -69,7 +69,7 @@ void NoeudMur::afficherConcret() const
 	glPushMatrix();
 
 	//Ajustement du mur avant la création
-	glRotated(angleRotationRelatif_, 0, 0, 1);
+	glRotated(angleRotation_, 0, 0, 1);
 	glScaled(facteurMiseAEchelle_, 1, 1);
 	
 	// Affichage du modèle.

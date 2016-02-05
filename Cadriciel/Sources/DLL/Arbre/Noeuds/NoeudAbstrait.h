@@ -153,8 +153,8 @@ public:
 	glm::dvec3 getPositionRelatif() { return positionRelative_; };
 	void setPositionRelatif(double x, double y, double z) { positionRelative_ = { x, y, z }; };
 
-	double getAngleRotationRelatif() { return angleRotationRelatif_; };
-	void setAngleRotationRelatif(double angle) { angleRotationRelatif_ = angle; };
+	double getAngleRotationRelatif() { return angleRotation_; };
+	void setAngleRotationRelatif(double angle) { angleRotation_ = angle; };
 
 	double getfacteurMiseAEchelle() { return facteurMiseAEchelle_; };
 	void setFacteurMiseEchelle(double facteur) { facteurMiseAEchelle_ = facteur; };
@@ -170,7 +170,7 @@ protected:
 	glm::dvec3				positionRelative_{ 0, 0, 0 };
 
 	/// Angle de rotation sur le plan xy
-	double					angleRotationRelatif_{ 0 };
+	double					angleRotation_{ 0 };
 
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
@@ -285,12 +285,12 @@ inline void NoeudAbstrait::assignerPositionRelative(
 //TODO: Documentation.	
 inline double NoeudAbstrait::obtenirAngleRotation() const
 {
-	return angleRotationRelatif_;
+	return angleRotation_;
 }
 //TODO: Documentation.
 inline void NoeudAbstrait::assignerAngleRotation(double angleRotation)
 {
-	angleRotationRelatif_ = angleRotation;
+	angleRotation_ = angleRotation;
 }
 //TODO: Documentation.
 inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
