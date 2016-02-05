@@ -383,34 +383,42 @@ void FacadeModele::assignerEtat(Etat etat)
 		switch (etat)
 		{
 			case SELECTION :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatSelection>();
 				break;
 
 			case DEPLACEMENT :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatDeplacement>();
 				break;
 
 			case ROTATION :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatRotation>();
 				break;
 
 			case MISE_A_ECHELLE :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatMiseAEchelle>();
 				break;
 
 			case DUPLICATION :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatDuplication>();
 				break;
 
 			case CREATION_POTEAU :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatCreationPoteau>();
 				break;
 
 			case CREATION_MUR :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatCreationMur>();
 				break;
 
 			case CREATION_LIGNE_NOIRE :
+				etat_.reset(nullptr);
 				etat_ = std::make_unique<EtatCreationLigneNoire>();
 				break;
 			
@@ -433,22 +441,27 @@ void FacadeModele::assignerMode(Mode mode)
 	switch (mode)
 	{
 		case MENU_PRINCIPAL:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
 			break;
 
 		case SIMULATION:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>();
 			break;
 
 		case EDITION:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeEdition>();
 			break;
 
 		case CONFIGURE:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeConfigure>();
 			break;
 
 		case TEST:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeTest>();
 			break;
 

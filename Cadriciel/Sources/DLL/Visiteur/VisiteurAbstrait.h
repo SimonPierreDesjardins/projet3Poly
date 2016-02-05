@@ -51,7 +51,7 @@ public:
 
 	inline void assignerPositionRelative(glm::dvec3 positionRelative);
 	inline void assignerAngleRotation(double angleRotation);
-	inline void assignerFacteurDimension(double facteurDimension);
+	inline void assignerFacteurMiseAEchelle(double facteurDimension);
 	inline void assignerEstAffiche(const bool& estAffiche);
 	inline NoeudAbstrait* obtenirReferenceNoeud();
 
@@ -66,7 +66,7 @@ public:
 protected:
 	glm::dvec3 positionRelative_;
 	double angleRotation_;
-	double facteurDimension_;
+	double facteurMiseAEchelle_;
 	bool estAffiche_{ false };
 
 	modele::Modele3D* referenceModele_;
@@ -85,9 +85,9 @@ inline void VisiteurAbstrait::assignerAngleRotation(double angleRotation)
 	angleRotation_ = angleRotation;
 }
 
-inline void VisiteurAbstrait::assignerFacteurDimension(double facteurDimension)
+inline void VisiteurAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
 {
-	facteurDimension_ = facteurDimension;
+	facteurMiseAEchelle_ = facteurDimension;
 }
 
 inline NoeudAbstrait* VisiteurAbstrait::obtenirReferenceNoeud()
