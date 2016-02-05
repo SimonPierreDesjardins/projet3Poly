@@ -274,12 +274,6 @@ namespace modele{
 		couleurs_.push_back(couleur);
 	}
 
-	inline Mesh::Couleur Mesh::obtenirCouleurVec()
-	{
-		Couleur couleurVec = couleurs_.pop_back();
-		return couleurVec;
-	}
-
 } /// fin de rendering
 
 #endif /// __RENDERING_MESH_H__

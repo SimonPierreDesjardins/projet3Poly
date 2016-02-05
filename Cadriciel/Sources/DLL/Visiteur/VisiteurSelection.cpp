@@ -90,8 +90,8 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			//boite.coinMin[1] -= 0.5;
 			//boite.coinMax[1] += 0.5;
 
-			boite.coinMax[1] *= noeud->chercher(i)->chercher(0)->obtenirFacteurMiseAEchelle();
-			boite.coinMin[1] *= noeud->chercher(i)->chercher(0)->obtenirFacteurMiseAEchelle();
+			boite.coinMax[0] *= noeud->chercher(i)->chercher(0)->obtenirFacteurMiseAEchelle();
+			boite.coinMin[0] *= noeud->chercher(i)->chercher(0)->obtenirFacteurMiseAEchelle();
 
 			/*std::cout << "Boite apres scale : " << boite.coinMin[1] << " , " << boite.coinMax[1] << std::endl;
 			std::cout << "Curseur : " << positionRelative_[1] << std::endl;
@@ -118,10 +118,10 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			pointBoite4[0] = boite.coinMin[0];
 			pointBoite4[1] = boite.coinMax[1];
 
-			utilitaire::calculerPositionApresRotation(pointBoite1, p1, -(noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
-			utilitaire::calculerPositionApresRotation(pointBoite2, p2, -(noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
-			utilitaire::calculerPositionApresRotation(pointBoite3, p3, -(noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
-			utilitaire::calculerPositionApresRotation(pointBoite4, p4, -(noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
+			utilitaire::calculerPositionApresRotation(pointBoite1, p1, (noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
+			utilitaire::calculerPositionApresRotation(pointBoite2, p2, (noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
+			utilitaire::calculerPositionApresRotation(pointBoite3, p3, (noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
+			utilitaire::calculerPositionApresRotation(pointBoite4, p4, (noeud->chercher(i)->chercher(0)->obtenirAngleRotation()));
 
 			/*double r1, r2, r3, r4;
 			r1 = utilitaire::calculerDistanceHypothenuse(origine, pointBoite1);
@@ -133,7 +133,8 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			pointBoite1[0] = r1*cos(angleRotation-180);
 			pointBoite1[1] = r1*sin(angleRotation-180);
 
-			pointBoite2[0] = r2*cos(angleRotation-180);
+			pointBoite2[0] = r2*cos(angleRotation-180);				mesh::Couleur couleur = mesh.obtenirCouleurs();
+				glColor4f(couleur[0], couleur[1], couleur[2], couleur[3]);
 			pointBoite2[1] = r2*sin(angleRotation-180);
 
 			pointBoite3[0] = r3*cos(angleRotation);
@@ -157,6 +158,13 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			p4[0] += noeud->chercher(i)->obtenirPositionRelative()[0];
 			p4[1] += noeud->chercher(i)->obtenirPositionRelative()[1];
 			p4[2] = 0.0;
+
+			std::cout << "Position Boite " << i << " :" << std::endl;
+			std::cout << "p1: " << p1[0] << ", " << p1[1] << std::endl;
+			std::cout << "p2: " << p2[0] << ", " << p2[1] << std::endl;
+			std::cout << "p3: " << p3[0] << ", " << p3[1] << std::endl;
+			std::cout << "p4: " << p4[0] << ", " << p4[1] << std::endl;
+		
 
 			droite1A = (p3[1] - p2[1]) / (p3[0] - p2[0]);
 			droite1K = p3[1] - (droite1A * p3[0]);

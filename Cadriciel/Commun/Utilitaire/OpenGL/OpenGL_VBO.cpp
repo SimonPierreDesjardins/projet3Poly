@@ -170,8 +170,6 @@ namespace opengl{
 			if (possedeCouleurs)
 			{
 				glDisable(GL_COLOR_MATERIAL);
-				mesh::Couleur couleur = mesh.obtenirCouleurs();
-				glColor4f(couleur[0], couleur[1], couleur[2], couleur[3]);
 			}
 			if (possedeNormales)
 				glDisable(GL_LIGHTING);
