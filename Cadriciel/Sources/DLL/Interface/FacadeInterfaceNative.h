@@ -13,9 +13,8 @@
 #include <Windowsx.h>
 
 
-extern "C" 
+extern "C"
 {
-
 	__declspec(dllexport) void initialiserOpenGL(int * handle);
 	__declspec(dllexport) void libererOpenGL();
 	__declspec(dllexport) void dessinerOpenGL();
@@ -27,8 +26,17 @@ extern "C"
 	__declspec(dllexport) bool executerTests();
 	__declspec(dllexport) void assignerEtat(int etat);
 	__declspec(dllexport) void assignerMode(int mode);
+	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
-}
+	__declspec(dllexport) double obtenirAngleRotation();
+	__declspec(dllexport) double obtenirFacteurGrandeur();
+	__declspec(dllexport) double obtenirPositionRelativeX();
+	__declspec(dllexport) double obtenirPositionRelativeY();
 
+	__declspec(dllexport) void assignerAngleRotation(double angle);
+	__declspec(dllexport) void assignerFacteurGrandeur(double facteurGrandeur);
+	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX);
+	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY);
+}
 #endif // __FACADE_INTERFACE_NATIVE_H__

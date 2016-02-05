@@ -378,7 +378,6 @@ void FacadeModele::animer(float temps)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-
 void FacadeModele::assignerEtat(Etat etat)
 {
 		switch (etat)
@@ -448,6 +447,127 @@ void FacadeModele::assignerMode(Mode mode)
 			break;
 	}
 }
+
+double FacadeModele::obtenirAngleRotation()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getAngleRotationRelatif();
+			}
+		}
+	}
+}
+
+double FacadeModele::obtenirFacteurGrandeur()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getfacteurMiseAEchelle();
+			}
+		}
+	}
+}
+
+double FacadeModele::obtenirPositionRelativeX()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif()[0];
+			}
+		}
+	}
+}
+
+double FacadeModele::obtenirPositionRelativeY()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif()[1];
+			}
+		}
+	}
+}
+
+void FacadeModele::assignerAngleRotation(double angle)
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerAngleRotation(angle);
+		}
+	}
+}
+
+void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur) 
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerFacteurMiseAEchelle(facteurGrandeur);
+		}
+	}
+}
+
+void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif();
+			position[0] = positionRelativeX;
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
+		}
+	}
+}
+
+void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif();
+			position[1] = positionRelativeY;
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
+		}
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

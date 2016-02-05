@@ -50,9 +50,8 @@ extern "C"
 		if (handle == nullptr)
 			return;
 
-		FacadeModele::obtenirInstance()->initialiserOpenGL((HWND) handle);
+		FacadeModele::obtenirInstance()->initialiserOpenGL((HWND)handle);
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -76,7 +75,6 @@ extern "C"
 		FacadeModele::libererInstance();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl dessinerOpenGL()
@@ -94,7 +92,6 @@ extern "C"
 		// Temporaire: pour détecter les erreurs OpenGL
 		aidegl::verifierErreurOpenGL();
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -118,7 +115,6 @@ extern "C"
 		);
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl animer(double temps)
@@ -134,9 +130,8 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl animer(double temps)
 	{
-		FacadeModele::obtenirInstance()->animer((float) temps);
+		FacadeModele::obtenirInstance()->animer((float)temps);
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -152,7 +147,6 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl zoomOut()
@@ -167,7 +161,6 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
@@ -181,7 +174,6 @@ extern "C"
 	{
 		return utilitaire::CompteurAffichage::obtenirInstance()->obtenirAffichagesSeconde();
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -207,7 +199,47 @@ extern "C"
 	{
 		FacadeModele::obtenirInstance()->assignerMode((Mode)mode);
 	}
-	
+
+	__declspec(dllexport) double __cdecl obtenirAngleRotation()
+	{
+		return FacadeModele::obtenirInstance()->obtenirAngleRotation();
+	}
+
+	__declspec(dllexport) double obtenirFacteurGrandeur()
+	{
+		return FacadeModele::obtenirInstance()->obtenirFacteurGrandeur();
+	}
+
+	__declspec(dllexport) double obtenirPositionRelativeX()
+	{
+		return FacadeModele::obtenirInstance()->obtenirPositionRelativeX();
+	}
+
+	__declspec(dllexport) double obtenirPositionRelativeY()
+	{
+		return FacadeModele::obtenirInstance()->obtenirPositionRelativeY();
+	}
+
+	__declspec(dllexport) void assignerAngleRotation(double angle)
+	{
+		FacadeModele::obtenirInstance()->assignerAngleRotation(angle);
+	}
+
+	__declspec(dllexport) void assignerFacteurGrandeur(double facteurGrandeur)
+	{
+		FacadeModele::obtenirInstance()->assignerFacteurGrandeur(facteurGrandeur);
+	}
+
+	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX)
+	{
+		FacadeModele::obtenirInstance()->assignerPositionRelativeX(positionRelativeX);
+	}
+
+	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY)
+	{
+		FacadeModele::obtenirInstance()->assignerPositionRelativeY(positionRelativeY);
+	}
+
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 

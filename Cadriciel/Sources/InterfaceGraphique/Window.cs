@@ -234,10 +234,64 @@ namespace InterfaceGraphique
 
         private void panneauOperation__VisibleChanged(object sender, EventArgs e)
         {
-            textboxDimension_.Text = "";
-            textBoxRotation_.Text = "Test Ici";
-            textBoxPositionX_.Text = "Test Ici";
-            textBoxPositionY_.Text = "Test Ici";
+            textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+            textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+            textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+            textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+        }
+
+        static bool fred = true;
+        private void aideMenuEdition__Click(object sender, EventArgs e)
+        {
+            fred =! fred;
+            panneauOperation_.Visible = fred;
+        }
+
+        private void textboxDimension__Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerFacteurGrandeur(Convert.ToDouble(textboxDimension_.Text));
+        }
+
+        private void textBoxRotation__Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
+        }
+
+        private void textBoxPositionX__Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerPositionRelativeX(Convert.ToDouble(textBoxPositionX_.Text));
+        }
+
+        private void textBoxPositionY__KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                FonctionsNatives.assignerPositionRelativeY(Convert.ToDouble(textBoxPositionY_.Text));
+            }
+        }
+
+        private void textBoxPositionX__KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                FonctionsNatives.assignerPositionRelativeX(Convert.ToDouble(textBoxPositionX_.Text));
+            }
+        }
+
+        private void textBoxRotation__KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
+            }
+        }
+
+        private void textboxDimension__KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                FonctionsNatives.assignerFacteurGrandeur(Convert.ToDouble(textboxDimension_.Text));
+            }
         }
     }
 
@@ -299,6 +353,30 @@ namespace InterfaceGraphique
  
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void repartirMessage(int msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern double obtenirAngleRotation();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern double obtenirFacteurGrandeur();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern double obtenirPositionRelativeX();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern double obtenirPositionRelativeY();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerAngleRotation(double angle);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerFacteurGrandeur(double facteurGrandeur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerPositionRelativeX(double positionRelativeX);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerPositionRelativeY(double positionRelativeY);
 
     }
 }

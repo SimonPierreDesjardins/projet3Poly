@@ -326,8 +326,9 @@
             // aideMenuEdition_
             // 
             this.aideMenuEdition_.Name = "aideMenuEdition_";
-            this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
+            this.aideMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.aideMenuEdition_.Text = "Aide";
+            this.aideMenuEdition_.Click += new System.EventHandler(this.aideMenuEdition__Click);
             // 
             // barreOutils_
             // 
@@ -444,8 +445,7 @@
             // 
             // panneauOperation_
             // 
-            this.panneauOperation_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panneauOperation_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panneauOperation_.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.panneauOperation_.Controls.Add(this.textBoxPositionY_);
             this.panneauOperation_.Controls.Add(this.textBoxPositionX_);
@@ -467,6 +467,7 @@
             this.textBoxPositionY_.Name = "textBoxPositionY_";
             this.textBoxPositionY_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionY_.TabIndex = 7;
+            this.textBoxPositionY_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionY__KeyDown);
             // 
             // textBoxPositionX_
             // 
@@ -474,6 +475,7 @@
             this.textBoxPositionX_.Name = "textBoxPositionX_";
             this.textBoxPositionX_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionX_.TabIndex = 6;
+            this.textBoxPositionX_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionX__KeyDown);
             // 
             // textBoxRotation_
             // 
@@ -481,6 +483,7 @@
             this.textBoxRotation_.Name = "textBoxRotation_";
             this.textBoxRotation_.Size = new System.Drawing.Size(84, 20);
             this.textBoxRotation_.TabIndex = 5;
+            this.textBoxRotation_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotation__KeyDown);
             // 
             // textboxDimension_
             // 
@@ -488,6 +491,7 @@
             this.textboxDimension_.Name = "textboxDimension_";
             this.textboxDimension_.Size = new System.Drawing.Size(84, 20);
             this.textboxDimension_.TabIndex = 4;
+            this.textboxDimension_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxDimension__KeyDown);
             // 
             // panneauPositionY_
             // 

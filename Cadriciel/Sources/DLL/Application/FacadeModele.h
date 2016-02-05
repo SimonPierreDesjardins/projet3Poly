@@ -65,6 +65,16 @@ public:
    // Obtenir l'etat courant.
    inline ModeAbstrait* obtenirMode();
 
+   double obtenirAngleRotation();
+   double obtenirFacteurGrandeur();
+   double obtenirPositionRelativeX();
+   double obtenirPositionRelativeY();
+
+   void assignerAngleRotation(double angle);
+   void assignerFacteurGrandeur(double facteurGrandeur);
+   void assignerPositionRelativeX(double positionRelativeX);
+   void assignerPositionRelativeY(double positionRelativeY);
+
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
    /// Retourne l'arbre de rendu.
