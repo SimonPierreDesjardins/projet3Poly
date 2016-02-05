@@ -65,11 +65,13 @@ public:
    // Obtenir l'etat courant.
    inline ModeAbstrait* obtenirMode();
 
+   //Obtient des informations sur le noeud
    double obtenirAngleRotation();
    double obtenirFacteurGrandeur();
    double obtenirPositionRelativeX();
    double obtenirPositionRelativeY();
 
+   //Assigne des informations sur le noeud
    void assignerAngleRotation(double angle);
    void assignerFacteurGrandeur(double facteurGrandeur);
    void assignerPositionRelativeX(double positionRelativeX);

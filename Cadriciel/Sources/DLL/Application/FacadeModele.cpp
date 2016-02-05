@@ -419,6 +419,15 @@ void FacadeModele::assignerEtat(Etat etat)
 		}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerMode(Mode mode)
+///
+/// Cette fonction change l'attribut mode_ pour la valeur du mode en paramètre.
+///
+/// @param[in] etat : Nouveau mode à traiter.
+///
+////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerMode(Mode mode)
 {
 	switch (mode)
@@ -448,6 +457,15 @@ void FacadeModele::assignerMode(Mode mode)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double __cdecl obtenirAngleRotation()
+///
+/// Cette fonction permet d'obtenir l'angle de rotation d'un objet
+///
+/// @return doublee : l'angle de rotation de l'objet
+///
+////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirAngleRotation()
 {
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -466,6 +484,15 @@ double FacadeModele::obtenirAngleRotation()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double obtenirFacteurGrandeur()
+///
+/// Cette fonction permet d'obtenir le facteur de grandissement d'un objet
+///
+/// @return doublee : le facteur de grandissement d'un objet
+///
+////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirFacteurGrandeur()
 {
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -484,6 +511,15 @@ double FacadeModele::obtenirFacteurGrandeur()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+///
+/// Cette fonction permet d'obtenir la position relative en X
+///
+/// @return doublee : la position relative en X
+///
+////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirPositionRelativeX()
 {
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -502,6 +538,15 @@ double FacadeModele::obtenirPositionRelativeX()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+///
+/// Cette fonction permet d'obtenir la position relative en Y
+///
+/// @return doublee : la position relative en Y
+///
+////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirPositionRelativeY()
 {
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -520,6 +565,8 @@ double FacadeModele::obtenirPositionRelativeY()
 	}
 }
 
+//TODO:
+//Appeler un visiteur
 void FacadeModele::assignerAngleRotation(double angle)
 {
 	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
@@ -531,6 +578,8 @@ void FacadeModele::assignerAngleRotation(double angle)
 	}
 }
 
+//TODO:
+//Appeler un visiteur
 void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur) 
 {
 	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)

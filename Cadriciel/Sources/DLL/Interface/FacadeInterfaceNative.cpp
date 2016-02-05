@@ -190,31 +190,85 @@ extern "C"
 		return reussite ? 0 : 1;
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerEtat(int etat)
+	///
+	/// Cette fonction permet d'assigner un Etat
+	///
+	/// @param int etat : Le numero de l'état selectionné
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerEtat(int etat)
 	{
 		FacadeModele::obtenirInstance()->assignerEtat((Etat)etat);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerMode(int mode)
+	///
+	/// Cette fonction permet d'assigner un Mode
+	///
+	/// @param int mode : Le numero du mode sélectionné
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerMode(int mode)
 	{
 		FacadeModele::obtenirInstance()->assignerMode((Mode)mode);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double __cdecl obtenirAngleRotation()
+	///
+	/// Cette fonction permet d'obtenir l'angle de rotation d'un objet
+	///
+	/// @return doublee : l'angle de rotation de l'objet
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double __cdecl obtenirAngleRotation()
 	{
 		return FacadeModele::obtenirInstance()->obtenirAngleRotation();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double obtenirFacteurGrandeur()
+	///
+	/// Cette fonction permet d'obtenir le facteur de grandissement d'un objet
+	///
+	/// @return doublee : le facteur de grandissement d'un objet
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double obtenirFacteurGrandeur()
 	{
 		return FacadeModele::obtenirInstance()->obtenirFacteurGrandeur();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+	///
+	/// Cette fonction permet d'obtenir la position relative en X
+	///
+	/// @return doublee : la position relative en X
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double obtenirPositionRelativeX()
 	{
 		return FacadeModele::obtenirInstance()->obtenirPositionRelativeX();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+	///
+	/// Cette fonction permet d'obtenir la position relative en Y
+	///
+	/// @return doublee : la position relative en Y
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double obtenirPositionRelativeY()
 	{
 		return FacadeModele::obtenirInstance()->obtenirPositionRelativeY();
