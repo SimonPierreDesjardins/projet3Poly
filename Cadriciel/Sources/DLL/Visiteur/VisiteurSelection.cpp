@@ -42,7 +42,9 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 
 		glm::dvec3 pointBoite1, pointBoite2, pointBoite3, pointBoite4;
 		glm::dvec3 p1, p2, p3, p4;
-		double droite1A, droite1K, droite2A, droite2K, droite3A, droite3K, droite4A, droite4K;
+		double droite12A, droite12K, droite23A, droite23K, droite34A, droite34K, droite41A, droite41K;
+		bool estDansBoite = false;
+		int angle = 0; // 0 : 0-90, 1 : 90-180, 2 : 180-270, 3 : 270-360
 		switch (noeud->chercher(i)->obtenirType()[0])
 		{
 		case 'p' :
@@ -166,19 +168,64 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			std::cout << "p4: " << p4[0] << ", " << p4[1] << std::endl;
 		
 
-			droite1A = (p3[1] - p2[1]) / (p3[0] - p2[0]);
-			droite1K = p3[1] - (droite1A * p3[0]);
-			droite2A = (p4[1] - p1[1]) / (p4[0] - p1[0]);
-			droite2K = p4[1] - (droite2A * p4[0]);
-			droite3A = (p3[1] - p4[1]) / (p3[0] - p4[0]);
-			droite3K = p3[1] - (droite3A * p3[0]);
-			droite4A = (p1[1] - p2[1]) / (p1[0] - p2[0]);
-			droite4K = p1[1] - (droite4A * p1[0]);
+			droite12A = (p1[1] - p2[1]) / (p1[0] - p2[0]);
+			droite12K = p1[1] - (droite12A * p1[0]);
+			droite23A = (p2[1] - p3[1]) / (p2[0] - p3[0]);
+			droite23K = p2[1] - (droite23A * p2[0]);
+			droite34A = (p3[1] - p4[1]) / (p3[0] - p4[0]);
+			droite34K = p3[1] - (droite34A * p3[0]);
+			droite41A = (p4[1] - p1[1]) / (p4[0] - p1[0]);
+			droite41K = p4[1] - (droite41A * p4[0]);
+
+			if (noeud->chercher(i)->chercher(0)->obtenirAngleRotation() < 90 && noeud->chercher(i)->chercher(0)->obtenirAngleRotation() > 0)
+			{
+				angle = 0;
+			}
+			else if (noeud->chercher(i)->chercher(0)->obtenirAngleRotation() < 180 && noeud->chercher(i)->chercher(0)->obtenirAngleRotation() > 90)
+			{
+				angle = 1;
+			}
+			else if (noeud->chercher(i)->chercher(0)->obtenirAngleRotation() < 270 && noeud->chercher(i)->chercher(0)->obtenirAngleRotation() > 180)
+			{
+				angle = 2;
+			}
+			else if (noeud->chercher(i)->chercher(0)->obtenirAngleRotation() < 360 && noeud->chercher(i)->chercher(0)->obtenirAngleRotation() > 270)
+			{
+				angle = 3;
+			}
+
+			switch (angle)
+			{
+			case 0:
+				if ((positionRelative_[0] * droite12A + droite12K) < positionRelative_[1] && (positionRelative_[0] * droite23A + droite23K) > positionRelative_[1] && (positionRelative_[0] * droite34A + droite34K) > positionRelative_[1] && (positionRelative_[0] * droite41A + droite41K) < positionRelative_[1])
+				{
+					estDansBoite = true;
+				}
+				break;
+			case 1:
+				if ((positionRelative_[0] * droite12A + droite12K) > positionRelative_[1] && (positionRelative_[0] * droite23A + droite23K) > positionRelative_[1] && (positionRelative_[0] * droite34A + droite34K) < positionRelative_[1] && (positionRelative_[0] * droite41A + droite41K) < positionRelative_[1])
+				{
+					estDansBoite = true;
+				}
+				break;
+			case 2:
+				if ((positionRelative_[0] * droite12A + droite12K) > positionRelative_[1] && (positionRelative_[0] * droite23A + droite23K) < positionRelative_[1] && (positionRelative_[0] * droite34A + droite34K) < positionRelative_[1] && (positionRelative_[0] * droite41A + droite41K) > positionRelative_[1])
+				{
+					estDansBoite = true;
+				}
+				break;
+			case 3:
+				if ((positionRelative_[0] * droite12A + droite12K) < positionRelative_[1] && (positionRelative_[0] * droite23A + droite23K) < positionRelative_[1] && (positionRelative_[0] * droite34A + droite34K) > positionRelative_[1] && (positionRelative_[0] * droite41A + droite41K) > positionRelative_[1])
+				{
+					estDansBoite = true;
+				}
+				break;
+			default:
+				break;
+			}
 
 
-
-			//if (positionRelative_[0] < boite.coinMin[0] + noeud->chercher(i)->obtenirPositionRelative()[0] || positionRelative_[0] > boite.coinMax[0] + noeud->chercher(i)->obtenirPositionRelative()[0] || positionRelative_[1] < boite.coinMin[1] + noeud->chercher(i)->obtenirPositionRelative()[1] || positionRelative_[1] > boite.coinMax[1] + noeud->chercher(i)->obtenirPositionRelative()[1])
-			if ((positionRelative_[0] * droite1A + droite1K) > positionRelative_[1] && (positionRelative_[0] * droite2A + droite2K) < positionRelative_[1] && (positionRelative_[0] * droite3A + droite3K) > positionRelative_[1] && (positionRelative_[0] * droite4A + droite4K) < positionRelative_[1])
+			if (estDansBoite)
 			{
 				noeud->chercher(i)->assignerSelection(1);
 				std::cout << "Lobjet est selectionne" << std::endl;
