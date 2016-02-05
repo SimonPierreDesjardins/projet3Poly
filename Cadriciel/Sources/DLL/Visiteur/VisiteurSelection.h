@@ -28,6 +28,12 @@ public:
 	
 	/// Parcours du noeudTable.
 	virtual void visiter(NoeudTable* noeud);
+
+	//Indique si la touche control est appuyee
+	void assignerControl(bool estControl);
+
+private:
+	bool estControlAppuye;
 };
 
 #endif // VISITEUR_SELECTION_H

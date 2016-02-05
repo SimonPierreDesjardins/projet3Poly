@@ -29,10 +29,14 @@ public:
 
 	void gererDragGauche(const int& xAvant, const int& yAvant, const int& xApres, const int& yApres);
 
+	void gererToucheControlEnfoncee();
+	void gererToucheControlRelachee();
+
 
 private : 
-	int xEnfonce;
-	int yEnfonce;
+	int xEnfonce_;
+	int yEnfonce_;
+	std::unique_ptr<VisiteurSelection> visiteurSelection_;
 };
 
 #endif

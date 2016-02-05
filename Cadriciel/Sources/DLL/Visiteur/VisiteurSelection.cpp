@@ -35,7 +35,15 @@ VisiteurSelection::~VisiteurSelection()
 
 void VisiteurSelection::visiter(NoeudTable* noeud)
 {
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	if (!estControlAppuye)
+	{
+		for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
+		{
+			noeud->chercher(i)->assignerSelection(0);
+		}
+	}
+	
+	for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		modele::Modele3D const* modeleEnfant = noeud->chercher(i)->getModele();
 		utilitaire::BoiteEnglobante boite = utilitaire::calculerBoiteEnglobante(*modeleEnfant);
@@ -78,15 +86,21 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			pointBoite4[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite4[1];
 			pointBoite4[2] = 0.0;
 
-			if (positionRelative_[0] < pointBoite2[0] && positionRelative_[0] > pointBoite1[0] && positionRelative_[1] < pointBoite3[1] && positionRelative_[1] > pointBoite1[1])
+			if (estControlAppuye)
 			{
-				noeud->chercher(i)->assignerSelection(1);
-				std::cout << "Lobjet est selectionne" << std::endl;
+				if (positionRelative_[0] < pointBoite2[0] && positionRelative_[0] > pointBoite1[0] && positionRelative_[1] < pointBoite3[1] && positionRelative_[1] > pointBoite1[1])
+				{
+					noeud->chercher(i)->inverserSelection();
+					std::cout << "La selection de lobjet est inversee" << std::endl;
+				}
 			}
 			else
 			{
-				noeud->chercher(i)->assignerSelection(0);
-				std::cout << "Lobjet nest pas selectionne" << std::endl;
+				if (positionRelative_[0] < pointBoite2[0] && positionRelative_[0] > pointBoite1[0] && positionRelative_[1] < pointBoite3[1] && positionRelative_[1] > pointBoite1[1])
+				{
+					noeud->chercher(i)->assignerSelection(1);
+					std::cout << "Lobjet est selectionne" << std::endl;
+				}
 			}
 			break;
 		case 'l':
@@ -191,15 +205,21 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 					break;
 				}
 			}
-			if (estDansBoite)
+			if (estControlAppuye)
 			{
-				noeud->chercher(i)->assignerSelection(1);
-				std::cout << "Lobjet est selectionne" << std::endl;
+				if (estDansBoite)
+				{
+					noeud->chercher(i)->inverserSelection();
+					std::cout << "La selection de lobjet est inversee" << std::endl;
+				}
 			}
 			else
 			{
-				noeud->chercher(i)->assignerSelection(0);
-				std::cout << "Lobjet nest pas selectionne" << std::endl;
+				if (estDansBoite)
+				{
+					noeud->chercher(i)->assignerSelection(1);
+					std::cout << "Lobjet est selectionne" << std::endl;
+				}
 			}
 			break;
 		case 'm':
@@ -303,17 +323,21 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			default:
 				break;
 			}
-
-
-			if (estDansBoite)
+			if (estControlAppuye)
 			{
-				noeud->chercher(i)->assignerSelection(1);
-				std::cout << "Lobjet est selectionne" << std::endl;
+				if (estDansBoite)
+				{
+					noeud->chercher(i)->inverserSelection();
+					std::cout << "La selection de lobjet est inversee" << std::endl;
+				}
 			}
 			else
 			{
-				noeud->chercher(i)->assignerSelection(0);
-				std::cout << "Lobjet nest pas selectionne" << std::endl;
+				if (estDansBoite)
+				{
+					noeud->chercher(i)->assignerSelection(1);
+					std::cout << "Lobjet est selectionne" << std::endl;
+				}
 			}
 			break;
 		default:
@@ -321,4 +345,14 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			break;
 		}
 	}
+
+	for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	{
+		std::cout << noeud->chercher(i)->obtenirType() << " : " << noeud->chercher(i)->estSelectionne() << std::endl;
+	}
+}
+
+void VisiteurSelection::assignerControl(bool estControl)
+{
+	estControlAppuye = estControl;
 }
