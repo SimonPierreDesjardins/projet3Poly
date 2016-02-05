@@ -39,8 +39,10 @@ void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 
 void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 {
+	const double FACTEUR_ARBITRAIRE = 10.0;
+	
 	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle();
-	double nouveauFacteurMiseAEchelle = facteurMiseAEchelle + facteurMiseAEchelle_;
+	double nouveauFacteurMiseAEchelle = facteurMiseAEchelle + facteurMiseAEchelle_ / FACTEUR_ARBITRAIRE;
 	if (nouveauFacteurMiseAEchelle < 0)
 	{
 		nouveauFacteurMiseAEchelle = 0;

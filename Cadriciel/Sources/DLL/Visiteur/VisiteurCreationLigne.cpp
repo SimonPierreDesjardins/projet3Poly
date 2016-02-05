@@ -42,7 +42,6 @@ void VisiteurCreationLigne::visiter(NoeudTable* noeud)
 	std::cout << " : " << positionRelative_[2] << std::endl;
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
-	nouveauNoeud->assignerSelection(true);
 	noeud->ajouter(nouveauNoeud);
 	referenceNoeud_ = nouveauNoeud.get();
 }

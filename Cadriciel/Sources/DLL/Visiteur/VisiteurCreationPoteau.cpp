@@ -42,8 +42,6 @@ void VisiteurCreationPoteau::visiter(NoeudTable* noeud)
 	std::cout << " : " <<  positionRelative_[2] << std::endl;
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
-	//TODO: a enlever quand la selection est faite.
-	nouveauNoeud->assignerSelection(true);
 	noeud->ajouter(nouveauNoeud);
 }
 

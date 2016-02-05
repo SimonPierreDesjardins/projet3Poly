@@ -52,7 +52,7 @@ void VisiteurRotation::visiter(NoeudPoteau* noeud)
 
 void VisiteurRotation::visiter(NoeudMur* noeud)
 {
-	// Assigner le nouvel angle de rotation.
+	// Assigner le nouvel angle de rotation.)
 	double angle = noeud->obtenirAngleRotation() + angleRotation_;
 	noeud->assignerAngleRotation(angle);
 	
@@ -63,7 +63,6 @@ void VisiteurRotation::visiter(NoeudMur* noeud)
 void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
 {
 	assignerNouvellePositionRelative(noeud);
-
 	NoeudAbstrait* enfant;
 	double angle;
 	glm::dvec3 nouvellePositionRelative;
@@ -82,32 +81,38 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 {
 	if (noeud->obtenirNombreEnfants() < 1) return;
 	// Initialiser les minimums et les maximums 
-	double minX = noeud->chercher(0)->obtenirPositionRelative()[0];
-	double maxX = noeud->chercher(0)->obtenirPositionRelative()[0];
-	double minY = noeud->chercher(0)->obtenirPositionRelative()[1];
-	double maxY = noeud->chercher(0)->obtenirPositionRelative()[1];
+	double minX = 0;
+	double maxX = 0;
+	double minY = 0;
+	double maxY = 0;
 	double x = 0;
 	double y = 0;
+
+	NoeudAbstrait* enfant;
 	// Trouver les min / max dans les positions des noeuds sur la table.
 	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
-		x = noeud->chercher(i)->obtenirPositionRelative()[0];
-		y = noeud->chercher(i)->obtenirPositionRelative()[1];
-		if (x > maxX)
+		enfant = noeud->chercher(i);
+		if (enfant->estSelectionne())
 		{
-			maxX = x;
-		}
-		else if (x < minX)
-		{
-			minX = x;
-		}
-		if (y > maxY)
-		{
-			maxY = y; 
-		}
-		else if (y < minY)
-		{
-			minY = y;
+			x = enfant->obtenirPositionRelative()[0];
+			y = enfant->chercher(i)->obtenirPositionRelative()[1];
+			if (x > maxX)
+			{
+				maxX = x;
+			}
+			else if (x < minX)
+			{
+				minX = x;
+			}
+			if (y > maxY)
+			{
+				maxY = y; 
+			}
+			else if (y < minY)
+			{
+				minY = y;
+			}
 		}
 	}
 	// Calculer et assigner la position relative à la ligne
