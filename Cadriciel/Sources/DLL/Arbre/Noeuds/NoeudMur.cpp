@@ -79,6 +79,25 @@ void NoeudMur::afficherConcret() const
 	glPopMatrix();
 }
 
+
+utilitaire::BoiteEnglobante NoeudMur::obtenirBoiteEnglobanteCourante() const
+{
+	utilitaire::BoiteEnglobante boiteEnglobanteCourante;
+	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
+	boiteEnglobanteCourante.coinMin[0] = boiteEnglobanteModele_.coinMin[0] * facteurMiseAEchelle_;
+	boiteEnglobanteCourante.coinMax[0] = boiteEnglobanteModele_.coinMax[0] * facteurMiseAEchelle_;
+
+	// Mettre à jour la position des coins de la boite avec l'angle de rotation du noeud.
+	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMin, boiteEnglobanteCourante.coinMin, angleRotation_);
+	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMax, boiteEnglobanteCourante.coinMax, angleRotation_);
+
+	// Mettre à jour les coins avec la position relative.
+	boiteEnglobanteCourante.coinMin = boiteEnglobanteModele_.coinMin + positionRelative_;
+	boiteEnglobanteCourante.coinMax = boiteEnglobanteModele_.coinMax + positionRelative_;
+
+	return boiteEnglobanteCourante;
+}
+
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

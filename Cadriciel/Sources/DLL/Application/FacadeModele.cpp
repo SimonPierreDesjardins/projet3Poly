@@ -498,7 +498,7 @@ double FacadeModele::obtenirAngleRotation()
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getAngleRotationRelatif();
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirAngleRotation();
 			}
 		}
 	}
@@ -525,7 +525,7 @@ double FacadeModele::obtenirFacteurGrandeur()
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getfacteurMiseAEchelle();
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirFacteurMiseAEchelle();
 			}
 		}
 	}
@@ -552,7 +552,7 @@ double FacadeModele::obtenirPositionRelativeX()
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif()[0];
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[0];
 			}
 		}
 	}
@@ -579,7 +579,7 @@ double FacadeModele::obtenirPositionRelativeY()
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif()[1];
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[1];
 			}
 		}
 	}
@@ -617,7 +617,7 @@ void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
 	{
 		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 		{
-			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif();
+			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative();
 			position[0] = positionRelativeX;
 			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
 		}
@@ -630,7 +630,7 @@ void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
 	{
 		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 		{
-			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif();
+			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative();
 			position[1] = positionRelativeY;
 			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
 		}

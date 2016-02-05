@@ -84,6 +84,22 @@ void NoeudPoteau::afficherConcret() const
 	glPopMatrix();
 }
 
+utilitaire::BoiteEnglobante NoeudPoteau::obtenirBoiteEnglobanteCourante() const
+{
+	utilitaire::BoiteEnglobante boiteEnglobanteCourante;
+	// Mettre à jour les coins avec le facteur de mise à échelle.
+	for (int i = 0; i < 2; i++)
+	{
+		boiteEnglobanteCourante.coinMin[i] = boiteEnglobanteModele_.coinMin[i] * facteurMiseAEchelle_;
+		boiteEnglobanteCourante.coinMax[i] = boiteEnglobanteModele_.coinMax[i] * facteurMiseAEchelle_;
+	}
+	// Mettre à jour les coins avec la position relative.
+	boiteEnglobanteCourante.coinMin = boiteEnglobanteModele_.coinMin + positionRelative_;
+	boiteEnglobanteCourante.coinMax = boiteEnglobanteModele_.coinMax + positionRelative_;
+
+	return boiteEnglobanteCourante;
+}
+
 void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
