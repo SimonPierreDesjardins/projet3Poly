@@ -87,7 +87,7 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 	double maxY = 0;
 	double x = 0;
 	double y = 0;
-
+	bool estPremierSelectionne = true;
 	NoeudAbstrait* enfant;
 	// Trouver les min / max dans les positions des noeuds sur la table.
 	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
@@ -96,22 +96,28 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 		if (enfant->estSelectionne())
 		{
 			x = enfant->obtenirPositionRelative()[0];
-			y = enfant->chercher(i)->obtenirPositionRelative()[1];
-			if (x > maxX)
+			y = enfant->obtenirPositionRelative()[1];
+
+			if (x > maxX || estPremierSelectionne)
 			{
 				maxX = x;
 			}
-			else if (x < minX)
+			if (x < minX || estPremierSelectionne)
 			{
 				minX = x;
 			}
-			if (y > maxY)
+			if (y > maxY || estPremierSelectionne)
 			{
 				maxY = y; 
 			}
-			else if (y < minY)
+			if (y < minY || estPremierSelectionne)
 			{
 				minY = y;
+			}
+			
+			if (estPremierSelectionne)
+			{
+				estPremierSelectionne = false;
 			}
 		}
 	}

@@ -10,7 +10,7 @@ VisiteurDuplication::VisiteurDuplication()
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
-		if (table->chercher(0)->estSelectionne())
+		if (table->chercher(i)->estSelectionne())
 		{
 			nNoeuds_++;
 		}
