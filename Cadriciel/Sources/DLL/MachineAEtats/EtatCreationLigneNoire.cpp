@@ -58,7 +58,7 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	if (!enCreation_)
 	{
 		enCreation_ = true;
-
+		//std::cout << "Premier clic position: " << positionVirtuelle[0] << " : " << positionVirtuelle[1] << std::endl;
 		arbre->accepterVisiteur(visiteur_.get());
 		ligne_ = visiteur_->obtenirReferenceNoeud();
 
@@ -77,6 +77,7 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	// Clic subsequent sans CTRL enfoncee (dernier clic).
 	else if (enCreation_ && !toucheCtrlEnfonce_)
 	{
+		//std::cout << "Deuxieme clic position: " << positionVirtuelle[0] << " : " << positionVirtuelle[1] << std::endl;
 		calculerPositionCentreLigne();
 		ligne_ = nullptr;
 		segment_ = nullptr;
@@ -181,7 +182,7 @@ void EtatCreationLigneNoire::calculerPositionCentreLigne()
 		ligne_->chercher(i)->assignerPositionRelative(positionEnfant);
 		ligne_->assignerSelection(true);
 	}
-	std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
+	//std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
 }
 
 void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)

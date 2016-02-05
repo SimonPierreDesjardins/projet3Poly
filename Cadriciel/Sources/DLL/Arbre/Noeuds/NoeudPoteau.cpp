@@ -67,11 +67,11 @@ void NoeudPoteau::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
+	if (estSelectionne())
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
 
-	glColor3f(1.0 , 0.0, 0.0);
-	
-
-	
 	//glRotatef(90, 1, 0, 0);
 	//glRotatef(90, 0, 1, 0);
 
