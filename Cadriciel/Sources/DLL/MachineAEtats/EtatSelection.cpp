@@ -20,7 +20,7 @@
 EtatSelection::EtatSelection()
 {
 	std::cout << "Selection d'un object" << std::endl;
-	visiteur_ = std::make_unique<VisiteurSelection>();
+	visiteurSelection_ = std::make_unique<VisiteurSelection>();
 }
 
 EtatSelection::~EtatSelection()
@@ -31,27 +31,27 @@ EtatSelection::~EtatSelection()
 
 void EtatSelection::gererClicGaucheEnfonce(const int& x, const int& y)
 {
-	xEnfonce = x;
-	yEnfonce = y;
+	xEnfonce_ = x;
+	yEnfonce_ = y;
 }
 
 void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 {
 	int deltaX = 0, deltaY = 0;
-	deltaX = x - xEnfonce;
+	deltaX = x - xEnfonce_;
 	if (deltaX < 0)
 	{
 		deltaX = -deltaX;
 	}
-	deltaY = x - yEnfonce;
+	deltaY = x - yEnfonce_;
 	if (deltaY < 0)
 	{
 		deltaY = -deltaY;
 	}
 
 	int moyenneX = 0, moyenneY = 0;
-	moyenneX = (xEnfonce + x) / 2;
-	moyenneY = (yEnfonce + y) / 2;
+	moyenneX = (xEnfonce_ + x) / 2;
+	moyenneY = (yEnfonce_ + y) / 2;
 
 	if (deltaX < 3)
 	{
@@ -59,7 +59,7 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 	}
 	else
 	{
-		gererDragGauche(xEnfonce, yEnfonce, x, y);
+		gererDragGauche(xEnfonce_, yEnfonce_, x, y);
 	}
 }
 
@@ -68,12 +68,22 @@ void EtatSelection::gererClicGauche(const int& x, const int& y)
 {
 	glm::dvec3 positionRelative;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
-	visiteur_->assignerPositionRelative(positionRelative);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteur_.get());
+	visiteurSelection_->assignerPositionRelative(positionRelative);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSelection_.get());
 }
 
 
 void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const int& xApres, const int& yApres)
 {
 	std::cout << "Drag gauche : " << xAvant << " " << yAvant << " a " << xApres << " " << yApres << std::endl;
+}
+
+void EtatSelection::gererToucheControlEnfoncee()
+{
+	visiteurSelection_->assignerControl(true);
+}
+
+void EtatSelection::gererToucheControlRelachee()
+{
+	visiteurSelection_->assignerControl(false);
 }
