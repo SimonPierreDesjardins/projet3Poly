@@ -111,6 +111,10 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				{
 					angleRot += 360;
 				}
+				while (angleRot > 360)
+				{
+					angleRot -= 360;
+				}
 
 				boite.coinMax[0] *= noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
 				boite.coinMin[0] *= noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
@@ -158,19 +162,20 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				droite41A = (p4[1] - p1[1]) / (p4[0] - p1[0]);
 				droite41K = p4[1] - (droite41A * p4[0]);
 
-				if (angleRot < 90 && angleRot > 0)
+
+				if (angleRot <= 90 && angleRot > 0)
 				{
 					angle = 0;
 				}
-				else if (angleRot < 180 && angleRot > 90)
+				else if (angleRot <= 180 && angleRot > 90)
 				{
 					angle = 1;
 				}
-				else if (angleRot < 270 && angleRot > 180)
+				else if (angleRot <= 270 && angleRot > 180)
 				{
 					angle = 2;
 				}
-				else if (angleRot < 360 && angleRot > 270)
+				else if (angleRot <= 360 && angleRot > 270)
 				{
 					angle = 3;
 				}

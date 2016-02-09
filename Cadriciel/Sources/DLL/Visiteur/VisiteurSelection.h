@@ -33,7 +33,7 @@ public:
 	void assignerControl(bool estControl);
 
 private:
-	bool estControlAppuye;
+	bool estControlAppuye = false;
 };
 
 #endif // VISITEUR_SELECTION_H
