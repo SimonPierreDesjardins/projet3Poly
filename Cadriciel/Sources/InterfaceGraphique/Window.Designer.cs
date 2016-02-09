@@ -42,6 +42,7 @@
             this.modeTestModeEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalMenuEdition = new System.Windows.Forms.ToolStripMenuItem();
             this.editionMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.supprimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outilsMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.selectionMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.deplacementMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,7 +77,6 @@
             this.panneauPositionX_ = new System.Windows.Forms.Label();
             this.panneauDimension_ = new System.Windows.Forms.Label();
             this.panneauRotation_ = new System.Windows.Forms.Label();
-            this.supprimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
             this.panneauOperation_.SuspendLayout();
@@ -94,7 +94,7 @@
             this.viewPort_.Size = new System.Drawing.Size(623, 402);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
-            this.viewPort_.Paint += new System.Windows.Forms.PaintEventHandler(this.viewPort__Paint);
+            this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
             // 
             // bouttonSimulation_
             // 
@@ -178,6 +178,7 @@
             this.nouveauMenuEdition_.Name = "nouveauMenuEdition_";
             this.nouveauMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.nouveauMenuEdition_.Text = "Nouveau";
+            this.nouveauMenuEdition_.Click += new System.EventHandler(this.nouveauMenuEdition__Click);
             // 
             // ouvrirMenuEdition_
             // 
@@ -220,6 +221,13 @@
             this.editionMenuEdition_.Name = "editionMenuEdition_";
             this.editionMenuEdition_.Size = new System.Drawing.Size(56, 20);
             this.editionMenuEdition_.Text = "Édition";
+            // 
+            // supprimerToolStripMenuItem
+            // 
+            this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.supprimerToolStripMenuItem.Text = "Supprimer";
+            this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
             // outilsMenuEdition_
             // 
@@ -465,7 +473,6 @@
             this.panneauOperation_.Name = "panneauOperation_";
             this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
             this.panneauOperation_.TabIndex = 8;
-            this.panneauOperation_.VisibleChanged += new System.EventHandler(this.panneauOperation__VisibleChanged);
             // 
             // textBoxPositionY_
             // 
@@ -534,13 +541,6 @@
             this.panneauRotation_.Size = new System.Drawing.Size(87, 13);
             this.panneauRotation_.TabIndex = 0;
             this.panneauRotation_.Text = "Angle de rotation";
-            // 
-            // supprimerToolStripMenuItem
-            // 
-            this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.supprimerToolStripMenuItem.Text = "Supprimer";
-            this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
             // Window
             // 

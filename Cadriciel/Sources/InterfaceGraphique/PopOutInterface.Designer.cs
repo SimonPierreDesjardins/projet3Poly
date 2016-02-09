@@ -37,9 +37,9 @@
             this.informationDone_.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.informationDone_.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.informationDone_.Location = new System.Drawing.Point(105, 226);
+            this.informationDone_.Location = new System.Drawing.Point(105, 339);
             this.informationDone_.Name = "informationDone_";
-            this.informationDone_.Size = new System.Drawing.Size(75, 23);
+            this.informationDone_.Size = new System.Drawing.Size(201, 23);
             this.informationDone_.TabIndex = 0;
             this.informationDone_.Text = "Done";
             this.informationDone_.UseVisualStyleBackColor = true;
@@ -48,7 +48,7 @@
             // 
             this.infoText_.Location = new System.Drawing.Point(13, 13);
             this.infoText_.Name = "infoText_";
-            this.infoText_.Size = new System.Drawing.Size(259, 210);
+            this.infoText_.Size = new System.Drawing.Size(385, 323);
             this.infoText_.TabIndex = 1;
             this.infoText_.Text = "Entrez\r\ntout\r\nle\r\ntext\r\nnecessaire\r\nque\r\nle\r\nprogramme\r\ndoit\r\nfaire\r\net\r\nles\r\nkey" +
     "bind";
@@ -57,7 +57,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(410, 374);
             this.Controls.Add(this.infoText_);
             this.Controls.Add(this.informationDone_);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -65,7 +65,6 @@
             this.Text = "Information";
             this.ResumeLayout(false);
 
-            
         }
 
         #endregion

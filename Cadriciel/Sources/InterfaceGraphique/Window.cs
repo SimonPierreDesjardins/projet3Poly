@@ -81,7 +81,6 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
-            //FonctionsNatives.assignerEtat(Etat.SELECTION);
             FonctionsNatives.assignerMode(Mode.EDITION);
         }
 
@@ -110,7 +109,7 @@ namespace InterfaceGraphique
             viewPort_.Visible = !afficherMenu;
             menuEdition_.Visible = !afficherMenu;
             barreOutils_.Visible = !afficherMenu;
-            panneauOperation_.Visible = !afficherMenu;
+            panneauOperation_.Visible = afficherMenu;
         }
 
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,14 +231,6 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerMode(Mode.CONFIGURE);
         }
 
-        private void panneauOperation__VisibleChanged(object sender, EventArgs e)
-        {
-            textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-            textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-            textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-            textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-        }
-
         private void aideMenuEdition__Click(object sender, EventArgs e)
         {
             PopOutInterface popup = new PopOutInterface();
@@ -310,10 +301,32 @@ namespace InterfaceGraphique
             FonctionsNatives.suppression();
         }
 
-        private void viewPort__Paint(object sender, PaintEventArgs e)
+        private void viewPort__MouseClick(object sender, MouseEventArgs e)
         {
-
+            if (FonctionsNatives.obtenirEtat() == 0)
+            {
+                if (FonctionsNatives.obtenirNombreSelection() == 1)
+                {
+                    textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+                    textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                    panneauOperation_.Visible = true;
+                }
+                else
+                    panneauOperation_.Visible = false;
+            }
         }
+
+        private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                FonctionsNatives.nouvelleTable();
+            }
+        }
+
     }
 
     enum Etat
@@ -407,6 +420,12 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void suppression();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirNombreSelection();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void nouvelleTable();
 
     }
 }

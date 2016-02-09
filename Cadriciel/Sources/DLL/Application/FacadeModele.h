@@ -65,6 +65,8 @@ public:
    // Obtenir l'etat courant.
    inline ModeAbstrait* obtenirMode();
 
+   int obtenirNombreSelection();
+
    //Obtient des informations sur le noeud
    double obtenirAngleRotation();
    double obtenirFacteurGrandeur();

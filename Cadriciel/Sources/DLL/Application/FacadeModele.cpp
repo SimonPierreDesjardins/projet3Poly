@@ -121,7 +121,7 @@ FacadeModele::~FacadeModele()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::initialiserOpenGL(HWND hWnd)
 {
-	assignerEtat(SELECTION);
+	//assignerEtat(SELECTION);
 	assignerMode(MENU_PRINCIPAL);
 
 	hWnd_ = hWnd;
@@ -472,7 +472,36 @@ void FacadeModele::assignerMode(Mode mode)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn __declspec(dllexport) double __cdecl obtenirAngleRotation()
+/// @fn int FacadeModele::obtenirNombreSelection()
+///
+/// Cette fonction permet d'obtenir le nombre d'objet selectionné
+///
+/// @return int : le nombre d'objet selectionné
+///
+////////////////////////////////////////////////////////////////////////
+int FacadeModele::obtenirNombreSelection()
+{
+	int nbSelection = 0;
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		nbSelection = 0;
+	}
+	else
+	{
+		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				nbSelection += 1;
+			}
+		}
+	}
+	return nbSelection;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double FacadeModele::obtenirAngleRotation()
 ///
 /// Cette fonction permet d'obtenir l'angle de rotation d'un objet
 ///
@@ -481,25 +510,29 @@ void FacadeModele::assignerMode(Mode mode)
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirAngleRotation()
 {
+	bool trouve = false;
+	double angle;
 	if (obtenirInstance()->arbre_ == nullptr)
 	{
-		return 1;
+		angle = 0;
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirAngleRotation();
+				angle = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirAngleRotation();
+				trouve = true;
 			}
 		}
 	}
+	return angle;
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn __declspec(dllexport) double obtenirFacteurGrandeur()
+/// @fn double FacadeModele::obtenirFacteurGrandeur()
 ///
 /// Cette fonction permet d'obtenir le facteur de grandissement d'un objet
 ///
@@ -508,25 +541,29 @@ double FacadeModele::obtenirAngleRotation()
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirFacteurGrandeur()
 {
+	bool trouve = false;
+	double facteurGrandeur;
 	if (obtenirInstance()->arbre_ == nullptr)
 	{
-		return 1;
+		facteurGrandeur = 1;
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirFacteurMiseAEchelle();
+				facteurGrandeur = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirFacteurMiseAEchelle();
+				trouve = true;
 			}
 		}
 	}
+	return facteurGrandeur;
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+/// @fn double FacadeModele::obtenirPositionRelativeX()
 ///
 /// Cette fonction permet d'obtenir la position relative en X
 ///
@@ -535,25 +572,29 @@ double FacadeModele::obtenirFacteurGrandeur()
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirPositionRelativeX()
 {
+	bool trouve = false;
+	double positionX;
 	if (obtenirInstance()->arbre_ == nullptr)
 	{
-		return 1;
+		positionX = 0;
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[0];
+				positionX = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[0];
+				trouve = true;
 			}
 		}
 	}
+	return positionX;
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+/// @fn double FacadeModele::obtenirPositionRelativeY()
 ///
 /// Cette fonction permet d'obtenir la position relative en Y
 ///
@@ -562,20 +603,24 @@ double FacadeModele::obtenirPositionRelativeX()
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirPositionRelativeY()
 {
+	bool trouve = false;
+	double positionY;
 	if (obtenirInstance()->arbre_ == nullptr)
 	{
-		return 1;
+		positionY = 0;
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
 		{
 			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
 			{
-				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[1];
+				positionY = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[1];
+				trouve = true;
 			}
 		}
 	}
+	return positionY;
 }
 
 //TODO:

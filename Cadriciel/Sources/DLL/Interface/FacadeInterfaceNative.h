@@ -33,7 +33,9 @@ extern "C"
 	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
+	__declspec(dllexport) void __cdecl nouvelleTable();
 	__declspec(dllexport) void __cdecl suppression();
+	__declspec(dllexport) int __cdecl obtenirNombreSelection();
 
 	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) double obtenirFacteurGrandeur();
