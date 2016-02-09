@@ -411,6 +411,10 @@ extern "C"
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheT();
 					break;
 
+				case VK_DELETE:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheSupprimer();
+					break;
+
 				default:
 					break;
 			}

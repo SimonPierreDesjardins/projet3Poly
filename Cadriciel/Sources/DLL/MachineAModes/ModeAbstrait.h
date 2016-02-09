@@ -66,11 +66,18 @@ public:
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
 
+<<<<<<< HEAD
 	inline int obtenirTypeMode();
 
 protected:
 	int typeMode_;
 
+=======
+	virtual void gererToucheSupprimer();
+
+private:
+	
+>>>>>>> selection
 };
 
 inline int ModeAbstrait::obtenirTypeMode()

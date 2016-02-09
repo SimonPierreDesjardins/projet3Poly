@@ -19,7 +19,11 @@
 ModeEdition::ModeEdition()
 {
 	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
+<<<<<<< HEAD
 	typeMode_ = EDITION;
+=======
+	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
+>>>>>>> selection
 }
 
 ModeEdition::~ModeEdition()
@@ -140,5 +144,10 @@ void ModeEdition::gererToucheControlEnfoncee()
 void ModeEdition::gererToucheControlRelachee()
 {
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
+}
+
+void ModeEdition::gererToucheSupprimer()
+{
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
 }
 
