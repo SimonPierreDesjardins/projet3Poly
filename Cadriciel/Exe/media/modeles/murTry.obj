@@ -1,6 +1,6 @@
 # Blender v2.69 (sub 0) OBJ File: 'MurTry.blend'
 # www.blender.org
-mtllib murTry.mtl
+mtllib MurTry.mtl
 o Cube
 v 0.500000 -0.125000 3.000002
 v 0.500000 -0.125000 8.999998
