@@ -58,6 +58,8 @@ public:
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
+	bool estClickDrag();
+	
 	bool toucheCtrlEnfonce_{ false };
 	bool curseurEstSurTable_{ false };
 	bool toucheAltEnfonce_{ false };
@@ -67,6 +69,8 @@ protected:
 
 	int ancienX_;
 	int ancienY_;
+	glm::ivec2 anchor;
+	glm::ivec2 currentPosition;
 };
 
 #endif /// ETAT_ABSTRAIT_H

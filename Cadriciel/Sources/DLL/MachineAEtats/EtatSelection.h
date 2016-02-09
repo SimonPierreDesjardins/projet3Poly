@@ -20,8 +20,8 @@ public:
 	EtatSelection();
 	virtual ~EtatSelection();
 
-	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int & x, const int& y);
 
 	void gererClicGauche(const int& x, const int& y);
 
@@ -29,6 +29,9 @@ public:
 
 	void gererToucheControlEnfoncee();
 	void gererToucheControlRelachee();
+
+private:
+	bool dessineRectangle{ false };
 
 private : 
 	int xEnfonce_;

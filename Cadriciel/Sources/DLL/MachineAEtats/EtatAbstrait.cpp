@@ -29,8 +29,6 @@ EtatAbstrait::~EtatAbstrait()
 void EtatAbstrait::gererClicDroitEnfonce(const int& x, const int& y)
 {
 	clicDroitEnfonce_ = true;
-	ancienX_ = x;
-	ancienY_ = y;
 }
 
 void EtatAbstrait::gererClicDroitRelache(const int& x, const int& y)
@@ -41,6 +39,8 @@ void EtatAbstrait::gererClicDroitRelache(const int& x, const int& y)
 void EtatAbstrait::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = true;
+	anchor = glm::ivec2(x, y);
+	currentPosition = anchor;
 }
 
 void EtatAbstrait::gererClicGaucheRelache(const int& x, const int& y)
@@ -55,11 +55,14 @@ void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 			//TODO
 			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(NULL, NULL);
 		else
-			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - ancienX_), y - ancienY_));
-		ancienX_ = x;
-		ancienY_ = y;
-	}
+			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition.x), y - currentPosition.y));
 
+	}
+	currentPosition = glm::ivec2(x, y);
+}
+
+bool EtatAbstrait::estClickDrag(){
+	return (std::abs(currentPosition.x - anchor.x) > 3 || std::abs(currentPosition.y - anchor.y) > 3);
 }
 
 void EtatAbstrait::gererToucheEchappe()
