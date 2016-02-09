@@ -24,16 +24,12 @@ public:
 	
 	/// Parcours du noeudTable.
 	virtual void visiter(NoeudTable* noeud);
-	virtual void visiter(NoeudPoteau* noeud);
-	virtual void visiter(NoeudMur* noeud);
-	virtual void visiter(NoeudLigneNoire* noeud);
-	virtual void visiter(NoeudSegment* noeud);
 
 	//Indique si la touche control est appuyee
-	void assignerControl(bool controlAppuye);
+	void assignerControl(bool estControl);
 
 private:
-	bool controlAppuye_{ false };
+	bool estControlAppuye;
 };
 
 #endif // VISITEUR_SELECTION_H

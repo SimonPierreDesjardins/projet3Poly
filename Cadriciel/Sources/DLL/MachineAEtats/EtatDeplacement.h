@@ -27,7 +27,6 @@ protected:
 	virtual void reinitialiser();
 
 private:
-	
 	std::unique_ptr<VisiteurVerificationObjets> visiteurVerificationObjets_;
 	std::unique_ptr<VisiteurDeplacement> visiteurDeplacement_;
 

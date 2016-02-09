@@ -24,6 +24,8 @@ public:
 	
 	/// Affiche le segment.
 	virtual void afficherConcret() const;
+
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 
 #endif

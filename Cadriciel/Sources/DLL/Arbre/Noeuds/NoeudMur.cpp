@@ -71,7 +71,8 @@ void NoeudMur::afficherConcret() const
 	glDisable(GL_COLOR_MATERIAL);
 	glEnable(GL_BLEND);
 	//glDepthMask(GL_FALSE);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	glColor3f(1, 0, 0);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glColor3f(1, 0, 0);
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
 	glScaled(facteurMiseAEchelle_, 1, 1);
@@ -90,11 +91,13 @@ void NoeudMur::afficherConcret() const
 void NoeudMur::mettreAJourQuadEnglobantConcret()
 {
 	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
+	glm::dvec3 tmp;
 	std::cout << "Mise à jour Mur:" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
-		utilitaire::calculerPositionApresRotation(quadEnglobant_.coins[i], quadEnglobant_.coins[i], angleRotation_);
+		tmp = quadEnglobant_.coins[i];
+		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
 		quadEnglobant_.coins[i] += positionRelative_;
 		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
 	}

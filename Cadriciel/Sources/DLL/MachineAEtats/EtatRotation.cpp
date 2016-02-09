@@ -18,15 +18,15 @@
 EtatRotation::EtatRotation()
 {
 	std::cout << "Outil de rotation" << std::endl;
-	visiteur_ = std::make_unique<VisiteurRotation>();
+	visiteurRotation_ = std::make_unique<VisiteurRotation>();
+	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationObjets>();
 }
 
 EtatRotation::~EtatRotation()
 {
 	if (clicGaucheEnfonce_)
 	{
-		visiteur_->assignerAngleRotation((double)(dernierePositionY_ - positionInitialeY_));
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+		reinitialiser();
 	}
 }
 
@@ -40,6 +40,11 @@ void EtatRotation::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatRotation::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurVerificationObjets_.get());
+	if (!visiteurVerificationObjets_->objetsDansZoneSimulation())
+	{
+		reinitialiser();
+	}
 }
 
 
@@ -48,8 +53,14 @@ void EtatRotation::gererMouvementSouris(const int& x, const int& y)
 	EtatAbstrait::gererMouvementSouris(x, y);
 	if (clicGaucheEnfonce_)
 	{
-		visiteur_->assignerAngleRotation((double)(y - dernierePositionY_));
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+		visiteurRotation_->assignerAngleRotation((double)(y - dernierePositionY_));
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurRotation_.get());
 		dernierePositionY_ = y;
 	}
+}
+
+void EtatRotation::reinitialiser()
+{
+	visiteurRotation_->assignerAngleRotation((double)(positionInitialeY_- dernierePositionY_));
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurRotation_.get());
 }

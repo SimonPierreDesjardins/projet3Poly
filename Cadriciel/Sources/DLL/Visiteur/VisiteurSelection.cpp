@@ -28,14 +28,19 @@ VisiteurSelection::~VisiteurSelection()
 }
 
 void VisiteurSelection::visiter(NoeudTable* noeud)
-{	
+{
+	if (!estControlAppuye)
+	{
+		for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
+		{
+			noeud->chercher(i)->assignerSelection(0);
+		}
+	}
+	
 	for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
-		noeud->chercher(i)->accepterVisiteur(this);
-		/*
 		modele::Modele3D const* modeleEnfant = noeud->chercher(i)->getModele();
-
-		utilitaire::calculerBoiteEnglobante(*modeleEnfant);
+		utilitaire::BoiteEnglobante boite = utilitaire::calculerBoiteEnglobante(*modeleEnfant);
 
 		glm::dvec3 pointBoite1, pointBoite2, pointBoite3, pointBoite4;
 		glm::dvec3 p1, p2, p3, p4;
@@ -46,8 +51,22 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 		switch (noeud->chercher(i)->obtenirType()[0])
 		{
 		case 'p' :
-			
-			pointBoite1 = noeud->obtenirQuadEnglobant.coins[0];
+
+			pointBoite1[0] = boite.coinMin[0];
+			pointBoite1[1] = boite.coinMin[1];
+
+			pointBoite2[0] = boite.coinMax[0];
+			pointBoite2[1] = boite.coinMin[1];
+
+			pointBoite3[0] = boite.coinMax[0];
+			pointBoite3[1] = boite.coinMax[1];
+
+			pointBoite4[0] = boite.coinMin[0];
+			pointBoite4[1] = boite.coinMax[1];
+
+			pointBoite1[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite1[0];
+			pointBoite1[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite1[1];
+			pointBoite1[2] = 0.0;
 
 			pointBoite2[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite2[0];
 			pointBoite2[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite2[1];
@@ -60,7 +79,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			pointBoite4[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite4[0];
 			pointBoite4[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite4[1];
 			pointBoite4[2] = 0.0;
-			
+
 			if (estControlAppuye)
 			{
 				if (positionRelative_[0] < pointBoite2[0] && positionRelative_[0] > pointBoite1[0] && positionRelative_[1] < pointBoite3[1] && positionRelative_[1] > pointBoite1[1])
@@ -87,11 +106,26 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 					angleRot += 360;
 				}
 
+				boite.coinMax[0] *= noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
+				boite.coinMin[0] *= noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
+
+				pointBoite1[0] = boite.coinMin[0];
+				pointBoite1[1] = boite.coinMin[1];
+
+				pointBoite2[0] = boite.coinMax[0];
+				pointBoite2[1] = boite.coinMin[1];
+
+				pointBoite3[0] = boite.coinMax[0];
+				pointBoite3[1] = boite.coinMax[1];
+
+				pointBoite4[0] = boite.coinMin[0];
+				pointBoite4[1] = boite.coinMax[1];
+
 				utilitaire::calculerPositionApresRotation(pointBoite1, p1, angleRot);
 				utilitaire::calculerPositionApresRotation(pointBoite2, p2, angleRot);
 				utilitaire::calculerPositionApresRotation(pointBoite3, p3, angleRot);
 				utilitaire::calculerPositionApresRotation(pointBoite4, p4, angleRot);
-				
+
 				p1[0] += noeud->chercher(i)->chercher(j)->obtenirPositionRelative()[0] + noeud->chercher(i)->obtenirPositionRelative()[0];
 				p1[1] += noeud->chercher(i)->chercher(j)->obtenirPositionRelative()[1] + noeud->chercher(i)->obtenirPositionRelative()[1];
 				p1[2] = 0.0;
@@ -107,7 +141,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				p4[0] += noeud->chercher(i)->chercher(j)->obtenirPositionRelative()[0] + noeud->chercher(i)->obtenirPositionRelative()[0];
 				p4[1] += noeud->chercher(i)->chercher(j)->obtenirPositionRelative()[1] + noeud->chercher(i)->obtenirPositionRelative()[1];
 				p4[2] = 0.0;
-				
+
 				droite12A = (p1[1] - p2[1]) / (p1[0] - p2[0]);
 				droite12K = p1[1] - (droite12A * p1[0]);
 				droite23A = (p2[1] - p3[1]) / (p2[0] - p3[0]);
@@ -188,7 +222,23 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			{
 				angleRot += 360;
 			}
-						
+
+			boite.coinMax[0] *= noeud->chercher(i)->obtenirFacteurMiseAEchelle();
+			boite.coinMin[0] *= noeud->chercher(i)->obtenirFacteurMiseAEchelle();
+
+
+			pointBoite1[0] = boite.coinMin[0];
+			pointBoite1[1] = boite.coinMin[1];
+
+			pointBoite2[0] = boite.coinMax[0];
+			pointBoite2[1] = boite.coinMin[1];
+
+			pointBoite3[0] = boite.coinMax[0];
+			pointBoite3[1] = boite.coinMax[1];
+
+			pointBoite4[0] = boite.coinMin[0];
+			pointBoite4[1] = boite.coinMax[1];
+
 			utilitaire::calculerPositionApresRotation(pointBoite1, p1, angleRot);
 			utilitaire::calculerPositionApresRotation(pointBoite2, p2, angleRot);
 			utilitaire::calculerPositionApresRotation(pointBoite3, p3, angleRot);
@@ -209,7 +259,8 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			p4[0] += noeud->chercher(i)->obtenirPositionRelative()[0];
 			p4[1] += noeud->chercher(i)->obtenirPositionRelative()[1];
 			p4[2] = 0.0;
-			
+
+
 			droite12A = (p1[1] - p2[1]) / (p1[0] - p2[0]);
 			droite12K = p1[1] - (droite12A * p1[0]);
 			droite23A = (p2[1] - p3[1]) / (p2[0] - p3[0]);
@@ -286,53 +337,10 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			std::cout << "default" << std::endl;
 			break;
 		}
-	*/
-	}
-	
-}
-
-/// Parcours du noeudTable.
-
-void VisiteurSelection::visiter(NoeudPoteau* noeud)
-{
-	//noeud->mettreAJourQuadEnglobant();
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
-
-	if (quad.coins[1].x < positionRelative_.x && positionRelative_.x < quad.coins[3].x && quad.coins[2].y < positionRelative_.y && positionRelative_.y < quad.coins[0].y)
-	{
-		if (controlAppuye_)
-		{
-			noeud->inverserSelection();
-			std::cout << "La selection du poteau est inversee" << std::endl;
-		}
-		else
-		{
-			noeud->assignerSelection(true);
-			std::cout << "Le poteau est selectionne." << std::endl;
-		}
-	}
-	else
-	{
-		noeud->assignerSelection(false);
-		std::cout << "Le poteau n'est pas selectionne." << std::endl;
 	}
 }
 
-void VisiteurSelection::visiter(NoeudMur* noeud)
+void VisiteurSelection::assignerControl(bool estControl)
 {
-}
-
-void VisiteurSelection::visiter(NoeudLigneNoire* noeud)
-{
-}
-
-void VisiteurSelection::visiter(NoeudSegment* noeud)
-{
-}
-
-
-
-void VisiteurSelection::assignerControl(bool controlAppuye)
-{
-	controlAppuye_ = controlAppuye;
+	estControlAppuye = estControl;
 }

@@ -29,6 +29,8 @@ public:
 	virtual void visiter(NoeudLigneNoire* noeud);
 
 private:
+
+
 	void assignerNouvellePositionRelative(NoeudAbstrait* noeud);
 	
 	void calculerCentreSelection(NoeudAbstrait* noeud);

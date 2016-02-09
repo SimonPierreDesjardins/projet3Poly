@@ -51,6 +51,7 @@ void VisiteurVerificationObjets::visiter(NoeudMur* noeud)
 
 void VisiteurVerificationObjets::visiter(NoeudLigneNoire* noeud)
 {
+	noeud->mettreAJourQuadEnglobant();
 	for (int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{
 		noeud->chercher(i)->accepterVisiteur(this);
@@ -60,7 +61,7 @@ void VisiteurVerificationObjets::visiter(NoeudLigneNoire* noeud)
 
 void VisiteurVerificationObjets::visiter(NoeudSegment* noeud)
 {
-	noeud->mettreAJourQuadEnglobant();
+	//noeud->mettreAJourQuadEnglobant();
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
