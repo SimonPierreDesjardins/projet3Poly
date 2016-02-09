@@ -27,7 +27,7 @@ EtatCreationLigneNoire::~EtatCreationLigneNoire()
 	// Effacer la ligne si on change d'outil lors d'une création.
 	if (enCreation_ && ligne_ != nullptr && segment_ != nullptr)
 	{
-		NoeudAbstrait* table = ligne_->obtenirParent().get();
+		NoeudAbstrait* table = ligne_->obtenirParent();
 		table->effacer(ligne_);
 	}
 	ligne_ = nullptr;
@@ -45,9 +45,9 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
 	if (!curseurEstSurTable_) return;
 	
-	FacadeModele* facade = FacadeModele::obtenirInstance().get();
-	ArbreRenduINF2990* arbre = facade->obtenirArbreRenduINF2990().get();
-	vue::Vue* vue = facade->obtenirVue().get();
+	FacadeModele* facade = FacadeModele::obtenirInstance();
+	ArbreRenduINF2990* arbre = facade->obtenirArbreRenduINF2990();
+	vue::Vue* vue = facade->obtenirVue();
 
 	// Calcul et assignation de la position virtuelle.
 	glm::dvec3 positionVirtuelle;
@@ -62,15 +62,17 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 		arbre->accepterVisiteur(visiteur_.get());
 		ligne_ = visiteur_->obtenirReferenceNoeud();
 
-		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
-		ligne_->ajouter(segment_);
+		std::shared_ptr<NoeudAbstrait> nouveauNoeud  = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+		segment_ = nouveauNoeud.get();
+		ligne_->ajouter(nouveauNoeud);
 
 	}
 	// Clic subsequent avec CTRL enfoncee.
 	else if (enCreation_ && toucheCtrlEnfonce_)
 	{
-		segment_ = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
-		ligne_->ajouter(segment_);
+		std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+		segment_ = nouveauNoeud.get();
+		ligne_->ajouter(nouveauNoeud);
 	}
 	// Clic subsequent sans CTRL enfoncee (dernier clic).
 	else if (enCreation_ && !toucheCtrlEnfonce_)
@@ -184,6 +186,8 @@ void EtatCreationLigneNoire::calculerPositionCentreLigne()
 
 void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 {
+	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
+
 	if (positionEstSurTable && !curseurEstSurTable_)
 	{
 		curseurEstSurTable_ = true;
@@ -191,7 +195,6 @@ void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			segment_->assignerAffiche(true);
 		}
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_)
 	{
@@ -200,7 +203,6 @@ void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 		{
 			segment_->assignerAffiche(false);
 		}
-		assignerSymbolePointeur(curseurEstSurTable_);
 	}
 }
 

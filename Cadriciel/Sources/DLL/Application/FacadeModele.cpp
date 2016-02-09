@@ -8,7 +8,6 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-
 // Commentaire Doxygen mis sur la première page de la documentation Doxygen.
 /**
 
@@ -42,8 +41,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "EtatTypes.h"
+#include "ModeTypes.h"
+
 /// Pointeur vers l'instance unique de la classe.
-std::shared_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
+std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 
 /// Chaîne indiquant le nom du fichier de configuration du projet.
 const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
@@ -63,13 +65,13 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 /// @return Un pointeur vers l'instance unique de cette classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::shared_ptr<FacadeModele> FacadeModele::obtenirInstance()
+FacadeModele* FacadeModele::obtenirInstance()
 {
-	if (instance_ == nullptr)
+	if (instance_.get() == nullptr)
 	{
-		instance_ = std::shared_ptr<FacadeModele>(new FacadeModele());
+		instance_ = std::unique_ptr<FacadeModele>(new FacadeModele());
 	}
-	return instance_;
+	return instance_.get();
 }
 
 
@@ -119,6 +121,9 @@ FacadeModele::~FacadeModele()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::initialiserOpenGL(HWND hWnd)
 {
+	assignerEtat(SELECTION);
+	assignerMode(MENU_PRINCIPAL);
+
 	hWnd_ = hWnd;
 	bool succes{ aidegl::creerContexteGL(hWnd_, hDC_, hGLRC_) };
 	assert(succes && "Le contexte OpenGL n'a pu être créé.");
@@ -164,11 +169,11 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
 	// l'arbre après avoir créé le contexte OpenGL.
-	arbre_ = std::make_shared<ArbreRenduINF2990>();
+	arbre_ = std::make_unique<ArbreRenduINF2990>();
 	arbre_->initialiser();
 
 	// On crée une vue par défaut.
-	vue_ = std::make_shared<vue::VueOrtho>(
+	vue_ = std::make_unique<vue::VueOrtho>(
 		vue::Camera{
 			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
@@ -373,12 +378,257 @@ void FacadeModele::animer(float temps)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-
-void FacadeModele::modifierEtat(std::shared_ptr<EtatAbstrait> etat)
+void FacadeModele::assignerEtat(Etat etat)
 {
-	etat_ = etat;
+		switch (etat)
+		{
+			case SELECTION :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatSelection>();
+				break;
+
+			case DEPLACEMENT :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatDeplacement>();
+				break;
+
+			case ROTATION :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatRotation>();
+				break;
+
+			case MISE_A_ECHELLE :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatMiseAEchelle>();
+				break;
+
+			case DUPLICATION :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatDuplication>();
+				break;
+
+			case CREATION_POTEAU :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatCreationPoteau>();
+				break;
+
+			case CREATION_MUR :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatCreationMur>();
+				break;
+
+			case CREATION_LIGNE_NOIRE :
+				etat_.reset(nullptr);
+				etat_ = std::make_unique<EtatCreationLigneNoire>();
+				break;
+			
+			default:
+				break;
+		}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerMode(Mode mode)
+///
+/// Cette fonction change l'attribut mode_ pour la valeur du mode en paramètre.
+///
+/// @param[in] etat : Nouveau mode à traiter.
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerMode(Mode mode)
+{
+	switch (mode)
+	{
+		case MENU_PRINCIPAL:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeMenuPrincipal>();
+			break;
+
+		case SIMULATION:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeSimulation>();
+			break;
+
+		case EDITION:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeEdition>();
+			break;
+
+		case CONFIGURE:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeConfigure>();
+			break;
+
+		case TEST:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeTest>();
+			break;
+
+		default:
+			break;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double __cdecl obtenirAngleRotation()
+///
+/// Cette fonction permet d'obtenir l'angle de rotation d'un objet
+///
+/// @return doublee : l'angle de rotation de l'objet
+///
+////////////////////////////////////////////////////////////////////////
+double FacadeModele::obtenirAngleRotation()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getAngleRotationRelatif();
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double obtenirFacteurGrandeur()
+///
+/// Cette fonction permet d'obtenir le facteur de grandissement d'un objet
+///
+/// @return doublee : le facteur de grandissement d'un objet
+///
+////////////////////////////////////////////////////////////////////////
+double FacadeModele::obtenirFacteurGrandeur()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getfacteurMiseAEchelle();
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+///
+/// Cette fonction permet d'obtenir la position relative en X
+///
+/// @return doublee : la position relative en X
+///
+////////////////////////////////////////////////////////////////////////
+double FacadeModele::obtenirPositionRelativeX()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif()[0];
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+///
+/// Cette fonction permet d'obtenir la position relative en Y
+///
+/// @return doublee : la position relative en Y
+///
+////////////////////////////////////////////////////////////////////////
+double FacadeModele::obtenirPositionRelativeY()
+{
+	if (obtenirInstance()->arbre_ == nullptr)
+	{
+		return 1;
+	}
+	else
+	{
+		for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		{
+			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			{
+				return obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif()[1];
+			}
+		}
+	}
+}
+
+//TODO:
+//Appeler un visiteur
+void FacadeModele::assignerAngleRotation(double angle)
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerAngleRotation(angle);
+		}
+	}
+}
+
+//TODO:
+//Appeler un visiteur
+void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur) 
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerFacteurMiseAEchelle(facteurGrandeur);
+		}
+	}
+}
+
+void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif();
+			position[0] = positionRelativeX;
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
+		}
+	}
+}
+
+void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
+{
+	for (int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	{
+		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		{
+			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->getPositionRelatif();
+			position[1] = positionRelativeY;
+			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
+		}
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

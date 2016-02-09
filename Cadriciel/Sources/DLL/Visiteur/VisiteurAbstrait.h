@@ -10,17 +10,19 @@
 #ifndef VISITEUR_ABSTRAIT_H
 #define VISITEUR_ABSTRAIT_H
 
-#include "FacadeModele.h"
 #include "glm\glm.hpp"
 
-
 class ArbreRendu;
+
+class NoeudAbstrait;
 class NoeudPoteau;
 class NoeudTable;
 class NoeudMur;
 class NoeudLigneNoire;
+class NoeudSegment;
 class NoeudRobot;
 class NoeudAraignee;
+class NoeudDuplication;
 
 namespace modele{
 	class Modele3D;
@@ -49,21 +51,26 @@ public:
 
 	inline void assignerPositionRelative(glm::dvec3 positionRelative);
 	inline void assignerAngleRotation(double angleRotation);
-	inline void assignerFacteurDimension(double facteurDimension);
-	inline std::shared_ptr<NoeudAbstrait> obtenirReferenceNoeud();
+	inline void assignerFacteurMiseAEchelle(double facteurDimension);
+	inline void assignerEstAffiche(const bool& estAffiche);
+	inline NoeudAbstrait* obtenirReferenceNoeud();
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigneNoire* noeud);
+	virtual void visiter(NoeudSegment* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
 
 protected:
 	glm::dvec3 positionRelative_;
 	double angleRotation_;
-	double facteurDimension_;
+	double facteurMiseAEchelle_;
+	bool estAffiche_{ false };
+
 	modele::Modele3D* referenceModele_;
-	std::shared_ptr<NoeudAbstrait> referenceNoeud_;
+	NoeudAbstrait* referenceNoeud_;
 };
 
 
@@ -78,16 +85,20 @@ inline void VisiteurAbstrait::assignerAngleRotation(double angleRotation)
 	angleRotation_ = angleRotation;
 }
 
-inline void VisiteurAbstrait::assignerFacteurDimension(double facteurDimension)
+inline void VisiteurAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
 {
-	facteurDimension_ = facteurDimension;
+	facteurMiseAEchelle_ = facteurDimension;
 }
 
-inline std::shared_ptr<NoeudAbstrait> VisiteurAbstrait::obtenirReferenceNoeud()
+inline NoeudAbstrait* VisiteurAbstrait::obtenirReferenceNoeud()
 {
 	return referenceNoeud_;
 }
 
+inline void VisiteurAbstrait::assignerEstAffiche(const bool& estAffiche)
+{
+	estAffiche_ = estAffiche;
+}
 #endif // VISITEUR_ABSTRAIT_H
 
 

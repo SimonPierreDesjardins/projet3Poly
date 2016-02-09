@@ -70,3 +70,13 @@ void VisiteurAbstrait::visiter(NoeudLigneNoire* noeud)
 {
 
 }
+
+void VisiteurAbstrait::visiter(NoeudDuplication* noeud)
+{
+
+}
+
+void VisiteurAbstrait::visiter(NoeudSegment* noeud)
+{
+
+}

@@ -21,7 +21,13 @@
 
 #include <iostream>
 
-
+#define VK_KEY_D 0x44
+#define VK_KEY_S 0x53
+#define VK_KEY_R 0x52
+#define VK_KEY_E 0x45
+#define VK_KEY_C 0x43
+#define VK_KEY_Z 0x5A
+#define VK_KEY_T 0x54
 
 extern "C"
 {
@@ -44,9 +50,8 @@ extern "C"
 		if (handle == nullptr)
 			return;
 
-		FacadeModele::obtenirInstance()->initialiserOpenGL((HWND) handle);
+		FacadeModele::obtenirInstance()->initialiserOpenGL((HWND)handle);
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -70,7 +75,6 @@ extern "C"
 		FacadeModele::libererInstance();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl dessinerOpenGL()
@@ -88,7 +92,6 @@ extern "C"
 		// Temporaire: pour détecter les erreurs OpenGL
 		aidegl::verifierErreurOpenGL();
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -112,7 +115,6 @@ extern "C"
 		);
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl animer(double temps)
@@ -128,9 +130,8 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl animer(double temps)
 	{
-		FacadeModele::obtenirInstance()->animer((float) temps);
+		FacadeModele::obtenirInstance()->animer((float)temps);
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -146,7 +147,6 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl zoomOut()
@@ -161,7 +161,6 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
@@ -175,7 +174,6 @@ extern "C"
 	{
 		return utilitaire::CompteurAffichage::obtenirInstance()->obtenirAffichagesSeconde();
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -192,73 +190,132 @@ extern "C"
 		return reussite ? 0 : 1;
 	}
 
-
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerEtat(int etat)
+	///
+	/// Cette fonction permet d'assigner un Etat
+	///
+	/// @param int etat : Le numero de l'état selectionné
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerEtat(int etat)
 	{
-		switch (etat)
-		{
-			case SELECTION :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatSelection>());
-				break;
+		FacadeModele::obtenirInstance()->assignerEtat((Etat)etat);
+	}
 
-			case DEPLACEMENT :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDeplacement>());
-				break;
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerMode(int mode)
+	///
+	/// Cette fonction permet d'assigner un Mode
+	///
+	/// @param int mode : Le numero du mode sélectionné
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerMode(int mode)
+	{
+		FacadeModele::obtenirInstance()->assignerMode((Mode)mode);
+	}
 
-			case ROTATION :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatRotation>());
-				break;
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double __cdecl obtenirAngleRotation()
+	///
+	/// Cette fonction permet d'obtenir l'angle de rotation d'un objet
+	///
+	/// @return doublee : l'angle de rotation de l'objet
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) double __cdecl obtenirAngleRotation()
+	{
+		return FacadeModele::obtenirInstance()->obtenirAngleRotation();
+	}
 
-			case MISE_A_ECHELLE :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatMiseAEchelle>());
-				break;
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double obtenirFacteurGrandeur()
+	///
+	/// Cette fonction permet d'obtenir le facteur de grandissement d'un objet
+	///
+	/// @return doublee : le facteur de grandissement d'un objet
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) double obtenirFacteurGrandeur()
+	{
+		return FacadeModele::obtenirInstance()->obtenirFacteurGrandeur();
+	}
 
-			case DUPLICATION :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatDuplication>());
-				break;
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+	///
+	/// Cette fonction permet d'obtenir la position relative en X
+	///
+	/// @return doublee : la position relative en X
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) double obtenirPositionRelativeX()
+	{
+		return FacadeModele::obtenirInstance()->obtenirPositionRelativeX();
+	}
 
-			case CREATION_POTEAU :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationPoteau>());
-				break;
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double obtenirPositionRelativeX()
+	///
+	/// Cette fonction permet d'obtenir la position relative en Y
+	///
+	/// @return doublee : la position relative en Y
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) double obtenirPositionRelativeY()
+	{
+		return FacadeModele::obtenirInstance()->obtenirPositionRelativeY();
+	}
 
-			case CREATION_MUR :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationMur>());
-				break;
+	__declspec(dllexport) void assignerAngleRotation(double angle)
+	{
+		FacadeModele::obtenirInstance()->assignerAngleRotation(angle);
+	}
 
-			case CREATION_LIGNE_NOIRE :
-				FacadeModele::obtenirInstance()->modifierEtat(std::make_shared<EtatCreationLigneNoire>());
-				break;
-			
-			default:
-				break;
-		}
+	__declspec(dllexport) void assignerFacteurGrandeur(double facteurGrandeur)
+	{
+		FacadeModele::obtenirInstance()->assignerFacteurGrandeur(facteurGrandeur);
+	}
+
+	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX)
+	{
+		FacadeModele::obtenirInstance()->assignerPositionRelativeX(positionRelativeX);
+	}
+
+	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY)
+	{
+		FacadeModele::obtenirInstance()->assignerPositionRelativeY(positionRelativeY);
 	}
 
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
-	{	
+	{
+
 		if (msg == WM_KEYDOWN)
 		{
 			switch (wParam)
 			{
 				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
-					std::cout << "La fleche de gauche est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
 					break;
 
 				case VK_RIGHT:
-					std::cout << "La fleche de droite est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
 					break;
 
 				case VK_UP:
-					std::cout << "La fleche du haut est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheHaut();
 					break;
 
 				case VK_DOWN:
-					std::cout << "La fleche du bas est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
 					break;
 
 				case VK_TAB:
@@ -283,20 +340,53 @@ extern "C"
 				case VK_CONTROL:
 				case VK_RCONTROL:
 				case VK_LCONTROL:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlEnfoncee();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
 					break;
 
 				case VK_ESCAPE:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheEchappe();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheEchappe();
 					break;
+
 				case VK_OEM_PLUS:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererTouchePlus();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererTouchePlus();
 					break;
+
 				case VK_OEM_MINUS:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheMoins();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheMoins();
 					break;
+
 				case VK_DELETE:
 					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheSupprimer();
+
+				case VK_KEY_D:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheD();
+					break;
+
+				case VK_KEY_S:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheS();
+					break;
+
+				case VK_KEY_R:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheR();
+					break;
+
+				case VK_KEY_E:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheE();
+					break;
+
+				case VK_KEY_C:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheC();
+					break;
+
+				case VK_KEY_Z:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheZ();
+					break;
+
+				case VK_KEY_T:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheT();
+					break;
+
+>>>>>>> origin/develop
 				default:
 					break;
 			}
@@ -309,7 +399,7 @@ extern "C"
 				case VK_CONTROL:
 				case VK_LCONTROL:
 				case VK_RCONTROL:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
 					break;
 
 				default:
@@ -319,29 +409,32 @@ extern "C"
 
 		switch (msg)
 		{
-			case WM_LBUTTONDOWN :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
-			
-			case WM_LBUTTONUP :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
-			
-			case WM_RBUTTONDOWN :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
-			
-			case WM_RBUTTONUP :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-				break;
+		case WM_LBUTTONDOWN:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
 
-			case WM_MOUSEMOVE :
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));	
-				break;
+		case WM_LBUTTONUP:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
 
-			case WM_MOUSEWHEEL:
-				FacadeModele::obtenirInstance()->obtenirEtat()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
-				break;
+		case WM_RBUTTONDOWN:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_RBUTTONUP:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEMOVE:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEWHEEL:
+			FacadeModele::obtenirInstance()->obtenirEtat()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			break;
+
+		//case WM_SETCURSOR:
+			//FacadeModele::obtenirInstance()->obtenirEtat()->assignerSymbolePointeur();
 		}
 	}
 

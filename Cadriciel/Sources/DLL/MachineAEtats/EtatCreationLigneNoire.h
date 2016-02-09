@@ -33,10 +33,8 @@ public:
 private:
 	void calculerPositionCentreLigne();
 	
-	
-	std::shared_ptr<NoeudAbstrait> ligne_;
-	std::shared_ptr<NoeudAbstrait> segment_;
-	
+	NoeudAbstrait* ligne_{ nullptr };
+	NoeudAbstrait* segment_{ nullptr };
 	bool enCreation_{ false };
 	std::vector<glm::dvec3> positionsClic_;
 

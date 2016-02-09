@@ -152,7 +152,6 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				p4[1] += noeud->chercher(i)->chercher(j)->obtenirPositionRelative()[1] + noeud->chercher(i)->obtenirPositionRelative()[1];
 				p4[2] = 0.0;
 
-
 				droite12A = (p1[1] - p2[1]) / (p1[0] - p2[0]);
 				droite12K = p1[1] - (droite12A * p1[0]);
 				droite23A = (p2[1] - p3[1]) / (p2[0] - p3[0]);

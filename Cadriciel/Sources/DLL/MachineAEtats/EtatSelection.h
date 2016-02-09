@@ -14,13 +14,11 @@
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
 
-
 class EtatSelection : public EtatAbstrait
 {
 public:
 	EtatSelection();
 	virtual ~EtatSelection();
-
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
@@ -31,7 +29,6 @@ public:
 
 	void gererToucheControlEnfoncee();
 	void gererToucheControlRelachee();
-
 
 private : 
 	int xEnfonce_;

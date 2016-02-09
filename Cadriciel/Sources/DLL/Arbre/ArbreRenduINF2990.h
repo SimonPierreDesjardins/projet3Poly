@@ -55,6 +55,8 @@ public:
    static const std::string NOM_LIGNENOIRE;
    /// La chaîne représentant le type des segments.
    static const std::string NOM_SEGMENT;
+   /// La chaîne représentant le type des des duplications. 
+   static const std::string NOM_DUPLICATION;
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

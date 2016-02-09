@@ -30,8 +30,7 @@ public:
 private:
 	bool enCreation_{ false };
 	glm::dvec3 positionPremierClic_;
-	std::shared_ptr<NoeudAbstrait> table_;
-
+	NoeudAbstrait* mur_{ nullptr };
 };
 
 #endif
