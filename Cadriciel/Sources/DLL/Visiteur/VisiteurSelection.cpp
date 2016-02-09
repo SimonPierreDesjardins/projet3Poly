@@ -46,7 +46,8 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 	for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		modele::Modele3D const* modeleEnfant = noeud->chercher(i)->getModele();
-		utilitaire::BoiteEnglobante boite = utilitaire::calculerBoiteEnglobante(*modeleEnfant);
+		utilitaire::BoiteEnglobante boite1 = utilitaire::calculerBoiteEnglobante(*modeleEnfant);
+		utilitaire::BoiteEnglobante boite = boite1;
 
 		glm::dvec3 pointBoite1, pointBoite2, pointBoite3, pointBoite4;
 		glm::dvec3 p1, p2, p3, p4;
@@ -58,17 +59,17 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 		{
 		case 'p' :
 
-			pointBoite1[0] = boite.coinMin[0];
-			pointBoite1[1] = boite.coinMin[1];
+			pointBoite1[0] = boite1.coinMin[0];
+			pointBoite1[1] = boite1.coinMin[1];
 
-			pointBoite2[0] = boite.coinMax[0];
-			pointBoite2[1] = boite.coinMin[1];
+			pointBoite2[0] = boite1.coinMax[0];
+			pointBoite2[1] = boite1.coinMin[1];
 
-			pointBoite3[0] = boite.coinMax[0];
-			pointBoite3[1] = boite.coinMax[1];
+			pointBoite3[0] = boite1.coinMax[0];
+			pointBoite3[1] = boite1.coinMax[1];
 
-			pointBoite4[0] = boite.coinMin[0];
-			pointBoite4[1] = boite.coinMax[1];
+			pointBoite4[0] = boite1.coinMin[0];
+			pointBoite4[1] = boite1.coinMax[1];
 
 			pointBoite1[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite1[0];
 			pointBoite1[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite1[1];
@@ -111,13 +112,13 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				{
 					angleRot += 360;
 				}
-				while (angleRot > 360)
+				while (angleRot >= 360)
 				{
 					angleRot -= 360;
 				}
 
-				boite.coinMax[0] *= noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
-				boite.coinMin[0] *= noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
+				boite.coinMax[0] = boite1.coinMax[0] * noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
+				boite.coinMin[0] = boite1.coinMin[0] * noeud->chercher(i)->chercher(j)->obtenirFacteurMiseAEchelle();
 
 				pointBoite1[0] = boite.coinMin[0];
 				pointBoite1[1] = boite.coinMin[1];
@@ -161,22 +162,38 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				droite41A = (p4[1] - p1[1]) / (p4[0] - p1[0]);
 				droite41K = p4[1] - (droite41A * p4[0]);
 
-
-				if (angleRot <= 90 && angleRot > 0)
+				std::cout << angleRot << std::endl;
+				if (angleRot < 90 && angleRot > 0)
 				{
 					angle = 0;
 				}
-				else if (angleRot <= 180 && angleRot > 90)
+				else if (angleRot < 180 && angleRot > 90)
 				{
 					angle = 1;
 				}
-				else if (angleRot <= 270 && angleRot > 180)
+				else if (angleRot < 270 && angleRot > 180)
 				{
 					angle = 2;
 				}
-				else if (angleRot <= 360 && angleRot > 270)
+				else if (angleRot < 360 && angleRot > 270)
 				{
 					angle = 3;
+				}
+				else if (angleRot == 0)
+				{
+					angle = 4;
+				}
+				else if (angleRot == 90)
+				{
+					angle = 5;
+				}
+				else if (angleRot == 180)
+				{
+					angle = 6;
+				}
+				else if (angleRot == 270)
+				{
+					angle = 7;
 				}
 
 				switch (angle)
@@ -201,6 +218,30 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 					break;
 				case 3:
 					if ((positionRelative_[0] * droite12A + droite12K) < positionRelative_[1] && (positionRelative_[0] * droite23A + droite23K) < positionRelative_[1] && (positionRelative_[0] * droite34A + droite34K) > positionRelative_[1] && (positionRelative_[0] * droite41A + droite41K) > positionRelative_[1])
+					{
+						estDansBoite = true;
+					}
+					break;
+				case 4:
+					if (positionRelative_[0] > p1[0] && positionRelative_[0] < p2[0] && positionRelative_[1] < p3[1] && positionRelative_[1] > p1[1])
+					{
+						estDansBoite = true;
+					}
+					break;
+				case 5:
+					if (positionRelative_[0] > p3[0] && positionRelative_[0] < p2[0] && positionRelative_[1] < p3[1] && positionRelative_[1] > p1[1])
+					{
+						estDansBoite = true;
+					}
+					break;
+				case 6:
+					if (positionRelative_[0] > p2[0] && positionRelative_[0] < p1[0] && positionRelative_[1] < p1[1] && positionRelative_[1] > p3[1])
+					{
+						estDansBoite = true;
+					}
+					break;
+				case 7:
+					if (positionRelative_[0] > p1[0] && positionRelative_[0] < p3[0] && positionRelative_[1] < p1[1] && positionRelative_[1] > p2[1])
 					{
 						estDansBoite = true;
 					}
@@ -234,21 +275,21 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				angleRot += 360;
 			}
 
-			boite.coinMax[0] *= noeud->chercher(i)->obtenirFacteurMiseAEchelle();
-			boite.coinMin[0] *= noeud->chercher(i)->obtenirFacteurMiseAEchelle();
+			boite1.coinMax[0] *= noeud->chercher(i)->obtenirFacteurMiseAEchelle();
+			boite1.coinMin[0] *= noeud->chercher(i)->obtenirFacteurMiseAEchelle();
 
 
-			pointBoite1[0] = boite.coinMin[0];
-			pointBoite1[1] = boite.coinMin[1];
+			pointBoite1[0] = boite1.coinMin[0];
+			pointBoite1[1] = boite1.coinMin[1];
 
-			pointBoite2[0] = boite.coinMax[0];
-			pointBoite2[1] = boite.coinMin[1];
+			pointBoite2[0] = boite1.coinMax[0];
+			pointBoite2[1] = boite1.coinMin[1];
 
-			pointBoite3[0] = boite.coinMax[0];
-			pointBoite3[1] = boite.coinMax[1];
+			pointBoite3[0] = boite1.coinMax[0];
+			pointBoite3[1] = boite1.coinMax[1];
 
-			pointBoite4[0] = boite.coinMin[0];
-			pointBoite4[1] = boite.coinMax[1];
+			pointBoite4[0] = boite1.coinMin[0];
+			pointBoite4[1] = boite1.coinMax[1];
 
 			utilitaire::calculerPositionApresRotation(pointBoite1, p1, angleRot);
 			utilitaire::calculerPositionApresRotation(pointBoite2, p2, angleRot);
@@ -349,6 +390,11 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			break;
 		}
 	}
+}
+
+void VisiteurSelection::visiterRectangle(NoeudTable* noeud)
+{
+	
 }
 
 void VisiteurSelection::assignerControl(bool estControl)
