@@ -20,7 +20,7 @@ namespace InterfaceGraphique
         private const int WM_RBUTTONDOWN =  0x0204;
         private const int WM_RBUTTONUP =    0x0205;
         private const int WM_MOUSEMOVE =    0x0200;
-        private const int WM_MOUSEWHEEL =    0x020A;
+        private const int WM_MOUSEWHEEL =   0x020A;
 
         public bool PreFilterMessage(ref Message m)
         {
@@ -219,7 +219,7 @@ namespace InterfaceGraphique
 
         private void modeTestModeEdition__Click(object sender, EventArgs e)
         {
-            //FonctionsNatives.assignerMode(Mode.TEST);
+            FonctionsNatives.assignerMode(Mode.TEST);
         }
 
         private void bouttonSimulation__Click(object sender, EventArgs e)
@@ -307,7 +307,7 @@ namespace InterfaceGraphique
 
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            FonctionsNatives.suppression();
         }
 
         private void viewPort__Paint(object sender, PaintEventArgs e)
@@ -404,6 +404,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerPositionRelativeY(double positionRelativeY);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void suppression();
 
     }
 }

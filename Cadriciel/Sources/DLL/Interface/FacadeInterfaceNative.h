@@ -33,6 +33,8 @@ extern "C"
 	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
+	__declspec(dllexport) void __cdecl suppression();
+
 	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) double obtenirFacteurGrandeur();
 	__declspec(dllexport) double obtenirPositionRelativeX();

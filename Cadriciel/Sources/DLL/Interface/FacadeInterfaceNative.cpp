@@ -302,6 +302,11 @@ extern "C"
 		return FacadeModele::obtenirInstance()->obtenirPositionRelativeY();
 	}
 
+	__declspec(dllexport) void __cdecl suppression()
+	{
+		FacadeModele::obtenirInstance()->obtenirMode()->gererToucheSupprimer();
+	}
+
 	__declspec(dllexport) void assignerAngleRotation(double angle)
 	{
 		FacadeModele::obtenirInstance()->assignerAngleRotation(angle);

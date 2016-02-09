@@ -19,11 +19,8 @@
 ModeEdition::ModeEdition()
 {
 	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
-<<<<<<< HEAD
 	typeMode_ = EDITION;
-=======
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
->>>>>>> selection
 }
 
 ModeEdition::~ModeEdition()
