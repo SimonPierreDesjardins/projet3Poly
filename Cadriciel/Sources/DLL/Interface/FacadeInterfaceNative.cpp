@@ -355,9 +355,6 @@ extern "C"
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheMoins();
 					break;
 
-				case VK_DELETE:
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheSupprimer();
-
 				case VK_KEY_D:
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheD();
 					break;
@@ -385,8 +382,6 @@ extern "C"
 				case VK_KEY_T:
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheT();
 					break;
-
->>>>>>> origin/develop
 				default:
 					break;
 			}

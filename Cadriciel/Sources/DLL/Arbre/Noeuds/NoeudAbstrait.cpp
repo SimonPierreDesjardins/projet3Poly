@@ -386,6 +386,7 @@ void NoeudAbstrait::afficher() const
 		glPushMatrix();
 		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT);
 
+
 		// La translation de la position relative		
 		glTranslated(
 			positionRelative_[0], positionRelative_[1], positionRelative_[2]
