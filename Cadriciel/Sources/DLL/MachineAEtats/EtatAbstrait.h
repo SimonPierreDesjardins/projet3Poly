@@ -64,6 +64,7 @@ protected:
 	bool enCreation_{ false };
 	bool clicGaucheEnfonce_{false};
 	bool clicDroitEnfonce_{false};
+
 	int ancienX_;
 	int ancienY_;
 };

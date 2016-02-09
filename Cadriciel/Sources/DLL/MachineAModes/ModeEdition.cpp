@@ -148,3 +148,41 @@ void ModeEdition::gererToucheAltEnfoncee() {
 void ModeEdition::gererToucheAltRelachee(){
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
 }
+
+void  ModeEdition::gererClicDroitEnfonce(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(x,y);
+}
+
+void  ModeEdition::gererClicDroitRelache(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(x,y);;
+}
+
+void  ModeEdition::gererClicGaucheEnfonce(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(x,y);
+}
+
+void  ModeEdition::gererClicGaucheRelache(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(x,y);
+}
+
+void  ModeEdition::gererMouvementSouris(const int & x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(x,y);
+}
+
+
+void ModeEdition::gererMoletteSouris(const int & delta){
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
+		;
+	else{
+		if (delta>0)
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
+		else
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+	}
+
+}

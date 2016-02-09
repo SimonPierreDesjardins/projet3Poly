@@ -46,13 +46,24 @@ public:
 	virtual void gererFlecheHaut();
 	virtual void gererFlecheDroit();
 
+	//Gestion de touches modificatrices
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-
 	virtual void gererToucheAltEnfoncee();
 	virtual void gererToucheAltRelachee();
 
+	// Gestion de la souris
+	virtual void gererClicDroitEnfonce(const int& x, const int& y);
+	virtual void gererClicDroitRelache(const int& x, const int& y);
+	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
+	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int & x, const int& y);
+	virtual void gererMoletteSouris(const int & delta);
+
 protected:
+
+	int ancienSourisX_;
+	int ancienSourisY_;
 
 };
 
