@@ -12,6 +12,8 @@
 #define MODE_EDITION_H
 
 #include "ModeAbstrait.h"
+#include "VisiteurAbstrait.h"
+#include "VisiteurSuppression.h"
 #include <memory>
 #include "glm\glm.hpp"
 
@@ -49,7 +51,10 @@ public:
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
 
+	virtual void gererToucheSupprimer();
+
 protected:
+	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
 
 };
 

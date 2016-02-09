@@ -66,6 +66,8 @@ public:
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
 
+	virtual void gererToucheSupprimer();
+
 private:
 	
 };
