@@ -155,6 +155,7 @@
     <ClCompile Include="MachineAEtats\EtatCreationPoteau.cpp" />
     <ClCompile Include="MachineAEtats\EtatDeplacement.cpp" />
     <ClCompile Include="MachineAEtats\EtatDuplication.cpp" />
+    <ClCompile Include="MachineAEtats\EtatLoupe.cpp" />
     <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp" />
     <ClCompile Include="MachineAEtats\EtatRotation.cpp" />
     <ClCompile Include="MachineAEtats\EtatSelection.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="MachineAEtats\EtatCreationPoteau.h" />
     <ClInclude Include="MachineAEtats\EtatDeplacement.h" />
     <ClInclude Include="MachineAEtats\EtatDuplication.h" />
+    <ClInclude Include="MachineAEtats\EtatLoupe.h" />
     <ClInclude Include="MachineAEtats\EtatMiseAEchelle.h" />
     <ClInclude Include="MachineAEtats\EtatRotation.h" />
     <ClInclude Include="MachineAEtats\EtatSelection.h" />

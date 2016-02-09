@@ -86,6 +86,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl dessinerOpenGL()
 	{
+		
 		// Affiche la scène.
 		FacadeModele::obtenirInstance()->afficher();
 
@@ -335,6 +336,7 @@ extern "C"
 				case VK_RMENU:
 				case VK_LMENU:
 					std::cout << "La touche alt est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
 					break;
 
 				case VK_CONTROL:
@@ -396,6 +398,13 @@ extern "C"
 				case VK_LCONTROL:
 				case VK_RCONTROL:
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
+					break;
+
+				case VK_MENU:
+				case VK_RMENU:
+				case VK_LMENU:
+					std::cout << "La touche alt est relachee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
 					break;
 
 				default:

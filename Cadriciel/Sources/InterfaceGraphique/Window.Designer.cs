@@ -76,6 +76,8 @@
             this.panneauPositionX_ = new System.Windows.Forms.Label();
             this.panneauDimension_ = new System.Windows.Forms.Label();
             this.panneauRotation_ = new System.Windows.Forms.Label();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
             this.panneauOperation_.SuspendLayout();
@@ -223,7 +225,8 @@
             this.rotationMenuEdition_,
             this.miseAEchelleMenuEdition_,
             this.duplicationMenuEdition_,
-            this.creationMenuEdition_});
+            this.creationMenuEdition_,
+            this.zoomToolStripMenuItem});
             this.outilsMenuEdition_.Name = "outilsMenuEdition_";
             this.outilsMenuEdition_.Size = new System.Drawing.Size(50, 20);
             this.outilsMenuEdition_.Text = "Outils";
@@ -529,6 +532,13 @@
             this.panneauRotation_.TabIndex = 0;
             this.panneauRotation_.Text = "Angle de rotation";
             // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.zoomToolStripMenuItem.Text = "Zoom";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -611,6 +621,7 @@
         private System.Windows.Forms.TextBox textBoxPositionX_;
         private System.Windows.Forms.TextBox textBoxRotation_;
         private System.Windows.Forms.TextBox textboxDimension_;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
     }
 }
 

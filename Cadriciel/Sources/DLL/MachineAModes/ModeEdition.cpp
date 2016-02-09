@@ -79,7 +79,7 @@ void ModeEdition::gererToucheT()
 
 void ModeEdition::gererToucheZ()
 {
-	//FacadeModele::obtenirInstance()->assignerEtat(ZOOM);
+	FacadeModele::obtenirInstance()->assignerEtat(ZOOM);
 }
 
 void ModeEdition::gererToucheCTRLavecS()
@@ -110,25 +110,25 @@ void ModeEdition::gererTouche2()
 void ModeEdition::gererFlecheGauche()
 {
 	std::cout << "La fleche de gauche est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
 }
 
 void ModeEdition::gererFlecheBas()
 {
 	std::cout << "La fleche du bas est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
 }
 
 void ModeEdition::gererFlecheHaut()
 {
 	std::cout << "La fleche du haut est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
 }
 
 void ModeEdition::gererFlecheDroit()
 {
 	std::cout << "La fleche de droite est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
 }
 
 void ModeEdition::gererToucheControlEnfoncee()
@@ -141,3 +141,10 @@ void ModeEdition::gererToucheControlRelachee()
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
 }
 
+void ModeEdition::gererToucheAltEnfoncee() {
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
+}
+
+void ModeEdition::gererToucheAltRelachee(){
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
+}

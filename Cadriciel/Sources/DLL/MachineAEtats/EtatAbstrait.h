@@ -25,6 +25,7 @@ enum Etat
 	CREATION_POTEAU,
 	CREATION_MUR,
 	CREATION_LIGNE_NOIRE,
+	ZOOM
 };
 
 class EtatAbstrait
@@ -49,18 +50,23 @@ public:
 	void gererEstSurTable(const glm::dvec3& position);
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 	void assignerSymbolePointeur(bool estSymboleStandard);
+	virtual void gererTouchePlus();
+	virtual void gererToucheMoins();
+	virtual void gererToucheAltEnfoncee();
+	virtual void gererToucheAltRelachee();
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
 	bool toucheCtrlEnfonce_{ false };
-	bool clicGaucheEnfonce_{ false };
-	bool clicDroitEnfonce_{ false };
 	bool curseurEstSurTable_{ false };
+	bool toucheAltEnfonce_{ false };
+	bool enCreation_{ false };
+	bool clicGaucheEnfonce_{false};
+	bool clicDroitEnfonce_{false};
 	int ancienX_;
 	int ancienY_;
 };
-
 
 #endif /// ETAT_ABSTRAIT_H
 

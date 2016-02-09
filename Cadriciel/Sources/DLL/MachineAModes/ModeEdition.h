@@ -49,6 +49,9 @@ public:
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
 
+	virtual void gererToucheAltEnfoncee();
+	virtual void gererToucheAltRelachee();
+
 protected:
 
 };
