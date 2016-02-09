@@ -20,6 +20,7 @@ EtatCreationLigneNoire::EtatCreationLigneNoire()
 {
 	std::cout << "Creation de ligne" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationLigne>();
+	typeEtat_ = CREATION_LIGNE_NOIRE;
 }
 
 EtatCreationLigneNoire::~EtatCreationLigneNoire()

@@ -16,6 +16,7 @@
 EtatDuplication::EtatDuplication()
 {
 	visiteur_ = std::make_unique<VisiteurDuplication>();
+	typeEtat_ = DUPLICATION;
 }
 
 EtatDuplication::~EtatDuplication()

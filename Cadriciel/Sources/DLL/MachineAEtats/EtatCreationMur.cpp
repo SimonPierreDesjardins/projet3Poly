@@ -21,6 +21,7 @@ EtatCreationMur::EtatCreationMur()
 {
 	std::cout << "Creation de mur" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationMur>();
+	typeEtat_ = CREATION_MUR;
 }
 
 EtatCreationMur::~EtatCreationMur()

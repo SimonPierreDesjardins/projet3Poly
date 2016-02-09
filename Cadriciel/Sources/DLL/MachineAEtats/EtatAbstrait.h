@@ -49,6 +49,7 @@ public:
 	void gererEstSurTable(const glm::dvec3& position);
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 	void assignerSymbolePointeur(bool estSymboleStandard);
+	inline Etat obtenirTypeEtat() const;
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
@@ -59,7 +60,15 @@ protected:
 	bool curseurEstSurTable_{ false };
 	int ancienX_;
 	int ancienY_;
+	Etat typeEtat_;
 };
+
+inline Etat EtatAbstrait::obtenirTypeEtat() const
+{
+	return typeEtat_;
+}
+
+
 
 
 #endif /// ETAT_ABSTRAIT_H

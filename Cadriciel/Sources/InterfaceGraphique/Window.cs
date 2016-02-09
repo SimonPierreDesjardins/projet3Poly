@@ -81,7 +81,7 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
-            FonctionsNatives.assignerEtat(Etat.SELECTION);
+            //FonctionsNatives.assignerEtat(Etat.SELECTION);
             FonctionsNatives.assignerMode(Mode.EDITION);
         }
 
@@ -219,7 +219,7 @@ namespace InterfaceGraphique
 
         private void modeTestModeEdition__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerMode(Mode.TEST);
+            //FonctionsNatives.assignerMode(Mode.TEST);
         }
 
         private void bouttonSimulation__Click(object sender, EventArgs e)
@@ -240,11 +240,14 @@ namespace InterfaceGraphique
             textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
         }
 
-        static bool fred = true;
         private void aideMenuEdition__Click(object sender, EventArgs e)
         {
-            fred =! fred;
-            panneauOperation_.Visible = fred;
+            PopOutInterface popup = new PopOutInterface();
+            DialogResult dialogresult = popup.ShowDialog();
+            if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
+            {
+                popup.Dispose();
+            }
         }
 
         private void textboxDimension__Enter(object sender, EventArgs e)
@@ -274,7 +277,11 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                FonctionsNatives.assignerPositionRelativeX(Convert.ToDouble(textBoxPositionX_.Text));
+                double donnee = Convert.ToDouble(textBoxPositionX_.Text);
+                if (!(donnee < -48 || donnee > 48))
+                    FonctionsNatives.assignerPositionRelativeX(donnee);
+                else
+                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
             }
         }
 
@@ -282,7 +289,11 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
+                double donnee = Convert.ToDouble(textBoxPositionY_.Text);
+                if (!(donnee < -24 || donnee > 24))
+                    FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
+                else
+                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
             }
         }
 
@@ -292,6 +303,16 @@ namespace InterfaceGraphique
             {
                 FonctionsNatives.assignerFacteurGrandeur(Convert.ToDouble(textboxDimension_.Text));
             }
+        }
+
+        private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void viewPort__Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 
@@ -337,7 +358,13 @@ namespace InterfaceGraphique
         public static extern void assignerEtat(Etat etat);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirEtat();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerMode(Mode mode);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirMode();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void redimensionnerFenetre(int largeur, int hauteur);

@@ -21,6 +21,7 @@ EtatSelection::EtatSelection()
 {
 	std::cout << "Selection d'un object" << std::endl;
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
+	typeEtat_ = SELECTION;
 }
 
 EtatSelection::~EtatSelection()

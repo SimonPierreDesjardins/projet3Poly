@@ -16,6 +16,7 @@
 EtatDeplacement::EtatDeplacement()
 {
 	visiteur_ = std::make_unique<VisiteurDeplacement>();
+	typeEtat_ = DEPLACEMENT;
 }
 
 EtatDeplacement::~EtatDeplacement()

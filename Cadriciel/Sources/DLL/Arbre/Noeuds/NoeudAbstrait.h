@@ -10,7 +10,6 @@
 #ifndef __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 #define __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
-
 #include "GL/glew.h"
 #include <string>
 #include <memory>

@@ -206,6 +206,20 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirEtat()
+	///
+	/// Cette fonction permet d'obtenir un Etat
+	///
+	/// @return int etat : Le numero du mode sélectionné
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) int __cdecl obtenirEtat()
+	{
+		return (int)FacadeModele::obtenirInstance()->obtenirEtat()->obtenirTypeEtat();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
 	/// @fn __declspec(dllexport) void __cdecl assignerMode(int mode)
 	///
 	/// Cette fonction permet d'assigner un Mode
@@ -216,6 +230,20 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerMode(int mode)
 	{
 		FacadeModele::obtenirInstance()->assignerMode((Mode)mode);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirMode()
+	///
+	/// Cette fonction permet d'obtenir un Mode
+	///
+	/// @return int mode : Le numero du mode sélectionné
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) int __cdecl obtenirMode()
+	{
+		return FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
 	}
 
 	////////////////////////////////////////////////////////////////////////

@@ -66,10 +66,17 @@ public:
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
 
-private:
-	
+	inline int obtenirTypeMode();
+
+protected:
+	int typeMode_;
+
 };
 
+inline int ModeAbstrait::obtenirTypeMode()
+{
+	return typeMode_;
+}
 
 #endif /// MODE_ABSTRAIT_H
 

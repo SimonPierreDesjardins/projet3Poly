@@ -16,6 +16,7 @@
 EtatMiseAEchelle::EtatMiseAEchelle()
 {
 	visiteur_ = std::make_unique<VisiteurMiseAEchelle>();
+	typeEtat_ = MISE_A_ECHELLE;
 }
 
 EtatMiseAEchelle::~EtatMiseAEchelle()

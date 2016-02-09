@@ -19,6 +19,7 @@
 ModeEdition::ModeEdition()
 {
 	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
+	typeMode_ = EDITION;
 }
 
 ModeEdition::~ModeEdition()
