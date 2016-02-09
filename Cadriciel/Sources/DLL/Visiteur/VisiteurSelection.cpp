@@ -59,17 +59,17 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 		{
 		case 'p' :
 
-			pointBoite1[0] = boite.coinMin[0] * (noeud->chercher(i)->getfacteurMiseAEchelle());
-			pointBoite1[1] = boite.coinMin[1] * (noeud->chercher(i)->getfacteurMiseAEchelle());
+			pointBoite1[0] = boite.coinMin[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
+			pointBoite1[1] = boite.coinMin[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
 
-			pointBoite2[0] = boite.coinMax[0] * (noeud->chercher(i)->getfacteurMiseAEchelle());
-			pointBoite2[1] = boite.coinMin[1] * (noeud->chercher(i)->getfacteurMiseAEchelle());
+			pointBoite2[0] = boite.coinMax[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
+			pointBoite2[1] = boite.coinMin[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
 
-			pointBoite3[0] = boite.coinMax[0] * (noeud->chercher(i)->getfacteurMiseAEchelle());
-			pointBoite3[1] = boite.coinMax[1] * (noeud->chercher(i)->getfacteurMiseAEchelle());
+			pointBoite3[0] = boite.coinMax[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
+			pointBoite3[1] = boite.coinMax[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
 
-			pointBoite4[0] = boite.coinMin[0] * (noeud->chercher(i)->getfacteurMiseAEchelle());
-			pointBoite4[1] = boite.coinMax[1] * (noeud->chercher(i)->getfacteurMiseAEchelle());
+			pointBoite4[0] = boite.coinMin[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
+			pointBoite4[1] = boite.coinMax[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
 
 			pointBoite1[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite1[0];
 			pointBoite1[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite1[1];

@@ -73,7 +73,7 @@ void NoeudPoteau::afficherConcret() const
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4f(0.0, 1.0, 0.0, 1.0);
 	}
 	
 	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
