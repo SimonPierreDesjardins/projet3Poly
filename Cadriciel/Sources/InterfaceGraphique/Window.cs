@@ -293,6 +293,11 @@ namespace InterfaceGraphique
                 FonctionsNatives.assignerFacteurGrandeur(Convert.ToDouble(textboxDimension_.Text));
             }
         }
+
+        private void enregistrerMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.sauvegarder();
+        }
     }
 
     enum Etat
@@ -377,6 +382,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerPositionRelativeY(double positionRelativeY);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void sauvegarder();
 
     }
 }

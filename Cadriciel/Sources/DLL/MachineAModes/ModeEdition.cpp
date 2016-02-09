@@ -15,6 +15,7 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
+#include "VisiteurSauvegarde.h"
 
 ModeEdition::ModeEdition()
 {
@@ -139,5 +140,10 @@ void ModeEdition::gererToucheControlEnfoncee()
 void ModeEdition::gererToucheControlRelachee()
 {
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
+}
+
+void ModeEdition::sauvegarder(){
+	unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
 }
 

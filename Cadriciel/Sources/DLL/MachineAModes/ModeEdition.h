@@ -21,6 +21,8 @@ public:
 	ModeEdition();
 	virtual ~ModeEdition();
 
+	
+
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 
@@ -48,6 +50,8 @@ public:
 
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
+
+	virtual void sauvegarder();
 
 protected:
 

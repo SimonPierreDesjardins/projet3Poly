@@ -17,6 +17,7 @@
 #include <iterator>
 
 #include "glm\glm.hpp"
+#include "rapidjson\document.h"
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 namespace modele{
@@ -158,6 +159,8 @@ public:
 
 	double getfacteurMiseAEchelle() { return facteurMiseAEchelle_; };
 	void setFacteurMiseEchelle(double facteur) { facteurMiseAEchelle_ = facteur; };
+
+	rapidjson::Value toJson(rapidjson::Document::AllocatorType& allocator);
 
 protected:
 	/// Type du noeud.

@@ -133,6 +133,10 @@ extern "C"
 		FacadeModele::obtenirInstance()->animer((float)temps);
 	}
 
+	__declspec(dllexport) void __cdecl sauvegarder(){
+		FacadeModele::obtenirInstance()->obtenirMode()->sauvegarder();
+	}
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl zoomIn()

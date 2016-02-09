@@ -188,6 +188,7 @@
             this.enregistrerMenuEdition_.Name = "enregistrerMenuEdition_";
             this.enregistrerMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.enregistrerMenuEdition_.Text = "Enregistrer";
+            this.enregistrerMenuEdition_.Click += new System.EventHandler(this.enregistrerMenuEdition__Click);
             // 
             // enregistrerSousMenuEdition_
             // 
@@ -326,7 +327,7 @@
             // aideMenuEdition_
             // 
             this.aideMenuEdition_.Name = "aideMenuEdition_";
-            this.aideMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
             this.aideMenuEdition_.Text = "Aide";
             this.aideMenuEdition_.Click += new System.EventHandler(this.aideMenuEdition__Click);
             // 
