@@ -38,6 +38,8 @@ public:
 	virtual void gererToucheAltEnfoncee();
 	virtual void gererToucheAltRelachee();
 
+	
+
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
 
@@ -51,7 +53,7 @@ protected:
 	bool estPremierClic_{ false };
 
 	glm::dvec3 positionPremierClic_;
-	glm::dvec3 positionDeuxiemeClic_;
+	glm::dvec3 positionDeuxiemeClic_;	
 
 };
 

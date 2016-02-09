@@ -271,6 +271,8 @@ void FacadeModele::libererOpenGL()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::afficher() const
 {
+	if (!peutAfficher_)
+		return;
 	// Efface l'ancien rendu
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -377,6 +379,14 @@ void FacadeModele::animer(float temps)
 void FacadeModele::modifierEtat(std::shared_ptr<EtatAbstrait> etat)
 {
 	etat_ = etat;
+}
+
+void FacadeModele::continuerAffichage(){
+	peutAfficher_ = true;
+}
+
+void FacadeModele::stopAffichage(){
+	peutAfficher_ = false;
 }
 
 

@@ -82,6 +82,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl dessinerOpenGL()
 	{
+		
 		// Affiche la scène.
 		FacadeModele::obtenirInstance()->afficher();
 

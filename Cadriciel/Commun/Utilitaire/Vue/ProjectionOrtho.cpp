@@ -274,36 +274,41 @@ namespace vue {
 		//ratio rectangle
 		double r = w / h;
 
-		// convertir coin1 en position fenetre virtuelle
-		double decalageX = double(std::min(coin1.x, coin2.x)) / xMaxCloture_*W;
-		double decalageY = double(std::min(coin1.y, coin2.y)) / yMaxCloture_*H;
+		double decalageX = 0.0;
+		double decalageY = 0.0;
 
 		//Trouver nouvelles dimensions de la fenetre
 		if (R > r){
+
+			//Rajuster le décalage en Y pour centrer
+			decalageY += (1 / r - 1 / R)*W / 2;
+
 			//Transformer W
 			W = xMaxCloture_ / w*W;
 			//déduire H par ratio
 			H = W / R;
 
-			//Rajuster le décalage en Y pour centrer
-			decalageY -= (1 / r - 1 / R)*H / 2;
 		}
 		else{
+			
+			//Rajuster le décalage en X pour centrer
+			decalageX += (r - R)*H / 2;
+
 			//Transformer H
 			H = yMaxCloture_/h *H;
 			// Deduire W par ratio
 			W = H*R;
-
-			//Rajuster le décalage en X pour centrer
-			decalageX += (r - R)*W / 2;
 		}
-		
+
+		// convertir coin1 en position fenetre virtuelle
+		decalageX += double(std::min(coin1.x, coin2.x)) / xMaxCloture_*W;
+		decalageY += double(std::min(coin1.y, coin2.y)) / yMaxCloture_*H;
 
 		//Appliquer les transformations a la fenetre
-		yMaxFenetre_ -= decalageY;
+		yMaxFenetre_ += decalageY;
 		yMinFenetre_ = yMaxFenetre_ - H;
 
-		xMinFenetre_ += decalageX;
+		xMinFenetre_ -= decalageX;
 		xMaxFenetre_ = xMinFenetre_ + W;
 	}
 
