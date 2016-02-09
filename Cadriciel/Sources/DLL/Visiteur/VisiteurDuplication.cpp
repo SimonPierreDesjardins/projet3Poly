@@ -17,12 +17,6 @@ VisiteurDuplication::VisiteurDuplication()
 	}
 }
 
-
-VisiteurDuplication::VisiteurDuplication(const int& x, const int& y)
-{
-
-}
-
 VisiteurDuplication::~VisiteurDuplication()
 {
 	

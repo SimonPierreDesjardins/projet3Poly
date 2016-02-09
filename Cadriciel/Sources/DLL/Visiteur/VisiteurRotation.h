@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurRotation();
 
-	// Constructeur par paramètre.
-	VisiteurRotation(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurRotation();
 

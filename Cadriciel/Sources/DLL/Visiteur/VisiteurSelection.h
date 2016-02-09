@@ -19,21 +19,21 @@ public:
 	/// Constructeur par défaut.
 	VisiteurSelection();
 
-	// Constructeur par paramètre.
-	VisiteurSelection(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurSelection();
-
 	
 	/// Parcours du noeudTable.
 	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudPoteau* noeud);
+	virtual void visiter(NoeudMur* noeud);
+	virtual void visiter(NoeudLigneNoire* noeud);
+	virtual void visiter(NoeudSegment* noeud);
 
 	//Indique si la touche control est appuyee
-	void assignerControl(bool estControl);
+	void assignerControl(bool controlAppuye);
 
 private:
-	bool estControlAppuye;
+	bool controlAppuye_{ false };
 };
 
 #endif // VISITEUR_SELECTION_H

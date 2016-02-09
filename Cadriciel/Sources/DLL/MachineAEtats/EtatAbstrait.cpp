@@ -147,3 +147,8 @@ void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 		SetCursor(Cursor);
 	}
 }
+
+void EtatAbstrait::reinitialiser()
+{
+
+}

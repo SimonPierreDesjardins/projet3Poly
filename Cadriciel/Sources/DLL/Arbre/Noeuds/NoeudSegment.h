@@ -20,7 +20,8 @@ public:
 	NoeudSegment(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudSegment();
-
+	virtual void mettreAJourQuadEnglobantConcret();
+	
 	/// Affiche le segment.
 	virtual void afficherConcret() const;
 };

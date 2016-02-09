@@ -67,6 +67,10 @@ protected:
 
 	int ancienX_;
 	int ancienY_;
+
+	virtual void reinitialiser();
+
+
 };
 
 #endif /// ETAT_ABSTRAIT_H

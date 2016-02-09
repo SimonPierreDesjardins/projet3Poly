@@ -48,6 +48,7 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 	//Deuxieme clic
 	else
 	{
+		mur_->mettreAJourQuadEnglobant();
 		enCreation_ = false;
 		mur_ = nullptr;
 	}

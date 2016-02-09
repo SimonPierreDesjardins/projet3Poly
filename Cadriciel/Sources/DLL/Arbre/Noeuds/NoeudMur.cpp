@@ -12,6 +12,7 @@
 
 #include "GL/glew.h"
 #include <cmath>
+#include <iostream>
 
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
@@ -67,7 +68,10 @@ void NoeudMur::afficherConcret() const
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
-
+	glDisable(GL_COLOR_MATERIAL);
+	glEnable(GL_BLEND);
+	//glDepthMask(GL_FALSE);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);	glColor3f(1, 0, 0);
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
 	glScaled(facteurMiseAEchelle_, 1, 1);
@@ -75,29 +79,26 @@ void NoeudMur::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
+	//glDepthMask(GL_TRUE);
+	glDisable(GL_BLEND);
+
 	// Restauration de la matrice.
 	glPopMatrix();
 }
 
 
-utilitaire::BoiteEnglobante NoeudMur::obtenirBoiteEnglobanteCourante() const
+void NoeudMur::mettreAJourQuadEnglobantConcret()
 {
-	utilitaire::BoiteEnglobante boiteEnglobanteCourante;
 	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
-	boiteEnglobanteCourante.coinMin[0] = boiteEnglobanteModele_.coinMin[0] * facteurMiseAEchelle_;
-	boiteEnglobanteCourante.coinMax[0] = boiteEnglobanteModele_.coinMax[0] * facteurMiseAEchelle_;
-
-	// Mettre à jour la position des coins de la boite avec l'angle de rotation du noeud.
-	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMin, boiteEnglobanteCourante.coinMin, angleRotation_);
-	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMax, boiteEnglobanteCourante.coinMax, angleRotation_);
-
-	// Mettre à jour les coins avec la position relative.
-	boiteEnglobanteCourante.coinMin = boiteEnglobanteModele_.coinMin + positionRelative_;
-	boiteEnglobanteCourante.coinMax = boiteEnglobanteModele_.coinMax + positionRelative_;
-
-	return boiteEnglobanteCourante;
+	std::cout << "Mise à jour Mur:" << std::endl;
+	for (int i = 0; i < 4; i++)
+	{
+		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
+		utilitaire::calculerPositionApresRotation(quadEnglobant_.coins[i], quadEnglobant_.coins[i], angleRotation_);
+		quadEnglobant_.coins[i] += positionRelative_;
+		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
+	}
 }
-
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

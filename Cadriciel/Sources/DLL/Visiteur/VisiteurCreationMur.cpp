@@ -20,12 +20,6 @@ VisiteurCreationMur::VisiteurCreationMur()
 
 }
 
-VisiteurCreationMur::VisiteurCreationMur(const int& x, const int& y)
-: VisiteurAbstrait(x, y)
-{
-
-}
-
 VisiteurCreationMur::~VisiteurCreationMur()
 {
 

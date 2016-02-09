@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurCreationPoteau();
 
-	// Constructeur par paramètre.
-	VisiteurCreationPoteau(const int& x, const int& y);
-	
 	/// Destructeur.
 	virtual ~VisiteurCreationPoteau();
 

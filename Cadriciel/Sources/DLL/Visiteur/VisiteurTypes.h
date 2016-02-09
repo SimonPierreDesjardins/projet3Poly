@@ -16,6 +16,11 @@
 #include "VisiteurCreationMur.h"
 #include "VisiteurCreationLigne.h"
 #include "VisiteurSelection.h"
+#include "VisiteurDuplication.h"
+#include "VisiteurDeplacement.h"
+#include "VisiteurMiseAEchelle.h"
+#include "VisiteurRotation.h"
+#include "VisiteurVerificationObjets.h"
 
 #endif /// Header pour les états
 

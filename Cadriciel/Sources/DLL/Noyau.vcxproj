@@ -176,6 +176,7 @@
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
     <ClCompile Include="Visiteur\VisiteurRotation.cpp" />
     <ClCompile Include="Visiteur\VisiteurSelection.cpp" />
+    <ClCompile Include="Visiteur\VisiteurVerificationObjets.cpp" />
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -228,6 +229,7 @@
     <ClInclude Include="Visiteur\VisiteurRotation.h" />
     <ClInclude Include="Visiteur\VisiteurSelection.h" />
     <ClInclude Include="Visiteur\VisiteurTypes.h" />
+    <ClInclude Include="Visiteur\VisiteurVerificationObjets.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commun\Utilitaire\Utilitaire.vcxproj">

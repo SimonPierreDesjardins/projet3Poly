@@ -10,20 +10,21 @@
 
 #include "EtatDeplacement.h"
 #include "VisiteurDeplacement.h"
+#include "VisiteurVerificationObjets.h"
 #include "FacadeModele.h"
 #include <iostream>
 
 EtatDeplacement::EtatDeplacement()
 {
-	visiteur_ = std::make_unique<VisiteurDeplacement>();
+	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
+	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationObjets>();
 }
 
 EtatDeplacement::~EtatDeplacement()
 {
 	if (clicGaucheEnfonce_)
 	{
-		visiteur_->assignerPositionRelative(positionVirtuelleInitiale_ - dernierePositionVirtuelle_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+		reinitialiser();
 	}
 }
 
@@ -37,6 +38,11 @@ void EtatDeplacement::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatDeplacement::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurVerificationObjets_.get());
+	if (!visiteurVerificationObjets_->objetsDansZoneSimulation())
+	{
+		reinitialiser();
+	}
 }
 
 void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
@@ -47,8 +53,14 @@ void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 	
 	if (clicGaucheEnfonce_)
 	{
-		visiteur_->assignerPositionRelative(positionVirtuelle - dernierePositionVirtuelle_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+		visiteurDeplacement_->assignerPositionRelative(positionVirtuelle - dernierePositionVirtuelle_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurDeplacement_.get());
 		dernierePositionVirtuelle_ = positionVirtuelle;
 	}
+}
+
+void EtatDeplacement::reinitialiser()
+{
+	visiteurDeplacement_->assignerPositionRelative(positionVirtuelleInitiale_ - dernierePositionVirtuelle_);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurDeplacement_.get());
 }

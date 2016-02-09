@@ -78,7 +78,13 @@ public:
 	inline void assignerFacteurMiseAEchelle(double facteurDimension);
 
 	/// Obtient la boite englobante courante du noeud.
-	virtual utilitaire::BoiteEnglobante obtenirBoiteEnglobanteCourante() const;
+	inline utilitaire::QuadEnglobant obtenirQuadEnglobant() const;
+
+	/// Mettre à jour le quadrilatère englobant du noeud.
+	void mettreAJourQuadEnglobant();
+
+	/// Mettre à jour le quadrilatère du noeud de manière concrète.
+	virtual void mettreAJourQuadEnglobantConcret();
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -166,11 +172,10 @@ protected:
 
 	/// Angle de rotation sur le plan xy
 	double					angleRotation_{ 0 };
+	
+	/// Quadrilatère englobant le noeud.
+	utilitaire::QuadEnglobant quadEnglobant_;
 
-	
-	/// Boite englobante du modele.
-	utilitaire::BoiteEnglobante boiteEnglobanteModele_;
-	
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
 
@@ -189,8 +194,12 @@ protected:
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_;
 
+	/// Boite englobante du modele.
+	utilitaire::BoiteEnglobante boiteEnglobanteModele_;
+
 	/// Modèle 3D correspondant à ce noeud.
 	modele::Modele3D const* modele_;
+
 	/// Storage pour le dessin du modèle
 	opengl::VBO const*		vbo_;
 };
@@ -300,6 +309,12 @@ inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 inline void NoeudAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
 {
 	facteurMiseAEchelle_ = facteurDimension;
+}
+
+//TODO: Documentation.
+inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobant() const
+{
+	return quadEnglobant_;
 }
 ////////////////////////////////////////////////////////////////////////
 ///

@@ -13,12 +13,6 @@ VisiteurRotation::VisiteurRotation()
 }
 
 
-VisiteurRotation::VisiteurRotation(const int& x, const int& y)
-	: VisiteurAbstrait(x, y)
-{
-}
-
-
 VisiteurRotation::~VisiteurRotation()
 {
 }

@@ -30,9 +30,6 @@
     <Filter Include="Header Files\Application">
       <UniqueIdentifier>{c845f3fe-60ec-4b69-870e-1b94806be78e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Interface">
-      <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Configuration">
       <UniqueIdentifier>{737950f1-92e0-48cc-99df-484ed3bae29b}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     </Filter>
     <Filter Include="Source Files\MachineAMode">
       <UniqueIdentifier>{09293064-47cf-4e37-b7ff-074d481561cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre\Interface">
+      <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +208,9 @@
     <ClCompile Include="MachineAEtats\EtatLoupe.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurVerificationObjets.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -247,7 +250,7 @@
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="Interface\FacadeInterfaceNative.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Arbre\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
@@ -362,6 +365,9 @@
 	</ClInclude>
     <ClInclude Include="MachineAEtats\EtatLoupe.h">
       <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurVerificationObjets.h">
+      <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
