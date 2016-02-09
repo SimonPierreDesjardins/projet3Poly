@@ -1,5 +1,5 @@
-#ifndef ETAT_LUPE_H
-#define ETAT_LUPE_H
+#ifndef ETAT_LOUPE_H
+#define ETAT_LOUPE_H
 
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
@@ -16,7 +16,7 @@ public:
 private:
 	glm::ivec2 anchor;
 	glm::ivec2 currentPosition;
-	bool rectum{ false };
+	bool dessineRectangle{ false };
 };
 
 #endif

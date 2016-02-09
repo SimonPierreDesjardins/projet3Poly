@@ -247,22 +247,22 @@ extern "C"
 				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
 					std::cout << "La fleche de gauche est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
 					break;
 
 				case VK_RIGHT:
 					std::cout << "La fleche de droite est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
 					break;
 
 				case VK_UP:
 					std::cout << "La fleche du haut est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
 					break;
 
 				case VK_DOWN:
 					std::cout << "La fleche du bas est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+					FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
 					break;
 
 				case VK_TAB:
