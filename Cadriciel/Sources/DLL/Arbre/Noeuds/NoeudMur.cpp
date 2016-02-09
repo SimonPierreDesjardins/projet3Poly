@@ -73,7 +73,10 @@ void NoeudMur::afficherConcret() const
 		glColor4f(1.0, 0.0, 0.0, 1.0);
 	}
 	else
+	{
 		glColor4f(0.0, 0.0, 0.0, 1.0);
+	}
+
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
 	glScaled(facteurMiseAEchelle_, 1, 1);

@@ -31,6 +31,15 @@ void NoeudSegment::afficherConcret() const
 
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
+
+	if (estSelectionne())
+	{
+		glColor4f(1.0, 0.0, 0.0, 1.0);
+	}
+	else
+	{
+		glColor4f(0.0, 0.0, 0.0, 1.0);
+	}
 	glScaled(facteurMiseAEchelle_, 1, 1);
 
 	// Affichage du modèle.
