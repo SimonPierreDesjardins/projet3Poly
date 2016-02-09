@@ -116,3 +116,5 @@ void EtatAbstrait::gererMoletteSouris(const int & delta){
 	}
 		
 }
+
+
