@@ -481,6 +481,8 @@ void FacadeModele::assignerMode(Mode mode)
 ////////////////////////////////////////////////////////////////////////
 int FacadeModele::obtenirNombreSelection()
 {
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
 	int nbSelection = 0;
 	if (obtenirInstance()->arbre_ == nullptr)
 	{
@@ -488,9 +490,10 @@ int FacadeModele::obtenirNombreSelection()
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 		{
-			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne())
 			{
 				nbSelection += 1;
 			}
@@ -510,6 +513,8 @@ int FacadeModele::obtenirNombreSelection()
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirAngleRotation()
 {
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
 	bool trouve = false;
 	double angle;
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -518,11 +523,12 @@ double FacadeModele::obtenirAngleRotation()
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++)
 		{
-			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne())
 			{
-				angle = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirAngleRotation();
+				angle = enfant->obtenirAngleRotation();
 				trouve = true;
 			}
 		}
@@ -541,6 +547,8 @@ double FacadeModele::obtenirAngleRotation()
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirFacteurGrandeur()
 {
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
 	bool trouve = false;
 	double facteurGrandeur;
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -549,11 +557,12 @@ double FacadeModele::obtenirFacteurGrandeur()
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++)
 		{
-			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne())
 			{
-				facteurGrandeur = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirFacteurMiseAEchelle();
+				facteurGrandeur = enfant->obtenirFacteurMiseAEchelle();
 				trouve = true;
 			}
 		}
@@ -572,6 +581,8 @@ double FacadeModele::obtenirFacteurGrandeur()
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirPositionRelativeX()
 {
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
 	bool trouve = false;
 	double positionX;
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -580,11 +591,12 @@ double FacadeModele::obtenirPositionRelativeX()
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++)
 		{
-			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne())
 			{
-				positionX = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[0];
+				positionX = enfant->obtenirPositionRelative()[0];
 				trouve = true;
 			}
 		}
@@ -603,6 +615,8 @@ double FacadeModele::obtenirPositionRelativeX()
 ////////////////////////////////////////////////////////////////////////
 double FacadeModele::obtenirPositionRelativeY()
 {
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
 	bool trouve = false;
 	double positionY;
 	if (obtenirInstance()->arbre_ == nullptr)
@@ -611,11 +625,12 @@ double FacadeModele::obtenirPositionRelativeY()
 	}
 	else
 	{
-		for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants() && !trouve; i++)
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++)
 		{
-			if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne())
 			{
-				positionY = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative()[1];
+				positionY = enfant->obtenirPositionRelative()[1];
 				trouve = true;
 			}
 		}
@@ -627,11 +642,16 @@ double FacadeModele::obtenirPositionRelativeY()
 //Appeler un visiteur
 void FacadeModele::assignerAngleRotation(double angle)
 {
-	for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	std::unique_ptr<VisiteurRotation> visiteur = std::make_unique <VisiteurRotation>();
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
-		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne())
 		{
-			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerAngleRotation(angle);
+			visiteur->assignerAngleRotation(angle - enfant->obtenirAngleRotation());
+			enfant->accepterVisiteur(visiteur.get());
 		}
 	}
 }
@@ -640,37 +660,46 @@ void FacadeModele::assignerAngleRotation(double angle)
 //Appeler un visiteur
 void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur) 
 {
-	for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
-		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne())
 		{
-			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerFacteurMiseAEchelle(facteurGrandeur);
+			enfant->assignerFacteurMiseAEchelle(facteurGrandeur);
 		}
 	}
 }
 
 void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
 {
-	for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
-		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne())
 		{
-			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative();
+			glm::dvec3 position = enfant->obtenirPositionRelative();
 			position[0] = positionRelativeX;
-			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
+			enfant->assignerPositionRelative(position);
 		}
 	}
 }
 
 void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
 {
-	for (unsigned int i = 0; i < obtenirInstance()->arbre_->chercher(0)->obtenirNombreEnfants(); i++)
+	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
-		if (obtenirInstance()->arbre_->chercher(0)->chercher(i)->estSelectionne())
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne())
 		{
-			glm::dvec3 position = obtenirInstance()->arbre_->chercher(0)->chercher(i)->obtenirPositionRelative();
+			glm::dvec3 position = enfant->obtenirPositionRelative();
 			position[1] = positionRelativeY;
-			obtenirInstance()->arbre_->chercher(0)->chercher(i)->assignerPositionRelative(position);
+			enfant->assignerPositionRelative(position);
 		}
 	}
 }

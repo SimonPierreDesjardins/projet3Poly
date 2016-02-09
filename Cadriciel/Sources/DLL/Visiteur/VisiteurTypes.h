@@ -17,6 +17,8 @@
 #include "VisiteurCreationLigne.h"
 #include "VisiteurSelection.h"
 #include "VisiteurSuppression.h"
+#include "VisiteurRotation.h"
+#include "VisiteurMiseAEchelle.h"
 
 #endif /// Header pour les états
 
