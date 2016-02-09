@@ -295,6 +295,8 @@ extern "C"
 				case VK_OEM_MINUS:
 					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheMoins();
 					break;
+				case VK_DELETE:
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheSupprimer();
 				default:
 					break;
 			}
