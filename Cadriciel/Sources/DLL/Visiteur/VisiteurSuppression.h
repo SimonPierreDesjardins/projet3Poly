@@ -8,7 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef VISITEUR_SUPRESSION_H
+#ifndef VISITEUR_SUPPRESSION_H
 #define VISITEUR_SUPPRESSION_H
 
 #include "VisiteurAbstrait.h"
@@ -30,7 +30,7 @@ public:
 	virtual void visiter(NoeudTable* noeud);
 };
 
-#endif // VISITEUR_SELECTION_H
+#endif // VISITEUR_SUPPRESSION_H
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

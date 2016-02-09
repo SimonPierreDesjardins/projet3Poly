@@ -35,5 +35,11 @@ VisiteurSuppression::~VisiteurSuppression()
 
 void VisiteurSuppression::visiter(NoeudTable* noeud)
 {
-	
+	for (unsigned i = noeud->obtenirNombreEnfants(); i > 0; i--)
+	{
+		if (noeud->chercher(i-1)->estSelectionne())
+		{
+			noeud->effacer(noeud->chercher(i-1));
+		}
+	}
 }

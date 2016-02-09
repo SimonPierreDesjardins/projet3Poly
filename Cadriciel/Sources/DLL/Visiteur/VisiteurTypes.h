@@ -16,6 +16,7 @@
 #include "VisiteurCreationMur.h"
 #include "VisiteurCreationLigne.h"
 #include "VisiteurSelection.h"
+#include "VisiteurSuppression.h"
 
 #endif /// Header pour les états
 
