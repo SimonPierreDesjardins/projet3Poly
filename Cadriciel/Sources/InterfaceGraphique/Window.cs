@@ -298,6 +298,11 @@ namespace InterfaceGraphique
         {
             FonctionsNatives.sauvegarder();
         }
+
+        private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.charger();
+        }
     }
 
     enum Etat
@@ -385,6 +390,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void sauvegarder();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void charger();
 
     }
 }

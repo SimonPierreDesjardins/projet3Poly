@@ -23,6 +23,7 @@ extern "C"
 	__declspec(dllexport) void zoomIn();
 	__declspec(dllexport) void zoomOut();
 	__declspec(dllexport) void sauvegarder();
+	__declspec(dllexport) void charger();
 	__declspec(dllexport) int  obtenirAffichagesParSeconde();
 	__declspec(dllexport) bool executerTests();
 	__declspec(dllexport) void assignerEtat(int etat);

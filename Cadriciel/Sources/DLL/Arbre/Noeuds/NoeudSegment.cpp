@@ -1,5 +1,6 @@
 #include "NoeudSegment.h"
 #include "Utilitaire.h"
+#include "VisiteurAbstrait.h"
 
 #include "GL/glew.h"
 #include <cmath>
@@ -16,6 +17,10 @@ NoeudSegment::NoeudSegment(const std::string& typeNoeud)
 
 NoeudSegment::~NoeudSegment()
 {
+}
+
+void NoeudSegment::accepterVisiteur(VisiteurAbstrait* visiteur){
+	visiteur->visiter(this);
 }
 
 void NoeudSegment::afficherConcret() const

@@ -137,6 +137,9 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirMode()->sauvegarder();
 	}
 
+	__declspec(dllexport) void __cdecl charger(){
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chargerZone();
+	}
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl zoomIn()

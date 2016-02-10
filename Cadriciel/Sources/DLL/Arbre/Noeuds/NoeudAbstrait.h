@@ -17,8 +17,7 @@
 #include <iterator>
 
 #include "glm\glm.hpp"
-#include "rapidjson\prettywriter.h"
-#include "rapidjson\document.h"
+#include "rapidjson\writer.h"
 
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
@@ -27,6 +26,10 @@ namespace modele{
 }
 namespace opengl{
 	class VBO;
+}
+
+namespace rapidjson{
+	class FileWriteStream;
 }
 
 class VisiteurAbstrait;
@@ -162,7 +165,8 @@ public:
 	double getfacteurMiseAEchelle() { return facteurMiseAEchelle_; };
 	void setFacteurMiseEchelle(double facteur) { facteurMiseAEchelle_ = facteur; };
 
-	void toJson(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer);
+	void toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+	void fromJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
 protected:
 	/// Type du noeud.

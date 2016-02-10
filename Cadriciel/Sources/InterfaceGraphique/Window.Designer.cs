@@ -182,6 +182,7 @@
             this.ouvrirMenuEdition_.Name = "ouvrirMenuEdition_";
             this.ouvrirMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.ouvrirMenuEdition_.Text = "Ouvrir";
+            this.ouvrirMenuEdition_.Click += new System.EventHandler(this.ouvrirMenuEdition__Click);
             // 
             // enregistrerMenuEdition_
             // 

@@ -10,6 +10,7 @@
 #include "NoeudAbstrait.h"
 #include "Utilitaire.h"
 #include <iterator>
+#include "rapidjson\filewritestream.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -451,14 +452,19 @@ modele::Modele3D const* NoeudAbstrait::getModele()
 	return modele_;
 }
 
-void NoeudAbstrait::toJson(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer){
-	writer.StartObject();
+void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
 	writer.Key("type");
 	writer.String(obtenirType().c_str());
 	writer.Key("posX");
-
-
-	
+	writer.Double(obtenirPositionRelative().x);
+	writer.Key("posY");
+	writer.Double(obtenirPositionRelative().y);
+	writer.Key("posZ");
+	writer.Double(obtenirPositionRelative().z);
+	writer.Key("angleRotation");
+	writer.Double(obtenirAngleRotation());
+	writer.Key("facteurEchelle");
+	writer.Double(obtenirFacteurMiseAEchelle());
 }
 
 ////////////////////////////////////////////////

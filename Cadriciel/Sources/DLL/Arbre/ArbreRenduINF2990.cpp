@@ -12,7 +12,8 @@
 #include "EtatOpenGL.h"
 #include "NoeudTypes.h"
 #include "VisiteurTypes.h"
-
+#include "rapidjson\document.h"
+#include "rapidjson\filereadstream.h"
 
 /// La chaîne représentant le type des araignées.
 const std::string ArbreRenduINF2990::NOM_ARAIGNEE{ "araignee" };
@@ -108,6 +109,30 @@ void ArbreRenduINF2990::initialiser()
 	noeudMur2->assignerPositionRelative({ -10, -10, 0 });
 
 	*/
+}
+
+void ArbreRenduINF2990::chargerZone(){
+	rapidjson::Document doc;
+	FILE* fp = fopen("./../Zones/map.json", "rb"); // non-Windows use "r"
+	char readBuffer[65536];
+	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+	doc.ParseStream(is);
+
+	fclose(fp);
+	rapidjson::Value value(doc["table"], doc.GetAllocator());
+	chargerZone(doc["table"]);
+	const string kTypeNames[] =
+	{ "Null", "False", "True", "Object", "Array", "String", "Number" };
+	for (rapidjson::Value::ConstMemberIterator itr = doc["table"].MemberBegin();
+		itr != doc.MemberEnd(); ++itr)
+	{
+		std::cout << "value name : " << itr->name.GetString() << " is " << kTypeNames[itr->value.GetType()] << std::endl;
+	}
+}
+
+void ArbreRenduINF2990::chargerZone(const rapidjson::Value& value){
+
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

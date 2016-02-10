@@ -15,6 +15,9 @@
 #include <map>
 #include <string>
 
+namespace rapidjson{
+	class Value;
+}
 class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -39,6 +42,7 @@ public:
    /// Initialise l'arbre de rendu à son état initial.
    void initialiser();
 
+   void chargerZone();
 	/// La chaîne représentant le type des araignées.
    static const std::string NOM_ARAIGNEE;
 	/// La chaîne représentant le type des cones-cubes.
@@ -57,6 +61,9 @@ public:
    static const std::string NOM_SEGMENT;
    /// La chaîne représentant le type des des duplications. 
    static const std::string NOM_DUPLICATION;
+
+private:
+	void chargerZone(const rapidjson::Value& value);
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

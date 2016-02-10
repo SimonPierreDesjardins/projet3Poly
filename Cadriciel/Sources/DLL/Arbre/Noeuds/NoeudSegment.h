@@ -14,12 +14,16 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
+class VisiteurAbstrait;
+
 class NoeudSegment : public NoeudAbstrait
 {
 public:
 	NoeudSegment(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudSegment();
+
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 	/// Affiche le segment.
 	virtual void afficherConcret() const;
