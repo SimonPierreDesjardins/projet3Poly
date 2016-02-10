@@ -451,22 +451,14 @@ modele::Modele3D const* NoeudAbstrait::getModele()
 	return modele_;
 }
 
-rapidjson::Value NoeudAbstrait::toJson(rapidjson::Document::AllocatorType& allocator){
-	rapidjson::Value noeudValue(rapidjson::kObjectType), positionValue(rapidjson::kArrayType);
-	glm::dvec3 positionArray = getPositionRelatif();
+void NoeudAbstrait::toJson(rapidjson::PrettyWriter<rapidjson::StringBuffer>& writer){
+	writer.StartObject();
+	writer.Key("type");
+	writer.String(obtenirType().c_str());
+	writer.Key("posX");
 
-	noeudValue.AddMember("angleRotation", getAngleRotationRelatif(), allocator);
 
-
-	for (int i = 0; i < positionArray.length(); i++)
-	{
-		positionValue.PushBack(positionArray[i], allocator);
-	}
-	noeudValue.AddMember("position", positionValue, allocator);
-
-	noeudValue.AddMember("facteurEchelle", getfacteurMiseAEchelle(), allocator);
-
-	return noeudValue;
+	
 }
 
 ////////////////////////////////////////////////

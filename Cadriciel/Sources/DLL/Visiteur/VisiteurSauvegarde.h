@@ -15,24 +15,30 @@
 #include "rapidjson\document.h"
 #include "rapidjson\writer.h"
 #include "rapidjson\stringbuffer.h"
+#include "rapidjson\prettywriter.h"
 
 class VisiteurSauvegarde : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurSauvegarde(){ allocator = doc.GetAllocator(); };
+	VisiteurSauvegarde();
 
 	/// Destructeur.
 	virtual ~VisiteurSauvegarde(){};
 
 	/// Sauvegarde en JSON de l'arbre de rendu.
 	virtual void visiter(ArbreRendu* noeud);
-	/// Creation de poteau sur la table.
+	/// Sauvegarde en JSON d'un NoeudTable.
 	virtual void visiter(NoeudTable* noeud);
-	void visiterEnfants(NoeudComposite* noeud);
+	/// Sauvegarde en JSON d'un NoeudPoteau.
+	virtual void visiter(NoeudPoteau* noeud);
+	
 private:
 	rapidjson::Document doc;
-	rapidjson::Document::AllocatorType& allocator;
+	rapidjson::Document::AllocatorType& allocator{doc.GetAllocator()};
+	rapidjson::StringBuffer buffer;
+	shared_ptr<rapidjson::PrettyWriter<rapidjson::StringBuffer>> writer;
+	void visiterEnfants(NoeudComposite* noeud);
 	
 };
 
