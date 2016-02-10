@@ -68,6 +68,11 @@ void NoeudMur::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
+//	glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);
+	//glClearColor(0, 0, 0, 0);
+	
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	if (estSelectionne())
 	{
 		glColor4f(1.0, 0.0, 0.0, 1.0);
@@ -77,6 +82,13 @@ void NoeudMur::afficherConcret() const
 		glColor4f(0.0, 1.0, 0.0, 1.0);
 	}
 
+	//glEnable(GL_BLEND);
+	//glDepthMask(GL_FALSE);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	if (enCreation_)
+		glColor4f(0.0, 0.0, 1.0, 0.5);
+
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
 	glScaled(facteurMiseAEchelle_, 1, 1);
@@ -84,6 +96,8 @@ void NoeudMur::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
+	//glDepthMask(GL_TRUE);
+	//glDisable(GL_BLEND);
 	// Restauration de la matrice.
 	glPopMatrix();
 }

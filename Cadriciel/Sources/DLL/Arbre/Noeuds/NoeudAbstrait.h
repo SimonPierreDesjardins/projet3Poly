@@ -153,7 +153,13 @@ public:
 
 	virtual modele::Modele3D const* getModele();
 
+	virtual bool obtenirEnCreation() { return enCreation_; };
+	virtual void assignerEnCreation(bool enCreation) { enCreation_ = enCreation; };
+
 protected:
+	///Si l'objet est en train de se faire créer
+	bool enCreation_		{ false };
+
 	/// Type du noeud.
 	std::string				type_;
 
