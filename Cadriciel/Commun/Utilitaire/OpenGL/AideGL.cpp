@@ -204,6 +204,7 @@ namespace aidegl {
 
 		// On veut que le rectangle soit immédiatement visible.
 		glFlush();
+
 	}
 
 

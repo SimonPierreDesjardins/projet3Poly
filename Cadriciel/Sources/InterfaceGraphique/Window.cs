@@ -199,7 +199,7 @@ namespace InterfaceGraphique
 
         private void outilsZoom__Click(object sender, EventArgs e)
         {
-            //FonctionsNatives.assignerEtat(Etat.ZOOM);
+            FonctionsNatives.assignerEtat(Etat.ZOOM);
         }
 
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
@@ -293,6 +293,11 @@ namespace InterfaceGraphique
                 FonctionsNatives.assignerFacteurGrandeur(Convert.ToDouble(textboxDimension_.Text));
             }
         }
+
+        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ZOOM);
+        }
     }
 
     enum Etat
@@ -305,10 +310,8 @@ namespace InterfaceGraphique
         CREATION_POTEAU,
         CREATION_MUR,
         CREATION_LIGNE_NOIRE,
-        MENU_PRINCIPALE,
-        SIMULATION,
-        TEST
-    }
+        ZOOM
+    };
 
     enum Mode
     {

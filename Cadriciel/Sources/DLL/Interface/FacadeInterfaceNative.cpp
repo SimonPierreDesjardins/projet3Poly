@@ -86,6 +86,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl dessinerOpenGL()
 	{
+		
 		// Affiche la scène.
 		FacadeModele::obtenirInstance()->afficher();
 
@@ -335,6 +336,7 @@ extern "C"
 				case VK_RMENU:
 				case VK_LMENU:
 					std::cout << "La touche alt est appuyee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
 					break;
 
 				case VK_CONTROL:
@@ -404,6 +406,13 @@ extern "C"
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
 					break;
 
+				case VK_MENU:
+				case VK_RMENU:
+				case VK_LMENU:
+					std::cout << "La touche alt est relachee" << std::endl;
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
+					break;
+
 				default:
 					break;
 			}
@@ -412,27 +421,27 @@ extern "C"
 		switch (msg)
 		{
 		case WM_LBUTTONDOWN:
-			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_LBUTTONUP:
-			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_RBUTTONDOWN:
-			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			FacadeModele::obtenirInstance()->obtenirMode()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_RBUTTONUP:
-			FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			FacadeModele::obtenirInstance()->obtenirMode()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_MOUSEMOVE:
-			FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			FacadeModele::obtenirInstance()->obtenirMode()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_MOUSEWHEEL:
-			FacadeModele::obtenirInstance()->obtenirEtat()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			FacadeModele::obtenirInstance()->obtenirMode()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
 			break;
 
 		//case WM_SETCURSOR:

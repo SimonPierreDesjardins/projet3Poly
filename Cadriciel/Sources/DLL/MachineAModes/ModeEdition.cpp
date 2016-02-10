@@ -80,7 +80,7 @@ void ModeEdition::gererToucheT()
 
 void ModeEdition::gererToucheZ()
 {
-	//FacadeModele::obtenirInstance()->assignerEtat(ZOOM);
+	FacadeModele::obtenirInstance()->assignerEtat(ZOOM);
 }
 
 void ModeEdition::gererToucheCTRLavecS()
@@ -111,25 +111,25 @@ void ModeEdition::gererTouche2()
 void ModeEdition::gererFlecheGauche()
 {
 	std::cout << "La fleche de gauche est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
 }
 
 void ModeEdition::gererFlecheBas()
 {
 	std::cout << "La fleche du bas est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
 }
 
 void ModeEdition::gererFlecheHaut()
 {
 	std::cout << "La fleche du haut est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
 }
 
 void ModeEdition::gererFlecheDroit()
 {
 	std::cout << "La fleche de droite est appuyee" << std::endl;
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
 }
 
 void ModeEdition::gererToucheControlEnfoncee()
@@ -147,3 +147,48 @@ void ModeEdition::gererToucheSupprimer()
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
 }
 
+void ModeEdition::gererToucheAltEnfoncee() {
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
+}
+
+void ModeEdition::gererToucheAltRelachee(){
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
+}
+
+void  ModeEdition::gererClicDroitEnfonce(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(x,y);
+}
+
+void  ModeEdition::gererClicDroitRelache(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(x,y);;
+}
+
+void  ModeEdition::gererClicGaucheEnfonce(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(x,y);
+}
+
+void  ModeEdition::gererClicGaucheRelache(const int& x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(x,y);
+}
+
+void  ModeEdition::gererMouvementSouris(const int & x, const int& y)
+{
+	FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(x,y);
+}
+
+
+void ModeEdition::gererMoletteSouris(const int & delta){
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
+		;
+	else{
+		if (delta>0)
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
+		else
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+	}
+
+}

@@ -137,7 +137,6 @@ void EtatCreationLigneNoire::gererToucheControlRelachee()
 	toucheCtrlEnfonce_ = false;
 }
 
-
 void EtatCreationLigneNoire::calculerPositionCentreLigne()
 {
 	// Si le vecteur de positions est vide, on sort.
@@ -205,4 +204,3 @@ void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
 		}
 	}
 }
-

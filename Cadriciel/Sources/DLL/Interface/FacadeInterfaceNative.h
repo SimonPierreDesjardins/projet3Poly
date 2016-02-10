@@ -13,6 +13,7 @@
 #include <Windowsx.h>
 
 
+
 extern "C"
 {
 	__declspec(dllexport) void initialiserOpenGL(int * handle);
@@ -28,6 +29,7 @@ extern "C"
 	__declspec(dllexport) void assignerMode(int mode);
 	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+	__declspec(dllexport) bool peutRafraichir();
 
 	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) double obtenirFacteurGrandeur();
