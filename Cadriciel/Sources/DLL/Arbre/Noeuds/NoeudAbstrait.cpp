@@ -13,6 +13,7 @@
 #include "rapidjson\filewritestream.h"
 
 
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudAbstrait::NoeudAbstrait(const std::string& type)
@@ -465,6 +466,13 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 	writer.Double(obtenirAngleRotation());
 	writer.Key("facteurEchelle");
 	writer.Double(obtenirFacteurMiseAEchelle());
+}
+
+void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
+	rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
+	assignerPositionRelative(glm::dvec3(itr++->value.GetDouble(), itr++->value.GetDouble(), itr++->value.GetDouble()));
+	assignerAngleRotation(itr++->value.GetDouble());
+	assignerFacteurMiseAEchelle(itr->value.GetDouble());
 }
 
 ////////////////////////////////////////////////

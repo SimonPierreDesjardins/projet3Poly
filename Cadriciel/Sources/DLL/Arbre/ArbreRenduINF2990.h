@@ -14,10 +14,8 @@
 #include "ArbreRendu.h"
 #include <map>
 #include <string>
+#include "rapidjson\document.h"
 
-namespace rapidjson{
-	class Value;
-}
 class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -63,7 +61,7 @@ public:
    static const std::string NOM_DUPLICATION;
 
 private:
-	void chargerZone(const rapidjson::Value& value);
+	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent);
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

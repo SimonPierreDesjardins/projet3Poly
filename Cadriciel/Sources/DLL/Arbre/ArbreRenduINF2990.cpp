@@ -12,7 +12,7 @@
 #include "EtatOpenGL.h"
 #include "NoeudTypes.h"
 #include "VisiteurTypes.h"
-#include "rapidjson\document.h"
+
 #include "rapidjson\filereadstream.h"
 
 /// La chaîne représentant le type des araignées.
@@ -112,6 +112,7 @@ void ArbreRenduINF2990::initialiser()
 }
 
 void ArbreRenduINF2990::chargerZone(){
+	vider();
 	rapidjson::Document doc;
 	FILE* fp = fopen("./../Zones/map.json", "rb"); // non-Windows use "r"
 	char readBuffer[65536];
@@ -120,19 +121,33 @@ void ArbreRenduINF2990::chargerZone(){
 	doc.ParseStream(is);
 
 	fclose(fp);
-	rapidjson::Value value(doc["table"], doc.GetAllocator());
-	chargerZone(doc["table"]);
-	const string kTypeNames[] =
-	{ "Null", "False", "True", "Object", "Array", "String", "Number" };
-	for (rapidjson::Value::ConstMemberIterator itr = doc["table"].MemberBegin();
-		itr != doc.MemberEnd(); ++itr)
+
+	shared_ptr<NoeudAbstrait> noeudTable = { creerNoeud(NOM_TABLE) };
+	ajouter(noeudTable);
+
+	const rapidjson::Value& enfantsTable = doc["table"]["noeudsEnfants"];
+	for (rapidjson::Value::ConstValueIterator itr = enfantsTable.Begin();
+		itr != enfantsTable.End(); ++itr)
 	{
-		std::cout << "value name : " << itr->name.GetString() << " is " << kTypeNames[itr->value.GetType()] << std::endl;
+		chargerZone(itr, noeudTable);
 	}
 }
 
-void ArbreRenduINF2990::chargerZone(const rapidjson::Value& value){
+void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent){
+	std::cout << noeudJSON->FindMember("type")->value.GetString() << std::endl;
+	shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
+	noeud->fromJson(noeudJSON);
+	parent->ajouter(noeud);
+	
+	if (!noeudJSON->HasMember("noeudsEnfants"))
+		return;
 
+	const rapidjson::Value& enfants = noeudJSON->FindMember("noeudsEnfants")->value;
+	for (rapidjson::Value::ConstValueIterator itr = enfants.Begin();
+		itr != enfants.End(); ++itr)
+	{
+		chargerZone(itr, noeud);
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

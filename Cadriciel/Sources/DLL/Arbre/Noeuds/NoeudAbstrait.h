@@ -18,6 +18,7 @@
 
 #include "glm\glm.hpp"
 #include "rapidjson\writer.h"
+#include "rapidjson\document.h"
 
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
@@ -166,7 +167,7 @@ public:
 	void setFacteurMiseEchelle(double facteur) { facteurMiseAEchelle_ = facteur; };
 
 	void toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
-	void fromJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
 protected:
 	/// Type du noeud.
