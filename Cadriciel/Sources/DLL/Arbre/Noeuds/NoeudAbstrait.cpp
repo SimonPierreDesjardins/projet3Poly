@@ -466,7 +466,8 @@ void NoeudAbstrait::mettreAJourQuadEnglobantConcret()
 
 }
 
-//TODO: Documentation.
+
+/// Accepter un visiteur
 void NoeudAbstrait::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 

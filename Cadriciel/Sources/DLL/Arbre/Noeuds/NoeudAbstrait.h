@@ -176,6 +176,7 @@ protected:
 	/// Quadrilatère englobant le noeud.
 	utilitaire::QuadEnglobant quadEnglobant_;
 
+	
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
 
@@ -192,7 +193,7 @@ protected:
 	bool					enregistrable_{ true };
 
 	/// Pointeur vers le parent.
-	NoeudAbstrait* parent_;
+	NoeudAbstrait*			parent_;
 
 	/// Boite englobante du modele.
 	utilitaire::BoiteEnglobante boiteEnglobanteModele_;

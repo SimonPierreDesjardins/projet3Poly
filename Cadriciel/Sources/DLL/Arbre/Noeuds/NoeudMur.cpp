@@ -32,7 +32,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudMur::NoeudMur(const std::string& typeNoeud)
-: NoeudAbstrait{ typeNoeud }
+	: NoeudAbstrait{ typeNoeud }
 {
 	angleRotation_ = 0;
 	facteurMiseAEchelle_ = 1;
@@ -64,8 +64,6 @@ NoeudMur::~NoeudMur()
 void NoeudMur::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
-//	NoeudComposite::afficherConcret();
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	glDisable(GL_COLOR_MATERIAL);
@@ -102,6 +100,7 @@ void NoeudMur::mettreAJourQuadEnglobantConcret()
 		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
 	}
 }
+
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

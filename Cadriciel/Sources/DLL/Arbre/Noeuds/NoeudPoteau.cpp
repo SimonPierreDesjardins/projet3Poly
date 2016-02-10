@@ -94,8 +94,9 @@ void NoeudPoteau::mettreAJourQuadEnglobantConcret()
 		quadEnglobant_.coins[i] *= facteurMiseAEchelle_;
 		quadEnglobant_.coins[i] += positionRelative_;
 		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
-	}	
+	}
 }
+
 
 void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
