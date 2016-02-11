@@ -8,7 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "EtatCreationLigneNoire.h"
+#include "EtatCreationLigne.h"
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
@@ -16,13 +16,12 @@
 
 #include <iostream> 
 
-EtatCreationLigneNoire::EtatCreationLigneNoire()
+EtatCreationLigne::EtatCreationLigne()
 {
-	std::cout << "Creation de ligne" << std::endl;
-	visiteur_ = std::make_unique<VisiteurCreationLigne>();
+	visiteurCreationLigne_ = std::make_unique<VisiteurCreationLigne>();
 }
 
-EtatCreationLigneNoire::~EtatCreationLigneNoire()
+EtatCreationLigne::~EtatCreationLigne()
 {
 	// Effacer la ligne si on change d'outil lors d'une création.
 	if (enCreation_ && ligne_ != nullptr && segment_ != nullptr)
@@ -36,11 +35,11 @@ EtatCreationLigneNoire::~EtatCreationLigneNoire()
 	assignerSymbolePointeur(true);
 }
 
-void EtatCreationLigneNoire::gererClicGaucheEnfonce(const int& x, const int& y)
+void EtatCreationLigne::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 }
 
-void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
+void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
 	if (!curseurEstSurTable_) return;
@@ -59,8 +58,8 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	{
 		enCreation_ = true;
 		//std::cout << "Premier clic position: " << positionVirtuelle[0] << " : " << positionVirtuelle[1] << std::endl;
-		arbre->accepterVisiteur(visiteur_.get());
-		ligne_ = visiteur_->obtenirReferenceNoeud();
+		arbre->accepterVisiteur(visiteurCreationLigne_.get());
+		ligne_ = visiteurCreationLigne_->obtenirReferenceNoeud();
 
 		std::shared_ptr<NoeudAbstrait> nouveauNoeud  = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 		segment_ = nouveauNoeud.get();
@@ -86,7 +85,7 @@ void EtatCreationLigneNoire::gererClicGaucheRelache(const int& x, const int& y)
 	}
 }
 
-void EtatCreationLigneNoire::gererToucheEchappe()
+void EtatCreationLigne::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
@@ -98,7 +97,7 @@ void EtatCreationLigneNoire::gererToucheEchappe()
 	}
 }
 
-void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
+void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
 	glm::dvec3 positionVirtuelle;
@@ -124,7 +123,7 @@ void EtatCreationLigneNoire::gererMouvementSouris(const int& x, const int& y)
 	}
 }
 
-void EtatCreationLigneNoire::gererToucheControlEnfoncee()
+void EtatCreationLigne::gererToucheControlEnfoncee()
 {
 	if (!toucheCtrlEnfonce_)
 	{
@@ -132,12 +131,12 @@ void EtatCreationLigneNoire::gererToucheControlEnfoncee()
 	}
 }
 
-void EtatCreationLigneNoire::gererToucheControlRelachee()
+void EtatCreationLigne::gererToucheControlRelachee()
 {
 	toucheCtrlEnfonce_ = false;
 }
 
-void EtatCreationLigneNoire::calculerPositionCentreLigne()
+void EtatCreationLigne::calculerPositionCentreLigne()
 {
 	// Si le vecteur de positions est vide, on sort.
 	if (positionsClic_.empty()) return;
@@ -184,7 +183,7 @@ void EtatCreationLigneNoire::calculerPositionCentreLigne()
 	//std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
 }
 
-void EtatCreationLigneNoire::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
 

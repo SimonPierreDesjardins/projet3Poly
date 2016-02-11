@@ -20,7 +20,7 @@
 EtatCreationMur::EtatCreationMur()
 {
 	std::cout << "Creation de mur" << std::endl;
-	visiteur_ = std::make_unique<VisiteurCreationMur>();
+	visiteurCreationMur_ = std::make_unique<VisiteurCreationMur>();
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -41,9 +41,9 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 	{
 		enCreation_ = true;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
-		visiteur_->assignerPositionRelative(positionPremierClic_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-		mur_ = visiteur_.get()->obtenirReferenceNoeud();
+		visiteurCreationMur_->assignerPositionRelative(positionPremierClic_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationMur_.get());
+		mur_ = visiteurCreationMur_.get()->obtenirReferenceNoeud();
 	}
 	//Deuxieme clic
 	else

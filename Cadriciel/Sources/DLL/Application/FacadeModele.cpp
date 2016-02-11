@@ -421,7 +421,7 @@ void FacadeModele::assignerEtat(Etat etat)
 
 			case CREATION_LIGNE_NOIRE :
 				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatCreationLigneNoire>();
+				etat_ = std::make_unique<EtatCreationLigne>();
 				break;
 			
 			case ZOOM:

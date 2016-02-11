@@ -31,9 +31,10 @@ public:
 	void gererToucheControlRelachee();
 
 private : 
+	std::unique_ptr<VisiteurSelection> visiteurSelection_;
+
 	int xEnfonce_;
 	int yEnfonce_;
-	std::unique_ptr<VisiteurSelection> visiteurSelection_;
 };
 
 #endif

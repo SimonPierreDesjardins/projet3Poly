@@ -150,7 +150,7 @@
     <ClCompile Include="Arbre\Noeuds\NoeudComposite.cpp" />
     <ClCompile Include="Interface\FacadeInterfaceNative.cpp" />
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp" />
-    <ClCompile Include="MachineAEtats\EtatCreationLigneNoire.cpp" />
+    <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationMur.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationPoteau.cpp" />
     <ClCompile Include="MachineAEtats\EtatDeplacement.cpp" />
@@ -199,7 +199,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudComposite.h" />
     <ClInclude Include="Interface\FacadeInterfaceNative.h" />
     <ClInclude Include="MachineAEtats\EtatAbstrait.h" />
-    <ClInclude Include="MachineAEtats\EtatCreationLigneNoire.h" />
+    <ClInclude Include="MachineAEtats\EtatCreationLigne.h" />
     <ClInclude Include="MachineAEtats\EtatCreationMur.h" />
     <ClInclude Include="MachineAEtats\EtatCreationPoteau.h" />
     <ClInclude Include="MachineAEtats\EtatDeplacement.h" />

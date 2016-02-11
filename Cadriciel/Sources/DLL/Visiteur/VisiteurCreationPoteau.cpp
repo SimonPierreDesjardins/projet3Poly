@@ -39,8 +39,3 @@ void VisiteurCreationPoteau::visiter(NoeudTable* noeud)
 	nouveauNoeud->mettreAJourQuadEnglobant();
 	noeud->ajouter(nouveauNoeud);
 }
-
-void VisiteurCreationPoteau::visiter(NoeudPoteau* noeud)
-{
-
-}

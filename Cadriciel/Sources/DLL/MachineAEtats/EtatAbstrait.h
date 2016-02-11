@@ -56,7 +56,7 @@ public:
 	virtual void gererToucheAltRelachee();
 
 protected:
-	std::unique_ptr<VisiteurAbstrait> visiteur_;
+	virtual void reinitialiser();
 
 	bool toucheCtrlEnfonce_{ false };
 	bool curseurEstSurTable_{ false };
@@ -67,8 +67,6 @@ protected:
 
 	int ancienX_;
 	int ancienY_;
-
-	virtual void reinitialiser();
 };
 
 #endif /// ETAT_ABSTRAIT_H

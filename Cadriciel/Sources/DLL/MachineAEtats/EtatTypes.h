@@ -11,7 +11,7 @@
 #ifndef ETAT_TYPES_H
 #define ETAT_TYPES_H
 
-#include "EtatCreationLigneNoire.h"
+#include "EtatCreationLigne.h"
 #include "EtatCreationMur.h"
 #include "EtatCreationPoteau.h"
 #include "EtatDeplacement.h"

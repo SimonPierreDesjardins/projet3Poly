@@ -17,7 +17,6 @@
 
 VisiteurCreationLigne::VisiteurCreationLigne()
 {
-
 }
 
 VisiteurCreationLigne::~VisiteurCreationLigne()
