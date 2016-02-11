@@ -17,6 +17,7 @@ VisiteurVerificationObjets::~VisiteurVerificationObjets()
 
 void VisiteurVerificationObjets::visiter(ArbreRendu* noeud)
 {
+	noeud->mettreAJourQuadEnglobant();
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 
@@ -24,15 +25,25 @@ void VisiteurVerificationObjets::visiter(ArbreRendu* noeud)
 void VisiteurVerificationObjets::visiter(NoeudTable* noeud)
 {
 	objetsDansZoneSimulation_ = true;
+	NoeudAbstrait* enfant = nullptr;
+	for (int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
+	{
+		enfant = noeud->chercher(i);
+		enfant->accepterVisiteur(this);
+	}
+}
+
+void VisiteurVerificationObjets::visiter(NoeudDuplication* noeud)
+{
 	for (int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
 
+
 void VisiteurVerificationObjets::visiter(NoeudPoteau* noeud)
 {
-	noeud->mettreAJourQuadEnglobant();
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
@@ -41,7 +52,6 @@ void VisiteurVerificationObjets::visiter(NoeudPoteau* noeud)
 
 void VisiteurVerificationObjets::visiter(NoeudMur* noeud)
 {
-	noeud->mettreAJourQuadEnglobant();
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
@@ -51,7 +61,6 @@ void VisiteurVerificationObjets::visiter(NoeudMur* noeud)
 
 void VisiteurVerificationObjets::visiter(NoeudLigneNoire* noeud)
 {
-	noeud->mettreAJourQuadEnglobant();
 	for (int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{
 		noeud->chercher(i)->accepterVisiteur(this);
@@ -61,7 +70,6 @@ void VisiteurVerificationObjets::visiter(NoeudLigneNoire* noeud)
 
 void VisiteurVerificationObjets::visiter(NoeudSegment* noeud)
 {
-	//noeud->mettreAJourQuadEnglobant();
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);

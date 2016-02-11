@@ -21,7 +21,7 @@
 #include "EtatSelection.h"
 #include "EtatLoupe.h"
 
-#endif /// Header pour les états
+#endif /// ETAT_TYPES_H 
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -85,14 +85,14 @@ void NoeudPoteau::afficherConcret() const
 	glPopMatrix();
 }
 
-void NoeudPoteau::mettreAJourQuadEnglobantConcret()
+void NoeudPoteau::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 	// Mettre à jour les coins avec le facteur de mise à échelle.
 	std::cout << "Mise à jour Poteau:" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		quadEnglobant_.coins[i] *= facteurMiseAEchelle_;
-		quadEnglobant_.coins[i] += positionRelative_;
+		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
 		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
 	}
 }

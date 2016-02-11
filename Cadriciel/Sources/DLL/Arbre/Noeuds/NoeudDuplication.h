@@ -27,6 +27,7 @@ public:
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	inline std::shared_ptr<NoeudAbstrait> obtenirDuplication(int indice);
+//	virtual void mettreAJourQuadEnglobantConcret();
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:

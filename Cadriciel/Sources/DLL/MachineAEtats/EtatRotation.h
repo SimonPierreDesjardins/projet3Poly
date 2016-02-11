@@ -27,11 +27,11 @@ protected:
 	virtual void reinitialiser();
 
 private:
-	std::unique_ptr<VisiteurVerificationObjets> visiteurVerificationObjets_;
-	std::unique_ptr<VisiteurRotation> visiteurRotation_;
+	std::unique_ptr<VisiteurVerificationObjets> visiteurVerificationObjets_{ nullptr };
+	std::unique_ptr<VisiteurRotation> visiteurRotation_{ nullptr };
 
-	int dernierePositionY_;
-	int positionInitialeY_;
+	int dernierePositionY_{ 0 };
+	int positionInitialeY_{ 0 };
 };
 
 #endif

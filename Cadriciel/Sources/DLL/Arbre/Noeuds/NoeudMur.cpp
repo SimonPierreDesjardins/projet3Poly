@@ -86,7 +86,7 @@ void NoeudMur::afficherConcret() const
 }
 
 
-void NoeudMur::mettreAJourQuadEnglobantConcret()
+void NoeudMur::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
 	glm::dvec3 tmp;
@@ -96,7 +96,7 @@ void NoeudMur::mettreAJourQuadEnglobantConcret()
 		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
 		tmp = quadEnglobant_.coins[i];
 		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
-		quadEnglobant_.coins[i] += positionRelative_;
+		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
 		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
 	}
 }

@@ -40,7 +40,7 @@ void VisiteurDuplication::visiter(NoeudTable* noeud)
 		enfant = noeud->chercher(i);
 		if (enfant->estSelectionne())
 		{
-			noeud->chercher(i)->accepterVisiteur(this);
+			enfant->accepterVisiteur(this);
 		}
 	}
 }
@@ -51,7 +51,7 @@ void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 	shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
 	
 	nouveauNoeud->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
-	
+	// Assigner la position à la table dans la duplication si il y a plus qu'un noeud.
 	if (nNoeuds_ > 1)
 	{
 		nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative());

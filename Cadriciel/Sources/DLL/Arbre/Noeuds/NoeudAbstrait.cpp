@@ -441,6 +441,12 @@ void NoeudAbstrait::animer(float dt)
 //TODO: Documentation.
 void NoeudAbstrait::mettreAJourQuadEnglobant()
 {
+	mettreAJourQuadEnglobant(positionRelative_);
+}
+
+//TODO: Documentation.
+void NoeudAbstrait::mettreAJourQuadEnglobant(const glm::dvec3& positionRelative)
+{
 	// Le coin du quad en haut à droite.
 	quadEnglobant_.coins[0].x = boiteEnglobanteModele_.coinMax.x;
 	quadEnglobant_.coins[0].y = boiteEnglobanteModele_.coinMax.y;
@@ -457,14 +463,17 @@ void NoeudAbstrait::mettreAJourQuadEnglobant()
 	quadEnglobant_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
 	quadEnglobant_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
 
-	mettreAJourQuadEnglobantConcret();
+	mettreAJourQuadEnglobantConcret(positionRelative);
 }
 
+
+
 //TODO: Documentation.
-void NoeudAbstrait::mettreAJourQuadEnglobantConcret()
+void NoeudAbstrait::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 
 }
+
 
 
 /// Accepter un visiteur
