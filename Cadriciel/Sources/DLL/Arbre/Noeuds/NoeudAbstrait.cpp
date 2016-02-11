@@ -11,6 +11,7 @@
 #include "Utilitaire.h"
 #include <iterator>
 #include "rapidjson\filewritestream.h"
+#include <iostream>
 
 
 
@@ -457,11 +458,11 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 	writer.Key("type");
 	writer.String(obtenirType().c_str());
 	writer.Key("posX");
-	writer.Double(obtenirPositionRelative().x);
+	writer.Double(getPositionRelatif().x);
 	writer.Key("posY");
-	writer.Double(obtenirPositionRelative().y);
+	writer.Double(getPositionRelatif().y);
 	writer.Key("posZ");
-	writer.Double(obtenirPositionRelative().z);
+	writer.Double(getPositionRelatif().z);
 	writer.Key("angleRotation");
 	writer.Double(obtenirAngleRotation());
 	writer.Key("facteurEchelle");
@@ -469,8 +470,18 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 }
 
 void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
+	for (rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
+		itr != (noeudJSON->HasMember("noeudsEnfants")?noeudJSON->MemberEnd() - 1:noeudJSON->MemberEnd()); itr++){
+		std::cout << itr->name.GetString() << " : " << itr->value.GetDouble() << std::endl;
+	}
 	rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
-	assignerPositionRelative(glm::dvec3(itr++->value.GetDouble(), itr++->value.GetDouble(), itr++->value.GetDouble()));
+	double x = itr->value.GetDouble();
+	itr++;
+	double y = itr->value.GetDouble();
+	itr++;
+	double z = itr->value.GetDouble();
+	itr++;
+	positionRelative_ = glm::dvec3(x,y,z);
 	assignerAngleRotation(itr++->value.GetDouble());
 	assignerFacteurMiseAEchelle(itr->value.GetDouble());
 }

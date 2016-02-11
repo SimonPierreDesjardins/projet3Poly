@@ -4,6 +4,7 @@
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
 #include "rapidjson\filewritestream.h"
+#include "rapidjson\prettywriter.h"
 
 VisiteurSauvegarde::VisiteurSauvegarde()
 {
@@ -22,7 +23,7 @@ void VisiteurSauvegarde::visiter(ArbreRendu* noeud)
 	FILE* fp = fopen("./../Zones/map.json", "wb"); // non-Windows use "w"
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
-	writer = new rapidjson::Writer<rapidjson::FileWriteStream>(os);
+	writer = new rapidjson::PrettyWriter<rapidjson::FileWriteStream>(os);
 	writer->StartObject();
 	noeud->chercher(0)->accepterVisiteur(this);
 	writer->EndObject();

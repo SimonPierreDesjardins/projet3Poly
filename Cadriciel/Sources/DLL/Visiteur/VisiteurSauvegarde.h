@@ -18,6 +18,7 @@
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
 #include "rapidjson\writer.h"
+#include "rapidjson\prettywriter.h"
 
 namespace rapidjson{
 	class FileWriteStream;
@@ -48,7 +49,7 @@ public:
 	virtual void visiter(NoeudDuplication* noeud);
 	
 private:
-	rapidjson::Writer<rapidjson::FileWriteStream>* writer ;
+	rapidjson::PrettyWriter<rapidjson::FileWriteStream>* writer ;
 	void visiterEnfants(NoeudComposite* noeud);
 	
 };

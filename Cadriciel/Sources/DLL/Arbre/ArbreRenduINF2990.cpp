@@ -124,6 +124,8 @@ void ArbreRenduINF2990::chargerZone(){
 
 	shared_ptr<NoeudAbstrait> noeudTable = { creerNoeud(NOM_TABLE) };
 	ajouter(noeudTable);
+	if (!doc["table"].HasMember("noeudsEnfants"))
+		return;
 
 	const rapidjson::Value& enfantsTable = doc["table"]["noeudsEnfants"];
 	for (rapidjson::Value::ConstValueIterator itr = enfantsTable.Begin();
