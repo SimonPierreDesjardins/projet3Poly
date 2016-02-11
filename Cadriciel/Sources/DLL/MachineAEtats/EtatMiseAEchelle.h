@@ -22,8 +22,8 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
 private:
-	int dernierePositionY_;
-	int positionInitialeY_;
+	int dernierePositionY_{ 0 };
+	int positionInitialeY_{ 0 };
 };
 
 #endif

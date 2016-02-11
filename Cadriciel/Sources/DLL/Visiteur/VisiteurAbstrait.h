@@ -64,13 +64,13 @@ public:
 	virtual void visiter(NoeudDuplication* noeud);
 
 protected:
-	glm::dvec3 positionRelative_;
-	double angleRotation_;
-	double facteurMiseAEchelle_;
+	glm::dvec3 positionRelative_{ glm::dvec3() };
+	double angleRotation_{ 0.0 };
+	double facteurMiseAEchelle_{ 0.0 };
 	bool estAffiche_{ false };
 
-	modele::Modele3D* referenceModele_;
-	NoeudAbstrait* referenceNoeud_;
+	modele::Modele3D* referenceModele_{ nullptr };
+	NoeudAbstrait* referenceNoeud_{ nullptr };
 };
 
 

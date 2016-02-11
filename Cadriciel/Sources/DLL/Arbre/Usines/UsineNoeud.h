@@ -41,7 +41,7 @@ protected:
 	inline const std::string& obtenirNom() const;
 private:
 	/// Le nom associé à l'usine
-	std::string nom_;
+	std::string nom_{ "" };
 };
 
 

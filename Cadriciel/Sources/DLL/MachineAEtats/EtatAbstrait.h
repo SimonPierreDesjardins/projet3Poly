@@ -56,7 +56,7 @@ public:
 	virtual void gererToucheAltRelachee();
 
 protected:
-	std::unique_ptr<VisiteurAbstrait> visiteur_;
+	std::unique_ptr<VisiteurAbstrait> visiteur_{ nullptr };
 
 	bool estClickDrag();
 	
@@ -67,10 +67,8 @@ protected:
 	bool clicGaucheEnfonce_{false};
 	bool clicDroitEnfonce_{false};
 
-	int ancienX_;
-	int ancienY_;
-	glm::ivec2 anchor;
-	glm::ivec2 currentPosition;
+	glm::ivec2 anchor{glm::ivec2()};
+	glm::ivec2 currentPosition{ glm::ivec2() };
 };
 
 #endif /// ETAT_ABSTRAIT_H
