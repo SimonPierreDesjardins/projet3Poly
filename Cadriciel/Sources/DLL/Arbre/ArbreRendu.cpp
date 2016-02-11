@@ -138,6 +138,14 @@ void ArbreRendu::accepterVisiteur(VisiteurAbstrait* visiteur)
 	visiteur->visiter(this);
 }
 
+void ArbreRendu::assignerCheminFichierZone(std::string chemin){
+	cheminFichierZone = chemin.c_str();
+}
+
+const char* ArbreRendu::obtenirCheminFichierZone(){
+	return cheminFichierZone;
+}
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

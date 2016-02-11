@@ -12,7 +12,7 @@
 #include "EtatOpenGL.h"
 #include "NoeudTypes.h"
 #include "VisiteurTypes.h"
-
+#include <stdio.h>
 #include "rapidjson\filereadstream.h"
 
 /// La chaîne représentant le type des araignées.
@@ -102,7 +102,10 @@ void ArbreRenduINF2990::initialiser()
 void ArbreRenduINF2990::chargerZone(){
 	vider();
 	rapidjson::Document doc;
-	FILE* fp = fopen("./../Zones/map.json", "rb"); // non-Windows use "r"
+	FILE* fp;
+	errno_t err;
+	if (err = fopen_s(&fp, cheminFichierZone, "rb") != 0)
+		return;
 	char readBuffer[65536];
 	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 
@@ -139,6 +142,8 @@ void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJS
 		chargerZone(itr, noeud);
 	}
 }
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

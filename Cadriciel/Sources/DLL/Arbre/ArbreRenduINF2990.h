@@ -60,8 +60,11 @@ public:
    /// La chaîne représentant le type des duplications. 
    static const std::string NOM_DUPLICATION;
 
+   
+
 private:
 	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent);
+   
    /// La chaîne représentant le type du point de départ. 
    static const std::string NOM_DEPART;
 };

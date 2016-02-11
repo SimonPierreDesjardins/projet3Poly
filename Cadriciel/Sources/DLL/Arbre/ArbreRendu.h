@@ -67,6 +67,10 @@ public:
 	/// Accepter un visiteur.
 	void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+	void assignerCheminFichierZone(std::string chemin);
+
+	const char* obtenirCheminFichierZone();
+
 
 private:
    /// Définition du type pour l'association du nom d'un type vers l'usine
@@ -74,6 +78,8 @@ private:
 	using RegistreUsines = std::map<std::string, std::unique_ptr<const UsineAbstraite>>;
    /// Association du nom d'un type vers l'usine correspondante.
    RegistreUsines usines_;
+
+   const char* cheminFichierZone;
 
 };
 

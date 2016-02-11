@@ -3,6 +3,7 @@
 #include "ArbreRendu.h"
 #include "rapidjson\filewritestream.h"
 #include "NoeudComposite.h"
+#include "ArbreRenduINF2990.h"
 VisiteurSauvegarde::VisiteurSauvegarde()
 {
 	
@@ -17,7 +18,10 @@ VisiteurSauvegarde::~VisiteurSauvegarde()
 
 void VisiteurSauvegarde::visiter(ArbreRendu* noeud)
 {
-	FILE* fp = fopen("./../Zones/map.json", "wb"); // non-Windows use "w"
+	FILE* fp;
+	errno_t err;
+	if (err = fopen_s(&fp, noeud->obtenirCheminFichierZone(), "rb") != 0)
+		return;
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 	writer = new rapidjson::Writer<rapidjson::FileWriteStream>(os);

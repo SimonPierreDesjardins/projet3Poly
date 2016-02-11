@@ -358,7 +358,11 @@ namespace InterfaceGraphique
 
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
         {
-            Process.Start("explorer.exe", "-p");
+            System.Windows.Forms.OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                FonctionsNatives.assignerCheminFichierZone(FileName);
+            }
         }
 
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
@@ -494,5 +498,8 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void nouvelleTable();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerCheminFichierZone(FileName);
     }
 }
