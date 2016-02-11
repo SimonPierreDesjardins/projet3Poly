@@ -65,7 +65,11 @@ public:
    // Obtenir l'etat courant.
    inline ModeAbstrait* obtenirMode();
 
+   //Obtenir le nombre d'objet sélectionné
    int obtenirNombreSelection();
+   //Décrit si la caméra peut fonctionner ou non
+   bool obtenirAutorisationInput(){ return autorisationInput_; };
+   void assignerAutorisationInput(bool autorisation) { autorisationInput_ = autorisation; };
 
    //Obtient des informations sur le noeud
    double obtenirAngleRotation();
@@ -95,8 +99,9 @@ public:
 
 private:
    /// Constructeur par défaut.
-   FacadeModele() = default;
+	FacadeModele() = default;
 
+	bool autorisationInput_{ true };
    /// Constructeur copie désactivé.
    FacadeModele(const FacadeModele&) = delete;
    /// Opérateur d'assignation désactivé.

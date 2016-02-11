@@ -327,6 +327,7 @@ namespace InterfaceGraphique
 
         private void viewPort__MouseClick(object sender, MouseEventArgs e)
         {
+            FonctionsNatives.assignerAutorisationInput(true);
             if (FonctionsNatives.obtenirEtat() == 0)
             {
                 if (FonctionsNatives.obtenirNombreSelection() == 1)
@@ -335,6 +336,7 @@ namespace InterfaceGraphique
                     textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
                     textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
                     textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                    viewPort_.Focus();
                     panneauOperation_.Visible = true;
                 }
                 else
@@ -379,6 +381,26 @@ namespace InterfaceGraphique
                         panneauOperation_.Visible = false;
                 }
             }
+        }
+
+        private void textboxDimension__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxRotation__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxPositionX__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxPositionY__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
         }
 
     }
@@ -480,6 +502,12 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void nouvelleTable();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerAutorisationInput(bool autorisation);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool obtenirAutorisationInput();
 
     }
 }
