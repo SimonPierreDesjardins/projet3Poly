@@ -13,6 +13,7 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
+#include "AideGl.h"
 #include "glm\glm.hpp"
 
 
@@ -21,6 +22,7 @@ EtatSelection::EtatSelection()
 {
 	std::cout << "Selection d'un object" << std::endl;
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
+	typeEtat_ = SELECTION;
 }
 
 EtatSelection::~EtatSelection()
@@ -28,39 +30,44 @@ EtatSelection::~EtatSelection()
 
 }
 
-
-void EtatSelection::gererClicGaucheEnfonce(const int& x, const int& y)
-{
-	xEnfonce_ = x;
-	yEnfonce_ = y;
-}
-
 void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 {
-	int deltaX = 0, deltaY = 0;
-	deltaX = x - xEnfonce_;
-	if (deltaX < 0)
-	{
-		deltaX = -deltaX;
-	}
-	deltaY = x - yEnfonce_;
-	if (deltaY < 0)
-	{
-		deltaY = -deltaY;
+	EtatAbstrait::gererClicGaucheRelache(x, y);
+
+	if (dessineRectangle){
+		FacadeModele::obtenirInstance()->continuerAffichage();
+
+		aidegl::terminerRectangleElastique(anchor, glm::ivec2(x, y));
+
+		dessineRectangle = false;
 	}
 
-	int moyenneX = 0, moyenneY = 0;
-	moyenneX = (xEnfonce_ + x) / 2;
-	moyenneY = (yEnfonce_ + y) / 2;
-
-	if (deltaX < 3)
-	{
-		gererClicGauche(moyenneX, moyenneY);
-	}
-	else
+	if (estClickDrag())
 	{
 		gererDragGauche(xEnfonce_, yEnfonce_, x, y);
 	}
+	else
+	{
+		gererClicGauche(x, y);
+	}
+}
+
+void EtatSelection::gererMouvementSouris(const int & x, const int& y){
+
+	if (clicGaucheEnfonce_){
+		if (estClickDrag()){
+			if (dessineRectangle)
+				aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
+			else{
+				aidegl::initialiserRectangleElastique(anchor);
+				// redessiner le rectangle
+				FacadeModele::obtenirInstance()->stopAffichage();
+				dessineRectangle = true;
+			}
+		}
+	}
+	EtatAbstrait::gererMouvementSouris(x, y);
+
 }
 
 

@@ -12,6 +12,8 @@
 #define MODE_EDITION_H
 
 #include "ModeAbstrait.h"
+#include "VisiteurAbstrait.h"
+#include "VisiteurSuppression.h"
 #include <memory>
 #include "glm\glm.hpp"
 
@@ -48,12 +50,29 @@ public:
 	virtual void gererFlecheHaut();
 	virtual void gererFlecheDroit();
 
+	//Gestion de touches modificatrices
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
+	virtual void gererToucheAltEnfoncee();
+	virtual void gererToucheAltRelachee();
+
+	// Gestion de la souris
+	virtual void gererClicDroitEnfonce(const int& x, const int& y);
+	virtual void gererClicDroitRelache(const int& x, const int& y);
+	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
+	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int & x, const int& y);
+	virtual void gererMoletteSouris(const int & delta);
+
+	virtual void gererToucheSupprimer();
 
 	virtual void sauvegarder();
 
 protected:
+	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
+
+	int ancienSourisX_;
+	int ancienSourisY_;
 
 };
 

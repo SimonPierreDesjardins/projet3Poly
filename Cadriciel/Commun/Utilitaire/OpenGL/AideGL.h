@@ -97,7 +97,6 @@ namespace aidegl {
       unsigned char* data, int x, int y, int bpp, int pitch, unsigned int& ID, bool genererTexture=true
       );
 
-
 } // Fin de l'espace de nom aidegl
 
 

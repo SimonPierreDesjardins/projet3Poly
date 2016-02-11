@@ -387,7 +387,8 @@ void NoeudAbstrait::afficher() const
 {
 	if (affiche_) {
 		glPushMatrix();
-		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT);
+		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT | GL_ENABLE_BIT);
+
 
 		// La translation de la position relative		
 		glTranslated(
@@ -419,6 +420,7 @@ void NoeudAbstrait::afficher() const
 ////////////////////////////////////////////////////////////////////////
 void NoeudAbstrait::afficherConcret() const
 {
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -440,6 +442,13 @@ void NoeudAbstrait::animer(float dt)
 {
 }
 
+
+utilitaire::BoiteEnglobante NoeudAbstrait::obtenirBoiteEnglobanteCourante() const
+{
+	return boiteEnglobanteModele_;
+}
+
+
 /// Accepter un visiteur
 void NoeudAbstrait::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
@@ -458,11 +467,11 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 	writer.Key("type");
 	writer.String(obtenirType().c_str());
 	writer.Key("posX");
-	writer.Double(getPositionRelatif().x);
+	writer.Double(obtenirPositionRelative().x);
 	writer.Key("posY");
-	writer.Double(getPositionRelatif().y);
+	writer.Double(obtenirPositionRelative().y);
 	writer.Key("posZ");
-	writer.Double(getPositionRelatif().z);
+	writer.Double(obtenirPositionRelative().z);
 	writer.Key("angleRotation");
 	writer.Double(obtenirAngleRotation());
 	writer.Key("facteurEchelle");

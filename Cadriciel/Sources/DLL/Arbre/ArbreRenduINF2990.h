@@ -57,11 +57,13 @@ public:
    static const std::string NOM_LIGNENOIRE;
    /// La chaîne représentant le type des segments.
    static const std::string NOM_SEGMENT;
-   /// La chaîne représentant le type des des duplications. 
+   /// La chaîne représentant le type des duplications. 
    static const std::string NOM_DUPLICATION;
 
 private:
 	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent);
+   /// La chaîne représentant le type du point de départ. 
+   static const std::string NOM_DEPART;
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

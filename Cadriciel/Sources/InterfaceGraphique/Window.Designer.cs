@@ -42,6 +42,7 @@
             this.modeTestModeEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalMenuEdition = new System.Windows.Forms.ToolStripMenuItem();
             this.editionMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.supprimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outilsMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.selectionMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.deplacementMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
@@ -76,6 +77,8 @@
             this.panneauPositionX_ = new System.Windows.Forms.Label();
             this.panneauDimension_ = new System.Windows.Forms.Label();
             this.panneauRotation_ = new System.Windows.Forms.Label();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
             this.panneauOperation_.SuspendLayout();
@@ -93,6 +96,7 @@
             this.viewPort_.Size = new System.Drawing.Size(623, 402);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
+            this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
             // 
             // bouttonSimulation_
             // 
@@ -176,6 +180,7 @@
             this.nouveauMenuEdition_.Name = "nouveauMenuEdition_";
             this.nouveauMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.nouveauMenuEdition_.Text = "Nouveau";
+            this.nouveauMenuEdition_.Click += new System.EventHandler(this.nouveauMenuEdition__Click);
             // 
             // ouvrirMenuEdition_
             // 
@@ -196,9 +201,12 @@
             this.enregistrerSousMenuEdition_.Name = "enregistrerSousMenuEdition_";
             this.enregistrerSousMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.enregistrerSousMenuEdition_.Text = "Enregistrer Sous";
+            this.enregistrerSousMenuEdition_.Click += new System.EventHandler(this.enregistrerSousMenuEdition__Click);
             // 
             // modeTestModeEdition_
             // 
+            this.modeTestModeEdition_.Enabled = false;
+            this.modeTestModeEdition_.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.modeTestModeEdition_.Name = "modeTestModeEdition_";
             this.modeTestModeEdition_.Size = new System.Drawing.Size(158, 22);
             this.modeTestModeEdition_.Text = "Mode test";
@@ -213,9 +221,18 @@
             // 
             // editionMenuEdition_
             // 
+            this.editionMenuEdition_.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.supprimerToolStripMenuItem});
             this.editionMenuEdition_.Name = "editionMenuEdition_";
             this.editionMenuEdition_.Size = new System.Drawing.Size(56, 20);
             this.editionMenuEdition_.Text = "Édition";
+            // 
+            // supprimerToolStripMenuItem
+            // 
+            this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.supprimerToolStripMenuItem.Text = "Supprimer";
+            this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
             // outilsMenuEdition_
             // 
@@ -225,7 +242,8 @@
             this.rotationMenuEdition_,
             this.miseAEchelleMenuEdition_,
             this.duplicationMenuEdition_,
-            this.creationMenuEdition_});
+            this.creationMenuEdition_,
+            this.zoomToolStripMenuItem});
             this.outilsMenuEdition_.Name = "outilsMenuEdition_";
             this.outilsMenuEdition_.Size = new System.Drawing.Size(50, 20);
             this.outilsMenuEdition_.Text = "Outils";
@@ -461,7 +479,6 @@
             this.panneauOperation_.Name = "panneauOperation_";
             this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
             this.panneauOperation_.TabIndex = 8;
-            this.panneauOperation_.VisibleChanged += new System.EventHandler(this.panneauOperation__VisibleChanged);
             // 
             // textBoxPositionY_
             // 
@@ -531,6 +548,13 @@
             this.panneauRotation_.TabIndex = 0;
             this.panneauRotation_.Text = "Angle de rotation";
             // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.zoomToolStripMenuItem.Text = "Zoom";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -550,6 +574,7 @@
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Window_KeyDown);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
@@ -613,6 +638,8 @@
         private System.Windows.Forms.TextBox textBoxPositionX_;
         private System.Windows.Forms.TextBox textBoxRotation_;
         private System.Windows.Forms.TextBox textboxDimension_;
+        private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem supprimerToolStripMenuItem;
     }
 }
 

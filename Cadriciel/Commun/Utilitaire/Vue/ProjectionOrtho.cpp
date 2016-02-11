@@ -11,6 +11,7 @@
 #include "GL/glew.h"
 #include "ProjectionOrtho.h"
 #include <iostream>
+#include <algorithm>
 
 
 namespace vue {
@@ -202,7 +203,42 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::zoomerIn(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
-		// À IMPLANTER.
+		// S'assurer que coin 1 est le coin supérieur droit pour les opérations
+		//dimensions du rectum
+		double w = std::abs(coin2.x - coin1.x);
+		double h = std::abs(coin2.y - coin1.y);
+
+		//dimensions de la fenetre
+		double W = xMaxFenetre_ - xMinFenetre_;
+		double H = yMaxFenetre_ - yMinFenetre_;
+
+		//ratio fenetre
+		double R = W / H;
+		//ratio rectangle
+		double r = w / h;
+		
+		// convertir coin supérieur gauche en position fenetre virtuelle
+		double decalageX = double(std::min(coin1.x, coin2.x)) / xMaxCloture_*W;
+		double decalageY = double(std::min(coin1.y, coin2.y)) / yMaxCloture_*H;
+
+		//Trouver nouvelles dimensions de la fenetre
+		if (R > r){
+			H = h / yMaxCloture_*H;
+			// Deduire W
+			W = R*H;
+		}
+		else{
+			W = w / xMaxCloture_*W;
+			// Deduire H
+			H = W / R;
+		}
+
+		//Appliquer les transformations a la fenetre
+		yMaxFenetre_ -= decalageY;
+		yMinFenetre_ = yMaxFenetre_ - H;
+		
+		xMinFenetre_ += decalageX;
+		xMaxFenetre_ = xMinFenetre_ + W;
 	}
 
 
@@ -223,7 +259,56 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::zoomerOut(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
-		// À IMPLANTER.
+
+		//dimensions du rectum
+		double w = std::abs(coin2.x - coin1.x);
+		double h = std::abs(coin2.y - coin1.y);
+
+		//dimensions de la fenetre
+		double W = (xMaxFenetre_ - xMinFenetre_);
+		double H = (yMaxFenetre_ - yMinFenetre_);
+
+		//ratio fenetre
+		double R = W / H;
+		//ratio rectangle
+		double r = w / h;
+
+		double decalageX = 0.0;
+		double decalageY = 0.0;
+
+		//Trouver nouvelles dimensions de la fenetre
+		if (R > r){
+
+			//Rajuster le décalage en Y pour centrer
+			decalageY += (1 / r - 1 / R)*W / 2;
+
+			//Transformer W
+			W = xMaxCloture_ / w*W;
+			//déduire H par ratio
+			H = W / R;
+
+		}
+		else{
+			
+			//Rajuster le décalage en X pour centrer
+			decalageX += (r - R)*H / 2;
+
+			//Transformer H
+			H = yMaxCloture_/h *H;
+			// Deduire W par ratio
+			W = H*R;
+		}
+
+		// convertir coin1 en position fenetre virtuelle
+		decalageX += double(std::min(coin1.x, coin2.x)) / xMaxCloture_*W;
+		decalageY += double(std::min(coin1.y, coin2.y)) / yMaxCloture_*H;
+
+		//Appliquer les transformations a la fenetre
+		yMaxFenetre_ += decalageY;
+		yMinFenetre_ = yMaxFenetre_ - H;
+
+		xMinFenetre_ -= decalageX;
+		xMaxFenetre_ = xMinFenetre_ + W;
 	}
 
 

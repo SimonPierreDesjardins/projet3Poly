@@ -10,18 +10,18 @@
 #ifndef __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 #define __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
-
 #include "GL/glew.h"
 #include <string>
 #include <memory>
 #include <iterator>
-
+#include "Utilitaire.h"
 #include "glm\glm.hpp"
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
 
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
+
 namespace modele{
 	class Modele3D;
 }
@@ -34,6 +34,7 @@ namespace rapidjson{
 }
 
 class VisiteurAbstrait;
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudAbstrait
 /// @brief Classe de base du patron composite utilisée pour créer l'arbre
@@ -82,6 +83,9 @@ public:
 
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(double facteurDimension);
+
+	/// Obtient la boite englobante courante du noeud.
+	virtual utilitaire::BoiteEnglobante obtenirBoiteEnglobanteCourante() const;
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -157,14 +161,8 @@ public:
 
 	virtual modele::Modele3D const* getModele();
 
-	glm::dvec3 getPositionRelatif() { return positionRelative_; };
-	void setPositionRelatif(double x, double y, double z) { positionRelative_ = { x, y, z }; };
-
-	double getAngleRotationRelatif() { return angleRotation_; };
-	void setAngleRotationRelatif(double angle) { angleRotation_ = angle; };
-
-	double getfacteurMiseAEchelle() { return facteurMiseAEchelle_; };
-	void setFacteurMiseEchelle(double facteur) { facteurMiseAEchelle_ = facteur; };
+	virtual bool obtenirEnCreation() { return enCreation_; };
+	virtual void assignerEnCreation(bool enCreation) { enCreation_ = enCreation; };
 
 	/// convertit un noeud en JSON
 	void toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
@@ -173,6 +171,9 @@ public:
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
 protected:
+	///Si l'objet est en train de se faire créer
+	bool enCreation_		{ false };
+
 	/// Type du noeud.
 	std::string				type_;
 
@@ -185,6 +186,10 @@ protected:
 	/// Angle de rotation sur le plan xy
 	double					angleRotation_{ 0 };
 
+	
+	/// Boite englobante du modele.
+	utilitaire::BoiteEnglobante boiteEnglobanteModele_;
+	
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
 
@@ -478,6 +483,7 @@ inline void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, op
 {
 	modele_ = modele;
 	vbo_ = liste;
+	boiteEnglobanteModele_ = utilitaire::calculerBoiteEnglobante(*modele_);
 }
 #endif // __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 

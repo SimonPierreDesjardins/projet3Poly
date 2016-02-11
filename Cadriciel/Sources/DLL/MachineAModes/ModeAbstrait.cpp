@@ -18,7 +18,7 @@
 
 ModeAbstrait::ModeAbstrait()
 {
-
+	
 }
 
 ModeAbstrait::~ModeAbstrait()
@@ -168,3 +168,26 @@ void ModeAbstrait::gererToucheControlRelachee()
 }
 
 void ModeAbstrait::sauvegarder(){}
+// Method stub de gestion de la souris
+void ModeAbstrait::gererClicDroitEnfonce(const int& x, const int& y){
+}
+
+void ModeAbstrait::gererClicDroitRelache(const int& x, const int& y){
+}
+
+void ModeAbstrait::gererClicGaucheEnfonce(const int& x, const int& y){
+}
+
+void ModeAbstrait::gererClicGaucheRelache(const int& x, const int& y){
+}
+
+void ModeAbstrait::gererMouvementSouris(const int & x, const int& y){
+}
+
+void ModeAbstrait::gererMoletteSouris(const int & delta){
+}
+
+void ModeAbstrait::gererToucheSupprimer()
+{
+
+}

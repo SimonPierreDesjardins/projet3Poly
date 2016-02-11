@@ -67,7 +67,7 @@ void NoeudTable::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	// Affichage du modèle.
-	
+	glColor4f(1, 1, 1, 1);
 	glRotatef(90, 1, 0, 0);
 	glRotatef(90, 0, 1, 0);
 	vbo_->dessiner();

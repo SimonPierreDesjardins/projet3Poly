@@ -19,6 +19,7 @@
 #include "EtatMiseAEchelle.h"
 #include "EtatRotation.h"
 #include "EtatSelection.h"
+#include "EtatLoupe.h"
 
 #endif /// Header pour les états
 

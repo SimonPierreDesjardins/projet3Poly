@@ -65,6 +65,8 @@ public:
    // Obtenir l'etat courant.
    inline ModeAbstrait* obtenirMode();
 
+   int obtenirNombreSelection();
+
    //Obtient des informations sur le noeud
    double obtenirAngleRotation();
    double obtenirFacteurGrandeur();
@@ -89,12 +91,13 @@ public:
 
    /// Anime la scène.
    void animer(float temps);
-
+   void stopAffichage();
+   void continuerAffichage();
 
 private:
    /// Constructeur par défaut.
    FacadeModele() = default;
-
+   bool peutAfficher_{true};
    /// Constructeur copie désactivé.
    FacadeModele(const FacadeModele&) = delete;
    /// Opérateur d'assignation désactivé.

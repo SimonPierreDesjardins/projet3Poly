@@ -28,7 +28,6 @@ void NoeudSegment::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
 	glScaled(facteurMiseAEchelle_, 1, 1);
