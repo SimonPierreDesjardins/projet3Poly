@@ -22,8 +22,8 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
 private:
-	glm::dvec3 dernierePositionVirtuelle_;
-	glm::dvec3 positionVirtuelleInitiale_;
+	glm::dvec3 dernierePositionVirtuelle_{ glm::dvec3() };
+	glm::dvec3 positionVirtuelleInitiale_{ glm::dvec3() };
 };
 
 #endif

@@ -57,7 +57,7 @@ public:
 	inline Etat obtenirTypeEtat() const;
 
 protected:
-	std::unique_ptr<VisiteurAbstrait> visiteur_;
+	std::unique_ptr<VisiteurAbstrait> visiteur_{ nullptr };
 
 	bool estClickDrag();
 	
@@ -66,13 +66,10 @@ protected:
 	bool toucheAltEnfonce_{ false };
 	bool enCreation_{ false };
 	bool clicGaucheEnfonce_{false};
-	bool clicDroitEnfonce_{false};
-
-	int ancienX_;
-	int ancienY_;
-	glm::ivec2 anchor;
-	glm::ivec2 currentPosition;
-	Etat typeEtat_;
+	bool clicDroitEnfonce_{ false };
+	Etat typeEtat_{ Etat{} };
+	glm::ivec2 anchor{glm::ivec2()};
+	glm::ivec2 currentPosition{ glm::ivec2() };
 };
 
 inline Etat EtatAbstrait::obtenirTypeEtat() const

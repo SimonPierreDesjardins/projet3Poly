@@ -36,7 +36,7 @@ public:
 	void lireDOM(tinyxml2::XMLDocument const& document);
 
    /// Nombre de calculs par image.
-   static int CALCULS_PAR_IMAGE;
+	static int CALCULS_PAR_IMAGE;
 
 };
 

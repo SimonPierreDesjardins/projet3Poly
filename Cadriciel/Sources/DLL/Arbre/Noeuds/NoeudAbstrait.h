@@ -192,12 +192,12 @@ protected:
 	bool					enregistrable_{ true };
 
 	/// Pointeur vers le parent.
-	NoeudAbstrait* parent_;
+	NoeudAbstrait* parent_{ nullptr };
 
 	/// Modèle 3D correspondant à ce noeud.
-	modele::Modele3D const* modele_;
+	modele::Modele3D const* modele_{ nullptr };
 	/// Storage pour le dessin du modèle
-	opengl::VBO const*		vbo_;
+	opengl::VBO const*		vbo_{ nullptr };
 };
 
 

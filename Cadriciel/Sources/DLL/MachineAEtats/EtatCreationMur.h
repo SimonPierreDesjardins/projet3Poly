@@ -29,7 +29,7 @@ public:
 
 private:
 	bool enCreation_{ false };
-	glm::dvec3 positionPremierClic_;
+	glm::dvec3 positionPremierClic_{ glm::dvec3() };
 	NoeudAbstrait* mur_{ nullptr };
 };
 
