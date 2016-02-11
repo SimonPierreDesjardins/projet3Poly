@@ -208,6 +208,12 @@
     <ClCompile Include="Visiteur\VisiteurSuppression.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurDepart.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -358,6 +364,12 @@
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurSuppression.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudDepart.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurDepart.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>

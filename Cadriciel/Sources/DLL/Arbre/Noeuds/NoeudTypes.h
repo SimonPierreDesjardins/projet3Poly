@@ -10,5 +10,6 @@
 #include "NoeudLigneNoire.h"
 #include "NoeudSegment.h"
 #include "NoeudDuplication.h"
+#include "NoeudDepart.h"
 
 #endif /// __NOEUD_TYPES_H__

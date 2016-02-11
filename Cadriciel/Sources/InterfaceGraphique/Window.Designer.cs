@@ -185,6 +185,7 @@
             this.ouvrirMenuEdition_.Name = "ouvrirMenuEdition_";
             this.ouvrirMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.ouvrirMenuEdition_.Text = "Ouvrir";
+            this.ouvrirMenuEdition_.Click += new System.EventHandler(this.ouvrirMenuEdition__Click);
             // 
             // enregistrerMenuEdition_
             // 
@@ -197,6 +198,7 @@
             this.enregistrerSousMenuEdition_.Name = "enregistrerSousMenuEdition_";
             this.enregistrerSousMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.enregistrerSousMenuEdition_.Text = "Enregistrer Sous";
+            this.enregistrerSousMenuEdition_.Click += new System.EventHandler(this.enregistrerSousMenuEdition__Click);
             // 
             // modeTestModeEdition_
             // 
@@ -561,6 +563,7 @@
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Window_KeyDown);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();

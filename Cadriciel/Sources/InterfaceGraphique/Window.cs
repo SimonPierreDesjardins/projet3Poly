@@ -260,7 +260,17 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                FonctionsNatives.assignerPositionRelativeY(Convert.ToDouble(textBoxPositionY_.Text));
+                double donnee = 0.0;
+                if (!double.TryParse(textBoxPositionY_.Text, out donnee))
+                {
+                    //handle bad input
+                    donnee = FonctionsNatives.obtenirPositionRelativeY();
+                }
+
+                if (!(donnee < -24 || donnee > 24))
+                    FonctionsNatives.assignerPositionRelativeY(donnee);
+                else
+                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
             }
         }
 
@@ -268,7 +278,13 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                double donnee = Convert.ToDouble(textBoxPositionX_.Text);
+                double donnee = 0.0;
+                if (!double.TryParse(textBoxPositionX_.Text, out donnee))
+                {
+                    //handle bad input
+                    donnee = FonctionsNatives.obtenirPositionRelativeX();
+                }
+
                 if (!(donnee < -48 || donnee > 48))
                     FonctionsNatives.assignerPositionRelativeX(donnee);
                 else
@@ -280,11 +296,13 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                double donnee = Convert.ToDouble(textBoxPositionY_.Text);
-                if (!(donnee < -24 || donnee > 24))
-                    FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
-                else
-                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                double donnee = 0.0;
+                if (!double.TryParse(textBoxRotation_.Text, out donnee))
+                {
+                    //handle bad input
+                    donnee = FonctionsNatives.obtenirAngleRotation();
+                }
+                FonctionsNatives.assignerAngleRotation(donnee);
             }
         }
 
@@ -292,7 +310,13 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                FonctionsNatives.assignerFacteurGrandeur(Convert.ToDouble(textboxDimension_.Text));
+                double donnee = 0.0;
+                if (!double.TryParse(textboxDimension_.Text, out donnee))
+                {
+                    //handle bad input
+                    donnee = FonctionsNatives.obtenirFacteurGrandeur();
+                }
+                FonctionsNatives.assignerFacteurGrandeur(donnee);
             }
         }
 
@@ -324,6 +348,36 @@ namespace InterfaceGraphique
             if (dialogResult == DialogResult.Yes)
             {
                 FonctionsNatives.nouvelleTable();
+            }
+        }
+
+        private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
+        {
+            Process.Start(@"explorer.exe");
+        }
+
+        private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        {
+            Process.Start(@"explorer.exe");
+        }
+
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (FonctionsNatives.obtenirEtat() == 0)
+                {
+                    if (FonctionsNatives.obtenirNombreSelection() == 1)
+                    {
+                        textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+                        textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+                        textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+                        textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                        panneauOperation_.Visible = true;
+                    }
+                    else
+                        panneauOperation_.Visible = false;
+                }
             }
         }
 

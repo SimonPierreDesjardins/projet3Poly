@@ -59,6 +59,14 @@ void VisiteurRotation::visiter(NoeudMur* noeud)
 	assignerNouvellePositionRelative(noeud);
 }
 
+void VisiteurRotation::visiter(NoeudDepart* noeud)
+{
+	// Assigner le nouvel angle de rotation.)
+	double angle = noeud->obtenirAngleRotation() + angleRotation_;
+	noeud->assignerAngleRotation(angle);
+
+	assignerNouvellePositionRelative(noeud);
+}
 
 void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
 {
