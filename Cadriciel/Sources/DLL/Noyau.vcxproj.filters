@@ -204,11 +204,11 @@
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp">
       <Filter>Source Files\Visiteur</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="MachineAEtats\EtatLoupe.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurVerificationObjets.cpp">
+    <ClCompile Include="Visiteur\VisiteurVerificationQuad.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
   </ItemGroup>
@@ -288,9 +288,6 @@
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MachineAEtats\EtatTypes.h">
-      <Filter>Header Files\MachineAEtats</Filter>
-    </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
@@ -362,12 +359,18 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h">
       <Filter>Header Files\Visiteur</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="MachineAEtats\EtatLoupe.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurVerificationObjets.h">
+    <ClInclude Include="Visiteur\VisiteurVerificationQuad.h">
       <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAEtats\EtatTypes.h">
+      <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

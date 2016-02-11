@@ -1,39 +1,38 @@
-#include "VisiteurVerificationObjets.h"
+#include "VisiteurVerificationQuad.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
 
-
 /// Constructeur par défaut.
-VisiteurVerificationObjets::VisiteurVerificationObjets()
+VisiteurVerificationQuad::VisiteurVerificationQuad()
 {
 
 }
 
 /// Destructeur.
-VisiteurVerificationObjets::~VisiteurVerificationObjets()
+VisiteurVerificationQuad::~VisiteurVerificationQuad()
 {
 
 }
 
-void VisiteurVerificationObjets::visiter(ArbreRendu* noeud)
+void VisiteurVerificationQuad::visiter(ArbreRendu* noeud)
 {
 	noeud->mettreAJourQuadEnglobant();
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 
 
-void VisiteurVerificationObjets::visiter(NoeudTable* noeud)
+void VisiteurVerificationQuad::visiter(NoeudTable* noeud)
 {
 	objetsDansZoneSimulation_ = true;
 	NoeudAbstrait* enfant = nullptr;
-	for (int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{
 		enfant = noeud->chercher(i);
 		enfant->accepterVisiteur(this);
 	}
 }
 
-void VisiteurVerificationObjets::visiter(NoeudDuplication* noeud)
+void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 {
 	for (int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{
@@ -42,7 +41,7 @@ void VisiteurVerificationObjets::visiter(NoeudDuplication* noeud)
 }
 
 
-void VisiteurVerificationObjets::visiter(NoeudPoteau* noeud)
+void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 {
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
@@ -50,7 +49,7 @@ void VisiteurVerificationObjets::visiter(NoeudPoteau* noeud)
 	}
 }
 
-void VisiteurVerificationObjets::visiter(NoeudMur* noeud)
+void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 {
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
@@ -59,16 +58,16 @@ void VisiteurVerificationObjets::visiter(NoeudMur* noeud)
 }
 
 
-void VisiteurVerificationObjets::visiter(NoeudLigneNoire* noeud)
+void VisiteurVerificationQuad::visiter(NoeudLigneNoire* noeud)
 {
-	for (int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
 
 
-void VisiteurVerificationObjets::visiter(NoeudSegment* noeud)
+void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 {
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
@@ -77,7 +76,7 @@ void VisiteurVerificationObjets::visiter(NoeudSegment* noeud)
 }
 
 
-bool VisiteurVerificationObjets::verifierPointEstSurTable(glm::dvec3 point)
+bool VisiteurVerificationQuad::verifierPointEstSurTable(glm::dvec3 point)
 {
 	// Les valeurs maximales de la table.
 	const int MIN_X = -48;

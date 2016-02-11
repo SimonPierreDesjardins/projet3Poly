@@ -10,14 +10,14 @@
 
 #include "EtatDeplacement.h"
 #include "VisiteurDeplacement.h"
-#include "VisiteurVerificationObjets.h"
+#include "VisiteurVerificationQuad.h"
 #include "FacadeModele.h"
 #include <iostream>
 
 EtatDeplacement::EtatDeplacement()
 {
 	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
-	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationObjets>();
+	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 EtatDeplacement::~EtatDeplacement()

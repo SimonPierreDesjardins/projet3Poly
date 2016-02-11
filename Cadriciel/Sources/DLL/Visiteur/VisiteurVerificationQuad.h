@@ -8,19 +8,19 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef VISITEUR_VERIFICATION_OBJETS_H
-#define VISITEUR_VERIFICATION_OBJETS_H
+#ifndef VISITEUR_VERIFICATION_QUAD_H
+#define VISITEUR_VERIFICATION_QUAD_H
 
 #include "VisiteurAbstrait.h"
 
-class VisiteurVerificationObjets : public VisiteurAbstrait
+class VisiteurVerificationQuad : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurVerificationObjets();
+	VisiteurVerificationQuad();
 
 	/// Destructeur.
-	virtual ~VisiteurVerificationObjets();
+	virtual ~VisiteurVerificationQuad();
 
 	/// Obtenir si tous les objets sont dans la zone de simulation.
 	inline bool objetsDansZoneSimulation();
@@ -33,21 +33,17 @@ public:
 	virtual void visiter(NoeudLigneNoire* noeud);
 	virtual void visiter(NoeudSegment* noeud);
 
-
 private:
 	bool verifierPointEstSurTable(glm::dvec3 point);
-	
 	bool objetsDansZoneSimulation_;
-
-
 };
 
-inline bool VisiteurVerificationObjets::objetsDansZoneSimulation()
+inline bool VisiteurVerificationQuad::objetsDansZoneSimulation()
 {
 	return objetsDansZoneSimulation_;
 }
 
-#endif // VISITEUR_VERIFICATION_OBJETS
+#endif // VISITEUR_VERIFICATION_QUAD
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

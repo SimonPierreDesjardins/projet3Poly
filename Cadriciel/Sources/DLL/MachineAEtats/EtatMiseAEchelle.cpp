@@ -16,7 +16,7 @@
 EtatMiseAEchelle::EtatMiseAEchelle()
 {
 	visiteurMiseAEchelle_ = std::make_unique<VisiteurMiseAEchelle>();
-	visiteurVerificationObjets_= std::make_unique<VisiteurVerificationObjets>();
+	visiteurVerificationObjets_= std::make_unique<VisiteurVerificationQuad>();
 }
 
 EtatMiseAEchelle::~EtatMiseAEchelle()

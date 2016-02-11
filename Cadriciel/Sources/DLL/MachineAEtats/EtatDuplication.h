@@ -13,7 +13,7 @@
 
 #include "EtatAbstrait.h"
 #include "VisiteurDuplication.h"
-#include "VisiteurVerificationObjets.h"
+#include "VisiteurVerificationQuad.h"
 
 
 class EtatDuplication : public EtatAbstrait
@@ -31,7 +31,7 @@ protected:
 
 private:
 	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
-	std::unique_ptr<VisiteurVerificationObjets> visiteurVerificationObjets_{ nullptr };
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
 	
 	NoeudAbstrait* duplication_{ nullptr };
 	bool enDuplication_{ false };

@@ -16,7 +16,7 @@
 EtatDuplication::EtatDuplication()
 {
 	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
-	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationObjets>();
+	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 EtatDuplication::~EtatDuplication()

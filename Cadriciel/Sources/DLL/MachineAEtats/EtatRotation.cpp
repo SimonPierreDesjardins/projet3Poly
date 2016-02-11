@@ -19,7 +19,7 @@ EtatRotation::EtatRotation()
 {
 	std::cout << "Outil de rotation" << std::endl;
 	visiteurRotation_ = std::make_unique<VisiteurRotation>();
-	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationObjets>();
+	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 EtatRotation::~EtatRotation()

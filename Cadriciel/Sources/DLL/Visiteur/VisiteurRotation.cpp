@@ -84,7 +84,7 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 	bool estPremierSelectionne = true;
 	NoeudAbstrait* enfant;
 	// Trouver les min / max dans les positions des noeuds sur la table.
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i);
 		if (enfant->estSelectionne())

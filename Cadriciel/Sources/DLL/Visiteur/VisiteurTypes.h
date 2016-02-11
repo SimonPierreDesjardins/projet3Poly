@@ -20,7 +20,7 @@
 #include "VisiteurDeplacement.h"
 #include "VisiteurMiseAEchelle.h"
 #include "VisiteurRotation.h"
-#include "VisiteurVerificationObjets.h"
+#include "VisiteurVerificationQuad.h"
 
 #endif /// Header pour les états
 
