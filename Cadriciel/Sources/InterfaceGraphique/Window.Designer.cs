@@ -97,6 +97,7 @@
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
             this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
+            this.viewPort_.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
             // 
             // bouttonSimulation_
             // 
@@ -228,8 +229,9 @@
             // 
             // supprimerToolStripMenuItem
             // 
+            this.supprimerToolStripMenuItem.Enabled = false;
             this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.supprimerToolStripMenuItem.Text = "Supprimer";
             this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
@@ -485,6 +487,8 @@
             this.textBoxPositionY_.Name = "textBoxPositionY_";
             this.textBoxPositionY_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionY_.TabIndex = 7;
+            this.textBoxPositionY_.TabStop = false;
+            this.textBoxPositionY_.Click += new System.EventHandler(this.textBoxPositionY__Click);
             this.textBoxPositionY_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionY__KeyDown);
             // 
             // textBoxPositionX_
@@ -493,6 +497,8 @@
             this.textBoxPositionX_.Name = "textBoxPositionX_";
             this.textBoxPositionX_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionX_.TabIndex = 6;
+            this.textBoxPositionX_.TabStop = false;
+            this.textBoxPositionX_.Click += new System.EventHandler(this.textBoxPositionX__Click);
             this.textBoxPositionX_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionX__KeyDown);
             // 
             // textBoxRotation_
@@ -501,6 +507,8 @@
             this.textBoxRotation_.Name = "textBoxRotation_";
             this.textBoxRotation_.Size = new System.Drawing.Size(84, 20);
             this.textBoxRotation_.TabIndex = 5;
+            this.textBoxRotation_.TabStop = false;
+            this.textBoxRotation_.Click += new System.EventHandler(this.textBoxRotation__Click);
             this.textBoxRotation_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotation__KeyDown);
             // 
             // textboxDimension_
@@ -509,6 +517,8 @@
             this.textboxDimension_.Name = "textboxDimension_";
             this.textboxDimension_.Size = new System.Drawing.Size(84, 20);
             this.textboxDimension_.TabIndex = 4;
+            this.textboxDimension_.TabStop = false;
+            this.textboxDimension_.Click += new System.EventHandler(this.textboxDimension__Click);
             this.textboxDimension_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxDimension__KeyDown);
             // 
             // panneauPositionY_
@@ -573,7 +583,6 @@
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Window_KeyDown);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
