@@ -39,6 +39,7 @@ namespace InterfaceGraphique
             menuEdition_.Visible = false;
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
+            supprimerToolStripMenuItem.Enabled = false;
         }
 
         public void InitialiserAnimation()
@@ -59,9 +60,7 @@ namespace InterfaceGraphique
                 });
             }
             catch (Exception)
-            {
-            }
-            
+            {}
         }
        
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
@@ -323,6 +322,7 @@ namespace InterfaceGraphique
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.suppression();
+            supprimerToolStripMenuItem.Enabled = false;
         }
 
         private void viewPort__MouseClick(object sender, MouseEventArgs e)
@@ -330,7 +330,8 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerAutorisationInput(true);
             if (FonctionsNatives.obtenirEtat() == 0)
             {
-                if (FonctionsNatives.obtenirNombreSelection() == 1)
+                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+                if (nbEnfant == 1)
                 {
                     textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
                     textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
@@ -338,9 +339,16 @@ namespace InterfaceGraphique
                     textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
                     viewPort_.Focus();
                     panneauOperation_.Visible = true;
+                    supprimerToolStripMenuItem.Enabled = true;
                 }
+                else if (nbEnfant > 1)
+                    supprimerToolStripMenuItem.Enabled = true;
                 else
+                {
                     panneauOperation_.Visible = false;
+                    supprimerToolStripMenuItem.Enabled = false;
+                }
+                    
             }
         }
 
@@ -363,26 +371,6 @@ namespace InterfaceGraphique
             Process.Start(@"explorer.exe");
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                if (FonctionsNatives.obtenirEtat() == 0)
-                {
-                    if (FonctionsNatives.obtenirNombreSelection() == 1)
-                    {
-                        textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-                        textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-                        textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-                        textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-                        panneauOperation_.Visible = true;
-                    }
-                    else
-                        panneauOperation_.Visible = false;
-                }
-            }
-        }
-
         private void textboxDimension__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
@@ -403,6 +391,10 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
+        private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+        }
     }
 
     enum Etat

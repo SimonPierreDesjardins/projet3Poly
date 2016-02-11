@@ -95,6 +95,7 @@
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
             this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
+            this.viewPort_.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
             // 
             // bouttonSimulation_
             // 
@@ -226,8 +227,9 @@
             // 
             // supprimerToolStripMenuItem
             // 
+            this.supprimerToolStripMenuItem.Enabled = false;
             this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.supprimerToolStripMenuItem.Text = "Supprimer";
             this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
@@ -571,7 +573,6 @@
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Window_KeyDown);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
