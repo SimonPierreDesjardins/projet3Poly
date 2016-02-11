@@ -342,7 +342,10 @@ namespace InterfaceGraphique
                     supprimerToolStripMenuItem.Enabled = true;
                 }
                 else if (nbEnfant > 1)
+                {
                     supprimerToolStripMenuItem.Enabled = true;
+                    panneauOperation_.Visible = false;
+                }
                 else
                 {
                     panneauOperation_.Visible = false;
@@ -393,7 +396,34 @@ namespace InterfaceGraphique
 
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            if (e.KeyCode == Keys.Delete)
+            {
+                if (FonctionsNatives.obtenirEtat() == 0)
+                {
+                    int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+                    if (nbEnfant == 1)
+                    {
+                        textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+                        textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+                        textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+                        textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                        viewPort_.Focus();
+                        panneauOperation_.Visible = true;
+                        supprimerToolStripMenuItem.Enabled = true;
+                    }
+                    else if (nbEnfant > 1)
+                    {
+                        supprimerToolStripMenuItem.Enabled = true;
+                        panneauOperation_.Visible = false;
+                    }
+                    else
+                    {
+                        panneauOperation_.Visible = false;
+                        supprimerToolStripMenuItem.Enabled = false;
+                    }
 
+                }
+            }
         }
     }
 
