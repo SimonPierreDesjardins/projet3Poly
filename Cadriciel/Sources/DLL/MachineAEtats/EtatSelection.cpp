@@ -22,6 +22,7 @@ EtatSelection::EtatSelection()
 {
 	std::cout << "Selection d'un object" << std::endl;
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
+	typeEtat_ = SELECTION;
 }
 
 EtatSelection::~EtatSelection()
@@ -47,7 +48,7 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 	}
 	else
 	{
-		gererClicGauche(std::abs(anchor.x - currentPosition.x) / 2, std::abs(anchor.y - currentPosition.y) / 2);
+		gererClicGauche(x, y);
 	}
 }
 

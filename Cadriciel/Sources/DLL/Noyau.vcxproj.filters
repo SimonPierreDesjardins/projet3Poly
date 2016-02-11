@@ -52,9 +52,6 @@
     <Filter Include="Header Files\Tests">
       <UniqueIdentifier>{0dbbcffd-49b5-4878-a09c-22650c7a5093}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Tests">
-      <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\MachineAEtats">
       <UniqueIdentifier>{48f0b7e7-fdbd-4be6-91ff-baed38fc0647}</UniqueIdentifier>
     </Filter>
@@ -72,6 +69,9 @@
     </Filter>
     <Filter Include="Source Files\MachineAMode">
       <UniqueIdentifier>{09293064-47cf-4e37-b7ff-074d481561cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -207,6 +207,15 @@
 	</ClCompile>
     <ClCompile Include="MachineAEtats\EtatLoupe.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurSuppression.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurDepart.cpp">
+      <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -362,6 +371,15 @@
 	</ClInclude>
     <ClInclude Include="MachineAEtats\EtatLoupe.h">
       <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurSuppression.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudDepart.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurDepart.h">
+      <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

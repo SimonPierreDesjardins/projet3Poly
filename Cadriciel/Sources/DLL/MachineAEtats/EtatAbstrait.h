@@ -54,6 +54,7 @@ public:
 	virtual void gererToucheMoins();
 	virtual void gererToucheAltEnfoncee();
 	virtual void gererToucheAltRelachee();
+	inline Etat obtenirTypeEtat() const;
 
 protected:
 	std::unique_ptr<VisiteurAbstrait> visiteur_;
@@ -71,7 +72,14 @@ protected:
 	int ancienY_;
 	glm::ivec2 anchor;
 	glm::ivec2 currentPosition;
+
+	Etat typeEtat_;
 };
+
+inline Etat EtatAbstrait::obtenirTypeEtat() const
+{
+	return typeEtat_;
+}
 
 #endif /// ETAT_ABSTRAIT_H
 

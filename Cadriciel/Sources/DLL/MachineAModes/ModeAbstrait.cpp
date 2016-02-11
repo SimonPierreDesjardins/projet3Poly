@@ -18,7 +18,7 @@
 
 ModeAbstrait::ModeAbstrait()
 {
-
+	
 }
 
 ModeAbstrait::~ModeAbstrait()
@@ -184,4 +184,9 @@ void ModeAbstrait::gererMouvementSouris(const int & x, const int& y){
 }
 
 void ModeAbstrait::gererMoletteSouris(const int & delta){
+}
+
+void ModeAbstrait::gererToucheSupprimer()
+{
+
 }

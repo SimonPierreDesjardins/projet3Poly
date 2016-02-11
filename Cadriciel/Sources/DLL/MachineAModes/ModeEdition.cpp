@@ -19,6 +19,8 @@
 ModeEdition::ModeEdition()
 {
 	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
+	typeMode_ = EDITION;
+	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 }
 
 ModeEdition::~ModeEdition()
@@ -186,3 +188,10 @@ void ModeEdition::gererMoletteSouris(const int & delta){
 	}
 
 }
+
+void ModeEdition::gererToucheSupprimer()
+{
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
+}
+
+

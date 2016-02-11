@@ -73,9 +73,21 @@ public:
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
+	virtual void gererToucheSupprimer();
+
+	inline int obtenirTypeMode();
+
+protected:
+	int typeMode_;
+
 private:
+	
 };
 
+inline int ModeAbstrait::obtenirTypeMode()
+{
+	return typeMode_;
+}
 
 #endif /// MODE_ABSTRAIT_H
 

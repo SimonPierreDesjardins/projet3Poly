@@ -80,3 +80,8 @@ void VisiteurAbstrait::visiter(NoeudSegment* noeud)
 {
 
 }
+
+void VisiteurAbstrait::visiter(NoeudDepart* noeud)
+{
+
+}

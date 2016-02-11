@@ -32,6 +32,8 @@ const std::string ArbreRenduINF2990::NOM_LIGNENOIRE{ "ligneNoire" };
 const std::string ArbreRenduINF2990::NOM_SEGMENT{ "segment" };
 /// La chaîne représentant le type des duplications.
 const std::string ArbreRenduINF2990::NOM_DUPLICATION{ "duplication" };
+/// La chaîne représentant le type du point de départ.
+const std::string ArbreRenduINF2990::NOM_DEPART{ "depart" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -51,10 +53,11 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigneNoire>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
 	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
-	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));	
-	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry.obj" }));
-	ajouterUsine(NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/ligneNoire.obj" }));
+	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau2.obj" }));	
+	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry4.obj" }));
+	ajouterUsine(NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/ligneNoire2.obj" }));
 	ajouterUsine(NOM_DUPLICATION, std::make_unique<UsineNoeud<NoeudDuplication>>(NOM_DUPLICATION, std::string{ "media/modeles/table.obj" }));
+	ajouterUsine(NOM_DEPART, std::make_unique<UsineNoeud<NoeudDepart>>(NOM_DEPART, std::string{ "media/modeles/FlecheDepart.obj" }));
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -89,25 +92,10 @@ void ArbreRenduINF2990::initialiser()
 
 	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
 	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
+	shared_ptr<NoeudAbstrait> noeudDepart{ creerNoeud(NOM_DEPART) };
+
 	ajouter(noeudTable);
-	/*
-	shared_ptr<NoeudAbstrait> noeudMur{ creerNoeud(NOM_MUR) };
-	noeudTable->ajouter(noeudMur);
-
-	shared_ptr<NoeudAbstrait> noeudMur2{ creerNoeud(NOM_MUR) };
-	noeudTable->ajouter(noeudMur2);
-
-	noeudMur->assignerFacteurMiseAEchelle(20);
-	noeudMur->assignerAngleRotation(20);
-	noeudMur->assignerSelection(true);
-	noeudMur->assignerPositionRelative({ 10, 10, 0 });
-
-	noeudMur2->assignerFacteurMiseAEchelle(20);
-	noeudMur2->assignerAngleRotation(-20);
-	noeudMur2->assignerSelection(true);
-	noeudMur2->assignerPositionRelative({ -10, -10, 0 });
-
-	*/
+	ajouter(noeudDepart);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -19,6 +19,7 @@ EtatRotation::EtatRotation()
 {
 	std::cout << "Outil de rotation" << std::endl;
 	visiteur_ = std::make_unique<VisiteurRotation>();
+	typeEtat_ = ROTATION;
 }
 
 EtatRotation::~EtatRotation()

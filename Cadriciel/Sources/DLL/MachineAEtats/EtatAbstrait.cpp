@@ -18,7 +18,7 @@
 
 EtatAbstrait::EtatAbstrait()
 {
-
+	
 }
 
 EtatAbstrait::~EtatAbstrait()

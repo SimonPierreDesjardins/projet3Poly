@@ -59,6 +59,14 @@ void VisiteurRotation::visiter(NoeudMur* noeud)
 	assignerNouvellePositionRelative(noeud);
 }
 
+void VisiteurRotation::visiter(NoeudDepart* noeud)
+{
+	// Assigner le nouvel angle de rotation.)
+	double angle = noeud->obtenirAngleRotation() + angleRotation_;
+	noeud->assignerAngleRotation(angle);
+
+	assignerNouvellePositionRelative(noeud);
+}
 
 void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
 {
@@ -90,7 +98,7 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 	bool estPremierSelectionne = true;
 	NoeudAbstrait* enfant;
 	// Trouver les min / max dans les positions des noeuds sur la table.
-	for (int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
 	{
 		enfant = noeud->chercher(i);
 		if (enfant->estSelectionne())

@@ -12,6 +12,8 @@
 #define MODE_EDITION_H
 
 #include "ModeAbstrait.h"
+#include "VisiteurAbstrait.h"
+#include "VisiteurSuppression.h"
 #include <memory>
 #include "glm\glm.hpp"
 
@@ -60,7 +62,10 @@ public:
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
+	virtual void gererToucheSupprimer();
+
 protected:
+	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
 
 	int ancienSourisX_;
 	int ancienSourisY_;

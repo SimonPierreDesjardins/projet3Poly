@@ -61,8 +61,22 @@ NoeudLigneNoire::~NoeudLigneNoire()
 ////////////////////////////////////////////////////////////////////////
 void NoeudLigneNoire::afficherConcret() const
 {
+	glPushMatrix();
+
+	if (estSelectionne())
+	{
+		glColor4f(1.0, 0.0, 0.0, 1.0);
+	}
+	else
+	{
+		glColor4f(0.0, 1.0, 0.0, 1.0);
+	}
+
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
+
+	glPopMatrix();
+	
 }
 
 void NoeudLigneNoire::accepterVisiteur(VisiteurAbstrait* visiteur)
