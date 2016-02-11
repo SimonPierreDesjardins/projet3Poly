@@ -12,13 +12,10 @@
 #define VISITEUR_SAUVEGARDE_H
 
 #include "VisiteurAbstrait.h"
-#include "NoeudComposite.h"
-#include <memory>
-#include <fstream>
-#include "NoeudTypes.h"
-#include "ArbreRendu.h"
+
 #include "rapidjson\writer.h"
-#include "rapidjson\prettywriter.h"
+
+class NoeudComposite;
 
 namespace rapidjson{
 	class FileWriteStream;
@@ -49,7 +46,8 @@ public:
 	virtual void visiter(NoeudDuplication* noeud);
 	
 private:
-	rapidjson::PrettyWriter<rapidjson::FileWriteStream>* writer ;
+	/// Classe pour écrire dans un fichier
+	rapidjson::Writer<rapidjson::FileWriteStream>* writer ;
 	void visiterEnfants(NoeudComposite* noeud);
 	
 };

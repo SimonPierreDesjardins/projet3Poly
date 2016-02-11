@@ -166,7 +166,10 @@ public:
 	double getfacteurMiseAEchelle() { return facteurMiseAEchelle_; };
 	void setFacteurMiseEchelle(double facteur) { facteurMiseAEchelle_ = facteur; };
 
+	/// convertit un noeud en JSON
 	void toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
 protected:

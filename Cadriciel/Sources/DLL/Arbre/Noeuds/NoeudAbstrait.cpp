@@ -470,10 +470,6 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 }
 
 void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
-	for (rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
-		itr != (noeudJSON->HasMember("noeudsEnfants")?noeudJSON->MemberEnd() - 1:noeudJSON->MemberEnd()); itr++){
-		std::cout << itr->name.GetString() << " : " << itr->value.GetDouble() << std::endl;
-	}
 	rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
 	double x = itr->value.GetDouble();
 	itr++;
@@ -482,7 +478,8 @@ void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
 	double z = itr->value.GetDouble();
 	itr++;
 	positionRelative_ = glm::dvec3(x,y,z);
-	assignerAngleRotation(itr++->value.GetDouble());
+	assignerAngleRotation(itr->value.GetDouble());
+	itr++;
 	assignerFacteurMiseAEchelle(itr->value.GetDouble());
 }
 
