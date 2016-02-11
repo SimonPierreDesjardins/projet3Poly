@@ -26,7 +26,6 @@ public:
 	~NoeudLigneNoire();
 	/// Affiche la table.
 	virtual void afficherConcret() const;
-
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:

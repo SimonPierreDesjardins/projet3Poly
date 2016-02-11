@@ -384,7 +384,7 @@ void NoeudAbstrait::afficher() const
 {
 	if (affiche_) {
 		glPushMatrix();
-		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT);
+		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT | GL_ENABLE_BIT);
 
 
 		// La translation de la position relative		
@@ -417,6 +417,7 @@ void NoeudAbstrait::afficher() const
 ////////////////////////////////////////////////////////////////////////
 void NoeudAbstrait::afficherConcret() const
 {
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -438,6 +439,13 @@ void NoeudAbstrait::animer(float dt)
 {
 }
 
+
+utilitaire::BoiteEnglobante NoeudAbstrait::obtenirBoiteEnglobanteCourante() const
+{
+	return boiteEnglobanteModele_;
+}
+
+
 /// Accepter un visiteur
 void NoeudAbstrait::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
@@ -451,6 +459,9 @@ modele::Modele3D const* NoeudAbstrait::getModele()
 {
 	return modele_;
 }
+
+
+
 
 ////////////////////////////////////////////////
 /// @}

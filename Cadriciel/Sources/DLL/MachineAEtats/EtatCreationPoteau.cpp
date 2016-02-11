@@ -20,6 +20,7 @@ EtatCreationPoteau::EtatCreationPoteau()
 {
 	std::cout << "Creation de poteau" << std::endl;
 	visiteur_ = std::make_unique<VisiteurCreationPoteau>();
+	typeEtat_ = CREATION_POTEAU;
 }
 
 

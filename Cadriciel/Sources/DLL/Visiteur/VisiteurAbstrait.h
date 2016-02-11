@@ -50,13 +50,18 @@ public:
 	virtual ~VisiteurAbstrait();
 
 	inline void assignerPositionRelative(glm::dvec3 positionRelative);
+	inline void assignerPositionRelativeAvant(glm::dvec3 positionRelativeAvant);
+	inline void assignerPositionRelativeApres(glm::dvec3 positionRelativeApres);
 	inline void assignerAngleRotation(double angleRotation);
 	inline void assignerFacteurMiseAEchelle(double facteurDimension);
 	inline void assignerEstAffiche(const bool& estAffiche);
+	inline void assignerEstDrag(const bool& estDrag);
 	inline NoeudAbstrait* obtenirReferenceNoeud();
+	inline bool obtenirEstDrag();
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
+	virtual void visiterRectangle(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigneNoire* noeud);
@@ -65,6 +70,9 @@ public:
 
 protected:
 	glm::dvec3 positionRelative_;
+	glm::dvec3 positionRelativeAvant_;
+	glm::dvec3 positionRelativeApres_;
+	bool estDrag_{ false };
 	double angleRotation_;
 	double facteurMiseAEchelle_;
 	bool estAffiche_{ false };
@@ -78,6 +86,16 @@ protected:
 inline void VisiteurAbstrait::assignerPositionRelative(glm::dvec3 positionRelative)
 {
 	positionRelative_ = positionRelative;
+}
+
+inline void VisiteurAbstrait::assignerPositionRelativeAvant(glm::dvec3 positionRelativeAvant)
+{
+	positionRelativeAvant_ = positionRelativeAvant;
+}
+
+inline void VisiteurAbstrait::assignerPositionRelativeApres(glm::dvec3 positionRelativeApres)
+{
+	positionRelativeApres_ = positionRelativeApres;
 }
 
 inline void VisiteurAbstrait::assignerAngleRotation(double angleRotation)
@@ -99,6 +117,17 @@ inline void VisiteurAbstrait::assignerEstAffiche(const bool& estAffiche)
 {
 	estAffiche_ = estAffiche;
 }
+
+inline void VisiteurAbstrait::assignerEstDrag(const bool& estDrag)
+{
+	estDrag_ = estDrag;
+}
+
+inline bool VisiteurAbstrait::obtenirEstDrag()
+{
+	return estDrag_;
+}
+
 #endif // VISITEUR_ABSTRAIT_H
 
 

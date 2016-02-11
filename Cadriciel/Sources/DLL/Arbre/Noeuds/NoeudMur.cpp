@@ -68,14 +68,26 @@ void NoeudMur::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
+//	glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);
+	//glClearColor(0, 0, 0, 0);
+	
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	if (estSelectionne())
 	{
 		glColor4f(1.0, 0.0, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4f(0.0, 1.0, 0.0, 1.0);
 	}
+
+	//glEnable(GL_BLEND);
+	//glDepthMask(GL_FALSE);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	if (enCreation_)
+		glColor4f(0.0, 0.0, 1.0, 0.5);
 
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
@@ -84,8 +96,29 @@ void NoeudMur::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
+	//glDepthMask(GL_TRUE);
+	//glDisable(GL_BLEND);
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+
+utilitaire::BoiteEnglobante NoeudMur::obtenirBoiteEnglobanteCourante() const
+{
+	utilitaire::BoiteEnglobante boiteEnglobanteCourante;
+	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
+	boiteEnglobanteCourante.coinMin[0] = boiteEnglobanteModele_.coinMin[0] * facteurMiseAEchelle_;
+	boiteEnglobanteCourante.coinMax[0] = boiteEnglobanteModele_.coinMax[0] * facteurMiseAEchelle_;
+
+	// Mettre à jour la position des coins de la boite avec l'angle de rotation du noeud.
+	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMin, boiteEnglobanteCourante.coinMin, angleRotation_);
+	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMax, boiteEnglobanteCourante.coinMax, angleRotation_);
+
+	// Mettre à jour les coins avec la position relative.
+	boiteEnglobanteCourante.coinMin = boiteEnglobanteModele_.coinMin + positionRelative_;
+	boiteEnglobanteCourante.coinMax = boiteEnglobanteModele_.coinMax + positionRelative_;
+
+	return boiteEnglobanteCourante;
 }
 
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)

@@ -42,6 +42,7 @@
             this.modeTestModeEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalMenuEdition = new System.Windows.Forms.ToolStripMenuItem();
             this.editionMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.supprimerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.outilsMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.selectionMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.deplacementMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,6 +96,7 @@
             this.viewPort_.Size = new System.Drawing.Size(623, 402);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
+            this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
             // 
             // bouttonSimulation_
             // 
@@ -178,6 +180,7 @@
             this.nouveauMenuEdition_.Name = "nouveauMenuEdition_";
             this.nouveauMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.nouveauMenuEdition_.Text = "Nouveau";
+            this.nouveauMenuEdition_.Click += new System.EventHandler(this.nouveauMenuEdition__Click);
             // 
             // ouvrirMenuEdition_
             // 
@@ -199,6 +202,8 @@
             // 
             // modeTestModeEdition_
             // 
+            this.modeTestModeEdition_.Enabled = false;
+            this.modeTestModeEdition_.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.modeTestModeEdition_.Name = "modeTestModeEdition_";
             this.modeTestModeEdition_.Size = new System.Drawing.Size(158, 22);
             this.modeTestModeEdition_.Text = "Mode test";
@@ -213,9 +218,18 @@
             // 
             // editionMenuEdition_
             // 
+            this.editionMenuEdition_.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.supprimerToolStripMenuItem});
             this.editionMenuEdition_.Name = "editionMenuEdition_";
             this.editionMenuEdition_.Size = new System.Drawing.Size(56, 20);
             this.editionMenuEdition_.Text = "Édition";
+            // 
+            // supprimerToolStripMenuItem
+            // 
+            this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.supprimerToolStripMenuItem.Text = "Supprimer";
+            this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
             // outilsMenuEdition_
             // 
@@ -329,7 +343,7 @@
             // aideMenuEdition_
             // 
             this.aideMenuEdition_.Name = "aideMenuEdition_";
-            this.aideMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
             this.aideMenuEdition_.Text = "Aide";
             this.aideMenuEdition_.Click += new System.EventHandler(this.aideMenuEdition__Click);
             // 
@@ -462,7 +476,6 @@
             this.panneauOperation_.Name = "panneauOperation_";
             this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
             this.panneauOperation_.TabIndex = 8;
-            this.panneauOperation_.VisibleChanged += new System.EventHandler(this.panneauOperation__VisibleChanged);
             // 
             // textBoxPositionY_
             // 
@@ -622,6 +635,7 @@
         private System.Windows.Forms.TextBox textBoxRotation_;
         private System.Windows.Forms.TextBox textboxDimension_;
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem supprimerToolStripMenuItem;
     }
 }
 

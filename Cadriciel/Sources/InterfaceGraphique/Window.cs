@@ -20,7 +20,7 @@ namespace InterfaceGraphique
         private const int WM_RBUTTONDOWN =  0x0204;
         private const int WM_RBUTTONUP =    0x0205;
         private const int WM_MOUSEMOVE =    0x0200;
-        private const int WM_MOUSEWHEEL =    0x020A;
+        private const int WM_MOUSEWHEEL =   0x020A;
 
         public bool PreFilterMessage(ref Message m)
         {
@@ -81,7 +81,6 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
-            FonctionsNatives.assignerEtat(Etat.SELECTION);
             FonctionsNatives.assignerMode(Mode.EDITION);
         }
 
@@ -110,7 +109,7 @@ namespace InterfaceGraphique
             viewPort_.Visible = !afficherMenu;
             menuEdition_.Visible = !afficherMenu;
             barreOutils_.Visible = !afficherMenu;
-            panneauOperation_.Visible = !afficherMenu;
+            panneauOperation_.Visible = afficherMenu;
         }
 
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
@@ -232,19 +231,14 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerMode(Mode.CONFIGURE);
         }
 
-        private void panneauOperation__VisibleChanged(object sender, EventArgs e)
-        {
-            textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-            textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-            textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-            textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-        }
-
-        static bool fred = true;
         private void aideMenuEdition__Click(object sender, EventArgs e)
         {
-            fred =! fred;
-            panneauOperation_.Visible = fred;
+            PopOutInterface popup = new PopOutInterface();
+            DialogResult dialogresult = popup.ShowDialog();
+            if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
+            {
+                popup.Dispose();
+            }
         }
 
         private void textboxDimension__Enter(object sender, EventArgs e)
@@ -274,7 +268,11 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                FonctionsNatives.assignerPositionRelativeX(Convert.ToDouble(textBoxPositionX_.Text));
+                double donnee = Convert.ToDouble(textBoxPositionX_.Text);
+                if (!(donnee < -48 || donnee > 48))
+                    FonctionsNatives.assignerPositionRelativeX(donnee);
+                else
+                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
             }
         }
 
@@ -282,7 +280,11 @@ namespace InterfaceGraphique
         {
             if (e.KeyCode == Keys.Enter)
             {
-                FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
+                double donnee = Convert.ToDouble(textBoxPositionY_.Text);
+                if (!(donnee < -24 || donnee > 24))
+                    FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
+                else
+                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
             }
         }
 
@@ -297,6 +299,37 @@ namespace InterfaceGraphique
         private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
+        }
+
+        private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.suppression();
+        }
+
+        private void viewPort__MouseClick(object sender, MouseEventArgs e)
+        {
+            if (FonctionsNatives.obtenirEtat() == 0)
+            {
+                if (FonctionsNatives.obtenirNombreSelection() == 1)
+                {
+                    textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+                    textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                    panneauOperation_.Visible = true;
+                }
+                else
+                    panneauOperation_.Visible = false;
+            }
+        }
+
+        private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                FonctionsNatives.nouvelleTable();
+            }
         }
     }
 
@@ -340,7 +373,13 @@ namespace InterfaceGraphique
         public static extern void assignerEtat(Etat etat);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirEtat();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerMode(Mode mode);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirMode();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void redimensionnerFenetre(int largeur, int hauteur);
@@ -380,6 +419,15 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerPositionRelativeY(double positionRelativeY);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void suppression();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirNombreSelection();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void nouvelleTable();
 
     }
 }

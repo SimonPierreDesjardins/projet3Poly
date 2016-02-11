@@ -18,7 +18,7 @@
 
 ModeAbstrait::ModeAbstrait()
 {
-
+	
 }
 
 ModeAbstrait::~ModeAbstrait()

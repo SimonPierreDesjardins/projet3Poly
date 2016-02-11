@@ -73,7 +73,7 @@ void NoeudPoteau::afficherConcret() const
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4f(0.0, 1.0, 0.0, 1.0);
 	}
 	
 	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
@@ -87,6 +87,22 @@ void NoeudPoteau::afficherConcret() const
 
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+utilitaire::BoiteEnglobante NoeudPoteau::obtenirBoiteEnglobanteCourante() const
+{
+	utilitaire::BoiteEnglobante boiteEnglobanteCourante;
+	// Mettre à jour les coins avec le facteur de mise à échelle.
+	for (int i = 0; i < 2; i++)
+	{
+		boiteEnglobanteCourante.coinMin[i] = boiteEnglobanteModele_.coinMin[i] * facteurMiseAEchelle_;
+		boiteEnglobanteCourante.coinMax[i] = boiteEnglobanteModele_.coinMax[i] * facteurMiseAEchelle_;
+	}
+	// Mettre à jour les coins avec la position relative.
+	boiteEnglobanteCourante.coinMin = boiteEnglobanteModele_.coinMin + positionRelative_;
+	boiteEnglobanteCourante.coinMax = boiteEnglobanteModele_.coinMax + positionRelative_;
+
+	return boiteEnglobanteCourante;
 }
 
 void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)

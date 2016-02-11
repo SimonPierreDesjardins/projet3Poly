@@ -73,9 +73,22 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
+//private:
+
+	inline int obtenirTypeMode();
+
+protected:
+	int typeMode_;
+
 private:
+	
+
 };
 
+inline int ModeAbstrait::obtenirTypeMode()
+{
+	return typeMode_;
+}
 
 #endif /// MODE_ABSTRAIT_H
 

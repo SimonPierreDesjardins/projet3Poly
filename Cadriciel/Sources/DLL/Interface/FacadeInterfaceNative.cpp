@@ -207,6 +207,20 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirEtat()
+	///
+	/// Cette fonction permet d'obtenir un Etat
+	///
+	/// @return int etat : Le numero du mode sélectionné
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) int __cdecl obtenirEtat()
+	{
+		return (int)FacadeModele::obtenirInstance()->obtenirEtat()->obtenirTypeEtat();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
 	/// @fn __declspec(dllexport) void __cdecl assignerMode(int mode)
 	///
 	/// Cette fonction permet d'assigner un Mode
@@ -217,6 +231,20 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerMode(int mode)
 	{
 		FacadeModele::obtenirInstance()->assignerMode((Mode)mode);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirMode()
+	///
+	/// Cette fonction permet d'obtenir un Mode
+	///
+	/// @return int mode : Le numero du mode sélectionné
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) int __cdecl obtenirMode()
+	{
+		return FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -273,6 +301,44 @@ extern "C"
 	__declspec(dllexport) double obtenirPositionRelativeY()
 	{
 		return FacadeModele::obtenirInstance()->obtenirPositionRelativeY();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl nouvelleTable()
+	///
+	/// Cette fonction permet de supprimer tous les objets de la table
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl nouvelleTable()
+	{
+		FacadeModele::obtenirInstance()->reinitialiser();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl suppression()
+	///
+	/// Cette fonction permet de supprimer un objet selectionné
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl suppression()
+	{
+		FacadeModele::obtenirInstance()->obtenirMode()->gererToucheSupprimer();
+	}
+	
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) double __cdecl obtenirNombreSelection()
+	///
+	/// Cette fonction retourne le nombre d'objet selectionné
+	///
+	/// @param int : le nombre d'objet selectionné
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) int __cdecl obtenirNombreSelection()
+	{
+		return FacadeModele::obtenirInstance()->obtenirNombreSelection();
 	}
 
 	__declspec(dllexport) void assignerAngleRotation(double angle)
