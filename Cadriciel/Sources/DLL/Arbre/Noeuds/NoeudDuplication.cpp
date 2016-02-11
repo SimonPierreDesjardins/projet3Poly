@@ -20,4 +20,20 @@ void NoeudDuplication::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
-
+/*
+void NoeudDuplication::mettreAJourQuadEnglobantConcret()
+{
+	NoeudAbstrait* enfant;
+	for (int i = 0; i < enfants_.size(); i++)
+	{
+		enfant = chercher(i);
+		enfant->mettreAJourQuadEnglobant();
+		quadEnglobant_ = enfant->obtenirQuadEnglobant();
+		for (int i = 0; i < 4; i++)
+		{
+			quadEnglobant_.coins[i] += positionRelative_;
+		}
+		enfant->assignerQuadEnglobant(quadEnglobant_);
+	}
+}
+*/

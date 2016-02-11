@@ -151,7 +151,7 @@
     <ClCompile Include="Arbre\Noeuds\NoeudComposite.cpp" />
     <ClCompile Include="Interface\FacadeInterfaceNative.cpp" />
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp" />
-    <ClCompile Include="MachineAEtats\EtatCreationLigneNoire.cpp" />
+    <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationMur.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationPoteau.cpp" />
     <ClCompile Include="MachineAEtats\EtatDeplacement.cpp" />
@@ -179,6 +179,7 @@
     <ClCompile Include="Visiteur\VisiteurRotation.cpp" />
     <ClCompile Include="Visiteur\VisiteurSelection.cpp" />
     <ClCompile Include="Visiteur\VisiteurSuppression.cpp" />
+    <ClCompile Include="Visiteur\VisiteurVerificationQuad.cpp" />
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -202,7 +203,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudComposite.h" />
     <ClInclude Include="Interface\FacadeInterfaceNative.h" />
     <ClInclude Include="MachineAEtats\EtatAbstrait.h" />
-    <ClInclude Include="MachineAEtats\EtatCreationLigneNoire.h" />
+    <ClInclude Include="MachineAEtats\EtatCreationLigne.h" />
     <ClInclude Include="MachineAEtats\EtatCreationMur.h" />
     <ClInclude Include="MachineAEtats\EtatCreationPoteau.h" />
     <ClInclude Include="MachineAEtats\EtatDeplacement.h" />
@@ -230,10 +231,12 @@
     <ClInclude Include="Visiteur\VisiteurDeplacement.h" />
     <ClInclude Include="Visiteur\VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />
+    <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h" />
     <ClInclude Include="Visiteur\VisiteurRotation.h" />
     <ClInclude Include="Visiteur\VisiteurSelection.h" />
     <ClInclude Include="Visiteur\VisiteurSuppression.h" />
     <ClInclude Include="Visiteur\VisiteurTypes.h" />
+    <ClInclude Include="Visiteur\VisiteurVerificationQuad.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Commun\Utilitaire\Utilitaire.vcxproj">

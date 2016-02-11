@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurDuplication();
 
-	// Constructeur par paramètre.
-	VisiteurDuplication(const int& x, const int& y);
-	
 	/// Destructeur.
 	virtual ~VisiteurDuplication();
 

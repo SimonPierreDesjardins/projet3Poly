@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurDeplacement();
 
-	// Constructeur par paramètre.
-	VisiteurDeplacement(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurDeplacement();
 

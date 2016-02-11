@@ -20,9 +20,12 @@ public:
 	NoeudSegment(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudSegment();
-
+	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
+	
 	/// Affiche le segment.
 	virtual void afficherConcret() const;
+
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 
 #endif

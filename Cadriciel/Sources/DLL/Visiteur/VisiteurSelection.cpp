@@ -22,12 +22,6 @@ VisiteurSelection::VisiteurSelection()
 
 }
 
-VisiteurSelection::VisiteurSelection(const int& x, const int& y)
-	: VisiteurAbstrait(x, y)
-{
-}
-
-
 VisiteurSelection::~VisiteurSelection()
 {
 

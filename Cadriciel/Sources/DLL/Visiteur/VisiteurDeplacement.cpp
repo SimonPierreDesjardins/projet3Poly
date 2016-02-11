@@ -3,14 +3,8 @@
 #include "NoeudTypes.h"
 
 
-
 /// Constructeur par défaut.
 VisiteurDeplacement::VisiteurDeplacement()
-{
-}
-
-// Constructeur par paramètre.
-VisiteurDeplacement::VisiteurDeplacement(const int& x, const int& y)
 {
 }
 

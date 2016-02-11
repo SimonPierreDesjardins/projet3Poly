@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurCreationLigne();
 
-	// Constructeur par paramètre.
-	VisiteurCreationLigne(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurCreationLigne();
 

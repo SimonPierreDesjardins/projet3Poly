@@ -12,6 +12,7 @@
 #define ETAT_DEPLACEMENT_H
 
 #include "EtatAbstrait.h"
+#include "VisiteurTypes.h"
 
 class EtatDeplacement : public EtatAbstrait
 {
@@ -21,7 +22,14 @@ public:
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
+
+protected:
+	virtual void reinitialiser();
+
 private:
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
+	std::unique_ptr<VisiteurDeplacement> visiteurDeplacement_{ nullptr };
+
 	glm::dvec3 dernierePositionVirtuelle_;
 	glm::dvec3 positionVirtuelleInitiale_;
 };

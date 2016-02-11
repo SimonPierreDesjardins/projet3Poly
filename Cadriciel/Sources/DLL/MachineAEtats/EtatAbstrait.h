@@ -57,7 +57,7 @@ public:
 	inline Etat obtenirTypeEtat() const;
 
 protected:
-	std::unique_ptr<VisiteurAbstrait> visiteur_;
+	virtual void reinitialiser();
 
 	bool estClickDrag();
 	

@@ -18,9 +18,8 @@
 
 EtatCreationPoteau::EtatCreationPoteau()
 {
-	std::cout << "Creation de poteau" << std::endl;
-	visiteur_ = std::make_unique<VisiteurCreationPoteau>();
 	typeEtat_ = CREATION_POTEAU;
+	visiteurCreationPoteau_ = std::make_unique<VisiteurCreationPoteau>();
 }
 
 
@@ -40,8 +39,8 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 	if (!curseurEstSurTable_) return;
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-	visiteur_->assignerPositionRelative(positionVirtuelle);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
+	visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationPoteau_.get());
 }
 
 void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)

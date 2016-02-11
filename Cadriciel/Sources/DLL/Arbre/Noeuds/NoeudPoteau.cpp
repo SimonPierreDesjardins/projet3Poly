@@ -12,6 +12,7 @@
 
 #include "GL/glew.h"
 #include <cmath>
+#include <iostream>
 
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
@@ -89,21 +90,18 @@ void NoeudPoteau::afficherConcret() const
 	glPopMatrix();
 }
 
-utilitaire::BoiteEnglobante NoeudPoteau::obtenirBoiteEnglobanteCourante() const
+void NoeudPoteau::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
-	utilitaire::BoiteEnglobante boiteEnglobanteCourante;
 	// Mettre à jour les coins avec le facteur de mise à échelle.
-	for (int i = 0; i < 2; i++)
+	std::cout << "Mise à jour Poteau:" << std::endl;
+	for (int i = 0; i < 4; i++)
 	{
-		boiteEnglobanteCourante.coinMin[i] = boiteEnglobanteModele_.coinMin[i] * facteurMiseAEchelle_;
-		boiteEnglobanteCourante.coinMax[i] = boiteEnglobanteModele_.coinMax[i] * facteurMiseAEchelle_;
+		quadEnglobant_.coins[i] *= facteurMiseAEchelle_;
+		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
+		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
 	}
-	// Mettre à jour les coins avec la position relative.
-	boiteEnglobanteCourante.coinMin = boiteEnglobanteModele_.coinMin + positionRelative_;
-	boiteEnglobanteCourante.coinMax = boiteEnglobanteModele_.coinMax + positionRelative_;
-
-	return boiteEnglobanteCourante;
 }
+
 
 void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
 {

@@ -1,44 +1,49 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurRotation.h
+/// @file VisiteurVerificationObjets.h
 /// @author Olivier St-Amour
-/// @date 2016-01-29
+/// @date 2016-02-09
 /// @version 1.0
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef VISITEUR_ROTATION_H
-#define VISITEUR_ROTATION_H
+#ifndef VISITEUR_VERIFICATION_QUAD_H
+#define VISITEUR_VERIFICATION_QUAD_H
 
 #include "VisiteurAbstrait.h"
 
-class VisiteurRotation : public VisiteurAbstrait
+class VisiteurVerificationQuad : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurRotation();
+	VisiteurVerificationQuad();
 
 	/// Destructeur.
-	virtual ~VisiteurRotation();
+	virtual ~VisiteurVerificationQuad();
+
+	/// Obtenir si tous les objets sont dans la zone de simulation.
+	inline bool objetsDansZoneSimulation();
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigneNoire* noeud);
-	virtual void visiter(NoeudDepart* noeud);
+	virtual void visiter(NoeudSegment* noeud);
 
 private:
-
-
-	void assignerNouvellePositionRelative(NoeudAbstrait* noeud);
-	
-	void calculerCentreSelection(NoeudAbstrait* noeud);
-	glm::dvec3 centreSelection_;
+	bool verifierPointEstSurTable(glm::dvec3 point);
+	bool objetsDansZoneSimulation_;
 };
 
-#endif // VISITEUR_ROTATION_H
+inline bool VisiteurVerificationQuad::objetsDansZoneSimulation()
+{
+	return objetsDansZoneSimulation_;
+}
+
+#endif // VISITEUR_VERIFICATION_QUAD
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

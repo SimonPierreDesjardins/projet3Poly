@@ -84,6 +84,15 @@ void NoeudLigneNoire::accepterVisiteur(VisiteurAbstrait* visiteur)
 	visiteur->visiter(this);
 }
 
+/*
+void NoeudLigneNoire::mettreAJourQuadEnglobantConcret()
+{
+	for (int i = 0; i < enfants_.size(); i++)
+	{
+		enfants_[i]->mettreAJourQuadEnglobant();
+	}
+}
+*/
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

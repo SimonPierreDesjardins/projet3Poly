@@ -8,11 +8,6 @@ VisiteurMiseAEchelle::VisiteurMiseAEchelle()
 {
 }
 
-// Constructeur par paramètre.
-VisiteurMiseAEchelle::VisiteurMiseAEchelle(const int& x, const int& y)
-{
-}
-
 /// Destructeur.
 VisiteurMiseAEchelle::~VisiteurMiseAEchelle()
 {

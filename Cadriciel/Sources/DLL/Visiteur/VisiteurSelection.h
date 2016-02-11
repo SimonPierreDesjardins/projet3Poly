@@ -19,12 +19,8 @@ public:
 	/// Constructeur par défaut.
 	VisiteurSelection();
 
-	// Constructeur par paramètre.
-	VisiteurSelection(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurSelection();
-
 	
 	/// Parcours du noeudTable.
 	virtual void visiter(NoeudTable* noeud);

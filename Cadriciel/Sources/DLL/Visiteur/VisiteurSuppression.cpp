@@ -22,12 +22,6 @@ VisiteurSuppression::VisiteurSuppression()
 
 }
 
-VisiteurSuppression::VisiteurSuppression(const int& x, const int& y)
-	: VisiteurAbstrait(x, y)
-{
-}
-
-
 VisiteurSuppression::~VisiteurSuppression()
 {
 

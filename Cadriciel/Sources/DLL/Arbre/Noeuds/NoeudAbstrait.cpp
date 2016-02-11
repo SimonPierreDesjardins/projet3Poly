@@ -440,10 +440,42 @@ void NoeudAbstrait::animer(float dt)
 }
 
 
-utilitaire::BoiteEnglobante NoeudAbstrait::obtenirBoiteEnglobanteCourante() const
+//TODO: Documentation.
+void NoeudAbstrait::mettreAJourQuadEnglobant()
 {
-	return boiteEnglobanteModele_;
+	mettreAJourQuadEnglobant(positionRelative_);
 }
+
+//TODO: Documentation.
+void NoeudAbstrait::mettreAJourQuadEnglobant(const glm::dvec3& positionRelative)
+{
+	// Le coin du quad en haut à droite.
+	quadEnglobant_.coins[0].x = boiteEnglobanteModele_.coinMax.x;
+	quadEnglobant_.coins[0].y = boiteEnglobanteModele_.coinMax.y;
+
+	// Le coin du quad en haut à gauche.
+	quadEnglobant_.coins[1].x = boiteEnglobanteModele_.coinMin.x;
+	quadEnglobant_.coins[1].y = boiteEnglobanteModele_.coinMax.y;
+
+	// Le coin du quad en bas à gauche.
+	quadEnglobant_.coins[2].x = boiteEnglobanteModele_.coinMin.x;
+	quadEnglobant_.coins[2].y = boiteEnglobanteModele_.coinMin.y;
+	
+	// Le coin du quad en bas à droite.
+	quadEnglobant_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
+	quadEnglobant_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
+
+	mettreAJourQuadEnglobantConcret(positionRelative);
+}
+
+
+
+//TODO: Documentation.
+void NoeudAbstrait::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
+{
+
+}
+
 
 
 /// Accepter un visiteur

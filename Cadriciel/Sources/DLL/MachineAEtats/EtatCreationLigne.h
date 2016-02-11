@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file EtatCreationLigneNoire.h
+/// @file EtatCreationLigne.h
 /// @author 
 /// @date 2016-01-22
 /// @version 1.0
@@ -16,11 +16,11 @@
 #include <iostream>
 #include <vector>
 
-class EtatCreationLigneNoire : public EtatAbstrait
+class EtatCreationLigne: public EtatAbstrait
 {
 public:
-	EtatCreationLigneNoire();
-	virtual ~EtatCreationLigneNoire();
+	EtatCreationLigne();
+	virtual ~EtatCreationLigne();
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
@@ -31,6 +31,8 @@ public:
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 
 private:
+	std::unique_ptr<VisiteurCreationLigne> visiteurCreationLigne_;
+
 	void calculerPositionCentreLigne();
 	
 	NoeudAbstrait* ligne_{ nullptr };
@@ -40,7 +42,7 @@ private:
 
 };
 
-#endif
+#endif /// ETAT_CREATION_LIGNE_H
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

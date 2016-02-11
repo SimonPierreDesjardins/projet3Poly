@@ -12,6 +12,9 @@
 #define ETAT_DUPLICATION_H
 
 #include "EtatAbstrait.h"
+#include "VisiteurDuplication.h"
+#include "VisiteurVerificationQuad.h"
+
 
 class EtatDuplication : public EtatAbstrait
 {
@@ -23,10 +26,15 @@ public:
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 	virtual void gererToucheEchappe();
 
+protected:
+	virtual void reinitialiser();
+
 private:
+	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
+	
 	NoeudAbstrait* duplication_{ nullptr };
 	bool enDuplication_{ false };
-
 };
 
 #endif

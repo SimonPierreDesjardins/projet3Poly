@@ -99,6 +99,11 @@ namespace utilitaire {
 	   glm::dvec3 coinMax;
    };
 
+   struct QuadEnglobant
+   {
+	   glm::dvec3 coins[4];
+   };
+
    /// Calcule la sphère englobante
    SphereEnglobante calculerSphereEnglobante(modele::Modele3D const& modele);
 

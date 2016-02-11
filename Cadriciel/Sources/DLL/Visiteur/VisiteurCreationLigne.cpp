@@ -17,14 +17,7 @@
 
 VisiteurCreationLigne::VisiteurCreationLigne()
 {
-
 }
-
-VisiteurCreationLigne::VisiteurCreationLigne(const int& x, const int& y)
-: VisiteurAbstrait(x, y)
-{
-}
-
 
 VisiteurCreationLigne::~VisiteurCreationLigne()
 {

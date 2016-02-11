@@ -18,9 +18,7 @@ class VisiteurDepart : public VisiteurAbstrait
 public:
 	/// Constructeur par défaut.
 	VisiteurDepart();
-	
-	/// Constructeur par paramètre
-	VisiteurDepart(const int& x, const int& y);
+
 	/// Destructeur.
 	virtual ~VisiteurDepart();
 

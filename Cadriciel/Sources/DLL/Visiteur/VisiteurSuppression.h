@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurSuppression();
 
-	// Constructeur par paramètre.
-	VisiteurSuppression(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurSuppression();
 

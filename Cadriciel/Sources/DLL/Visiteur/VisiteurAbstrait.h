@@ -45,8 +45,7 @@ class VisiteurAbstrait
 public:
 	/// Constructeur par défaut.
 	VisiteurAbstrait();
-	// Constructeur par paramètre.
-	VisiteurAbstrait(const int& x, const int& y);
+
 	/// Destructeur.
 	virtual ~VisiteurAbstrait();
 

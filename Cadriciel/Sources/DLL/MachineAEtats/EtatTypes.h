@@ -11,7 +11,7 @@
 #ifndef ETAT_TYPES_H
 #define ETAT_TYPES_H
 
-#include "EtatCreationLigneNoire.h"
+#include "EtatCreationLigne.h"
 #include "EtatCreationMur.h"
 #include "EtatCreationPoteau.h"
 #include "EtatDeplacement.h"
@@ -21,7 +21,7 @@
 #include "EtatSelection.h"
 #include "EtatLoupe.h"
 
-#endif /// Header pour les états
+#endif /// ETAT_TYPES_H 
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

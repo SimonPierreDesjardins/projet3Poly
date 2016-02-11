@@ -28,6 +28,8 @@ public:
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 
 private:
+	std::unique_ptr<VisiteurCreationMur> visiteurCreationMur_;
+
 	bool enCreation_{ false };
 	glm::dvec3 positionPremierClic_;
 	NoeudAbstrait* mur_{ nullptr };

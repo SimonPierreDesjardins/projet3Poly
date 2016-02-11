@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurCreationPoteau();
 
-	// Constructeur par paramètre.
-	VisiteurCreationPoteau(const int& x, const int& y);
-	
 	/// Destructeur.
 	virtual ~VisiteurCreationPoteau();
 
@@ -29,9 +26,7 @@ public:
 	virtual void visiter(ArbreRendu* noeud);
 	/// Creation de poteau sur la table.
 	virtual void visiter(NoeudTable* noeud);
-	virtual void visiter(NoeudPoteau* noeud);
 };
-
 
 #endif // VISITEUR_CREATION_POTEAU_H
 

@@ -12,6 +12,8 @@
 #define ETAT_MISE_A_ECHELLE_H
 
 #include "EtatAbstrait.h"
+#include "VisiteurMiseAEchelle.h"
+#include "VisiteurVerificationQuad.h"
 
 class EtatMiseAEchelle : public EtatAbstrait
 {
@@ -21,9 +23,16 @@ public:
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
+
+protected:
+	virtual void reinitialiser();
+
 private:
-	int dernierePositionY_;
-	int positionInitialeY_;
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
+	std::unique_ptr<VisiteurMiseAEchelle> visiteurMiseAEchelle_{ nullptr };
+
+	int dernierePositionY_{ 0 };
+	int positionInitialeY_{ 0 };
 };
 
 #endif

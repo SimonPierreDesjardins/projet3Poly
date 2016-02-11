@@ -28,7 +28,7 @@ public:
 
 	/// Affiche la table.
 	virtual void afficherConcret() const;
-	virtual utilitaire::BoiteEnglobante obtenirBoiteEnglobanteCourante() const;
+	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 

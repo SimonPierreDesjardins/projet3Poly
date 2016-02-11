@@ -27,11 +27,6 @@ VisiteurAbstrait::VisiteurAbstrait()
 
 }
 
-VisiteurAbstrait::VisiteurAbstrait(const int& x, const int& y)
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative_);
-}
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn  VisiteurAbstrait::~VisiteurAbstrait()
