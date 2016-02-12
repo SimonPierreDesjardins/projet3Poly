@@ -59,14 +59,15 @@ public:
    static const std::string NOM_SEGMENT;
    /// La chaîne représentant le type des duplications. 
    static const std::string NOM_DUPLICATION;
-
+   /// La chaîne représentant le type du point de départ. 
+   static const std::string NOM_JONCTION;
    
 
 private:
 	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent);
 	void chargerZoneDefaut();
    /// La chaîne représentant le type du point de départ. 
-   static const std::string NOM_DEPART;
+   static const std::string NOM_DEPART;   
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

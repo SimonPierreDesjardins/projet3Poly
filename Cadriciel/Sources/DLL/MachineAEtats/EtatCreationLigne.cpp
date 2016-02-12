@@ -36,10 +36,6 @@ EtatCreationLigne::~EtatCreationLigne()
 	assignerSymbolePointeur(true);
 }
 
-void EtatCreationLigne::gererClicGaucheEnfonce(const int& x, const int& y)
-{
-}
-
 void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
@@ -71,7 +67,10 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 	else if (enCreation_ && toucheCtrlEnfonce_)
 	{
 		std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+		std::shared_ptr<NoeudAbstrait> jonction = arbre->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
+		jonction->assignerPositionRelative(positionVirtuelle);
 		segment_ = nouveauNoeud.get();
+		ligne_->ajouter(jonction);
 		ligne_->ajouter(nouveauNoeud);
 	}
 	// Clic subsequent sans CTRL enfoncee (dernier clic).

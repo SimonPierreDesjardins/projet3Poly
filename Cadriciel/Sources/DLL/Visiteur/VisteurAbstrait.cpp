@@ -85,3 +85,8 @@ void VisiteurAbstrait::visiter(NoeudDepart* noeud)
 {
 
 }
+
+void VisiteurAbstrait::visiter(NoeudJonction* noeud)
+{
+
+}

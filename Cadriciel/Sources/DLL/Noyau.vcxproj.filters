@@ -226,6 +226,9 @@
     <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudJonction.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -400,6 +403,9 @@
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudJonction.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>

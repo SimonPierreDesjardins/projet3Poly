@@ -95,6 +95,12 @@ void VisiteurSauvegarde::visiter(NoeudDepart* noeud){
 	writer->EndObject();
 }
 
+void VisiteurSauvegarde::visiter(NoeudJonction* noeud){
+	writer->StartObject();
+	noeud->toJson(*writer);
+	writer->EndObject();
+}
+
 void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud){
 	for each(shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants())
 	{

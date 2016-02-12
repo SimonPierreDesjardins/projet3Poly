@@ -24,6 +24,7 @@ class NoeudRobot;
 class NoeudAraignee;
 class NoeudDuplication;
 class NoeudDepart;
+class NoeudJonction;
 
 namespace modele{
 	class Modele3D;
@@ -68,6 +69,7 @@ public:
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudDepart* noeud);
+	virtual void visiter(NoeudJonction* noeud);
 
 protected:
 	glm::dvec3 positionRelative_{ glm::dvec3() };
