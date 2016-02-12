@@ -88,17 +88,20 @@ ArbreRenduINF2990::~ArbreRenduINF2990()
 ////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::initialiser()
 {
-	// On vide l'arbre
-	vider();
-
-	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
-	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
-	shared_ptr<NoeudAbstrait> noeudDepart{ creerNoeud(NOM_DEPART) };
-
-	ajouter(noeudTable);
-	noeudTable->ajouter(noeudDepart);
+	chargerZoneDefaut();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ArbreRenduINF2990::chargerZoneDefaut()
+///
+/// Cette fonction crée la structure de base de l'arbre de rendu, c'est-à-dire
+/// avec les noeuds structurants (pour les objets, les murs, les billes,
+/// les parties statiques, etc.) à partir du fichier JSON zone_par_defaut.json
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::chargerZoneDefaut(){
 	vider();
 	rapidjson::Document doc;
@@ -148,7 +151,6 @@ void ArbreRenduINF2990::chargerZone(){
 }
 
 void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent){
-	std::cout << noeudJSON->FindMember("type")->value.GetString() << std::endl;
 	shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
 	noeud->fromJson(noeudJSON);
 	parent->ajouter(noeud);

@@ -13,8 +13,12 @@ namespace InterfaceGraphique
 {    
     public partial class Window : Form, IMessageFilter
     {
+        //File explorer pour sauvegarder et ouvrir des fichiers de zones
         private System.Windows.Forms.OpenFileDialog zoneFileSystem;
+
+        //Chemin initial pour le file explorer
         string initialPath = System.IO.Path.GetFullPath("./../Zones/");
+
         private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
         private const int WM_LBUTTONDOWN =  0x0201;
@@ -411,6 +415,11 @@ namespace InterfaceGraphique
 
         private void nouveauMenuEdition__Click(object sender, EventArgs e)
         {
+            nouvelleZone();
+        }
+
+        private void nouvelleZone()
+        {
             DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
@@ -428,6 +437,11 @@ namespace InterfaceGraphique
         }
 
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
+        {
+            enregistrerSous();            
+        }
+
+        private void enregistrerSous()
         {
             DialogResult dialogResult = zoneFileSystem.ShowDialog();
             bool correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
@@ -449,10 +463,15 @@ namespace InterfaceGraphique
                 FonctionsNatives.sauvegarder();
                 enregistrerMenuEdition_.Enabled = true;
             }
-            
         }
 
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        {
+
+            ouvrirZone();
+        }
+
+        private void ouvrirZone()
         {
             if (zoneFileSystem.ShowDialog() == DialogResult.OK)
             {
@@ -460,7 +479,6 @@ namespace InterfaceGraphique
                 FonctionsNatives.charger();
                 enregistrerMenuEdition_.Enabled = true;
             }
-            
         }
 
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -493,6 +511,21 @@ namespace InterfaceGraphique
 
                 }
             }
+            else if (e.KeyCode == Keys.S && e.Control)
+            {
+                if (enregistrerMenuEdition_.Enabled)
+                    FonctionsNatives.sauvegarder();
+                else
+                    enregistrerSous();
+            }
+            else if (e.KeyCode == Keys.O && e.Control)
+            {
+                ouvrirZone();
+            }
+            else if (e.KeyCode == Keys.N && e.Control)
+            {
+                nouvelleZone();
+            }
             else if (e.KeyCode == Keys.D)
             {
                 changeIconColor();
@@ -523,6 +556,7 @@ namespace InterfaceGraphique
                 changeIconColor();
                 outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
             }
+            
         }
 
         private void textboxDimension__Enter_1(object sender, EventArgs e)

@@ -412,6 +412,10 @@ extern "C"
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
 					break;
 
+				case VK_CONTROL+VK_KEY_S:
+					//FacadeModele::obtenirInstance()->obtenirMode()->
+					break;
+
 				case VK_RIGHT:
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
 					break;
