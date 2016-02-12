@@ -376,7 +376,7 @@
             this.outilsCreationLigne_});
             this.barreOutils_.Location = new System.Drawing.Point(201, 394);
             this.barreOutils_.Name = "barreOutils_";
-            this.barreOutils_.Size = new System.Drawing.Size(250, 25);
+            this.barreOutils_.Size = new System.Drawing.Size(219, 25);
             this.barreOutils_.Stretch = true;
             this.barreOutils_.TabIndex = 7;
             this.barreOutils_.Text = "toolStrip1";
@@ -495,7 +495,7 @@
             this.textBoxPositionY_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionY_.TabIndex = 7;
             this.textBoxPositionY_.TabStop = false;
-            this.textBoxPositionY_.Click += new System.EventHandler(this.textBoxPositionY__Click);
+            this.textBoxPositionY_.Enter += new System.EventHandler(this.textBoxPositionY__Enter);
             this.textBoxPositionY_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionY__KeyDown);
             // 
             // textBoxPositionX_
@@ -505,7 +505,7 @@
             this.textBoxPositionX_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionX_.TabIndex = 6;
             this.textBoxPositionX_.TabStop = false;
-            this.textBoxPositionX_.Click += new System.EventHandler(this.textBoxPositionX__Click);
+            this.textBoxPositionX_.Enter += new System.EventHandler(this.textBoxPositionX__Enter_1);
             this.textBoxPositionX_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionX__KeyDown);
             // 
             // textBoxRotation_
@@ -515,7 +515,7 @@
             this.textBoxRotation_.Size = new System.Drawing.Size(84, 20);
             this.textBoxRotation_.TabIndex = 5;
             this.textBoxRotation_.TabStop = false;
-            this.textBoxRotation_.Click += new System.EventHandler(this.textBoxRotation__Click);
+            this.textBoxRotation_.Enter += new System.EventHandler(this.textBoxRotation__Enter_1);
             this.textBoxRotation_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotation__KeyDown);
             // 
             // textboxDimension_
@@ -525,7 +525,7 @@
             this.textboxDimension_.Size = new System.Drawing.Size(84, 20);
             this.textboxDimension_.TabIndex = 4;
             this.textboxDimension_.TabStop = false;
-            this.textboxDimension_.Click += new System.EventHandler(this.textboxDimension__Click);
+            this.textboxDimension_.Enter += new System.EventHandler(this.textboxDimension__Enter_1);
             this.textboxDimension_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxDimension__KeyDown);
             // 
             // panneauPositionY_

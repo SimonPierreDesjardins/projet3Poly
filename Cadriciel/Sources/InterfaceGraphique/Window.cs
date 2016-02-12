@@ -92,17 +92,6 @@ namespace InterfaceGraphique
 
         private void afficherMenuPrincipal(bool afficherMenu)
         {
-            //TODO: Libérer le viewport au menu principal
-            /*
-            if (afficherMenu)
-            {
-                FonctionsNatives.libererOpenGL();
-            }
-            else
-            {
-                InitialiserAnimation();
-            }
-             * */
             bouttonConfiguration_.Visible = afficherMenu;
             bouttonEditeur_.Visible = afficherMenu;
             bouttonQuitter_.Visible = afficherMenu;
@@ -113,18 +102,24 @@ namespace InterfaceGraphique
             panneauOperation_.Visible = !afficherMenu;
         }
 
-        private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
+        private void changeIconColor()
         {
-            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
-            outilsDéplacement_.BackColor = Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
             outilsSelection_.BackColor = System.Drawing.Color.Gray;
             outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
             outilsDuplication_.BackColor = System.Drawing.Color.Gray;
             outilsZoom_.BackColor = System.Drawing.Color.Gray;
             outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
             outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
             outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+        }
+
+        private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            changeIconColor();
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
         }
 
@@ -137,104 +132,55 @@ namespace InterfaceGraphique
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
-            outilsDéplacement_.BackColor = Color.Gray;
+            changeIconColor();
             outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             viewPort_.Focus();
         }
 
         private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            changeIconColor();
             outilsDéplacement_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             viewPort_.Focus();
         }
 
         private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
-            outilsDéplacement_.BackColor = Color.Gray;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            changeIconColor();
             outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             viewPort_.Focus();
         }
 
         private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
-            outilsDéplacement_.BackColor = Color.Gray;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            changeIconColor();
             outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             viewPort_.Focus();
         }
 
         private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
-            outilsDéplacement_.BackColor = Color.Gray;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            changeIconColor();
             outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             viewPort_.Focus();
         }
 
         private void murToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
-            outilsDéplacement_.BackColor = Color.Gray;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            changeIconColor();
             outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             viewPort_.Focus();
         }
 
         private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
-            outilsDéplacement_.BackColor = Color.Gray;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            changeIconColor();
             outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
         }
@@ -255,127 +201,64 @@ namespace InterfaceGraphique
         private void outilsSelection__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
+            changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsDéplacement__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            changeIconColor();
             outilsDéplacement_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsRotation__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
+            changeIconColor();
             outilsRotation_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsMiseAEchelle__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            changeIconColor();
             outilsMiseAEchelle_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsDuplication__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+            changeIconColor();
             outilsDuplication_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsZoom__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
+            changeIconColor();
             outilsZoom_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+            changeIconColor();
             outilsCreationPoteau_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsCreationMurs__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+            changeIconColor();
             outilsCreationMurs_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsCreationLigne__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+            changeIconColor();
             outilsCreationLigne_.BackColor = Color.CadetBlue;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void modeTestModeEdition__Click(object sender, EventArgs e)
@@ -533,15 +416,8 @@ namespace InterfaceGraphique
         private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
-            outilsDéplacement_.BackColor = Color.Gray;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            changeIconColor();
             outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             viewPort_.Focus();
         }
 
@@ -553,26 +429,6 @@ namespace InterfaceGraphique
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
         {
             Process.Start(@"explorer.exe");
-        }
-
-        private void textboxDimension__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
-        }
-
-        private void textBoxRotation__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
-        }
-
-        private void textBoxPositionX__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
-        }
-
-        private void textBoxPositionY__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
         }
 
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -607,76 +463,54 @@ namespace InterfaceGraphique
             }
             else if (e.KeyCode == Keys.D)
             {
-                outilsCreationMurs_.BackColor = Color.Gray;
-                outilsSelection_.BackColor = System.Drawing.Color.Gray;
+                changeIconColor();
                 outilsDéplacement_.BackColor = Color.CadetBlue;
-                outilsRotation_.BackColor = System.Drawing.Color.Gray;
-                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-                outilsZoom_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             }
             else if (e.KeyCode == Keys.S)
             {
-                outilsCreationMurs_.BackColor = Color.Gray;
+                changeIconColor();
                 outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
-                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-                outilsRotation_.BackColor = System.Drawing.Color.Gray;
-                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-                outilsZoom_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             }
             else if (e.KeyCode == Keys.R)
             {
-                outilsCreationMurs_.BackColor = Color.Gray;
-                outilsSelection_.BackColor = System.Drawing.Color.Gray;
-                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+                changeIconColor();
                 outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
-                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-                outilsZoom_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             }
             else if (e.KeyCode == Keys.E)
             {
-                outilsCreationMurs_.BackColor = Color.Gray;
-                outilsSelection_.BackColor = System.Drawing.Color.Gray;
-                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-                outilsRotation_.BackColor = System.Drawing.Color.Gray;
+                changeIconColor();
                 outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
-                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-                outilsZoom_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             }
             else if (e.KeyCode == Keys.C)
             {
-                outilsCreationMurs_.BackColor = Color.Gray;
-                outilsSelection_.BackColor = System.Drawing.Color.Gray;
-                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-                outilsRotation_.BackColor = System.Drawing.Color.Gray;
-                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+                changeIconColor();
                 outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
-                outilsZoom_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             }
             else if (e.KeyCode == Keys.Z)
             {
-                outilsCreationMurs_.BackColor = Color.Gray;
-                outilsSelection_.BackColor = System.Drawing.Color.Gray;
-                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
-                outilsRotation_.BackColor = System.Drawing.Color.Gray;
-                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+                changeIconColor();
                 outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
-                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             }
+        }
+
+        private void textboxDimension__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxRotation__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxPositionX__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxPositionY__Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
         }
 
     }
