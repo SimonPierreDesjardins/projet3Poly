@@ -11,5 +11,6 @@
 #include "NoeudSegment.h"
 #include "NoeudDuplication.h"
 #include "NoeudDepart.h"
+#include "NoeudJonction.h"
 
 #endif /// __NOEUD_TYPES_H__

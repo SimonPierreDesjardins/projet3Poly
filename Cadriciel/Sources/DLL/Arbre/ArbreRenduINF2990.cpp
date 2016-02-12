@@ -34,6 +34,8 @@ const std::string ArbreRenduINF2990::NOM_SEGMENT{ "segment" };
 const std::string ArbreRenduINF2990::NOM_DUPLICATION{ "duplication" };
 /// La chaîne représentant le type du point de départ.
 const std::string ArbreRenduINF2990::NOM_DEPART{ "depart" };
+/// La chaîne représentant le type du point de départ.
+const std::string ArbreRenduINF2990::NOM_JONCTION{ "jonction" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -53,11 +55,12 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigne>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
 	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
-	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau2.obj" }));	
+	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau2.obj" }));
 	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry4.obj" }));
 	ajouterUsine(NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/ligneNoire2.obj" }));
 	ajouterUsine(NOM_DUPLICATION, std::make_unique<UsineNoeud<NoeudDuplication>>(NOM_DUPLICATION, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(NOM_DEPART, std::make_unique<UsineNoeud<NoeudDepart>>(NOM_DEPART, std::string{ "media/modeles/FlecheDepart.obj" }));
+	ajouterUsine(NOM_JONCTION, std::make_unique<UsineNoeud<NoeudJonction>>(NOM_JONCTION, std::string{ "media/modeles/junctionCircle.obj" }));
 }
 
 ////////////////////////////////////////////////////////////////////////
