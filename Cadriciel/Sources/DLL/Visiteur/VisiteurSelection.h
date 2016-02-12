@@ -34,13 +34,25 @@ public:
 	virtual void visiterRectangle(NoeudTable* noeud);
 
 	//Indique si la touche control est appuyee
-	void assignerControl(bool estControl);
-
+	void assignerControl(bool ctrlAppuye);
+	inline void assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic);
 	bool estDansRectangleElastique(glm::dvec3 coinRectElastMin, glm::dvec3 coinRectElastMax, glm::dvec3 p1, glm::dvec3 p2, glm::dvec3 p3, glm::dvec3 p4);
 
 private:
 	bool ctrlAppuye_ = false;
+	glm::dvec3 coinsRectangleElastique[4];
 };
+
+
+inline void VisiteurSelection::assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic)
+{
+	coinsRectangleElastique[0] = positionDeuxiemeClic;
+	coinsRectangleElastique[1].x = positionPremierClic.x;
+	coinsRectangleElastique[1].y = positionDeuxiemeClic.y;
+	coinsRectangleElastique[2] = positionPremierClic;
+	coinsRectangleElastique[3].x = positionDeuxiemeClic.x;
+	coinsRectangleElastique[3].y = positionDeuxiemeClic.y;
+}
 
 #endif // VISITEUR_SELECTION_H
 

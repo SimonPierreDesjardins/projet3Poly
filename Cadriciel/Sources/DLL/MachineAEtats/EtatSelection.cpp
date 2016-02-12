@@ -17,7 +17,6 @@
 #include "glm\glm.hpp"
 
 
-
 EtatSelection::EtatSelection()
 {
 	std::cout << "Selection d'un object" << std::endl;
@@ -87,9 +86,8 @@ void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const 
 	std::cout << "Drag gauche : " << xAvant << " " << yAvant << " a " << xApres << " " << yApres << std::endl;
 	glm::dvec3 positionRelativeAvant, positionRelativeApres;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xAvant, yAvant, positionRelativeAvant);
-	visiteurSelection_->assignerPositionRelativeAvant(positionRelativeAvant);
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xApres, yApres, positionRelativeApres);
-	visiteurSelection_->assignerPositionRelativeApres(positionRelativeApres);
+	visiteurSelection_->assignerPositionRectElast(positionRelativeAvant, positionRelativeApres);
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurSelection_.get());
 }
 
