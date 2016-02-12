@@ -4,30 +4,69 @@
 #include "rapidjson\filewritestream.h"
 #include "NoeudComposite.h"
 #include "ArbreRenduINF2990.h"
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurSauvegarde::VisiteurSauvegarde()
+///
+/// Constructeur par défaut.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurSauvegarde::VisiteurSauvegarde()
 {
 	
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurSauvegarde::~VisiteurSauvegarde()
+///
+/// Destructeur déclaré virtuel pour les classes dérivées.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurSauvegarde::~VisiteurSauvegarde()
 {
 	delete writer;
 }
 
-
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(ArbreRendu* noeud)
+///
+/// Sauvegarde la racine d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers la racine de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(ArbreRendu* noeud)
 {
 	FILE* fp = noeud->obtenirFichierZone("wb");
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
-	writer = new rapidjson::PrettyWriter<rapidjson::FileWriteStream>(os);
+	writer = new rapidjson::Writer<rapidjson::FileWriteStream>(os);
 	writer->StartObject();
 	noeud->chercher(0)->accepterVisiteur(this);
 	writer->EndObject();
 	fclose(fp);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudTable* noeud)
+///
+/// Sauvegarde le noeud table d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud table de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudTable* noeud)
 {
 	writer->Key(noeud->obtenirType().c_str());
@@ -42,6 +81,17 @@ void VisiteurSauvegarde::visiter(NoeudTable* noeud)
 	writer->EndObject();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudPoteau* noeud)
+///
+/// Sauvegarde les noeuds poteaux d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud poteau de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudPoteau* noeud)
 {
 	writer->StartObject();
@@ -49,6 +99,17 @@ void VisiteurSauvegarde::visiter(NoeudPoteau* noeud)
 	writer->EndObject();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudMur* noeud)
+///
+/// Sauvegarde les noeuds murs d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud mur de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudMur* noeud)
 {
 	writer->StartObject();
@@ -56,6 +117,17 @@ void VisiteurSauvegarde::visiter(NoeudMur* noeud)
 	writer->EndObject();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudLigneNoire* noeud)
+///
+/// Sauvegarde les noeuds lignes d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud mur de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudLigneNoire* noeud)
 {
 	writer->StartObject();
@@ -69,19 +141,17 @@ void VisiteurSauvegarde::visiter(NoeudLigneNoire* noeud)
 	writer->EndObject();
 }
 
-void VisiteurSauvegarde::visiter(NoeudDuplication* noeud)
-{
-	writer->StartObject();
-	noeud->toJson(*writer);
-	if (noeud->obtenirNombreEnfants() > 0){
-		writer->Key("noeudsEnfants");
-		writer->StartArray();
-		visiterEnfants(noeud);
-		writer->EndArray();
-	}
-	writer->EndObject();
-}
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudSegment* noeud)
+///
+/// Sauvegarde les noeuds segments composant une ligne d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud segment de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudSegment* noeud)
 {
 	writer->StartObject();
@@ -89,19 +159,55 @@ void VisiteurSauvegarde::visiter(NoeudSegment* noeud)
 	writer->EndObject();
 }
 
-void VisiteurSauvegarde::visiter(NoeudDepart* noeud){
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudDepart* noeud)
+///
+/// Sauvegarde le noeud depart d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud depart de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudDepart* noeud)
+{
 	writer->StartObject();
 	noeud->toJson(*writer);
 	writer->EndObject();
 }
 
-void VisiteurSauvegarde::visiter(NoeudJonction* noeud){
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudJonction* noeud)
+///
+/// Sauvegarde les noeuds jonctions composant une ligne d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud jonction de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudJonction* noeud)
+{
 	writer->StartObject();
 	noeud->toJson(*writer);
 	writer->EndObject();
 }
 
-void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud){
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
+///
+/// Appel la méthode accepterVisiteur pour tous les enfants d'un noeud composite(ligne ou table)
+///
+/// @param[in] noeud : Pointeur vers le noeud ayant des enfants.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
+{
 	for each(shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants())
 	{
 		noeudAbs->accepterVisiteur(this);

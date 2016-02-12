@@ -17,7 +17,7 @@ namespace InterfaceGraphique
         private System.Windows.Forms.OpenFileDialog zoneFileSystem;
 
         //Chemin initial pour le file explorer
-        string initialPath = System.IO.Path.GetFullPath("./../Zones/");
+        string initialPath;
 
         private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
@@ -46,6 +46,7 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             zoneFileSystem = new OpenFileDialog();
+            initialPath = System.IO.Path.GetFullPath("./../Zones/");
             zoneFileSystem.InitialDirectory = initialPath;
             zoneFileSystem.Filter = "Fichiers textes et JSON (*.txt, *.json)|*.txt;*.json";
             supprimerToolStripMenuItem.Enabled = false;
