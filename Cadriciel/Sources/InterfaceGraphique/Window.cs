@@ -383,36 +383,6 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
-        private void viewPort__MouseClick(object sender, MouseEventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(true);
-            if (FonctionsNatives.obtenirEtat() == 0)
-            {
-                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-                if (nbEnfant == 1)
-                {
-                    textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-                    textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-                    viewPort_.Focus();
-                    panneauOperation_.Visible = true;
-                    supprimerToolStripMenuItem.Enabled = true;
-                }
-                else if (nbEnfant > 1)
-                {
-                    supprimerToolStripMenuItem.Enabled = true;
-                    panneauOperation_.Visible = false;
-                }
-                else
-                {
-                    panneauOperation_.Visible = false;
-                    supprimerToolStripMenuItem.Enabled = false;
-                }
-                    
-            }
-        }
-
         private void nouveauMenuEdition__Click(object sender, EventArgs e)
         {
             nouvelleZone();
@@ -424,6 +394,7 @@ namespace InterfaceGraphique
             if (dialogResult == DialogResult.Yes)
             {
                 FonctionsNatives.nouvelleTable();
+                panneauOperation_.Visible = false;
                 enregistrerMenuEdition_.Enabled = false;
             }
         }
@@ -467,7 +438,6 @@ namespace InterfaceGraphique
 
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
         {
-
             ouvrirZone();
         }
 
@@ -478,85 +448,71 @@ namespace InterfaceGraphique
                 FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
                 FonctionsNatives.charger();
                 enregistrerMenuEdition_.Enabled = true;
+                panneauOperation_.Visible = false;
             }
         }
 
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Delete)
+            switch(e.KeyCode)
             {
-                if (FonctionsNatives.obtenirEtat() == 0)
-                {
-                    int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-                    if (nbEnfant == 1)
+                case Keys.Delete:
+                    verificationDuNombreElementChoisi();
+                    break;
+
+                case Keys.S:
+                    if (e.Control)
                     {
-                        textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-                        textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-                        textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-                        textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-                        viewPort_.Focus();
-                        panneauOperation_.Visible = true;
-                        supprimerToolStripMenuItem.Enabled = true;
-                    }
-                    else if (nbEnfant > 1)
-                    {
-                        supprimerToolStripMenuItem.Enabled = true;
-                        panneauOperation_.Visible = false;
+                        if (enregistrerMenuEdition_.Enabled)
+                            FonctionsNatives.sauvegarder();
+                        else
+                            enregistrerSous();
                     }
                     else
                     {
-                        panneauOperation_.Visible = false;
-                        supprimerToolStripMenuItem.Enabled = false;
+                        changeIconColor();
+                        outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
                     }
+                    break;
 
-                }
-            }
-            else if (e.KeyCode == Keys.S && e.Control)
-            {
-                if (enregistrerMenuEdition_.Enabled)
-                    FonctionsNatives.sauvegarder();
-                else
-                    enregistrerSous();
-            }
-            else if (e.KeyCode == Keys.O && e.Control)
-            {
-                ouvrirZone();
-            }
-            else if (e.KeyCode == Keys.N && e.Control)
-            {
-                nouvelleZone();
-            }
-            else if (e.KeyCode == Keys.D)
-            {
-                changeIconColor();
-                outilsDéplacement_.BackColor = Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.S)
-            {
-                changeIconColor();
-                outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.R)
-            {
-                changeIconColor();
-                outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.E)
-            {
-                changeIconColor();
-                outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.C)
-            {
-                changeIconColor();
-                outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.Z)
-            {
-                changeIconColor();
-                outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            
+                case Keys.O:
+                    if (e.Control)
+                        ouvrirZone();
+                    break;
+
+                case Keys.N:
+                    if (e.Control)
+                        nouvelleZone();
+                    break;
+
+                case Keys.D:
+                    changeIconColor();
+                    outilsDéplacement_.BackColor = Color.CadetBlue;
+                    break;
+
+                case Keys.R:
+                    changeIconColor();
+                    outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+                     
+                case Keys.E:
+                    changeIconColor();
+                    outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                case Keys.C:
+                    changeIconColor();
+                    outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                case Keys.Z:
+                    changeIconColor();
+                    outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                default:
+                    break;
+            }     
         }
 
         private void textboxDimension__Enter_1(object sender, EventArgs e)
@@ -582,6 +538,42 @@ namespace InterfaceGraphique
         private void textBoxPositionY__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void verificationDuNombreElementChoisi ()
+        {
+            FonctionsNatives.assignerAutorisationInput(true);
+            if (FonctionsNatives.obtenirEtat() == 0)
+            {
+                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+                if (nbEnfant == 1)
+                {
+                    textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+                    textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                    viewPort_.Focus();
+                    panneauOperation_.Visible = true;
+                    supprimerToolStripMenuItem.Enabled = true;
+                }
+                else if (nbEnfant > 1)
+                {
+                    supprimerToolStripMenuItem.Enabled = true;
+                    panneauOperation_.Visible = false;
+                }
+                else
+                {
+                    panneauOperation_.Visible = false;
+                    supprimerToolStripMenuItem.Enabled = false;
+                }
+
+            }
+            viewPort_.Focus();
+        }
+
+        private void viewPort__MouseUp(object sender, MouseEventArgs e)
+        {
+            verificationDuNombreElementChoisi();
         }
 
     }
