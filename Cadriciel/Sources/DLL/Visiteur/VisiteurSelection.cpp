@@ -54,7 +54,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 
 			glm::dvec3 pointBoite1, pointBoite2, pointBoite3, pointBoite4;
 			glm::dvec3 p1, p2, p3, p4;
-			double droite12A, droite12K, droite23A, droite23K, droite34A, droite34K, droite41A, droite41K;
+			double droite12A, droite12K, droite23A, droite23K, droite34A, droite34K, droite41A, droite41K = 0.0;
 			bool estDansBoite = false;
 			int angle = 0; // 0 : 0-90, 1 : 90-180, 2 : 180-270, 3 : 270-360
 			double angleRot;
@@ -413,7 +413,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 
 			glm::dvec3 pointBoite1, pointBoite2, pointBoite3, pointBoite4;
 			glm::dvec3 p1, p2, p3, p4;
-			double droite12A, droite12K, droite23A, droite23K, droite34A, droite34K, droite41A, droite41K;
+			//double droite12A, droite12K, droite23A, droite23K, droite34A, droite34K, droite41A, droite41K;
 			bool estDansBoite = false;
 			int angle = 0; // 0 : 0-90, 1 : 90-180, 2 : 180-270, 3 : 270-360
 			double angleRot;

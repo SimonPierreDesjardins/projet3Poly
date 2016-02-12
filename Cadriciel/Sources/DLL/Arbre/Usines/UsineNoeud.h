@@ -17,6 +17,7 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+//TODO: à enlever.
 using namespace std;
 
 class NoeudAbstrait;
@@ -31,7 +32,7 @@ class NoeudAbstrait;
 ///////////////////////////////////////////////////////////////////////////
 class UsineAbstraite{
 public:
-	virtual shared_ptr<NoeudAbstrait> creerNoeud() const = 0;
+	virtual std::shared_ptr<NoeudAbstrait> creerNoeud() const = 0;
 	virtual ~UsineAbstraite() = default;
 protected:
 	UsineAbstraite(std::string nom) : nom_(nom) {}
@@ -41,7 +42,8 @@ protected:
 	inline const std::string& obtenirNom() const;
 private:
 	/// Le nom associé à l'usine
-	std::string nom_{ "" };
+	//TODO: initialisation à faire pour la version release.
+	std::string nom_;
 };
 
 
@@ -79,7 +81,7 @@ public:
    }
 
    /// Fonction à surcharger pour la création d'un noeud.
-   virtual shared_ptr<NoeudAbstrait> creerNoeud() const override;
+   virtual std::shared_ptr<NoeudAbstrait> creerNoeud() const override;
 
    /// Constructeur qui prend le nom associé à l'usine.
 	UsineNoeud(const std::string& nomUsine, const std::string& nomModele) 
@@ -108,10 +110,10 @@ protected:
 ///
 ////////////////////////////////////////////////////////////////////////
 template <typename Noeud>
-shared_ptr<NoeudAbstrait> UsineNoeud<Noeud>::creerNoeud() const
+std::shared_ptr<NoeudAbstrait> UsineNoeud<Noeud>::creerNoeud() const
 {
 	static_assert(std::is_base_of<NoeudAbstrait, Noeud>::value, R"(Une usine de noeuds ne peut creer que des types de noeuds dérivant de NoeudAbstrait.)");
-	shared_ptr<NoeudAbstrait> noeud = make_shared<Noeud>(obtenirNom());
+	std::shared_ptr<NoeudAbstrait> noeud = std::make_shared<Noeud>(obtenirNom());
 	noeud->assignerObjetRendu(&modele_, &vbo_);
 	return noeud;
 }
