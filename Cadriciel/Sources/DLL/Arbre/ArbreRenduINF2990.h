@@ -59,6 +59,8 @@ public:
    static const std::string NOM_DUPLICATION;
    /// La chaîne représentant le type du point de départ. 
    static const std::string NOM_DEPART;
+   /// La chaîne représentant le type du point de départ. 
+   static const std::string NOM_JONCTION;
 
 };
 
