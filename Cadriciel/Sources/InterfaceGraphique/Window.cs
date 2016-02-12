@@ -80,7 +80,9 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
+            panneauOperation_.Visible = false;
             FonctionsNatives.assignerMode(Mode.EDITION);
+            viewPort_.Focus();
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -108,12 +110,22 @@ namespace InterfaceGraphique
             viewPort_.Visible = !afficherMenu;
             menuEdition_.Visible = !afficherMenu;
             barreOutils_.Visible = !afficherMenu;
-            panneauOperation_.Visible = afficherMenu;
+            panneauOperation_.Visible = !afficherMenu;
         }
 
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -125,36 +137,106 @@ namespace InterfaceGraphique
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            outilsDéplacement_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void murToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void Window_Resize(object sender, EventArgs e)
@@ -173,46 +255,127 @@ namespace InterfaceGraphique
         private void outilsSelection__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
+            outilsSelection_.BackColor = Color.CadetBlue;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsDéplacement__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            outilsDéplacement_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsRotation__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
+            outilsRotation_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsMiseAEchelle__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            outilsMiseAEchelle_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsDuplication__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+            outilsDuplication_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsZoom__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
+            outilsZoom_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+            outilsCreationPoteau_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsCreationMurs__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+            outilsCreationMurs_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void outilsCreationLigne__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+            outilsCreationLigne_.BackColor = Color.CadetBlue;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void modeTestModeEdition__Click(object sender, EventArgs e)
@@ -237,6 +400,7 @@ namespace InterfaceGraphique
             if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
             {
                 popup.Dispose();
+                viewPort_.Focus();
             }
         }
 
@@ -324,6 +488,7 @@ namespace InterfaceGraphique
             FonctionsNatives.suppression();
             supprimerToolStripMenuItem.Enabled = false;
             panneauOperation_.Visible = false;
+            viewPort_.Focus();
         }
 
         private void viewPort__MouseClick(object sender, MouseEventArgs e)
@@ -368,6 +533,16 @@ namespace InterfaceGraphique
         private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
+            outilsDéplacement_.BackColor = Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            viewPort_.Focus();
         }
 
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
@@ -429,6 +604,78 @@ namespace InterfaceGraphique
                     }
 
                 }
+            }
+            else if (e.KeyCode == Keys.D)
+            {
+                outilsCreationMurs_.BackColor = Color.Gray;
+                outilsSelection_.BackColor = System.Drawing.Color.Gray;
+                outilsDéplacement_.BackColor = Color.CadetBlue;
+                outilsRotation_.BackColor = System.Drawing.Color.Gray;
+                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+                outilsZoom_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            }
+            else if (e.KeyCode == Keys.S)
+            {
+                outilsCreationMurs_.BackColor = Color.Gray;
+                outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
+                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+                outilsRotation_.BackColor = System.Drawing.Color.Gray;
+                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+                outilsZoom_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            }
+            else if (e.KeyCode == Keys.R)
+            {
+                outilsCreationMurs_.BackColor = Color.Gray;
+                outilsSelection_.BackColor = System.Drawing.Color.Gray;
+                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+                outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+                outilsZoom_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            }
+            else if (e.KeyCode == Keys.E)
+            {
+                outilsCreationMurs_.BackColor = Color.Gray;
+                outilsSelection_.BackColor = System.Drawing.Color.Gray;
+                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+                outilsRotation_.BackColor = System.Drawing.Color.Gray;
+                outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+                outilsZoom_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            }
+            else if (e.KeyCode == Keys.C)
+            {
+                outilsCreationMurs_.BackColor = Color.Gray;
+                outilsSelection_.BackColor = System.Drawing.Color.Gray;
+                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+                outilsRotation_.BackColor = System.Drawing.Color.Gray;
+                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+                outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+                outilsZoom_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
+            }
+            else if (e.KeyCode == Keys.Z)
+            {
+                outilsCreationMurs_.BackColor = Color.Gray;
+                outilsSelection_.BackColor = System.Drawing.Color.Gray;
+                outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+                outilsRotation_.BackColor = System.Drawing.Color.Gray;
+                outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+                outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+                outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+                outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+                outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
             }
         }
 
