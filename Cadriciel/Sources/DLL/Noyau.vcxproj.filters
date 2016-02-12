@@ -30,9 +30,6 @@
     <Filter Include="Header Files\Application">
       <UniqueIdentifier>{c845f3fe-60ec-4b69-870e-1b94806be78e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Interface">
-      <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Configuration">
       <UniqueIdentifier>{737950f1-92e0-48cc-99df-484ed3bae29b}</UniqueIdentifier>
     </Filter>
@@ -51,6 +48,9 @@
     </Filter>
     <Filter Include="Header Files\Tests">
       <UniqueIdentifier>{0dbbcffd-49b5-4878-a09c-22650c7a5093}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\MachineAEtats">
       <UniqueIdentifier>{48f0b7e7-fdbd-4be6-91ff-baed38fc0647}</UniqueIdentifier>
@@ -72,6 +72,9 @@
     </Filter>
     <Filter Include="Source Files\Tests">
       <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Arbre\Interface">
+      <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -115,9 +118,6 @@
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp">
-      <Filter>Source Files\MachineAEtats</Filter>
-    </ClCompile>
-    <ClCompile Include="MachineAEtats\EtatCreationLigneNoire.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
     <ClCompile Include="MachineAEtats\EtatCreationMur.cpp">
@@ -204,7 +204,7 @@
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp">
       <Filter>Source Files\Visiteur</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="MachineAEtats\EtatLoupe.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
@@ -219,6 +219,12 @@
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurSauvegarde.cpp">
       <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurVerificationQuad.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -259,7 +265,7 @@
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="Interface\FacadeInterfaceNative.h">
-      <Filter>Header Files\Interface</Filter>
+      <Filter>Header Files\Arbre\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
@@ -268,9 +274,6 @@
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatAbstrait.h">
-      <Filter>Header Files\MachineAEtats</Filter>
-    </ClInclude>
-    <ClInclude Include="MachineAEtats\EtatCreationLigneNoire.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatCreationMur.h">
@@ -293,9 +296,6 @@
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatSelection.h">
       <Filter>Header Files\MachineAEtats</Filter>
-    </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
@@ -371,7 +371,7 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h">
       <Filter>Header Files\Visiteur</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="MachineAEtats\EtatLoupe.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
@@ -386,6 +386,21 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurSauvegarde.h">
       <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurVerificationQuad.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAEtats\EtatTypes.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAEtats\EtatCreationLigne.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

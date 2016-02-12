@@ -95,6 +95,10 @@ public:
 
 protected:
 	/// Le choix du conteneur pour les enfants.
+	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
+
+
+   /// Le choix du conteneur pour les enfants.
 	using conteneur_enfants = std::vector<std::shared_ptr<NoeudAbstrait>>;
    /// La liste des enfants.
    conteneur_enfants enfants_;

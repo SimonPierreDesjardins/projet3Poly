@@ -19,9 +19,8 @@
 
 EtatCreationMur::EtatCreationMur()
 {
-	std::cout << "Creation de mur" << std::endl;
-	visiteur_ = std::make_unique<VisiteurCreationMur>();
 	typeEtat_ = CREATION_MUR;
+	visiteurCreationMur_ = std::make_unique<VisiteurCreationMur>();
 }
 
 EtatCreationMur::~EtatCreationMur()
@@ -42,17 +41,18 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 	{
 		enCreation_ = true;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
-		visiteur_->assignerPositionRelative(positionPremierClic_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur_.get());
-		mur_ = visiteur_.get()->obtenirReferenceNoeud();
-		visiteur_.get()->obtenirReferenceNoeud()->assignerEnCreation(true);
+		visiteurCreationMur_->assignerPositionRelative(positionPremierClic_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationMur_.get());
+		mur_ = visiteurCreationMur_.get()->obtenirReferenceNoeud();
+		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(true);
 	}
 	//Deuxieme clic
 	else
 	{
+		mur_->mettreAJourQuadEnglobant();
 		enCreation_ = false;
 		mur_ = nullptr;
-		visiteur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
+		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
 	}
 }
 
@@ -60,7 +60,7 @@ void EtatCreationMur::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
-		visiteur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
+		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(mur_);
 		enCreation_ = false;
 		mur_ = nullptr;

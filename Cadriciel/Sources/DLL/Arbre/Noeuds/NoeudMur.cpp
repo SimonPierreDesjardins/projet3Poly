@@ -103,22 +103,17 @@ void NoeudMur::afficherConcret() const
 }
 
 
-utilitaire::BoiteEnglobante NoeudMur::obtenirBoiteEnglobanteCourante() const
+void NoeudMur::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
-	utilitaire::BoiteEnglobante boiteEnglobanteCourante;
 	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
-	boiteEnglobanteCourante.coinMin[0] = boiteEnglobanteModele_.coinMin[0] * facteurMiseAEchelle_;
-	boiteEnglobanteCourante.coinMax[0] = boiteEnglobanteModele_.coinMax[0] * facteurMiseAEchelle_;
-
-	// Mettre à jour la position des coins de la boite avec l'angle de rotation du noeud.
-	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMin, boiteEnglobanteCourante.coinMin, angleRotation_);
-	utilitaire::calculerPositionApresRotation(boiteEnglobanteModele_.coinMax, boiteEnglobanteCourante.coinMax, angleRotation_);
-
-	// Mettre à jour les coins avec la position relative.
-	boiteEnglobanteCourante.coinMin = boiteEnglobanteModele_.coinMin + positionRelative_;
-	boiteEnglobanteCourante.coinMax = boiteEnglobanteModele_.coinMax + positionRelative_;
-
-	return boiteEnglobanteCourante;
+	glm::dvec3 tmp;
+	for (int i = 0; i < 4; i++)
+	{
+		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
+		tmp = quadEnglobant_.coins[i];
+		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
+		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
+	}
 }
 
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
@@ -129,3 +124,4 @@ void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+

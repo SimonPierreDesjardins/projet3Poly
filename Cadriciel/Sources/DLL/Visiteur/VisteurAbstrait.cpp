@@ -27,11 +27,6 @@ VisiteurAbstrait::VisiteurAbstrait()
 
 }
 
-VisiteurAbstrait::VisiteurAbstrait(const int& x, const int& y)
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative_);
-}
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn  VisiteurAbstrait::~VisiteurAbstrait()
@@ -52,6 +47,11 @@ void VisiteurAbstrait::visiter(ArbreRendu* noeud)
 }
 
 void VisiteurAbstrait::visiter(NoeudTable* noeud)
+{
+
+}
+
+void VisiteurAbstrait::visiterRectangle(NoeudTable* noeud)
 {
 
 }

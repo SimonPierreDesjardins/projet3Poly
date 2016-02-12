@@ -96,6 +96,7 @@
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
             this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
+            this.viewPort_.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
             // 
             // bouttonSimulation_
             // 
@@ -229,6 +230,7 @@
             // 
             // supprimerToolStripMenuItem
             // 
+            this.supprimerToolStripMenuItem.Enabled = false;
             this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
             this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.supprimerToolStripMenuItem.Text = "Supprimer";
@@ -338,6 +340,7 @@
             // 
             // orbiteMenuEdition_
             // 
+            this.orbiteMenuEdition_.Enabled = false;
             this.orbiteMenuEdition_.Name = "orbiteMenuEdition_";
             this.orbiteMenuEdition_.Size = new System.Drawing.Size(159, 22);
             this.orbiteMenuEdition_.Text = "Orbite";
@@ -361,7 +364,7 @@
             // 
             this.barreOutils_.AllowMerge = false;
             this.barreOutils_.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
-            this.barreOutils_.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.barreOutils_.BackColor = System.Drawing.Color.Gray;
             this.barreOutils_.Dock = System.Windows.Forms.DockStyle.None;
             this.barreOutils_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.outilsSelection_,
@@ -493,6 +496,8 @@
             this.textBoxPositionY_.Name = "textBoxPositionY_";
             this.textBoxPositionY_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionY_.TabIndex = 7;
+            this.textBoxPositionY_.TabStop = false;
+            this.textBoxPositionY_.Enter += new System.EventHandler(this.textBoxPositionY__Enter);
             this.textBoxPositionY_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionY__KeyDown);
             // 
             // textBoxPositionX_
@@ -501,6 +506,8 @@
             this.textBoxPositionX_.Name = "textBoxPositionX_";
             this.textBoxPositionX_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionX_.TabIndex = 6;
+            this.textBoxPositionX_.TabStop = false;
+            this.textBoxPositionX_.Enter += new System.EventHandler(this.textBoxPositionX__Enter_1);
             this.textBoxPositionX_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionX__KeyDown);
             // 
             // textBoxRotation_
@@ -509,6 +516,8 @@
             this.textBoxRotation_.Name = "textBoxRotation_";
             this.textBoxRotation_.Size = new System.Drawing.Size(84, 20);
             this.textBoxRotation_.TabIndex = 5;
+            this.textBoxRotation_.TabStop = false;
+            this.textBoxRotation_.Enter += new System.EventHandler(this.textBoxRotation__Enter_1);
             this.textBoxRotation_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotation__KeyDown);
             // 
             // textboxDimension_
@@ -517,6 +526,8 @@
             this.textboxDimension_.Name = "textboxDimension_";
             this.textboxDimension_.Size = new System.Drawing.Size(84, 20);
             this.textboxDimension_.TabIndex = 4;
+            this.textboxDimension_.TabStop = false;
+            this.textboxDimension_.Enter += new System.EventHandler(this.textboxDimension__Enter_1);
             this.textboxDimension_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxDimension__KeyDown);
             // 
             // panneauPositionY_
@@ -574,7 +585,6 @@
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Window_KeyDown);
             this.Resize += new System.EventHandler(this.Window_Resize);
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();

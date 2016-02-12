@@ -20,12 +20,6 @@ VisiteurDepart::VisiteurDepart()
 
 }
 
-VisiteurDepart::VisiteurDepart(const int& x, const int& y)
-: VisiteurAbstrait(x, y)
-{
-
-}
-
 VisiteurDepart::~VisiteurDepart()
 {
 

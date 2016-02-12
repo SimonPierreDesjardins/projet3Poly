@@ -503,6 +503,17 @@ NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 	return enfants_;
 }
 
+void NoeudComposite::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
+{
+	for (int i = 0; i < enfants_.size(); i++)
+	{
+		enfants_[i]->mettreAJourQuadEnglobant(positionRelative + positionRelative_);
+	}
+}
+
+
+
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

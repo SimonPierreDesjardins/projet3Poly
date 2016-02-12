@@ -175,6 +175,11 @@ void ModeAbstrait::charger(){
 
 }
 
+void ModeAbstrait::gererToucheSupprimer()
+{
+
+}
+
 // Method stub de gestion de la souris
 void ModeAbstrait::gererClicDroitEnfonce(const int& x, const int& y){
 }
@@ -192,9 +197,4 @@ void ModeAbstrait::gererMouvementSouris(const int & x, const int& y){
 }
 
 void ModeAbstrait::gererMoletteSouris(const int & delta){
-}
-
-void ModeAbstrait::gererToucheSupprimer()
-{
-
 }

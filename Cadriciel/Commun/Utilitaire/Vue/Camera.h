@@ -70,11 +70,11 @@ namespace vue {
 
 	private:
 		/// La position de la caméra.
-		glm::dvec3 position_;
+		glm::dvec3 position_{ glm::dvec3() };
 		/// La position du point visé par la caméra.
-		glm::dvec3 pointVise_;
+		glm::dvec3 pointVise_{ glm::dvec3() };
 		/// La direction du haut de la caméra.
-		glm::dvec3 directionHaut_;
+		glm::dvec3 directionHaut_{ glm::dvec3() };
 		/// La direction du haut du monde de la caméra.
 		const glm::dvec3 directionHautMonde_;
 

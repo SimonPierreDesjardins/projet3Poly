@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurMiseAEchelle();
 
-	// Constructeur par paramètre.
-	VisiteurMiseAEchelle(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurMiseAEchelle();
 

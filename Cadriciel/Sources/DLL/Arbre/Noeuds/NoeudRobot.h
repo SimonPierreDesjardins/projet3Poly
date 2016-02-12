@@ -38,7 +38,7 @@ public:
 
 private:
 	//test stuff
-	float angle_{ 0 };
+	float angle_{ 0.f };
 };
 
 

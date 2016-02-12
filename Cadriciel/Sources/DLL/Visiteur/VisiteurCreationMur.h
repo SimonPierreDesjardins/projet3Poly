@@ -19,9 +19,6 @@ public:
 	/// Constructeur par défaut.
 	VisiteurCreationMur();
 
-	// Constructeur par paramètre.
-	VisiteurCreationMur(const int& x, const int& y);
-
 	/// Destructeur.
 	virtual ~VisiteurCreationMur();
 

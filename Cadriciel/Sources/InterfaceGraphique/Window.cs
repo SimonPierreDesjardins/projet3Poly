@@ -44,6 +44,7 @@ namespace InterfaceGraphique
             zoneFileSystem = new OpenFileDialog();
             zoneFileSystem.InitialDirectory = initialPath;
             zoneFileSystem.Filter = "Fichiers textes et JSON (*.txt, *.json)|*.txt;*.json";
+            supprimerToolStripMenuItem.Enabled = false;
         }
 
         public void InitialiserAnimation()
@@ -64,9 +65,7 @@ namespace InterfaceGraphique
                 });
             }
             catch (Exception)
-            {
-            }
-            
+            {}
         }
        
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
@@ -86,7 +85,9 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
+            panneauOperation_.Visible = false;
             FonctionsNatives.assignerMode(Mode.EDITION);
+            viewPort_.Focus();
         }
 
         private void buttonQuitter_Click(object sender, EventArgs e)
@@ -96,17 +97,6 @@ namespace InterfaceGraphique
 
         private void afficherMenuPrincipal(bool afficherMenu)
         {
-            //TODO: Libérer le viewport au menu principal
-            /*
-            if (afficherMenu)
-            {
-                FonctionsNatives.libererOpenGL();
-            }
-            else
-            {
-                InitialiserAnimation();
-            }
-             * */
             bouttonConfiguration_.Visible = afficherMenu;
             bouttonEditeur_.Visible = afficherMenu;
             bouttonQuitter_.Visible = afficherMenu;
@@ -114,12 +104,28 @@ namespace InterfaceGraphique
             viewPort_.Visible = !afficherMenu;
             menuEdition_.Visible = !afficherMenu;
             barreOutils_.Visible = !afficherMenu;
-            panneauOperation_.Visible = afficherMenu;
+            panneauOperation_.Visible = !afficherMenu;
+        }
+
+        private void changeIconColor()
+        {
+            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsSelection_.BackColor = System.Drawing.Color.Gray;
+            outilsRotation_.BackColor = System.Drawing.Color.Gray;
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
+            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
+            outilsZoom_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
+            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            changeIconColor();
+            outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -131,36 +137,57 @@ namespace InterfaceGraphique
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
+            changeIconColor();
+            outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            changeIconColor();
+            outilsDéplacement_.BackColor = Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
+            changeIconColor();
+            outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+            changeIconColor();
+            outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+            changeIconColor();
+            outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void murToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+            changeIconColor();
+            outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+            changeIconColor();
+            outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void Window_Resize(object sender, EventArgs e)
@@ -179,46 +206,64 @@ namespace InterfaceGraphique
         private void outilsSelection__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
+            changeIconColor();
+            outilsSelection_.BackColor = Color.CadetBlue;
         }
 
         private void outilsDéplacement__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            changeIconColor();
+            outilsDéplacement_.BackColor = Color.CadetBlue;
         }
 
         private void outilsRotation__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
+            changeIconColor();
+            outilsRotation_.BackColor = Color.CadetBlue;
         }
 
         private void outilsMiseAEchelle__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            changeIconColor();
+            outilsMiseAEchelle_.BackColor = Color.CadetBlue;
         }
 
         private void outilsDuplication__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+            changeIconColor();
+            outilsDuplication_.BackColor = Color.CadetBlue;
         }
 
         private void outilsZoom__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
+            changeIconColor();
+            outilsZoom_.BackColor = Color.CadetBlue;
         }
 
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+            changeIconColor();
+            outilsCreationPoteau_.BackColor = Color.CadetBlue;
         }
 
         private void outilsCreationMurs__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+            changeIconColor();
+            outilsCreationMurs_.BackColor = Color.CadetBlue;
         }
 
         private void outilsCreationLigne__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+            changeIconColor();
+            outilsCreationLigne_.BackColor = Color.CadetBlue;
         }
 
         private void modeTestModeEdition__Click(object sender, EventArgs e)
@@ -243,6 +288,7 @@ namespace InterfaceGraphique
             if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
             {
                 popup.Dispose();
+                viewPort_.Focus();
             }
         }
 
@@ -328,22 +374,38 @@ namespace InterfaceGraphique
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.suppression();
+            supprimerToolStripMenuItem.Enabled = false;
+            panneauOperation_.Visible = false;
+            viewPort_.Focus();
         }
 
         private void viewPort__MouseClick(object sender, MouseEventArgs e)
         {
+            FonctionsNatives.assignerAutorisationInput(true);
             if (FonctionsNatives.obtenirEtat() == 0)
             {
-                if (FonctionsNatives.obtenirNombreSelection() == 1)
+                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+                if (nbEnfant == 1)
                 {
                     textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
                     textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
                     textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
                     textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                    viewPort_.Focus();
                     panneauOperation_.Visible = true;
+                    supprimerToolStripMenuItem.Enabled = true;
+                }
+                else if (nbEnfant > 1)
+                {
+                    supprimerToolStripMenuItem.Enabled = true;
+                    panneauOperation_.Visible = false;
                 }
                 else
+                {
                     panneauOperation_.Visible = false;
+                    supprimerToolStripMenuItem.Enabled = false;
+                }
+                    
             }
         }
 
@@ -360,6 +422,9 @@ namespace InterfaceGraphique
         private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
+            changeIconColor();
+            outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
         }
 
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
@@ -398,30 +463,93 @@ namespace InterfaceGraphique
             
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
+        private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             if (e.KeyCode == Keys.Delete)
             {
                 if (FonctionsNatives.obtenirEtat() == 0)
                 {
-                    if (FonctionsNatives.obtenirNombreSelection() == 1)
+                    int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+                    if (nbEnfant == 1)
                     {
                         textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
                         textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
                         textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
                         textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                        viewPort_.Focus();
                         panneauOperation_.Visible = true;
+                        supprimerToolStripMenuItem.Enabled = true;
+                    }
+                    else if (nbEnfant > 1)
+                    {
+                        supprimerToolStripMenuItem.Enabled = true;
+                        panneauOperation_.Visible = false;
                     }
                     else
+                    {
                         panneauOperation_.Visible = false;
+                        supprimerToolStripMenuItem.Enabled = false;
+                    }
+
                 }
             }
+            else if (e.KeyCode == Keys.D)
+            {
+                changeIconColor();
+                outilsDéplacement_.BackColor = Color.CadetBlue;
+            }
+            else if (e.KeyCode == Keys.S)
+            {
+                changeIconColor();
+                outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
+            }
+            else if (e.KeyCode == Keys.R)
+            {
+                changeIconColor();
+                outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+            }
+            else if (e.KeyCode == Keys.E)
+            {
+                changeIconColor();
+                outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+            }
+            else if (e.KeyCode == Keys.C)
+            {
+                changeIconColor();
+                outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+            }
+            else if (e.KeyCode == Keys.Z)
+            {
+                changeIconColor();
+                outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+            }
+        }
+
+        private void textboxDimension__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxRotation__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
         }
 
         private void enregistrerMenuEdition__Click(object sender, EventArgs e)
         {
             FonctionsNatives.sauvegarder();
         }
+       
+        private void textBoxPositionX__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxPositionY__Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
     }
 
     enum Etat
@@ -528,5 +656,11 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerCheminFichierZone(string chemin);
+        
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerAutorisationInput(bool autorisation);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool obtenirAutorisationInput();
     }
 }

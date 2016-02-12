@@ -34,8 +34,6 @@ private:
 	bool dessineRectangle{ false };
 
 private : 
-	int xEnfonce_;
-	int yEnfonce_;
 	std::unique_ptr<VisiteurSelection> visiteurSelection_;
 };
 

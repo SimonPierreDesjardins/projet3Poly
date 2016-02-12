@@ -352,6 +352,34 @@ extern "C"
 		return FacadeModele::obtenirInstance()->obtenirNombreSelection();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl obtenirAutorisationCamera()
+	///
+	/// Cette fonction retourne l'autorisation de la caméra
+	///
+	/// @return bool : l'autorisation de la caméra
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl obtenirAutorisationInput()
+	{
+		return FacadeModele::obtenirInstance()->obtenirAutorisationInput();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerAutorisationCamera()
+	///
+	/// Cette fonction assigne l'autorisation de la caméra
+	///
+	/// @param bool : l'autorisation de la caméra
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerAutorisationInput(bool autorisation)
+	{
+		FacadeModele::obtenirInstance()->assignerAutorisationInput(autorisation);
+	}
+
 	__declspec(dllexport) void assignerAngleRotation(double angle)
 	{
 		FacadeModele::obtenirInstance()->assignerAngleRotation(angle);
@@ -374,39 +402,39 @@ extern "C"
 
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-
-		if (msg == WM_KEYDOWN)
+		bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInput();
+		if (msg == WM_KEYDOWN && autoriserInput)
 		{
 			switch (wParam)
 			{
 				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
+						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
 					break;
 
 				case VK_RIGHT:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
+						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
 					break;
 
 				case VK_UP:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheHaut();
+						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheHaut();
 					break;
 
 				case VK_DOWN:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
+						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
 					break;
 
 				case VK_TAB:
-					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({0, 0, 10});
-					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({0, 1, 0});
+						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
+						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 1, 0 });
 					break;
 
 				case VK_BACK:
 					break;
 
 				case VK_SHIFT:
-					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({0, 10, 0});
-					FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({0, 0, 1});
+						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
+						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 0, 1 });
 					break;
 
 				case VK_MENU:
@@ -427,11 +455,11 @@ extern "C"
 					break;
 
 				case VK_OEM_PLUS:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererTouchePlus();
+						FacadeModele::obtenirInstance()->obtenirMode()->gererTouchePlus();
 					break;
 
 				case VK_OEM_MINUS:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheMoins();
+						FacadeModele::obtenirInstance()->obtenirMode()->gererToucheMoins();
 					break;
 
 				case VK_KEY_D:

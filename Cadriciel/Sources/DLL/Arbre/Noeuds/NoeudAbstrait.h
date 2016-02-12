@@ -76,16 +76,25 @@ public:
 	inline double obtenirAngleRotation() const;
 
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
-	inline void assignerAngleRotation(double angleRotation);
+	inline void assignerAngleRotation(const double& angleRotation);
 
 	/// Obtient le facteur de dimension du noeud.
 	inline double obtenirFacteurMiseAEchelle() const;
 
 	/// Assigne le facteur de dimension
-	inline void assignerFacteurMiseAEchelle(double facteurDimension);
+	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
 
-	/// Obtient la boite englobante courante du noeud.
-	virtual utilitaire::BoiteEnglobante obtenirBoiteEnglobanteCourante() const;
+	/// Obtient le quadrilatère englobante courante du noeud.
+	inline utilitaire::QuadEnglobant obtenirQuadEnglobant() const;
+
+	/// Mettre à jour le quadrilatère englobant du noeud.
+	void mettreAJourQuadEnglobant();
+
+	/// Mettre à jour le quadrilatère englobant du noeud en fonction d'une position relative.
+	void mettreAJourQuadEnglobant(const glm::dvec3& positionRelative);
+
+	/// Mettre à jour le quadrilatère du noeud de manière concrète en fonction d'une position relative.
+	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -185,10 +194,10 @@ protected:
 
 	/// Angle de rotation sur le plan xy
 	double					angleRotation_{ 0 };
-
 	
-	/// Boite englobante du modele.
-	utilitaire::BoiteEnglobante boiteEnglobanteModele_;
+	/// Quadrilatère englobant le noeud.
+	utilitaire::QuadEnglobant quadEnglobant_;
+
 	
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
@@ -206,12 +215,16 @@ protected:
 	bool					enregistrable_{ true };
 
 	/// Pointeur vers le parent.
-	NoeudAbstrait* parent_;
+	NoeudAbstrait* parent_{ nullptr };
+
+	/// Boite englobante du modele.
+	utilitaire::BoiteEnglobante boiteEnglobanteModele_;
 
 	/// Modèle 3D correspondant à ce noeud.
-	modele::Modele3D const* modele_;
+	modele::Modele3D const* modele_{ nullptr };
+
 	/// Storage pour le dessin du modèle
-	opengl::VBO const*		vbo_;
+	opengl::VBO const*		vbo_{ nullptr };
 };
 
 
@@ -306,7 +319,7 @@ inline double NoeudAbstrait::obtenirAngleRotation() const
 	return angleRotation_;
 }
 //TODO: Documentation.
-inline void NoeudAbstrait::assignerAngleRotation(double angleRotation)
+inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
 {
 	angleRotation_ = angleRotation;
 }
@@ -316,10 +329,17 @@ inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 	return facteurMiseAEchelle_;
 }
 //TODO: Documentation.
-inline void NoeudAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
+inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
 {
 	facteurMiseAEchelle_ = facteurDimension;
 }
+
+//TODO: Documentation.
+inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobant() const
+{
+	return quadEnglobant_;
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline const std::string& NoeudAbstrait::obtenirType() const

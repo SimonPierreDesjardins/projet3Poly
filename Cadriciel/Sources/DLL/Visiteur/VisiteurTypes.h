@@ -18,10 +18,13 @@
 #include "VisiteurSelection.h"
 #include "VisiteurSauvegarde.h"
 #include "VisiteurSuppression.h"
-#include "VisiteurRotation.h"
-#include "VisiteurMiseAEchelle.h"
-#include "VisiteurDeplacement.h"
 #include "VisiteurDepart.h"
+#include "VisiteurDuplication.h"
+#include "VisiteurDeplacement.h"
+#include "VisiteurMiseAEchelle.h"
+#include "VisiteurRotation.h"
+#include "VisiteurVerificationQuad.h"
+
 #endif /// Header pour les états
 
 ///////////////////////////////////////////////////////////////////////////////
