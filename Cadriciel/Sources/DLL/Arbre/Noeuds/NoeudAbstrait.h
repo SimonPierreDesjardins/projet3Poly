@@ -168,6 +168,7 @@ public:
 	/// Accepter un visiteur.
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+	/// Retourne le modèle
 	virtual modele::Modele3D const* getModele();
 
 	virtual bool obtenirEnCreation() { return enCreation_; };

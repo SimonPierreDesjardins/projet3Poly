@@ -49,8 +49,10 @@ public:
 	/// Sauvegarde en JSON d'un NoeudDuplication.
 	virtual void visiter(NoeudJonction* noeud);
 private:
-	/// Classe pour écrire dans un fichier
+	/// Objet pour écrire dans un fichier.
 	rapidjson::PrettyWriter<rapidjson::FileWriteStream>* writer ;
+
+	/// Visite tous les enfants d'un NoeudComposite.
 	void visiterEnfants(NoeudComposite* noeud);
 	
 };

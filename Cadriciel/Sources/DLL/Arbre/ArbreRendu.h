@@ -67,21 +67,30 @@ public:
 	/// Accepter un visiteur.
 	void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+	/// Assigne le chemin du fichier sélectionné par l'utilisateur
 	void assignerCheminFichierZone(std::string chemin);
 	
+	/// Retourne un pointeur vers le fichier sélectionné par l'utilisateur
 	FILE* obtenirFichierZone(std::string mode);
 protected:
+
+	/// Retourne un pointeur vers le fichier de structure de base
 	FILE* obtenirFichierZoneDefaut(std::string mode);
+
+	/// Constante représentant le fichier zone contenant la structure de base
+	const std::string cheminFichierZoneDefaut = "./../Zones/zone_par_defaut.json";
+
+	/// Chemin vers le fichier de zone sélectionné par l'utilisateur
+	std::string cheminFichierZone;
+
 private:
+
    /// Définition du type pour l'association du nom d'un type vers l'usine
    /// correspondante.
 	using RegistreUsines = std::map<std::string, std::unique_ptr<const UsineAbstraite>>;
+
    /// Association du nom d'un type vers l'usine correspondante.
-   RegistreUsines usines_;
-
-   std::string cheminFichierZone;
-
-   const std::string cheminFichierZoneDefaut = "./../Zones/zone_par_defaut.json";
+   RegistreUsines usines_;   
 };
 
 
