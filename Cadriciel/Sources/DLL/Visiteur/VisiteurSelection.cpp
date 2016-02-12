@@ -27,21 +27,31 @@ VisiteurSelection::~VisiteurSelection()
 
 }
 
+void VisiteurSelection::visiter(ArbreRendu* noeud)
+{
+	noeud->mettreAJourQuadEnglobant();
+	noeud->chercher("table")->accepterVisiteur(this);
+}
+
+
 void VisiteurSelection::visiter(NoeudTable* noeud)
 {
 	bool estSelectionne = true, estSegmentSelectionne;
 	if (!estDrag_)
 	{
-		if (!estControlAppuye)
+		if (!ctrlAppuye_)
 		{
 			for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
 			{
 				noeud->chercher(i)->assignerSelection(0);
 			}
 		}
-
+		NoeudAbstrait* enfant;
 		for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
 		{
+			
+			enfant = noeud->chercher(i);
+			enfant->accepterVisiteur(this);
 			modele::Modele3D const* modeleEnfant = noeud->chercher(i)->getModele();
 			utilitaire::BoiteEnglobante boite1 = utilitaire::calculerBoiteEnglobante(*modeleEnfant);
 			utilitaire::BoiteEnglobante boite = boite1;
@@ -54,54 +64,8 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 			double angleRot;
 			switch (noeud->chercher(i)->obtenirType()[0])
 			{
-			case 'p':
-
-				pointBoite1[0] = boite.coinMin[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-				pointBoite1[1] = boite.coinMin[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-
-				pointBoite2[0] = boite.coinMax[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-				pointBoite2[1] = boite.coinMin[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-
-				pointBoite3[0] = boite.coinMax[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-				pointBoite3[1] = boite.coinMax[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-
-				pointBoite4[0] = boite.coinMin[0] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-				pointBoite4[1] = boite.coinMax[1] * (noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-
-				pointBoite1[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite1[0];
-				pointBoite1[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite1[1];
-				pointBoite1[2] = 0.0;
-
-				pointBoite2[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite2[0];
-				pointBoite2[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite2[1];
-				pointBoite2[2] = 0.0;
-
-				pointBoite3[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite3[0];
-				pointBoite3[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite3[1];
-				pointBoite3[2] = 0.0;
-
-				pointBoite4[0] = noeud->chercher(i)->obtenirPositionRelative()[0] + pointBoite4[0];
-				pointBoite4[1] = noeud->chercher(i)->obtenirPositionRelative()[1] + pointBoite4[1];
-				pointBoite4[2] = 0.0;
-
-				if (estControlAppuye)
-				{
-					if (positionRelative_[0] < pointBoite2[0] && positionRelative_[0] > pointBoite1[0] && positionRelative_[1] < pointBoite3[1] && positionRelative_[1] > pointBoite1[1])
-					{
-						noeud->chercher(i)->inverserSelection();
-						std::cout << "La selection de lobjet est inversee" << std::endl;
-					}
-				}
-				else
-				{
-					if (positionRelative_[0] < pointBoite2[0] && positionRelative_[0] > pointBoite1[0] && positionRelative_[1] < pointBoite3[1] && positionRelative_[1] > pointBoite1[1])
-					{
-						noeud->chercher(i)->assignerSelection(1);
-						std::cout << "Lobjet est selectionne" << std::endl;
-					}
-				}
-				break;
 			case 'l':
+				/**/
 				for (unsigned j = 0; j < noeud->chercher(i)->obtenirNombreEnfants(); j++)
 				{
 					angleRot = noeud->chercher(i)->chercher(j)->obtenirAngleRotation();
@@ -247,7 +211,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 						break;
 					}
 				}
-				if (estControlAppuye)
+				if (ctrlAppuye_)
 				{
 					if (estDansBoite)
 					{
@@ -365,7 +329,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 				default:
 					break;
 				}
-				if (estControlAppuye)
+				if (ctrlAppuye_)
 				{
 					if (estDansBoite)
 					{
@@ -391,7 +355,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 	else
 	{
 		std::cout << positionRelativeAvant_[0] << ", " << positionRelativeAvant_[1] << "\n" << positionRelativeApres_[0] << ", " << positionRelativeApres_[1] << std::endl;
-		if (!estControlAppuye)
+		if (!ctrlAppuye_)
 		{
 			for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
 			{
@@ -446,7 +410,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 
 				estSelectionne = estDansRectangleElastique(positionRelativeAvant_, positionRelativeApres_, pointBoite1, pointBoite2, pointBoite3, pointBoite4);
 
-				if (estControlAppuye)
+				if (ctrlAppuye_)
 				{
 					if (estSelectionne)
 					{
@@ -518,7 +482,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 						estSelectionne = false;
 					}
 				}
-				if (estControlAppuye)
+				if (ctrlAppuye_)
 				{
 					if (estSelectionne)
 					{
@@ -638,7 +602,7 @@ void VisiteurSelection::visiter(NoeudTable* noeud)
 					break;
 				}*/
 				estSelectionne = estDansRectangleElastique(positionRelativeAvant_, positionRelativeApres_, p1, p2, p3, p4);
-				if (estControlAppuye)
+				if (ctrlAppuye_)
 				{
 					if (estSelectionne)
 					{
@@ -670,7 +634,7 @@ void VisiteurSelection::visiterRectangle(NoeudTable* noeud)
 
 void VisiteurSelection::assignerControl(bool estControl)
 {
-	estControlAppuye = estControl;
+	ctrlAppuye_ = estControl;
 }
 
 bool VisiteurSelection::estDansRectangleElastique(glm::dvec3 coinRectElastMin, glm::dvec3 coinRectElastMax, glm::dvec3 p1, glm::dvec3 p2, glm::dvec3 p3, glm::dvec3 p4)
@@ -721,4 +685,58 @@ bool VisiteurSelection::estDansRectangleElastique(glm::dvec3 coinRectElastMin, g
 	}
 
 	return estDansBoite;
+}
+
+void VisiteurSelection::visiter(NoeudPoteau* noeud)
+{
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
+	
+
+	if (utilitaire::calculerPointEstDansQuad(positionRelative_, noeud->obtenirQuadEnglobant()))
+	{
+		if (ctrlAppuye_)
+		{
+			noeud->inverserSelection();
+			std::cout << "La selection de lobjet est inversee" << std::endl;
+		}
+		else
+		{
+			noeud->assignerSelection(true);
+			std::cout << "Lobjet est selectionne" << std::endl;
+		}
+
+	}
+}
+
+void VisiteurSelection::visiter(NoeudMur* noeud)
+{	
+
+	if (utilitaire::calculerPointEstDansQuad(positionRelative_, noeud->obtenirQuadEnglobant()))
+	{
+		if (ctrlAppuye_)
+		{
+			noeud->inverserSelection();
+			std::cout << "La selection de lobjet est inversee" << std::endl;
+		}
+		else 
+		{
+			noeud->assignerSelection(true);
+			std::cout << "Lobjet est selectionne" << std::endl;
+		}
+	}
+}
+
+void VisiteurSelection::visiter(NoeudLigne* noeud)
+{
+
+}
+
+void VisiteurSelection::visiter(NoeudDepart* noeud)
+{
+
+}
+
+void VisiteurSelection::visiter(NoeudSegment* noeud)
+{
+
 }

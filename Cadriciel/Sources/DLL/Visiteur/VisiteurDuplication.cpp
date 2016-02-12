@@ -75,7 +75,7 @@ void VisiteurDuplication::visiter(NoeudMur* noeud)
 }
 
 
-void VisiteurDuplication::visiter(NoeudLigneNoire* noeud)
+void VisiteurDuplication::visiter(NoeudLigne* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	//Créer une nouvelle ligne et assigner ses attributs.

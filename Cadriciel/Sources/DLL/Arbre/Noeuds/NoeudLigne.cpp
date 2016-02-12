@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudLigneNoire.cpp
+/// @file NoeudLigne.cpp
 /// @author Frederic Gregoire
 /// @date 2011-05-19
 /// @version 1.0
@@ -7,7 +7,7 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
-#include "NoeudLigneNoire.h"
+#include "NoeudLigne.h"
 #include "Utilitaire.h"
 
 #include "GL/glew.h"
@@ -20,7 +20,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudLigneNoire::NoeudLigneNoire(const std::string& typeNoeud)
+/// @fn NoeudLigne::NoeudLigne(const std::string& typeNoeud)
 ///
 /// Ce constructeur ne fait qu'appeler la version de la classe et base
 /// et donner des valeurs par défaut aux variables membres.
@@ -30,7 +30,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudLigneNoire::NoeudLigneNoire(const std::string& typeNoeud)
+NoeudLigne::NoeudLigne(const std::string& typeNoeud)
 : NoeudComposite{ typeNoeud }
 {
 }
@@ -38,28 +38,28 @@ NoeudLigneNoire::NoeudLigneNoire(const std::string& typeNoeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudLigneNoire::~NoeudLigneNoire()
+/// @fn NoeudLigne::~NoeudLigne()
 ///
 /// Ce destructeur désallouee la liste d'affichage du cube.
 ///
 /// @return Aucune (destructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudLigneNoire::~NoeudLigneNoire()
+NoeudLigne::~NoeudLigne()
 {
 }
 
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudLigneNoire::afficherConcret() const
+/// @fn void NoeudLigne::afficherConcret() const
 ///
 /// Cette fonction effectue le véritable rendu de l'objet.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudLigneNoire::afficherConcret() const
+void NoeudLigne::afficherConcret() const
 {
 	glPushMatrix();
 
@@ -79,13 +79,13 @@ void NoeudLigneNoire::afficherConcret() const
 	
 }
 
-void NoeudLigneNoire::accepterVisiteur(VisiteurAbstrait* visiteur)
+void NoeudLigne::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
 
 /*
-void NoeudLigneNoire::mettreAJourQuadEnglobantConcret()
+void NoeudLigne::mettreAJourQuadEnglobantConcret()
 {
 	for (int i = 0; i < enfants_.size(); i++)
 	{

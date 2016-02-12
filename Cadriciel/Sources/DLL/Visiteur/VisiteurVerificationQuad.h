@@ -30,7 +30,7 @@ public:
 	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
-	virtual void visiter(NoeudLigneNoire* noeud);
+	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
 
 private:

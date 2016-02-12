@@ -58,7 +58,7 @@ void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 }
 
 
-void VisiteurVerificationQuad::visiter(NoeudLigneNoire* noeud)
+void VisiteurVerificationQuad::visiter(NoeudLigne* noeud)
 {
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{

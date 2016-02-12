@@ -48,7 +48,6 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 	}
 	else
 	{
-		//gererClicGauche(std::abs(anchor.x - currentPosition.x) / 2, std::abs(anchor.y - currentPosition.y) / 2);
 		gererClicGauche((anchor.x + currentPosition.x) / 2, (anchor.y + currentPosition.y) / 2);
 	}
 }
@@ -78,7 +77,7 @@ void EtatSelection::gererClicGauche(const int& x, const int& y)
 	glm::dvec3 positionRelative;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
 	visiteurSelection_->assignerPositionRelative(positionRelative);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSelection_.get());
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurSelection_.get());
 }
 
 
@@ -91,7 +90,7 @@ void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const 
 	visiteurSelection_->assignerPositionRelativeAvant(positionRelativeAvant);
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xApres, yApres, positionRelativeApres);
 	visiteurSelection_->assignerPositionRelativeApres(positionRelativeApres);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSelection_.get());
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurSelection_.get());
 }
 
 void EtatSelection::gererToucheControlEnfoncee()

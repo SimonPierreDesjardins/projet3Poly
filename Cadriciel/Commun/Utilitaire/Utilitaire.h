@@ -261,11 +261,11 @@ namespace utilitaire {
       return succes;
    }
 
-   double calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux);
-   double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux);
-   glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux);
-   void calculerPositionApresRotation(const glm::dvec3& positionInitiale, glm::dvec3& positionFinale, const double& theta);
-
+	double calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux);
+	double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux);
+	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux);
+	void calculerPositionApresRotation(const glm::dvec3& positionInitiale, glm::dvec3& positionFinale, const double& theta);
+	bool calculerPointEstDansQuad(const glm::dvec3& point, const QuadEnglobant& quad);
 } // Fin du namespace utilitaire.
 
 

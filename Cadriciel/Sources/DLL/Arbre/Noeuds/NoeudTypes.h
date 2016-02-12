@@ -7,7 +7,7 @@
 #include "NoeudTable.h"
 #include "NoeudPoteau.h"
 #include "NoeudMur.h"
-#include "NoeudLigneNoire.h"
+#include "NoeudLigne.h"
 #include "NoeudSegment.h"
 #include "NoeudDuplication.h"
 #include "NoeudDepart.h"

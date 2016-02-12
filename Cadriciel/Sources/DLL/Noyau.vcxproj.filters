@@ -148,9 +148,6 @@
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
-    <ClCompile Include="Arbre\Noeuds\NoeudLigneNoire.cpp">
-      <Filter>Source Files\Arbre\Noeuds</Filter>
-    </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
@@ -222,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudLigne.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,9 +302,6 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurAbstrait.h">
       <Filter>Header Files\Visiteur</Filter>
-    </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudLigneNoire.h">
-      <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudMur.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
@@ -394,6 +391,9 @@
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudLigne.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>

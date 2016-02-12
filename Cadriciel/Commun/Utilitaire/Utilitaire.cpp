@@ -17,6 +17,8 @@
 #include "Modele3D.h"
 #include "Noeud.h"
 
+#include <iostream>
+
 #include "glm\gtx\norm.hpp"
 
 namespace utilitaire {
@@ -557,7 +559,7 @@ namespace utilitaire {
 		}
 		return RAD_TO_DEG(angle);
 	}
-
+	//TODO: à remplacer par glm::distance.
 	double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		double distanceX = pointUn[0] - pointDeux[0];
@@ -579,6 +581,41 @@ namespace utilitaire {
 		positionFinale[0] = positionInitiale[0] * cos(DEG_TO_RAD(theta)) - positionInitiale[1] * sin(DEG_TO_RAD(theta));
 		positionFinale[1] = positionInitiale[0] * sin(DEG_TO_RAD(theta)) + positionInitiale[1] * cos(DEG_TO_RAD(theta));
 	}
+
+	bool calculerPointEstDansQuad(const glm::dvec3& point, const QuadEnglobant& quad)
+	{
+		const int N = 4;
+		// Calculer les vecteurs entre le point et chaque coin du quad.
+		glm::dvec3 w[N];
+		for (int i = 0; i < N; i++)
+		{
+			w[i] = quad.coins[i] - point;
+		}
+		//Calculer la somme de l'aire des 4 triangles formées par les 4 coins et le point. 
+		int j = 0;
+		double sommeAireTriangles = 0.0;
+		for (int i = 0; i < N; i++)
+		{
+			// i + 1 circulaire (j == 0 quand i == 3)
+			j = (i + 1) % N;
+			// L'aire du triangle est la composante z du produit vectoriel / 2;   
+			sommeAireTriangles += glm::distance(glm::cross(w[i], w[j]).z, 0.0) / 2;
+		}
+		// Calculer l'aire du quad 
+		glm::dvec3 v = quad.coins[1] - quad.coins[0];
+		glm::dvec3 u = quad.coins[3] - quad.coins[0];
+		double aireQuad = glm::distance(glm::cross(u, v).z, 0.0);
+		
+		bool pointEstDansQuad = true;
+		// Si la somme des aires du triangle est plus grand que l'aire du quad, le point n'est pas dans le quad.
+		std::cout << "aireQuad: " << aireQuad << " sommeAireTriangles: " << sommeAireTriangles << std::endl;
+		if (sommeAireTriangles > aireQuad)
+		{
+			pointEstDansQuad = false;
+		}
+		return pointEstDansQuad;
+	}
+
 }; // Fin de l'espace de nom utilitaire.
 
 

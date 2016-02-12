@@ -56,6 +56,6 @@ void VisiteurMiseAEchelle::visiter(NoeudMur* noeud)
 	noeud->assignerFacteurMiseAEchelle(nouveauFacteurMiseAEchelle);
 }
 
-void VisiteurMiseAEchelle::visiter(NoeudLigneNoire* noeud)
+void VisiteurMiseAEchelle::visiter(NoeudLigne* noeud)
 {
 }

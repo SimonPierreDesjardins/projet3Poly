@@ -18,7 +18,7 @@ class NoeudAbstrait;
 class NoeudPoteau;
 class NoeudTable;
 class NoeudMur;
-class NoeudLigneNoire;
+class NoeudLigne;
 class NoeudSegment;
 class NoeudRobot;
 class NoeudAraignee;
@@ -64,7 +64,7 @@ public:
 	virtual void visiterRectangle(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
-	virtual void visiter(NoeudLigneNoire* noeud);
+	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudDepart* noeud);

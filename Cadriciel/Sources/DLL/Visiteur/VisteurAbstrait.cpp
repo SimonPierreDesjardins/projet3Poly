@@ -66,7 +66,7 @@ void VisiteurAbstrait::visiter(NoeudMur* noeud)
 
 }
 
-void VisiteurAbstrait::visiter(NoeudLigneNoire* noeud)
+void VisiteurAbstrait::visiter(NoeudLigne* noeud)
 {
 
 }

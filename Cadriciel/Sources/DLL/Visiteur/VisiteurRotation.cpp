@@ -62,7 +62,7 @@ void VisiteurRotation::visiter(NoeudDepart* noeud)
 	assignerNouvellePositionRelative(noeud);
 }
 
-void VisiteurRotation::visiter(NoeudLigneNoire* noeud)
+void VisiteurRotation::visiter(NoeudLigne* noeud)
 {
 	assignerNouvellePositionRelative(noeud);
 	NoeudAbstrait* enfant;

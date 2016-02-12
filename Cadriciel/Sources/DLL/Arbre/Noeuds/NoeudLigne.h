@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file NoeudLigneNoire.h
+/// @file NoeudLigne.h
 /// @author Frederic Gregoire
 /// @date 2016-01-20
 /// @version 1.0
@@ -8,22 +8,22 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ARBRE_NOEUDS_NOEUDLIGNENOIRE_H__
-#define __ARBRE_NOEUDS_NOEUDLIGNENOIRE_H__
+#ifndef __ARBRE_NOEUDS_NOEUDLIGNE_H__
+#define __ARBRE_NOEUDS_NOEUDLIGNE_H__
 
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
 class VisiteurAbstrait;
 
-class NoeudLigneNoire : public NoeudComposite
+class NoeudLigne: public NoeudComposite
 {
 public:
 
 	/// Constructeur
-	NoeudLigneNoire(const std::string& typeNoeud);
+	NoeudLigne(const std::string& typeNoeud);
 	/// Destructeur.
-	~NoeudLigneNoire();
+	~NoeudLigne();
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
@@ -33,7 +33,7 @@ private:
 
 };
 
-#endif
+#endif //__ARBRE_NOEUDS_NOEUDLIGNE_H__
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

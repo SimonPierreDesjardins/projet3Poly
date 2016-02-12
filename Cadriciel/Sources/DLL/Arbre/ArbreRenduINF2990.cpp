@@ -51,7 +51,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
 	ajouterUsine(NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
-	ajouterUsine(NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigneNoire>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
+	ajouterUsine(NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigne>>(NOM_LIGNENOIRE, std::string{ "media/modeles/ligneNoire.obj" }));
 	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robotScale_SansRoue.obj" }));
 	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau2.obj" }));	
 	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/murTry4.obj" }));

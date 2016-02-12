@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file NoeudLigneNoire.h
+/// @file NoeudLigne.h
 /// @author Frederic Gregoire
 /// @date 2016-01-20
 /// @version 1.0
