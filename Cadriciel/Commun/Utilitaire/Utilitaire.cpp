@@ -605,17 +605,15 @@ namespace utilitaire {
 		glm::dvec3 v = quad.coins[1] - quad.coins[0];
 		glm::dvec3 u = quad.coins[3] - quad.coins[0];
 		double aireQuad = glm::distance(glm::cross(u, v).z, 0.0);
-		
-		bool pointEstDansQuad = true;
-		// Si la somme des aires du triangle est plus grand que l'aire du quad, le point n'est pas dans le quad.
-		std::cout << "aireQuad: " << aireQuad << " sommeAireTriangles: " << sommeAireTriangles << std::endl;
-		if (sommeAireTriangles > aireQuad)
+		bool pointEstDansQuad = false;
+
+		// Si la somme de l'aire des triangles du quad est égale à l'aire du quad, le point est dans le quad.
+		if (EGAL_ZERO(sommeAireTriangles - aireQuad))
 		{
-			pointEstDansQuad = false;
+			pointEstDansQuad = true;
 		}
 		return pointEstDansQuad;
 	}
-
 }; // Fin de l'espace de nom utilitaire.
 
 
