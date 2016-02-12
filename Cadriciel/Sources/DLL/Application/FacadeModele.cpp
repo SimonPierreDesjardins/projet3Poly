@@ -645,28 +645,38 @@ double FacadeModele::obtenirPositionRelativeY()
 	return positionY;
 }
 
-//TODO:
-//Appeler un visiteur
 void FacadeModele::assignerAngleRotation(double angle)
 {
 	std::unique_ptr<VisiteurRotation> visiteur = std::make_unique <VisiteurRotation>();
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+
 	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
 	NoeudAbstrait* enfant;
+	
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
 		enfant = table->chercher(i);
 		if (enfant->estSelectionne())
 		{
-			visiteur->assignerAngleRotation(angle - enfant->obtenirAngleRotation());
+			double angleAvantChangement = enfant->obtenirAngleRotation();
+			visiteur->assignerAngleRotation(angle - angleAvantChangement);
 			enfant->accepterVisiteur(visiteur.get());
+			enfant->mettreAJourQuadEnglobant();
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			if (!visiteurQuad->objetsDansZoneSimulation())
+			{
+				visiteur->assignerAngleRotation(angleAvantChangement - angle);
+				enfant->accepterVisiteur(visiteur.get());
+			}
 		}
 	}
 }
 
-//TODO:
-//Appeler un visiteur
-void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur) 
+void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur)
 {
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+
 	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
 	NoeudAbstrait* enfant;
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
@@ -674,13 +684,22 @@ void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur)
 		enfant = table->chercher(i);
 		if (enfant->estSelectionne())
 		{
+			double facteurAvantChangement = enfant->obtenirFacteurMiseAEchelle();
 			enfant->assignerFacteurMiseAEchelle(facteurGrandeur);
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			if (!visiteurQuad->objetsDansZoneSimulation())
+			{
+				enfant->assignerFacteurMiseAEchelle(facteurAvantChangement);
+			}
 		}
 	}
 }
 
 void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
 {
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+
 	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
 	NoeudAbstrait* enfant;
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
@@ -688,15 +707,26 @@ void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
 		enfant = table->chercher(i);
 		if (enfant->estSelectionne())
 		{
+			double positionXAvantChangement = enfant->obtenirPositionRelative()[0];
+
 			glm::dvec3 position = enfant->obtenirPositionRelative();
 			position[0] = positionRelativeX;
 			enfant->assignerPositionRelative(position);
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			if (!visiteurQuad->objetsDansZoneSimulation())
+			{
+				position[0] = positionXAvantChangement;
+				enfant->assignerPositionRelative(position);
+			}
 		}
 	}
 }
 
 void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
 {
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+
 	NoeudAbstrait* table = obtenirInstance()->arbre_->chercher(0);
 	NoeudAbstrait* enfant;
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
@@ -704,9 +734,18 @@ void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
 		enfant = table->chercher(i);
 		if (enfant->estSelectionne())
 		{
+			double positionYAvantChangement = enfant->obtenirPositionRelative()[1];
+
 			glm::dvec3 position = enfant->obtenirPositionRelative();
 			position[1] = positionRelativeY;
 			enfant->assignerPositionRelative(position);
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			if (!visiteurQuad->objetsDansZoneSimulation())
+			{
+				position[1] = positionYAvantChangement;
+				enfant->assignerPositionRelative(position);
+			}
 		}
 	}
 }

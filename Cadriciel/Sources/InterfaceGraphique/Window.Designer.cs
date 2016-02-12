@@ -95,7 +95,7 @@
             this.viewPort_.Size = new System.Drawing.Size(623, 402);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
-            this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
+            this.viewPort_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
             this.viewPort_.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
             // 
             // bouttonSimulation_
