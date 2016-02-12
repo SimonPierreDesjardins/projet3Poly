@@ -323,6 +323,7 @@ namespace InterfaceGraphique
         {
             FonctionsNatives.suppression();
             supprimerToolStripMenuItem.Enabled = false;
+            panneauOperation_.Visible = false;
         }
 
         private void viewPort__MouseClick(object sender, MouseEventArgs e)
