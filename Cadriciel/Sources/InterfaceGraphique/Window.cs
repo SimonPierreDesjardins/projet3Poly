@@ -272,17 +272,17 @@ namespace InterfaceGraphique
 
         private void modeTestModeEdition__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerMode(Mode.TEST);
+            //FonctionsNatives.assignerMode(Mode.TEST);
         }
 
         private void bouttonSimulation__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerMode(Mode.SIMULATION);
+            //FonctionsNatives.assignerMode(Mode.SIMULATION);
         }
 
         private void bouttonConfiguration__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerMode(Mode.CONFIGURE);
+            //FonctionsNatives.assignerMode(Mode.CONFIGURE);
         }
 
         private void aideMenuEdition__Click(object sender, EventArgs e)

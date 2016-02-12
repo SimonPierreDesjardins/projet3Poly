@@ -77,7 +77,7 @@ void ModeEdition::gererToucheS()
 
 void ModeEdition::gererToucheT()
 {
-	FacadeModele::obtenirInstance()->assignerMode(TEST);
+	//FacadeModele::obtenirInstance()->assignerMode(TEST);
 }
 
 void ModeEdition::gererToucheZ()
