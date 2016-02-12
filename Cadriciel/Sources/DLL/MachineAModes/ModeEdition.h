@@ -67,6 +67,7 @@ public:
 	virtual void gererToucheSupprimer();
 
 	virtual void sauvegarder();
+	virtual void charger();
 
 protected:
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;

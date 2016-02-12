@@ -53,6 +53,7 @@
             this.poteauMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.murMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.ligneNoireMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vuesMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.orthographiqueMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.orbiteMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,8 +78,6 @@
             this.panneauPositionX_ = new System.Windows.Forms.Label();
             this.panneauDimension_ = new System.Windows.Forms.Label();
             this.panneauRotation_ = new System.Windows.Forms.Label();
-            this.zoomToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
             this.panneauOperation_.SuspendLayout();
@@ -191,6 +190,7 @@
             // 
             // enregistrerMenuEdition_
             // 
+            this.enregistrerMenuEdition_.Enabled = false;
             this.enregistrerMenuEdition_.Name = "enregistrerMenuEdition_";
             this.enregistrerMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.enregistrerMenuEdition_.Text = "Enregistrer";
@@ -313,6 +313,13 @@
             this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(133, 22);
             this.ligneNoireMenuEdition_.Text = "Ligne noire";
             this.ligneNoireMenuEdition_.Click += new System.EventHandler(this.ligneNoireToolStripMenuItem_Click);
+            // 
+            // zoomToolStripMenuItem
+            // 
+            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.zoomToolStripMenuItem.Text = "Zoom";
+            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
             // 
             // vuesMenuEdition_
             // 
@@ -547,13 +554,6 @@
             this.panneauRotation_.Size = new System.Drawing.Size(87, 13);
             this.panneauRotation_.TabIndex = 0;
             this.panneauRotation_.Text = "Angle de rotation";
-            // 
-            // zoomToolStripMenuItem
-            // 
-            this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.zoomToolStripMenuItem.Text = "Zoom";
-            this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
             // 
             // Window
             // 

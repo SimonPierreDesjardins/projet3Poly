@@ -18,13 +18,10 @@ VisiteurSauvegarde::~VisiteurSauvegarde()
 
 void VisiteurSauvegarde::visiter(ArbreRendu* noeud)
 {
-	FILE* fp;
-	errno_t err;
-	if (err = fopen_s(&fp, noeud->obtenirCheminFichierZone(), "rb") != 0)
-		return;
+	FILE* fp = noeud->obtenirFichierZone("wb");
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
-	writer = new rapidjson::Writer<rapidjson::FileWriteStream>(os);
+	writer = new rapidjson::PrettyWriter<rapidjson::FileWriteStream>(os);
 	writer->StartObject();
 	noeud->chercher(0)->accepterVisiteur(this);
 	writer->EndObject();
@@ -92,9 +89,16 @@ void VisiteurSauvegarde::visiter(NoeudSegment* noeud)
 	writer->EndObject();
 }
 
+void VisiteurSauvegarde::visiter(NoeudDepart* noeud){
+	writer->StartObject();
+	noeud->toJson(*writer);
+	writer->EndObject();
+}
+
 void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud){
 	for each(shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants())
 	{
 		noeudAbs->accepterVisiteur(this);
 	}
 }
+

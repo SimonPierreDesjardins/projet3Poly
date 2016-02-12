@@ -167,7 +167,14 @@ void ModeAbstrait::gererToucheControlRelachee()
 
 }
 
-void ModeAbstrait::sauvegarder(){}
+void ModeAbstrait::sauvegarder(){
+
+}
+
+void ModeAbstrait::charger(){
+
+}
+
 // Method stub de gestion de la souris
 void ModeAbstrait::gererClicDroitEnfonce(const int& x, const int& y){
 }

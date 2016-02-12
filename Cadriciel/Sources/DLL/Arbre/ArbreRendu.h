@@ -68,10 +68,10 @@ public:
 	void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 	void assignerCheminFichierZone(std::string chemin);
-
-	const char* obtenirCheminFichierZone();
-
-
+	
+	FILE* obtenirFichierZone(std::string mode);
+protected:
+	FILE* obtenirFichierZoneDefaut(std::string mode);
 private:
    /// Définition du type pour l'association du nom d'un type vers l'usine
    /// correspondante.
@@ -79,8 +79,9 @@ private:
    /// Association du nom d'un type vers l'usine correspondante.
    RegistreUsines usines_;
 
-   const char* cheminFichierZone;
+   std::string cheminFichierZone;
 
+   const std::string cheminFichierZoneDefaut = "./../Zones/zone_par_defaut.json";
 };
 
 

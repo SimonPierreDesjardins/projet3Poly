@@ -13,6 +13,8 @@ namespace InterfaceGraphique
 {    
     public partial class Window : Form, IMessageFilter
     {
+        private System.Windows.Forms.OpenFileDialog zoneFileSystem;
+        string initialPath = System.IO.Path.GetFullPath("./../Zones/");
         private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
         private const int WM_LBUTTONDOWN =  0x0201;
@@ -39,6 +41,9 @@ namespace InterfaceGraphique
             menuEdition_.Visible = false;
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
+            zoneFileSystem = new OpenFileDialog();
+            zoneFileSystem.InitialDirectory = initialPath;
+            zoneFileSystem.Filter = "Fichiers textes et JSON (*.txt, *.json)|*.txt;*.json";
         }
 
         public void InitialiserAnimation()
@@ -348,6 +353,7 @@ namespace InterfaceGraphique
             if (dialogResult == DialogResult.Yes)
             {
                 FonctionsNatives.nouvelleTable();
+                enregistrerMenuEdition_.Enabled = false;
             }
         }
 
@@ -358,17 +364,38 @@ namespace InterfaceGraphique
 
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
         {
-            System.Windows.Forms.OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK)
+            DialogResult dialogResult = zoneFileSystem.ShowDialog();
+            bool correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
+            bool estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
+            while ((dialogResult == DialogResult.OK && !correctPath) || (dialogResult == DialogResult.OK && estFichierZoneDefaut))
             {
-                FonctionsNatives.assignerCheminFichierZone(FileName);
+                if (!correctPath)
+                    MessageBox.Show("Vous ne pouvez enregistrer que dans le dossier " + System.IO.Path.GetFullPath(initialPath), "Mauvais dossier", MessageBoxButtons.OK);
+                else if (estFichierZoneDefaut)
+                    MessageBox.Show("Vous ne pouvez pas enregistrer dans le fichier de zone par défaut", "Impossible d'écrire dans ce fichier", MessageBoxButtons.OK);
+                dialogResult = zoneFileSystem.ShowDialog();
+                correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
+                estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
             }
+
+            if (dialogResult == DialogResult.OK)
+            {
+                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.sauvegarder();
+                enregistrerMenuEdition_.Enabled = true;
+            }
+            
         }
 
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
         {
-            Process.Start(@"explorer.exe");
-            FonctionsNatives.charger();
+            if (zoneFileSystem.ShowDialog() == DialogResult.OK)
+            {
+                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.charger();
+                enregistrerMenuEdition_.Enabled = true;
+            }
+            
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -500,6 +527,6 @@ namespace InterfaceGraphique
         public static extern void nouvelleTable();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerCheminFichierZone(FileName);
+        public static extern void assignerCheminFichierZone(string chemin);
     }
 }

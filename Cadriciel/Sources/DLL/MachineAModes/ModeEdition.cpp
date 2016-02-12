@@ -149,6 +149,10 @@ void ModeEdition::sauvegarder(){
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
 }
 
+void ModeEdition::charger(){
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chargerZone();
+}
+
 void ModeEdition::gererToucheAltEnfoncee() {
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
 }

@@ -96,17 +96,38 @@ void ArbreRenduINF2990::initialiser()
 	shared_ptr<NoeudAbstrait> noeudDepart{ creerNoeud(NOM_DEPART) };
 
 	ajouter(noeudTable);
-	ajouter(noeudDepart);
+	noeudTable->ajouter(noeudDepart);
+}
+
+void ArbreRenduINF2990::chargerZoneDefaut(){
+	vider();
+	rapidjson::Document doc;
+	char readBuffer[65536];
+	FILE* fp = obtenirFichierZoneDefaut("rb");
+	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+	doc.ParseStream(is);
+
+	fclose(fp);
+
+	shared_ptr<NoeudAbstrait> noeudTable = { creerNoeud(NOM_TABLE) };
+	ajouter(noeudTable);
+	if (!doc["table"].HasMember("noeudsEnfants"))
+		return;
+
+	const rapidjson::Value& enfantsTable = doc["table"]["noeudsEnfants"];
+	for (rapidjson::Value::ConstValueIterator itr = enfantsTable.Begin();
+		itr != enfantsTable.End(); ++itr)
+	{
+		chargerZone(itr, noeudTable);
+	}
 }
 
 void ArbreRenduINF2990::chargerZone(){
 	vider();
 	rapidjson::Document doc;
-	FILE* fp;
-	errno_t err;
-	if (err = fopen_s(&fp, cheminFichierZone, "rb") != 0)
-		return;
 	char readBuffer[65536];
+	FILE* fp = obtenirFichierZone("rb");
 	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
 
 	doc.ParseStream(is);

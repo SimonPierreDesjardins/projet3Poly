@@ -139,7 +139,11 @@ extern "C"
 	}
 
 	__declspec(dllexport) void __cdecl charger(){
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chargerZone();
+		FacadeModele::obtenirInstance()->obtenirMode()->charger();
+	}
+
+	__declspec(dllexport) void __cdecl assignerCheminFichierZone(char* chemin){
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerCheminFichierZone(string(chemin));
 	}
 	////////////////////////////////////////////////////////////////////////
 	///

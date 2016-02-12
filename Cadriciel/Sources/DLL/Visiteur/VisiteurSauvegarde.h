@@ -13,7 +13,7 @@
 
 #include "VisiteurAbstrait.h"
 
-#include "rapidjson\writer.h"
+#include "rapidjson\prettywriter.h"
 
 class NoeudComposite;
 
@@ -44,10 +44,11 @@ public:
 	virtual void visiter(NoeudSegment* noeud);
 	/// Sauvegarde en JSON d'un NoeudDuplication.
 	virtual void visiter(NoeudDuplication* noeud);
-	
+	/// Sauvegarde en JSON d'un NoeudDuplication.
+	virtual void visiter(NoeudDepart* noeud);
 private:
 	/// Classe pour écrire dans un fichier
-	rapidjson::Writer<rapidjson::FileWriteStream>* writer ;
+	rapidjson::PrettyWriter<rapidjson::FileWriteStream>* writer ;
 	void visiterEnfants(NoeudComposite* noeud);
 	
 };

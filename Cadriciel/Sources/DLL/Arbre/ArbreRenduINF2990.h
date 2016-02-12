@@ -64,7 +64,7 @@ public:
 
 private:
 	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent);
-   
+	void chargerZoneDefaut();
    /// La chaîne représentant le type du point de départ. 
    static const std::string NOM_DEPART;
 };

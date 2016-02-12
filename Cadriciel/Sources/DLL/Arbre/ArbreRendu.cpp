@@ -139,11 +139,23 @@ void ArbreRendu::accepterVisiteur(VisiteurAbstrait* visiteur)
 }
 
 void ArbreRendu::assignerCheminFichierZone(std::string chemin){
-	cheminFichierZone = chemin.c_str();
+	cheminFichierZone = string(chemin);
 }
 
-const char* ArbreRendu::obtenirCheminFichierZone(){
-	return cheminFichierZone;
+FILE* ArbreRendu::obtenirFichierZone(std::string mode){
+	FILE* fichierZone;
+	errno_t err;
+	if (err = fopen_s(&fichierZone, cheminFichierZone.c_str(), mode.c_str()) != 0)
+		return NULL;
+	return fichierZone;
+}
+
+FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode){
+	FILE* fichierZone;
+	errno_t err;
+	if (err = fopen_s(&fichierZone, cheminFichierZoneDefaut.c_str(), mode.c_str()) != 0)
+		return NULL;
+	return fichierZone;
 }
 
 ////////////////////////////////////////////////
