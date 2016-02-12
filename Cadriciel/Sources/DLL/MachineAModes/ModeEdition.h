@@ -67,8 +67,8 @@ public:
 protected:
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
 
-	int ancienSourisX_;
-	int ancienSourisY_;
+	int ancienSourisX_{ 0 };
+	int ancienSourisY_{ 0 };
 
 };
 

@@ -385,6 +385,7 @@ namespace InterfaceGraphique
                 }
             }
         }
+
     }
 
     enum Etat

@@ -49,6 +49,9 @@
     <Filter Include="Header Files\Tests">
       <UniqueIdentifier>{0dbbcffd-49b5-4878-a09c-22650c7a5093}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Tests">
+      <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\MachineAEtats">
       <UniqueIdentifier>{48f0b7e7-fdbd-4be6-91ff-baed38fc0647}</UniqueIdentifier>
     </Filter>
@@ -289,6 +292,9 @@
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatSelection.h">
+      <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">

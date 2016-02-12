@@ -44,11 +44,12 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 
 	if (estClickDrag())
 	{
-		gererDragGauche(xEnfonce_, yEnfonce_, x, y);
+		gererDragGauche(anchor.x, anchor.y, x, y);
 	}
 	else
 	{
-		gererClicGauche(x, y);
+		//gererClicGauche(std::abs(anchor.x - currentPosition.x) / 2, std::abs(anchor.y - currentPosition.y) / 2);
+		gererClicGauche((anchor.x + currentPosition.x) / 2, (anchor.y + currentPosition.y) / 2);
 	}
 }
 
@@ -73,6 +74,7 @@ void EtatSelection::gererMouvementSouris(const int & x, const int& y){
 
 void EtatSelection::gererClicGauche(const int& x, const int& y)
 {
+	visiteurSelection_->assignerEstDrag(false);
 	glm::dvec3 positionRelative;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
 	visiteurSelection_->assignerPositionRelative(positionRelative);
@@ -82,7 +84,14 @@ void EtatSelection::gererClicGauche(const int& x, const int& y)
 
 void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const int& xApres, const int& yApres)
 {
+	visiteurSelection_->assignerEstDrag(true);
 	std::cout << "Drag gauche : " << xAvant << " " << yAvant << " a " << xApres << " " << yApres << std::endl;
+	glm::dvec3 positionRelativeAvant, positionRelativeApres;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xAvant, yAvant, positionRelativeAvant);
+	visiteurSelection_->assignerPositionRelativeAvant(positionRelativeAvant);
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xApres, yApres, positionRelativeApres);
+	visiteurSelection_->assignerPositionRelativeApres(positionRelativeApres);
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSelection_.get());
 }
 
 void EtatSelection::gererToucheControlEnfoncee()
