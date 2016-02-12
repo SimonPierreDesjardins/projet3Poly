@@ -143,6 +143,11 @@ void ModeEdition::gererToucheControlRelachee()
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
 }
 
+void ModeEdition::gererToucheSupprimer()
+{
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
+}
+
 void ModeEdition::gererToucheAltEnfoncee() {
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
 }
@@ -188,10 +193,3 @@ void ModeEdition::gererMoletteSouris(const int & delta){
 	}
 
 }
-
-void ModeEdition::gererToucheSupprimer()
-{
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
-}
-
-

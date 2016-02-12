@@ -35,9 +35,6 @@ private:
 
 private : 
 	std::unique_ptr<VisiteurSelection> visiteurSelection_;
-
-	int xEnfonce_;
-	int yEnfonce_;
 };
 
 #endif

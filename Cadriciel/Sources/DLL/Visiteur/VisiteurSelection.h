@@ -25,10 +25,12 @@ public:
 	/// Parcours du noeudTable.
 	virtual void visiter(NoeudTable* noeud);
 
-	void visiterRectangle(NoeudTable* noeud);
+	virtual void visiterRectangle(NoeudTable* noeud);
 
 	//Indique si la touche control est appuyee
 	void assignerControl(bool estControl);
+
+	bool estDansRectangleElastique(glm::dvec3 coinRectElastMin, glm::dvec3 coinRectElastMax, glm::dvec3 p1, glm::dvec3 p2, glm::dvec3 p3, glm::dvec3 p4);
 
 private:
 	bool estControlAppuye = false;

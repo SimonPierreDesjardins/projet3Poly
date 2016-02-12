@@ -430,6 +430,7 @@ namespace InterfaceGraphique
                 }
             }
         }
+
     }
 
     enum Etat

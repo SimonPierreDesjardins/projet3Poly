@@ -30,8 +30,8 @@ private:
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
 	std::unique_ptr<VisiteurDeplacement> visiteurDeplacement_{ nullptr };
 
-	glm::dvec3 dernierePositionVirtuelle_;
-	glm::dvec3 positionVirtuelleInitiale_;
+	glm::dvec3 dernierePositionVirtuelle_{ glm::dvec3() };
+	glm::dvec3 positionVirtuelleInitiale_{ glm::dvec3() };
 };
 
 #endif
