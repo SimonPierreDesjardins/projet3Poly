@@ -223,7 +223,7 @@
     <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="NoeudJonction.cpp">
+    <ClCompile Include="Arbre\Noeuds\NoeudJonction.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
   </ItemGroup>
@@ -399,7 +399,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="NoeudJonction.h">
+    <ClInclude Include="Arbre\Noeuds\NoeudJonction.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>

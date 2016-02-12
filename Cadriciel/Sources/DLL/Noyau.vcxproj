@@ -138,6 +138,7 @@
     <ClCompile Include="Arbre\Noeuds\NoeudConeCube.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudJonction.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudLigneNoire.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudPoteau.cpp" />
@@ -166,7 +167,6 @@
     <ClCompile Include="MachineAModes\ModeMenuPrincipal.cpp" />
     <ClCompile Include="MachineAModes\ModeSimulation.cpp" />
     <ClCompile Include="MachineAModes\ModeTest.cpp" />
-    <ClCompile Include="NoeudJonction.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
@@ -189,6 +189,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudConeCube.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDepart.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudJonction.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudLigneNoire.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudMur.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudPoteau.h" />
@@ -221,7 +222,6 @@
     <ClInclude Include="MachineAModes\ModeSimulation.h" />
     <ClInclude Include="MachineAModes\ModeTest.h" />
     <ClInclude Include="MachineAModes\ModeTypes.h" />
-    <ClInclude Include="NoeudJonction.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />

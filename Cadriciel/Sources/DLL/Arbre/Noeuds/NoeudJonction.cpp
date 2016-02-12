@@ -77,12 +77,6 @@ void NoeudJonction::afficherConcret() const
 		glColor4f(0.0, 1.0, 0.0, 1.0);
 	}
 
-	//glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
-
-
-	//glRotatef(90, 1, 0, 0);
-	//glRotatef(90, 0, 1, 0);
-
 	// Affichage du modèle.
 	vbo_->dessiner();
 
@@ -93,7 +87,7 @@ void NoeudJonction::afficherConcret() const
 void NoeudJonction::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 	// Mettre à jour les coins avec le facteur de mise à échelle.
-	std::cout << "Mise à jour Poteau:" << std::endl;
+	std::cout << "Mise à jour Jonction:" << std::endl;
 	for (int i = 0; i < 4; i++)
 	{
 		quadEnglobant_.coins[i] *= facteurMiseAEchelle_;

@@ -22,7 +22,6 @@ public:
 	EtatCreationLigne();
 	virtual ~EtatCreationLigne();
 
-	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
 	virtual void gererToucheEchappe();
