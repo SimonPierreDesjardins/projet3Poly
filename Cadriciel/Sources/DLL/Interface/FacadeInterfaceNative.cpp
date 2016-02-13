@@ -552,9 +552,6 @@ extern "C"
 		case WM_MOUSEWHEEL:
 			FacadeModele::obtenirInstance()->obtenirMode()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
 			break;
-
-		//case WM_SETCURSOR:
-			//FacadeModele::obtenirInstance()->obtenirEtat()->assignerSymbolePointeur();
 		}
 	}
 

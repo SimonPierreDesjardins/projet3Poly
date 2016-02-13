@@ -849,11 +849,29 @@ namespace InterfaceGraphique
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Ouvre un explorateur de ficher pour charger la zone sauvegarder lorsque 
+        /// le bouton ouvrir est appuyer sur le menu
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
         {
             ouvrirZone();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Charge une zone sauvegarder
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void ouvrirZone()
         {
             if (zoneFileSystem.ShowDialog() == DialogResult.OK)
@@ -865,6 +883,16 @@ namespace InterfaceGraphique
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        ///
+        /// Gère les touches lorsque le viewPort_ panel à le focus.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch(e.KeyCode)
@@ -928,64 +956,137 @@ namespace InterfaceGraphique
             }     
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textboxDimension__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textboxDimension__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionX__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionX__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxRotation__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxRotation__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
-      
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionY__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionY__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void enregistrerMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Permet de sauvegarder un ficher lorsque le bouton sauvegarder est cliqué
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void enregistrerMenuEdition__Click(object sender, EventArgs e)
         {
             FonctionsNatives.sauvegarder();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void verificationDuNombreElementChoisi ()
+        ///
+        /// Permet de savoir le nombre d'objet sélectionné et affiche le panneau
+        /// des opérations si un objet est sélectionné
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void verificationDuNombreElementChoisi ()
         {
             FonctionsNatives.assignerAutorisationInput(true);
-            if (FonctionsNatives.obtenirEtat() == 0)
-            {
-                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-                if (nbEnfant == 1)
-                {
-                    mettreAJourInformation();
-                    viewPort_.Focus();
-                    panneauOperation_.Visible = true;
-                    supprimerToolStripMenuItem.Enabled = true;
-                }
-                else if (nbEnfant > 1)
-                {
-                    supprimerToolStripMenuItem.Enabled = true;
-                    panneauOperation_.Visible = false;
-                }
-                else
-                {
-                    panneauOperation_.Visible = false;
-                    supprimerToolStripMenuItem.Enabled = false;
-                }
 
+            int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+            if (nbEnfant == 1)
+            {
+                mettreAJourInformation();
+                viewPort_.Focus();
+                panneauOperation_.Visible = true;
+                supprimerToolStripMenuItem.Enabled = true;
             }
+            else if (nbEnfant > 1)
+            {
+                supprimerToolStripMenuItem.Enabled = true;
+                panneauOperation_.Visible = false;
+            }
+            else
+            {
+                panneauOperation_.Visible = false;
+                supprimerToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void viewPort__MouseUp(object sender, MouseEventArgs e)
+        ///
+        /// Vérifie le nombre d'objet sélectionné lorsqu'un clique de la souris est relâché
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void viewPort__MouseUp(object sender, MouseEventArgs e)
+        {
+            if (FonctionsNatives.obtenirEtat() == 0)
+                verificationDuNombreElementChoisi();
             viewPort_.Focus();
         }
 
-        private void viewPort__MouseUp(object sender, MouseEventArgs e)
-        {
-            verificationDuNombreElementChoisi();
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mettreAJourInformation()
+        ///
+        /// Met à jour les informations dans le panneau d'opération
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mettreAJourInformation()
         {
             textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
@@ -993,6 +1094,24 @@ namespace InterfaceGraphique
             textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
             textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
         }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void viewPort__MouseMove(object sender, MouseEventArgs e)
+        ///
+        /// Vérifie le nombre d'objet sélectionné, s'il en a seulement un et que le clique
+        /// gauche est appuyé il met a jour les info dans le panneau d'opération
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void viewPort__MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                verificationDuNombreElementChoisi();
+        }
+
     }
 
     enum Etat
@@ -1017,6 +1136,13 @@ namespace InterfaceGraphique
         TEST
     };
 
+    ////////////////////////////////////////////////////////////////////////
+    ///
+    /// @fn  static partial class FonctionsNatives
+    ///
+    /// Permet de faire le lien avec les méthodes implémentées dans le C++
+    ///
+    ////////////////////////////////////////////////////////////////////////
     static partial class FonctionsNatives
     {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
