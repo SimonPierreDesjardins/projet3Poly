@@ -95,7 +95,7 @@
             this.viewPort_.Size = new System.Drawing.Size(623, 402);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
-            this.viewPort_.MouseClick += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseClick);
+            this.viewPort_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
             this.viewPort_.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
             // 
             // bouttonSimulation_
@@ -191,9 +191,11 @@
             // 
             // enregistrerMenuEdition_
             // 
+            this.enregistrerMenuEdition_.Enabled = false;
             this.enregistrerMenuEdition_.Name = "enregistrerMenuEdition_";
             this.enregistrerMenuEdition_.Size = new System.Drawing.Size(158, 22);
             this.enregistrerMenuEdition_.Text = "Enregistrer";
+            this.enregistrerMenuEdition_.Click += new System.EventHandler(this.enregistrerMenuEdition__Click);
             // 
             // enregistrerSousMenuEdition_
             // 

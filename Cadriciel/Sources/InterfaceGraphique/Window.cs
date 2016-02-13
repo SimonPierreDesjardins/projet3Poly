@@ -13,6 +13,12 @@ namespace InterfaceGraphique
 {    
     public partial class Window : Form, IMessageFilter
     {
+        //File explorer pour sauvegarder et ouvrir des fichiers de zones
+        private System.Windows.Forms.OpenFileDialog zoneFileSystem;
+
+        //Chemin initial pour le file explorer
+        string initialPath;
+
         private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
         private const int WM_LBUTTONDOWN =  0x0201;
@@ -39,6 +45,10 @@ namespace InterfaceGraphique
             menuEdition_.Visible = false;
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
+            zoneFileSystem = new OpenFileDialog();
+            initialPath = System.IO.Path.GetFullPath("./../Zones/");
+            zoneFileSystem.InitialDirectory = initialPath;
+            zoneFileSystem.Filter = "Fichiers textes et JSON (*.txt, *.json)|*.txt;*.json";
             supprimerToolStripMenuItem.Enabled = false;
         }
 
@@ -263,17 +273,17 @@ namespace InterfaceGraphique
 
         private void modeTestModeEdition__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerMode(Mode.TEST);
+            //FonctionsNatives.assignerMode(Mode.TEST);
         }
 
         private void bouttonSimulation__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerMode(Mode.SIMULATION);
+            //FonctionsNatives.assignerMode(Mode.SIMULATION);
         }
 
         private void bouttonConfiguration__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerMode(Mode.CONFIGURE);
+            //FonctionsNatives.assignerMode(Mode.CONFIGURE);
         }
 
         private void aideMenuEdition__Click(object sender, EventArgs e)
@@ -374,7 +384,164 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
-        private void viewPort__MouseClick(object sender, MouseEventArgs e)
+        private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        {
+            nouvelleZone();
+        }
+
+        private void nouvelleZone()
+        {
+            DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                FonctionsNatives.nouvelleTable();
+                panneauOperation_.Visible = false;
+                enregistrerMenuEdition_.Enabled = false;
+            }
+        }
+
+        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ZOOM);
+            changeIconColor();
+            outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
+        }
+
+        private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
+        {
+            enregistrerSous();            
+        }
+
+        private void enregistrerSous()
+        {
+            DialogResult dialogResult = zoneFileSystem.ShowDialog();
+            bool correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
+            bool estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
+            while ((dialogResult == DialogResult.OK && !correctPath) || (dialogResult == DialogResult.OK && estFichierZoneDefaut))
+            {
+                if (!correctPath)
+                    MessageBox.Show("Vous ne pouvez enregistrer que dans le dossier " + System.IO.Path.GetFullPath(initialPath), "Mauvais dossier", MessageBoxButtons.OK);
+                else if (estFichierZoneDefaut)
+                    MessageBox.Show("Vous ne pouvez pas enregistrer dans le fichier de zone par défaut", "Impossible d'écrire dans ce fichier", MessageBoxButtons.OK);
+                dialogResult = zoneFileSystem.ShowDialog();
+                correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
+                estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
+            }
+
+            if (dialogResult == DialogResult.OK)
+            {
+                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.sauvegarder();
+                enregistrerMenuEdition_.Enabled = true;
+            }
+        }
+
+        private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        {
+            ouvrirZone();
+        }
+
+        private void ouvrirZone()
+        {
+            if (zoneFileSystem.ShowDialog() == DialogResult.OK)
+            {
+                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.charger();
+                enregistrerMenuEdition_.Enabled = true;
+                panneauOperation_.Visible = false;
+            }
+        }
+
+        private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                case Keys.Delete:
+                    verificationDuNombreElementChoisi();
+                    break;
+
+                case Keys.S:
+                    if (e.Control)
+                    {
+                        if (enregistrerMenuEdition_.Enabled)
+                            FonctionsNatives.sauvegarder();
+                        else
+                            enregistrerSous();
+                    }
+                    else
+                    {
+                        changeIconColor();
+                        outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
+                    }
+                    break;
+
+                case Keys.O:
+                    if (e.Control)
+                        ouvrirZone();
+                    break;
+
+                case Keys.N:
+                    if (e.Control)
+                        nouvelleZone();
+                    break;
+
+                case Keys.D:
+                    changeIconColor();
+                    outilsDéplacement_.BackColor = Color.CadetBlue;
+                    break;
+
+                case Keys.R:
+                    changeIconColor();
+                    outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+                     
+                case Keys.E:
+                    changeIconColor();
+                    outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                case Keys.C:
+                    changeIconColor();
+                    outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                case Keys.Z:
+                    changeIconColor();
+                    outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                default:
+                    break;
+            }     
+        }
+
+        private void textboxDimension__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxRotation__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void enregistrerMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.sauvegarder();
+        }
+       
+        private void textBoxPositionX__Enter_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void textBoxPositionY__Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInput(false);
+        }
+
+        private void verificationDuNombreElementChoisi ()
         {
             FonctionsNatives.assignerAutorisationInput(true);
             if (FonctionsNatives.obtenirEtat() == 0)
@@ -400,117 +567,14 @@ namespace InterfaceGraphique
                     panneauOperation_.Visible = false;
                     supprimerToolStripMenuItem.Enabled = false;
                 }
-                    
-            }
-        }
 
-        private void nouveauMenuEdition__Click(object sender, EventArgs e)
-        {
-            DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                FonctionsNatives.nouvelleTable();
             }
-        }
-
-        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerEtat(Etat.ZOOM);
-            changeIconColor();
-            outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
         }
 
-        private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
+        private void viewPort__MouseUp(object sender, MouseEventArgs e)
         {
-            Process.Start(@"explorer.exe");
-        }
-
-        private void ouvrirMenuEdition__Click(object sender, EventArgs e)
-        {
-            Process.Start(@"explorer.exe");
-        }
-
-        private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            if (e.KeyCode == Keys.Delete)
-            {
-                if (FonctionsNatives.obtenirEtat() == 0)
-                {
-                    int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-                    if (nbEnfant == 1)
-                    {
-                        textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-                        textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-                        textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-                        textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-                        viewPort_.Focus();
-                        panneauOperation_.Visible = true;
-                        supprimerToolStripMenuItem.Enabled = true;
-                    }
-                    else if (nbEnfant > 1)
-                    {
-                        supprimerToolStripMenuItem.Enabled = true;
-                        panneauOperation_.Visible = false;
-                    }
-                    else
-                    {
-                        panneauOperation_.Visible = false;
-                        supprimerToolStripMenuItem.Enabled = false;
-                    }
-
-                }
-            }
-            else if (e.KeyCode == Keys.D)
-            {
-                changeIconColor();
-                outilsDéplacement_.BackColor = Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.S)
-            {
-                changeIconColor();
-                outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.R)
-            {
-                changeIconColor();
-                outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.E)
-            {
-                changeIconColor();
-                outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.C)
-            {
-                changeIconColor();
-                outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-            else if (e.KeyCode == Keys.Z)
-            {
-                changeIconColor();
-                outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
-            }
-        }
-
-        private void textboxDimension__Enter_1(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
-        }
-
-        private void textBoxRotation__Enter_1(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
-        }
-
-        private void textBoxPositionX__Enter_1(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
-        }
-
-        private void textBoxPositionY__Enter(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInput(false);
+            verificationDuNombreElementChoisi();
         }
 
     }
@@ -603,6 +667,12 @@ namespace InterfaceGraphique
         public static extern void assignerPositionRelativeY(double positionRelativeY);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void sauvegarder();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void charger();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void suppression();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -612,10 +682,12 @@ namespace InterfaceGraphique
         public static extern void nouvelleTable();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerCheminFichierZone(string chemin);
+        
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAutorisationInput(bool autorisation);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool obtenirAutorisationInput();
-
     }
 }

@@ -12,7 +12,9 @@
 #include "EtatOpenGL.h"
 #include "NoeudTypes.h"
 #include "VisiteurTypes.h"
-
+#include <stdio.h>
+#include "rapidjson\filereadstream.h"
+#include <sys/stat.h>
 
 /// La chaîne représentant le type des araignées.
 const std::string ArbreRenduINF2990::NOM_ARAIGNEE{ "araignee" };
@@ -81,25 +83,123 @@ ArbreRenduINF2990::~ArbreRenduINF2990()
 ///
 /// @fn void ArbreRenduINF2990::initialiser()
 ///
-/// Cette fonction crée la structure de base de l'arbre de rendu, c'est-à-dire
-/// avec les noeuds structurants (pour les objets, les murs, les billes,
-/// les parties statiques, etc.)
+/// Cette fonction appel chargerZoneDefaut() pour créer la structure de base de l'arbre de rendu,
+/// c'est-à-dire avec les noeuds structurants (pour les objets, les murs, les billes,
+/// les parties statiques, etc.).
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::initialiser()
 {
-	// On vide l'arbre
-	vider();
-
-	// On ajoute un noeud bidon seulement pour que quelque chose s'affiche.
-	shared_ptr<NoeudAbstrait> noeudTable{ creerNoeud(NOM_TABLE) };
-	shared_ptr<NoeudAbstrait> noeudDepart{ creerNoeud(NOM_DEPART) };
-
-	ajouter(noeudTable);
-	ajouter(noeudDepart);
+	chargerZoneDefaut();
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ArbreRenduINF2990::chargerZoneDefaut()
+///
+/// Cette fonction s'occupe de récupérer le fichier json contenant la configuration 
+/// de base de l'arbre de rendu. Si le fichier n'existe pas, la fonction le crée.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRenduINF2990::chargerZoneDefaut(){
+	struct stat buffer;
+	if (stat(cheminFichierZoneDefaut.c_str(), &buffer) != 0){
+		shared_ptr<NoeudAbstrait> table = { creerNoeud(NOM_TABLE) };
+		ajouter(table);
+		shared_ptr<NoeudAbstrait> pointDepart = { creerNoeud(NOM_DEPART) };
+		table->ajouter(pointDepart);
+		cheminFichierZone = cheminFichierZoneDefaut;
+		unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();;
+		accepterVisiteur(visiteur.get());
+		return;
+	}
+	chargerZone(obtenirFichierZoneDefaut("rb"));
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ArbreRenduINF2990::chargerZone()
+///
+/// Cette fonction s'occupe de récupérer le fichier json contenant une configuration quelconque 
+/// de l'arbre de rendu sauvegardé par un utilisateur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRenduINF2990::chargerZone(){
+	chargerZone(obtenirFichierZone("rb"));
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ArbreRenduINF2990::chargerZone(FILE* fp)
+///
+/// Cette fonction s'occupe de générer l'arbre de rendu
+/// selon le fichier json qu'on lui a passé en paramètre.
+///
+/// @param[in] fp : le fichier de sauvegarde pas encore parse.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRenduINF2990::chargerZone(FILE* fp){
+	vider();
+	rapidjson::Document doc;
+	char readBuffer[65536];
+	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
+
+	doc.ParseStream(is);
+
+	fclose(fp);
+
+	shared_ptr<NoeudAbstrait> noeudTable = { creerNoeud(NOM_TABLE) };
+	ajouter(noeudTable);
+	if (!doc["table"].HasMember("noeudsEnfants"))
+		return;
+
+	const rapidjson::Value& enfantsTable = doc["table"]["noeudsEnfants"];
+	for (rapidjson::Value::ConstValueIterator itr = enfantsTable.Begin();
+		itr != enfantsTable.End(); ++itr)
+	{
+		chargerZone(itr, noeudTable);
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent)
+///
+/// Fonction récursive traversant l'arbre Json pour créer chaque noeud
+/// selon leur type et les ajoutant au parent correspondant
+///
+/// @param[in] noeudJSON : noeud en Json contenant les attributs du noeudAbstrait.
+/// @param[in] parent : le pointeur vers le parent du noeud qui s'apprête à être créé.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent){
+	shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
+	noeud->fromJson(noeudJSON);
+	parent->ajouter(noeud);
+	
+	if (!noeudJSON->HasMember("noeudsEnfants"))
+		return;
+
+	const rapidjson::Value& enfants = noeudJSON->FindMember("noeudsEnfants")->value;
+	for (rapidjson::Value::ConstValueIterator itr = enfants.Begin();
+		itr != enfants.End(); ++itr)
+	{
+		chargerZone(itr, noeud);
+	}
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

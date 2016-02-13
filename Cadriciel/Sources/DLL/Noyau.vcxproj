@@ -178,6 +178,7 @@
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
     <ClCompile Include="Visiteur\VisiteurRotation.cpp" />
+    <ClCompile Include="Visiteur\VisiteurSauvegarde.cpp" />
     <ClCompile Include="Visiteur\VisiteurSelection.cpp" />
     <ClCompile Include="Visiteur\VisiteurSuppression.cpp" />
     <ClCompile Include="Visiteur\VisiteurVerificationQuad.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h" />
     <ClInclude Include="Visiteur\VisiteurRotation.h" />
+    <ClInclude Include="Visiteur\VisiteurSauvegarde.h" />
     <ClInclude Include="Visiteur\VisiteurSelection.h" />
     <ClInclude Include="Visiteur\VisiteurSuppression.h" />
     <ClInclude Include="Visiteur\VisiteurTypes.h" />

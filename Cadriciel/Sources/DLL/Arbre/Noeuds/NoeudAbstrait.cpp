@@ -10,6 +10,9 @@
 #include "NoeudAbstrait.h"
 #include "Utilitaire.h"
 #include <iterator>
+#include "rapidjson\filewritestream.h"
+#include <iostream>
+
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -492,8 +495,34 @@ modele::Modele3D const* NoeudAbstrait::getModele()
 	return modele_;
 }
 
+void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
+	writer.Key("type");
+	writer.String(obtenirType().c_str());
+	writer.Key("posX");
+	writer.Double(obtenirPositionRelative().x);
+	writer.Key("posY");
+	writer.Double(obtenirPositionRelative().y);
+	writer.Key("posZ");
+	writer.Double(obtenirPositionRelative().z);
+	writer.Key("angleRotation");
+	writer.Double(obtenirAngleRotation());
+	writer.Key("facteurEchelle");
+	writer.Double(obtenirFacteurMiseAEchelle());
+}
 
-
+void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
+	rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
+	double x = itr->value.GetDouble();
+	itr++;
+	double y = itr->value.GetDouble();
+	itr++;
+	double z = itr->value.GetDouble();
+	itr++;
+	positionRelative_ = glm::dvec3(x,y,z);
+	assignerAngleRotation(itr->value.GetDouble());
+	itr++;
+	assignerFacteurMiseAEchelle(itr->value.GetDouble());
+}
 
 ////////////////////////////////////////////////
 /// @}

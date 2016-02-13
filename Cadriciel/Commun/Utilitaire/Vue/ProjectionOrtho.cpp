@@ -140,7 +140,6 @@ namespace vue {
 	void ProjectionOrtho::redimensionnerFenetre(const glm::ivec2& coinMin,
 		const glm::ivec2& coinMax)
 	{
-		
 		if (coinMax.x < 100 || coinMax.y < 100)
 			return;
 

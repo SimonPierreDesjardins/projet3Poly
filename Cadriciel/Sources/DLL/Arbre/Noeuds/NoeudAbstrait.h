@@ -16,6 +16,9 @@
 #include <iterator>
 #include "Utilitaire.h"
 #include "glm\glm.hpp"
+#include "rapidjson\writer.h"
+#include "rapidjson\document.h"
+
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 
@@ -25,6 +28,11 @@ namespace modele{
 namespace opengl{
 	class VBO;
 }
+
+namespace rapidjson{
+	class FileWriteStream;
+}
+
 class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -160,10 +168,17 @@ public:
 	/// Accepter un visiteur.
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+	/// Retourne le modèle
 	virtual modele::Modele3D const* getModele();
 
 	virtual bool obtenirEnCreation() { return enCreation_; };
 	virtual void assignerEnCreation(bool enCreation) { enCreation_ = enCreation; };
+
+	/// convertit un noeud en JSON
+	void toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+	/// assigne les attributs d'un noeud à partir d'un JSON
+	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
 protected:
 	///Si l'objet est en train de se faire créer

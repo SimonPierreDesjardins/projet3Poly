@@ -167,6 +167,14 @@ void ModeAbstrait::gererToucheControlRelachee()
 
 }
 
+void ModeAbstrait::sauvegarder(){
+
+}
+
+void ModeAbstrait::charger(){
+
+}
+
 void ModeAbstrait::gererToucheSupprimer()
 {
 

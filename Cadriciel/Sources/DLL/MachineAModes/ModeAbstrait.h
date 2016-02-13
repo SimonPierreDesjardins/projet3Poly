@@ -29,6 +29,9 @@ public:
 	ModeAbstrait();
 	virtual ~ModeAbstrait();
 
+	virtual void sauvegarder();
+	virtual void charger();
+
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 

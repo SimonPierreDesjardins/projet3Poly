@@ -14,6 +14,7 @@
 #include "ArbreRendu.h"
 #include <map>
 #include <string>
+#include "rapidjson\document.h"
 
 class VisiteurAbstrait;
 
@@ -31,37 +32,59 @@ class VisiteurAbstrait;
 class ArbreRenduINF2990 : public ArbreRendu
 {
 public:
-   /// Constructeur par défaut.
-   ArbreRenduINF2990();
-   /// Destructeur.
-   virtual ~ArbreRenduINF2990();
+	/// Constructeur par défaut.
+	ArbreRenduINF2990();
+	/// Destructeur.
+	virtual ~ArbreRenduINF2990();
 
-   /// Initialise l'arbre de rendu à son état initial.
-   void initialiser();
+	/// Initialise l'arbre de rendu à son état initial.
+	void initialiser();
+
+	/// Charge le fichier de sauvegarde présentement assigné à l'arbre de rendu
+	void chargerZone();
 
 	/// La chaîne représentant le type des araignées.
-   static const std::string NOM_ARAIGNEE;
-	/// La chaîne représentant le type des cones-cubes.
-   static const std::string NOM_CONECUBE;
-   /// La chaîne représentant le type du robot.
-   static const std::string NOM_ROBOT;
-   /// La chaîne représentant le type de la table.
-   static const std::string NOM_TABLE;
-   /// La chaîne représentant le type des poteaux.
-   static const std::string NOM_POTEAU;
-   /// La chaîne représentant le type des murs.
-   static const std::string NOM_MUR;
-   /// La chaîne représentant le type des lignes.
-   static const std::string NOM_LIGNENOIRE;
-   /// La chaîne représentant le type des segments.
-   static const std::string NOM_SEGMENT;
-   /// La chaîne représentant le type des duplications. 
-   static const std::string NOM_DUPLICATION;
-   /// La chaîne représentant le type du point de départ. 
-   static const std::string NOM_DEPART;
-   /// La chaîne représentant le type du point de départ. 
-   static const std::string NOM_JONCTION;
+	static const std::string NOM_ARAIGNEE;
 
+	/// La chaîne représentant le type des cones-cubes.
+	static const std::string NOM_CONECUBE;
+
+	/// La chaîne représentant le type du robot.
+	static const std::string NOM_ROBOT;
+
+	/// La chaîne représentant le type de la table.
+	static const std::string NOM_TABLE;
+
+	/// La chaîne représentant le type des poteaux.
+	static const std::string NOM_POTEAU;
+
+	/// La chaîne représentant le type des murs.
+	static const std::string NOM_MUR;
+
+	/// La chaîne représentant le type des lignes.
+	static const std::string NOM_LIGNENOIRE;
+
+	/// La chaîne représentant le type des segments.
+	static const std::string NOM_SEGMENT;
+
+	/// La chaîne représentant le type des duplications. 
+	static const std::string NOM_DUPLICATION;
+
+	/// La chaîne représentant le type du point de départ. 
+	static const std::string NOM_JONCTION;
+   
+private:
+	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre
+	void chargerZone(FILE* fp);
+
+	/// Fonction récursive pour créer tous les noeuds selon l'arbre Json qui se trouve dans le fichier de sauvegarde
+	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent);
+
+	/// Charge le fichier zone_par_defaut.json qui contient la structure de base de l'arbre de rendu
+	void chargerZoneDefaut();
+
+	/// La chaîne représentant le type du point de départ. 
+	static const std::string NOM_DEPART;   
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

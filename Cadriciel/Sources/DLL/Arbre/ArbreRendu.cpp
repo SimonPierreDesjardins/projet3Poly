@@ -132,10 +132,76 @@ unsigned int ArbreRendu::calculerProfondeurMaximale()
 }
 
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ArbreRendu::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Fonction faisant partie du patron visiteur.
+/// Celle-ci permet à un noeud d'accepter un visiteur 
+/// en appelant la fonction visiter de celui-ci.
+///
+/// @param[in] visiteur : Pointeur vers le visiteur qui doit être accepté par le noeud.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ArbreRendu::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ArbreRendu::assignerCheminFichierZone(std::string chemin)
+///
+/// Fonction servant à assigner le chemin d'un fichier de zone sélectionné par un utilisateur 
+/// à la variable cheminFichierZone.
+///
+/// @param[in] chemin : Chemin vers le fichier.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRendu::assignerCheminFichierZone(std::string chemin){
+	cheminFichierZone = string(chemin);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn FILE* ArbreRendu::obtenirFichierZone(std::string mode)
+///
+/// Fonction permettant d'obtenir le fichier de zone sélectionné par l'utilisateur.
+///
+/// @param[in] mode : Si on ouvre le fichier en lecture ou en écriture.
+///
+/// @return Pointeur vers le fichier
+///
+////////////////////////////////////////////////////////////////////////
+FILE* ArbreRendu::obtenirFichierZone(std::string mode){
+	FILE* fichierZone;
+	errno_t err;
+	if (err = fopen_s(&fichierZone, cheminFichierZone.c_str(), mode.c_str()) != 0)
+		return NULL;
+	return fichierZone;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode)
+///
+/// Fonction permettant d'obtenir le fichier de zone contenant la structure de base.
+///
+/// @param[in] mode : Si on ouvre le fichier en lecture ou en écriture.
+///
+/// @return Pointeur vers le fichier
+///
+////////////////////////////////////////////////////////////////////////
+FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode){
+	FILE* fichierZone;
+	errno_t err;
+	if (err = fopen_s(&fichierZone, cheminFichierZoneDefaut.c_str(), mode.c_str()) != 0)
+		return NULL;
+	return fichierZone;
 }
 
 ////////////////////////////////////////////////

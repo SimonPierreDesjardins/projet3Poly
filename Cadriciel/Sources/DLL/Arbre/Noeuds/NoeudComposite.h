@@ -82,12 +82,19 @@ public:
    virtual void afficherConcret() const;
    /// Anime le noeud.
    virtual void animer( float dt );
+   
+   
 
    //Recherche un enfant par indice
    std::shared_ptr<const NoeudAbstrait> getEnfant(int indice) const;
 
+   //Retourne une référence au vecteur d'enfants
+   std::vector<std::shared_ptr<NoeudAbstrait>>& getEnfants();
+
+   
 
 protected:
+	/// Le choix du conteneur pour les enfants.
 	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
 
 

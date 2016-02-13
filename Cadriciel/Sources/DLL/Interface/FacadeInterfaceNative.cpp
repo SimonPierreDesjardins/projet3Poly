@@ -134,6 +134,17 @@ extern "C"
 		FacadeModele::obtenirInstance()->animer((float)temps);
 	}
 
+	__declspec(dllexport) void __cdecl sauvegarder(){
+		FacadeModele::obtenirInstance()->obtenirMode()->sauvegarder();
+	}
+
+	__declspec(dllexport) void __cdecl charger(){
+		FacadeModele::obtenirInstance()->obtenirMode()->charger();
+	}
+
+	__declspec(dllexport) void __cdecl assignerCheminFichierZone(char* chemin){
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerCheminFichierZone(string(chemin));
+	}
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl zoomIn()
@@ -399,6 +410,10 @@ extern "C"
 				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
+					break;
+
+				case VK_CONTROL+VK_KEY_S:
+					//FacadeModele::obtenirInstance()->obtenirMode()->
 					break;
 
 				case VK_RIGHT:

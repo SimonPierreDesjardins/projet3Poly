@@ -23,6 +23,8 @@ public:
 	ModeEdition();
 	virtual ~ModeEdition();
 
+	
+
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 
@@ -63,6 +65,9 @@ public:
 	virtual void gererMoletteSouris(const int & delta);
 
 	virtual void gererToucheSupprimer();
+
+	virtual void sauvegarder();
+	virtual void charger();
 
 protected:
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;

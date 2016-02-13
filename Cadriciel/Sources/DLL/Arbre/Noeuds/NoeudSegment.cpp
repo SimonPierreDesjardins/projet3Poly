@@ -19,6 +19,10 @@ NoeudSegment::~NoeudSegment()
 {
 }
 
+void NoeudSegment::accepterVisiteur(VisiteurAbstrait* visiteur){
+	visiteur->visiter(this);
+}
+
 void NoeudSegment::afficherConcret() const
 {
 	// Sauvegarde de la matrice.
@@ -45,9 +49,4 @@ void NoeudSegment::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRel
 		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
 		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
 	}
-}
-
-void NoeudSegment::accepterVisiteur(VisiteurAbstrait* visiteur)
-{
-	visiteur->visiter(this);
 }

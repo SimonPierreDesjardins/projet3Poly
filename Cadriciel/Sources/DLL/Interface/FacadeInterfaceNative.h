@@ -23,6 +23,9 @@ extern "C"
 	__declspec(dllexport) void animer(double temps);
 	__declspec(dllexport) void zoomIn();
 	__declspec(dllexport) void zoomOut();
+	__declspec(dllexport) void sauvegarder();
+	__declspec(dllexport) void charger();
+	__declspec(dllexport) void assignerCheminFichierZone(char* chemin);
 	__declspec(dllexport) int  obtenirAffichagesParSeconde();
 	__declspec(dllexport) bool executerTests();
 
