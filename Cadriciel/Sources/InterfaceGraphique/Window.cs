@@ -327,6 +327,9 @@ namespace InterfaceGraphique
                     FonctionsNatives.assignerPositionRelativeY(donnee);
                 else
                     textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+
+                mettreAJourInformation();
+                textBoxPositionY_.Select(textBoxPositionY_.Text.Length, 0);
             }
         }
 
@@ -345,6 +348,9 @@ namespace InterfaceGraphique
                     FonctionsNatives.assignerPositionRelativeX(donnee);
                 else
                     textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+
+                mettreAJourInformation();
+                textBoxPositionX_.Select(textBoxPositionX_.Text.Length, 0);
             }
         }
 
@@ -359,6 +365,8 @@ namespace InterfaceGraphique
                     donnee = FonctionsNatives.obtenirAngleRotation();
                 }
                 FonctionsNatives.assignerAngleRotation(donnee);
+                mettreAJourInformation();
+                textBoxRotation_.Select(textBoxRotation_.Text.Length, 0);
             }
         }
 
@@ -373,6 +381,8 @@ namespace InterfaceGraphique
                     donnee = FonctionsNatives.obtenirFacteurGrandeur();
                 }
                 FonctionsNatives.assignerFacteurGrandeur(donnee);
+                mettreAJourInformation();
+                textboxDimension_.Select(textboxDimension_.Text.Length, 0);
             }
         }
 
@@ -549,10 +559,7 @@ namespace InterfaceGraphique
                 int nbEnfant = FonctionsNatives.obtenirNombreSelection();
                 if (nbEnfant == 1)
                 {
-                    textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-                    textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+                    mettreAJourInformation();
                     viewPort_.Focus();
                     panneauOperation_.Visible = true;
                     supprimerToolStripMenuItem.Enabled = true;
@@ -575,6 +582,14 @@ namespace InterfaceGraphique
         private void viewPort__MouseUp(object sender, MouseEventArgs e)
         {
             verificationDuNombreElementChoisi();
+        }
+
+        private void mettreAJourInformation()
+        {
+            textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+            textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+            textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+            textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
         }
 
     }
