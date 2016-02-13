@@ -23,7 +23,7 @@ public:
 	virtual ~VisiteurDuplication();
 
 	inline void assignerEnDuplication(bool enDuplication);
-	inline NoeudDuplication* obtenirDuplication();
+	inline NoeudAbstrait* obtenirDuplication();
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);	
@@ -38,7 +38,7 @@ private:
 	int nNoeuds_{ 0 };
 	bool enDuplication_{ false };
 	NoeudAbstrait* nouvelleLigne_{ nullptr };
-	NoeudDuplication* duplication_{ nullptr };
+	NoeudAbstrait* duplication_{ nullptr };
 };
 
 inline void VisiteurDuplication::assignerEnDuplication(bool enDuplication)
@@ -46,7 +46,7 @@ inline void VisiteurDuplication::assignerEnDuplication(bool enDuplication)
 	enDuplication_ = enDuplication;
 }
 
-inline NoeudDuplication* VisiteurDuplication::obtenirDuplication()
+inline NoeudAbstrait* VisiteurDuplication::obtenirDuplication()
 {
 	return duplication_;
 }
