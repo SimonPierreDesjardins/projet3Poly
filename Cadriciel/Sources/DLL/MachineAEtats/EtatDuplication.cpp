@@ -13,6 +13,7 @@
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
+
 EtatDuplication::EtatDuplication()
 {
 	typeEtat_ = DUPLICATION;
@@ -47,7 +48,6 @@ void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 	}
 
 }
-
 
 void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 {
