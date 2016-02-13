@@ -12,6 +12,7 @@
 #define VISITEUR_SELECTION_H
 
 #include "VisiteurAbstrait.h"
+#include "Utilitaire.h"
 
 class VisiteurSelection : public VisiteurAbstrait
 {
@@ -30,28 +31,46 @@ public:
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudDepart* noeud);
 	virtual void visiter(NoeudSegment* noeud);
-
-	virtual void visiterRectangle(NoeudTable* noeud);
+	virtual void visiter(NoeudJonction* noeud);
 
 	//Indique si la touche control est appuyee
 	void assignerControl(bool ctrlAppuye);
 	inline void assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic);
-	bool estDansRectangleElastique(glm::dvec3 coinRectElastMin, glm::dvec3 coinRectElastMax, glm::dvec3 p1, glm::dvec3 p2, glm::dvec3 p3, glm::dvec3 p4);
+	bool quadEstDansRectangleElastique(const utilitaire::QuadEnglobant& quad);
 
 private:
 	bool ctrlAppuye_ = false;
-	glm::dvec3 coinsRectangleElastique[4];
+	double xMinRectangleElastique_;
+	double xMaxRectangleElastique_;
+	double yMinRectangleElastique_;
+	double yMaxRectangleElastique_;
 };
 
 
 inline void VisiteurSelection::assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic)
-{
-	coinsRectangleElastique[0] = positionDeuxiemeClic;
-	coinsRectangleElastique[1].x = positionPremierClic.x;
-	coinsRectangleElastique[1].y = positionDeuxiemeClic.y;
-	coinsRectangleElastique[2] = positionPremierClic;
-	coinsRectangleElastique[3].x = positionDeuxiemeClic.x;
-	coinsRectangleElastique[3].y = positionDeuxiemeClic.y;
+{	
+	// Assigner la position min et max en x du rectangle elastique.
+	if (positionDeuxiemeClic.x < positionPremierClic.x)
+	{
+		xMinRectangleElastique_ = positionDeuxiemeClic.x;
+		xMaxRectangleElastique_ = positionPremierClic.x;
+	}
+	else
+	{
+		xMinRectangleElastique_ = positionPremierClic.x;
+		xMaxRectangleElastique_ = positionDeuxiemeClic.x;
+	}
+	// Assigner la position min et max en y du rectangle elastique.
+	if (positionDeuxiemeClic.y < positionPremierClic.y)
+	{
+		yMinRectangleElastique_ = positionDeuxiemeClic.y;
+		yMaxRectangleElastique_ = positionPremierClic.y;
+	}
+	else
+	{
+		yMinRectangleElastique_ = positionPremierClic.y;
+		yMaxRectangleElastique_ = positionDeuxiemeClic.y;
+	}
 }
 
 #endif // VISITEUR_SELECTION_H
