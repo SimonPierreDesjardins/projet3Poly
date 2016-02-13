@@ -507,7 +507,7 @@
             this.textBoxPositionX_.Size = new System.Drawing.Size(84, 20);
             this.textBoxPositionX_.TabIndex = 6;
             this.textBoxPositionX_.TabStop = false;
-            this.textBoxPositionX_.Enter += new System.EventHandler(this.textBoxPositionX__Enter_1);
+            this.textBoxPositionX_.Enter += new System.EventHandler(this.textBoxPositionX__Enter);
             this.textBoxPositionX_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionX__KeyDown);
             // 
             // textBoxRotation_
@@ -517,7 +517,7 @@
             this.textBoxRotation_.Size = new System.Drawing.Size(84, 20);
             this.textBoxRotation_.TabIndex = 5;
             this.textBoxRotation_.TabStop = false;
-            this.textBoxRotation_.Enter += new System.EventHandler(this.textBoxRotation__Enter_1);
+            this.textBoxRotation_.Enter += new System.EventHandler(this.textBoxRotation__Enter);
             this.textBoxRotation_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotation__KeyDown);
             // 
             // textboxDimension_
@@ -527,7 +527,7 @@
             this.textboxDimension_.Size = new System.Drawing.Size(84, 20);
             this.textboxDimension_.TabIndex = 4;
             this.textboxDimension_.TabStop = false;
-            this.textboxDimension_.Enter += new System.EventHandler(this.textboxDimension__Enter_1);
+            this.textboxDimension_.Enter += new System.EventHandler(this.textboxDimension__Enter);
             this.textboxDimension_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxDimension__KeyDown);
             // 
             // panneauPositionY_
