@@ -32,7 +32,7 @@ public:
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudJonction* noeud);
-	virtual void visiter(NoeudDuplication* noeud);
+	virtual void visiter(NoeudDupliquation* noeud);
 
 private:
 	int nNoeuds_{ 0 };

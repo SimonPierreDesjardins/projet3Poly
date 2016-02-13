@@ -9,7 +9,7 @@
 #include "NoeudMur.h"
 #include "NoeudLigne.h"
 #include "NoeudSegment.h"
-#include "NoeudDuplication.h"
+#include "NoeudDupliquation.h"
 #include "NoeudDepart.h"
 #include "NoeudJonction.h"
 

@@ -59,6 +59,7 @@ public:
 protected:
 	virtual void reinitialiser();
 
+	ArbreRendu* arbre_{ nullptr };
 
 	bool estClickDrag();
 	
@@ -77,6 +78,7 @@ protected:
 
 	glm::ivec2 anchor{glm::ivec2()};
 	glm::ivec2 currentPosition{ glm::ivec2() };
+
 };
 
 inline Etat EtatAbstrait::obtenirTypeEtat() const

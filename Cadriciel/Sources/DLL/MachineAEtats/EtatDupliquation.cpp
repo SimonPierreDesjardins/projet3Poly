@@ -24,6 +24,7 @@ EtatDuplication::EtatDuplication()
 EtatDuplication::~EtatDuplication()
 {
 	reinitialiser();
+	arbre_ = nullptr;
 }
 
 void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
@@ -46,7 +47,6 @@ void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 			duplication_->assignerAffiche(false);
 		}
 	}
-
 }
 
 void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
@@ -107,9 +107,9 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 void EtatDuplication::reinitialiser()
 {
 	enDuplication_ = false;
-	if (duplication_ != nullptr)
+	if (duplication_ != nullptr && arbre_ != nullptr)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->effacer(duplication_);
+		arbre_->chercher("table")->effacer(duplication_);
 	}
 	duplication_ = nullptr;
 }

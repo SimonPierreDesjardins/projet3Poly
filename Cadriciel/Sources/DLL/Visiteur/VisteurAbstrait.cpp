@@ -71,7 +71,7 @@ void VisiteurAbstrait::visiter(NoeudLigne* noeud)
 
 }
 
-void VisiteurAbstrait::visiter(NoeudDuplication* noeud)
+void VisiteurAbstrait::visiter(NoeudDupliquation* noeud)
 {
 
 }

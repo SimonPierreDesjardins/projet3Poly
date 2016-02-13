@@ -48,10 +48,10 @@ public:
 	/// Sauvegarde en JSON d'un NoeudSegment.
 	virtual void visiter(NoeudSegment* noeud);
 
-	/// Sauvegarde en JSON d'un NoeudDuplication.
+	/// Sauvegarde en JSON d'un NoeudDupliquation.
 	virtual void visiter(NoeudDepart* noeud);
 
-	/// Sauvegarde en JSON d'un NoeudDuplication.
+	/// Sauvegarde en JSON d'un NoeudDupliquation.
 	virtual void visiter(NoeudJonction* noeud);
 private:
 

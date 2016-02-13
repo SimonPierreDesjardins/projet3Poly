@@ -100,6 +100,8 @@ void FacadeModele::libererInstance()
 ////////////////////////////////////////////////////////////////////////
 FacadeModele::~FacadeModele()
 {
+	etat_ = nullptr;
+	mode_ = nullptr;
 	arbre_ = nullptr;
 	vue_ = nullptr;
 }

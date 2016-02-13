@@ -28,7 +28,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudConeCube::NoeudConeCube(const std::string& typeNoeud)
-: NoeudAbstrait{ typeNoeud }
+	: NoeudAbstrait{ typeNoeud }
 {
 }
 

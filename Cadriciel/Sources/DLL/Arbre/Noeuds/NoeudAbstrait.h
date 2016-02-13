@@ -116,6 +116,11 @@ public:
 	inline void assignerEstEnregistrable(bool enregistrable);
 	/// Vérifie si le noeud est enregistrable.
 	inline bool estEnregistrable() const;
+	/// Écrit si le noeud peut être enregistré ou non.
+	inline bool assignerEstDupliquable(bool estDupliquable);
+	/// Vérifie si l'objet peut être dupliqué.
+	inline bool estDupliquable() const;
+
 
 	/// Assigne le modèle3D et la liste d'affichage du noeud courant
 	inline void assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste);
@@ -215,6 +220,8 @@ protected:
 	/// Détermine si l'objet peut être sauvegardé en XML.
 	bool					enregistrable_{ true };
 
+	/// Détermine si l'objet peut être dupliqué
+	bool				    estDupliquable_{ true };
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
 
@@ -487,6 +494,16 @@ inline void NoeudAbstrait::assignerEstEnregistrable(bool enregistrable)
 inline bool NoeudAbstrait::estEnregistrable() const
 {
 	return enregistrable_;
+}
+//TODO: Documentation.
+inline bool NoeudAbstrait::assignerEstDupliquable(bool estDupliquable)
+{
+	estDupliquable_ = estDupliquable;
+}
+//TODO: Documentation.
+inline bool NoeudAbstrait::estDupliquable() const
+{
+	return estDupliquable_;
 }
 
 ////////////////////////////////////////////////////////////////////////

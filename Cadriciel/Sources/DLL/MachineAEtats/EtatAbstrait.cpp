@@ -18,7 +18,7 @@
 
 EtatAbstrait::EtatAbstrait()
 {
-	
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 }
 
 EtatAbstrait::~EtatAbstrait()

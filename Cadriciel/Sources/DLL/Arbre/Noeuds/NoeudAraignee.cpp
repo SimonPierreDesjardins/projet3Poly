@@ -33,7 +33,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudAraignee::NoeudAraignee(const std::string& typeNoeud)
-: NoeudComposite{ typeNoeud }
+	: NoeudComposite{ typeNoeud }
 {
 }
 

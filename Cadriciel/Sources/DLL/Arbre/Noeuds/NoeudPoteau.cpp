@@ -32,7 +32,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
-: NoeudAbstrait{ typeNoeud }
+	: NoeudAbstrait{ typeNoeud }
 {
 }
 

@@ -29,7 +29,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot::NoeudRobot(const std::string& typeNoeud)
-: NoeudComposite{ typeNoeud }
+	: NoeudComposite{ typeNoeud }
 {
 }
 

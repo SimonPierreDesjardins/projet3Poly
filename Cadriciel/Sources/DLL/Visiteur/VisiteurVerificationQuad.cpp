@@ -32,7 +32,7 @@ void VisiteurVerificationQuad::visiter(NoeudTable* noeud)
 	}
 }
 
-void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
+void VisiteurVerificationQuad::visiter(NoeudDupliquation* noeud)
 {
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{

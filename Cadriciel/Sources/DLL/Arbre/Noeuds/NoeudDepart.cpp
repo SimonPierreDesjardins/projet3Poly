@@ -31,8 +31,9 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudDepart::NoeudDepart(const std::string& typeNoeud)
-: NoeudAbstrait{ typeNoeud }
+	: NoeudAbstrait{ typeNoeud }
 {
+	estDupliquable_ = false;
 }
 
 
@@ -61,9 +62,6 @@ NoeudDepart::~NoeudDepart()
 ////////////////////////////////////////////////////////////////////////
 void NoeudDepart::afficherConcret() const
 {
-	// Appel à la version de la classe de base pour l'affichage des enfants.
-	//	NoeudComposite::afficherConcret();
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
@@ -76,11 +74,7 @@ void NoeudDepart::afficherConcret() const
 		glColor4f(0.0, 1.0, 0.0, 1.0);
 	}
 
-	//glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
-	//glRotatef(90, 1, 0, 0);
-	//glRotatef(90, 0, 1, 0);
 	glRotated(angleRotation_, 0, 0, 1);
-	glScaled(facteurMiseAEchelle_, 1, 1);
 
 	// Affichage du modèle.
 	vbo_->dessiner();
