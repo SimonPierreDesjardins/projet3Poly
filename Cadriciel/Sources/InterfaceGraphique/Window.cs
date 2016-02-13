@@ -1075,8 +1075,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void viewPort__MouseUp(object sender, MouseEventArgs e)
         {
-            if (FonctionsNatives.obtenirEtat() == 0)
-                verificationDuNombreElementChoisi();
+            verificationDuNombreElementChoisi();
             viewPort_.Focus();
         }
 
