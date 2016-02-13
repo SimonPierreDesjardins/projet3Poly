@@ -91,7 +91,6 @@ void NoeudMur::afficherConcret() const
 
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
-	glScaled(facteurMiseAEchelle_, 1, 1);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();

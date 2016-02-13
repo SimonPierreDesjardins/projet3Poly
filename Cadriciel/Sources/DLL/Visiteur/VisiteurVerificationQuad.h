@@ -32,6 +32,7 @@ public:
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
+	virtual void visiter(NoeudDepart* noeud);
 
 private:
 	bool verifierPointEstSurTable(glm::dvec3 point);
