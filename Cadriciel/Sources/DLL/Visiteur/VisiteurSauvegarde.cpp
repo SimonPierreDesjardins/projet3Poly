@@ -119,7 +119,7 @@ void VisiteurSauvegarde::visiter(NoeudMur* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn  void VisiteurSauvegarde::visiter(NoeudLigneNoire* noeud)
+/// @fn  void VisiteurSauvegarde::visiter(NoeudLigne* noeud)
 ///
 /// Sauvegarde les noeuds lignes d'un arbre de rendu dans un fichier Json
 ///
@@ -128,7 +128,7 @@ void VisiteurSauvegarde::visiter(NoeudMur* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSauvegarde::visiter(NoeudLigneNoire* noeud)
+void VisiteurSauvegarde::visiter(NoeudLigne* noeud)
 {
 	writer->StartObject();
 	noeud->toJson(*writer);

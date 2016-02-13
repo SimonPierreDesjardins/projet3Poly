@@ -33,7 +33,7 @@ private:
 	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
 	
-	NoeudAbstrait* duplication_{ nullptr };
+	NoeudDuplication* duplication_{ nullptr };
 	bool enDuplication_{ false };
 };
 

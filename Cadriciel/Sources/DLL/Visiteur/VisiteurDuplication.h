@@ -22,23 +22,33 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurDuplication();
 
-	inline void assignerDuplication(bool enDuplication);
+	inline void assignerEnDuplication(bool enDuplication);
+	inline NoeudDuplication* obtenirDuplication();
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);	
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigne* noeud);
+	virtual void visiter(NoeudSegment* noeud);
+	virtual void visiter(NoeudJonction* noeud);
 	virtual void visiter(NoeudDuplication* noeud);
 
 private:
 	int nNoeuds_{ 0 };
 	bool enDuplication_{ false };
+	NoeudAbstrait* nouvelleLigne_{ nullptr };
+	NoeudDuplication* duplication_{ nullptr };
 };
 
-inline void VisiteurDuplication::assignerDuplication(bool enDuplication)
+inline void VisiteurDuplication::assignerEnDuplication(bool enDuplication)
 {
 	enDuplication_ = enDuplication;
+}
+
+inline NoeudDuplication* VisiteurDuplication::obtenirDuplication()
+{
+	return duplication_;
 }
 
 #endif // VISITEUR_DUPLICATION_H

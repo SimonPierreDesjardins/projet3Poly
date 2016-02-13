@@ -86,14 +86,10 @@ void VisiteurDuplication::visiter(NoeudLigne* noeud)
 		nouvelleLigne->assignerPositionRelative(noeud->obtenirPositionRelative());
 	}
 	//Créer une copie des segments.
-	shared_ptr<NoeudAbstrait> nouveauSegment;
+	nouvelleLigne_ = nouvelleLigne.get();
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
-		nouveauSegment = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
-		nouveauSegment->assignerFacteurMiseAEchelle(noeud->chercher(i)->obtenirFacteurMiseAEchelle());
-		nouveauSegment->assignerAngleRotation(noeud->chercher(i)->obtenirAngleRotation());
-		nouveauSegment->assignerPositionRelative(noeud->chercher(i)->obtenirPositionRelative());
-		nouvelleLigne->ajouter(nouveauSegment);
+	{		
+		
 	}
 	referenceNoeud_->ajouter(nouvelleLigne);
 }
@@ -111,4 +107,26 @@ void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 		table->ajouter(enfant);
 	}
 	table->effacer(noeud);
+}
+
+
+void VisiteurDuplication::visiter(NoeudSegment* noeud)
+{
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	shared_ptr<NoeudAbstrait> nouveauSegment; 
+	nouveauSegment = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+	nouveauSegment->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
+	nouveauSegment->assignerAngleRotation(noeud->obtenirAngleRotation());
+	nouveauSegment->assignerPositionRelative(noeud->obtenirPositionRelative());
+	nouvelleLigne_->ajouter(nouveauSegment);
+}
+void VisiteurDuplication::visiter(NoeudJonction* noeud)
+{
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	shared_ptr<NoeudAbstrait> nouveauSegment; 
+	nouveauSegment = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+	nouveauSegment->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
+	nouveauSegment->assignerAngleRotation(noeud->obtenirAngleRotation());
+	nouveauSegment->assignerPositionRelative(noeud->obtenirPositionRelative());
+	nouvelleLigne_->ajouter(nouveauSegment);
 }

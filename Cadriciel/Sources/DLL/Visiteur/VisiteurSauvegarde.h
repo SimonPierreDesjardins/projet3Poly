@@ -42,8 +42,8 @@ public:
 	/// Sauvegarde en JSON d'un NoeudMur.
 	virtual void visiter(NoeudMur* noeud);
 
-	/// Sauvegarde en JSON d'un NoeudLigneNoire.
-	virtual void visiter(NoeudLigneNoire* noeud);
+	/// Sauvegarde en JSON d'un NoeudLigne.
+	virtual void visiter(NoeudLigne* noeud);
 
 	/// Sauvegarde en JSON d'un NoeudSegment.
 	virtual void visiter(NoeudSegment* noeud);

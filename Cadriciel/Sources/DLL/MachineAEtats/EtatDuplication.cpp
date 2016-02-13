@@ -12,7 +12,7 @@
 #include "VisiteurTypes.h"
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
-
+#include "NoeudTypes.h"
 EtatDuplication::EtatDuplication()
 {
 	typeEtat_ = DUPLICATION;
@@ -64,7 +64,7 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 	{
 		enDuplication_ = true;
 		arbre->accepterVisiteur(visiteurDuplication_.get());
-		duplication_ = visiteurDuplication_->obtenirReferenceNoeud();
+		duplication_ = visiteurDuplication_->obtenirDuplication();
 	}
 
 	// Réinitialiser la duplication si un des objets ne se trouve pas sur la table.
