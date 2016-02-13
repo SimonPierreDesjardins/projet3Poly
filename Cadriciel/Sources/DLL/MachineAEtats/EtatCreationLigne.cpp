@@ -179,7 +179,7 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 		positionEnfant -= centre;
 		ligne_->chercher(i)->assignerPositionRelative(positionEnfant);
 	}
-	ligne_->mettreAJourQuadEnglobant();
+//	ligne_->mettreAJourQuadEnglobant();
 	//std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
 }
 

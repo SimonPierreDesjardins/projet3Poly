@@ -502,18 +502,32 @@ NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 {
 	return enfants_;
 }
-
+/*
 void NoeudComposite::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
+	glm::dvec3 positionVirtuelleParent = { 0, 0, 0 };
+	// La position virtuelle du parent est la moyenne des 4 coins de son quad englobant.
+	if (parent_ != nullptr)
+	{
+		utilitaire::QuadEnglobant quadParent = parent_->obtenirQuadEnglobant();
+		for (int i = 0; i < quadParent.N_COINS; i++)
+		{
+			positionVirtuelleParent += quadParent.coins[i];
+		}
+		positionVirtuelleParent /= quadParent.N_COINS;
+	}
+	// Ajuster la position de son propre quad englobant.
+	for (int i = 0; i < quadEnglobant_.N_COINS; i++)
+	{
+		quadEnglobant_.coins[i] += positionVirtuelleParent;
+	}
+
 	for (int i = 0; i < enfants_.size(); i++)
 	{
-		enfants_[i]->mettreAJourQuadEnglobant(positionRelative + positionRelative_);
+		enfants_[i]->mettreAJourQuadEnglobant();
 	}
 }
-
-
-
-
+*/
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file EtatDuplication.h
+/// @file EtatDupliquation.h
 /// @author 
 /// @date 2016-01-22
 /// @version 1.0
@@ -12,15 +12,15 @@
 #define ETAT_DUPLICATION_H
 
 #include "EtatAbstrait.h"
-#include "VisiteurDuplication.h"
+#include "VisiteurDupliquation.h"
 #include "VisiteurVerificationQuad.h"
 
 
-class EtatDuplication : public EtatAbstrait
+class EtatDupliquation : public EtatAbstrait
 {
 public:
-	EtatDuplication();
-	virtual ~EtatDuplication();
+	EtatDupliquation();
+	virtual ~EtatDupliquation();
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
@@ -30,9 +30,10 @@ protected:
 	virtual void reinitialiser();
 
 private:
-	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
-	
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
+	std::unique_ptr<VisiteurDupliquation> visiteurDupliquation_{ nullptr };
+
 	NoeudAbstrait* duplication_{ nullptr };
 	bool enDuplication_{ false };
 };

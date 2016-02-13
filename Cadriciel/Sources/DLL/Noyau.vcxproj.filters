@@ -73,7 +73,7 @@
     <Filter Include="Source Files\Tests">
       <UniqueIdentifier>{d13df2a5-057c-4e3f-b7b4-d458ca9ae3b6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Arbre\Interface">
+    <Filter Include="Header Files\Interface">
       <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -169,9 +169,6 @@
     <ClCompile Include="Visiteur\VisiteurRotation.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurDuplication.cpp">
-      <Filter>Source Files\Visiteur</Filter>
-    </ClCompile>
     <ClCompile Include="MachineAModes\ModeAbstrait.cpp">
       <Filter>Source Files\MachineAMode</Filter>
     </ClCompile>
@@ -229,6 +226,12 @@
     <ClCompile Include="Arbre\Noeuds\NoeudDupliquation.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurDupliquation.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -268,7 +271,7 @@
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="Interface\FacadeInterfaceNative.h">
-      <Filter>Header Files\Arbre\Interface</Filter>
+      <Filter>Header Files\Interface</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
@@ -286,9 +289,6 @@
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatDeplacement.h">
-      <Filter>Header Files\MachineAEtats</Filter>
-    </ClInclude>
-    <ClInclude Include="MachineAEtats\EtatDuplication.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
     <ClInclude Include="MachineAEtats\EtatMiseAEchelle.h">
@@ -357,9 +357,6 @@
     <ClInclude Include="MachineAModes\ModeTypes.h">
       <Filter>Header Files\MachineAModes</Filter>
     </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurDuplication.h">
-      <Filter>Header Files\Visiteur</Filter>
-    </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
@@ -407,6 +404,12 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudDupliquation.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurDupliquation.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="MachineAEtats\EtatDupliquation.h">
+      <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

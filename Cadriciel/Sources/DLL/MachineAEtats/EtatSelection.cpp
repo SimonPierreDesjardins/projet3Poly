@@ -21,6 +21,9 @@ EtatSelection::EtatSelection()
 {
 	std::cout << "Selection d'un object" << std::endl;
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	vue_ = FacadeModele::obtenirInstance()->obtenirVue();
 	typeEtat_ = SELECTION;
 }
 
@@ -73,10 +76,20 @@ void EtatSelection::gererMouvementSouris(const int & x, const int& y){
 void EtatSelection::gererClicGauche(const int& x, const int& y)
 {
 	visiteurSelection_->assignerEstDrag(false);
-	glm::dvec3 positionRelative;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
+	glm::dvec3 positionRelative = { 0.0, 0.0, 0.0 };
+	
+	if (vue_ != nullptr)
+	{
+		vue_->convertirClotureAVirtuelle(x, y, positionRelative);
+	}
+	
 	visiteurSelection_->assignerPositionRelative(positionRelative);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurSelection_.get());
+	
+	if (arbre_ != nullptr)
+	{
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurSelection_.get());
+	}
 }
 
 
@@ -88,7 +101,9 @@ void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const 
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xAvant, yAvant, positionRelativeAvant);
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xApres, yApres, positionRelativeApres);
 	visiteurSelection_->assignerPositionRectElast(positionRelativeAvant, positionRelativeApres);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurSelection_.get());
+	
+	arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+	arbre_->accepterVisiteur(visiteurSelection_.get());
 }
 
 void EtatSelection::gererToucheControlEnfoncee()

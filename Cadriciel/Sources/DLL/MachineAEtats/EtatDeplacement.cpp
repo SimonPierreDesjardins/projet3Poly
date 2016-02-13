@@ -18,7 +18,8 @@ EtatDeplacement::EtatDeplacement()
 {
 	typeEtat_ = DEPLACEMENT;
 	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
-	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 EtatDeplacement::~EtatDeplacement()
@@ -39,8 +40,12 @@ void EtatDeplacement::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatDeplacement::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurVerificationObjets_.get());
-	if (!visiteurVerificationObjets_->objetsDansZoneSimulation())
+	if (arbre_ != nullptr)
+	{
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+	}
+	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
 	{
 		reinitialiser();
 	}

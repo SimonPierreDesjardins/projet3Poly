@@ -408,7 +408,7 @@ void FacadeModele::assignerEtat(Etat etat)
 
 			case DUPLICATION :
 				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatDuplication>();
+				etat_ = std::make_unique<EtatDupliquation>();
 				break;
 
 			case CREATION_POTEAU :
@@ -663,7 +663,7 @@ void FacadeModele::assignerAngleRotation(double angle)
 			double angleAvantChangement = enfant->obtenirAngleRotation();
 			visiteur->assignerAngleRotation(angle - angleAvantChangement);
 			enfant->accepterVisiteur(visiteur.get());
-			enfant->mettreAJourQuadEnglobant();
+//			enfant->mettreAJourQuadEnglobant();
 
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
 			if (!visiteurQuad->objetsDansZoneSimulation())

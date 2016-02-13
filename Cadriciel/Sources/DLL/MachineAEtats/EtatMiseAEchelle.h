@@ -12,8 +12,9 @@
 #define ETAT_MISE_A_ECHELLE_H
 
 #include "EtatAbstrait.h"
-#include "VisiteurMiseAEchelle.h"
+#include "VIsiteurMiseAjourQuad.h"
 #include "VisiteurVerificationQuad.h"
+#include "VisiteurMiseAEchelle.h"
 
 class EtatMiseAEchelle : public EtatAbstrait
 {
@@ -28,7 +29,8 @@ protected:
 	virtual void reinitialiser();
 
 private:
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
 	std::unique_ptr<VisiteurMiseAEchelle> visiteurMiseAEchelle_{ nullptr };
 
 	int dernierePositionY_{ 0 };

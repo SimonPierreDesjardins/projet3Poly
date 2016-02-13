@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file EtatDuplication.cpp
+/// @file EtatDupliquation.cpp
 /// @author 
 /// @date 2016-01-22
 /// @version 1.0
@@ -8,26 +8,27 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "EtatDuplication.h"
+#include "EtatDupliquation.h"
 #include "VisiteurTypes.h"
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 
-EtatDuplication::EtatDuplication()
+EtatDupliquation::EtatDupliquation()
 {
 	typeEtat_ = DUPLICATION;
-	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
-	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
+	visiteurDupliquation_ = std::make_unique<VisiteurDupliquation>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
-EtatDuplication::~EtatDuplication()
+EtatDupliquation::~EtatDupliquation()
 {
 	reinitialiser();
 	arbre_ = nullptr;
 }
 
-void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatDupliquation::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	assignerSymbolePointeur(positionEstSurTable);
 
@@ -49,22 +50,24 @@ void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 	}
 }
 
-void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
+void EtatDupliquation::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
 	if (!curseurEstSurTable_) return;
-
-	// Obtenir l'arbre et vérifier si les objets sont sur la table.
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	arbre->accepterVisiteur(visiteurVerificationObjets_.get());
-	bool objetsDansZoneSimulation =	visiteurVerificationObjets_->objetsDansZoneSimulation();
 	
+	if (arbre_ != nullptr)
+	{
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+	}
+
+	bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
 	// On commence une duplication si on ne se trouve pas en duplication.
 	if (!enDuplication_)
 	{
 		enDuplication_ = true;
-		arbre->accepterVisiteur(visiteurDuplication_.get());
-		duplication_ = visiteurDuplication_->obtenirDuplication();
+		arbre_->accepterVisiteur(visiteurDupliquation_.get());
+		duplication_ = visiteurDupliquation_->obtenirDuplication();
 	}
 
 	// Réinitialiser la duplication si un des objets ne se trouve pas sur la table.
@@ -77,11 +80,11 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 	else if (enDuplication_ && objetsDansZoneSimulation)
 	{
 		enDuplication_ = false;
-		duplication_->accepterVisiteur(visiteurDuplication_.get());
+		duplication_->accepterVisiteur(visiteurDupliquation_.get());
 	}
 }
 
-void EtatDuplication::gererToucheEchappe()
+void EtatDupliquation::gererToucheEchappe()
 {
 	if (enDuplication_)
 	{
@@ -89,7 +92,7 @@ void EtatDuplication::gererToucheEchappe()
 	}
 }
 
-void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
+void EtatDupliquation::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
 	glm::dvec3 positionVirtuelle;
@@ -104,7 +107,7 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 }
 
 
-void EtatDuplication::reinitialiser()
+void EtatDupliquation::reinitialiser()
 {
 	enDuplication_ = false;
 	if (duplication_ != nullptr && arbre_ != nullptr)

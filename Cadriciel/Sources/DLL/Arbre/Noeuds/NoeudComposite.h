@@ -95,7 +95,7 @@ public:
 
 protected:
 	/// Le choix du conteneur pour les enfants.
-	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
+//	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
 
 
    /// Le choix du conteneur pour les enfants.

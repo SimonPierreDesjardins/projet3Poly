@@ -11,6 +11,7 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "VisiteurSelection.h"
+#include "VisiteurMiseAJourQuad.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
@@ -29,7 +30,6 @@ VisiteurSelection::~VisiteurSelection()
 
 void VisiteurSelection::visiter(ArbreRendu* noeud)
 {
-	noeud->mettreAJourQuadEnglobant();
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 
@@ -55,7 +55,8 @@ void VisiteurSelection::assignerControl(bool ctrlAppuye)
 
 void VisiteurSelection::visiter(NoeudPoteau* noeud)
 {
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
+	
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 
 	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
 	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
@@ -73,7 +74,7 @@ void VisiteurSelection::visiter(NoeudPoteau* noeud)
 
 void VisiteurSelection::visiter(NoeudMur* noeud)
 {	
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 
 	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
 	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
@@ -108,7 +109,7 @@ void VisiteurSelection::visiter(NoeudLigne* noeud)
 
 void VisiteurSelection::visiter(NoeudDepart* noeud)
 {
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 
 	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
 		(!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
@@ -126,7 +127,7 @@ void VisiteurSelection::visiter(NoeudDepart* noeud)
 
 void VisiteurSelection::visiter(NoeudSegment* noeud)
 {
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	NoeudAbstrait* pere = noeud->obtenirParent();
 	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
 	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
@@ -144,7 +145,7 @@ void VisiteurSelection::visiter(NoeudSegment* noeud)
 
 void VisiteurSelection::visiter(NoeudJonction* noeud)
 {
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	NoeudAbstrait* pere = noeud->obtenirParent();
 	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
 	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))

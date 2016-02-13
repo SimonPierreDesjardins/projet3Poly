@@ -49,7 +49,7 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 	//Deuxieme clic
 	else
 	{
-		mur_->mettreAJourQuadEnglobant();
+//		mur_->mettreAJourQuadEnglobant();
 		enCreation_ = false;
 		mur_ = nullptr;
 		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);

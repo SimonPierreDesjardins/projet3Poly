@@ -17,9 +17,9 @@
 
 EtatRotation::EtatRotation()
 {
-	std::cout << "Outil de rotation" << std::endl;
 	typeEtat_ = ROTATION;
 	visiteurRotation_ = std::make_unique<VisiteurRotation>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
@@ -41,7 +41,11 @@ void EtatRotation::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatRotation::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurVerificationQuad_.get());
+	if (arbre_ != nullptr)
+	{
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+	}
 	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
 	{
 		reinitialiser();

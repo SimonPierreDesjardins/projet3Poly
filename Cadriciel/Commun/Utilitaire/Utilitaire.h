@@ -13,6 +13,7 @@
 #include "glm\glm.hpp"
 
 #include <sstream>
+#include <vector>
 
 template <typename T> class aiMatrix4x4t;	/// Déclaration avancée d'une classe
 using aiMatrix4x4 = aiMatrix4x4t<float>;	//  template
@@ -101,7 +102,8 @@ namespace utilitaire {
 
    struct QuadEnglobant
    {
-	   glm::dvec3 coins[4];
+	  static const int N_COINS = 4;
+	  glm::dvec3 coins[N_COINS];
    };
 
    /// Calcule la sphère englobante

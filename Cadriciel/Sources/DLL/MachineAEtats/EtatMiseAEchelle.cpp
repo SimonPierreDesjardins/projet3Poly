@@ -17,7 +17,8 @@ EtatMiseAEchelle::EtatMiseAEchelle()
 {
 	typeEtat_ = MISE_A_ECHELLE;
 	visiteurMiseAEchelle_ = std::make_unique<VisiteurMiseAEchelle>();
-	visiteurVerificationObjets_= std::make_unique<VisiteurVerificationQuad>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 EtatMiseAEchelle::~EtatMiseAEchelle()
@@ -38,8 +39,12 @@ void EtatMiseAEchelle::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurVerificationObjets_.get());
-	if (!visiteurVerificationObjets_->objetsDansZoneSimulation())
+	if (arbre_ != nullptr)
+	{
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+	}
+	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
 	{
 		reinitialiser();
 	}
