@@ -96,12 +96,6 @@
     <ClCompile Include="Arbre\Noeuds\NoeudComposite.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
-    <ClCompile Include="Arbre\Noeuds\NoeudAraignee.cpp">
-      <Filter>Source Files\Arbre\Noeuds</Filter>
-    </ClCompile>
-    <ClCompile Include="Arbre\Noeuds\NoeudConeCube.cpp">
-      <Filter>Source Files\Arbre\Noeuds</Filter>
-    </ClCompile>
     <ClCompile Include="Tests\ConfigSceneTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
@@ -226,7 +220,7 @@
     <ClCompile Include="MachineAEtats\EtatDupliquation.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="Arbre\Noeuds\NoeudDupliquation.cpp">
+    <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
   </ItemGroup>
@@ -250,12 +244,6 @@
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudComposite.h">
-      <Filter>Header Files\Arbre\Noeuds</Filter>
-    </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudAraignee.h">
-      <Filter>Header Files\Arbre\Noeuds</Filter>
-    </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudConeCube.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
     <ClInclude Include="Tests\ConfigSceneTest.h">
@@ -405,7 +393,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudJonction.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudDupliquation.h">
+    <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>

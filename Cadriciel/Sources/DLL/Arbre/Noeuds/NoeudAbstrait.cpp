@@ -480,14 +480,6 @@ void NoeudAbstrait::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRe
 }
 
 
-
-/// Accepter un visiteur
-void NoeudAbstrait::accepterVisiteur(VisiteurAbstrait* visiteur)
-{
-
-}
-
-
 //Get le modele dun noeud
 
 modele::Modele3D const* NoeudAbstrait::getModele()

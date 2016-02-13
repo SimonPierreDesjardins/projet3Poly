@@ -22,7 +22,7 @@ class NoeudLigne;
 class NoeudSegment;
 class NoeudRobot;
 class NoeudAraignee;
-class NoeudDupliquation;
+class NoeudDuplication;
 class NoeudDepart;
 class NoeudJonction;
 
@@ -67,9 +67,10 @@ public:
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
-	virtual void visiter(NoeudDupliquation* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudDepart* noeud);
 	virtual void visiter(NoeudJonction* noeud);
+	virtual void visiter(NoeudRobot* noeud);
 
 protected:
 	glm::dvec3 positionRelative_{ glm::dvec3() };

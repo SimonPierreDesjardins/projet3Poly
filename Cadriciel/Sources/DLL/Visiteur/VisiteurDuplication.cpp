@@ -12,7 +12,7 @@ VisiteurDuplication::VisiteurDuplication()
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
 		enfant = table->chercher(i);
-		if (enfant->estSelectionne() && enfant->estDupliquable())
+		if (enfant->estSelectionne() && enfant->estDuplicable())
 		{
 			nNoeuds_++;
 		}
@@ -97,7 +97,7 @@ void VisiteurDuplication::visiter(NoeudLigne* noeud)
 	duplication_->ajouter(nouvelleLigne);
 }
 
-void VisiteurDuplication::visiter(NoeudDupliquation* noeud)
+void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	// Ajouter les noeuds sur la table, puis détruire la duplication.

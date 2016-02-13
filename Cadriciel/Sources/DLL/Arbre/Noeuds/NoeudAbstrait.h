@@ -117,9 +117,9 @@ public:
 	/// Vérifie si le noeud est enregistrable.
 	inline bool estEnregistrable() const;
 	/// Écrit si le noeud peut être enregistré ou non.
-	inline bool assignerEstDupliquable(bool estDupliquable);
+	inline bool assignerEstDuplicable(bool estDuplicable);
 	/// Vérifie si l'objet peut être dupliqué.
-	inline bool estDupliquable() const;
+	inline bool estDuplicable() const;
 
 
 	/// Assigne le modèle3D et la liste d'affichage du noeud courant
@@ -171,10 +171,11 @@ public:
 	virtual void animer(float dt);
 
 	/// Accepter un visiteur.
-	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur) = 0;
 
 	/// Retourne le modèle
 	virtual modele::Modele3D const* getModele();
+
 
 	virtual bool obtenirEnCreation() { return enCreation_; };
 	virtual void assignerEnCreation(bool enCreation) { enCreation_ = enCreation; };
@@ -220,8 +221,8 @@ protected:
 	/// Détermine si l'objet peut être sauvegardé en XML.
 	bool					enregistrable_{ true };
 
-	/// Détermine si l'objet peut être dupliqué
-	bool				    estDupliquable_{ true };
+	/// Détermine si l'objet peut être duplicé
+	bool				    estDuplicable_{ true };
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
 
@@ -321,17 +322,51 @@ inline void NoeudAbstrait::assignerPositionRelative(
 	positionRelative_ = positionRelative;
 }
 
-//TODO: Documentation.	
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
+///
+/// Cette fonction permet d'assigner la position relative du noeud par
+/// rapport à son parent.
+///
+/// @param positionRelative : La position relative.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
 inline double NoeudAbstrait::obtenirAngleRotation() const
 {
 	return angleRotation_;
 }
-//TODO: Documentation.
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
+///
+/// Cette fonction permet d'assigner un angle de rotation en sens horaire au noeud par rapport à son centre.
+///
+/// @param angleRotation : Le nouvel angle de rotation de l'objet.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
 inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
 {
 	angleRotation_ = angleRotation;
 }
-//TODO: Documentation.
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
+///
+/// Cette fonction permet d'assigner un angle de rotation en sens horaire au noeud par rapport à son centre.
+///
+/// @param angleRotation : Le nouvel angle de rotation de l'objet.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
 inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 {
 	return facteurMiseAEchelle_;
@@ -495,15 +530,33 @@ inline bool NoeudAbstrait::estEnregistrable() const
 {
 	return enregistrable_;
 }
-//TODO: Documentation.
-inline bool NoeudAbstrait::assignerEstDupliquable(bool estDupliquable)
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline bool NoeudAbstrait::assignerEstDuplicable( bool estDuplicable)
+///
+/// Cette méthode permet d'assigner l'état d'être duplicable ou non du noeud.
+///
+/// @return L'état enregistrable ou non.
+///
+////////////////////////////////////////////////////////////////////////
+inline bool NoeudAbstrait::assignerEstDuplicable(bool estDuplicable)
 {
-	estDupliquable_ = estDupliquable;
+	estDuplicable_ = estDuplicable;
 }
-//TODO: Documentation.
-inline bool NoeudAbstrait::estDupliquable() const
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline bool NoeudAbstrait::estDuplicable() const
+///
+/// Cette méthode retourne si oui ou non le Noeud est duplicable.
+///
+/// @return L'état enregistrable ou non.
+///
+////////////////////////////////////////////////////////////////////////
+inline bool NoeudAbstrait::estDuplicable() const
 {
-	return estDupliquable_;
+	return estDuplicable_;
 }
 
 ////////////////////////////////////////////////////////////////////////

@@ -35,6 +35,7 @@ public:
 
 	/// On tourne
 	virtual void animer(float temps);
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
 	//test stuff

@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "NoeudRobot.h"
 #include "Utilitaire.h"
+#include "VisiteurAbstrait.h"
 
 #include "GL/glew.h"
 #include <cmath>
@@ -81,6 +82,11 @@ void NoeudRobot::animer(float temps)
 	angle_ = fmod(angle_ + temps / 4.0f * 360.0f, 360.0f);
 	positionRelative_[0] = 100 * cos(utilitaire::DEG_TO_RAD(angle_));
 	positionRelative_[1] = 60 * sin(utilitaire::DEG_TO_RAD(angle_));
+}
+
+void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
+	visiteur->visiter(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
