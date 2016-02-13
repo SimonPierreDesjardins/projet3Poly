@@ -140,7 +140,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	FreeImage_Initialise();
 
 	// La couleur de fond
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.32f, 0.32f, 0.32f, 1.0f);
 
 	// Les lumières
 	glEnable(GL_LIGHTING);
