@@ -57,6 +57,14 @@ void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 	}
 }
 
+void VisiteurVerificationQuad::visiter(NoeudDepart* noeud)
+{
+	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
+	{
+		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
+	}
+}
+
 
 void VisiteurVerificationQuad::visiter(NoeudLigne* noeud)
 {

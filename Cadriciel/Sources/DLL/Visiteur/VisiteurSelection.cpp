@@ -108,7 +108,20 @@ void VisiteurSelection::visiter(NoeudLigne* noeud)
 
 void VisiteurSelection::visiter(NoeudDepart* noeud)
 {
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobant();
 
+	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
+		(!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
+	{
+		if (ctrlAppuye_)
+		{
+			noeud->inverserSelection();
+		}
+		else
+		{
+			noeud->assignerSelection(true);
+		}
+	}
 }
 
 void VisiteurSelection::visiter(NoeudSegment* noeud)
