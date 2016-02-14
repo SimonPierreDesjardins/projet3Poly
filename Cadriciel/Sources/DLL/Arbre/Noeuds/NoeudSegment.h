@@ -16,6 +16,14 @@
 
 class VisiteurAbstrait;
 
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudSegment
+/// @brief Chaque noeud de ce type représente un des segments qui composent une ligne noire.
+/// Celles-ci se situent habituellement sous un objet de type NoeudLigne.
+///
+/// @author Frédéric Grégoire
+/// @date 2016-01-20
+///////////////////////////////////////////////////////////////////////////
 class NoeudSegment : public NoeudAbstrait
 {
 public:

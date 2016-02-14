@@ -16,6 +16,8 @@
 #include "Vue.h"
 #include "Projection.h"
 
+glm::ivec2 EtatAbstrait::currentPosition_ = { 0.0, 0.0 };
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -89,7 +91,7 @@ void EtatAbstrait::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = true;
 	anchor = glm::ivec2(x, y);
-	currentPosition = anchor;
+	currentPosition_ = anchor;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -126,10 +128,10 @@ void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 			//TODO
 			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(NULL, NULL);
 		else
-			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition.x), y - currentPosition.y));
+			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
 
 	}
-	currentPosition = glm::ivec2(x, y);
+	currentPosition_ = glm::ivec2(x, y);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -141,7 +143,7 @@ void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 ///
 ////////////////////////////////////////////////////////////////////////
 bool EtatAbstrait::estClickDrag(){
-	return (std::abs(currentPosition.x - anchor.x) > 3 || std::abs(currentPosition.y - anchor.y) > 3);
+	return (std::abs(currentPosition_.x - anchor.x) > 3 || std::abs(currentPosition_.y - anchor.y) > 3);
 }
 
 ////////////////////////////////////////////////////////////////////////

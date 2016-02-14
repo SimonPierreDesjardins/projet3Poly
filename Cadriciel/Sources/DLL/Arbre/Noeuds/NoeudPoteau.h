@@ -14,7 +14,13 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
-//class VisiteurAbstrait;
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudPoteau
+/// @brief Noeud des obstacles au robot sous forme de poteaux
+///
+/// @author Frédéric Grégoire
+/// @date 2016-01-20
+///////////////////////////////////////////////////////////////////////////
 
 class NoeudPoteau : public NoeudAbstrait
 {

@@ -43,12 +43,6 @@ public:
 	/// Charge le fichier de sauvegarde présentement assigné à l'arbre de rendu
 	void chargerZone();
 
-	/// La chaîne représentant le type des araignées.
-	static const std::string NOM_ARAIGNEE;
-
-	/// La chaîne représentant le type des cones-cubes.
-	static const std::string NOM_CONECUBE;
-
 	/// La chaîne représentant le type du robot.
 	static const std::string NOM_ROBOT;
 

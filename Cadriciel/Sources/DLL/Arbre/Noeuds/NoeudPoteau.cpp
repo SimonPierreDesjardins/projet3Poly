@@ -62,19 +62,16 @@ NoeudPoteau::~NoeudPoteau()
 ////////////////////////////////////////////////////////////////////////
 void NoeudPoteau::afficherConcret() const
 {
-	// Appel à la version de la classe de base pour l'affichage des enfants.
-	//	NoeudComposite::afficherConcret();
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.2, 0.0, 1.0);
+		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 	// Effectuer la mise à échelle.
 	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
@@ -85,35 +82,23 @@ void NoeudPoteau::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 }
-/*
-void NoeudPoteau::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	// Mettre à jour les coins avec le facteur de mise à échelle.
 
-	glm::dvec3 positionVirtuelleParent = { 0, 0, 0 };
-
-	if (parent_ != nullptr)
-	{
-		utilitaire::QuadEnglobant quadParent = parent_->obtenirQuadEnglobant();
-		for (int i = 0; i < quadParent.N_COINS; i++)
-		{
-			positionVirtuelleParent += quadParent.coins[i];
-		}
-		positionVirtuelleParent /= quadParent.N_COINS;
-	}
-	for (int i = 0; i < 4; i++)
-	{
-		quadEnglobant_.coins[i] *= facteurMiseAEchelle_;
-		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
-	}
-}
-*/
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
+/// sa tâche à la méthode qui se charge de ce type de noeud.
+///
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

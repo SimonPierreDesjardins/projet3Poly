@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 #include "NoeudAbstraitTest.h"
-#include "NoeudConeCube.h"
+#include "NoeudPoteau.h"
 #include "ArbreRenduINF2990.h"
 #include "Utilitaire.h"
 
@@ -31,7 +31,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(NoeudAbstraitTest);
 ////////////////////////////////////////////////////////////////////////
 void NoeudAbstraitTest::setUp()
 {
-	noeud = std::make_unique<NoeudConeCube>( ArbreRenduINF2990::NOM_CONECUBE );
+	noeud = std::make_unique<NoeudPoteau>( ArbreRenduINF2990::NOM_POTEAU );
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -89,8 +89,8 @@ void NoeudAbstraitTest::testPositionRelative()
 ////////////////////////////////////////////////////////////////////////
 void NoeudAbstraitTest::testType()
 {
-	CPPUNIT_ASSERT(noeud->obtenirType() == ArbreRenduINF2990::NOM_CONECUBE);
-	CPPUNIT_ASSERT(noeud->obtenirType() != ArbreRenduINF2990::NOM_ARAIGNEE);
+	CPPUNIT_ASSERT(noeud->obtenirType() == ArbreRenduINF2990::NOM_POTEAU);
+	//CPPUNIT_ASSERT(noeud->obtenirType() != ArbreRenduINF2990::NOM_LIGNE);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -145,7 +145,7 @@ void NoeudAbstraitTest::testEnfants()
 	CPPUNIT_ASSERT(noeud->calculerProfondeur() == 1);
 
 	// Essaie d'ajouter un noeud
-	std::shared_ptr<NoeudAbstrait> nouveauNoeud(new NoeudConeCube{ ArbreRenduINF2990::NOM_CONECUBE });
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud(new NoeudPoteau{ ArbreRenduINF2990::NOM_POTEAU });
 	bool ajout{ noeud->ajouter(nouveauNoeud) };
 
 	// L'ajout devrait avoir échoué puisqu'il s'agit d'un noeud abstrait...

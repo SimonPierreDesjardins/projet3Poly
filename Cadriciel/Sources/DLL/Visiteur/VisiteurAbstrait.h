@@ -70,6 +70,7 @@ public:
 	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudDepart* noeud);
 	virtual void visiter(NoeudJonction* noeud);
+	virtual void visiter(NoeudRobot* noeud);
 
 protected:
 	glm::dvec3 positionRelative_{ glm::dvec3() };

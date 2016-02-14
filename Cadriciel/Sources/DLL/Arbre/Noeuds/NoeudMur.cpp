@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// @file NoeudMur.cpp
 /// @author Philippe Marcotte et Camille Gendreau
-/// @date 2011-05-19
+/// @date 2016-05-19
 /// @version 1.0
 ///
 /// @addtogroup inf2990 INF2990
@@ -67,11 +67,11 @@ void NoeudMur::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.2, 0.0, 1.0);
+		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 
@@ -88,20 +88,18 @@ void NoeudMur::afficherConcret() const
 	glPopMatrix();
 }
 
-/*
-void NoeudMur::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
-	glm::dvec3 tmp;
-	for (int i = 0; i < 4; i++)
-	{
-		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
-		tmp = quadEnglobant_.coins[i];
-		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
-		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
-	}
-}
-*/
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
+/// sa tâche à la méthode qui se charge de ce type de noeud.
+///
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

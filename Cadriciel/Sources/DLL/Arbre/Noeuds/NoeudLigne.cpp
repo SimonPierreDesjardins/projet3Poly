@@ -65,11 +65,11 @@ void NoeudLigne::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.2, 0.0, 1.0);
+		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 	// Appel à la version de la classe de base pour l'affichage des enfants.
@@ -79,37 +79,23 @@ void NoeudLigne::afficherConcret() const
 	
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudLigne::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
+/// sa tâche à la méthode qui se charge de ce type de noeud.
+///
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudLigne::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
 
-/*
-void NoeudLigne::mettreAJourQuadEnglobantConcret()
-{
-	glm::dvec3 positionVirtuelleParent = { 0, 0, 0 };
-	// La position virtuelle du parent est la moyenne des 4 coins de son quad englobant.
-	if (parent_ != nullptr)
-	{
-		utilitaire::QuadEnglobant quadParent = parent_->obtenirQuadEnglobant();
-		for (int i = 0; i < quadParent.N_COINS; i++)
-		{
-			positionVirtuelleParent += quadParent.coins[i];
-		}
-		positionVirtuelleParent /= quadParent.N_COINS;
-	}
-
-	for (int i = 0; i < quadEnglobant_.N_COINS; i++)
-	{
-		quadEnglobant_.coins[i] += positionVirtuelleParent;
-	}
-
-	for (int i = 0; i < enfants_.size(); i++)
-	{
-		enfants_[i]->mettreAJourQuadEnglobant();
-	}
-}
-*/
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

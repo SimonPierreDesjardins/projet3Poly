@@ -21,12 +21,6 @@ namespace InterfaceGraphique
 {    
     public partial class Window : Form, IMessageFilter
     {
-        //File explorer pour sauvegarder et ouvrir des fichiers de zones
-        private System.Windows.Forms.OpenFileDialog zoneFileSystem;
-
-        //Chemin initial pour le file explorer
-        public static string initialPath = "./../Zones/";
-
         private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
         private const int WM_LBUTTONDOWN =  0x0201;
@@ -61,10 +55,6 @@ namespace InterfaceGraphique
             menuEdition_.Visible = false;
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
-            zoneFileSystem = new OpenFileDialog();
-
-            zoneFileSystem.InitialDirectory = initialPath;
-            zoneFileSystem.Filter = "Fichiers textes et JSON (*.txt, *.json)|*.txt;*.json";
             supprimerToolStripMenuItem.Enabled = false;
         }
 
@@ -388,6 +378,17 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Fonction appelant les fonctions servant à redimenssionner la fenetre virtuelle selon la cloture pour garder le rapport d'aspect.
+        /// Celle
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void Window_Resize(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL
@@ -805,7 +806,7 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        /// @fn private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
         ///
         /// Sauvegarde la zone lorsque enregistrer sous est appuyé
         /// 
@@ -820,7 +821,7 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        /// @fn private void enregistrerSousZone()
         ///
         /// Ouvre un explorateur de fichier qui permet de sauvegarde la zone, permet uniquement à 
         /// l'utilisateur de sauvegarder dans zones
@@ -828,23 +829,24 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void enregistrerSousZone()
         {
-            /*ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
+            ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
             FonctionsNatives.assignerAutorisationInput(false);
             if (explorateur.ShowDialog() == DialogResult.OK)
             {
                 FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.sauvegarder();
+                enregistrerMenuEdition_.Enabled = true;
             }
             explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInput(true);*/
+            FonctionsNatives.assignerAutorisationInput(true);
+            
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void ouvrirMenuEdition__Click(object sender, EventArgs e)
         ///
-        /// Ouvre un explorateur de ficher pour charger la zone sauvegarder lorsque 
-        /// le bouton ouvrir est appuyer sur le menu
+        /// Charge une zone sauvegardée
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du clique
@@ -857,22 +859,24 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        /// @fn private void ouvrirZone()
         ///
-        /// Charge une zone sauvegarder
+        /// Ouvre un explorateur de ficher pour charger la zone sauvegarder lorsque 
+        /// le bouton ouvrir est appuyer sur le menu
         ///
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirZone()
         {
-            /*ExplorateurOuverture explorateur = new ExplorateurOuverture();
+            ExplorateurOuverture explorateur = new ExplorateurOuverture();
             FonctionsNatives.assignerAutorisationInput(false);
             if (explorateur.ShowDialog() == DialogResult.OK)
             {
                 FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.charger();
+                enregistrerMenuEdition_.Enabled = true;
             }
             explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInput(true);*/
+            FonctionsNatives.assignerAutorisationInput(true);
             
         }
 
@@ -1223,5 +1227,8 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool obtenirAutorisationInput();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern string obtenirCheminFichierZoneDefaut();
     }
 }

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file NoeudPoteau.h
+/// @file NoeudJonction.h
 /// @author Camille Gendreau
 /// @date 2016-02-11
 /// @version 1.0
@@ -14,7 +14,13 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
-//class VisiteurAbstrait;
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudJonction
+/// @brief Noeud de l'objet rendu servant à la liaison de segments de la ligne noire.
+///
+/// @author Camille Gendreau
+/// @date 2007-01-24
+///////////////////////////////////////////////////////////////////////////
 
 class NoeudJonction : public NoeudAbstrait
 {

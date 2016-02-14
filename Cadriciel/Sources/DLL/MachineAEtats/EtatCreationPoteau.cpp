@@ -69,9 +69,8 @@ void EtatCreationPoteau::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 {
 	EtatAbstrait::gererClicGaucheRelache(x, y);
-	if (!estClickDrag())
+	if (!estClickDrag() && curseurEstSurTable_)
 	{
-		if (!curseurEstSurTable_) return;
 		glm::dvec3 positionVirtuelle;
 		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);

@@ -16,10 +16,6 @@
 #include "rapidjson\filereadstream.h"
 #include <sys/stat.h>
 
-/// La chaîne représentant le type des araignées.
-const std::string ArbreRenduINF2990::NOM_ARAIGNEE{ "araignee" };
-/// La chaîne représentant le type des cones-cubes.
-const std::string ArbreRenduINF2990::NOM_CONECUBE{ "conecube" };
 /// La chaîne représentant le type du robot.
 const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
 /// La chaîne représentant le type de la table.

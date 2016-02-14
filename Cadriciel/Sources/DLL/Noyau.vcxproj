@@ -134,8 +134,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp" />
-    <ClCompile Include="Arbre\Noeuds\NoeudAraignee.cpp" />
-    <ClCompile Include="Arbre\Noeuds\NoeudConeCube.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudJonction.cpp" />
@@ -186,8 +184,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h" />
-    <ClInclude Include="Arbre\Noeuds\NoeudAraignee.h" />
-    <ClInclude Include="Arbre\Noeuds\NoeudConeCube.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDepart.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudLigne.h" />

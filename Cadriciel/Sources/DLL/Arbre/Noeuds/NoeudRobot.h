@@ -30,11 +30,10 @@ public:
 	/// Destructeur.
 	~NoeudRobot();
 
-	/// Affiche le cube.
+	/// Affiche le robot.
 	virtual void afficherConcret() const;
 
-	/// On tourne
-	virtual void animer(float temps);
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
 	//test stuff

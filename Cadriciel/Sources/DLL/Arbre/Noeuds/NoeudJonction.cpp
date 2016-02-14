@@ -70,11 +70,11 @@ void NoeudJonction::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.2, 0.0, 1.0);
+		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 	// Affichage du modèle.
@@ -83,20 +83,19 @@ void NoeudJonction::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 }
-/*
-void NoeudJonction::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	// Mettre à jour les coins avec le facteur de mise à échelle.
-	std::cout << "Mise à jour Jonction:" << std::endl;
-	for (int i = 0; i < 4; i++)
-	{
-		quadEnglobant_.coins[i] *= facteurMiseAEchelle_;
-		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
-		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
-	}
-}
-*/
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudJonction::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
+/// sa tâche à la méthode qui se charge de ce type de noeud.
+///
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudJonction::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

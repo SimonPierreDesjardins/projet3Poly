@@ -42,7 +42,6 @@ protected:
 	inline const std::string& obtenirNom() const;
 private:
 	/// Le nom associé à l'usine
-	//TODO: initialisation à faire pour la version release.
 	std::string nom_;
 };
 

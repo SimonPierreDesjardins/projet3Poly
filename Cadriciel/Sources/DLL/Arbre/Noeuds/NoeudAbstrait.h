@@ -120,9 +120,9 @@ public:
 	/// Vérifie si le noeud est enregistrable.
 	inline bool estEnregistrable() const;
 	/// Écrit si le noeud peut être enregistré ou non.
-	inline bool assignerEstDupliquable(bool estDupliquable);
+	inline bool assignerEstDuplicable(bool estDuplicable);
 	/// Vérifie si l'objet peut être dupliqué.
-	inline bool estDupliquable() const;
+	inline bool estDuplicable() const;
 
 	/// Assigne le modèle3D et la liste d'affichage du noeud courant
 	void assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste);
@@ -173,10 +173,11 @@ public:
 	virtual void animer(float dt);
 
 	/// Accepter un visiteur.
-	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur) = 0;
 
 	/// Retourne le modèle
 	virtual modele::Modele3D const* getModele();
+
 
 	virtual bool obtenirEnCreation() { return enCreation_; };
 	virtual void assignerEnCreation(bool enCreation) { enCreation_ = enCreation; };
@@ -225,7 +226,7 @@ protected:
 	bool					enregistrable_{ true };
 
 	/// Détermine si l'objet peut être dupliqué
-	bool				    estDupliquable_{ true };
+	bool				    estDuplicable_{ true };
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
 
@@ -324,40 +325,106 @@ inline void NoeudAbstrait::assignerPositionRelative(
 	positionRelative_ = positionRelative;
 }
 
-//TODO: Documentation.	
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
+///
+/// Cette fonction permet d'obtenir l'angle de rotation affectant présentement ce noeud.
+///
+/// @return l'angle de rotation en degrees du noeud
+///
+////////////////////////////////////////////////////////////////////////
 inline double NoeudAbstrait::obtenirAngleRotation() const
 {
 	return angleRotation_;
 }
-//TODO: Documentation.
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
+///
+/// Cette fonction permet d'assigner un angle de rotation en sens horaire au noeud par rapport à son centre.
+///
+/// @param angleRotation : Le nouvel angle de rotation de l'objet.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
 inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
 {
 	angleRotation_ = angleRotation;
 }
-//TODO: Documentation.
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
+///
+/// Cette fonction permet d'obtenir l'échelle d'agrandissement ou de rapetissement du noeud.
+///
+/// @return L'échelle de l'objet. 1 étant l'échelle originale.
+///
+////////////////////////////////////////////////////////////////////////
 inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 {
 	return facteurMiseAEchelle_;
 }
-//TODO: Documentation.
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
+///
+/// Cette fonction permet d'assigner une nouvelle échelle d'agrandissement au Noeud.
+///
+/// @param[in] facteurDimension : Le facteur de redimentionnement de l'objet.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
 inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
 {
 	facteurMiseAEchelle_ = facteurDimension;
 }
 
-//TODO: Documentation.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantCourant() const
+///
+/// Cette fonction permet d'obtenir le quad définisant la zone de sélection de l'objet.
+///
+/// @return Un plan orthogonal à Z  représentant les bornes de l'objet dans l'espace 3d.
+///
+////////////////////////////////////////////////////////////////////////
 inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantCourant() const
 {
 	return quadEnglobantCourant_;
 }
 
-///TODO: Documentation.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quadEnglobant)
+///
+/// Cette fonction permet d'assigner le nouveau quad englobant au noeud.
+///
+/// @param[in] quadEnglobant : Le nouveau plan des bornes pour la sélection
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quadEnglobant)
 {
 	quadEnglobantCourant_ = quadEnglobant;
 }
 
-///TODO: Documentation.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
+///
+/// Cette fonction permet d'obtenir le quad définit en fonction du modele.
+///
+/// @return Un plan orthogonal à Z  représentant les bornes de l'objet dans l'espace 3d.
+///
+////////////////////////////////////////////////////////////////////////
 inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
 {
 	return quadEnglobantModele_;
@@ -510,15 +577,35 @@ inline bool NoeudAbstrait::estEnregistrable() const
 {
 	return enregistrable_;
 }
-//TODO: Documentation.
-inline bool NoeudAbstrait::assignerEstDupliquable(bool estDupliquable)
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline bool NoeudAbstrait::assignerEstDuplicable( bool estDuplicable)
+///
+/// Cette méthode permet d'assigner l'état d'être duplicable ou non du noeud.
+///
+/// @return L'état enregistrable ou non.
+///
+////////////////////////////////////////////////////////////////////////
+inline bool NoeudAbstrait::assignerEstDuplicable(bool estDuplicable)
 {
-	estDupliquable_ = estDupliquable;
+	estDuplicable_ = estDuplicable;
 }
-//TODO: Documentation.
-inline bool NoeudAbstrait::estDupliquable() const
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline bool NoeudAbstrait::estDuplicable() const
+///
+/// Cette méthode retourne si oui ou non le Noeud est duplicable.
+///
+/// @return L'état enregistrable ou non.
+///
+////////////////////////////////////////////////////////////////////////
+inline bool NoeudAbstrait::estDuplicable() const
 {
-	return estDupliquable_;
+	return estDuplicable_;
 }
 
 

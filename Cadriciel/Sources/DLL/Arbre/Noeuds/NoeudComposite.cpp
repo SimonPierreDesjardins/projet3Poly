@@ -295,7 +295,7 @@ void NoeudComposite::effacerSelection()
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
 		) {
-		if ((*it)->estSelectionne() && (*it)->estDupliquable()) {
+		if ((*it)->estSelectionne() && (*it)->estDuplicable()) {
 			NoeudAbstrait* enfant{ (*it).get() };
 			enfants_.erase(it);
 
@@ -481,9 +481,9 @@ std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant(int indice) const
 ///
 /// @fn NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 ///
-/// Cette fonction retourne l'attribut enfants_
+/// Retourne le conteneur des enfants de ce noeud
 ///
-/// @return NoeudComposite::conteneur_enfants&: le nombre d'enfant
+/// @return conteneur_enfants: Le conteneur d'enfants de ce Noeud.
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()

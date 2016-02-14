@@ -14,6 +14,13 @@
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudLigne
+/// @brief Noeud des murs servant d'obstacles au robot.
+///
+/// @author Frédéric Grégoire
+/// @date 2016-01-20
+///////////////////////////////////////////////////////////////////////////
 class NoeudMur : public NoeudAbstrait
 {
 

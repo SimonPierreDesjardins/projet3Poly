@@ -18,6 +18,13 @@
 
 class VisiteurAbstrait;
 
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudTable
+/// @brief Noeud représentant la table, c'est à dire la zone de simulation.
+///
+/// @author Camille Gendreau
+/// @date 2016-01-20
+///////////////////////////////////////////////////////////////////////////
 class NoeudTable : public NoeudComposite
 {
 

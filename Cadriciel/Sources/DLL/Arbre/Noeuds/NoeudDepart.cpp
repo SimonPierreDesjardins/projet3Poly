@@ -33,7 +33,7 @@
 NoeudDepart::NoeudDepart(const std::string& typeNoeud)
 	: NoeudAbstrait{ typeNoeud }
 {
-	estDupliquable_ = false;
+	estDuplicable_ = false;
 }
 
 
@@ -67,11 +67,11 @@ void NoeudDepart::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.20, 0.0, 1.0);
+		glColor4d(1.0, 0.20, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 	glRotated(angleRotation_, 0, 0, 1);
@@ -83,21 +83,18 @@ void NoeudDepart::afficherConcret() const
 	glPopMatrix();
 }
 
-/*
-void NoeudDepart::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	// Mettre à jour la position en x et y des coins avec le facteur de mise à échelle.
-	glm::dvec3 tmp;
-	for (int i = 0; i < 4; i++)
-	{
-		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
-		quadEnglobant_.coins[i].y *= facteurMiseAEchelle_;
-		tmp = quadEnglobant_.coins[i];
-		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
-		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
-	}
-}
-*/
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudDepart::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
+/// sa tâche à la méthode qui se charge de ce type de noeud.
+///
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudDepart::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

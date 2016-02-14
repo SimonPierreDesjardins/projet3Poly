@@ -34,7 +34,7 @@ VisiteurAbstrait::VisiteurAbstrait()
 /// Destructeur déclaré virtuel pour les classes dérivées.
 ///
 /// @return Aucune (destructeur).
-///
+///NoeudDuplication
 ////////////////////////////////////////////////////////////////////////
 VisiteurAbstrait::~VisiteurAbstrait()
 {
@@ -178,5 +178,9 @@ void VisiteurAbstrait::visiter(NoeudDepart* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudJonction* noeud)
 {
+
+}
+
+void VisiteurAbstrait::visiter(NoeudRobot* noeud){
 
 }

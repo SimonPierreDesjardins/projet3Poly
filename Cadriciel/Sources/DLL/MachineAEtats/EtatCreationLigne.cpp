@@ -65,9 +65,7 @@ EtatCreationLigne::~EtatCreationLigne()
 void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
-	if (!curseurEstSurTable_) return;
-	
-	if (!estClickDrag())
+	if (!estClickDrag() && curseurEstSurTable_)
 	{
 		FacadeModele* facade = FacadeModele::obtenirInstance();
 		ArbreRenduINF2990* arbre = facade->obtenirArbreRenduINF2990();
@@ -104,7 +102,6 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 		// Clic subsequent sans CTRL enfoncee (dernier clic).
 		else if (enCreation_ && !toucheCtrlEnfonce_)
 		{
-			//std::cout << "Deuxieme clic position: " << positionVirtuelle[0] << " : " << positionVirtuelle[1] << std::endl;
 			calculerPositionCentreLigne();
 			ligne_ = nullptr;
 			segment_ = nullptr;

@@ -84,7 +84,7 @@ protected:
 	Etat typeEtat_{ SELECTION };
 
 	glm::ivec2 anchor{glm::ivec2()};
-	glm::ivec2 currentPosition{ glm::ivec2() };
+	static glm::ivec2 currentPosition_;
 
 };
 
