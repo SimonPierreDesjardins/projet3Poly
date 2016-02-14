@@ -225,7 +225,7 @@ protected:
 	/// Détermine si l'objet peut être sauvegardé en XML.
 	bool					enregistrable_{ true };
 
-	/// Détermine si l'objet peut être duplicé
+	/// Détermine si l'objet peut être dupliqué
 	bool				    estDuplicable_{ true };
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
@@ -578,6 +578,7 @@ inline bool NoeudAbstrait::estEnregistrable() const
 	return enregistrable_;
 }
 
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline bool NoeudAbstrait::assignerEstDuplicable( bool estDuplicable)
@@ -591,6 +592,7 @@ inline bool NoeudAbstrait::assignerEstDuplicable(bool estDuplicable)
 {
 	estDuplicable_ = estDuplicable;
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///

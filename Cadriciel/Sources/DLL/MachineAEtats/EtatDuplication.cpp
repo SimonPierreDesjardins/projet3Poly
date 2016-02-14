@@ -27,6 +27,14 @@ EtatDuplication::EtatDuplication()
 	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
+
+	// On commence une duplication si on ne se trouve pas en duplication.
+
+	arbre_->accepterVisiteur(visiteurDuplication_.get());
+	duplication_ = visiteurDuplication_->obtenirDuplication();
+	glm::dvec3 positionVirtuelle;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(currentPosition_.x, currentPosition_.y, positionVirtuelle);
+	duplication_->assignerPositionRelative(positionVirtuelle);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -38,7 +46,11 @@ EtatDuplication::EtatDuplication()
 ////////////////////////////////////////////////////////////////////////
 EtatDuplication::~EtatDuplication()
 {
-	reinitialiser();
+	if (duplication_ != nullptr && arbre_ != nullptr)
+	{
+		arbre_->chercher("table")->effacer(duplication_);
+	}
+	duplication_ = nullptr;
 	arbre_ = nullptr;
 }
 
@@ -98,40 +110,12 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 	}
 
 	bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
-	// On commence une duplication si on ne se trouve pas en duplication.
-	if (!enDuplication_)
-	{
-		enDuplication_ = true;
-		arbre_->accepterVisiteur(visiteurDuplication_.get());
-		duplication_ = visiteurDuplication_->obtenirDuplication();
-	}
 
-	// Réinitialiser la duplication si un des objets ne se trouve pas sur la table.
-	else if (enDuplication_ && !objetsDansZoneSimulation)
+	// Ajouter la duplication sur la table.
+	if (objetsDansZoneSimulation)
 	{
-		reinitialiser();
-	}
-
-	// Ajouter la duplication sur la table autrement.
-	else if (enDuplication_ && objetsDansZoneSimulation)
-	{
-		enDuplication_ = false;
 		duplication_->accepterVisiteur(visiteurDuplication_.get());
-	}
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void EtatDuplication::gererToucheEchappe()
-///
-/// Cette fonction supprime les objets en duplication. Sinon rien
-///
-////////////////////////////////////////////////////////////////////////
-void EtatDuplication::gererToucheEchappe()
-{
-	if (enDuplication_)
-	{
-		reinitialiser();
+		duplication_ = visiteurDuplication_->obtenirDuplication();
 	}
 }
 
@@ -154,25 +138,6 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 	
 	gererEstSurTable(positionVirtuelle);
 
-	if (enDuplication_)
-	{
-		duplication_->assignerPositionRelative(positionVirtuelle);
-	}
-}
+	duplication_->assignerPositionRelative(positionVirtuelle);
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void EtatDuplication::reinitialiser()
-///
-/// Cette fonction remet les objets à leur position initiale
-///
-////////////////////////////////////////////////////////////////////////
-void EtatDuplication::reinitialiser()
-{
-	enDuplication_ = false;
-	if (duplication_ != nullptr && arbre_ != nullptr)
-	{
-		arbre_->chercher("table")->effacer(duplication_);
-	}
-	duplication_ = nullptr;
 }
