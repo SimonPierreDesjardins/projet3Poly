@@ -17,10 +17,20 @@
 
 class NoeudComposite;
 
+
 namespace rapidjson{
 	class FileWriteStream;
 }
 
+///////////////////////////////////////////////////////////////////////////
+/// @class ArbreRenduINF2990
+/// @brief Cette classe s'occupe de visiter chaque noeuds de l'arbre de rendu
+/// pour écrire leurs attributs dans un fichier Json
+/// et ainsi, permettre de les charger plus tard.
+///
+/// @author Philippe Marcotte
+/// @date 2016-02-09
+///////////////////////////////////////////////////////////////////////////
 class VisiteurSauvegarde : public VisiteurAbstrait
 {
 public:

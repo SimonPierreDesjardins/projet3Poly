@@ -12,8 +12,6 @@
 #include "EtatRotation.h"
 #include "VisiteurRotation.h"
 #include "ArbreRenduINF2990.h"
-#include <iostream>
-
 
 EtatRotation::EtatRotation()
 {

@@ -7,7 +7,6 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////
-#include <iostream>
 #include "VisiteurRotation.h"
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
@@ -134,7 +133,6 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 	}
 	// Calculer et assigner la position relative à la ligne
 	 centreSelection_= { (minX + maxX) / 2, (minY + maxY) / 2, 0 };
-	 std::cout << "centre de selection: " << centreSelection_[0] << " : " << centreSelection_[1]<< std::endl;
 }
 
 void VisiteurRotation::assignerNouvellePositionRelative(NoeudAbstrait* noeud)

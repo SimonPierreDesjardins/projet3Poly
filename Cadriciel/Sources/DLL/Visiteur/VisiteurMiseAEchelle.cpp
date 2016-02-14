@@ -10,7 +10,6 @@
 #include "VisiteurMiseAEchelle.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
-#include <iostream>
 
 /// Constructeur par défaut.
 VisiteurMiseAEchelle::VisiteurMiseAEchelle()
@@ -40,7 +39,6 @@ void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud)
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
 	{
 		table->chercher(i)->assignerFacteurMiseAEchelle(facteursDimensionsInitiaux_[i]);
-		std::cout << facteursDimensionsInitiaux_[i] << std::endl;
 	}
 }
 

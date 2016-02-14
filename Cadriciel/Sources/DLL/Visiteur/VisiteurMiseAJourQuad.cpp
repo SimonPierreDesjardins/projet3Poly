@@ -11,8 +11,6 @@
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
 
-#include <iostream>
-
 
 VisiteurMiseAJourQuad::VisiteurMiseAJourQuad()
 {
@@ -77,7 +75,6 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 		quad.coins[i] *= noeud->obtenirFacteurMiseAEchelle();
 		quad.coins[i] += (positionVirtuelleParent + noeud->obtenirPositionRelative());
 	}
-	std::cout << std::endl;
 	noeud->assignerQuadEnglobantCourant(quad);
 }
 

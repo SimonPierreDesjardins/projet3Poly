@@ -16,7 +16,6 @@
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
 #include "Modele3D.h"
-#include <iostream>
 
 VisiteurSelection::VisiteurSelection()
 {

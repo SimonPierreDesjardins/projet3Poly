@@ -428,18 +428,18 @@ extern "C"
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
 					break;
 
-				case VK_TAB:
-						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
-						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 1, 0 });
-					break;
+				//case VK_TAB:
+						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
+						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 1, 0 });
+					//break;
 
 				case VK_BACK:
 					break;
 
-				case VK_SHIFT:
-						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
-						FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 0, 1 });
-					break;
+				//case VK_SHIFT:
+						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 10, 0 });
+						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 0, 1 });
+					//break;
 
 				case VK_MENU:
 				case VK_RMENU:
@@ -552,9 +552,6 @@ extern "C"
 		case WM_MOUSEWHEEL:
 			FacadeModele::obtenirInstance()->obtenirMode()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
 			break;
-
-		//case WM_SETCURSOR:
-			//FacadeModele::obtenirInstance()->obtenirEtat()->assignerSymbolePointeur();
 		}
 	}
 

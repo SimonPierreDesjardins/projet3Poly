@@ -12,7 +12,6 @@
 #include "VisiteurTypes.h"
 #include "FacadeModele.h"
 #include <cmath>
-#include <iostream>
 
 EtatMiseAEchelle::EtatMiseAEchelle()
 {

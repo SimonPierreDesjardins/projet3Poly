@@ -16,27 +16,75 @@
 #include "Vue.h"
 #include "Projection.h"
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatAbstrait::EtatAbstrait()
+///
+/// Constructeur par défault. Assigne arbre_ à arbre courant
+///
+////////////////////////////////////////////////////////////////////////
 EtatAbstrait::EtatAbstrait()
 {
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	vue_ = FacadeModele::obtenirInstance()->obtenirVue();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatAbstrait::~EtatAbstrait()
+///
+/// Destructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatAbstrait::~EtatAbstrait()
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererClicDroitEnfonce(const int& x, const int& y)
+///
+/// Cette fonction assigne un booléan à true si le bouton droit de la souris est
+/// appuyé.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererClicDroitEnfonce(const int& x, const int& y)
 {
 	clicDroitEnfonce_ = true;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererClicDroitRelache(const int& x, const int& y)
+///
+/// Cette fonction assigne un booléan à false si le bouton droit de la souris est
+/// relâché.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererClicDroitRelache(const int& x, const int& y)
 {
 	clicDroitEnfonce_ = false;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererClicGaucheEnfonce(const int& x, const int& y)
+///
+/// Cette fonction assigne un booléan à true si le bouton gauche de la souris est
+/// appuyé et sauvegarde la position courante.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = true;
@@ -44,11 +92,33 @@ void EtatAbstrait::gererClicGaucheEnfonce(const int& x, const int& y)
 	currentPosition = anchor;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererClicGaucheRelache(const int& x, const int& y)
+///
+/// Cette fonction assigne un booléan à false si le bouton gauche de la souris est
+/// relâché.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
+///
+/// Cette fonction gère les mouvements de la souris. Si le clique droit est enfoncé
+/// on peux déplacer la caméra, sinon rien
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 {
 	if (clicDroitEnfonce_){
@@ -62,36 +132,85 @@ void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 	currentPosition = glm::ivec2(x, y);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool EtatAbstrait::estClickDrag()
+///
+/// Cette fonction vérifie si le point d'origine et le point final d'un clique
+/// est à plus de trois pixels
+///
+////////////////////////////////////////////////////////////////////////
 bool EtatAbstrait::estClickDrag(){
 	return (std::abs(currentPosition.x - anchor.x) > 3 || std::abs(currentPosition.y - anchor.y) > 3);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererToucheEchappe()
+///
+/// Cette fonction gère la touche Escape
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheEchappe()
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererToucheControlEnfoncee()
+///
+/// Cette fonction gère la touche Control enfoncee
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheControlEnfoncee()
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererToucheControlRelachee()
+///
+/// Cette fonction gère la touche Control relâchée
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheControlRelachee()
 {
 
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererToucheAltEnfoncee()
+///
+/// Cette fonction gère la touche Alt enfoncee
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheAltEnfoncee()
 {
 	toucheAltEnfonce_ = true;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererToucheAltRelachee()
+///
+/// Cette fonction gère la touche Alt relâchée
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheAltRelachee()
 {
 	toucheAltEnfonce_ = false;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererTouchePlus()
+///
+/// Cette fonction gère la touche +=, permet de faire un zoom avec la caméra
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererTouchePlus(){
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
 		//TODO Gérer le zoom plus pour une camera
@@ -101,6 +220,13 @@ void EtatAbstrait::gererTouchePlus(){
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererTouchePlus()
+///
+/// Cette fonction gère la touche +=, permet de faire un zoom avec la caméra
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheMoins(){
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
 		//TODO Gérer le zoom moins pour une camera
@@ -109,6 +235,16 @@ void EtatAbstrait::gererToucheMoins(){
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererMoletteSouris(const int & delta)
+///
+/// Cette fonction gère la molette de la souris. Permet d'effecter un zoom
+/// avec la caméra
+///
+/// @param const int & delta: la valeur de la molette de la souris
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMoletteSouris(const int & delta){
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
 		;
@@ -121,6 +257,15 @@ void EtatAbstrait::gererMoletteSouris(const int & delta){
 		
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
+///
+/// Cette fonction vérifie que le curseur est sur la table
+///
+/// @param const glm::dvec3& position: position de la souris
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 {
 	// TODO: Changer les constantes pour les dimensions dynamiques de la table.
@@ -133,6 +278,15 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 	gererEstSurTableConcret(positionEstSurTable);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
+///
+/// Cette fonction change l'image du curseur s'il n'est pas sur la table
+///
+/// @param bool positionEstSurTable: True si la souris est sur la table sinon false
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	if (!positionEstSurTable)
@@ -142,6 +296,16 @@ void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+///
+/// Cette fonction assigne l'image du cursor lorsque ce n'est pas son symbole standard
+/// qui est affiché
+///
+/// @param bool estSymboleStandard: True si la souris est sur la table sinon false
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 {
 	//Pour forme de cursor voir http://msdn.microsoft.com/en-us/library/ms648391%28v=vs.85%29.aspx
@@ -152,6 +316,11 @@ void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::reinitialiser()
+///
+////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::reinitialiser()
 {
 
