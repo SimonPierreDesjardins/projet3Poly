@@ -75,7 +75,18 @@ void NoeudTable::afficherConcret() const
 	glPopMatrix();
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudTable::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
+/// sa tâche à la méthode qui se charge de ce type de noeud.
+///
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudTable::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

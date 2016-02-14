@@ -498,6 +498,15 @@ std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant(int indice) const
 	return enfants_[indice];
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
+///
+/// Retourne le conteneur des enfants de ce noeud
+///
+/// @return Le conteneur d'enfants de ce Noeud.
+///
+////////////////////////////////////////////////////////////////////////
 NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 {
 	return enfants_;

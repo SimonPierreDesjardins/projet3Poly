@@ -221,7 +221,7 @@ bool NoeudAbstrait::ajouter(std::shared_ptr<NoeudAbstrait> enfant)
 /// Elle retourne toujours 0, car ce type de noeud abstrait ne peut pas
 /// avoir d'enfant.
 ///
-/// @return Vrai si l'ajout a bien été effectué, faux autrement.
+/// @return Le nombre d'enfants que possède le noeud.
 ///
 ////////////////////////////////////////////////////////////////////////
 unsigned int NoeudAbstrait::obtenirNombreEnfants() const
@@ -480,13 +480,35 @@ void NoeudAbstrait::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRe
 }
 
 
-//Get le modele dun noeud
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn modele::Modele3D const* NoeudAbstrait::getModele()
+///
+/// Cette fonction retourne le modele 3D utilisé pour représenté l'instance concrète du Noeud.
+///
+/// Elle ne fait rien pour cette classe et vise à être surcharger par
+/// les classes dérivées.
+///
+/// @return Le modèle 3D du noeud, null si absent.
+///
+////////////////////////////////////////////////////////////////////////
 
 modele::Modele3D const* NoeudAbstrait::getModele()
 {
 	return modele_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer)
+///
+/// Cette fonction obtient les valeurs à sauvegarder pour le noeud en JSON
+///
+/// @param[in] writer : Le stream dans lequel le JSON est écrit
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
 	writer.Key("type");
 	writer.String(obtenirType().c_str());
@@ -502,6 +524,17 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 	writer.Double(obtenirFacteurMiseAEchelle());
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON)
+///
+/// Cette fonction assigne les valeurs nécessaires au chargement du noeud à partir du fichier JSOn de sauvegarde.
+///
+/// @param[in] noeudJSON : Le noeud du fichier JSON contenant les informations de chargement.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
 	rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
 	double x = itr->value.GetDouble();

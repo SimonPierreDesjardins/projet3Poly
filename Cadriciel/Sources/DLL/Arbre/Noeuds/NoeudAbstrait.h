@@ -326,12 +326,9 @@ inline void NoeudAbstrait::assignerPositionRelative(
 ///
 /// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
 ///
-/// Cette fonction permet d'assigner la position relative du noeud par
-/// rapport à son parent.
+/// Cette fonction permet d'obtenir l'angle de rotation affectant présentement ce noeud.
 ///
-/// @param positionRelative : La position relative.
-///
-/// @return Aucune
+/// @return l'angle de rotation en degrees du noeud
 ///
 ////////////////////////////////////////////////////////////////////////
 inline double NoeudAbstrait::obtenirAngleRotation() const
@@ -360,11 +357,9 @@ inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
 ///
 /// @fn inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 ///
-/// Cette fonction permet d'assigner un angle de rotation en sens horaire au noeud par rapport à son centre.
+/// Cette fonction permet d'obtenir l'échelle d'agrandissement ou de rapetissement du noeud.
 ///
-/// @param angleRotation : Le nouvel angle de rotation de l'objet.
-///
-/// @return Aucune
+/// @return L'échelle de l'objet. 1 étant l'échelle originale.
 ///
 ////////////////////////////////////////////////////////////////////////
 inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
@@ -376,7 +371,7 @@ inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 ///
 /// @fn inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
 ///
-/// Cette fonction permet d'assigner une nouvelle échelle d'agrandissement au Mesh.
+/// Cette fonction permet d'assigner une nouvelle échelle d'agrandissement au Noeud.
 ///
 /// @param facteurDimension : Le facteur de redimentionnement de l'objet.
 ///
@@ -394,7 +389,7 @@ inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDime
 ///
 /// Cette fonction permet d'obtenir le quad définisant la zone de sélection de l'objet.
 ///
-/// @return Aucune
+/// @return Un plan orthogonal à Z  représentant les bornes de l'objet dans l'espace 3d.
 ///
 ////////////////////////////////////////////////////////////////////////
 inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobant() const

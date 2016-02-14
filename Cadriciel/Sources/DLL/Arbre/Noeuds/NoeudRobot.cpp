@@ -72,18 +72,18 @@ void NoeudRobot::afficherConcret() const
 	glPopMatrix();
 }
 
-
-void NoeudRobot::animer(float temps)
-{
-	// Appel à la version de la classe de base pour l'animation des enfants.
-	NoeudComposite::animer(temps);
-
-	// L'araignée oscille selon une période de 4 secondes.
-	angle_ = fmod(angle_ + temps / 4.0f * 360.0f, 360.0f);
-	positionRelative_[0] = 100 * cos(utilitaire::DEG_TO_RAD(angle_));
-	positionRelative_[1] = 60 * sin(utilitaire::DEG_TO_RAD(angle_));
-}
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
+///
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
+/// sa tâche à la méthode qui se charge de ce type de noeud.
+///
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

@@ -32,14 +32,18 @@ void EtatLoupe::gererMouvementSouris(const int & x, const int& y){
 	if (clicGaucheEnfonce_){
 		// Initialisation du rectangle elastique
 		if (estClickDrag()){
-			if (!dessineRectangle){
+			if (dessineRectangle){
+				aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
+			}
+			else{
 				aidegl::initialiserRectangleElastique(anchor);
 				FacadeModele::obtenirInstance()->stopAffichage();
 				dessineRectangle = true;
+				//Placer notre nouveau rectangle initial, assure fonctionnement de mise à jour
+				aidegl::mettreAJourRectangleElastique(anchor, anchor, glm::ivec2(x, y));
 			}	
-			// redessiner le rectangle
-			aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
 		}
+		//TODO Arrêter de dessiner un rectangle si on quite le clickdrag
 	}
 	EtatAbstrait::gererMouvementSouris(x, y);
 	

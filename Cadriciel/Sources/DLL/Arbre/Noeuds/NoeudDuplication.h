@@ -48,6 +48,7 @@ private:
 ///
 /// @param indice : l'indice à lequel se situe le noeud voulu.
 ///
+/// @return : Aucune
 ////////////////////////////////////////////////////////////////////////
 
 inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(int indice)
