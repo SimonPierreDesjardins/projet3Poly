@@ -31,7 +31,7 @@ private:
 	std::unique_ptr<VisiteurCreationMur> visiteurCreationMur_;
 
 	bool enCreation_{ false };
-	glm::dvec3 positionPremierClic_{ glm::dvec3() };
+	glm::dvec3 positionPremierClic_{ 0.0, 0.0, 0.0 };
 	NoeudAbstrait* mur_{ nullptr };
 };
 

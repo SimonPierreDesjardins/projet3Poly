@@ -69,30 +69,23 @@ void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
-	EtatAbstrait::gererClicGaucheRelache(x, y);
-	if (!curseurEstSurTable_) return;
-	
-	if (!estClickDrag())
+	EtatAbstrait::gererClicGaucheRelache(x, y);	
+	if (!estClickDrag() && curseurEstSurTable_)
 	{
-		enCreation_ = false;
-		mur_ = nullptr;
-		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
 		//Premier clic
 		if (!enCreation_)
 		{
 			enCreation_ = true;
-			FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
+			vue_->convertirClotureAVirtuelle(x, y, positionPremierClic_);
 			visiteurCreationMur_->assignerPositionRelative(positionPremierClic_);
-			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationMur_.get());
-			mur_ = visiteurCreationMur_.get()->obtenirReferenceNoeud();
-			visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(true);
+			arbre_->accepterVisiteur(visiteurCreationMur_.get());
+			mur_ = visiteurCreationMur_->obtenirReferenceNoeud();
 		}
 		//Deuxieme clic
 		else
 		{
 			enCreation_ = false;
 			mur_ = nullptr;
-			visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
 		}
 	}
 }
@@ -108,7 +101,6 @@ void EtatCreationMur::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
-		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(mur_);
 		enCreation_ = false;
 		mur_ = nullptr;
@@ -133,7 +125,6 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 	// Calculer la position virtuelle.
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-	
 	gererEstSurTable(positionVirtuelle);
 
 	if (enCreation_)

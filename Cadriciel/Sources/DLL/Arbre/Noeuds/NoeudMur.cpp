@@ -67,11 +67,11 @@ void NoeudMur::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.2, 0.0, 1.0);
+		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 0.0, 0.0, 1.0);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 
@@ -88,20 +88,6 @@ void NoeudMur::afficherConcret() const
 	glPopMatrix();
 }
 
-/*
-void NoeudMur::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
-	glm::dvec3 tmp;
-	for (int i = 0; i < 4; i++)
-	{
-		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
-		tmp = quadEnglobant_.coins[i];
-		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
-		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
-	}
-}
-*/
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
