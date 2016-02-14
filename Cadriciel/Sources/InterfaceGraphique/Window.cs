@@ -17,7 +17,7 @@ namespace InterfaceGraphique
         private System.Windows.Forms.OpenFileDialog zoneFileSystem;
 
         //Chemin initial pour le file explorer
-        string initialPath;
+        public static string initialPath = "./../Zones/";
 
         private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
@@ -46,7 +46,7 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             zoneFileSystem = new OpenFileDialog();
-            initialPath = System.IO.Path.GetFullPath("./../Zones/");
+
             zoneFileSystem.InitialDirectory = initialPath;
             zoneFileSystem.Filter = "Fichiers textes et JSON (*.txt, *.json)|*.txt;*.json";
             supprimerToolStripMenuItem.Enabled = false;
@@ -420,31 +420,20 @@ namespace InterfaceGraphique
 
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
         {
-            enregistrerSous();            
+            enregistrerSousZone();            
         }
 
-        private void enregistrerSous()
+        private void enregistrerSousZone()
         {
-            DialogResult dialogResult = zoneFileSystem.ShowDialog();
-            bool correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
-            bool estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
-            while ((dialogResult == DialogResult.OK && !correctPath) || (dialogResult == DialogResult.OK && estFichierZoneDefaut))
+            ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
+            FonctionsNatives.assignerAutorisationInput(false);
+            if (explorateur.ShowDialog() == DialogResult.OK)
             {
-                if (!correctPath)
-                    MessageBox.Show("Vous ne pouvez enregistrer que dans le dossier " + System.IO.Path.GetFullPath(initialPath), "Mauvais dossier", MessageBoxButtons.OK);
-                else if (estFichierZoneDefaut)
-                    MessageBox.Show("Vous ne pouvez pas enregistrer dans le fichier de zone par défaut", "Impossible d'écrire dans ce fichier", MessageBoxButtons.OK);
-                dialogResult = zoneFileSystem.ShowDialog();
-                correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
-                estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
-            }
-
-            if (dialogResult == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.sauvegarder();
-                enregistrerMenuEdition_.Enabled = true;
             }
+            explorateur.Dispose();
+            FonctionsNatives.assignerAutorisationInput(true);
         }
 
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
@@ -454,13 +443,16 @@ namespace InterfaceGraphique
 
         private void ouvrirZone()
         {
-            if (zoneFileSystem.ShowDialog() == DialogResult.OK)
+            ExplorateurOuverture explorateur = new ExplorateurOuverture();
+            FonctionsNatives.assignerAutorisationInput(false);
+            if (explorateur.ShowDialog() == DialogResult.OK)
             {
-                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.charger();
-                enregistrerMenuEdition_.Enabled = true;
-                panneauOperation_.Visible = false;
             }
+            explorateur.Dispose();
+            FonctionsNatives.assignerAutorisationInput(true);
+            
         }
 
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
@@ -477,7 +469,7 @@ namespace InterfaceGraphique
                         if (enregistrerMenuEdition_.Enabled)
                             FonctionsNatives.sauvegarder();
                         else
-                            enregistrerSous();
+                            enregistrerSousZone();
                     }
                     else
                     {

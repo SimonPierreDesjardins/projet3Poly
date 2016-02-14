@@ -57,6 +57,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExplorateurSauvegarde.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExplorateurSauvegarde.Designer.cs">
+      <DependentUpon>ExplorateurSauvegarde.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExplorateurOuverture.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExplorateurOuverture.Designer.cs">
+      <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
+    </Compile>
+    <Compile Include="NouveauFichier.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NouveauFichier.Designer.cs">
+      <DependentUpon>NouveauFichier.cs</DependentUpon>
+    </Compile>
     <Compile Include="PopOutInterface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,6 +89,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ExplorateurSauvegarde.resx">
+      <DependentUpon>ExplorateurSauvegarde.cs</DependentUpon>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ExplorateurSauvegarde1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExplorateurOuverture.resx">
+      <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NouveauFichier.resx">
+      <DependentUpon>NouveauFichier.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PopOutInterface.resx">
       <DependentUpon>PopOutInterface.cs</DependentUpon>
       <SubType>Designer</SubType>
