@@ -13,6 +13,8 @@
 
 #include "VisiteurAbstrait.h"
 #include "Utilitaire.h"
+#include <memory>
+
 
 class VisiteurSelection : public VisiteurAbstrait
 {
@@ -46,7 +48,7 @@ private:
 	double yMaxRectangleElastique_;
 };
 
-
+//TODO: enlever le inline.
 inline void VisiteurSelection::assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic)
 {	
 	// Assigner la position min et max en x du rectangle elastique.

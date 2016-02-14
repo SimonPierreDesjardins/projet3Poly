@@ -84,17 +84,20 @@ public:
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
 
-	/// Obtient le quadrilatère englobante courante du noeud.
-	inline utilitaire::QuadEnglobant obtenirQuadEnglobant() const;
+	/// Obtient le quadrilatère englobant du noeud.
+	inline utilitaire::QuadEnglobant obtenirQuadEnglobantCourant() const;
 
-	/// Mettre à jour le quadrilatère englobant du noeud.
-	void mettreAJourQuadEnglobant();
-
+	/// Assigne le quadrilatère englobant du noeud.
+	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
+	
+	/// Obtenir la boite englobante du modèle.
+	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
+	
 	/// Mettre à jour le quadrilatère englobant du noeud en fonction d'une position relative.
-	void mettreAJourQuadEnglobant(const glm::dvec3& positionRelative);
+	//void mettreAJourQuadEnglobant();
 
 	/// Mettre à jour le quadrilatère du noeud de manière concrète en fonction d'une position relative.
-	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
+	//virtual void mettreAJourQuadEnglobantConcret();
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -121,9 +124,8 @@ public:
 	/// Vérifie si l'objet peut être dupliqué.
 	inline bool estDupliquable() const;
 
-
 	/// Assigne le modèle3D et la liste d'affichage du noeud courant
-	inline void assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste);
+	void assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste);
 
 	// Interface d'un noeud
 
@@ -200,13 +202,15 @@ protected:
 
 	/// Angle de rotation sur le plan xy
 	double					angleRotation_{ 0 };
-	
-	/// Quadrilatère englobant le noeud.
-	utilitaire::QuadEnglobant quadEnglobant_;
-
-	
+		
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
+
+	/// Quadrilatère englobant le noeud.
+	utilitaire::QuadEnglobant quadEnglobantCourant_;
+
+	/// Quadrilatère englobant le modèle
+	utilitaire::QuadEnglobant quadEnglobantModele_;
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -225,8 +229,7 @@ protected:
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
 
-	/// Boite englobante du modele.
-	utilitaire::BoiteEnglobante boiteEnglobanteModele_;
+
 
 	/// Modèle 3D correspondant à ce noeud.
 	modele::Modele3D const* modele_{ nullptr };
@@ -343,9 +346,21 @@ inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDime
 }
 
 //TODO: Documentation.
-inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobant() const
+inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantCourant() const
 {
-	return quadEnglobant_;
+	return quadEnglobantCourant_;
+}
+
+///TODO: Documentation.
+inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quadEnglobant)
+{
+	quadEnglobantCourant_ = quadEnglobant;
+}
+
+///TODO: Documentation.
+inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
+{
+	return quadEnglobantModele_;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -506,23 +521,8 @@ inline bool NoeudAbstrait::estDupliquable() const
 	return estDupliquable_;
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerObjetRendu(modele::Modele3D* modele, modele::opengl_storage::OpenGL_Liste* liste)
-///
-/// Cette fonction assigne l'objet de rendu au modèle, c'est-à-dire son
-/// modèle 3D et sa liste d'affichage
-///
-/// @param modele : le modèle 3D
-/// @param liste : la liste d'affichage OpenGL
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste)
-{
-	modele_ = modele;
-	vbo_ = liste;
-	boiteEnglobanteModele_ = utilitaire::calculerBoiteEnglobante(*modele_);
-}
+
+
 #endif // __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
 

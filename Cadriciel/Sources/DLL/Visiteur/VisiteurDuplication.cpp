@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file VisiteurDuplication.cpp
+/// @author Olivier St-Amour 
+/// @date 2016-02-13
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
+
+
 #include "VisiteurDuplication.h"
 #include "FacadeModele.h"
 #include "NoeudTypes.h"
@@ -97,7 +108,7 @@ void VisiteurDuplication::visiter(NoeudLigne* noeud)
 	duplication_->ajouter(nouvelleLigne);
 }
 
-void VisiteurDuplication::visiter(NoeudDupliquation* noeud)
+void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	// Ajouter les noeuds sur la table, puis détruire la duplication.

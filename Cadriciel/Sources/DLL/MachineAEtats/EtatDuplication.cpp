@@ -25,7 +25,8 @@ EtatDuplication::EtatDuplication()
 {
 	typeEtat_ = DUPLICATION;
 	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
-	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -89,17 +90,19 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
 	if (!curseurEstSurTable_) return;
-
-	// Obtenir l'arbre et vérifier si les objets sont sur la table.
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	arbre->accepterVisiteur(visiteurVerificationObjets_.get());
-	bool objetsDansZoneSimulation =	visiteurVerificationObjets_->objetsDansZoneSimulation();
 	
+	if (arbre_ != nullptr)
+	{
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+	}
+
+	bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
 	// On commence une duplication si on ne se trouve pas en duplication.
 	if (!enDuplication_)
 	{
 		enDuplication_ = true;
-		arbre->accepterVisiteur(visiteurDuplication_.get());
+		arbre_->accepterVisiteur(visiteurDuplication_.get());
 		duplication_ = visiteurDuplication_->obtenirDuplication();
 	}
 

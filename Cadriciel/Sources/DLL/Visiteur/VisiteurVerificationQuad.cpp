@@ -1,11 +1,20 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file VisiteurVerificationQuad.cpp
+/// @author Olivier St-Amour 
+/// @date 2016-02-13
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
 #include "VisiteurVerificationQuad.h"
+#include "VisiteurMiseAJourQuad.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
 
 /// Constructeur par défaut.
 VisiteurVerificationQuad::VisiteurVerificationQuad()
 {
-
 }
 
 /// Destructeur.
@@ -16,7 +25,7 @@ VisiteurVerificationQuad::~VisiteurVerificationQuad()
 
 void VisiteurVerificationQuad::visiter(ArbreRendu* noeud)
 {
-	noeud->mettreAJourQuadEnglobant();
+//	noeud->mettreAJourQuadEnglobant();
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 
@@ -32,7 +41,7 @@ void VisiteurVerificationQuad::visiter(NoeudTable* noeud)
 	}
 }
 
-void VisiteurVerificationQuad::visiter(NoeudDupliquation* noeud)
+void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 {
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
 	{
@@ -45,7 +54,7 @@ void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 {
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
+		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
 
@@ -53,7 +62,7 @@ void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 {
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
+		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
 
@@ -61,7 +70,7 @@ void VisiteurVerificationQuad::visiter(NoeudDepart* noeud)
 {
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
+		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
 
@@ -79,7 +88,7 @@ void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 {
 	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
 	{
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobant().coins[i]);
+		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
 

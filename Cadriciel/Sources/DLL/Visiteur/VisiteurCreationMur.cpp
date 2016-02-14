@@ -13,7 +13,6 @@
 #include "VisiteurCreationMur.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
-#include <iostream>
 
 VisiteurCreationMur::VisiteurCreationMur()
 {
@@ -32,9 +31,6 @@ void VisiteurCreationMur::visiter(ArbreRendu* noeud)
 
 void VisiteurCreationMur::visiter(NoeudTable* noeud)
 {
-	std::cout << "Debut de mur a la position: " << positionRelative_[0] << " : " << positionRelative_[1];
-	std::cout << " : " << positionRelative_[2] << std::endl;
-
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_MUR);
 	referenceNoeud_ = nouveauNoeud.get();
 	nouveauNoeud->assignerPositionRelative(positionRelative_);

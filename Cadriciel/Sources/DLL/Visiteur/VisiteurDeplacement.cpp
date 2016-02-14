@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file VisiteurDeplacement.cpp
+/// @author Olivier St-Amour 
+/// @date 2016-02-13
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
 #include "VisiteurDeplacement.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"

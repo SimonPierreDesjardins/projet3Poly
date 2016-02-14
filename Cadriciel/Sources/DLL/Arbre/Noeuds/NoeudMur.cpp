@@ -88,7 +88,7 @@ void NoeudMur::afficherConcret() const
 	glPopMatrix();
 }
 
-
+/*
 void NoeudMur::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
@@ -101,7 +101,7 @@ void NoeudMur::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelativ
 		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
 	}
 }
-
+*/
 void NoeudMur::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

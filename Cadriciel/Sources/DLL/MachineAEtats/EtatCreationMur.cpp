@@ -15,8 +15,6 @@
 #include "ArbreRenduINF2990.h"
 #include "Utilitaire.h"
 
-#include <iostream> 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn EtatCreationMur::EtatCreationMur()
@@ -76,6 +74,9 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 	
 	if (!estClickDrag())
 	{
+		enCreation_ = false;
+		mur_ = nullptr;
+		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
 		//Premier clic
 		if (!enCreation_)
 		{
@@ -89,7 +90,6 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 		//Deuxieme clic
 		else
 		{
-			mur_->mettreAJourQuadEnglobant();
 			enCreation_ = false;
 			mur_ = nullptr;
 			visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);

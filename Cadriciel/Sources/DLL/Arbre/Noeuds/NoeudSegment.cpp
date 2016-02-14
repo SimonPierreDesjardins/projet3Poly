@@ -38,10 +38,13 @@ void NoeudSegment::afficherConcret() const
 	glPopMatrix();
 }
 
+/*
 void NoeudSegment::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
 	glm::dvec3 tmp;
+
+
 	for (int i = 0; i < 4; i++)
 	{
 		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
@@ -50,3 +53,4 @@ void NoeudSegment::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRel
 		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
 	}
 }
+*/

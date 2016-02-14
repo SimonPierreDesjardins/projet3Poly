@@ -15,6 +15,12 @@
 #include "VisiteurAbstrait.h"
 #include "glm\glm.hpp"
 
+class ArbreRendu;
+namespace vue
+{
+	class Vue;
+};
+
 enum Etat
 {
 	SELECTION,
@@ -60,6 +66,7 @@ protected:
 	virtual void reinitialiser();
 
 	ArbreRendu* arbre_{ nullptr };
+	vue::Vue* vue_{ nullptr };
 
 	bool estClickDrag();
 	

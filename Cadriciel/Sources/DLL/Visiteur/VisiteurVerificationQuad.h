@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurVerificationObjets.h
+/// @file VisiteurVerificationQuad.h
 /// @author Olivier St-Amour
 /// @date 2016-02-09
 /// @version 1.0
@@ -12,6 +12,8 @@
 #define VISITEUR_VERIFICATION_QUAD_H
 
 #include "VisiteurAbstrait.h"
+#include "VisiteurMiseAJourQuad.h"
+#include <memory>
 
 class VisiteurVerificationQuad : public VisiteurAbstrait
 {
@@ -27,7 +29,7 @@ public:
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
-	virtual void visiter(NoeudDupliquation* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigne* noeud);

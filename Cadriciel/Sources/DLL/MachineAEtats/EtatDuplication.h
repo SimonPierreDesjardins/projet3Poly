@@ -30,9 +30,10 @@ protected:
 	virtual void reinitialiser();
 
 private:
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
 	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationObjets_{ nullptr };
-	
+
 	NoeudAbstrait* duplication_{ nullptr };
 	bool enDuplication_{ false };
 };

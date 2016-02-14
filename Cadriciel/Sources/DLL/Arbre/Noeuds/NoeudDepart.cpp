@@ -83,7 +83,7 @@ void NoeudDepart::afficherConcret() const
 	glPopMatrix();
 }
 
-
+/*
 void NoeudDepart::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 	// Mettre à jour la position en x et y des coins avec le facteur de mise à échelle.
@@ -97,7 +97,7 @@ void NoeudDepart::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRela
 		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
 	}
 }
-
+*/
 void NoeudDepart::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);

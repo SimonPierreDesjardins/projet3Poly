@@ -18,7 +18,6 @@
 #include "VisiteurSelection.h"
 #include "VisiteurSauvegarde.h"
 #include "VisiteurSuppression.h"
-#include "VisiteurDepart.h"
 #include "VisiteurDuplication.h"
 #include "VisiteurDeplacement.h"
 #include "VisiteurMiseAEchelle.h"

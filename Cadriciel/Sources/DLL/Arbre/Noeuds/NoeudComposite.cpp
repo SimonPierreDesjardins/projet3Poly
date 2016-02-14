@@ -295,7 +295,7 @@ void NoeudComposite::effacerSelection()
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
 		) {
-		if ((*it)->estSelectionne()) {
+		if ((*it)->estSelectionne() && (*it)->estDupliquable()) {
 			NoeudAbstrait* enfant{ (*it).get() };
 			enfants_.erase(it);
 
@@ -489,23 +489,6 @@ std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant(int indice) const
 NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 {
 	return enfants_;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudComposite::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-///
-/// Cette fonction met à jour la boite englobante en fonction de la position
-///
-/// @param const glm::dvec3& positionRelative: la nouvelle position de l'objet
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudComposite::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	for (int i = 0; i < enfants_.size(); i++)
-	{
-		enfants_[i]->mettreAJourQuadEnglobant(positionRelative + positionRelative_);
-	}
 }
 
 ////////////////////////////////////////////////

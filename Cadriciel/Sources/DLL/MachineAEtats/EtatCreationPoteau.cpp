@@ -14,8 +14,6 @@
 #include "ArbreRenduINF2990.h"
 #include "glm\glm.hpp"
 
-#include <iostream> 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn EtatCreationPoteau::EtatCreationPoteau()

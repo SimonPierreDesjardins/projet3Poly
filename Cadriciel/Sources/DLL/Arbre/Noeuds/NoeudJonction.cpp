@@ -83,7 +83,7 @@ void NoeudJonction::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 }
-
+/*
 void NoeudJonction::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
 {
 	// Mettre à jour les coins avec le facteur de mise à échelle.
@@ -95,7 +95,7 @@ void NoeudJonction::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRe
 		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
 	}
 }
-
+*/
 
 void NoeudJonction::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
