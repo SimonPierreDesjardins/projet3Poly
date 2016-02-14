@@ -360,30 +360,58 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) bool __cdecl obtenirAutorisationCamera()
+	/// @fn __declspec(dllexport) bool __cdecl obtenirAutorisationInputClavier()
 	///
-	/// Cette fonction retourne l'autorisation de la caméra
+	/// Cette fonction retourne l'autorisation des inputs claviers
 	///
-	/// @return bool : l'autorisation de la caméra
+	/// @return bool : l'autorisation des inputs claviers
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool __cdecl obtenirAutorisationInput()
+	__declspec(dllexport) bool __cdecl obtenirAutorisationInputClavier()
 	{
-		return FacadeModele::obtenirInstance()->obtenirAutorisationInput();
+		return FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier();
 	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void __cdecl assignerAutorisationCamera()
+	/// @fn __declspec(dllexport) void __cdecl assignerAutorisationInputClavier(bool autorisation)
 	///
-	/// Cette fonction assigne l'autorisation de la caméra
+	/// Cette fonction assigne l'autorisation des inputs claviers
 	///
-	/// @param bool : l'autorisation de la caméra
+	/// @param bool : l'autorisation des inputs claviers
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl assignerAutorisationInput(bool autorisation)
+	__declspec(dllexport) void __cdecl assignerAutorisationInputClavier(bool autorisation)
 	{
-		FacadeModele::obtenirInstance()->assignerAutorisationInput(autorisation);
+		FacadeModele::obtenirInstance()->assignerAutorisationInputClavier(autorisation);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl obtenirAutorisationInputSouris()
+	///
+	/// Cette fonction retourne l'autorisation des inputs souris
+	///
+	/// @return bool : l'autorisation des inputs souris
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl obtenirAutorisationInputSouris()
+	{
+		return FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerAutorisationInputSouris(bool autorisation)
+	///
+	/// Cette fonction assigne l'autorisation des inputs souris
+	///
+	/// @param bool : l'autorisation des inputs souris
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerAutorisationInputSouris(bool autorisation)
+	{
+		FacadeModele::obtenirInstance()->assignerAutorisationInputSouris(autorisation);
 	}
 
 	__declspec(dllexport) void assignerAngleRotation(double angle)
@@ -408,43 +436,44 @@ extern "C"
 
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInput();
-		if (msg == WM_KEYDOWN && autoriserInput)
-		{
-			switch (wParam)
+		bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier();
+		if (autoriserInput){
+			if (msg == WM_KEYDOWN)
 			{
-				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
+				switch (wParam)
+				{
+					// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
-						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
 					break;
 
-				case VK_CONTROL+VK_KEY_S:
+				case VK_CONTROL + VK_KEY_S:
 					//FacadeModele::obtenirInstance()->obtenirMode()->
 					break;
 
 				case VK_RIGHT:
-						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
 					break;
 
 				case VK_UP:
-						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheHaut();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheHaut();
 					break;
 
 				case VK_DOWN:
-						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
 					break;
 
-				//case VK_TAB:
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 1, 0 });
+					//case VK_TAB:
+					//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
+					//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 1, 0 });
 					//break;
 
 				case VK_BACK:
 					break;
 
-				//case VK_SHIFT:
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 10, 0 });
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 0, 1 });
+					//case VK_SHIFT:
+					//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 10, 0 });
+					//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 0, 1 });
 					//break;
 
 				case VK_MENU:
@@ -465,11 +494,11 @@ extern "C"
 					break;
 
 				case VK_OEM_PLUS:
-						FacadeModele::obtenirInstance()->obtenirMode()->gererTouchePlus();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererTouchePlus();
 					break;
 
 				case VK_OEM_MINUS:
-						FacadeModele::obtenirInstance()->obtenirMode()->gererToucheMoins();
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheMoins();
 					break;
 
 				case VK_KEY_D:
@@ -508,13 +537,13 @@ extern "C"
 
 				default:
 					break;
+				}
 			}
-		}
 
-		if (msg == WM_KEYUP)
-		{
-			switch (wParam)
+			if (msg == WM_KEYUP)
 			{
+				switch (wParam)
+				{
 				case VK_CONTROL:
 				case VK_LCONTROL:
 				case VK_RCONTROL:
@@ -530,36 +559,39 @@ extern "C"
 
 				default:
 					break;
+				}
 			}
 		}
 
-		switch (msg)
-		{
-		case WM_LBUTTONDBLCLK:
-		case WM_LBUTTONDOWN:
-			FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+		if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris()){
+			switch (msg)
+			{
+			case WM_LBUTTONDBLCLK:
+			case WM_LBUTTONDOWN:
+				FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
 
-		case WM_LBUTTONUP:
-			FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+			case WM_LBUTTONUP:
+				FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
 
-		case WM_RBUTTONDBLCLK:
-		case WM_RBUTTONDOWN:
-			FacadeModele::obtenirInstance()->obtenirMode()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+			case WM_RBUTTONDBLCLK:
+			case WM_RBUTTONDOWN:
+				FacadeModele::obtenirInstance()->obtenirMode()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
 
-		case WM_RBUTTONUP:
-			FacadeModele::obtenirInstance()->obtenirMode()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+			case WM_RBUTTONUP:
+				FacadeModele::obtenirInstance()->obtenirMode()->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
 
-		case WM_MOUSEMOVE:
-			FacadeModele::obtenirInstance()->obtenirMode()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+			case WM_MOUSEMOVE:
+				FacadeModele::obtenirInstance()->obtenirMode()->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				break;
 
-		case WM_MOUSEWHEEL:
-			FacadeModele::obtenirInstance()->obtenirMode()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
-			break;
+			case WM_MOUSEWHEEL:
+				FacadeModele::obtenirInstance()->obtenirMode()->gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+				break;
+			}
 		}
 	}
 

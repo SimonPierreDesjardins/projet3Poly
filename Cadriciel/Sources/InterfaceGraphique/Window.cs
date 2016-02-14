@@ -385,7 +385,7 @@ namespace InterfaceGraphique
         /// @fn private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         ///
         /// Fonction appelant les fonctions servant à redimenssionner la fenetre virtuelle selon la cloture pour garder le rapport d'aspect.
-        /// Celle
+        /// Celle-ci est appelée lorsqu'on redimenssionne la fenetre.
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -398,6 +398,17 @@ namespace InterfaceGraphique
             FonctionsNatives.dessinerOpenGL();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Fonction appelant les fonctions servant à redimenssionner la fenetre virtuelle selon la cloture pour garder le rapport d'aspect.
+        /// Celle-ci est appelée lors du chargement de la fenetre.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void Window_Load(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL
@@ -832,7 +843,8 @@ namespace InterfaceGraphique
         private void enregistrerSousZone()
         {
             ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
-            FonctionsNatives.assignerAutorisationInput(false);
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+            FonctionsNatives.assignerAutorisationInputSouris(false);
             if (explorateur.ShowDialog() == DialogResult.OK)
             {
                 FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
@@ -840,7 +852,8 @@ namespace InterfaceGraphique
                 enregistrerMenuEdition_.Enabled = true;
             }
             explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInput(true);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+            FonctionsNatives.assignerAutorisationInputSouris(true);
             
         }
 
@@ -870,7 +883,8 @@ namespace InterfaceGraphique
         private void ouvrirZone()
         {
             ExplorateurOuverture explorateur = new ExplorateurOuverture();
-            FonctionsNatives.assignerAutorisationInput(false);
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+            FonctionsNatives.assignerAutorisationInputSouris(false);
             if (explorateur.ShowDialog() == DialogResult.OK)
             {
                 FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
@@ -878,8 +892,8 @@ namespace InterfaceGraphique
                 enregistrerMenuEdition_.Enabled = true;
             }
             explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInput(true);
-
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+            FonctionsNatives.assignerAutorisationInputSouris(true);
             panneauOperation_.Visible = false;
             
         }
@@ -969,7 +983,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void textboxDimension__Enter(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerAutorisationInput(false);
+            FonctionsNatives.assignerAutorisationInputClavier(false);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -984,7 +998,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionX__Enter(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerAutorisationInput(false);
+            FonctionsNatives.assignerAutorisationInputClavier(false);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -999,7 +1013,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void textBoxRotation__Enter(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerAutorisationInput(false);
+            FonctionsNatives.assignerAutorisationInputClavier(false);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1014,7 +1028,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionY__Enter(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerAutorisationInput(false);
+            FonctionsNatives.assignerAutorisationInputClavier(false);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1042,7 +1056,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void verificationDuNombreElementChoisi ()
         {
-            FonctionsNatives.assignerAutorisationInput(true);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
 
             int nbEnfant = FonctionsNatives.obtenirNombreSelection();
             if (nbEnfant == 1)
@@ -1110,11 +1124,6 @@ namespace InterfaceGraphique
         {
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
-        }
-
-        private void viewPort__Paint(object sender, PaintEventArgs e)
-        {
-
         }
 
     }
@@ -1232,10 +1241,16 @@ namespace InterfaceGraphique
         public static extern void assignerCheminFichierZone(string chemin);
         
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerAutorisationInput(bool autorisation);
+        public static extern void assignerAutorisationInputClavier(bool autorisation);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool obtenirAutorisationInput();
+        public static extern bool obtenirAutorisationInputClavier();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerAutorisationInputSouris(bool autorisation);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool obtenirAutorisationInputSouris();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern string obtenirCheminFichierZoneDefaut();
