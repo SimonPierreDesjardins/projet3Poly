@@ -207,13 +207,13 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void enregistrerButt_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count != 0)
+            if (listView1.SelectedItems.Count > 0)
             {
-                enregistrerButt.DialogResult = DialogResult.OK;
+                DialogResult = DialogResult.OK;
                 cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
             }
             else
-                enregistrerButt.DialogResult = DialogResult.Cancel;
+                DialogResult = DialogResult.Cancel;
             Close();
         }
 
