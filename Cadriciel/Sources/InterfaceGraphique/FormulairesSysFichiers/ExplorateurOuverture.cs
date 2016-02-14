@@ -54,7 +54,7 @@ namespace InterfaceGraphique
             StringBuilder str = new StringBuilder(100);
             FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
             cheminFichierZoneDefaut = str.ToString();
-            cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/"));
+            cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             InitializeComponent();
             PopulateTreeView();
@@ -161,14 +161,17 @@ namespace InterfaceGraphique
             }
             foreach (FileInfo file in nodeDirInfo.GetFiles("*.json"))
             {
-                item = new ListViewItem(file.Name, 1);
-                subItems = new ListViewItem.ListViewSubItem[]
+                if (file.Length > 0)
+                {
+                    item = new ListViewItem(file.Name, 1);
+                    subItems = new ListViewItem.ListViewSubItem[]
                   { new ListViewItem.ListViewSubItem(item, "Fichier zone"), 
                    new ListViewItem.ListViewSubItem(item, 
 				file.LastAccessTime.ToShortDateString())};
-                item.Tag = file;
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
+                    item.Tag = file;
+                    item.SubItems.AddRange(subItems);
+                    listView1.Items.Add(item);
+                }
             }
 
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
