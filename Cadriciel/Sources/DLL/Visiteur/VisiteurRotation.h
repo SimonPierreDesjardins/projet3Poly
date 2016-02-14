@@ -31,7 +31,6 @@ public:
 
 private:
 
-
 	void assignerNouvellePositionRelative(NoeudAbstrait* noeud);
 	
 	void calculerCentreSelection(NoeudAbstrait* noeud);

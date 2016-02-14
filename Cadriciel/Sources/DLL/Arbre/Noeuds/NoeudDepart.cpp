@@ -33,7 +33,7 @@
 NoeudDepart::NoeudDepart(const std::string& typeNoeud)
 	: NoeudAbstrait{ typeNoeud }
 {
-	estDupliquable_ = false;
+	estDuplicable_ = false;
 }
 
 

@@ -5,7 +5,7 @@
 NoeudDuplication::NoeudDuplication(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
-	estDupliquable_ = false;
+	estDuplicable_ = false;
 }
 
 NoeudDuplication::~NoeudDuplication()

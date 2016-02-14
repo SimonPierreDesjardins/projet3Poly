@@ -24,10 +24,6 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
-	virtual void gererToucheEchappe();
-
-protected:
-	virtual void reinitialiser();
 
 private:
 	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };

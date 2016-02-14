@@ -35,7 +35,9 @@ public:
 	virtual void visiter(NoeudDuplication* noeud);
 
 private:
-	int nNoeuds_{ 0 };
+
+	void calculerCentreSelection(NoeudAbstrait* noeud);
+	glm::dvec3 centreSelection_{ 0.0, 0.0, 0.0 };
 	bool enDuplication_{ false };
 	NoeudAbstrait* nouvelleLigne_{ nullptr };
 	NoeudAbstrait* duplication_{ nullptr };

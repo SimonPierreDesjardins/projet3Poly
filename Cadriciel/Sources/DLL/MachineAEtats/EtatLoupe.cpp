@@ -32,7 +32,7 @@ void EtatLoupe::gererMouvementSouris(const int & x, const int& y){
 	if (clicGaucheEnfonce_){
 		if (estClickDrag()){
 			if (dessineRectangle)
-				aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
+				aidegl::mettreAJourRectangleElastique(anchor, currentPosition_, glm::ivec2(x, y));
 			else{
 				aidegl::initialiserRectangleElastique(anchor);
 				// redessiner le rectangle
