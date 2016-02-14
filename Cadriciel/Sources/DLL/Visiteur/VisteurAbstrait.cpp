@@ -41,51 +41,141 @@ VisiteurAbstrait::~VisiteurAbstrait()
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(ArbreRendu* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès à l'arbreRendu passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(ArbreRendu* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudTable* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Table passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudTable* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiterRectangle(NoeudTable* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Table passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiterRectangle(NoeudTable* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudPoteau* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Poteau passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudPoteau* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudMur* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Mur passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudMur* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudLigne* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Ligne passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudLigne* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudDuplication* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Duplication passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudDuplication* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudSegment* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Segment passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudSegment* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudDepart* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Depart passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudDepart* noeud)
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  VisiteurAbstrait::visiter(NoeudJonction* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Jonction passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudJonction* noeud)
 {
 

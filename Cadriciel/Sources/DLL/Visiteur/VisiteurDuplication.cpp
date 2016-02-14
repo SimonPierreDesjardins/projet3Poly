@@ -15,7 +15,6 @@
 #include "ArbreRendu.h"
 #include <memory>
 
-
 VisiteurDuplication::VisiteurDuplication()
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
