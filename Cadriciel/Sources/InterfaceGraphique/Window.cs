@@ -21,8 +21,10 @@ namespace InterfaceGraphique
 {    
     public partial class Window : Form, IMessageFilter
     {
-        private const int WM_KEYUP =        0x101;
-        private const int WM_KEYDOWN =      0x100;
+        private const int WM_KEYDOWN =      0x0100;
+        private const int WM_KEYUP =        0x0101;
+        private const int WM_SYSKEYDOWN =   0x0104;
+        private const int WM_SYSKEYUP =     0x0105;
         private const int WM_LBUTTONDOWN =  0x0201;
         private const int WM_LBUTTONUP =    0x0202;
         private const int WM_RBUTTONDOWN =  0x0204;
@@ -30,14 +32,27 @@ namespace InterfaceGraphique
         private const int WM_MOUSEMOVE =    0x0200;
         private const int WM_MOUSEWHEEL =   0x020A;
 
+        bool arreterToutMessage_;
+        public void arreterToutMessage()
+        { arreterToutMessage_ = true; }
+
         public bool PreFilterMessage(ref Message m)
         {
-            // On veut seulement traiter les inputs sur le view_port.
-            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN || m.Msg == WM_KEYUP || m.Msg == WM_MOUSEWHEEL)
+            if(!arreterToutMessage_)
             {
-                FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
+                // On veut seulement traiter les inputs sur le view_port.
+                if (m.HWnd == viewPort_.Handle || 
+                    m.Msg == WM_KEYUP          || 
+                    m.Msg == WM_KEYDOWN        || 
+                    m.Msg == WM_SYSKEYUP       || 
+                    m.Msg == WM_SYSKEYDOWN     ||
+                    m.Msg == WM_MOUSEWHEEL)
+                {
+                    FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
+                }
+                return false;
             }
-            return false;
+            return true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -50,6 +65,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         public Window()
         {
+            arreterToutMessage_ = false;
             InitializeComponent();
             InitialiserAnimation();
             menuEdition_.Visible = false;
@@ -107,10 +123,13 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
+            arreterToutMessage();
+
             lock(Program.unLock)
             {
                 FonctionsNatives.libererOpenGL();
                 Program.peutAfficher = false;
+                
             }
         }
 
@@ -1125,7 +1144,6 @@ namespace InterfaceGraphique
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
         }
-
     }
 
     enum Etat

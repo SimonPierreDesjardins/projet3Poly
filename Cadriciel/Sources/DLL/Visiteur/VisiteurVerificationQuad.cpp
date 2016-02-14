@@ -56,7 +56,6 @@ VisiteurVerificationQuad::~VisiteurVerificationQuad()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(ArbreRendu* noeud)
 {
-//	noeud->mettreAJourQuadEnglobant();
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 

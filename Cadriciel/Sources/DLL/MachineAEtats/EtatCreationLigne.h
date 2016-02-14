@@ -30,15 +30,17 @@ public:
 	virtual void gererEstSurTableConcret(bool positionEstSurTable);
 
 private:
-	std::unique_ptr<VisiteurCreationLigne> visiteurCreationLigne_;
-
-	void calculerPositionCentreLigne();
-	
+	std::unique_ptr<VisiteurCreationLigne> visiteurCreationLigne_{ nullptr };
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
+		
 	NoeudAbstrait* ligne_{ nullptr };
 	NoeudAbstrait* segment_{ nullptr };
 	bool enCreation_{ false };
 	std::vector<glm::dvec3> positionsClic_;
 
+	void calculerPositionCentreLigne();
+	bool ligneEstSurTable();
 };
 
 #endif /// ETAT_CREATION_LIGNE_H
