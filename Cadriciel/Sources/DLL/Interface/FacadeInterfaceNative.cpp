@@ -287,7 +287,7 @@ extern "C"
 	/// @return doublee : le facteur de grandissement d'un objet
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) double obtenirFacteurGrandeur()
+	__declspec(dllexport) double __cdecl obtenirFacteurGrandeur()
 	{
 		return FacadeModele::obtenirInstance()->obtenirFacteurGrandeur();
 	}
@@ -301,7 +301,7 @@ extern "C"
 	/// @return doublee : la position relative en X
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) double obtenirPositionRelativeX()
+	__declspec(dllexport) double __cdecl obtenirPositionRelativeX()
 	{
 		return FacadeModele::obtenirInstance()->obtenirPositionRelativeX();
 	}
@@ -315,7 +315,7 @@ extern "C"
 	/// @return doublee : la position relative en Y
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) double obtenirPositionRelativeY()
+	__declspec(dllexport) double __cdecl obtenirPositionRelativeY()
 	{
 		return FacadeModele::obtenirInstance()->obtenirPositionRelativeY();
 	}
@@ -386,40 +386,89 @@ extern "C"
 		FacadeModele::obtenirInstance()->assignerAutorisationInput(autorisation);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerAngleRotation(double angle)
+	///
+	/// Cette fonction permet d'assigner l'angle de rotation
+	///
+	/// @param double : l'angle de rotation.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void assignerAngleRotation(double angle)
 	{
 		FacadeModele::obtenirInstance()->assignerAngleRotation(angle);
 	}
 
-	__declspec(dllexport) void assignerFacteurGrandeur(double facteurGrandeur)
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerFacteurGrandeur(facteurGrandeur)
+	///
+	/// Cette fonction permet d'assigner le facteur de mise à échelle.
+	///
+	/// @param double : l'angle de rotation.
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerFacteurGrandeur(double facteurGrandeur)
 	{
 		FacadeModele::obtenirInstance()->assignerFacteurGrandeur(facteurGrandeur);
 	}
 
-	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX)
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerPositionRelativeX(positionRelativeX)
+	///
+	///	Cette fonction permmet d'assigner une position relative en X.
+	///
+	/// @param positionRelativeX : la position relative en X. 
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerPositionRelativeX(double positionRelativeX)
 	{
 		FacadeModele::obtenirInstance()->assignerPositionRelativeX(positionRelativeX);
 	}
 
-	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY)
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerPositionRelativeY(positionRelativeY)
+	///
+	/// Cette fonction permet d'assigner une position relative en Y.
+	///
+	/// @param positionRelativeX : la position relative en Y. 
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerPositionRelativeY(double positionRelativeY)
 	{
 		FacadeModele::obtenirInstance()->assignerPositionRelativeY(positionRelativeY);
 	}
 
-	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+	///
+	/// Cette fonction permet de repartir le traitement de certains messages provenant de l'interface utilisateur,
+	/// principalement les messages concerant les entrées avec la souris et le clavier.
+	/// Voir https://msdn.microsoft.com/en-us/library/windows/desktop/dd375731(v=vs.85).aspx/ 
+	///	pour la documentation sur la signification des codes virtuels.
+	///
+	/// @param UINT msg : L'identificateur du message.
+	///
+	/// @param WPARAM wParam : Information additionnelle du message. 
+	///
+	/// @param LPARAM lParam : Information additionnelle du message.
+	///
+	////////////////////////////////////////////////////////////////////////
+
+	__declspec(dllexport) void __cdecl repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInput();
+		// Répartition du traitement des touches enfoncées.
 		if (msg == WM_KEYDOWN && autoriserInput)
 		{
 			switch (wParam)
 			{
-				// voir http://www.kbdedit.com/manual/low_level_vk_list.html 
 				case VK_LEFT:
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
-					break;
-
-				case VK_CONTROL+VK_KEY_S:
-					//FacadeModele::obtenirInstance()->obtenirMode()->
 					break;
 
 				case VK_RIGHT:
@@ -434,30 +483,7 @@ extern "C"
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
 					break;
 
-				//case VK_TAB:
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 1, 0 });
-					//break;
-
 				case VK_BACK:
-					break;
-
-				//case VK_SHIFT:
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 10, 0 });
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 0, 1 });
-					//break;
-
-				case VK_MENU:
-				case VK_RMENU:
-				case VK_LMENU:
-					std::cout << "La touche alt est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
-					break;
-
-				case VK_CONTROL:
-				case VK_RCONTROL:
-				case VK_LCONTROL:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
 					break;
 
 				case VK_ESCAPE:
@@ -505,34 +531,74 @@ extern "C"
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheSupprimer();
 					break;
 
+				case VK_CONTROL:
+				case VK_LCONTROL:
+				case VK_RCONTROL:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
+					break;
 
 				default:
 					break;
 			}
 		}
-
+		// Répartition du traitement des touches relachées.
 		if (msg == WM_KEYUP)
 		{
 			switch (wParam)
 			{
 				case VK_CONTROL:
-				case VK_LCONTROL:
 				case VK_RCONTROL:
+				case VK_LCONTROL:
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
-					break;
-
-				case VK_MENU:
-				case VK_RMENU:
-				case VK_LMENU:
-					std::cout << "La touche alt est relachee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
 					break;
 
 				default:
 					break;
 			}
 		}
+		// Répartition du traitement des touches enfoncées provenant du système pour les différents types de claviers.
+		if (msg == WM_SYSKEYDOWN)
+		{
+			switch (wParam)
+			{
+				case VK_MENU:
+				case VK_LMENU:
+				case VK_RMENU:
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
+					break;
 
+				case VK_CONTROL:
+				case VK_LCONTROL:
+				case VK_RCONTROL:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
+					break;
+
+				default:
+					break;
+			}
+		}
+		// Répartition du traitement des touches relâchées provenant du système pour les différents types de clavier.
+		if (msg == WM_SYSKEYUP)
+		{
+			switch (wParam)
+			{
+				case VK_MENU:
+				case VK_LMENU:
+				case VK_RMENU:
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
+					break;
+
+				case VK_CONTROL:
+				case VK_RCONTROL:
+				case VK_LCONTROL:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
+					break;
+
+				default:
+					break;
+			}
+		}
+		// Répartition du traitement des messages provenant de la souris.
 		switch (msg)
 		{
 		case WM_LBUTTONDBLCLK:
@@ -562,10 +628,7 @@ extern "C"
 			break;
 		}
 	}
-
-
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

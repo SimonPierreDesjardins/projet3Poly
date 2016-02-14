@@ -25,6 +25,8 @@ EtatCreationPoteau::EtatCreationPoteau()
 {
 	typeEtat_ = CREATION_POTEAU;
 	visiteurCreationPoteau_ = std::make_unique<VisiteurCreationPoteau>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -71,10 +73,20 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 	EtatAbstrait::gererClicGaucheRelache(x, y);
 	if (!estClickDrag() && curseurEstSurTable_)
 	{
+		// Ajout du poteau sur la table.
 		glm::dvec3 positionVirtuelle;
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationPoteau_.get());
+		arbre_->accepterVisiteur(visiteurCreationPoteau_.get());
+		NoeudAbstrait* poteau = visiteurCreationPoteau_->obtenirReferenceNoeud();
+		
+		// Mettre à jour les quads et vérifier si le nouveau poteau se situe à l'extérieur de la table.
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+		if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
+		{
+			arbre_->chercher("table")->effacer(poteau);
+		}
 	}
 }
 

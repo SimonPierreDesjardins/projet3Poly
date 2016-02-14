@@ -71,20 +71,6 @@ void VisiteurAbstrait::visiter(NoeudTable* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn  VisiteurAbstrait::visiterRectangle(NoeudTable* noeud)
-///
-/// Fonction virtuelle pour les classes dérivées donnant accès au noeud Table passé en paramètre.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void VisiteurAbstrait::visiterRectangle(NoeudTable* noeud)
-{
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn  VisiteurAbstrait::visiter(NoeudPoteau* noeud)
 ///
 /// Fonction virtuelle pour les classes dérivées donnant accès au noeud Poteau passé en paramètre.

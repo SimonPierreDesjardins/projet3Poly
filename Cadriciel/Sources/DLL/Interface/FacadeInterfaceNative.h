@@ -39,11 +39,11 @@ extern "C"
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	__declspec(dllexport) bool peutRafraichir();
 
-	__declspec(dllexport) void __cdecl nouvelleTable();
-	__declspec(dllexport) void __cdecl suppression();
-	__declspec(dllexport) int __cdecl obtenirNombreSelection();
-	__declspec(dllexport) bool __cdecl obtenirAutorisationInput();
-	__declspec(dllexport) void __cdecl assignerAutorisationInput(bool autorisation);
+	__declspec(dllexport) void nouvelleTable();
+	__declspec(dllexport) void suppression();
+	__declspec(dllexport) int  obtenirNombreSelection();
+	__declspec(dllexport) bool obtenirAutorisationInput();
+	__declspec(dllexport) void assignerAutorisationInput(bool autorisation);
 
 	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) double obtenirFacteurGrandeur();

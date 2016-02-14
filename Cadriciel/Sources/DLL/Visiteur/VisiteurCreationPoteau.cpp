@@ -78,4 +78,5 @@ void VisiteurCreationPoteau::visiter(NoeudTable* noeud)
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
 	noeud->ajouter(nouveauNoeud);
+	referenceNoeud_ = nouveauNoeud.get();
 }

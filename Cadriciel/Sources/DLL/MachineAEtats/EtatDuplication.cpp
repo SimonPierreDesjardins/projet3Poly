@@ -28,8 +28,7 @@ EtatDuplication::EtatDuplication()
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 
-	// On commence une duplication si on ne se trouve pas en duplication.
-
+	// On commence une duplication.
 	arbre_->accepterVisiteur(visiteurDuplication_.get());
 	duplication_ = visiteurDuplication_->obtenirDuplication();
 	glm::dvec3 positionVirtuelle;
@@ -101,21 +100,20 @@ void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
-	if (!curseurEstSurTable_) return;
-	
-	if (arbre_ != nullptr)
+	if (curseurEstSurTable_ && !estClickDrag())
 	{
-		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
-		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
-	}
-
-	bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
-
-	// Ajouter la duplication sur la table.
-	if (objetsDansZoneSimulation)
-	{
-		duplication_->accepterVisiteur(visiteurDuplication_.get());
-		duplication_ = visiteurDuplication_->obtenirDuplication();
+		if (arbre_ != nullptr)
+		{
+			arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+		}
+		bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
+		// Ajouter la duplication sur la table.
+		if (objetsDansZoneSimulation)
+		{
+			duplication_->accepterVisiteur(visiteurDuplication_.get());
+			duplication_ = visiteurDuplication_->obtenirDuplication();
+		}
 	}
 }
 
@@ -123,8 +121,7 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 ///
 /// @fn void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 ///
-/// Cette fonction assigne la position en x et y au nouveau objet si une duplication
-/// est en cours.
+/// Cette fonction assigne la position en x et y courante à la duplication.
 ///
 /// @param const int& x: position en x du cursor
 /// @param const int& y: position en y du cursor
@@ -137,7 +134,5 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	
 	gererEstSurTable(positionVirtuelle);
-
 	duplication_->assignerPositionRelative(positionVirtuelle);
-
 }
