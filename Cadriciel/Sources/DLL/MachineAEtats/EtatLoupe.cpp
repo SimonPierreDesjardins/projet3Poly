@@ -30,15 +30,15 @@ void EtatLoupe::gererClicGaucheRelache(const int& x, const int& y){
 void EtatLoupe::gererMouvementSouris(const int & x, const int& y){
 	
 	if (clicGaucheEnfonce_){
+		// Initialisation du rectangle elastique
 		if (estClickDrag()){
-			if (dessineRectangle)
-				aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
-			else{
+			if (!dessineRectangle){
 				aidegl::initialiserRectangleElastique(anchor);
-				// redessiner le rectangle
 				FacadeModele::obtenirInstance()->stopAffichage();
 				dessineRectangle = true;
-			}
+			}	
+			// redessiner le rectangle
+			aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
 		}
 	}
 	EtatAbstrait::gererMouvementSouris(x, y);
