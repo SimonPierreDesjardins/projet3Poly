@@ -20,6 +20,8 @@
 #include "BancTests.h"
 
 #include <iostream>
+#include <string>
+
 
 #define VK_KEY_D 0x44
 #define VK_KEY_S 0x53
@@ -143,7 +145,11 @@ extern "C"
 	}
 
 	__declspec(dllexport) void __cdecl assignerCheminFichierZone(char* chemin){
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerCheminFichierZone(string(chemin));
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerCheminFichierZone(std::string(chemin));
+	}
+
+	__declspec(dllexport) void __cdecl obtenirCheminFichierZoneDefaut(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZoneDefaut().c_str());
 	}
 	////////////////////////////////////////////////////////////////////////
 	///

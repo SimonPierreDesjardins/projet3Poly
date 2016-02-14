@@ -204,6 +204,20 @@ FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode){
 	return fichierZone;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::string ArbreRendu::obtenirCheminFichierZoneDefaut()
+///
+/// Fonction permettant d'obtenir le chemin vers le fichier contenant la structure de base de l'arbre de rendu.
+///
+///
+/// @return Pointeur vers le fichier
+///
+////////////////////////////////////////////////////////////////////////
+std::string ArbreRendu::obtenirCheminFichierZoneDefaut(){
+	return cheminFichierZoneDefaut;
+}
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

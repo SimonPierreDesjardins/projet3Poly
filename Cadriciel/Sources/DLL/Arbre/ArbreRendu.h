@@ -72,6 +72,10 @@ public:
 	
 	/// Retourne un pointeur vers le fichier sélectionné par l'utilisateur
 	FILE* obtenirFichierZone(std::string mode);
+
+	/// Retourne le chemin vers le fichier de zone de base
+	std::string obtenirCheminFichierZoneDefaut();
+
 protected:
 
 	/// Retourne un pointeur vers le fichier de structure de base
