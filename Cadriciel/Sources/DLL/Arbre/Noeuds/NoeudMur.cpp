@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// @file NoeudMur.cpp
 /// @author Philippe Marcotte et Camille Gendreau
-/// @date 2011-05-19
+/// @date 2016-05-19
 /// @version 1.0
 ///
 /// @addtogroup inf2990 INF2990
