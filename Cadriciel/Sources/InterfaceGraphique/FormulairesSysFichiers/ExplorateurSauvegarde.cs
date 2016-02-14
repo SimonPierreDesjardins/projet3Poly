@@ -70,7 +70,7 @@ namespace InterfaceGraphique
             StringBuilder str = new StringBuilder(100);
             FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
             cheminFichierZoneDefaut = str.ToString();
-            cheminDossierZone = cheminFichierZoneDefaut.Substring(0,cheminFichierZoneDefaut.LastIndexOf("/"));
+            cheminDossierZone = cheminFichierZoneDefaut.Substring(0,cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             InitializeComponent();
             PopulateTreeView();
@@ -207,6 +207,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void enregistrerButt_Click(object sender, EventArgs e)
         {
+            //if(listView1.SelectedItems)
             cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
             Close();
         }
