@@ -15,22 +15,66 @@
 #include "ArbreRendu.h"
 #include <memory>
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::VisiteurDuplication()
+///
+/// Constructeur. Il initialise l'attribut centreSelection_ selon la sélection.
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurDuplication::VisiteurDuplication()
 {
 	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	calculerCentreSelection(noeud);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::~VisiteurDuplication()
+///
+/// Destructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurDuplication::~VisiteurDuplication()
 {
 	
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(ArbreRendu* noeud)
+///
+/// Fonction servant à donner l'accès au noeud Table.
+///
+/// @param[in] noeud : l'arbre rendu contenant le noeud Table, entre autres.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(ArbreRendu* noeud)
 {
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudTable* noeud)
+///
+/// Fonction qui crée et ajoute un noeud Duplication au noeud Table passé en paramètre selon la sélection actuelle.
+///
+/// @param[in] noeud : Le noeud Table auquel on veut ajouter la duplication.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudTable* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
@@ -49,6 +93,17 @@ void VisiteurDuplication::visiter(NoeudTable* noeud)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudPoteau* noeud)
+///
+/// Fonction qui crée et ajoute un noeud Poteau au noeud Table passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Poteau que l'on veut ajouter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
@@ -62,7 +117,17 @@ void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 	duplication_->ajouter(nouveauNoeud);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudMur* noeud)
+///
+/// Fonction qui crée et ajoute un noeud Mur au noeud Table passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Mur que l'on veut ajouter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudMur* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
@@ -77,7 +142,17 @@ void VisiteurDuplication::visiter(NoeudMur* noeud)
 	duplication_->ajouter(nouveauNoeud);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudLigne* noeud)
+///
+/// Fonction qui crée et ajoute un noeud Ligne au noeud Table passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Ligne que l'on veut ajouter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudLigne* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
@@ -96,6 +171,17 @@ void VisiteurDuplication::visiter(NoeudLigne* noeud)
 	duplication_->ajouter(nouvelleLigne);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudDuplication* noeud)
+///
+/// Fonction qui crée et ajoute un noeud Duplication au noeud Table passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Duplication que l'on veut ajouter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 {
 	NoeudAbstrait* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
@@ -113,7 +199,17 @@ void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 	arbre->accepterVisiteur(this);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudSegment* noeud)
+///
+/// Fonction qui crée et ajoute un noeud Segment au noeud Table passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Segment que l'on veut ajouter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudSegment* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
@@ -126,6 +222,18 @@ void VisiteurDuplication::visiter(NoeudSegment* noeud)
 	
 	nouvelleLigne_->ajouter(nouveauSegment);
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudJonction* noeud)
+///
+/// Fonction qui crée et ajoute un noeud Jonction au noeud Table passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Jonction que l'on veut ajouter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudJonction* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
@@ -137,6 +245,17 @@ void VisiteurDuplication::visiter(NoeudJonction* noeud)
 	nouvelleLigne_->ajouter(nouvelleJonction);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::calculerCentreSelection(NoeudAbstrait* noeud)
+///
+/// Fonction qui calcule le centre de la sélection actuelle en faisant la moyenne des points extrêmes de la sélection.
+///
+/// @param[in] noeud : Le noeud Abstrait que l'on veut dupliquer.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::calculerCentreSelection(NoeudAbstrait* noeud)
 {
 	if (noeud->obtenirNombreEnfants() < 1) return;
