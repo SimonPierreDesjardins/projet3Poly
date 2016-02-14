@@ -14,6 +14,16 @@
 #include <memory>
 #include "glm\glm.hpp"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class ModeAbstrait
+/// @brief Classe qui représente le mode abstrait de notre machine à modes
+///
+///        Cette classe s'occupe de déclarer les fonctions qui seront implémentés 
+///	       dans les états dérivés.
+/// @author Simon-Pierre Desjardins
+/// @date 2016-02-14
+///////////////////////////////////////////////////////////////////////////
+
 enum Mode
 {
 	MENU_PRINCIPAL,
@@ -26,12 +36,16 @@ enum Mode
 class ModeAbstrait
 {
 public:
+	//Constructeur par défaut
 	ModeAbstrait();
+	//Destructeur
 	virtual ~ModeAbstrait();
 
+	//Gestion du système de chargement et de sauvegarde
 	virtual void sauvegarder();
 	virtual void charger();
 
+	//Gestion des différentes touches et de leur effet selon le mode choisi
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 
@@ -62,7 +76,7 @@ public:
 	virtual void gererFlecheHaut();
 	virtual void gererFlecheDroit();
 
-	// Gestion touches de modif
+	// Gestion des touches de modification
 	virtual void gererBarreDespacement();
 	virtual void gererToucheArriere();
 	virtual void gererToucheControlEnfoncee();
@@ -84,6 +98,16 @@ protected:
 	int typeMode_;
 };
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline int ModeAbstrait::obtenirTypeMode()
+///
+/// Cette fonction retourne le type de mode de l'attribut typeMode_.
+///
+///
+/// @return int typeMode_.
+///
+////////////////////////////////////////////////////////////////////////
 inline int ModeAbstrait::obtenirTypeMode()
 {
 	return typeMode_;
