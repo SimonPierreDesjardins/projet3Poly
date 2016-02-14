@@ -67,11 +67,11 @@ void NoeudDepart::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.0, 0.0, 1.0);
+		glColor4f(1.0, 0.20, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0, 1.0, 0.0, 1.0);
+		glColor4f(0.0, 0.0, 0.0, 1.0);
 	}
 
 	glRotated(angleRotation_, 0, 0, 1);

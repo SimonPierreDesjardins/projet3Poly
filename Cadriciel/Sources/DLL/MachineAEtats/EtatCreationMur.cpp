@@ -30,29 +30,34 @@ EtatCreationMur::~EtatCreationMur()
 
 void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 {
+	EtatAbstrait::gererClicGaucheEnfonce(x, y);
 }
 
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
+	EtatAbstrait::gererClicGaucheRelache(x, y);
 	if (!curseurEstSurTable_) return;
 	
-	//Premier clic
-	if (!enCreation_)
+	if (!estClickDrag())
 	{
-		enCreation_ = true;
-		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
-		visiteurCreationMur_->assignerPositionRelative(positionPremierClic_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationMur_.get());
-		mur_ = visiteurCreationMur_.get()->obtenirReferenceNoeud();
-		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(true);
-	}
-	//Deuxieme clic
-	else
-	{
-		mur_->mettreAJourQuadEnglobant();
-		enCreation_ = false;
-		mur_ = nullptr;
-		visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
+		//Premier clic
+		if (!enCreation_)
+		{
+			enCreation_ = true;
+			FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionPremierClic_);
+			visiteurCreationMur_->assignerPositionRelative(positionPremierClic_);
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationMur_.get());
+			mur_ = visiteurCreationMur_.get()->obtenirReferenceNoeud();
+			visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(true);
+		}
+		//Deuxieme clic
+		else
+		{
+			mur_->mettreAJourQuadEnglobant();
+			enCreation_ = false;
+			mur_ = nullptr;
+			visiteurCreationMur_.get()->obtenirReferenceNoeud()->assignerEnCreation(false);
+		}
 	}
 }
 

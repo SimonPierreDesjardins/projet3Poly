@@ -140,7 +140,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	FreeImage_Initialise();
 
 	// La couleur de fond
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.32f, 0.32f, 0.32f, 1.0f);
 
 	// Les lumières
 	glEnable(GL_LIGHTING);
@@ -571,7 +571,10 @@ double FacadeModele::obtenirFacteurGrandeur()
 			enfant = table->chercher(i);
 			if (enfant->estSelectionne())
 			{
-				facteurGrandeur = enfant->obtenirFacteurMiseAEchelle();
+				if (enfant->obtenirType() == "ligneNoire" || enfant->obtenirType() == "depart")
+					facteurGrandeur = 1;
+				else
+					facteurGrandeur = enfant->obtenirFacteurMiseAEchelle();
 				trouve = true;
 			}
 		}
