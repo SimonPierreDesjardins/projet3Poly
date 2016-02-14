@@ -15,15 +15,49 @@
 #include "NoeudTypes.h"
 #include <iostream>
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurCreationLigne::VisiteurCreationLigne()
+///
+/// Constructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurCreationLigne::VisiteurCreationLigne()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurCreationLigne::~VisiteurCreationLigne()
+///
+/// Destructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurCreationLigne::~VisiteurCreationLigne()
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurCreationLigne::visiter(ArbreRendu* noeud)
+///
+/// Fonction servant à donner l'accès au noeud Table à l'état CréationLigne
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurCreationLigne::visiter(ArbreRendu* noeud)
 {
 	noeud->chercher(0)->accepterVisiteur(this);
