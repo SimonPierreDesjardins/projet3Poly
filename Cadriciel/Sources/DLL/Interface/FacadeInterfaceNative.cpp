@@ -418,10 +418,6 @@ extern "C"
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheGauche();
 					break;
 
-				case VK_CONTROL+VK_KEY_S:
-					//FacadeModele::obtenirInstance()->obtenirMode()->
-					break;
-
 				case VK_RIGHT:
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheDroit();
 					break;
@@ -434,30 +430,7 @@ extern "C"
 						FacadeModele::obtenirInstance()->obtenirMode()->gererFlecheBas();
 					break;
 
-				//case VK_TAB:
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 0, 10 });
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 1, 0 });
-					//break;
-
 				case VK_BACK:
-					break;
-
-				//case VK_SHIFT:
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerPosition({ 0, 10, 0 });
-						//FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera().assignerDirectionHaut({ 0, 0, 1 });
-					//break;
-
-				case VK_MENU:
-				case VK_RMENU:
-				case VK_LMENU:
-					std::cout << "La touche alt est appuyee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
-					break;
-
-				case VK_CONTROL:
-				case VK_RCONTROL:
-				case VK_LCONTROL:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
 					break;
 
 				case VK_ESCAPE:
@@ -505,6 +478,11 @@ extern "C"
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheSupprimer();
 					break;
 
+				case VK_CONTROL:
+				case VK_LCONTROL:
+				case VK_RCONTROL:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
+					break;
 
 				default:
 					break;
@@ -516,22 +494,58 @@ extern "C"
 			switch (wParam)
 			{
 				case VK_CONTROL:
-				case VK_LCONTROL:
 				case VK_RCONTROL:
+				case VK_LCONTROL:
 					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
-					break;
-
-				case VK_MENU:
-				case VK_RMENU:
-				case VK_LMENU:
-					std::cout << "La touche alt est relachee" << std::endl;
-					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
 					break;
 
 				default:
 					break;
 			}
 		}
+
+		if (msg == WM_SYSKEYDOWN)
+		{
+			switch (wParam)
+			{
+				case VK_MENU:
+				case VK_LMENU:
+				case VK_RMENU:
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
+					break;
+
+				case VK_CONTROL:
+				case VK_LCONTROL:
+				case VK_RCONTROL:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlEnfoncee();
+					break;
+
+				default:
+					break;
+			}
+		}
+
+		if (msg == WM_SYSKEYUP)
+		{
+			switch (wParam)
+			{
+				case VK_MENU:
+				case VK_LMENU:
+				case VK_RMENU:
+					FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
+					break;
+
+				case VK_CONTROL:
+				case VK_RCONTROL:
+				case VK_LCONTROL:
+					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheControlRelachee();
+					break;
+
+				default:
+					break;
+			}
+		}
+
 
 		switch (msg)
 		{
