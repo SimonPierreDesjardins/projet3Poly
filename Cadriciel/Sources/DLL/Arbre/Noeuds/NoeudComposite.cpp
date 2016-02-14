@@ -8,9 +8,7 @@
 ////////////////////////////////////////////////
 
 #include "NoeudComposite.h"
-
 #include <cassert>
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -30,7 +28,6 @@ NoeudComposite::NoeudComposite(
 {
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudComposite::~NoeudComposite()
@@ -44,7 +41,6 @@ NoeudComposite::~NoeudComposite()
 {
 	vider();
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -73,7 +69,6 @@ unsigned int NoeudComposite::calculerProfondeur() const
 	return profondeurEnfantMax + 1;
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudComposite::vider()
@@ -100,7 +95,6 @@ void NoeudComposite::vider()
 		enfants_.erase(enfants_.begin());
 	}
 }	
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -131,7 +125,6 @@ void NoeudComposite::effacer(const NoeudAbstrait* noeud)
 		}
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -165,7 +158,6 @@ const NoeudAbstrait* NoeudComposite::chercher(
 	return nullptr;
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn shared_ptr<NoeudAbstrait> NoeudComposite::chercher( const std::string& typeNoeud )
@@ -196,7 +188,6 @@ NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
 	return nullptr;
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn const shared_ptr<NoeudAbstrait> NoeudComposite::chercher( unsigned int indice ) const
@@ -219,7 +210,6 @@ const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn shared_ptr<NoeudAbstrait> NoeudComposite::chercher( unsigned int indice )
@@ -241,7 +231,6 @@ NoeudAbstrait* NoeudComposite::chercher(unsigned int indice)
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn bool NoeudComposite::ajouter( shared_ptr<NoeudAbstrait> enfant )
@@ -260,7 +249,6 @@ bool NoeudComposite::ajouter(std::shared_ptr<NoeudAbstrait> enfant)
 
 	return true;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -281,7 +269,6 @@ unsigned int NoeudComposite::obtenirNombreEnfants() const
 
 	return static_cast<unsigned int> (enfants_.size());
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -308,7 +295,7 @@ void NoeudComposite::effacerSelection()
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
 		) {
-		if ((*it)->estSelectionne()) {
+		if ((*it)->estSelectionne() && (*it)->estDuplicable()) {
 			NoeudAbstrait* enfant{ (*it).get() };
 			enfants_.erase(it);
 
@@ -324,7 +311,6 @@ void NoeudComposite::effacerSelection()
 		}
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -345,7 +331,6 @@ void NoeudComposite::selectionnerTout()
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudComposite::deselectionnerTout()
@@ -364,7 +349,6 @@ void NoeudComposite::deselectionnerTout()
 		enfant->deselectionnerTout();
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -389,7 +373,6 @@ bool NoeudComposite::selectionExiste() const
 
 	return false;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -416,7 +399,6 @@ void NoeudComposite::changerModePolygones(bool estForce)
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudComposite::assignerModePolygones( GLenum modePolygones )
@@ -437,7 +419,6 @@ void NoeudComposite::assignerModePolygones(GLenum modePolygones)
 		enfant->assignerModePolygones(modePolygones);
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -461,7 +442,6 @@ void NoeudComposite::afficherConcret() const
 	}
 		
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -492,7 +472,6 @@ void NoeudComposite::animer(float dt)
 /// @return Le noeud a l'indice donne
 ///
 ////////////////////////////////////////////////////////////////////////
-
 std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant(int indice) const
 {
 	return enfants_[indice];
@@ -504,24 +483,13 @@ std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant(int indice) const
 ///
 /// Retourne le conteneur des enfants de ce noeud
 ///
-/// @return Le conteneur d'enfants de ce Noeud.
+/// @return conteneur_enfants: Le conteneur d'enfants de ce Noeud.
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 {
 	return enfants_;
 }
-
-void NoeudComposite::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	for (int i = 0; i < enfants_.size(); i++)
-	{
-		enfants_[i]->mettreAJourQuadEnglobant(positionRelative + positionRelative_);
-	}
-}
-
-
-
 
 ////////////////////////////////////////////////
 /// @}

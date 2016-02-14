@@ -12,15 +12,29 @@
 #include "VisiteurDeplacement.h"
 #include "VisiteurVerificationQuad.h"
 #include "FacadeModele.h"
-#include <iostream>
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatDeplacement::EtatDeplacement()
+///
+/// Constructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatDeplacement::EtatDeplacement()
 {
 	typeEtat_ = DEPLACEMENT;
 	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
-	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatDeplacement::~EtatDeplacement()
+///
+/// Destructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatDeplacement::~EtatDeplacement()
 {
 	if (clicGaucheEnfonce_)
@@ -29,6 +43,17 @@ EtatDeplacement::~EtatDeplacement()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDeplacement::gererClicGaucheEnfonce(const int& x, const int& y)
+///
+/// Cette fonction déplace un objet s'il est sélectionné tant que le clique gauche
+/// est enfoncé
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDeplacement::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = true;
@@ -36,16 +61,42 @@ void EtatDeplacement::gererClicGaucheEnfonce(const int& x, const int& y)
 	positionVirtuelleInitiale_ = dernierePositionVirtuelle_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDeplacement::gererClicGaucheRelache(const int& x, const int& y)
+///
+/// Cette fonction assigne la nouvelle position de l'objet s'il est sur la table.
+/// Sinon il est replacé à sa position originale.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDeplacement::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurVerificationObjets_.get());
-	if (!visiteurVerificationObjets_->objetsDansZoneSimulation())
+	if (arbre_ != nullptr)
+	{
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+	}
+	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
 	{
 		reinitialiser();
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
+///
+/// Cette fonction change les attributs de position X et Y d'un objet en fonction de la 
+/// position du curseur
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
@@ -60,6 +111,13 @@ void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDeplacement::reinitialiser()
+///
+/// Cette fonction remet les attributs initials à un objet
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDeplacement::reinitialiser()
 {
 	visiteurDeplacement_->assignerPositionRelative(positionVirtuelleInitiale_ - dernierePositionVirtuelle_);

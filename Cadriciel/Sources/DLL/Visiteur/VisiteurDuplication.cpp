@@ -1,3 +1,14 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file VisiteurDuplication.cpp
+/// @author Olivier St-Amour 
+/// @date 2016-02-13
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
+
+
 #include "VisiteurDuplication.h"
 #include "FacadeModele.h"
 #include "NoeudTypes.h"

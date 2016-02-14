@@ -34,7 +34,7 @@ public:
 
 	/// Affiche la table.
 	virtual void afficherConcret() const;
-	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
+//	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 

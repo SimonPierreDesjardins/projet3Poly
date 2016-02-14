@@ -12,6 +12,7 @@
 #define VISITEUR_MISE_A_ECHELLE_H
 
 #include "VisiteurAbstrait.h"
+#include <vector>
 
 class VisiteurMiseAEchelle : public VisiteurAbstrait
 {
@@ -22,11 +23,14 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurMiseAEchelle();
 
+	void initialiser(ArbreRendu* arbre);
+	void reinitialiser(ArbreRendu* arbre);
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
-	virtual void visiter(NoeudLigne* noeud);
+private:
+	std::vector<double> facteursDimensionsInitiaux_;
 };
 
 

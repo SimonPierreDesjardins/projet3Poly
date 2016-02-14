@@ -441,16 +441,9 @@ void NoeudAbstrait::afficherConcret() const
 void NoeudAbstrait::animer(float dt)
 {
 }
-
-
+/*
 //TODO: Documentation.
 void NoeudAbstrait::mettreAJourQuadEnglobant()
-{
-	mettreAJourQuadEnglobant(positionRelative_);
-}
-
-//TODO: Documentation.
-void NoeudAbstrait::mettreAJourQuadEnglobant(const glm::dvec3& positionRelative)
 {
 	// Le coin du quad en haut à droite.
 	quadEnglobant_.coins[0].x = boiteEnglobanteModele_.coinMax.x;
@@ -468,17 +461,18 @@ void NoeudAbstrait::mettreAJourQuadEnglobant(const glm::dvec3& positionRelative)
 	quadEnglobant_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
 	quadEnglobant_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
 
-	mettreAJourQuadEnglobantConcret(positionRelative);
+	mettreAJourQuadEnglobantConcret();
 }
 
 
 
 //TODO: Documentation.
-void NoeudAbstrait::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
+void NoeudAbstrait::mettreAJourQuadEnglobantConcret()
 {
 
 }
 
+*/
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -492,7 +486,6 @@ void NoeudAbstrait::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRe
 /// @return Le modèle 3D du noeud, null si absent.
 ///
 ////////////////////////////////////////////////////////////////////////
-
 modele::Modele3D const* NoeudAbstrait::getModele()
 {
 	return modele_;
@@ -548,6 +541,42 @@ void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
 	itr++;
 	assignerFacteurMiseAEchelle(itr->value.GetDouble());
 }
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerObjetRendu(modele::Modele3D* modele, modele::opengl_storage::OpenGL_Liste* liste)
+///
+/// Cette fonction assigne l'objet de rendu au modèle, c'est-à-dire son
+/// modèle 3D et sa liste d'affichage
+///
+/// @param modele : le modèle 3D
+/// @param liste : la liste d'affichage OpenGL
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste)
+{
+	modele_ = modele;
+	vbo_ = liste;
+	utilitaire::BoiteEnglobante boiteEnglobanteModele = utilitaire::calculerBoiteEnglobante(*modele_);
+
+	// Le coin du quad en haut à droite.
+	quadEnglobantModele_.coins[0].x = boiteEnglobanteModele.coinMax.x;
+	quadEnglobantModele_.coins[0].y = boiteEnglobanteModele.coinMax.y;
+
+	// Le coin du quad en haut à gauche.
+	quadEnglobantModele_.coins[1].x = boiteEnglobanteModele.coinMin.x;
+	quadEnglobantModele_.coins[1].y = boiteEnglobanteModele.coinMax.y;
+
+	// Le coin du quad en bas à gauche.
+	quadEnglobantModele_.coins[2].x = boiteEnglobanteModele.coinMin.x;
+	quadEnglobantModele_.coins[2].y = boiteEnglobanteModele.coinMin.y;
+	
+	// Le coin du quad en bas à droite.
+	quadEnglobantModele_.coins[3].x = boiteEnglobanteModele.coinMax.x;
+	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele.coinMin.y;
+}
+
 
 ////////////////////////////////////////////////
 /// @}

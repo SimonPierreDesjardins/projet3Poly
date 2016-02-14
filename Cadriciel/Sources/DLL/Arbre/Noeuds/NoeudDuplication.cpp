@@ -7,7 +7,6 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
-
 #include "NoeudDuplication.h"
 #include "VisiteurAbstrait.h"
 
@@ -39,6 +38,7 @@ NoeudDuplication::NoeudDuplication(const std::string& typeNoeud)
 /// @return Aucune (destructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
+
 NoeudDuplication::~NoeudDuplication()
 {
 }

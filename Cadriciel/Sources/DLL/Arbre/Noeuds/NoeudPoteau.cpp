@@ -62,44 +62,25 @@ NoeudPoteau::~NoeudPoteau()
 ////////////////////////////////////////////////////////////////////////
 void NoeudPoteau::afficherConcret() const
 {
-	// Appel à la version de la classe de base pour l'affichage des enfants.
-//	NoeudComposite::afficherConcret();
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0f, 0.2f, 0.0f, 1.0f);
+		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
-	
+	// Effectuer la mise à échelle.
 	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
 	
-
-	//glRotatef(90, 1, 0, 0);
-	//glRotatef(90, 0, 1, 0);
-
 	// Affichage du modèle.
 	vbo_->dessiner();
 
 	// Restauration de la matrice.
 	glPopMatrix();
-}
-
-void NoeudPoteau::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	// Mettre à jour les coins avec le facteur de mise à échelle.
-	std::cout << "Mise à jour Poteau:" << std::endl;
-	for (int i = 0; i < 4; i++)
-	{
-		quadEnglobant_.coins[i] *= facteurMiseAEchelle_;
-		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
-		std::cout << "coin " << i << ": " << quadEnglobant_.coins[i].x << ", " << quadEnglobant_.coins[i].y << std::endl;
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -118,7 +99,6 @@ void NoeudPoteau::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

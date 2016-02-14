@@ -154,7 +154,7 @@
     <ClCompile Include="MachineAEtats\EtatCreationMur.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationPoteau.cpp" />
     <ClCompile Include="MachineAEtats\EtatDeplacement.cpp" />
-    <ClCompile Include="MachineAEtats\EtatDupliquation.cpp" />
+    <ClCompile Include="MachineAEtats\EtatDuplication.cpp" />
     <ClCompile Include="MachineAEtats\EtatLoupe.cpp" />
     <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp" />
     <ClCompile Include="MachineAEtats\EtatRotation.cpp" />
@@ -171,10 +171,10 @@
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
-    <ClCompile Include="Visiteur\VisiteurDepart.cpp" />
     <ClCompile Include="Visiteur\VisiteurDeplacement.cpp" />
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
+    <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp" />
     <ClCompile Include="Visiteur\VisiteurRotation.cpp" />
     <ClCompile Include="Visiteur\VisiteurSauvegarde.cpp" />
     <ClCompile Include="Visiteur\VisiteurSelection.cpp" />
@@ -226,7 +226,6 @@
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
-    <ClInclude Include="Visiteur\VisiteurDepart.h" />
     <ClInclude Include="Visiteur\VisiteurDeplacement.h" />
     <ClInclude Include="Visiteur\VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />

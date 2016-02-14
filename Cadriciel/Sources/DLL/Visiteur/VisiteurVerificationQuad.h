@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurVerificationObjets.h
+/// @file VisiteurVerificationQuad.h
 /// @author Olivier St-Amour
 /// @date 2016-02-09
 /// @version 1.0
@@ -12,6 +12,8 @@
 #define VISITEUR_VERIFICATION_QUAD_H
 
 #include "VisiteurAbstrait.h"
+#include "VisiteurMiseAJourQuad.h"
+#include <memory>
 
 class VisiteurVerificationQuad : public VisiteurAbstrait
 {

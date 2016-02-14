@@ -140,6 +140,7 @@ namespace InterfaceGraphique
             afficherMenuPrincipal(false);
             panneauOperation_.Visible = false;
             FonctionsNatives.assignerMode(Mode.EDITION);
+            verificationDuNombreElementChoisi();
             viewPort_.Focus();
         }
 

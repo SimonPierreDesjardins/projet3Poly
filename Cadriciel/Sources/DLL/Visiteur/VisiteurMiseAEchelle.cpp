@@ -1,17 +1,47 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file VisiteurMiseAEchelle.cpp
+/// @author Olivier St-Amour 
+/// @date 2016-02-13
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
 #include "VisiteurMiseAEchelle.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
 
-
 /// Constructeur par défaut.
 VisiteurMiseAEchelle::VisiteurMiseAEchelle()
 {
+
 }
 
 /// Destructeur.
 VisiteurMiseAEchelle::~VisiteurMiseAEchelle()
 {
 }
+
+void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
+{
+	facteursDimensionsInitiaux_.clear();
+	NoeudAbstrait* table = noeud->chercher("table");
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
+	{
+		facteursDimensionsInitiaux_.push_back(table->chercher(i)->obtenirFacteurMiseAEchelle());
+	}
+}
+
+
+void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud)
+{
+	NoeudAbstrait* table = noeud->chercher("table");
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
+	{
+		table->chercher(i)->assignerFacteurMiseAEchelle(facteursDimensionsInitiaux_[i]);
+	}
+}
+
 
 void VisiteurMiseAEchelle::visiter(ArbreRendu* noeud)
 {
@@ -34,28 +64,18 @@ void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 
 void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 {
-	const double FACTEUR_ARBITRAIRE = 10.0;
-	
-	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle();
-	double nouveauFacteurMiseAEchelle = facteurMiseAEchelle + facteurMiseAEchelle_ / FACTEUR_ARBITRAIRE;
-	if (nouveauFacteurMiseAEchelle < 0)
+	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_;
+	if (facteurMiseAEchelle >= 0)
 	{
-		nouveauFacteurMiseAEchelle = 0;
+		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
 	}
-	noeud->assignerFacteurMiseAEchelle(nouveauFacteurMiseAEchelle);
 }
 
 void VisiteurMiseAEchelle::visiter(NoeudMur* noeud)
 {
-	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle();
-	double nouveauFacteurMiseAEchelle = facteurMiseAEchelle + facteurMiseAEchelle_;
-	if (nouveauFacteurMiseAEchelle < 0)
+	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_ * 2;
+	if (facteurMiseAEchelle >= 0)
 	{
-		nouveauFacteurMiseAEchelle = 0;
+		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
 	}
-	noeud->assignerFacteurMiseAEchelle(nouveauFacteurMiseAEchelle);
-}
-
-void VisiteurMiseAEchelle::visiter(NoeudLigne* noeud)
-{
 }

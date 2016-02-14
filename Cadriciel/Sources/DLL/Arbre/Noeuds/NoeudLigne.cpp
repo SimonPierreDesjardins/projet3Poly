@@ -65,11 +65,11 @@ void NoeudLigne::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0f, 0.2f, 0.0f, 1.0f);
+		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else
 	{
-		glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
+		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 	// Appel à la version de la classe de base pour l'affichage des enfants.
@@ -96,15 +96,6 @@ void NoeudLigne::accepterVisiteur(VisiteurAbstrait* visiteur)
 	visiteur->visiter(this);
 }
 
-/*
-void NoeudLigne::mettreAJourQuadEnglobantConcret()
-{
-	for (int i = 0; i < enfants_.size(); i++)
-	{
-		enfants_[i]->mettreAJourQuadEnglobant();
-	}
-}
-*/
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

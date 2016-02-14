@@ -77,16 +77,3 @@ void NoeudSegment::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 }
-
-void NoeudSegment::mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative)
-{
-	// Mettre à jour la position en x des coins avec le facteur de mise à échelle.
-	glm::dvec3 tmp;
-	for (int i = 0; i < 4; i++)
-	{
-		quadEnglobant_.coins[i].x *= facteurMiseAEchelle_;
-		tmp = quadEnglobant_.coins[i];
-		utilitaire::calculerPositionApresRotation(tmp, quadEnglobant_.coins[i], angleRotation_);
-		quadEnglobant_.coins[i] += positionRelative_ + positionRelative;
-	}
-}
