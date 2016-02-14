@@ -82,48 +82,145 @@ protected:
 	NoeudAbstrait* referenceNoeud_{ nullptr };
 };
 
-
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::assignerPositionRelative(glm::dvec3 positionRelative)
+///
+/// Fonction qui assigne la positionRelative d'un clic
+///
+/// @param[in] positionRelative : position du clic
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurAbstrait::assignerPositionRelative(glm::dvec3 positionRelative)
 {
 	positionRelative_ = positionRelative;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::assignerPositionRelativeAvant(glm::dvec3 positionRelativeAvant)
+///
+/// Fonction qui assigne la positionRelative d'un clic (lors d'un drag)
+///
+/// @param[in] positionRelativeAvant : position du clic
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurAbstrait::assignerPositionRelativeAvant(glm::dvec3 positionRelativeAvant)
 {
 	positionRelativeAvant_ = positionRelativeAvant;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::assignerPositionRelativeApres(glm::dvec3 positionRelativeApres)
+///
+/// Fonction qui assigne la positionRelative où le clic est relaché.
+///
+/// @param[in] positionRelativeApres : position où le clic est relaché.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurAbstrait::assignerPositionRelativeApres(glm::dvec3 positionRelativeApres)
 {
 	positionRelativeApres_ = positionRelativeApres;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::assignerAngleRotation(double angleRotation)
+///
+/// Fonction qui assigne l'angle de rotation
+///
+/// @param[in] angleRotation : angle de rotation
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurAbstrait::assignerAngleRotation(double angleRotation)
 {
 	angleRotation_ = angleRotation;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
+///
+/// Fonction qui assigne le facteur de mise à échelle
+///
+/// @param[in] facteurDimension : facteur de mise à échelle.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurAbstrait::assignerFacteurMiseAEchelle(double facteurDimension)
 {
 	facteurMiseAEchelle_ = facteurDimension;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::obtenirReferenceNoeud()
+///
+/// Fonction qui retourne la référence d'un noeud
+///
+/// @param[in] Aucun.
+///
+/// @return NoeudAbstrait* : le noeud dont on veut la référence.
+///
+////////////////////////////////////////////////////////////////////////
 inline NoeudAbstrait* VisiteurAbstrait::obtenirReferenceNoeud()
 {
 	return referenceNoeud_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::assignerEstAffiche(const bool& estAffiche)
+///
+/// Fonction qui assigne le booléen estAffiche selon si ... est affiché ou non.
+///
+/// @param[in] const bool& estAffiche : booléen qui indique si ... est affiché ou non.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurAbstrait::assignerEstAffiche(const bool& estAffiche)
 {
 	estAffiche_ = estAffiche;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::assignerEstDrag(const bool& estDrag)
+///
+/// Fonction qui assigne le booléen estDrag selon s'il s'agit d'un drag ou d'un simple clic.
+///
+/// @param[in] const bool& estDrag : booléen qui indique s'il s'agit d'un drag ou d'un simple clic.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurAbstrait::assignerEstDrag(const bool& estDrag)
 {
 	estDrag_ = estDrag;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurAbstrait::obtenirEstDrag()
+///
+/// Fonction qui retrourne l'attribut estDrag qui indique s'il s'agit d'un drag ou d'un simple clic.
+///
+/// @param[in] Aucun
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline bool VisiteurAbstrait::obtenirEstDrag()
 {
 	return estDrag_;

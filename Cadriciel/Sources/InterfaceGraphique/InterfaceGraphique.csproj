@@ -57,22 +57,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Formulaires de gestion de fichiers zones\ExplorateurOuverture.cs">
+    <Compile Include="FormulairesSysFichiers\ExplorateurOuverture.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formulaires de gestion de fichiers zones\ExplorateurOuverture.Designer.cs">
+    <Compile Include="FormulairesSysFichiers\ExplorateurOuverture.Designer.cs">
       <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formulaires de gestion de fichiers zones\ExplorateurSauvegarde.cs">
+    <Compile Include="FormulairesSysFichiers\ExplorateurSauvegarde.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formulaires de gestion de fichiers zones\ExplorateurSauvegarde.Designer.cs">
+    <Compile Include="FormulairesSysFichiers\ExplorateurSauvegarde.Designer.cs">
       <DependentUpon>ExplorateurSauvegarde.cs</DependentUpon>
     </Compile>
-    <Compile Include="Formulaires de gestion de fichiers zones\NouveauFichier.cs">
+    <Compile Include="FormulairesSysFichiers\NouveauFichier.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Formulaires de gestion de fichiers zones\NouveauFichier.Designer.cs">
+    <Compile Include="FormulairesSysFichiers\NouveauFichier.Designer.cs">
       <DependentUpon>NouveauFichier.cs</DependentUpon>
     </Compile>
     <Compile Include="PopOutInterface.cs">
@@ -89,13 +89,13 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Formulaires de gestion de fichiers zones\ExplorateurOuverture.resx">
+    <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurOuverture.resx">
       <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formulaires de gestion de fichiers zones\ExplorateurSauvegarde.resx">
+    <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurSauvegarde.resx">
       <DependentUpon>ExplorateurSauvegarde.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Formulaires de gestion de fichiers zones\NouveauFichier.resx">
+    <EmbeddedResource Include="FormulairesSysFichiers\NouveauFichier.resx">
       <DependentUpon>NouveauFichier.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PopOutInterface.resx">
@@ -155,6 +155,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\line2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\poteau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\greek6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\law2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

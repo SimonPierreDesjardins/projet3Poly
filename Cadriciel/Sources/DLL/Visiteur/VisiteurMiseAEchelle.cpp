@@ -11,17 +11,49 @@
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
 
-/// Constructeur par défaut.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::VisiteurMiseAEchelle()
+///
+/// Constructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurMiseAEchelle::VisiteurMiseAEchelle()
 {
 
 }
 
-/// Destructeur.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::~VisiteurMiseAEchelle()
+///
+/// Destructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurMiseAEchelle::~VisiteurMiseAEchelle()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
+///
+/// Fonction qui initialise les valeurs du vecteur facteursDimensionsInitiaux_
+/// selon les facteurs de dimensions des enfants de la table.
+///
+/// @param[in] noeud : l'arbre rendu contenant le noeud Table, entre autres.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
 {
 	facteursDimensionsInitiaux_.clear();
@@ -32,7 +64,18 @@ void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
 	}
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud)
+///
+/// Fonction qui reinitialise les facteurs de dimensions des enfants de la 
+/// table selon le vecteur facteursDimensionsInitiaux_.
+///
+/// @param[in] noeud : l'arbre rendu contenant le noeud Table, entre autres.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud)
 {
 	NoeudAbstrait* table = noeud->chercher("table");
@@ -42,12 +85,33 @@ void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud)
 	}
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::visiter(ArbreRendu* noeud)
+///
+/// Fonction servant à donner l'accès au noeud Table.
+///
+/// @param[in] noeud : l'arbre rendu contenant le noeud Table, entre autres.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::visiter(ArbreRendu* noeud)
 {
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
+///
+/// Fonction servant à donner l'accès aux enfants de la table.
+///
+/// @param[in] noeud : Le noeud Table contenant les enfants desquels on veut modifier le facteur de dimension.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 {
 	NoeudAbstrait* enfant;
@@ -62,6 +126,17 @@ void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
+///
+/// Fonction modifiant le facteur de dimension du poteau passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Poteau duquel on veut modifier le facteur de dimension.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 {
 	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_;
@@ -71,6 +146,17 @@ void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAEchelle::visiter(NoeudMur* noeud)
+///
+/// Fonction modifiant le facteur de dimension du mur passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Mur duquel on veut modifier le facteur de dimension.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::visiter(NoeudMur* noeud)
 {
 	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_ * 2;

@@ -41,6 +41,17 @@ private:
 	bool objetsDansZoneSimulation_;
 };
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurVerificationQuad::objetsDansZoneSimulation()
+///
+/// Retourne l'attribut objetsDansZoneSimulation_ indiquant si les objets sont dans les limites de la table.
+///
+/// @param[in] Aucun
+///
+/// @return bool : Booléen qui indique si les objets sont dans les limites de la table.
+///
+////////////////////////////////////////////////////////////////////////
 inline bool VisiteurVerificationQuad::objetsDansZoneSimulation()
 {
 	return objetsDansZoneSimulation_;

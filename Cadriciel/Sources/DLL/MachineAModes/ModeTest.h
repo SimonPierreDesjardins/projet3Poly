@@ -15,10 +15,23 @@
 #include <memory>
 #include "glm\glm.hpp"
 
+//////////////////////////////////////////////////////////////////////////
+/// @class ModeTest
+/// @brief Classe qui représente le mode test de notre machine à modes
+///
+///        Cette classe s'occupe d'implémenter les fonctions du mode test
+
+/// @author Simon-Pierre Desjardins
+/// @date 2016-02-14
+///////////////////////////////////////////////////////////////////////////
+
 class ModeTest : public ModeAbstrait
 {
 public:
+
+	//Constructeur par défaut
 	ModeTest();
+	//Destructeur
 	virtual ~ModeTest();
 
 

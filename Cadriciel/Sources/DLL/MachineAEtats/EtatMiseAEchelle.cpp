@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 /// @file EtatMiseAEchelle.cpp
-/// @author 
+/// @author Olivier St-Amour
 /// @date 2016-01-22
 /// @version 1.0
 ///
@@ -13,6 +13,13 @@
 #include "FacadeModele.h"
 #include <cmath>
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatMiseAEchelle::EtatMiseAEchelle()
+///
+/// Constructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatMiseAEchelle::EtatMiseAEchelle()
 {
 	typeEtat_ = MISE_A_ECHELLE;
@@ -21,6 +28,13 @@ EtatMiseAEchelle::EtatMiseAEchelle()
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatMiseAEchelle::~EtatMiseAEchelle()
+///
+/// Destructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatMiseAEchelle::~EtatMiseAEchelle()
 {
 	if (clicGaucheEnfonce_)
@@ -29,6 +43,16 @@ EtatMiseAEchelle::~EtatMiseAEchelle()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatMiseAEchelle::gererClicGaucheEnfonce(const int& x, const int& y)
+///
+/// Cette fonction sauvegarde l'emplacement du clique
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatMiseAEchelle::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = true;
@@ -39,6 +63,17 @@ void EtatMiseAEchelle::gererClicGaucheEnfonce(const int& x, const int& y)
 	visiteurMiseAEchelle_->initialiser(arbre_);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
+///
+/// Cette fonction assigne le facteur mise à échelle si l'objet est encore dans
+/// la zone de création.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
@@ -57,6 +92,17 @@ void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
+///
+/// Cette fonction change le facteur de dimension en fonction de la position
+/// actuelle de la souris. Si le bouton gauche n'est pas appuyé, rien.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
@@ -73,6 +119,13 @@ void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatMiseAEchelle::reinitialiser()
+///
+/// Remet l'objet à sa dimension originale
+///
+////////////////////////////////////////////////////////////////////////
 void EtatMiseAEchelle::reinitialiser()
 {
 	visiteurMiseAEchelle_->assignerFacteurMiseAEchelle(positionInitialeY_ - dernierePositionY_);

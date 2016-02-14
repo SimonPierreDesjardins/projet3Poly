@@ -164,7 +164,6 @@
             // 
             // enregistrerButt
             // 
-            this.enregistrerButt.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.enregistrerButt.Location = new System.Drawing.Point(44, 18);
             this.enregistrerButt.Name = "enregistrerButt";
             this.enregistrerButt.Size = new System.Drawing.Size(75, 23);
