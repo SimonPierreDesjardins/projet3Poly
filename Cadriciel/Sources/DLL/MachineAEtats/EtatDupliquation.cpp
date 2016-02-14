@@ -14,6 +14,13 @@
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatDuplication::EtatDuplication()
+///
+/// Constructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatDuplication::EtatDuplication()
 {
 	typeEtat_ = DUPLICATION;
@@ -21,12 +28,29 @@ EtatDuplication::EtatDuplication()
 	visiteurVerificationObjets_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatDuplication::~EtatDuplication()
+///
+/// Destructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatDuplication::~EtatDuplication()
 {
 	reinitialiser();
 	arbre_ = nullptr;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
+///
+/// Cette fonction affiche l'objet si le curseur est sur la table et arrête
+/// d'afficher l'objet si le curseur n'est pas sur la table.
+///
+/// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	assignerSymbolePointeur(positionEstSurTable);
@@ -49,6 +73,18 @@ void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
+///
+/// Cette fonction duplique les objets sélectionnés. Si on objet est à l'extérieur
+/// on les remets à la position initiale. Si le curseur n'est pas sur la table on
+/// ne fait rien.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
@@ -81,6 +117,13 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDuplication::gererToucheEchappe()
+///
+/// Cette fonction supprime les objets en duplication. Sinon rien
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDuplication::gererToucheEchappe()
 {
 	if (enDuplication_)
@@ -89,6 +132,17 @@ void EtatDuplication::gererToucheEchappe()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
+///
+/// Cette fonction assigne la position en x et y au nouveau objet si une duplication
+/// est en cours.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
@@ -103,7 +157,13 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 	}
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatDuplication::reinitialiser()
+///
+/// Cette fonction remet les objets à leur position initiale
+///
+////////////////////////////////////////////////////////////////////////
 void EtatDuplication::reinitialiser()
 {
 	enDuplication_ = false;

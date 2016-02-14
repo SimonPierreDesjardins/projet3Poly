@@ -16,12 +16,26 @@
 
 #include <iostream> 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatCreationLigne::EtatCreationLigne()
+///
+/// Constructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatCreationLigne::EtatCreationLigne()
 {
 	typeEtat_ = CREATION_LIGNE_NOIRE;
 	visiteurCreationLigne_ = std::make_unique<VisiteurCreationLigne>();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatCreationLigne::~EtatCreationLigne()
+///
+/// Destructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatCreationLigne::~EtatCreationLigne()
 {
 	// Effacer la ligne si on change d'outil lors d'une création.
@@ -36,6 +50,18 @@ EtatCreationLigne::~EtatCreationLigne()
 	assignerSymbolePointeur(true);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
+///
+/// Cette fonction crée une ligne si le curseur est sur la table et que le clique est à moins
+/// de trois pixels. Crée un segement de ligne si CTRL est enfoncé par la suite sinon
+/// dernière ligne créé.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
@@ -88,6 +114,13 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationLigne::gererToucheEchappe()
+///
+/// Cette fonction supprime une ligne si elle est en création. Sinon rien
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererToucheEchappe()
 {
 	if (enCreation_)
@@ -100,6 +133,17 @@ void EtatCreationLigne::gererToucheEchappe()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
+///
+/// Cette fonction assigne la longeur et l'angle d'une ligne lorsqu'elle est en
+/// création, sinon rien
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
@@ -126,6 +170,13 @@ void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationLigne::gererToucheControlEnfoncee()
+///
+/// Cette fonction assigne la valeur True si la touche CTRL est enfoncée
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererToucheControlEnfoncee()
 {
 	if (!toucheCtrlEnfonce_)
@@ -134,11 +185,25 @@ void EtatCreationLigne::gererToucheControlEnfoncee()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationLigne::gererToucheControlRelachee()
+///
+/// Cette fonction assigne la valeur False si la touche CTRL est relâchée
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererToucheControlRelachee()
 {
 	toucheCtrlEnfonce_ = false;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationLigne::calculerPositionCentreLigne()
+///
+/// Cette fonction calcul le centre d'une ligne
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::calculerPositionCentreLigne()
 {
 	// Si le vecteur de positions est vide, on sort.
@@ -186,6 +251,16 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 	//std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
+///
+/// Cette fonction affiche l'objet si le curseur est sur la table et arrête
+/// d'afficher l'objet si le curseur n'est pas sur la table.
+///
+/// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);

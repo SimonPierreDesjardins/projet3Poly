@@ -17,22 +17,58 @@
 
 #include <iostream> 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatCreationMur::EtatCreationMur()
+///
+/// Constructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatCreationMur::EtatCreationMur()
 {
 	typeEtat_ = CREATION_MUR;
 	visiteurCreationMur_ = std::make_unique<VisiteurCreationMur>();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn EtatCreationMur::~EtatCreationMur()
+///
+/// Destructeur par défault
+///
+////////////////////////////////////////////////////////////////////////
 EtatCreationMur::~EtatCreationMur()
 {
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
+///
+/// Cette fonction assigne un booléan à true si le bouton gauche de la souris est
+/// appuyé et sauvegarde la position courante.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationMur::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 	EtatAbstrait::gererClicGaucheEnfonce(x, y);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
+///
+/// Cette fonction crée un mur au premier clique puis assigne son facteur de mise à échelle
+/// et angle de rotation en fonction du deuxième clique.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 {
 	EtatAbstrait::gererClicGaucheRelache(x, y);
@@ -61,6 +97,13 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationMur::gererToucheEchappe()
+///
+/// Cette fonction supprime le mur s'il est en création
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationMur::gererToucheEchappe()
 {
 	if (enCreation_)
@@ -72,6 +115,17 @@ void EtatCreationMur::gererToucheEchappe()
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
+///
+/// Cette fonction assigne un facteur de mise à échelle
+/// et un angle de rotation à un mur s'il est en création.
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
@@ -98,6 +152,16 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
+///
+/// Cette fonction affiche l'objet si le curseur est sur la table et arrête
+/// d'afficher l'objet si le curseur n'est pas sur la table.
+///
+/// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
+///
+////////////////////////////////////////////////////////////////////////
 void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);

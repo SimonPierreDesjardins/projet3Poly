@@ -650,6 +650,16 @@ double FacadeModele::obtenirPositionRelativeY()
 	return positionY;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerAngleRotation(double angle)
+///
+/// Cette fonction assigne un angle de rotation à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: l'angle a assigner a l'objet
+///
+////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerAngleRotation(double angle)
 {
 	std::unique_ptr<VisiteurRotation> visiteur = std::make_unique <VisiteurRotation>();
@@ -678,6 +688,16 @@ void FacadeModele::assignerAngleRotation(double angle)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur)
+///
+/// Cette fonction assigne un facteur de mise à échelle à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: facteur de mise à échelle
+///
+////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur)
 {
 	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
@@ -701,6 +721,16 @@ void FacadeModele::assignerFacteurGrandeur(double facteurGrandeur)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
+///
+/// Cette fonction assigne une position en X à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: position en X de l'objet
+///
+////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
 {
 	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
@@ -728,6 +758,16 @@ void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
+///
+/// Cette fonction assigne une position en Y à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: position en Y de l'objet
+///
+////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
 {
 	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
@@ -755,10 +795,26 @@ void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::continuerAffichage()
+///
+/// Cette fonction assigne la valeur d'un booléan à vrai si l'on veut
+/// continuer a afficher l'animation
+///
+////////////////////////////////////////////////////////////////////////
 void FacadeModele::continuerAffichage(){
 	peutAfficher_ = true;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::stopAffichage()
+///
+/// Cette fonction assigne la valeur d'un booléan à false si l'on veut
+/// arrêter d'afficher l'animation
+///
+////////////////////////////////////////////////////////////////////////
 void FacadeModele::stopAffichage(){
 	peutAfficher_ = false;
 }
