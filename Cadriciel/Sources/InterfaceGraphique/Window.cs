@@ -131,6 +131,8 @@ namespace InterfaceGraphique
             panneauOperation_.Visible = false;
             FonctionsNatives.assignerMode(Mode.EDITION);
             verificationDuNombreElementChoisi();
+            changeIconColor();
+            outilsSelection_.BackColor = Color.CadetBlue;
             viewPort_.Focus();
         }
 
@@ -877,6 +879,8 @@ namespace InterfaceGraphique
             }
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInput(true);
+
+            panneauOperation_.Visible = false;
             
         }
 
@@ -1106,6 +1110,11 @@ namespace InterfaceGraphique
         {
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
+        }
+
+        private void viewPort__Paint(object sender, PaintEventArgs e)
+        {
+
         }
 
     }
