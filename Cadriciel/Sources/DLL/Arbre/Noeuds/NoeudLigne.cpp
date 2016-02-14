@@ -65,11 +65,11 @@ void NoeudLigne::afficherConcret() const
 
 	if (estSelectionne())
 	{
-		glColor4f(1.0, 0.0, 0.0, 1.0);
+		glColor4f(1.0f, 0.2f, 0.0f, 1.0f);
 	}
 	else
 	{
-		glColor4f(0.0, 1.0, 0.0, 1.0);
+		glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 	}
 
 	// Appel à la version de la classe de base pour l'affichage des enfants.

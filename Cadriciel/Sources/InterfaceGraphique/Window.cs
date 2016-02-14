@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   Window.cs
+/// @author INF2990
+/// @date   2016-02-13
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +25,7 @@ namespace InterfaceGraphique
         private System.Windows.Forms.OpenFileDialog zoneFileSystem;
 
         //Chemin initial pour le file explorer
-        string initialPath;
+        public static string initialPath = "./../Zones/";
 
         private const int WM_KEYUP =        0x101;
         private const int WM_KEYDOWN =      0x100;
@@ -37,7 +45,15 @@ namespace InterfaceGraphique
             }
             return false;
         }
-       
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public Window()
+        ///
+        /// Cette fonction initialize la fenetre et initialise la visibilité de
+        /// ses composantes
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public Window()
         {
             InitializeComponent();
@@ -46,12 +62,19 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             zoneFileSystem = new OpenFileDialog();
-            initialPath = System.IO.Path.GetFullPath("./../Zones/");
+
             zoneFileSystem.InitialDirectory = initialPath;
             zoneFileSystem.Filter = "Fichiers textes et JSON (*.txt, *.json)|*.txt;*.json";
             supprimerToolStripMenuItem.Enabled = false;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void InitialiserAnimation()
+        ///
+        /// Cette fonction initialize les animations sur le viewPort_ panel
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void InitialiserAnimation()
         {
             this.DoubleBuffered = false;
@@ -59,6 +82,15 @@ namespace InterfaceGraphique
             FonctionsNatives.dessinerOpenGL();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void MettreAJour(double tempsInterAffichage)
+        ///
+        /// Cette fonction met a jour l'animation de viewPort_ panel
+        /// 
+        /// @param double tempsInterAffichage: Temps entre chaque affichage
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void MettreAJour(double tempsInterAffichage)
         {
             try
@@ -72,7 +104,17 @@ namespace InterfaceGraphique
             catch (Exception)
             {}
         }
-       
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void Window_FormClosing(object sender, FormClosingEventArgs e)
+        ///
+        /// Cette fonction arrete openGL
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param FormClosingEventArgs e: evenement de fermeture
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
             lock(Program.unLock)
@@ -82,11 +124,17 @@ namespace InterfaceGraphique
             }
         }
 
-        private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void buttonEditeur_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change la visibilité des composant pour être en mode édition
+        /// et assigne le mode à édition et etat à sélection
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
@@ -95,11 +143,31 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction ferme l'application lorsque l'utilisation appuie sur Quitter
+        /// du menu principal
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void buttonQuitter_Click(object sender, EventArgs e)
         {
                 Application.Exit();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void afficherMenuPrincipal(bool afficherMenu)
+        ///
+        /// Cette fonction ajuste la visibilité des composants de la fenêtre
+        /// 
+        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void afficherMenuPrincipal(bool afficherMenu)
         {
             bouttonConfiguration_.Visible = afficherMenu;
@@ -112,6 +180,13 @@ namespace InterfaceGraphique
             panneauOperation_.Visible = !afficherMenu;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void changeIconColor()
+        ///
+        /// Cette fonction met la couleur des icons a gris
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void changeIconColor()
         {
             outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
@@ -125,6 +200,33 @@ namespace InterfaceGraphique
             outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction affiche le menu principal et change le mode à menu principal
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            afficherMenuPrincipal(true);
+            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, mise à échelle
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
@@ -133,12 +235,17 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
-        private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            afficherMenuPrincipal(true);
-            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void sToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, sélection
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
@@ -147,6 +254,17 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, déplacement
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
@@ -155,6 +273,17 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, rotation
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
@@ -163,6 +292,17 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, duplication
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
@@ -171,6 +311,17 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation poteau
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
@@ -179,6 +330,17 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void murToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation mur
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void murToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
@@ -187,11 +349,41 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation ligne noire
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
             changeIconColor();
             outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
+            viewPort_.Focus();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, zoom
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerEtat(Etat.ZOOM);
+            changeIconColor();
+            outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
         }
 
@@ -208,6 +400,17 @@ namespace InterfaceGraphique
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsSelection__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, sélection
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsSelection__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.SELECTION);
@@ -215,6 +418,17 @@ namespace InterfaceGraphique
             outilsSelection_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsDéplacement__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, déplacement
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsDéplacement__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
@@ -222,6 +436,17 @@ namespace InterfaceGraphique
             outilsDéplacement_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsRotation__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, rotation
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsRotation__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ROTATION);
@@ -229,6 +454,17 @@ namespace InterfaceGraphique
             outilsRotation_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsMiseAEchelle__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, mise à échelle
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsMiseAEchelle__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
@@ -236,6 +472,17 @@ namespace InterfaceGraphique
             outilsMiseAEchelle_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsDuplication__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, duplication
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsDuplication__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.DUPLICATION);
@@ -243,6 +490,17 @@ namespace InterfaceGraphique
             outilsDuplication_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsZoom__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, zoom
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsZoom__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.ZOOM);
@@ -250,6 +508,17 @@ namespace InterfaceGraphique
             outilsZoom_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsCreationPoteau__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation poteau
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
@@ -257,6 +526,17 @@ namespace InterfaceGraphique
             outilsCreationPoteau_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsCreationMurs__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation mur
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsCreationMurs__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
@@ -264,6 +544,17 @@ namespace InterfaceGraphique
             outilsCreationMurs_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outilsCreationLigne__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation ligne noire
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outilsCreationLigne__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
@@ -271,21 +562,61 @@ namespace InterfaceGraphique
             outilsCreationLigne_.BackColor = Color.CadetBlue;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void modeTestModeEdition__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change le mode pour test lorsque le mode test est appuyé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void modeTestModeEdition__Click(object sender, EventArgs e)
         {
             //FonctionsNatives.assignerMode(Mode.TEST);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void bouttonSimulation__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change le mode pour simulation lorsque le mode simulation est appuyé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void bouttonSimulation__Click(object sender, EventArgs e)
         {
             //FonctionsNatives.assignerMode(Mode.SIMULATION);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void bouttonConfiguration__Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction change le mode pour configuration lorsque le mode configuration est appuyé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void bouttonConfiguration__Click(object sender, EventArgs e)
         {
             //FonctionsNatives.assignerMode(Mode.CONFIGURE);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void aideMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Affiche une nouvelle fenêtre indiquant des informations d'aide
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void aideMenuEdition__Click(object sender, EventArgs e)
         {
             PopOutInterface popup = new PopOutInterface();
@@ -297,21 +628,18 @@ namespace InterfaceGraphique
             }
         }
 
-        private void textboxDimension__Enter(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerFacteurGrandeur(Convert.ToDouble(textboxDimension_.Text));
-        }
-
-        private void textBoxRotation__Enter(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAngleRotation(Convert.ToDouble(textBoxRotation_.Text));
-        }
-
-        private void textBoxPositionX__Enter(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerPositionRelativeX(Convert.ToDouble(textBoxPositionX_.Text));
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionY__KeyDown(object sender, EventArgs e)
+        ///
+        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
+        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
+        /// table
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventsArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionY__KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -327,9 +655,24 @@ namespace InterfaceGraphique
                     FonctionsNatives.assignerPositionRelativeY(donnee);
                 else
                     textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+
+                mettreAJourInformation();
+                textBoxPositionY_.Select(textBoxPositionY_.Text.Length, 0);
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionX__KeyDown(object sender, EventArgs e)
+        ///
+        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
+        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
+        /// table
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventsArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionX__KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -345,9 +688,24 @@ namespace InterfaceGraphique
                     FonctionsNatives.assignerPositionRelativeX(donnee);
                 else
                     textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+
+                mettreAJourInformation();
+                textBoxPositionX_.Select(textBoxPositionX_.Text.Length, 0);
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxRotation__KeyDown(object sender, EventArgs e)
+        ///
+        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
+        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
+        /// table
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventsArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxRotation__KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -359,9 +717,23 @@ namespace InterfaceGraphique
                     donnee = FonctionsNatives.obtenirAngleRotation();
                 }
                 FonctionsNatives.assignerAngleRotation(donnee);
+                mettreAJourInformation();
+                textBoxRotation_.Select(textBoxRotation_.Text.Length, 0);
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textboxDimension__KeyDown(object sender, EventArgs e)
+        ///
+        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
+        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
+        /// table
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventsArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textboxDimension__KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -373,9 +745,21 @@ namespace InterfaceGraphique
                     donnee = FonctionsNatives.obtenirFacteurGrandeur();
                 }
                 FonctionsNatives.assignerFacteurGrandeur(donnee);
+                mettreAJourInformation();
+                textboxDimension_.Select(textboxDimension_.Text.Length, 0);
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Supprime tous les objets sélectionnés
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.suppression();
@@ -384,11 +768,29 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Crée une nouvelle zone de céation lorsque nouveau est appuyé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void nouveauMenuEdition__Click(object sender, EventArgs e)
         {
             nouvelleZone();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Crée une nouvelle zone de céation si l'utilisateur appuie sur oui, 
+        /// sinon ne fait rien
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void nouvelleZone()
         {
             DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
@@ -400,59 +802,89 @@ namespace InterfaceGraphique
             }
         }
 
-        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerEtat(Etat.ZOOM);
-            changeIconColor();
-            outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Sauvegarde la zone lorsque enregistrer sous est appuyé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
         {
-            enregistrerSous();            
+            enregistrerSousZone();            
         }
 
-        private void enregistrerSous()
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Ouvre un explorateur de fichier qui permet de sauvegarde la zone, permet uniquement à 
+        /// l'utilisateur de sauvegarder dans zones
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void enregistrerSousZone()
         {
-            DialogResult dialogResult = zoneFileSystem.ShowDialog();
-            bool correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
-            bool estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
-            while ((dialogResult == DialogResult.OK && !correctPath) || (dialogResult == DialogResult.OK && estFichierZoneDefaut))
+            ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
+            FonctionsNatives.assignerAutorisationInput(false);
+            if (explorateur.ShowDialog() == DialogResult.OK)
             {
-                if (!correctPath)
-                    MessageBox.Show("Vous ne pouvez enregistrer que dans le dossier " + System.IO.Path.GetFullPath(initialPath), "Mauvais dossier", MessageBoxButtons.OK);
-                else if (estFichierZoneDefaut)
-                    MessageBox.Show("Vous ne pouvez pas enregistrer dans le fichier de zone par défaut", "Impossible d'écrire dans ce fichier", MessageBoxButtons.OK);
-                dialogResult = zoneFileSystem.ShowDialog();
-                correctPath = zoneFileSystem.FileName.Contains(initialPath.TrimEnd('\\'));
-                estFichierZoneDefaut = zoneFileSystem.FileName.CompareTo(System.IO.Path.GetFullPath("./../Zones/zone_par_defaut.json")) == 0;
-            }
-
-            if (dialogResult == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.sauvegarder();
-                enregistrerMenuEdition_.Enabled = true;
             }
+            explorateur.Dispose();
+            FonctionsNatives.assignerAutorisationInput(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Ouvre un explorateur de ficher pour charger la zone sauvegarder lorsque 
+        /// le bouton ouvrir est appuyer sur le menu
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
         {
             ouvrirZone();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ouvrirMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Charge une zone sauvegarder
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void ouvrirZone()
         {
-            if (zoneFileSystem.ShowDialog() == DialogResult.OK)
+            ExplorateurOuverture explorateur = new ExplorateurOuverture();
+            FonctionsNatives.assignerAutorisationInput(false);
+            if (explorateur.ShowDialog() == DialogResult.OK)
             {
-                FonctionsNatives.assignerCheminFichierZone(zoneFileSystem.FileName);
+                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.charger();
-                enregistrerMenuEdition_.Enabled = true;
-                panneauOperation_.Visible = false;
             }
+            explorateur.Dispose();
+            FonctionsNatives.assignerAutorisationInput(true);
+            
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        ///
+        /// Gère les touches lorsque le viewPort_ panel à le focus.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             switch(e.KeyCode)
@@ -467,7 +899,7 @@ namespace InterfaceGraphique
                         if (enregistrerMenuEdition_.Enabled)
                             FonctionsNatives.sauvegarder();
                         else
-                            enregistrerSous();
+                            enregistrerSousZone();
                     }
                     else
                     {
@@ -516,65 +948,159 @@ namespace InterfaceGraphique
             }     
         }
 
-        private void textboxDimension__Enter_1(object sender, EventArgs e)
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textboxDimension__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void textboxDimension__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
-        private void textBoxRotation__Enter_1(object sender, EventArgs e)
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionX__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void textBoxPositionX__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
-        private void enregistrerMenuEdition__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.sauvegarder();
-        }
-       
-        private void textBoxPositionX__Enter_1(object sender, EventArgs e)
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxRotation__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void textBoxRotation__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionY__Enter(object sender, EventArgs e)
+        ///
+        /// Empêche les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionY__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInput(false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void enregistrerMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Permet de sauvegarder un ficher lorsque le bouton sauvegarder est cliqué
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void enregistrerMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.sauvegarder();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void verificationDuNombreElementChoisi ()
+        ///
+        /// Permet de savoir le nombre d'objet sélectionné et affiche le panneau
+        /// des opérations si un objet est sélectionné
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void verificationDuNombreElementChoisi ()
         {
             FonctionsNatives.assignerAutorisationInput(true);
-            if (FonctionsNatives.obtenirEtat() == 0)
-            {
-                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-                if (nbEnfant == 1)
-                {
-                    textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-                    textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-                    viewPort_.Focus();
-                    panneauOperation_.Visible = true;
-                    supprimerToolStripMenuItem.Enabled = true;
-                }
-                else if (nbEnfant > 1)
-                {
-                    supprimerToolStripMenuItem.Enabled = true;
-                    panneauOperation_.Visible = false;
-                }
-                else
-                {
-                    panneauOperation_.Visible = false;
-                    supprimerToolStripMenuItem.Enabled = false;
-                }
 
+            int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+            if (nbEnfant == 1)
+            {
+                mettreAJourInformation();
+                viewPort_.Focus();
+                panneauOperation_.Visible = true;
+                supprimerToolStripMenuItem.Enabled = true;
             }
-            viewPort_.Focus();
+            else if (nbEnfant > 1)
+            {
+                supprimerToolStripMenuItem.Enabled = true;
+                panneauOperation_.Visible = false;
+            }
+            else
+            {
+                panneauOperation_.Visible = false;
+                supprimerToolStripMenuItem.Enabled = false;
+            }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void viewPort__MouseUp(object sender, MouseEventArgs e)
+        ///
+        /// Vérifie le nombre d'objet sélectionné lorsqu'un clique de la souris est relâché
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void viewPort__MouseUp(object sender, MouseEventArgs e)
         {
             verificationDuNombreElementChoisi();
+            viewPort_.Focus();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mettreAJourInformation()
+        ///
+        /// Met à jour les informations dans le panneau d'opération
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void mettreAJourInformation()
+        {
+            textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
+            textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
+            textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
+            textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void viewPort__MouseMove(object sender, MouseEventArgs e)
+        ///
+        /// Vérifie le nombre d'objet sélectionné, s'il en a seulement un et que le clique
+        /// gauche est appuyé il met a jour les info dans le panneau d'opération
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void viewPort__MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                verificationDuNombreElementChoisi();
         }
 
     }
@@ -601,6 +1127,13 @@ namespace InterfaceGraphique
         TEST
     };
 
+    ////////////////////////////////////////////////////////////////////////
+    ///
+    /// @fn  static partial class FonctionsNatives
+    ///
+    /// Permet de faire le lien avec les méthodes implémentées dans le C++
+    ///
+    ////////////////////////////////////////////////////////////////////////
     static partial class FonctionsNatives
     {
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]

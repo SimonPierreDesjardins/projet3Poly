@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   PopOutInterface.cs
+/// @author INF2990
+/// @date   2016-02-13
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -13,6 +21,13 @@ namespace InterfaceGraphique
 {
     public partial class PopOutInterface : Form
     {
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public PopOutInterface()
+        ///
+        /// Cette fonction initialize le popout et lui assigne un text sur son label
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public PopOutInterface()
         {
             InitializeComponent();

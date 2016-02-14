@@ -371,13 +371,32 @@ inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 {
 	return facteurMiseAEchelle_;
 }
-//TODO: Documentation.
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
+///
+/// Cette fonction permet d'assigner une nouvelle échelle d'agrandissement au Mesh.
+///
+/// @param facteurDimension : Le facteur de redimentionnement de l'objet.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
 inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
 {
 	facteurMiseAEchelle_ = facteurDimension;
 }
 
-//TODO: Documentation.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobant() const
+///
+/// Cette fonction permet d'obtenir le quad définisant la zone de sélection de l'objet.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
 inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobant() const
 {
 	return quadEnglobant_;

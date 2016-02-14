@@ -32,15 +32,20 @@ EtatCreationPoteau::~EtatCreationPoteau()
 
 void EtatCreationPoteau::gererClicGaucheEnfonce(const int& x, const int& y)
 {
+	EtatAbstrait::gererClicGaucheEnfonce(x, y);
 }
 
 void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 {
-	if (!curseurEstSurTable_) return;
-	glm::dvec3 positionVirtuelle;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-	visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationPoteau_.get());
+	EtatAbstrait::gererClicGaucheRelache(x, y);
+	if (!estClickDrag())
+	{
+		if (!curseurEstSurTable_) return;
+		glm::dvec3 positionVirtuelle;
+		FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+		visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurCreationPoteau_.get());
+	}
 }
 
 void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)

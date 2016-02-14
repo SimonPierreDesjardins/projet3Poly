@@ -17,7 +17,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudDepart
-/// @brief Classe qui représente le point départ du projet intégrateur.
+/// @brief Classe qui représente le point départ du robot lors de la simulation.
 ///
 /// @author Frédéric Grégoire
 /// @date 2015-08-30
