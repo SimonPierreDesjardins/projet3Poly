@@ -16,6 +16,13 @@
 
 class VisiteurAbstrait;
 
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudDuplication
+/// @brief Classe qui représente temporairement un groupe d'objets à dupliquer
+///
+/// @author Olivier St-Amour
+/// @date 2015-08-30
+///////////////////////////////////////////////////////////////////////////
 class NoeudDuplication : public NoeudComposite
 {
 public:
@@ -27,12 +34,21 @@ public:
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	inline std::shared_ptr<NoeudAbstrait> obtenirDuplication(int indice);
-//	virtual void mettreAJourQuadEnglobantConcret();
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
 
 };
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(int indice)
+///
+/// Cette fonction retourne le noeud d'un des objets présentement duppliqué se situant à l'indice donné.
+///
+/// @param indice : l'indice à lequel se situe le noeud voulu.
+///
+////////////////////////////////////////////////////////////////////////
 
 inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(int indice)
 {

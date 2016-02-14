@@ -16,6 +16,13 @@
 
 class VisiteurAbstrait;
 
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudLigne
+/// @brief Noeud de l'objet englobant tous les segments et jonctions d'une ligne noire
+///
+/// @author 
+/// @date 2016-01-20
+///////////////////////////////////////////////////////////////////////////
 class NoeudLigne: public NoeudComposite
 {
 public:
@@ -27,7 +34,6 @@ public:
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
-	//virtual void mettreAJourQuadEnglobantConcret();
 
 private:
 
