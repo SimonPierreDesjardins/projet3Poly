@@ -43,11 +43,33 @@ private:
 	NoeudAbstrait* duplication_{ nullptr };
 };
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::assignerEnDuplication(bool enDuplication)
+///
+/// Assigne l'attribut enDuplication qui indique si une duplication est en cours
+///
+/// @param[in] enDuplication : valeur que l'on veut affigner à l'attribut.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void VisiteurDuplication::assignerEnDuplication(bool enDuplication)
 {
 	enDuplication_ = enDuplication;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::obtenirDuplication()
+///
+/// Retourne l'attribut duplication_ qui représente le noeud dupliqué.
+///
+/// @param[in] Aucun.
+///
+/// @return NoeudAbstrait* : noeud dupliqué.
+///
+////////////////////////////////////////////////////////////////////////
 inline NoeudAbstrait* VisiteurDuplication::obtenirDuplication()
 {
 	return duplication_;

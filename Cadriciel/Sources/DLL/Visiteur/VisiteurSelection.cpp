@@ -108,6 +108,44 @@ void VisiteurSelection::assignerControl(bool ctrlAppuye)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn VisiteurSelection::assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic)
+///
+/// Fonction qui assigne les attributs correspondants aux coins du rectangle élastique.
+///
+/// @param[in] positionPremierClic : position virtuelle du premier clic du rectangle
+///            positionDeuxiemeClic: position virtuelle du deuxième clic du rectangle
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSelection::assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic)
+{
+	// Assigner la position min et max en x du rectangle elastique.
+	if (positionDeuxiemeClic.x < positionPremierClic.x)
+	{
+		xMinRectangleElastique_ = positionDeuxiemeClic.x;
+		xMaxRectangleElastique_ = positionPremierClic.x;
+	}
+	else
+	{
+		xMinRectangleElastique_ = positionPremierClic.x;
+		xMaxRectangleElastique_ = positionDeuxiemeClic.x;
+	}
+	// Assigner la position min et max en y du rectangle elastique.
+	if (positionDeuxiemeClic.y < positionPremierClic.y)
+	{
+		yMinRectangleElastique_ = positionDeuxiemeClic.y;
+		yMaxRectangleElastique_ = positionPremierClic.y;
+	}
+	else
+	{
+		yMinRectangleElastique_ = positionPremierClic.y;
+		yMaxRectangleElastique_ = positionDeuxiemeClic.y;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn VisiteurSelection::visiter(NoeudPoteau* noeud)
 ///
 /// Fonction qui sélectionne le poteau passé en paramètre selon la position du curseur et selon l'état de la touche Ctrl.
