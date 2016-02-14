@@ -202,9 +202,6 @@
     <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurDepart.cpp">
-      <Filter>Source Files\Visiteur</Filter>
-    </ClCompile>
     <ClCompile Include="Visiteur\VisiteurSauvegarde.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
@@ -374,9 +371,6 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudDepart.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
-    </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurDepart.h">
-      <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurSauvegarde.h">
       <Filter>Header Files\Visiteur</Filter>

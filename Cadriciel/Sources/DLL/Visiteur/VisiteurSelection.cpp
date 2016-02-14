@@ -147,8 +147,7 @@ void VisiteurSelection::visiter(NoeudJonction* noeud)
 {
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	NoeudAbstrait* pere = noeud->obtenirParent();
-	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
-	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
+	if (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad))
 	{
 		if (ctrlAppuye_)
 		{

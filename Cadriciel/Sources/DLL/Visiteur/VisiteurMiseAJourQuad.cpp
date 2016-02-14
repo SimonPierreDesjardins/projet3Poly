@@ -11,6 +11,9 @@
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
 
+#include <iostream>
+
+
 VisiteurMiseAJourQuad::VisiteurMiseAJourQuad()
 {
 
@@ -74,6 +77,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 		quad.coins[i] *= noeud->obtenirFacteurMiseAEchelle();
 		quad.coins[i] += (positionVirtuelleParent + noeud->obtenirPositionRelative());
 	}
+	std::cout << std::endl;
 	noeud->assignerQuadEnglobantCourant(quad);
 }
 
@@ -177,7 +181,6 @@ void VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
 	glm::dvec3 tmp;
 	for (int i = 0; i < quad.N_COINS; i++)
 	{
-		quad.coins[i] += positionVirtuelleParent + noeud->obtenirPositionRelative();
 		tmp = quad.coins[i];
 		utilitaire::calculerPositionApresRotation(tmp, quad.coins[i], noeud->obtenirAngleRotation());
 		quad.coins[i] += positionVirtuelleParent + noeud->obtenirPositionRelative();

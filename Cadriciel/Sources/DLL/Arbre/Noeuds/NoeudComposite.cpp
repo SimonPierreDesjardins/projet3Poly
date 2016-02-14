@@ -325,7 +325,6 @@ void NoeudComposite::effacerSelection()
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudComposite::selectionnerTout()

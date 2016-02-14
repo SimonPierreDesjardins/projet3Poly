@@ -173,7 +173,6 @@
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
-    <ClCompile Include="Visiteur\VisiteurDepart.cpp" />
     <ClCompile Include="Visiteur\VisiteurDeplacement.cpp" />
     <ClCompile Include="Visiteur\VisiteurDupliquation.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
@@ -231,7 +230,6 @@
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
-    <ClInclude Include="Visiteur\VisiteurDepart.h" />
     <ClInclude Include="Visiteur\VisiteurDeplacement.h" />
     <ClInclude Include="Visiteur\VisiteurDupliquation.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />
