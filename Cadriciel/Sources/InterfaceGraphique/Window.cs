@@ -30,14 +30,22 @@ namespace InterfaceGraphique
         private const int WM_MOUSEMOVE =    0x0200;
         private const int WM_MOUSEWHEEL =   0x020A;
 
+        bool arreterToutMessage_;
+        public void arreterToutMessage()
+        { arreterToutMessage_ = true; }
+
         public bool PreFilterMessage(ref Message m)
         {
-            // On veut seulement traiter les inputs sur le view_port.
-            if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN || m.Msg == WM_KEYUP || m.Msg == WM_MOUSEWHEEL)
+            if(!arreterToutMessage_)
             {
-                FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
+                // On veut seulement traiter les inputs sur le view_port.
+                if (m.HWnd == viewPort_.Handle || m.Msg == WM_KEYDOWN || m.Msg == WM_KEYUP || m.Msg == WM_MOUSEWHEEL)
+                {
+                    FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
+                }
+                return false;
             }
-            return false;
+            return true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -50,6 +58,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         public Window()
         {
+            arreterToutMessage_ = false;
             InitializeComponent();
             InitialiserAnimation();
             menuEdition_.Visible = false;
@@ -107,10 +116,13 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
+            arreterToutMessage();
+
             lock(Program.unLock)
             {
                 FonctionsNatives.libererOpenGL();
                 Program.peutAfficher = false;
+                
             }
         }
 
@@ -131,6 +143,8 @@ namespace InterfaceGraphique
             panneauOperation_.Visible = false;
             FonctionsNatives.assignerMode(Mode.EDITION);
             verificationDuNombreElementChoisi();
+            changeIconColor();
+            outilsSelection_.BackColor = Color.CadetBlue;
             viewPort_.Focus();
         }
 
@@ -877,6 +891,8 @@ namespace InterfaceGraphique
             }
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInput(true);
+
+            panneauOperation_.Visible = false;
             
         }
 
@@ -1107,6 +1123,7 @@ namespace InterfaceGraphique
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
         }
+
 
     }
 

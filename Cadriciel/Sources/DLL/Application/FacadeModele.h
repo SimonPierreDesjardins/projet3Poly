@@ -67,8 +67,32 @@ public:
 
    //Obtenir le nombre d'objet sélectionné
    int obtenirNombreSelection();
-   //Décrit si la caméra peut fonctionner ou non
+
+
+   ////////////////////////////////////////////////////////////////////////
+   ///
+   /// @fn  bool obtenirAutorisationInput()
+   ///
+   /// Retourne si oui ou non le modele prend présentement les entrées utilisateurs
+   ///
+   /// @param[in] hWnd : La poignée ("handle") vers la fenêtre à utiliser.
+   ///
+   /// @return Aucune.
+   ///
+   ////////////////////////////////////////////////////////////////////////
    bool obtenirAutorisationInput(){ return autorisationInput_; };
+
+   ////////////////////////////////////////////////////////////////////////
+   ///
+   /// @fn  bool obtenirAutorisationInput()
+   ///
+   /// Retourne si oui ou non le modele prend présentement les entrées utilisateurs
+   ///
+   /// @param[in] autorisation : Si vrai, permet au modele de prendre les entrées utilisateurs.
+   ///
+   /// @return Aucune.
+   ///
+   ////////////////////////////////////////////////////////////////////////
    void assignerAutorisationInput(bool autorisation) { autorisationInput_ = autorisation; };
 
    //Obtient des informations sur le noeud

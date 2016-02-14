@@ -12,23 +12,65 @@
 #include "ArbreRendu.h"
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::VisiteurMiseAJourQuad()
+///
+/// Constructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurMiseAJourQuad::VisiteurMiseAJourQuad()
 {
 
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::~VisiteurMiseAJourQuad()
+///
+/// Destructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurMiseAJourQuad::~VisiteurMiseAJourQuad()
 {
 
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(ArbreRendu* noeud)
+///
+/// Fonction servant à donner l'accès au noeud Table.
+///
+/// @param[in] noeud : l'arbre rendu contenant le noeud Table, entre autres.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(ArbreRendu* noeud)
 {
 	noeud->chercher("table")->accepterVisiteur(this);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudTable* noeud)
+///
+/// Fonction servant à donner l'accès aux enfants du noeud Table.
+///
+/// @param[in] noeud : Le noeud Table contenant les enfants auxquels on veut avoir accès.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudTable* noeud)
 {
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
@@ -37,6 +79,17 @@ void VisiteurMiseAJourQuad::visiter(NoeudTable* noeud)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudDuplication* noeud)
+///
+/// Fonction qui met à jour le quadrilatère contenant les noeuds que l'on duplique.
+///
+/// @param[in] noeud : Le noeud Duplication contenant les noeuds que l'on veut dupliquer.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudDuplication* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
@@ -59,6 +112,17 @@ void VisiteurMiseAJourQuad::visiter(NoeudDuplication* noeud)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
+///
+/// Fonction qui met à jour le quadrilatère du poteau passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Poteau que l'on veut mettre à jour.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
@@ -78,6 +142,17 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 	noeud->assignerQuadEnglobantCourant(quad);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
+///
+/// Fonction qui met à jour le quadrilatère du mur passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Mur que l'on veut mettre à jour.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
@@ -100,6 +175,17 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 	noeud->assignerQuadEnglobantCourant(quad);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudLigne* noeud)
+///
+/// Fonction qui met à jour le quadrilatère de la ligne passée en paramètre.
+///
+/// @param[in] noeud : Le noeud Ligne que l'on veut mettre à jour.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudLigne* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
@@ -122,6 +208,17 @@ void VisiteurMiseAJourQuad::visiter(NoeudLigne* noeud)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudSegment* noeud)
+///
+/// Fonction qui met à jour le quadrilatère du segment passé en paramètre.
+///
+/// @param[in] noeud : Le noeud Segment que l'on veut mettre à jour.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudSegment* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
@@ -145,6 +242,17 @@ void VisiteurMiseAJourQuad::visiter(NoeudSegment* noeud)
 }
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudJonction* noeud)
+///
+/// Fonction qui met à jour le quadrilatère de la jonction passée en paramètre.
+///
+/// @param[in] noeud : Le noeud Jonction que l'on veut mettre à jour.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudJonction* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
@@ -164,6 +272,17 @@ void VisiteurMiseAJourQuad::visiter(NoeudJonction* noeud)
 	noeud->assignerQuadEnglobantCourant(quad);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
+///
+/// Fonction qui met à jour le quadrilatère de la flèche de départ passée en paramètre.
+///
+/// @param[in] noeud : Le noeud Depart que l'on veut mettre à jour.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
