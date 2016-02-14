@@ -156,6 +156,15 @@
   <ItemGroup>
     <None Include="Resources\line2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\poteau.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\greek6.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\law2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(TargetName).exe testsC++</PostBuildEvent>
