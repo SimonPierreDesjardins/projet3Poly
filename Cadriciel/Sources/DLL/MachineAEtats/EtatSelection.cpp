@@ -48,7 +48,7 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 	}
 	else
 	{
-		gererClicGauche((anchor.x + currentPosition.x) / 2, (anchor.y + currentPosition.y) / 2);
+		gererClicGauche((anchor.x + currentPosition_.x) / 2, (anchor.y + currentPosition_.y) / 2);
 	}
 }
 
@@ -57,9 +57,9 @@ void EtatSelection::gererMouvementSouris(const int & x, const int& y){
 	if (clicGaucheEnfonce_){
 		// Initialisation du rectangle elastique
 		if (estClickDrag()){
-			if (dessineRectangle){
-				aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
-			}
+
+			if (dessineRectangle)
+				aidegl::mettreAJourRectangleElastique(anchor, currentPosition_, glm::ivec2(x, y));
 			else{
 				aidegl::initialiserRectangleElastique(anchor);
 				FacadeModele::obtenirInstance()->stopAffichage();

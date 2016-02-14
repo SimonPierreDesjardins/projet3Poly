@@ -32,9 +32,9 @@ void EtatLoupe::gererMouvementSouris(const int & x, const int& y){
 	if (clicGaucheEnfonce_){
 		// Initialisation du rectangle elastique
 		if (estClickDrag()){
-			if (dessineRectangle){
-				aidegl::mettreAJourRectangleElastique(anchor, currentPosition, glm::ivec2(x, y));
-			}
+			if (dessineRectangle)
+				aidegl::mettreAJourRectangleElastique(anchor, currentPosition_, glm::ivec2(x, y));
+
 			else{
 				aidegl::initialiserRectangleElastique(anchor);
 				FacadeModele::obtenirInstance()->stopAffichage();
