@@ -879,6 +879,8 @@ namespace InterfaceGraphique
             }
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInput(true);
+
+            panneauOperation_.Visible = false;
             
         }
 
