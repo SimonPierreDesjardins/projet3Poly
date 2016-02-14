@@ -441,38 +441,6 @@ void NoeudAbstrait::afficherConcret() const
 void NoeudAbstrait::animer(float dt)
 {
 }
-/*
-//TODO: Documentation.
-void NoeudAbstrait::mettreAJourQuadEnglobant()
-{
-	// Le coin du quad en haut à droite.
-	quadEnglobant_.coins[0].x = boiteEnglobanteModele_.coinMax.x;
-	quadEnglobant_.coins[0].y = boiteEnglobanteModele_.coinMax.y;
-
-	// Le coin du quad en haut à gauche.
-	quadEnglobant_.coins[1].x = boiteEnglobanteModele_.coinMin.x;
-	quadEnglobant_.coins[1].y = boiteEnglobanteModele_.coinMax.y;
-
-	// Le coin du quad en bas à gauche.
-	quadEnglobant_.coins[2].x = boiteEnglobanteModele_.coinMin.x;
-	quadEnglobant_.coins[2].y = boiteEnglobanteModele_.coinMin.y;
-	
-	// Le coin du quad en bas à droite.
-	quadEnglobant_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
-	quadEnglobant_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
-
-	mettreAJourQuadEnglobantConcret();
-}
-
-
-
-//TODO: Documentation.
-void NoeudAbstrait::mettreAJourQuadEnglobantConcret()
-{
-
-}
-
-*/
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -576,7 +544,6 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 	quadEnglobantModele_.coins[3].x = boiteEnglobanteModele.coinMax.x;
 	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele.coinMin.y;
 }
-
 
 ////////////////////////////////////////////////
 /// @}
