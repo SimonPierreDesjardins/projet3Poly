@@ -535,6 +535,7 @@ extern "C"
 
 		switch (msg)
 		{
+		case WM_LBUTTONDBLCLK:
 		case WM_LBUTTONDOWN:
 			FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
@@ -543,6 +544,7 @@ extern "C"
 			FacadeModele::obtenirInstance()->obtenirMode()->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
+		case WM_RBUTTONDBLCLK:
 		case WM_RBUTTONDOWN:
 			FacadeModele::obtenirInstance()->obtenirMode()->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
