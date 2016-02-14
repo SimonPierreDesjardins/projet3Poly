@@ -33,8 +33,9 @@ private:
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
 	std::unique_ptr<VisiteurMiseAEchelle> visiteurMiseAEchelle_{ nullptr };
 
-	int dernierePositionY_{ 0 };
-	int positionInitialeY_{ 0 };
+	double dernierePositionY_{ 0.0 };
+	double positionInitialeY_{ 0.0 };
+	double surplusMouvement_{ 0.0 };
 };
 
 #endif

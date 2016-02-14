@@ -308,7 +308,7 @@ void NoeudComposite::effacerSelection()
 	for (conteneur_enfants::iterator it{ enfants_.begin() };
 		it != enfants_.end();
 		) {
-		if ((*it)->estSelectionne()) {
+		if ((*it)->estSelectionne() && (*it)->estDupliquable()) {
 			NoeudAbstrait* enfant{ (*it).get() };
 			enfants_.erase(it);
 

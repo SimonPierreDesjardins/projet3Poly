@@ -11,6 +11,7 @@
 #include "EtatMiseAEchelle.h"
 #include "VisiteurTypes.h"
 #include "FacadeModele.h"
+#include <cmath>
 #include <iostream>
 
 EtatMiseAEchelle::EtatMiseAEchelle()
@@ -25,20 +26,27 @@ EtatMiseAEchelle::~EtatMiseAEchelle()
 {
 	if (clicGaucheEnfonce_)
 	{
-		reinitialiser();
+		visiteurMiseAEchelle_->reinitialiser(arbre_);
 	}
 }
 
 void EtatMiseAEchelle::gererClicGaucheEnfonce(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = true;
-	dernierePositionY_ = y;
-	positionInitialeY_ = y;
+	glm::dvec3 positionVirtuelle = { 0.0, 0.0, 0.0 };
+	vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	dernierePositionY_ = positionVirtuelle.y;
+	positionInitialeY_ = positionVirtuelle.y;
+	visiteurMiseAEchelle_->initialiser(arbre_);
 }
 
 void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
+	glm::dvec3 positionVirtuelle = { 0.0, 0.0, 0.0 };
+	vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	dernierePositionY_ = positionVirtuelle.y;
+
 	if (arbre_ != nullptr)
 	{
 		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
@@ -46,23 +54,28 @@ void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 	}
 	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
 	{
-		reinitialiser();
+		visiteurMiseAEchelle_->reinitialiser(arbre_);
 	}
 }
 
 void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
+
 	if (clicGaucheEnfonce_)
 	{
-		visiteurMiseAEchelle_->assignerFacteurMiseAEchelle((double)(dernierePositionY_ - y));
+		glm::dvec3 positionVirtuelle = { 0.0, 0.0, 0.0 };
+		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+
+		visiteurMiseAEchelle_->assignerFacteurMiseAEchelle(positionVirtuelle.y - dernierePositionY_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAEchelle_.get());
-		dernierePositionY_ = y;
+
+		dernierePositionY_ = positionVirtuelle.y;
 	}
 }
 
 void EtatMiseAEchelle::reinitialiser()
 {
-	visiteurMiseAEchelle_->assignerFacteurMiseAEchelle((double)(dernierePositionY_ - positionInitialeY_));
+	visiteurMiseAEchelle_->assignerFacteurMiseAEchelle(positionInitialeY_ - dernierePositionY_);
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAEchelle_.get());
 }
