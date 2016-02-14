@@ -161,14 +161,17 @@ namespace InterfaceGraphique
             }
             foreach (FileInfo file in nodeDirInfo.GetFiles("*.json"))
             {
-                item = new ListViewItem(file.Name, 1);
-                subItems = new ListViewItem.ListViewSubItem[]
+                if (file.Length > 0)
+                {
+                    item = new ListViewItem(file.Name, 1);
+                    subItems = new ListViewItem.ListViewSubItem[]
                   { new ListViewItem.ListViewSubItem(item, "Fichier zone"), 
                    new ListViewItem.ListViewSubItem(item, 
 				file.LastAccessTime.ToShortDateString())};
-                item.Tag = file;
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
+                    item.Tag = file;
+                    item.SubItems.AddRange(subItems);
+                    listView1.Items.Add(item);
+                }
             }
 
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
