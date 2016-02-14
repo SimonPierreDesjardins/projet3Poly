@@ -827,7 +827,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void enregistrerSousZone()
         {
-            ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
+            /*ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
             FonctionsNatives.assignerAutorisationInput(false);
             if (explorateur.ShowDialog() == DialogResult.OK)
             {
@@ -835,7 +835,7 @@ namespace InterfaceGraphique
                 FonctionsNatives.sauvegarder();
             }
             explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInput(true);
+            FonctionsNatives.assignerAutorisationInput(true);*/
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -863,7 +863,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirZone()
         {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture();
+            /*ExplorateurOuverture explorateur = new ExplorateurOuverture();
             FonctionsNatives.assignerAutorisationInput(false);
             if (explorateur.ShowDialog() == DialogResult.OK)
             {
@@ -871,7 +871,7 @@ namespace InterfaceGraphique
                 FonctionsNatives.charger();
             }
             explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInput(true);
+            FonctionsNatives.assignerAutorisationInput(true);*/
             
         }
 
