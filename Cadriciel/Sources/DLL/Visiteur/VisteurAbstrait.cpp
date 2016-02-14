@@ -51,11 +51,6 @@ void VisiteurAbstrait::visiter(NoeudTable* noeud)
 
 }
 
-void VisiteurAbstrait::visiterRectangle(NoeudTable* noeud)
-{
-
-}
-
 void VisiteurAbstrait::visiter(NoeudPoteau* noeud)
 {
 

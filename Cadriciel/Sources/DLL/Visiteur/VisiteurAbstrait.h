@@ -62,7 +62,6 @@ public:
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
-	virtual void visiterRectangle(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigne* noeud);
@@ -80,7 +79,6 @@ protected:
 	double angleRotation_{ 0.0 };
 	double facteurMiseAEchelle_{ 0.0 };
 	bool estAffiche_{ false };
-	modele::Modele3D* referenceModele_{ nullptr };
 	NoeudAbstrait* referenceNoeud_{ nullptr };
 };
 

@@ -27,6 +27,8 @@ EtatCreationLigne::EtatCreationLigne()
 {
 	typeEtat_ = CREATION_LIGNE_NOIRE;
 	visiteurCreationLigne_ = std::make_unique<VisiteurCreationLigne>();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -65,39 +67,34 @@ EtatCreationLigne::~EtatCreationLigne()
 void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
-	if (!estClickDrag() && curseurEstSurTable_)
+	if (!estClickDrag() && curseurEstSurTable_ && ligneEstSurTable())
 	{
-		FacadeModele* facade = FacadeModele::obtenirInstance();
-		ArbreRenduINF2990* arbre = facade->obtenirArbreRenduINF2990();
-		vue::Vue* vue = facade->obtenirVue();
-
 		// Calcul et assignation de la position virtuelle.
 		glm::dvec3 positionVirtuelle;
-		vue->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		positionsClic_.push_back(positionVirtuelle);
 
 		// Premier clic avec ou sans CTRL enfoncee.
 		if (!enCreation_)
 		{
 			enCreation_ = true;
-			//std::cout << "Premier clic position: " << positionVirtuelle[0] << " : " << positionVirtuelle[1] << std::endl;
-			arbre->accepterVisiteur(visiteurCreationLigne_.get());
+			arbre_->accepterVisiteur(visiteurCreationLigne_.get());
 			ligne_ = visiteurCreationLigne_->obtenirReferenceNoeud();
 
-			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 			segment_ = nouveauNoeud.get();
 			ligne_->ajouter(nouveauNoeud);
 
 		}
 		// Clic subsequent avec CTRL enfoncee.
 		else if (enCreation_ && toucheCtrlEnfonce_)
-		{
-			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
-			std::shared_ptr<NoeudAbstrait> jonction = arbre->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
+		{		
+			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+			std::shared_ptr<NoeudAbstrait> jonction = arbre_->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
 			jonction->assignerPositionRelative(positionVirtuelle);
-			segment_ = nouveauNoeud.get();
 			ligne_->ajouter(jonction);
 			ligne_->ajouter(nouveauNoeud);
+			segment_ = nouveauNoeud.get();
 		}
 		// Clic subsequent sans CTRL enfoncee (dernier clic).
 		else if (enCreation_ && !toucheCtrlEnfonce_)
@@ -244,8 +241,6 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 		positionEnfant -= centre;
 		ligne_->chercher(i)->assignerPositionRelative(positionEnfant);
 	}
-//	ligne_->mettreAJourQuadEnglobant();
-	//std::cout << "calcul centre: " << centre[0] << " : " << centre[1] << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -278,4 +273,11 @@ void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
 			segment_->assignerAffiche(false);
 		}
 	}
+}
+
+bool EtatCreationLigne::ligneEstSurTable()
+{
+	arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+	arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+	return visiteurVerificationQuad_->objetsDansZoneSimulation();
 }
