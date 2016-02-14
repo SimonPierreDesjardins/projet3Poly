@@ -17,14 +17,27 @@
 #include <memory>
 #include "glm\glm.hpp"
 
+//////////////////////////////////////////////////////////////////////////
+/// @class ModeEdition
+/// @brief Classe qui représente le mode edition de notre machine à modes
+///
+///        Cette classe s'occupe d'implémenter les fonctions du mode edition
+
+/// @author Simon-Pierre Desjardins
+/// @date 2016-02-14
+///////////////////////////////////////////////////////////////////////////
+
 class ModeEdition : public ModeAbstrait
 {
 public:
+
+	//Constructeur par défaut
 	ModeEdition();
+	//Destructeur
 	virtual ~ModeEdition();
 
 	
-
+	//Gestion des différentes touches et de leur effet selon le mode choisi
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 
@@ -66,12 +79,16 @@ public:
 
 	virtual void gererToucheSupprimer();
 
+	//Gestion du système de chargement et de sauvegarde
 	virtual void sauvegarder();
 	virtual void charger();
 
 protected:
+
+	//Visiteur pour la suppression d'un noeud
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
 
+	//Ancienne position en X et Y de la souris
 	int ancienSourisX_{ 0 };
 	int ancienSourisY_{ 0 };
 

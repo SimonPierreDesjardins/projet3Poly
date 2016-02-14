@@ -15,10 +15,23 @@
 #include <memory>
 #include "glm\glm.hpp"
 
+//////////////////////////////////////////////////////////////////////////
+/// @class ModeConfigure
+/// @brief Classe qui représente le mode configure de notre machine à modes
+///
+///        Cette classe s'occupe d'implémenter les fonctions du mode configure
+
+/// @author Simon-Pierre Desjardins
+/// @date 2016-02-14
+///////////////////////////////////////////////////////////////////////////
 class ModeConfigure : public ModeAbstrait
 {
 public:
+
+	//Constructeur par défaut
 	ModeConfigure();
+
+	//Destructeur
 	virtual ~ModeConfigure();
 
 
