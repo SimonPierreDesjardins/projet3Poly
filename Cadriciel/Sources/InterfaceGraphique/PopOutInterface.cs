@@ -40,24 +40,24 @@ namespace InterfaceGraphique
 
                 case 2:
                     infoText_.Text = ("Ce text se met à jour pour vous aider selon le mode dans lequel vous êtes.\n\n"+ 
-                    "Flèche droite      Déplacement de la fenêtre virtuelle vers la droite.\n"+ 
-                    "Flèche gauche      Déplacement de la fenêtre virtuelle vers la gauche.\n"+
-                    "Flèche bas         Déplacement de la fenêtre virtuelle vers le bas.\n"+
-                    "Flèche haut        Déplacement de la fenêtre virtuelle vers le haut.\n\n "+
-                    "+/-            Zoom avant / arrière\n"+
-                    "Supprimer      Supprime les objets sélectionnés.\n"+
-                    "d              Choisit l'outil de déplacement\n"+
-                    "s              Choisit l'outil de sélection.\n"+
-                    "r              Choisit l'outil de rotation.\n"+
-                    "e              Choisit l'outil de rotation.\n"+
-                    "c              Choisit l'outil de duplication.\n"+
-                    "z              Choisit l'outil de zoom.\n"+
-                    "t              Baslcule en mode test.\n\n"+
-                    "CTRL-s         Savegarde la scène dans le fichier.\n"+
-                    "CTRL-n         Réinitialise l'environnement d'édition avec une nouvelle scène.\n"+
-                    "CTRL-o         Choisi une scène sauvegardé et l'affiche\n"+
-                    "1              Choisit la caméra orthographique\n"+
-                    "2              Choisit la caméra orbite");
+                    "Flèche droite          Déplacement de la fenêtre virtuelle vers la droite.\n"+ 
+                    "Flèche gauche       Déplacement de la fenêtre virtuelle vers la gauche.\n"+
+                    "Flèche bas             Déplacement de la fenêtre virtuelle vers le bas.\n"+
+                    "Flèche haut            Déplacement de la fenêtre virtuelle vers le haut.\n\n "+
+                    "+/-                         Zoom avant / arrière.\n"+
+                    "Supprimer              Supprime les objets sélectionnés.\n"+
+                    "D                            Choisit l'outil de déplacement.\n"+
+                    "S                            Choisit l'outil de sélection.\n"+
+                    "R                            Choisit l'outil de rotation.\n"+
+                    "E                            Choisit l'outil de rotation.\n"+
+                    "C                            Choisit l'outil de duplication.\n"+
+                    "Z                            Choisit l'outil de zoom.\n"+
+                    "T                            Baslcule en mode test.\n\n"+
+                    "CTRL - S                Savegarde la scène dans le fichier.\n"+
+                    "CTRL - N                Réinitialise l'environnement d'édition avec une nouvelle scène.\n"+
+                    "CTRL - O                Choisi une scène sauvegardé et l'affiche.\n"+
+                    "1                             Choisit la caméra orthographique.\n"+
+                    "2                             Choisit la caméra orbite.");
                     break;
 
                 case 3:
