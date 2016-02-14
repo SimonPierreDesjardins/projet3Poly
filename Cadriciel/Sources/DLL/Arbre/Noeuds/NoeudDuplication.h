@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file NoeudDupliquation.h
+/// @file NoeudDuplication.h
 /// @author Olivier St-Amour
 /// @date 2016-02-02
 /// @version 1.0
@@ -8,22 +8,22 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ARBRE_NOEUDS_NOEUDDUPLIQUATION_H__
-#define __ARBRE_NOEUDS_NOEUDDUPLIQUATION_H__
+#ifndef __ARBRE_NOEUDS_NOEUDDuplication_H__
+#define __ARBRE_NOEUDS_NOEUDDuplication_H__
 
 #include "NoeudComposite.h"
 #include "GL/glew.h"
 
 class VisiteurAbstrait;
 
-class NoeudDupliquation : public NoeudComposite
+class NoeudDuplication : public NoeudComposite
 {
 public:
 
 	/// Constructeur
-	NoeudDupliquation(const std::string& typeNoeud);
+	NoeudDuplication(const std::string& typeNoeud);
 	/// Destructeur.
-	~NoeudDupliquation();
+	~NoeudDuplication();
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	inline std::shared_ptr<NoeudAbstrait> obtenirDuplication(int indice);
@@ -34,7 +34,7 @@ private:
 
 };
 
-inline std::shared_ptr<NoeudAbstrait> NoeudDupliquation::obtenirDuplication(int indice)
+inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(int indice)
 {
 	if ((indice >= 0) && (indice < enfants_.size())) 	
 	{		 

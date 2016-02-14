@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurDupliquation.cpp
+/// @file VisiteurDuplication.cpp
 /// @author Olivier St-Amour 
 /// @date 2016-02-13
 /// @version 1.0
@@ -9,14 +9,14 @@
 ///////////////////////////////////////////////////////////////////////////
 
 
-#include "VisiteurDupliquation.h"
+#include "VisiteurDuplication.h"
 #include "FacadeModele.h"
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
 #include <memory>
 
 
-VisiteurDupliquation::VisiteurDupliquation()
+VisiteurDuplication::VisiteurDuplication()
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	NoeudAbstrait* enfant = nullptr;
@@ -30,17 +30,17 @@ VisiteurDupliquation::VisiteurDupliquation()
 	}
 }
 
-VisiteurDupliquation::~VisiteurDupliquation()
+VisiteurDuplication::~VisiteurDuplication()
 {
 	
 }
 
-void VisiteurDupliquation::visiter(ArbreRendu* noeud)
+void VisiteurDuplication::visiter(ArbreRendu* noeud)
 {
 	noeud->chercher(0)->accepterVisiteur(this);
 }
 
-void VisiteurDupliquation::visiter(NoeudTable* noeud)
+void VisiteurDuplication::visiter(NoeudTable* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_DUPLICATION);
@@ -58,7 +58,7 @@ void VisiteurDupliquation::visiter(NoeudTable* noeud)
 	}
 }
 
-void VisiteurDupliquation::visiter(NoeudPoteau* noeud)
+void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
@@ -73,7 +73,7 @@ void VisiteurDupliquation::visiter(NoeudPoteau* noeud)
 }
 
 
-void VisiteurDupliquation::visiter(NoeudMur* noeud)
+void VisiteurDuplication::visiter(NoeudMur* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_MUR);
@@ -89,7 +89,7 @@ void VisiteurDupliquation::visiter(NoeudMur* noeud)
 }
 
 
-void VisiteurDupliquation::visiter(NoeudLigne* noeud)
+void VisiteurDuplication::visiter(NoeudLigne* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	// Creer une nouvelle ligne et assigner ses attributs.
@@ -108,7 +108,7 @@ void VisiteurDupliquation::visiter(NoeudLigne* noeud)
 	duplication_->ajouter(nouvelleLigne);
 }
 
-void VisiteurDupliquation::visiter(NoeudDupliquation* noeud)
+void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 {
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	// Ajouter les noeuds sur la table, puis détruire la duplication.
@@ -124,7 +124,7 @@ void VisiteurDupliquation::visiter(NoeudDupliquation* noeud)
 }
 
 
-void VisiteurDupliquation::visiter(NoeudSegment* noeud)
+void VisiteurDuplication::visiter(NoeudSegment* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 
@@ -136,7 +136,7 @@ void VisiteurDupliquation::visiter(NoeudSegment* noeud)
 	
 	nouvelleLigne_->ajouter(nouveauSegment);
 }
-void VisiteurDupliquation::visiter(NoeudJonction* noeud)
+void VisiteurDuplication::visiter(NoeudJonction* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file EtatDupliquation.cpp
+/// @file EtatDuplication.cpp
 /// @author 
 /// @date 2016-01-22
 /// @version 1.0
@@ -8,27 +8,27 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "EtatDupliquation.h"
+#include "EtatDuplication.h"
 #include "VisiteurTypes.h"
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 
-EtatDupliquation::EtatDupliquation()
+EtatDuplication::EtatDuplication()
 {
 	typeEtat_ = DUPLICATION;
-	visiteurDupliquation_ = std::make_unique<VisiteurDupliquation>();
+	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
-EtatDupliquation::~EtatDupliquation()
+EtatDuplication::~EtatDuplication()
 {
 	reinitialiser();
 	arbre_ = nullptr;
 }
 
-void EtatDupliquation::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	assignerSymbolePointeur(positionEstSurTable);
 
@@ -50,7 +50,7 @@ void EtatDupliquation::gererEstSurTableConcret(bool positionEstSurTable)
 	}
 }
 
-void EtatDupliquation::gererClicGaucheRelache(const int& x, const int& y)
+void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
 	if (!curseurEstSurTable_) return;
@@ -66,8 +66,8 @@ void EtatDupliquation::gererClicGaucheRelache(const int& x, const int& y)
 	if (!enDuplication_)
 	{
 		enDuplication_ = true;
-		arbre_->accepterVisiteur(visiteurDupliquation_.get());
-		duplication_ = visiteurDupliquation_->obtenirDuplication();
+		arbre_->accepterVisiteur(visiteurDuplication_.get());
+		duplication_ = visiteurDuplication_->obtenirDuplication();
 	}
 
 	// Réinitialiser la duplication si un des objets ne se trouve pas sur la table.
@@ -80,11 +80,11 @@ void EtatDupliquation::gererClicGaucheRelache(const int& x, const int& y)
 	else if (enDuplication_ && objetsDansZoneSimulation)
 	{
 		enDuplication_ = false;
-		duplication_->accepterVisiteur(visiteurDupliquation_.get());
+		duplication_->accepterVisiteur(visiteurDuplication_.get());
 	}
 }
 
-void EtatDupliquation::gererToucheEchappe()
+void EtatDuplication::gererToucheEchappe()
 {
 	if (enDuplication_)
 	{
@@ -92,7 +92,7 @@ void EtatDupliquation::gererToucheEchappe()
 	}
 }
 
-void EtatDupliquation::gererMouvementSouris(const int& x, const int& y)
+void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
 	glm::dvec3 positionVirtuelle;
@@ -107,7 +107,7 @@ void EtatDupliquation::gererMouvementSouris(const int& x, const int& y)
 }
 
 
-void EtatDupliquation::reinitialiser()
+void EtatDuplication::reinitialiser()
 {
 	enDuplication_ = false;
 	if (duplication_ != nullptr && arbre_ != nullptr)

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurDupliquation.h
+/// @file VisiteurDuplication.h
 /// @author Olivier St-Amour
 /// @date 2016-02-02
 /// @version 1.0
@@ -13,14 +13,14 @@
 
 #include "VisiteurAbstrait.h"
  
-class VisiteurDupliquation : public VisiteurAbstrait
+class VisiteurDuplication : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurDupliquation();
+	VisiteurDuplication();
 
 	/// Destructeur.
-	virtual ~VisiteurDupliquation();
+	virtual ~VisiteurDuplication();
 
 	inline void assignerEnDuplication(bool enDuplication);
 	inline NoeudAbstrait* obtenirDuplication();
@@ -32,7 +32,7 @@ public:
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudJonction* noeud);
-	virtual void visiter(NoeudDupliquation* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
 
 private:
 	int nNoeuds_{ 0 };
@@ -41,12 +41,12 @@ private:
 	NoeudAbstrait* duplication_{ nullptr };
 };
 
-inline void VisiteurDupliquation::assignerEnDuplication(bool enDuplication)
+inline void VisiteurDuplication::assignerEnDuplication(bool enDuplication)
 {
 	enDuplication_ = enDuplication;
 }
 
-inline NoeudAbstrait* VisiteurDupliquation::obtenirDuplication()
+inline NoeudAbstrait* VisiteurDuplication::obtenirDuplication()
 {
 	return duplication_;
 }

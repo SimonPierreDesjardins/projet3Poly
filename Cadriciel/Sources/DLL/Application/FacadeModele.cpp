@@ -408,7 +408,7 @@ void FacadeModele::assignerEtat(Etat etat)
 
 			case DUPLICATION :
 				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatDupliquation>();
+				etat_ = std::make_unique<EtatDuplication>();
 				break;
 
 			case CREATION_POTEAU :

@@ -15,7 +15,7 @@
 #include "EtatCreationMur.h"
 #include "EtatCreationPoteau.h"
 #include "EtatDeplacement.h"
-#include "EtatDupliquation.h"
+#include "EtatDuplication.h"
 #include "EtatMiseAEchelle.h"
 #include "EtatRotation.h"
 #include "EtatSelection.h"

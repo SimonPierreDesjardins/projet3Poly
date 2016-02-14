@@ -137,7 +137,7 @@
     <ClCompile Include="Arbre\Noeuds\NoeudAraignee.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudConeCube.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp" />
-    <ClCompile Include="Arbre\Noeuds\NoeudDupliquation.cpp" />
+    <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudJonction.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudLigne.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudMur.cpp" />
@@ -156,7 +156,7 @@
     <ClCompile Include="MachineAEtats\EtatCreationMur.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationPoteau.cpp" />
     <ClCompile Include="MachineAEtats\EtatDeplacement.cpp" />
-    <ClCompile Include="MachineAEtats\EtatDupliquation.cpp" />
+    <ClCompile Include="MachineAEtats\EtatDuplication.cpp" />
     <ClCompile Include="MachineAEtats\EtatLoupe.cpp" />
     <ClCompile Include="MachineAEtats\EtatMiseAEchelle.cpp" />
     <ClCompile Include="MachineAEtats\EtatRotation.cpp" />
@@ -174,7 +174,7 @@
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
     <ClCompile Include="Visiteur\VisiteurDeplacement.cpp" />
-    <ClCompile Include="Visiteur\VisiteurDupliquation.cpp" />
+    <ClCompile Include="Visiteur\VisiteurDuplication.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp" />
     <ClCompile Include="Visiteur\VisiteurRotation.cpp" />
@@ -189,7 +189,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudAraignee.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudConeCube.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDepart.h" />
-    <ClInclude Include="Arbre\Noeuds\NoeudDupliquation.h" />
+    <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudLigne.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudJonction.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudMur.h" />
@@ -210,7 +210,7 @@
     <ClInclude Include="MachineAEtats\EtatCreationMur.h" />
     <ClInclude Include="MachineAEtats\EtatCreationPoteau.h" />
     <ClInclude Include="MachineAEtats\EtatDeplacement.h" />
-    <ClInclude Include="MachineAEtats\EtatDupliquation.h" />
+    <ClInclude Include="MachineAEtats\EtatDuplication.h" />
     <ClInclude Include="MachineAEtats\EtatLoupe.h" />
     <ClInclude Include="MachineAEtats\EtatMiseAEchelle.h" />
     <ClInclude Include="MachineAEtats\EtatRotation.h" />
@@ -231,7 +231,7 @@
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
     <ClInclude Include="Visiteur\VisiteurDeplacement.h" />
-    <ClInclude Include="Visiteur\VisiteurDupliquation.h" />
+    <ClInclude Include="Visiteur\VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h" />
     <ClInclude Include="Visiteur\VisiteurRotation.h" />

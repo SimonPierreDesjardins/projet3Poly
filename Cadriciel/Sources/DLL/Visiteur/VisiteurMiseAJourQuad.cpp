@@ -39,7 +39,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudTable* noeud)
 	}
 }
 
-void VisiteurMiseAJourQuad::visiter(NoeudDupliquation* noeud)
+void VisiteurMiseAJourQuad::visiter(NoeudDuplication* noeud)
 {
 	glm::dvec3 positionVirtuelleParent = { 0.0, 0.0, 0.0 };	
 	NoeudAbstrait* parent = noeud->obtenirParent();

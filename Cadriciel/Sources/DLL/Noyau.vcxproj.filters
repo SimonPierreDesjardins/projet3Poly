@@ -217,17 +217,17 @@
     <ClCompile Include="Arbre\Noeuds\NoeudLigne.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
-    <ClCompile Include="MachineAEtats\EtatDupliquation.cpp">
-      <Filter>Source Files\MachineAEtats</Filter>
-    </ClCompile>
-    <ClCompile Include="Arbre\Noeuds\NoeudDupliquation.cpp">
-      <Filter>Source Files\Arbre\Noeuds</Filter>
-    </ClCompile>
     <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurDupliquation.cpp">
+    <ClCompile Include="Visiteur\VisiteurDuplication.cpp">
       <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAEtats\EtatDuplication.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -396,14 +396,14 @@
     <ClInclude Include="Arbre\Noeuds\NoeudJonction.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="Arbre\Noeuds\NoeudDupliquation.h">
-      <Filter>Header Files\Arbre\Noeuds</Filter>
-    </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurDupliquation.h">
+    <ClInclude Include="Visiteur\VisiteurDuplication.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
-    <ClInclude Include="MachineAEtats\EtatDupliquation.h">
+    <ClInclude Include="MachineAEtats\EtatDuplication.h">
       <Filter>Header Files\MachineAEtats</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

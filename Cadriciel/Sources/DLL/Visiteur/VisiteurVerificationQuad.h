@@ -29,7 +29,7 @@ public:
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
-	virtual void visiter(NoeudDupliquation* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 	virtual void visiter(NoeudLigne* noeud);
