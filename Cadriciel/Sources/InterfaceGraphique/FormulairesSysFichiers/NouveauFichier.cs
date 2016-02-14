@@ -79,7 +79,7 @@ namespace InterfaceGraphique
                     return;
                 }
                 creerFichierButt.DialogResult = DialogResult.OK;
-                System.IO.File.Create(cheminDossierZone + nomFichier + ".json");
+                System.IO.File.Create(cheminDossierZone + nomFichier + ".json").Dispose();
             }
             Close();
         }

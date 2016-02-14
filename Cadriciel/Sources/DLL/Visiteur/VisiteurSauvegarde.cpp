@@ -46,7 +46,8 @@ VisiteurSauvegarde::~VisiteurSauvegarde()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(ArbreRendu* noeud)
 {
-	FILE* fp = noeud->obtenirFichierZone("wb");
+
+	FILE* fp = noeud->obtenirFichierZone("w");
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 	writer = new rapidjson::Writer<rapidjson::FileWriteStream>(os);
