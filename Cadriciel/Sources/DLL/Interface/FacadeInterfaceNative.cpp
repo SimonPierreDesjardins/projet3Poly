@@ -561,7 +561,8 @@ extern "C"
 					break;
 
 				case VK_KEY_S:
-					FacadeModele::obtenirInstance()->obtenirMode()->gererToucheS();
+					if(!GetKeyState(VK_CONTROL))
+						FacadeModele::obtenirInstance()->obtenirMode()->gererToucheS();
 					break;
 
 				case VK_KEY_R:
