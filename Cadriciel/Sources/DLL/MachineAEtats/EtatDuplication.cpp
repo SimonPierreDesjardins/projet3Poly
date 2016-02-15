@@ -45,8 +45,7 @@ EtatDuplication::EtatDuplication()
 ////////////////////////////////////////////////////////////////////////
 EtatDuplication::~EtatDuplication()
 {
-	if (duplication_ != nullptr && arbre_ != nullptr)
-	{
+	if (duplication_ != nullptr && arbre_ != nullptr) {
 		arbre_->chercher("table")->effacer(duplication_);
 	}
 	duplication_ = nullptr;
@@ -67,19 +66,15 @@ void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	assignerSymbolePointeur(positionEstSurTable);
 
-	if (positionEstSurTable && !curseurEstSurTable_)
-	{
+	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
-		if (duplication_ != nullptr)
-		{
+		if (duplication_ != nullptr) {
 			duplication_->assignerAffiche(true);
 		}
 	}
-	else if (!positionEstSurTable && curseurEstSurTable_)
-	{
+	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
-		if (duplication_ != nullptr)
-		{
+		if (duplication_ != nullptr) {
 			duplication_->assignerAffiche(false);
 		}
 	}
@@ -100,17 +95,14 @@ void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
 void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
-	if (curseurEstSurTable_ && !estClickDrag())
-	{
-		if (arbre_ != nullptr)
-		{
+	if (curseurEstSurTable_ && !estClickDrag()) {
+		if (arbre_ != nullptr) {
 			arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 		}
 		bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
 		// Ajouter la duplication sur la table.
-		if (objetsDansZoneSimulation)
-		{
+		if (objetsDansZoneSimulation) {
 			duplication_->accepterVisiteur(visiteurDuplication_.get());
 			duplication_ = visiteurDuplication_->obtenirDuplication();
 		}

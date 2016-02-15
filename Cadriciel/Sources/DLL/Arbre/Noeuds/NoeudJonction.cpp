@@ -62,18 +62,13 @@ NoeudJonction::~NoeudJonction()
 ////////////////////////////////////////////////////////////////////////
 void NoeudJonction::afficherConcret() const
 {
-	// Appel à la version de la classe de base pour l'affichage des enfants.
-	//	NoeudComposite::afficherConcret();
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	if (estSelectionne())
-	{
+	if (estSelectionne()) {
 		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
-	else
-	{
+	else {
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 

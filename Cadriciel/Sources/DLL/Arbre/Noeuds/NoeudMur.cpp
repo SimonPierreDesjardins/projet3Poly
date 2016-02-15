@@ -33,8 +33,8 @@
 NoeudMur::NoeudMur(const std::string& typeNoeud)
 	: NoeudAbstrait{ typeNoeud }
 {
-	angleRotation_ = 0;
-	facteurMiseAEchelle_ = 1;
+	angleRotation_ = 0.0;
+	facteurMiseAEchelle_ = 1.0;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -65,15 +65,12 @@ void NoeudMur::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	if (estSelectionne())
-	{
+	if (estSelectionne()) {
 		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
-	else
-	{
+	else {
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
-
 
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);

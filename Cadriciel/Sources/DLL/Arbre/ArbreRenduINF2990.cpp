@@ -103,13 +103,13 @@ void ArbreRenduINF2990::initialiser()
 ////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::chargerZoneDefaut(){
 	struct stat buffer;
-	if (stat(cheminFichierZoneDefaut.c_str(), &buffer) != 0){
+	if (stat(cheminFichierZoneDefaut.c_str(), &buffer) != 0) {
 		shared_ptr<NoeudAbstrait> table = { creerNoeud(NOM_TABLE) };
 		ajouter(table);
 		shared_ptr<NoeudAbstrait> pointDepart = { creerNoeud(NOM_DEPART) };
 		table->ajouter(pointDepart);
 		cheminFichierZone = cheminFichierZoneDefaut;
-		unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();;
+		unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();
 		accepterVisiteur(visiteur.get());
 		return;
 	}
@@ -126,7 +126,8 @@ void ArbreRenduINF2990::chargerZoneDefaut(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ArbreRenduINF2990::chargerZone(){
+void ArbreRenduINF2990::chargerZone()
+{
 	chargerZone(obtenirFichierZone("rb"));
 }
 
@@ -142,25 +143,23 @@ void ArbreRenduINF2990::chargerZone(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ArbreRenduINF2990::chargerZone(FILE* fp){
+void ArbreRenduINF2990::chargerZone(FILE* fp)
+{
 	vider();
 	rapidjson::Document doc;
 	char readBuffer[65536];
 	rapidjson::FileReadStream is(fp, readBuffer, sizeof(readBuffer));
-
 	doc.ParseStream(is);
-
 	fclose(fp);
 
 	shared_ptr<NoeudAbstrait> noeudTable = { creerNoeud(NOM_TABLE) };
 	ajouter(noeudTable);
-	if (!doc["table"].HasMember("noeudsEnfants"))
+	if (!doc["table"].HasMember("noeudsEnfants")) {
 		return;
-
+	}
 	const rapidjson::Value& enfantsTable = doc["table"]["noeudsEnfants"];
 	for (rapidjson::Value::ConstValueIterator itr = enfantsTable.Begin();
-		itr != enfantsTable.End(); ++itr)
-	{
+		itr != enfantsTable.End(); ++itr) {
 		chargerZone(itr, noeudTable);
 	}
 }
@@ -183,18 +182,15 @@ void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJS
 	shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
 	noeud->fromJson(noeudJSON);
 	parent->ajouter(noeud);
-	
-	if (!noeudJSON->HasMember("noeudsEnfants"))
+	if (!noeudJSON->HasMember("noeudsEnfants")) {
 		return;
-
+	}
 	const rapidjson::Value& enfants = noeudJSON->FindMember("noeudsEnfants")->value;
 	for (rapidjson::Value::ConstValueIterator itr = enfants.Begin();
-		itr != enfants.End(); ++itr)
-	{
+		itr != enfants.End(); ++itr) {
 		chargerZone(itr, noeud);
 	}
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

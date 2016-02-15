@@ -72,11 +72,9 @@ void VisiteurDeplacement::visiter(NoeudTable* noeud)
 {
 	NoeudAbstrait* enfant;
 	glm::dvec3 positionVirtuelle;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
-		if (enfant->estSelectionne())
-		{
+		if (enfant->estSelectionne()) {
 			positionVirtuelle = enfant->obtenirPositionRelative();
 			enfant->assignerPositionRelative(positionVirtuelle + positionRelative_);
 		}

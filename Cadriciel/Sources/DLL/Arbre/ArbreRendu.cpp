@@ -24,7 +24,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 ArbreRendu::ArbreRendu()
-: NoeudComposite{ "racine" }
+	: NoeudComposite{ "racine" }
 {
 	// On ne veut pas que ce noeud soit sélectionnable.
 	assignerEstSelectionnable(false);
@@ -65,9 +65,7 @@ std::shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(
 		// Incapable de trouver l'usine
 		return nullptr;
 	}
-
 	const UsineAbstraite* usine{ (*(usines_.find(typeNouveauNoeud))).second.get() };
-
 	return usine->creerNoeud();
 }
 
@@ -95,11 +93,10 @@ std::shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(
 		// Incapable de trouver le parent
 		return nullptr;
 	}
-
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud{ creerNoeud(typeNouveauNoeud) };
-	if (nouveauNoeud)
+	if (nouveauNoeud) {
 		parent->ajouter(nouveauNoeud);
-
+	}
 	return nouveauNoeud;
 }
 
@@ -162,7 +159,8 @@ void ArbreRendu::accepterVisiteur(VisiteurAbstrait* visiteur)
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void ArbreRendu::assignerCheminFichierZone(std::string chemin){
+void ArbreRendu::assignerCheminFichierZone(std::string chemin)
+{
 	cheminFichierZone = string(chemin);
 }
 
@@ -177,11 +175,13 @@ void ArbreRendu::assignerCheminFichierZone(std::string chemin){
 /// @return Pointeur vers le fichier
 ///
 ////////////////////////////////////////////////////////////////////////
-FILE* ArbreRendu::obtenirFichierZone(std::string mode){
+FILE* ArbreRendu::obtenirFichierZone(std::string mode)
+{
 	FILE* fichierZone;
 	errno_t err;
-	if (err = fopen_s(&fichierZone, cheminFichierZone.c_str(), mode.c_str()) != 0)
+	if (err = fopen_s(&fichierZone, cheminFichierZone.c_str(), mode.c_str()) != 0) {
 		return NULL;
+	}
 	return fichierZone;
 }
 
@@ -196,11 +196,14 @@ FILE* ArbreRendu::obtenirFichierZone(std::string mode){
 /// @return Pointeur vers le fichier
 ///
 ////////////////////////////////////////////////////////////////////////
-FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode){
+FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode)
+{
 	FILE* fichierZone;
 	errno_t err;
-	if (err = fopen_s(&fichierZone, cheminFichierZoneDefaut.c_str(), mode.c_str()) != 0)
+	if (err = fopen_s(&fichierZone, cheminFichierZoneDefaut.c_str(), mode.c_str()) != 0) {
 		return NULL;
+	}
+
 	return fichierZone;
 }
 
@@ -214,7 +217,8 @@ FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode){
 /// @return Pointeur vers le fichier
 ///
 ////////////////////////////////////////////////////////////////////////
-std::string ArbreRendu::obtenirCheminFichierZoneDefaut(){
+std::string ArbreRendu::obtenirCheminFichierZoneDefaut()
+{
 	return cheminFichierZoneDefaut;
 }
 

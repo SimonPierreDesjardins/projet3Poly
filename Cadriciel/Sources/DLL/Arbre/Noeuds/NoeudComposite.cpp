@@ -146,8 +146,7 @@ const NoeudAbstrait* NoeudComposite::chercher(
 		return this;
 	}
 	else {
-		for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_)
-		{
+		for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_) {
 			NoeudAbstrait* const noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
 				return noeud;
@@ -176,8 +175,7 @@ NoeudAbstrait* NoeudComposite::chercher(const std::string& typeNoeud)
 		return this;
 	}
 	else {
-		for (std::shared_ptr<NoeudAbstrait> enfant : enfants_)
-		{
+		for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
 			NoeudAbstrait* noeud{ enfant->chercher(typeNoeud) };
 			if (noeud != nullptr) {
 				return noeud;
@@ -204,7 +202,7 @@ const NoeudAbstrait* NoeudComposite::chercher(unsigned int indice) const
 {
 	if ((indice >= 0) && (indice < enfants_.size())) {
 		return enfants_[indice].get();
-	}
+	} 
 	else {
 		return nullptr;
 	}
@@ -225,7 +223,7 @@ NoeudAbstrait* NoeudComposite::chercher(unsigned int indice)
 {		
 	if ((indice >= 0) && (indice < enfants_.size())) {
 		return enfants_[indice].get();
-	}
+	} 
 	else {
 		return nullptr;
 	}
@@ -284,7 +282,7 @@ unsigned int NoeudComposite::obtenirNombreEnfants() const
 void NoeudComposite::effacerSelection()
 {
 	// On efface tous les noeuds sélectionnés descendants des enfants.
-	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
 		enfant->effacerSelection();
 	}
 
@@ -305,7 +303,7 @@ void NoeudComposite::effacerSelection()
 			// éventuellement être évité avec des itérateurs plus robustes.
 			// Peut-être une liste chaînée?
 			it = enfants_.begin();
-		}
+		} 
 		else {
 			++it;
 		}
@@ -326,7 +324,7 @@ void NoeudComposite::selectionnerTout()
 {
 	NoeudAbstrait::selectionnerTout();
 
-	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
 		enfant->selectionnerTout();
 	}
 }
@@ -345,7 +343,7 @@ void NoeudComposite::deselectionnerTout()
 {
 	selectionne_ = false;
 
-	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
 		enfant->deselectionnerTout();
 	}
 }
@@ -366,7 +364,7 @@ bool NoeudComposite::selectionExiste() const
 		return true;
 	}
 
-	for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_) {
 		if (enfant->selectionExiste())
 			return true;
 	}
@@ -394,7 +392,7 @@ void NoeudComposite::changerModePolygones(bool estForce)
 	const bool forceEnfant = ((estForce) || (estSelectionne()));
 
 	// Applique le changement récursivement aux enfants.
-	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
 		enfant->changerModePolygones(forceEnfant);
 	}
 }
@@ -415,7 +413,7 @@ void NoeudComposite::assignerModePolygones(GLenum modePolygones)
 	NoeudAbstrait::assignerModePolygones(modePolygones);
 
 	// Applique le changement récursivement aux enfants.
-	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
 		enfant->assignerModePolygones(modePolygones);
 	}
 }
@@ -437,7 +435,7 @@ void NoeudComposite::afficherConcret() const
 {
 	NoeudAbstrait::afficherConcret();
 
-	for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_) {
 		enfant->afficher();
 	}
 		
@@ -456,7 +454,7 @@ void NoeudComposite::afficherConcret() const
 ////////////////////////////////////////////////////////////////////////
 void NoeudComposite::animer(float dt)
 {
-	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_){
+	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
 		enfant->animer(dt);
 	}
 }

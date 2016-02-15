@@ -470,7 +470,8 @@ modele::Modele3D const* NoeudAbstrait::getModele()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
+void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer)
+{
 	writer.Key("type");
 	writer.String(obtenirType().c_str());
 	writer.Key("posX");
@@ -496,7 +497,8 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON){
+void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON)
+{
 	rapidjson::Value::ConstMemberIterator itr = noeudJSON->MemberBegin() + 1;
 	double x = itr->value.GetDouble();
 	itr++;

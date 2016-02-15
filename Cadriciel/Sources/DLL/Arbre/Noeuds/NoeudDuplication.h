@@ -26,15 +26,14 @@ public:
 	~NoeudDuplication();
 	/// Affiche la table.
 	virtual void afficherConcret() const;
-	inline std::shared_ptr<NoeudAbstrait> obtenirDuplication(int indice);
+	/// Obtenir le pointeur intelligent d'un noeud dans le but de faire un transfert de possession.
+	inline std::shared_ptr<NoeudAbstrait> obtenirDuplication(const int& indice);
 	//virtual void mettreAJourQuadEnglobantConcret();
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
-
-private:
-
 };
 
-inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(int indice)
+//TODO: documentation
+inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(const int& indice)
 {
 	if ((indice >= 0) && (indice < enfants_.size())) 	
 	{		 

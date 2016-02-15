@@ -37,8 +37,7 @@ EtatMiseAEchelle::EtatMiseAEchelle()
 ////////////////////////////////////////////////////////////////////////
 EtatMiseAEchelle::~EtatMiseAEchelle()
 {
-	if (clicGaucheEnfonce_)
-	{
+	if (clicGaucheEnfonce_) {
 		visiteurMiseAEchelle_->reinitialiser(arbre_);
 	}
 }
@@ -81,13 +80,11 @@ void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 	vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	dernierePositionY_ = positionVirtuelle.y;
 
-	if (arbre_ != nullptr)
-	{
+	if (arbre_ != nullptr) {
 		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	}
-	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
-	{
+	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 		visiteurMiseAEchelle_->reinitialiser(arbre_);
 	}
 }
@@ -107,8 +104,7 @@ void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
 
-	if (clicGaucheEnfonce_)
-	{
+	if (clicGaucheEnfonce_) {
 		glm::dvec3 positionVirtuelle = { 0.0, 0.0, 0.0 };
 		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 

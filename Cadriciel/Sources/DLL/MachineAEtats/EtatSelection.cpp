@@ -24,11 +24,11 @@
 ////////////////////////////////////////////////////////////////////////
 EtatSelection::EtatSelection()
 {
+	typeEtat_ = SELECTION;
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	vue_ = FacadeModele::obtenirInstance()->obtenirVue();
-	typeEtat_ = SELECTION;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -40,7 +40,6 @@ EtatSelection::EtatSelection()
 ////////////////////////////////////////////////////////////////////////
 EtatSelection::~EtatSelection()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -58,20 +57,15 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 {
 	EtatAbstrait::gererClicGaucheRelache(x, y);
 
-	if (dessineRectangle){
+	if (dessineRectangle) {
 		FacadeModele::obtenirInstance()->continuerAffichage();
-
 		aidegl::terminerRectangleElastique(anchor, glm::ivec2(x, y));
-
 		dessineRectangle = false;
 	}
-
-	if (estClickDrag())
-	{
+	if (estClickDrag()) {
 		gererDragGauche(anchor.x, anchor.y, x, y);
 	}
-	else
-	{
+	else {
 		gererClicGauche((anchor.x + currentPosition_.x) / 2, (anchor.y + currentPosition_.y) / 2);
 	}
 }
@@ -89,13 +83,14 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatSelection::gererMouvementSouris(const int & x, const int& y){
 
-	if (clicGaucheEnfonce_){
+	if (clicGaucheEnfonce_) {
 		// Initialisation du rectangle elastique
-		if (estClickDrag()){
+		if (estClickDrag()) {
 
-			if (dessineRectangle)
+			if (dessineRectangle) {
 				aidegl::mettreAJourRectangleElastique(anchor, currentPosition_, glm::ivec2(x, y));
-			else{
+			}
+			else {
 				aidegl::initialiserRectangleElastique(anchor);
 				FacadeModele::obtenirInstance()->stopAffichage();
 				dessineRectangle = true;
@@ -122,17 +117,12 @@ void EtatSelection::gererMouvementSouris(const int & x, const int& y){
 void EtatSelection::gererClicGauche(const int& x, const int& y)
 {
 	visiteurSelection_->assignerEstDrag(false);
-	glm::dvec3 positionRelative = { 0.0, 0.0, 0.0 };
-	
-	if (vue_ != nullptr)
-	{
+	glm::dvec3 positionRelative = { 0.0, 0.0, 0.0 }; 
+	if (vue_ != nullptr) {
 		vue_->convertirClotureAVirtuelle(x, y, positionRelative);
-	}
-	
+	} 
 	visiteurSelection_->assignerPositionRelative(positionRelative);
-	
-	if (arbre_ != nullptr)
-	{
+	if (arbre_ != nullptr) {
 		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurSelection_.get());
 	}
@@ -153,13 +143,16 @@ void EtatSelection::gererClicGauche(const int& x, const int& y)
 void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const int& xApres, const int& yApres)
 {
 	visiteurSelection_->assignerEstDrag(true);
+
 	glm::dvec3 positionRelativeAvant, positionRelativeApres;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xAvant, yAvant, positionRelativeAvant);
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(xApres, yApres, positionRelativeApres);
 	visiteurSelection_->assignerPositionRectElast(positionRelativeAvant, positionRelativeApres);
-	
-	arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
-	arbre_->accepterVisiteur(visiteurSelection_.get());
+
+	if (arbre_ != nullptr) {
+		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
+		arbre_->accepterVisiteur(visiteurSelection_.get());
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

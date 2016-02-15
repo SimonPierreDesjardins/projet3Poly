@@ -45,7 +45,6 @@ VisiteurDuplication::VisiteurDuplication()
 ////////////////////////////////////////////////////////////////////////
 VisiteurDuplication::~VisiteurDuplication()
 {
-	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -82,12 +81,10 @@ void VisiteurDuplication::visiter(NoeudTable* noeud)
 	noeud->ajouter(nouveauNoeud);
 
 	duplication_ = nouveauNoeud.get();
-	NoeudAbstrait* enfant;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
+	NoeudAbstrait* enfant = nullptr;
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
-		if (enfant->estSelectionne())
-		{
+		if (enfant->estSelectionne()) {
 			enfant->accepterVisiteur(this);
 		}
 	}
@@ -111,9 +108,7 @@ void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 	
 	nouveauNoeud->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
 	// Assigner la position à la table dans la duplication si il y a plus qu'un noeud.
-	
 	nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative() - centreSelection_);
-
 	duplication_->ajouter(nouveauNoeud);
 }
 
@@ -136,9 +131,7 @@ void VisiteurDuplication::visiter(NoeudMur* noeud)
 	nouveauNoeud->assignerAngleRotation(noeud->obtenirAngleRotation());
 	nouveauNoeud->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
 	// Assigner la position à la table dans la duplication si il y a plus qu'un noeud.
-
 	nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative() - centreSelection_);
-
 	duplication_->ajouter(nouveauNoeud);
 }
 
@@ -156,16 +149,13 @@ void VisiteurDuplication::visiter(NoeudMur* noeud)
 void VisiteurDuplication::visiter(NoeudLigne* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	// Creer une nouvelle ligne et assigner ses attributs.
 	shared_ptr<NoeudAbstrait> nouvelleLigne = arbre->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
+
 	nouvelleLigne->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
-
 	nouvelleLigne->assignerPositionRelative(noeud->obtenirPositionRelative() - centreSelection_);
-
 	// Appeler le visiteur des enfants.
 	nouvelleLigne_ = nouvelleLigne.get();
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{		
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {		
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 	duplication_->ajouter(nouvelleLigne);
@@ -186,10 +176,10 @@ void VisiteurDuplication::visiter(NoeudDuplication* noeud)
 {
 	NoeudAbstrait* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	NoeudAbstrait* table = arbre->chercher("table");
+	
 	// Ajouter les noeuds sur la table, puis détruire la duplication.
-	std::shared_ptr<NoeudAbstrait> enfant;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
+	std::shared_ptr<NoeudAbstrait> enfant = nullptr;
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->obtenirDuplication(i);
 		// Assigner la position relative du noeud à la table avant de l'ajouter.
 		enfant->assignerPositionRelative(noeud->obtenirPositionRelative() + enfant->obtenirPositionRelative());
@@ -219,7 +209,6 @@ void VisiteurDuplication::visiter(NoeudSegment* noeud)
 	nouveauSegment->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
 	nouveauSegment->assignerAngleRotation(noeud->obtenirAngleRotation());
 	nouveauSegment->assignerPositionRelative(noeud->obtenirPositionRelative());
-	
 	nouvelleLigne_->ajouter(nouveauSegment);
 }
 
@@ -241,7 +230,6 @@ void VisiteurDuplication::visiter(NoeudJonction* noeud)
 	// Creer la nouvelle jonction et copier la position relative.
 	shared_ptr<NoeudAbstrait> nouvelleJonction = arbre->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
 	nouvelleJonction->assignerPositionRelative(noeud->obtenirPositionRelative());
-
 	nouvelleLigne_->ajouter(nouvelleJonction);
 }
 
@@ -260,46 +248,38 @@ void VisiteurDuplication::calculerCentreSelection(NoeudAbstrait* noeud)
 {
 	if (noeud->obtenirNombreEnfants() < 1) return;
 	// Initialiser les minimums et les maximums 
-	double minX = 0;
-	double maxX = 0;
-	double minY = 0;
-	double maxY = 0;
-	double x = 0;
-	double y = 0;
+	double minX = 0.0;
+	double maxX = 0.0;
+	double minY = 0.0;
+	double maxY = 0.0;
+	double x = 0.0;
+	double y = 0.0;
 	bool estPremierSelectionne = true;
-	NoeudAbstrait* enfant;
+	NoeudAbstrait* enfant = nullptr;
 	// Trouver les min / max dans les positions des noeuds sur la table.
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
-		if (enfant->estSelectionne() && enfant->estDuplicable())
-		{
-			x = enfant->obtenirPositionRelative()[0];
-			y = enfant->obtenirPositionRelative()[1];
+		if (enfant->estSelectionne() && enfant->estDuplicable()) {
+			x = enfant->obtenirPositionRelative().x;
+			y = enfant->obtenirPositionRelative().y;
 
-			if (x > maxX || estPremierSelectionne)
-			{
+			if (x > maxX || estPremierSelectionne) {
 				maxX = x;
 			}
-			if (x < minX || estPremierSelectionne)
-			{
+			if (x < minX || estPremierSelectionne) {
 				minX = x;
 			}
-			if (y > maxY || estPremierSelectionne)
-			{
+			if (y > maxY || estPremierSelectionne) {
 				maxY = y; 
 			}
-			if (y < minY || estPremierSelectionne)
-			{
+			if (y < minY || estPremierSelectionne) {
 				minY = y;
 			}
-			
-			if (estPremierSelectionne)
-			{
+			if (estPremierSelectionne) {
 				estPremierSelectionne = false;
 			}
 		}
 	}
 	// Calculer et assigner la position relative à la ligne
-	centreSelection_= { (minX + maxX) / 2, (minY + maxY) / 2, 0 };
+	centreSelection_= { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0.0 };
 }

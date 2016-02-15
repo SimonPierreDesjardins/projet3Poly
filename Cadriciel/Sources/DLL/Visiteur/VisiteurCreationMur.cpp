@@ -27,7 +27,6 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurCreationMur::VisiteurCreationMur()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -43,7 +42,6 @@ VisiteurCreationMur::VisiteurCreationMur()
 ////////////////////////////////////////////////////////////////////////
 VisiteurCreationMur::~VisiteurCreationMur()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -79,9 +77,4 @@ void VisiteurCreationMur::visiter(NoeudTable* noeud)
 	referenceNoeud_ = nouveauNoeud.get();
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
 	noeud->ajouter(nouveauNoeud);
-}
-
-void VisiteurCreationMur::visiter(NoeudPoteau* noeud)
-{
-
 }

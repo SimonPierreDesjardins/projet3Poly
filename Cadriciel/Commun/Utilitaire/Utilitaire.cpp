@@ -524,42 +524,35 @@ namespace utilitaire {
 		double dx = pointDeux[0] - pointUn[0];
 		double dy = pointDeux[1] - pointUn[1];
 
-		if (EGAL_ZERO(dx) && EGAL_ZERO(dy))
-		{
+		if (EGAL_ZERO(dx) && EGAL_ZERO(dy)) {
 			return 0.0;
 		}
 
-		if (EGAL_ZERO(dy) && dx < 0)
-		{
+		if (EGAL_ZERO(dy) && dx < 0) {
 			return RAD_TO_DEG(PI);
 		}
 
-		else if (EGAL_ZERO(dx) && dy > 0)
-		{
+		else if (EGAL_ZERO(dx) && dy > 0.0) {
 			return RAD_TO_DEG((PI / 2.0));
 		}
 
-		else if (EGAL_ZERO(dx) && dy < 0)
-		{
+		else if (EGAL_ZERO(dx) && dy < 0.0) {
 			return RAD_TO_DEG(3.0 * PI / 2.0);
 		}
 
 		double angle = atan(dy / dx);
-		if (dy < 0 && dx > 0)
-		{
-			angle += 2 * PI;
+		if (dy < 0 && dx > 0) {
+			angle += 2.0 * PI;
 		}
-		else if (dy > 0 && dx < 0)
-		{
+		else if (dy > 0.0 && dx < 0.0) {
 			angle += PI;
 		}
-		else if (dy < 0 && dx < 0)
-		{
+		else if (dy < 0.0 && dx < 0.0) {
 			angle += PI;
 		}
 		return RAD_TO_DEG(angle);
 	}
-	//TODO: à remplacer par glm::distance.
+
 	double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		double distanceX = pointUn[0] - pointDeux[0];
@@ -587,19 +580,17 @@ namespace utilitaire {
 		const int N = 4;
 		// Calculer les vecteurs entre le point et chaque coin du quad.
 		glm::dvec3 w[N];
-		for (int i = 0; i < N; i++)
-		{
+		for (int i = 0; i < N; i++) {
 			w[i] = quad.coins[i] - point;
 		}
 		//Calculer la somme de l'aire des 4 triangles formées par les 4 coins et le point. 
 		int j = 0;
 		double sommeAireTriangles = 0.0;
-		for (int i = 0; i < N; i++)
-		{
+		for (int i = 0; i < N; i++) {
 			// i + 1 circulaire (j == 0 quand i == 3)
 			j = (i + 1) % N;
 			// L'aire du triangle est la composante z du produit vectoriel / 2;   
-			sommeAireTriangles += glm::distance(glm::cross(w[i], w[j]).z, 0.0) / 2;
+			sommeAireTriangles += glm::distance(glm::cross(w[i], w[j]).z, 0.0) / 2.0;
 		}
 		// Calculer l'aire du quad 
 		glm::dvec3 v = quad.coins[1] - quad.coins[0];
@@ -608,14 +599,12 @@ namespace utilitaire {
 		bool pointEstDansQuad = false;
 
 		// Si la somme de l'aire des triangles du quad est égale à l'aire du quad, le point est dans le quad.
-		if (EGAL_ZERO(sommeAireTriangles - aireQuad))
-		{
+		if (EGAL_ZERO(sommeAireTriangles - aireQuad)) {
 			pointEstDansQuad = true;
 		}
 		return pointEstDansQuad;
 	}
 }; // Fin de l'espace de nom utilitaire.
-
 
 ///////////////////////////////////////////////////////////////////////////
 /// @}

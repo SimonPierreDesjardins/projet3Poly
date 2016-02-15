@@ -20,7 +20,7 @@
 /// @brief Classe qui représente le mode test de notre machine à modes
 ///
 ///        Cette classe s'occupe d'implémenter les fonctions du mode test
-
+///
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////

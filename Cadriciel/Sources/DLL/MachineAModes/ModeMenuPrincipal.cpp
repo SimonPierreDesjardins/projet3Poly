@@ -27,7 +27,6 @@
 
 ModeMenuPrincipal::ModeMenuPrincipal()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -41,5 +40,4 @@ ModeMenuPrincipal::ModeMenuPrincipal()
 
 ModeMenuPrincipal::~ModeMenuPrincipal()
 {
-
 }

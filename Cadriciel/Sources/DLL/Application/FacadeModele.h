@@ -65,47 +65,31 @@ public:
    // Obtenir l'etat courant.
    inline ModeAbstrait* obtenirMode();
 
-   //Obtenir le nombre d'objet sélectionné
+   // Obtenir le nombre d'objet sélectionné
    int obtenirNombreSelection();
 
+   // Obtient si le modèle est autorisé à recevoir des entrées utilisateurs. 
+   inline bool obtenirAutorisationEntreesUtilisateur(); 
+   // Assigne si le modèle est autorisé à recevoir des entrées utilisateurs. 
+   inline void assignerAutorisationEntreesUtilisateur(const bool& autorisation);
 
-   ////////////////////////////////////////////////////////////////////////
-   ///
-   /// @fn  bool obtenirAutorisationInput()
-   ///
-   /// Retourne si oui ou non le modele prend présentement les entrées utilisateurs
-   ///
-   /// @param[in] hWnd : La poignée ("handle") vers la fenêtre à utiliser.
-   ///
-   /// @return Aucune.
-   ///
-   ////////////////////////////////////////////////////////////////////////
-   bool obtenirAutorisationInput(){ return autorisationInput_; };
-
-   ////////////////////////////////////////////////////////////////////////
-   ///
-   /// @fn  bool obtenirAutorisationInput()
-   ///
-   /// Retourne si oui ou non le modele prend présentement les entrées utilisateurs
-   ///
-   /// @param[in] autorisation : Si vrai, permet au modele de prendre les entrées utilisateurs.
-   ///
-   /// @return Aucune.
-   ///
-   ////////////////////////////////////////////////////////////////////////
-   void assignerAutorisationInput(bool autorisation) { autorisationInput_ = autorisation; };
-
-   //Obtient des informations sur le noeud
+   // Obtient l'angle de rotaion du noeud selectionné. 
    double obtenirAngleRotation();
-   double obtenirFacteurGrandeur();
+   // Obtient le facteur de mise à échelle du noeud selectionné. 
+   double obtenirFacteurMiseAEchelle();
+   // Obtient la position relative en X du noeud selectionné.
    double obtenirPositionRelativeX();
+   // Obtient la position relative en Y du noeud selectionné.
    double obtenirPositionRelativeY();
 
-   //Assigne des informations sur le noeud
-   void assignerAngleRotation(double angle);
-   void assignerFacteurGrandeur(double facteurGrandeur);
-   void assignerPositionRelativeX(double positionRelativeX);
-   void assignerPositionRelativeY(double positionRelativeY);
+   // Assigne l'angle de rotaion du noeud selectionné. 
+   void assignerAngleRotation(const double& angle);
+   // Assigne le facteur de mise à échelle du noeud selectionné.
+   void assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle);
+   // Assigne la position relative en x du noeud sélectionné.
+   void assignerPositionRelativeX(const double& positionRelativeX);
+   // Assigne la position relative en x du noeud sélectionné. 
+   void assignerPositionRelativeY(const double& positionRelativeY);
 
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
@@ -127,7 +111,7 @@ private:
    FacadeModele() = default;
 
    bool peutAfficher_{true};
-   bool autorisationInput_{ true };
+   bool autorisationEntreesUtilisateur_{ true };
    /// Constructeur copie désactivé.
    FacadeModele(const FacadeModele&) = delete;
    /// Opérateur d'assignation désactivé.
@@ -154,6 +138,38 @@ private:
    std::unique_ptr<EtatAbstrait> etat_{ nullptr };
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
 };
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  bool obtenirAutorisationInput()
+///
+/// Retourne si oui ou non le modele prend présentement les entrées utilisateurs
+///
+/// @param[in] hWnd : La poignée ("handle") vers la fenêtre à utiliser.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+inline bool FacadeModele::obtenirAutorisationEntreesUtilisateur()
+{
+	return autorisationEntreesUtilisateur_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  bool obtenirAutorisationInput()
+///
+/// Retourne si oui ou non le modele prend présentement les entrées utilisateurs
+///
+/// @param[in] autorisation : Si vrai, permet au modele de prendre les entrées utilisateurs.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerAutorisationEntreesUtilisateur(const bool& autorisation)
+{ 
+	autorisationEntreesUtilisateur_= autorisation; 
+} 
 
 ////////////////////////////////////////////////////////////////////////
 ///

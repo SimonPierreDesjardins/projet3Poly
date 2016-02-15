@@ -85,7 +85,6 @@ protected:
 
 	glm::ivec2 anchor{glm::ivec2()};
 	static glm::ivec2 currentPosition_;
-
 };
 
 inline Etat EtatAbstrait::obtenirTypeEtat() const

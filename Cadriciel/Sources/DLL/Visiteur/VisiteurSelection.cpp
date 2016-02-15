@@ -78,13 +78,11 @@ void VisiteurSelection::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSelection::visiter(NoeudTable* noeud)
 {	
-	if (!ctrlAppuye_)
-	{
+	if (!ctrlAppuye_) {
 		noeud->deselectionnerTout();
 	}
-	NoeudAbstrait* enfant;
-	for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
+	NoeudAbstrait* enfant = nullptr;
+	for (unsigned i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
 		enfant->accepterVisiteur(this);
 	}
@@ -121,24 +119,20 @@ void VisiteurSelection::assignerControl(bool ctrlAppuye)
 void VisiteurSelection::assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic)
 {
 	// Assigner la position min et max en x du rectangle elastique.
-	if (positionDeuxiemeClic.x < positionPremierClic.x)
-	{
+	if (positionDeuxiemeClic.x < positionPremierClic.x) {
 		xMinRectangleElastique_ = positionDeuxiemeClic.x;
 		xMaxRectangleElastique_ = positionPremierClic.x;
 	}
-	else
-	{
+	else {
 		xMinRectangleElastique_ = positionPremierClic.x;
 		xMaxRectangleElastique_ = positionDeuxiemeClic.x;
 	}
 	// Assigner la position min et max en y du rectangle elastique.
-	if (positionDeuxiemeClic.y < positionPremierClic.y)
-	{
+	if (positionDeuxiemeClic.y < positionPremierClic.y) {
 		yMinRectangleElastique_ = positionDeuxiemeClic.y;
 		yMaxRectangleElastique_ = positionPremierClic.y;
 	}
-	else
-	{
+	else {
 		yMinRectangleElastique_ = positionPremierClic.y;
 		yMaxRectangleElastique_ = positionDeuxiemeClic.y;
 	}
@@ -157,18 +151,15 @@ void VisiteurSelection::assignerPositionRectElast(const glm::dvec3& positionPrem
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSelection::visiter(NoeudPoteau* noeud)
 {
-	
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
-
-	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
-	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
-	{
-		if (ctrlAppuye_)
-		{
+	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
+	bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
+	if ((estDrag_ && quadEstDansRectangle) ||
+	   (!estDrag_ && pointEstDansQuad)) {
+		if (ctrlAppuye_) {
 			noeud->inverserSelection();
 		}
-		else
-		{
+		else {
 			noeud->assignerSelection(true);
 		}
 	}
@@ -188,16 +179,14 @@ void VisiteurSelection::visiter(NoeudPoteau* noeud)
 void VisiteurSelection::visiter(NoeudMur* noeud)
 {	
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
-
-	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
-	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
-	{
-		if (ctrlAppuye_)
-		{
+	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
+	bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
+	if ((estDrag_ && quadEstDansRectangle) ||
+	   (!estDrag_ && pointEstDansQuad)) {
+		if (ctrlAppuye_) {
 			noeud->inverserSelection();
 		}
-		else 
-		{
+		else {
 			noeud->assignerSelection(true);
 		}
 	}
@@ -217,16 +206,13 @@ void VisiteurSelection::visiter(NoeudMur* noeud)
 void VisiteurSelection::visiter(NoeudLigne* noeud)
 {
 	
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
-	if (noeud->estSelectionne())
-	{
+	if (noeud->estSelectionne()) {
 		noeud->selectionnerTout();
 	}
-	else
-	{
+	else {
 		noeud->deselectionnerTout();
 	}
 }
@@ -245,16 +231,14 @@ void VisiteurSelection::visiter(NoeudLigne* noeud)
 void VisiteurSelection::visiter(NoeudDepart* noeud)
 {
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
-
-	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
-		(!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
-	{
-		if (ctrlAppuye_)
-		{
+	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
+	bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
+	if ((estDrag_ && quadEstDansRectangle) ||
+	   (!estDrag_ && pointEstDansQuad)) {
+		if (ctrlAppuye_) {
 			noeud->inverserSelection();
 		}
-		else
-		{
+		else {
 			noeud->assignerSelection(true);
 		}
 	}
@@ -275,15 +259,15 @@ void VisiteurSelection::visiter(NoeudSegment* noeud)
 {
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	NoeudAbstrait* pere = noeud->obtenirParent();
-	if (estDrag_ && quadEstDansRectangleElastique(quad) ||
-	  (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad)))
-	{
-		if (ctrlAppuye_)
-		{
+
+	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
+	bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
+	if ((estDrag_ && quadEstDansRectangle) ||
+	   (!estDrag_ && pointEstDansQuad)) {
+		if (ctrlAppuye_) {
 			pere->inverserSelection();
 		}
-		else
-		{
+		else {
 			pere->assignerSelection(true);
 		}
 	}
@@ -304,14 +288,12 @@ void VisiteurSelection::visiter(NoeudJonction* noeud)
 {
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	NoeudAbstrait* pere = noeud->obtenirParent();
-	if (!estDrag_ && utilitaire::calculerPointEstDansQuad(positionRelative_, quad))
-	{
-		if (ctrlAppuye_)
-		{
+	bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
+	if (!estDrag_ && pointEstDansQuad) {
+		if (ctrlAppuye_) {
 			pere->inverserSelection();
 		}
-		else
-		{
+		else {
 			pere->assignerSelection(true);
 		}
 	}
@@ -330,11 +312,9 @@ void VisiteurSelection::visiter(NoeudJonction* noeud)
 ////////////////////////////////////////////////////////////////////////
 bool VisiteurSelection::quadEstDansRectangleElastique(const utilitaire::QuadEnglobant& quad)
 {
-	for (int i = 0; i < 4; i++)
-	{
+	for (int i = 0; i < 4; i++) {
 		if (!utilitaire::DANS_LIMITESXY(quad.coins[i].x, xMinRectangleElastique_, xMaxRectangleElastique_,
-									   quad.coins[i].y, yMinRectangleElastique_, yMaxRectangleElastique_))
-		{
+									    quad.coins[i].y, yMinRectangleElastique_, yMaxRectangleElastique_)) {
 			return false;
 		}
 	}

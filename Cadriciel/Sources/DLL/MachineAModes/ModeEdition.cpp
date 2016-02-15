@@ -45,7 +45,6 @@ ModeEdition::ModeEdition()
 ////////////////////////////////////////////////////////////////////////
 ModeEdition::~ModeEdition()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -59,10 +58,13 @@ ModeEdition::~ModeEdition()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererTouchePlus()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		;
-	else
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+
+	} 
+	else {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
+	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -76,10 +78,13 @@ void ModeEdition::gererTouchePlus()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererToucheMoins()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		;
-	else
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+
+	}
+	else {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -360,7 +365,8 @@ void ModeEdition::gererToucheControlRelachee()
 /// Cette fonction permet de gérer la sauvegarde dans le modeEdition.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeEdition::sauvegarder(){
+void ModeEdition::sauvegarder()
+{
 	unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
 }
@@ -372,7 +378,8 @@ void ModeEdition::sauvegarder(){
 /// Cette fonction permet de gérer le chargement dans le modeEdition.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeEdition::charger(){
+void ModeEdition::charger()
+{
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chargerZone();
 }
 
@@ -396,7 +403,8 @@ void ModeEdition::gererToucheSupprimer()
 /// Elle appelle la fonction gererToucheAltEnfoncee selon l'état obtenu.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheAltEnfoncee() {
+void ModeEdition::gererToucheAltEnfoncee()
+{
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
 }
 
@@ -408,7 +416,8 @@ void ModeEdition::gererToucheAltEnfoncee() {
 /// Elle appelle la fonction gererToucheAltRelachee selon l'état obtenu.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheAltRelachee(){
+void ModeEdition::gererToucheAltRelachee()
+{
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
 }
 
@@ -487,7 +496,7 @@ void  ModeEdition::gererClicGaucheRelache(const int& x, const int& y)
 ///@param[in] y : La position en y du curseur de la souris lors d'un mouvement de souris.
 ///
 ////////////////////////////////////////////////////////////////////////
-void  ModeEdition::gererMouvementSouris(const int & x, const int& y)
+void  ModeEdition::gererMouvementSouris(const int& x, const int& y)
 {
 	FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(x,y);
 }
@@ -504,14 +513,17 @@ void  ModeEdition::gererMouvementSouris(const int & x, const int& y)
 ///@param[in] delta : La différence entre du mouvement de molette de la souris.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererMoletteSouris(const int & delta){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		;
-	else{
-		if (delta>0)
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-		else
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-	}
+void ModeEdition::gererMoletteSouris(const int& delta)
+{
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
 
+	}
+	else {
+		if (delta > 0) {
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
+		}
+		else {
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+		}
+	}
 }

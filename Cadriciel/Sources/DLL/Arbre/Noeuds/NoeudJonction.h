@@ -26,7 +26,6 @@ class NoeudJonction : public NoeudAbstrait
 {
 
 public:
-
 	/// Constructeur
 	NoeudJonction(const std::string& typeNoeud);
 	/// Destructeur.
@@ -34,7 +33,6 @@ public:
 
 	/// Affiche la table.
 	virtual void afficherConcret() const;
-//	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 

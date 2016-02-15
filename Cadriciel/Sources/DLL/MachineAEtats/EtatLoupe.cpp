@@ -24,25 +24,22 @@
 /// @param const int& y: position en y du cursor
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatLoupe::gererClicGaucheRelache(const int& x, const int& y){
+void EtatLoupe::gererClicGaucheRelache(const int& x, const int& y)
+{
 	EtatAbstrait::gererClicGaucheRelache(x, y);
 
-	if (estClickDrag()){
-		if (toucheAltEnfonce_){
-			// unzoom dat shit
+	if (estClickDrag()) {
+		if (toucheAltEnfonce_) {
 			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOutElastique(anchor, glm::ivec2(x, y));
 		}
 		else{
-			// zoom dat shit
 			FacadeModele::obtenirInstance()->obtenirVue()->zoomerInElastique(anchor, glm::ivec2(x, y));
 		}
 	}
 
-	if (dessineRectangle){
+	if (dessineRectangle) {
 		FacadeModele::obtenirInstance()->continuerAffichage();
-		
 		aidegl::terminerRectangleElastique(anchor, glm::ivec2(x, y));
-
 		dessineRectangle = false;
 	}
 }
@@ -57,15 +54,16 @@ void EtatLoupe::gererClicGaucheRelache(const int& x, const int& y){
 /// @param const int& y: position en y du cursor
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatLoupe::gererMouvementSouris(const int & x, const int& y){
+void EtatLoupe::gererMouvementSouris(const int & x, const int& y)
+{
 	
-	if (clicGaucheEnfonce_){
+	if (clicGaucheEnfonce_) {
 		// Initialisation du rectangle elastique
-		if (estClickDrag()){
+		if (estClickDrag()) {
 			if (dessineRectangle)
 				aidegl::mettreAJourRectangleElastique(anchor, currentPosition_, glm::ivec2(x, y));
 
-			else{
+			else {
 				aidegl::initialiserRectangleElastique(anchor);
 				FacadeModele::obtenirInstance()->stopAffichage();
 				dessineRectangle = true;

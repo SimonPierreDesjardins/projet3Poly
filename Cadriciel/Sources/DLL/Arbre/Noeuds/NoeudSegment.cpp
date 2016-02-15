@@ -50,7 +50,8 @@ NoeudSegment::~NoeudSegment()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudSegment::accepterVisiteur(VisiteurAbstrait* visiteur){
+void NoeudSegment::accepterVisiteur(VisiteurAbstrait* visiteur)
+{
 	visiteur->visiter(this);
 }
 

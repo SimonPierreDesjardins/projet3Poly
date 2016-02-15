@@ -32,11 +32,9 @@ public:
 
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
-
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
-	//test stuff
 	float angle_{ 0.f };
 };
 
