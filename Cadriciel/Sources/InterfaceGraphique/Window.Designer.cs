@@ -90,6 +90,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort_.AutoSize = true;
             this.viewPort_.Location = new System.Drawing.Point(0, 27);
+            this.viewPort_.MinimumSize = new System.Drawing.Size(100, 100);
             this.viewPort_.Name = "viewPort_";
             this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.viewPort_.Size = new System.Drawing.Size(623, 402);
@@ -586,7 +587,7 @@
             this.Controls.Add(this.bouttonEditeur_);
             this.Controls.Add(this.bouttonConfiguration_);
             this.Controls.Add(this.viewPort_);
-            this.MinimumSize = new System.Drawing.Size(100, 100);
+            this.MinimumSize = new System.Drawing.Size(100, 148);
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulateur de robot";
