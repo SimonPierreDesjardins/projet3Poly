@@ -161,7 +161,8 @@ namespace InterfaceGraphique
             }
             foreach (FileInfo file in nodeDirInfo.GetFiles("*.json"))
             {
-                if (file.Length > 0)
+
+                if (file.Length > 0 && file.Name != nomFichierZoneDefaut)
                 {
                     item = new ListViewItem(file.Name, 1);
                     subItems = new ListViewItem.ListViewSubItem[]
