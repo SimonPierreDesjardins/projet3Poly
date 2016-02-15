@@ -37,8 +37,7 @@ EtatRotation::EtatRotation()
 ////////////////////////////////////////////////////////////////////////
 EtatRotation::~EtatRotation()
 {
-	if (clicGaucheEnfonce_)
-	{
+	if (clicGaucheEnfonce_) {
 		reinitialiser();
 	}
 }
@@ -75,13 +74,11 @@ void EtatRotation::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatRotation::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
-	if (arbre_ != nullptr)
-	{
+	if (arbre_ != nullptr) {
 		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	}
-	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
-	{
+	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 		reinitialiser();
 	}
 }
@@ -100,8 +97,7 @@ void EtatRotation::gererClicGaucheRelache(const int& x, const int& y)
 void EtatRotation::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
-	if (clicGaucheEnfonce_)
-	{
+	if (clicGaucheEnfonce_) {
 		visiteurRotation_->assignerAngleRotation((double)(y - dernierePositionY_));
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurRotation_.get());
 		dernierePositionY_ = y;

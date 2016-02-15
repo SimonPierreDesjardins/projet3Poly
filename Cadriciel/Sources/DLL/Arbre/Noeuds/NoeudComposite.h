@@ -62,7 +62,6 @@ public:
 
    // Changer la sélection du noeud: on prend la version de la classe de
    // base.
-   // virtual void inverserSelection();
    /// Efface les enfants sélectionnés.
    virtual void effacerSelection();
    /// Sélectionne tous les enfants de même que le noeud.
@@ -94,15 +93,10 @@ public:
    
 
 protected:
-	/// Le choix du conteneur pour les enfants.
-//	virtual void mettreAJourQuadEnglobantConcret(const glm::dvec3& positionRelative);
-
-
    /// Le choix du conteneur pour les enfants.
 	using conteneur_enfants = std::vector<std::shared_ptr<NoeudAbstrait>>;
    /// La liste des enfants.
    conteneur_enfants enfants_;
-
 
 private:
    /// Constructeur copie déclaré privé mais non défini pour éviter le

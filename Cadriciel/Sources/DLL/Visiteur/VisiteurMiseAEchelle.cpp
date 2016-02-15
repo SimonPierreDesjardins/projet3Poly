@@ -24,7 +24,6 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurMiseAEchelle::VisiteurMiseAEchelle()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -56,10 +55,10 @@ VisiteurMiseAEchelle::~VisiteurMiseAEchelle()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
 {
+	// Vider le vecteur de facteurs de dimensions intiaux.
 	facteursDimensionsInitiaux_.clear();
 	NoeudAbstrait* table = noeud->chercher("table");
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
-	{
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
 		facteursDimensionsInitiaux_.push_back(table->chercher(i)->obtenirFacteurMiseAEchelle());
 	}
 }
@@ -79,8 +78,7 @@ void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
 void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud)
 {
 	NoeudAbstrait* table = noeud->chercher("table");
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
-	{
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
 		table->chercher(i)->assignerFacteurMiseAEchelle(facteursDimensionsInitiaux_[i]);
 	}
 }
@@ -114,13 +112,11 @@ void VisiteurMiseAEchelle::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 {
-	NoeudAbstrait* enfant;
-	glm::dvec3 positionVirtuelle;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
-	{
+	NoeudAbstrait* enfant = nullptr;
+	glm::dvec3 positionVirtuelle = { 0.0, 0.0, 0.0 };
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
-		if (enfant->estSelectionne())
-		{
+		if (enfant->estSelectionne()) {
 			enfant->accepterVisiteur(this);
 		}
 	}
@@ -140,8 +136,7 @@ void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 {
 	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_;
-	if (facteurMiseAEchelle >= 0)
-	{
+	if (facteurMiseAEchelle >= 0) {
 		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
 	}
 }
@@ -160,8 +155,7 @@ void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 void VisiteurMiseAEchelle::visiter(NoeudMur* noeud)
 {
 	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_ * 2;
-	if (facteurMiseAEchelle >= 0)
-	{
+	if (facteurMiseAEchelle >= 0) {
 		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
 	}
 }

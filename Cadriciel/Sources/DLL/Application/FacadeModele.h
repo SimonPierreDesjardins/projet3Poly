@@ -33,7 +33,6 @@ class NoeudAbstrait;
 class FacadeModele
 {
 public:
-
    /// Destructeur.
    ~FacadeModele();
 
@@ -65,71 +64,35 @@ public:
    // Obtenir l'etat courant.
    inline ModeAbstrait* obtenirMode();
 
-   //Obtenir le nombre d'objet sélectionné
+   // Obtenir le nombre d'objet sélectionné
    int obtenirNombreSelection();
 
+   // Obtient si le modèle est autorisé à recevoir des entrées utilisateurs. 
+   inline bool obtenirAutorisationInputSouris() const; 
+   // Assigne si le modèle est autorisé à recevoir des entrées utilisateurs. 
+   inline void assignerAutorisationInputSouris(const bool& autorisation);
 
-   ////////////////////////////////////////////////////////////////////////
-   ///
-   /// @fn  bool obtenirAutorisationInput()
-   ///
-   /// Retourne si oui ou non le modele prend présentement les entrées claviers utilisateurs
-   ///
-   ///
-   /// @return Aucune.
-   ///
-   ////////////////////////////////////////////////////////////////////////
-   bool obtenirAutorisationInputClavier(){ return autorisationInputClavier_; };
+   inline bool obtenirAutorisationInputClavier() const;
 
-   ////////////////////////////////////////////////////////////////////////
-   ///
-   /// @fn  bool obtenirAutorisationInput()
-   ///
-   /// Assigne la valeur autorisation à la variable autorisationInputClavier_.
-   ///
-   /// @param[in] autorisation : Si vrai, permet au modele de prendre les entrées claviers utilisateurs.
-   ///
-   /// @return Aucune.
-   ///
-   ////////////////////////////////////////////////////////////////////////
-   void assignerAutorisationInputClavier(bool autorisation) { autorisationInputClavier_ = autorisation; };
+   inline void assignerAutorisationInputClavier(const bool& autorisation);
 
-   ////////////////////////////////////////////////////////////////////////
-   ///
-   /// @fn  bool obtenirAutorisationInput()
-   ///
-   /// Retourne si oui ou non le modele prend présentement les entrées souris sourisutilisateurs
-   ///
-   ///
-   /// @return Aucune.
-   ///
-   ////////////////////////////////////////////////////////////////////////
-   bool obtenirAutorisationInputSouris(){ return autorisationInputSouris_; };
-
-   ////////////////////////////////////////////////////////////////////////
-   ///
-   /// @fn  void assignerAutorisationInputSouris(bool autorisation)
-   ///
-   /// Assigne la valeur autorisation à la variable autorisationInputSouris_.
-   ///
-   /// @param[in] autorisation : Si vrai, permet au modele de prendre les entrées souris utilisateurs.
-   ///
-   /// @return Aucune.
-   ///
-   ////////////////////////////////////////////////////////////////////////
-   void assignerAutorisationInputSouris(bool autorisation) { autorisationInputSouris_ = autorisation; };
-
-   //Obtient des informations sur le noeud
+   // Obtient l'angle de rotaion du noeud selectionné. 
    double obtenirAngleRotation();
-   double obtenirFacteurGrandeur();
+   // Obtient le facteur de mise à échelle du noeud selectionné. 
+   double obtenirFacteurMiseAEchelle();
+   // Obtient la position relative en X du noeud selectionné.
    double obtenirPositionRelativeX();
+   // Obtient la position relative en Y du noeud selectionné.
    double obtenirPositionRelativeY();
 
-   //Assigne des informations sur le noeud
-   void assignerAngleRotation(double angle);
-   void assignerFacteurGrandeur(double facteurGrandeur);
-   void assignerPositionRelativeX(double positionRelativeX);
-   void assignerPositionRelativeY(double positionRelativeY);
+   // Assigne l'angle de rotaion du noeud selectionné. 
+   void assignerAngleRotation(const double& angle);
+   // Assigne le facteur de mise à échelle du noeud selectionné.
+   void assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle);
+   // Assigne la position relative en x du noeud sélectionné.
+   void assignerPositionRelativeX(const double& positionRelativeX);
+   // Assigne la position relative en x du noeud sélectionné. 
+   void assignerPositionRelativeY(const double& positionRelativeY);
 
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
@@ -225,7 +188,6 @@ inline vue::Vue* FacadeModele::obtenirVue()
    return vue_.get();
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline const shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
@@ -240,7 +202,6 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 {
    return arbre_.get();
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -257,9 +218,69 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
    return arbre_.get();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  bool obtenirAutorisationInput()
+///
+/// Retourne si oui ou non le modele prend présentement les entrées claviers utilisateurs
+///
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+inline bool FacadeModele::obtenirAutorisationInputClavier() const
+{
+	return autorisationInputClavier_; 
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  bool obtenirAutorisationInput()
+///
+/// Assigne la valeur autorisation à la variable autorisationInputClavier_.
+///
+/// @param[in] autorisation : Si vrai, permet au modele de prendre les entrées claviers utilisateurs.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+inline void FacadeModele::assignerAutorisationInputClavier(const bool& autorisation)
+{ 
+	autorisationInputClavier_ = autorisation;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  bool obtenirAutorisationInput()
+///
+/// Retourne si oui ou non le modele prend présentement les entrées souris sourisutilisateurs
+///
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+bool FacadeModele::obtenirAutorisationInputSouris() const 
+{ 
+	return autorisationInputSouris_; 
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void assignerAutorisationInputSouris(bool autorisation)
+///
+/// Assigne la valeur autorisation à la variable autorisationInputSouris_.
+///
+/// @param[in] autorisation : Si vrai, permet au modele de prendre les entrées souris utilisateurs.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerAutorisationInputSouris(const bool& autorisation)
+{ 
+	autorisationInputSouris_ = autorisation; 
+}
 
 #endif // __APPLICATION_FACADEMODELE_H__
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

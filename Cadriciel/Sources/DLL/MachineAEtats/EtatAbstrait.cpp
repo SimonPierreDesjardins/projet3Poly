@@ -41,7 +41,6 @@ EtatAbstrait::EtatAbstrait()
 ////////////////////////////////////////////////////////////////////////
 EtatAbstrait::~EtatAbstrait()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -123,13 +122,14 @@ void EtatAbstrait::gererClicGaucheRelache(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 {
-	if (clicDroitEnfonce_){
-		if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-			//TODO
-			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(NULL, NULL);
-		else
-			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
+	if (clicDroitEnfonce_) {
+		if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
 
+			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(NULL, NULL);
+		}
+		else {
+			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
+		}
 	}
 	currentPosition_ = glm::ivec2(x, y);
 }
@@ -142,7 +142,8 @@ void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 /// est à plus de trois pixels
 ///
 ////////////////////////////////////////////////////////////////////////
-bool EtatAbstrait::estClickDrag(){
+bool EtatAbstrait::estClickDrag()
+{
 	return (std::abs(currentPosition_.x - anchor.x) > 3 || std::abs(currentPosition_.y - anchor.y) > 3);
 }
 
@@ -155,7 +156,6 @@ bool EtatAbstrait::estClickDrag(){
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheEchappe()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -167,7 +167,6 @@ void EtatAbstrait::gererToucheEchappe()
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheControlEnfoncee()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -179,7 +178,6 @@ void EtatAbstrait::gererToucheControlEnfoncee()
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheControlRelachee()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -214,12 +212,12 @@ void EtatAbstrait::gererToucheAltRelachee()
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererTouchePlus(){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		//TODO Gérer le zoom plus pour une camera
-		;
-	else
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+		//TODO: Gérer le zoom plus pour une camera
+	}
+	else {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -230,11 +228,12 @@ void EtatAbstrait::gererTouchePlus(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheMoins(){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		//TODO Gérer le zoom moins pour une camera
-		;
-	else
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+		//TODO: Gérer le zoom moins pour une camera
+	}
+	else {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -248,15 +247,18 @@ void EtatAbstrait::gererToucheMoins(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMoletteSouris(const int & delta){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective())
-		;
-	else{
-		if (delta>0)
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-		else
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+		//TODO: 
 	}
-		
+	else {
+		if (delta > 0) {
+
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
+		}
+		else {
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -275,7 +277,7 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 	const int MAX_X =  48;
 	const int MIN_Y = -24;
 	const int MAX_Y =  24;
-	bool positionEstSurTable = (MIN_X <= position[0] && position[0] <= MAX_X && MIN_Y <= position[1] && position[1] <= MAX_Y);
+	bool positionEstSurTable = (MIN_X <= position.x && position.x <= MAX_X && MIN_Y <= position.y && position.y <= MAX_Y);
 	
 	gererEstSurTableConcret(positionEstSurTable);
 }
@@ -291,8 +293,7 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
 {
-	if (!positionEstSurTable)
-	{
+	if (!positionEstSurTable) {
 		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
 		SetCursor(Cursor);
 	}
@@ -311,8 +312,7 @@ void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
 void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 {
 	//Pour forme de cursor voir http://msdn.microsoft.com/en-us/library/ms648391%28v=vs.85%29.aspx
-	if (!estSymboleStandard) 
-	{
+	if (!estSymboleStandard) {
 		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
 		SetCursor(Cursor);
 	}

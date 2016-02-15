@@ -26,7 +26,6 @@ class VisiteurAbstrait;
 class NoeudLigne: public NoeudComposite
 {
 public:
-
 	/// Constructeur
 	NoeudLigne(const std::string& typeNoeud);
 	/// Destructeur.
@@ -34,9 +33,6 @@ public:
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
-
-private:
-
 };
 
 #endif //__ARBRE_NOEUDS_NOEUDLIGNE_H__

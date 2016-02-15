@@ -41,8 +41,7 @@ EtatCreationLigne::EtatCreationLigne()
 EtatCreationLigne::~EtatCreationLigne()
 {
 	// Effacer la ligne si on change d'outil lors d'une création.
-	if (enCreation_ && ligne_ != nullptr && segment_ != nullptr)
-	{
+	if (enCreation_ && ligne_ != nullptr && segment_ != nullptr) {
 		NoeudAbstrait* table = ligne_->obtenirParent();
 		table->effacer(ligne_);
 	}
@@ -67,16 +66,14 @@ EtatCreationLigne::~EtatCreationLigne()
 void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 {
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
-	if (!estClickDrag() && curseurEstSurTable_ && ligneEstSurTable())
-	{
+	if (!estClickDrag() && curseurEstSurTable_ && ligneEstSurTable()) {
 		// Calcul et assignation de la position virtuelle.
 		glm::dvec3 positionVirtuelle;
 		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		positionsClic_.push_back(positionVirtuelle);
 
 		// Premier clic avec ou sans CTRL enfoncee.
-		if (!enCreation_)
-		{
+		if (!enCreation_) {
 			enCreation_ = true;
 			arbre_->accepterVisiteur(visiteurCreationLigne_.get());
 			ligne_ = visiteurCreationLigne_->obtenirReferenceNoeud();
@@ -87,8 +84,7 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 
 		}
 		// Clic subsequent avec CTRL enfoncee.
-		else if (enCreation_ && toucheCtrlEnfonce_)
-		{		
+		else if (enCreation_ && toucheCtrlEnfonce_) {		
 			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 			std::shared_ptr<NoeudAbstrait> jonction = arbre_->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
 			jonction->assignerPositionRelative(positionVirtuelle);
@@ -97,8 +93,7 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 			segment_ = nouveauNoeud.get();
 		}
 		// Clic subsequent sans CTRL enfoncee (dernier clic).
-		else if (enCreation_ && !toucheCtrlEnfonce_)
-		{
+		else if (enCreation_ && !toucheCtrlEnfonce_) {
 			calculerPositionCentreLigne();
 			ligne_ = nullptr;
 			segment_ = nullptr;
@@ -117,8 +112,7 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererToucheEchappe()
 {
-	if (enCreation_)
-	{
+	if (enCreation_) {
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(ligne_);
 		ligne_ = nullptr;
 		segment_ = nullptr;
@@ -146,8 +140,7 @@ void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 	
 	gererEstSurTable(positionVirtuelle);
 
-	if (enCreation_)
-	{
+	if (enCreation_) {
 		assert(segment_ != nullptr);
 
 		// Calculer et assigner l'angle de rotation.
@@ -173,8 +166,7 @@ void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::gererToucheControlEnfoncee()
 {
-	if (!toucheCtrlEnfonce_)
-	{
+	if (!toucheCtrlEnfonce_) {
 		toucheCtrlEnfonce_ = true;
 	}
 }
@@ -204,39 +196,33 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 	if (positionsClic_.empty()) return;
 
 	// Initialiser les minimums et les maximums 
-	double minX = positionsClic_[0][0];
-	double maxX = positionsClic_[0][0];
-	double minY = positionsClic_[0][1];
-	double maxY = positionsClic_[0][1];
+	double minX = positionsClic_[0].x;
+	double maxX = positionsClic_[0].x;
+	double minY = positionsClic_[0].y;
+	double maxY = positionsClic_[0].y;
 
 	// Trouver les min / max dans les positions des clics.
-	for (int i = 0; i < positionsClic_.size(); i++)
-	{
-		if (positionsClic_[i][0] > maxX)
-		{
-			maxX = positionsClic_[i][0];
+	for (int i = 0; i < positionsClic_.size(); i++) {
+		if (positionsClic_[i].x > maxX) {
+			maxX = positionsClic_[i].x;
 		}
-		if (positionsClic_[i][0] < minX)
-		{
-			minX = positionsClic_[i][0];
+		if (positionsClic_[i].x < minX) {
+			minX = positionsClic_[i].x;
 		}
-		if (positionsClic_[i][1] > maxY)
-		{
-			maxY = positionsClic_[i][1];
+		if (positionsClic_[i].x > maxY) {
+			maxY = positionsClic_[i].y;
 		}
-		if (positionsClic_[i][1] < minY)
-		{
-			minY = positionsClic_[i][1];
+		if (positionsClic_[i].x < minY) {
+			minY = positionsClic_[i].y;
 		}
 	}
 	// Calculer et assigner la position relative à la ligne
-	glm::dvec3 centre = { (minX + maxX) / 2, (minY + maxY) / 2, 0 };
+	glm::dvec3 centre = { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0 };
 	ligne_->assignerPositionRelative(centre);
 
 	// Ajuster la position relative des segments.
 	glm::dvec3 positionEnfant;
-	for (unsigned int i = 0; i < ligne_->obtenirNombreEnfants(); i++)
-	{
+	for (unsigned int i = 0; i < ligne_->obtenirNombreEnfants(); i++) {
 		positionEnfant = ligne_->chercher(i)->obtenirPositionRelative();
 		positionEnfant -= centre;
 		ligne_->chercher(i)->assignerPositionRelative(positionEnfant);
@@ -257,19 +243,15 @@ void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
 
-	if (positionEstSurTable && !curseurEstSurTable_)
-	{
+	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
-		if (segment_ != nullptr)
-		{
+		if (segment_ != nullptr) {
 			segment_->assignerAffiche(true);
 		}
 	}
-	else if (!positionEstSurTable && curseurEstSurTable_)
-	{
+	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
-		if (segment_ != nullptr)
-		{
+		if (segment_ != nullptr) {
 			segment_->assignerAffiche(false);
 		}
 	}

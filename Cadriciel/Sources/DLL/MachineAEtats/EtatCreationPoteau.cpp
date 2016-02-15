@@ -71,8 +71,7 @@ void EtatCreationPoteau::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 {
 	EtatAbstrait::gererClicGaucheRelache(x, y);
-	if (!estClickDrag() && curseurEstSurTable_)
-	{
+	if (!estClickDrag() && curseurEstSurTable_) {
 		// Ajout du poteau sur la table.
 		glm::dvec3 positionVirtuelle;
 		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
@@ -83,8 +82,7 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		// Mettre à jour les quads et vérifier si le nouveau poteau se situe à l'extérieur de la table.
 		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
-		if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
-		{
+		if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 			arbre_->chercher("table")->effacer(poteau);
 		}
 	}
@@ -123,12 +121,10 @@ void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
 {
 	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
 
-	if (positionEstSurTable && !curseurEstSurTable_)
-	{
+	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
 	}
-	else if (!positionEstSurTable && curseurEstSurTable_)
-	{
+	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
 	}
 }

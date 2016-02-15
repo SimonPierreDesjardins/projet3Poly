@@ -129,9 +129,6 @@
     <ClCompile Include="MachineAEtats\EtatRotation.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="MachineAEtats\EtatSelection.cpp">
-      <Filter>Source Files\MachineAEtats</Filter>
-    </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp">
       <Filter>Source Files</Filter>
       <Filter>Source Files\Arbre\Noeuds</Filter>
@@ -222,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
+    <ClCompile Include="MachineAEtats\EtatSelection.cpp">
+      <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

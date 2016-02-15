@@ -37,8 +37,7 @@ EtatDeplacement::EtatDeplacement()
 ////////////////////////////////////////////////////////////////////////
 EtatDeplacement::~EtatDeplacement()
 {
-	if (clicGaucheEnfonce_)
-	{
+	if (clicGaucheEnfonce_) {
 		reinitialiser();
 	}
 }
@@ -75,13 +74,11 @@ void EtatDeplacement::gererClicGaucheEnfonce(const int& x, const int& y)
 void EtatDeplacement::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
-	if (arbre_ != nullptr)
-	{
+	if (arbre_ != nullptr) {
 		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	}
-	if (!visiteurVerificationQuad_->objetsDansZoneSimulation())
-	{
+	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 		reinitialiser();
 	}
 }
@@ -103,8 +100,7 @@ void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	
-	if (clicGaucheEnfonce_)
-	{
+	if (clicGaucheEnfonce_) {
 		visiteurDeplacement_->assignerPositionRelative(positionVirtuelle - dernierePositionVirtuelle_);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurDeplacement_.get());
 		dernierePositionVirtuelle_ = positionVirtuelle;

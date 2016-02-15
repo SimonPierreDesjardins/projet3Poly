@@ -22,14 +22,14 @@
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 
-namespace modele{
+namespace modele {
 	class Modele3D;
 }
-namespace opengl{
+namespace opengl {
 	class VBO;
 }
 
-namespace rapidjson{
+namespace rapidjson {
 	class FileWriteStream;
 }
 
@@ -51,54 +51,35 @@ class NoeudAbstrait : public std::enable_shared_from_this<NoeudAbstrait>
 {
 public:
 	/// Constructeur.
-	NoeudAbstrait(
-		const std::string& type = std::string{ "" }
-	);
+	NoeudAbstrait(const std::string& type = std::string{ "" });
 	/// Destructeur.
 	virtual ~NoeudAbstrait();
 
 	/// Obtient le parent de ce noeud.
 	inline NoeudAbstrait* obtenirParent();
-
 	/// Obtient le parent de ce noeud (version constante).
 	inline const NoeudAbstrait* obtenirParent() const;
-
 	/// Assigne le parent de ce noeud.
 	inline void assignerParent(NoeudAbstrait* parent);
 
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
-
 	/// Assigne la position relative du noeud.
-	inline void assignerPositionRelative(const glm::dvec3& positionRelative);
-	
+	inline void assignerPositionRelative(const glm::dvec3& positionRelative);	
 	/// Obtient l'angle de rotation du noeud.
 	inline double obtenirAngleRotation() const;
-
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
 	inline void assignerAngleRotation(const double& angleRotation);
-
 	/// Obtient le facteur de dimension du noeud.
 	inline double obtenirFacteurMiseAEchelle() const;
-
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
-
 	/// Obtient le quadrilatère englobant du noeud.
 	inline utilitaire::QuadEnglobant obtenirQuadEnglobantCourant() const;
-
 	/// Assigne le quadrilatère englobant du noeud.
 	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
-	
 	/// Obtenir la boite englobante du modèle.
 	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
-	
-	/// Mettre à jour le quadrilatère englobant du noeud en fonction d'une position relative.
-	//void mettreAJourQuadEnglobant();
-
-	/// Mettre à jour le quadrilatère du noeud de manière concrète en fonction d'une position relative.
-	//virtual void mettreAJourQuadEnglobantConcret();
-
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
 
@@ -106,7 +87,6 @@ public:
 	inline void assignerAffiche(bool affiche);
 	/// Vérifie si le noeud se fait afficher.
 	inline bool estAffiche() const;
-
 	/// Écrit l'état de la sélection du noeud.
 	inline void assignerSelection(bool selectionne);
 	/// Vérifie si le noeud est sélectionné.

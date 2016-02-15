@@ -1236,7 +1236,7 @@ namespace InterfaceGraphique
         public static extern void assignerAngleRotation(double angle);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerFacteurGrandeur(double facteurGrandeur);
+        public static extern void assignerFacteurGrandeur(double facteurMiseAEchelle);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerPositionRelativeX(double positionRelativeX);

@@ -12,8 +12,6 @@
 #include <Windows.h>
 #include <Windowsx.h>
 
-
-
 extern "C"
 {
 	__declspec(dllexport) void initialiserOpenGL(int * handle);
@@ -53,8 +51,9 @@ extern "C"
 	__declspec(dllexport) double obtenirPositionRelativeY();
 
 	__declspec(dllexport) void assignerAngleRotation(double angle);
-	__declspec(dllexport) void assignerFacteurGrandeur(double facteurGrandeur);
+	__declspec(dllexport) void assignerFacteurGrandeur(double facteurMiseAEchelle);
 	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX);
 	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY);
 }
+
 #endif // __FACADE_INTERFACE_NATIVE_H__

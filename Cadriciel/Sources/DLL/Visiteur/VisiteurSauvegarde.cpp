@@ -73,7 +73,7 @@ void VisiteurSauvegarde::visiter(NoeudTable* noeud)
 	writer->Key(noeud->obtenirType().c_str());
 	writer->StartObject();
 	noeud->toJson(*writer);
-	if (noeud->obtenirNombreEnfants() > 0){
+	if (noeud->obtenirNombreEnfants() > 0) {
 		writer->Key("noeudsEnfants");
 		writer->StartArray();
 		visiterEnfants(noeud);
@@ -133,7 +133,7 @@ void VisiteurSauvegarde::visiter(NoeudLigne* noeud)
 {
 	writer->StartObject();
 	noeud->toJson(*writer);
-	if (noeud->obtenirNombreEnfants() > 0){
+	if (noeud->obtenirNombreEnfants() > 0) {
 		writer->Key("noeudsEnfants");
 		writer->StartArray();
 		visiterEnfants(noeud);
@@ -209,8 +209,7 @@ void VisiteurSauvegarde::visiter(NoeudJonction* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
 {
-	for each(shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants())
-	{
+	for each(shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants()) {
 		noeudAbs->accepterVisiteur(this);
 	}
 }

@@ -40,7 +40,6 @@ VisiteurVerificationQuad::VisiteurVerificationQuad()
 ////////////////////////////////////////////////////////////////////////
 VisiteurVerificationQuad::~VisiteurVerificationQuad()
 {
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -74,8 +73,7 @@ void VisiteurVerificationQuad::visiter(NoeudTable* noeud)
 {
 	objetsDansZoneSimulation_ = true;
 	NoeudAbstrait* enfant = nullptr;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
-	{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++) {
 		enfant = noeud->chercher(i);
 		enfant->accepterVisiteur(this);
 	}
@@ -94,8 +92,7 @@ void VisiteurVerificationQuad::visiter(NoeudTable* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 {
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
-	{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++) {
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
@@ -113,8 +110,7 @@ void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
-	{
+	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
@@ -132,8 +128,7 @@ void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
-	{
+	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
@@ -151,8 +146,7 @@ void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudDepart* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
-	{
+	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
@@ -170,8 +164,7 @@ void VisiteurVerificationQuad::visiter(NoeudDepart* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudLigne* noeud)
 {
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++)
-	{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++) {
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
@@ -189,8 +182,7 @@ void VisiteurVerificationQuad::visiter(NoeudLigne* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++)
-	{
+	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
 		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
 	}
 }
@@ -209,10 +201,10 @@ void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 bool VisiteurVerificationQuad::verifierPointEstSurTable(glm::dvec3 point)
 {
 	// Les valeurs maximales de la table.
-	const int MIN_X = -48;
-	const int MAX_X =  48;
-	const int MIN_Y = -24;
-	const int MAX_Y =  24;
+	const double MIN_X = -48.0;
+	const double MAX_X =  48.0;
+	const double MIN_Y = -24.0;
+	const double MAX_Y =  24.0;
 
-	return MIN_X <= point.x && point.x <= MAX_X && MIN_Y <= point.y && point.y <= MAX_Y;
+	return (MIN_X <= point.x && point.x <= MAX_X && MIN_Y <= point.y && point.y <= MAX_Y);
 }
