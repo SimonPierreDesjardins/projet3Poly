@@ -654,12 +654,16 @@ namespace InterfaceGraphique
         private void aideMenuEdition__Click(object sender, EventArgs e)
         {
             PopOutInterface popup = new PopOutInterface();
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+            FonctionsNatives.assignerAutorisationInputSouris(false);
             DialogResult dialogresult = popup.ShowDialog();
             if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
             {
                 popup.Dispose();
                 viewPort_.Focus();
             }
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+            FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
         ////////////////////////////////////////////////////////////////////////

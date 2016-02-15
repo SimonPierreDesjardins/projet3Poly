@@ -136,21 +136,65 @@ extern "C"
 		FacadeModele::obtenirInstance()->animer((float)temps);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl sauvegarder()
+	///
+	/// Cette fonction écrit la structure de l'arbre de rendu dans un fichier qui a été charger au préalable.
+	///
+	///
+	/// @return Aucune.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl sauvegarder(){
 		FacadeModele::obtenirInstance()->obtenirMode()->sauvegarder();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl charger()
+	///
+	/// Cette fonction charge un fichier sélectionné par l'utilisateur.
+	///
+	///
+	/// @return Aucune.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl charger(){
 		FacadeModele::obtenirInstance()->obtenirMode()->charger();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerCheminFichierZone(char* chemin)
+	///
+	/// Cette fonction assigne le chemin vers le fichier sélectionné par l'utilisateur.
+	///
+	/// @param[in] chemin : chemin vers le fichier de zone
+	///
+	/// @return Aucune.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerCheminFichierZone(char* chemin){
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerCheminFichierZone(std::string(chemin));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirCheminFichierZoneDefaut(char* chemin, int longueur)
+	///
+	/// Cette fonction permet d'obtenir le chemin vers le fichier de zone par défaut.
+	///
+	/// @param[in] chemin : contenur pour la string représentant le chemin versle fichier de zone par défaut
+	/// @param[in] longueur : taille du conteneur
+	///
+	/// @return Aucune.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl obtenirCheminFichierZoneDefaut(char* chemin, int longueur){
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZoneDefaut().c_str());
 	}
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) void __cdecl zoomIn()
