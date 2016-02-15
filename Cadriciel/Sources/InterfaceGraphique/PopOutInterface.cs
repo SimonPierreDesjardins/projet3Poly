@@ -1,6 +1,6 @@
 ﻿////////////////////////////////////////////////
 /// @file   PopOutInterface.cs
-/// @author INF2990
+/// @author Frédéric Grégoire
 /// @date   2016-02-13
 ///
 /// @addtogroup inf2990 INF2990
