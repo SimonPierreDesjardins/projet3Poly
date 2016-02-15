@@ -127,3 +127,6 @@ void EtatMiseAEchelle::reinitialiser()
 	visiteurMiseAEchelle_->assignerFacteurMiseAEchelle(positionInitialeY_ - dernierePositionY_);
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAEchelle_.get());
 }
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////
