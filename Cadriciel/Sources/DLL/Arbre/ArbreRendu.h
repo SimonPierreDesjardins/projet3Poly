@@ -13,7 +13,7 @@
 
 #include "NoeudComposite.h"
 
-#include <string>
+
 #include <map>
 #include <memory>
 #include "UsineNoeud.h"

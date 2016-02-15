@@ -15,6 +15,10 @@
 #include <stdio.h>
 #include "rapidjson\filereadstream.h"
 #include <sys/stat.h>
+#include <windows.h>
+#include <locale>
+#include <codecvt>
+#include <string>
 
 /// La chaîne représentant le type du robot.
 const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
@@ -103,6 +107,14 @@ void ArbreRenduINF2990::initialiser()
 ////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::chargerZoneDefaut(){
 	struct stat buffer;
+	std::string cheminDossierZone = cheminFichierZoneDefaut.substr(0, cheminFichierZoneDefaut.find_last_of('/') + 1);
+
+	if (stat(cheminDossierZone.c_str(), &buffer) != 0){
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+		std::wstring wideString = converter.from_bytes(cheminDossierZone);
+		CreateDirectory(wideString.c_str(), NULL);
+	}
+
 	if (stat(cheminFichierZoneDefaut.c_str(), &buffer) != 0) {
 		shared_ptr<NoeudAbstrait> table = { creerNoeud(NOM_TABLE) };
 		ajouter(table);
@@ -113,6 +125,7 @@ void ArbreRenduINF2990::chargerZoneDefaut(){
 		accepterVisiteur(visiteur.get());
 		return;
 	}
+
 	chargerZone(obtenirFichierZoneDefaut("rb"));
 }
 
