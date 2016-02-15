@@ -15,11 +15,6 @@ namespace InterfaceGraphique
     public partial class ExplorateurOuverture : Form
     {
         /// <summary>
-        /// Dossier racine contenant les zones
-        /// </summary>
-        private TreeNode rootNode;
-
-        /// <summary>
         /// Chemin vers le fichier que l'utilisateur a sélectionné
         /// </summary>
         public String cheminFichier;
