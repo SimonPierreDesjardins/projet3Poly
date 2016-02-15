@@ -519,6 +519,18 @@ namespace utilitaire {
 		}
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn double calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux)
+	///
+	/// Fonction qui permet de calculer l'angle de rotation entre deux points.
+	///
+	/// @param[in] pointUn : Un dvec3 représentant le point 1.
+	/// @param[in] pointDeux :  Un dvec3 représentant le point 2.
+	///
+	/// @return Le double angle.
+	///
+	////////////////////////////////////////////////////////////////////////
 	double calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		double dx = pointDeux[0] - pointUn[0];
@@ -559,7 +571,18 @@ namespace utilitaire {
 		}
 		return RAD_TO_DEG(angle);
 	}
-	//TODO: à remplacer par glm::distance.
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux)
+	///
+	/// Fonction qui permet de calculer la distance de l'hypoténuse avec deux points
+	///
+	/// @param[in] pointUn : Un dvec3 représentant le point 1.
+	/// @param[in] pointDeux :  Un dvec3 représentant le point 2.
+	///
+	/// @return Le double distance.
+	///
+	////////////////////////////////////////////////////////////////////////
 	double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		double distanceX = pointUn[0] - pointDeux[0];
@@ -568,6 +591,18 @@ namespace utilitaire {
 		return distance;
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux)
+	///
+	/// Fonction qui permet de calculer la position moyenne entre deux points
+	///
+	/// @param[in] pointUn : Un dvec3 représentant le point 1.
+	/// @param[in] pointDeux : Un dvec3 représentant le point 2.
+	///
+	/// @return Le dvec3 nouvellePosition.
+	///
+	////////////////////////////////////////////////////////////////////////
 	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux)
 	{
 		glm::dvec3 nouvellePosition;
@@ -576,12 +611,36 @@ namespace utilitaire {
 		return nouvellePosition;
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn void calculerPositionApresRotation(const glm::dvec3& positionInitiale, glm::dvec3& positionFinale, const double& theta)
+	///
+	/// Fonction qui permet de calculer la position d'un point après une rotation.
+	///
+	/// @param[in] positionInitiale : Un dvec3 représentant le point initiale avant la rotation.
+	/// @param[in] positionFinale : Un dvec3 représentant le point finale après la rotation.
+	/// @param[in] theta : Un double représentant l'angle de rotation.
+	///
+	/// @return Aucune.
+	///
+	////////////////////////////////////////////////////////////////////////
 	void calculerPositionApresRotation(const glm::dvec3& positionInitiale, glm::dvec3& positionFinale, const double& theta)
 	{
 		positionFinale[0] = positionInitiale[0] * cos(DEG_TO_RAD(theta)) - positionInitiale[1] * sin(DEG_TO_RAD(theta));
 		positionFinale[1] = positionInitiale[0] * sin(DEG_TO_RAD(theta)) + positionInitiale[1] * cos(DEG_TO_RAD(theta));
 	}
-
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn bool calculerPointEstDansQuad(const glm::dvec3& point, const QuadEnglobant& quad)
+	///
+	/// Fonction qui permet de calculer si le point est dans le quadrilatère
+	///
+	/// @param[in] point : Un dvec3 représentant le point désiré.
+	/// @param[in] quad : Un QuadEnglobant représentant le quadrilatère
+	///
+	/// @return bool pointEstDansQuad.
+	///
+	////////////////////////////////////////////////////////////////////////
 	bool calculerPointEstDansQuad(const glm::dvec3& point, const QuadEnglobant& quad)
 	{
 		const int N = 4;
