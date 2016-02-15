@@ -107,15 +107,14 @@ void ArbreRenduINF2990::initialiser()
 ////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::chargerZoneDefaut(){
 	struct stat buffer;
-	std::string cheminDossierZone = cheminFichierZoneDefaut.substr(0, cheminFichierZoneDefaut.find_last_of('/') + 1);
-
-	if (stat(cheminDossierZone.c_str(), &buffer) != 0){
-		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-		std::wstring wideString = converter.from_bytes(cheminDossierZone);
-		CreateDirectory(wideString.c_str(), NULL);
-	}
-
+	
 	if (stat(cheminFichierZoneDefaut.c_str(), &buffer) != 0) {
+		std::string cheminDossierZone = cheminFichierZoneDefaut.substr(0, cheminFichierZoneDefaut.find_last_of('/') + 1);
+		if (stat(cheminDossierZone.c_str(), &buffer) != 0){
+			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+			std::wstring wideString = converter.from_bytes(cheminDossierZone);
+			CreateDirectory(wideString.c_str(), NULL);
+		}
 		shared_ptr<NoeudAbstrait> table = { creerNoeud(NOM_TABLE) };
 		ajouter(table);
 		shared_ptr<NoeudAbstrait> pointDepart = { creerNoeud(NOM_DEPART) };
