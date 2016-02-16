@@ -1,0 +1,105 @@
+.TH "ArbreRendu" 3 "Mon Feb 15 2016" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ArbreRendu \- Classe d'arbre de rendu qui contient la racine de l'arbre de rendu avec les usines qui permettent d'ajouter des noeuds à cet arbre\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ArbreRendu\&.h>\fP
+.PP
+Inherits \fBNoeudComposite\fP\&.
+.PP
+Inherited by \fBArbreRenduINF2990\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBArbreRendu\fP ()"
+.br
+.RI "\fIConstructeur par défaut\&. \fP"
+.ti -1c
+.RI "virtual \fB~ArbreRendu\fP ()"
+.br
+.RI "\fIDestructeur\&. \fP"
+.ti -1c
+.RI "void \fBajouterUsine\fP (const std::string &type, std::unique_ptr< const \fBUsineAbstraite\fP > usine)"
+.br
+.RI "\fIAjoute une usine associée à un type de noeud\&. \fP"
+.ti -1c
+.RI "std::shared_ptr< \fBNoeudAbstrait\fP > \fBcreerNoeud\fP (const std::string &typeNouveauNoeud) const "
+.br
+.RI "\fICrée un nouveau noeud\&. \fP"
+.ti -1c
+.RI "std::shared_ptr< \fBNoeudAbstrait\fP > \fBajouterNouveauNoeud\fP (const std::string &nomParent, const std::string &typeNouveauNoeud)"
+.br
+.RI "\fICrée et ajoute un nouveau noeud à l'arbre\&. \fP"
+.ti -1c
+.RI "void \fBaccepterVisiteur\fP (\fBVisiteurAbstrait\fP *visiteur)"
+.br
+.RI "\fIAccepter un visiteur\&. \fP"
+.ti -1c
+.RI "void \fBassignerCheminFichierZone\fP (std::string chemin)"
+.br
+.RI "\fIAssigne le chemin du fichier sélectionné par l'utilisateur\&. \fP"
+.ti -1c
+.RI "FILE * \fBobtenirFichierZone\fP (std::string mode)"
+.br
+.RI "\fIRetourne un pointeur vers le fichier sélectionné par l'utilisateur\&. \fP"
+.ti -1c
+.RI "std::string \fBobtenirCheminFichierZoneDefaut\fP ()"
+.br
+.RI "\fIRetourne le chemin vers le fichier de zone de base\&. \fP"
+.in -1c
+.SS "Static Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "static unsigned int \fBcalculerProfondeurMaximale\fP ()"
+.br
+.RI "\fICalcule la profondeur maximale possible pour l'arbre de rendu\&. \fP"
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "FILE * \fBobtenirFichierZoneDefaut\fP (std::string mode)"
+.br
+.RI "\fIRetourne un pointeur vers le fichier de structure de base\&. \fP"
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "const std::string \fBcheminFichierZoneDefaut\fP = '\&./Zones/zone_par_defaut\&.json'"
+.br
+.RI "\fIConstante représentant le fichier zone contenant la structure de base\&. \fP"
+.ti -1c
+.RI "std::string \fBcheminFichierZone\fP"
+.br
+.RI "\fIChemin vers le fichier de zone sélectionné par l'utilisateur\&. \fP"
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Classe d'arbre de rendu qui contient la racine de l'arbre de rendu avec les usines qui permettent d'ajouter des noeuds à cet arbre\&. 
+
+La profondeur de cet arbre est limitée par la taille de la pile des matrices et la taille de la pile des noms pour la sélection OpenGL, étant donné que chaque niveau de l'arbre effectue un 'push' sur chacune de ces piles lors du rendu\&. L'arbre ne vérifie pas que la profondeur reste sous la limite, mais il offre des fonctions permettant de le vérifier aisément\&.
+.PP
+\fBAuthor:\fP
+.RS 4
+Martin Bisson 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2007-01-28 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for My Project from the source code\&.

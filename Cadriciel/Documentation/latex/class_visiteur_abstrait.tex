@@ -1,0 +1,108 @@
+\hypertarget{class_visiteur_abstrait}{}\section{Visiteur\+Abstrait Class Reference}
+\label{class_visiteur_abstrait}\index{Visiteur\+Abstrait@{Visiteur\+Abstrait}}
+
+
+Classe de base du patron visiteur utilisée pour effectuer des manipulations sur l\textquotesingle{}arbre de rendu.  
+
+
+
+
+{\ttfamily \#include $<$Visiteur\+Abstrait.\+h$>$}
+
+Inheritance diagram for Visiteur\+Abstrait\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_visiteur_abstrait}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__inf2990_gab30d8c699bab1b4538f79e5750468d2d}{Visiteur\+Abstrait} ()
+\begin{DoxyCompactList}\small\item\em Constructeur par défaut. \end{DoxyCompactList}\item 
+virtual \hyperlink{group__inf2990_ga49b82dbd9c247719aece829132013f45}{$\sim$\+Visiteur\+Abstrait} ()
+\begin{DoxyCompactList}\small\item\em Destructeur. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga865f6a23e40671d242c4b1be08e5b64a}{assigner\+Position\+Relative} (glm\+::dvec3 position\+Relative)
+\item 
+void \hyperlink{group__inf2990_ga502ec76a196806a076cfb94922880361}{assigner\+Position\+Relative\+Avant} (glm\+::dvec3 position\+Relative\+Avant)
+\item 
+void \hyperlink{group__inf2990_ga584c5fd6e43fa50348f915645aa7106f}{assigner\+Position\+Relative\+Apres} (glm\+::dvec3 position\+Relative\+Apres)
+\item 
+void \hyperlink{group__inf2990_ga3036c649ed93909baf0060a3055e3d83}{assigner\+Angle\+Rotation} (double angle\+Rotation)
+\item 
+void \hyperlink{group__inf2990_gaeb5a06db4d8895f86b8d6563974461c4}{assigner\+Facteur\+Mise\+A\+Echelle} (double facteur\+Dimension)
+\item 
+void \hyperlink{group__inf2990_gac9697e56d1de349151d72e6030db45b9}{assigner\+Est\+Affiche} (const bool \&est\+Affiche)
+\item 
+void \hyperlink{group__inf2990_ga5a9d4c82f2fe5ae47f13754cd2587c4d}{assigner\+Est\+Drag} (const bool \&est\+Drag)
+\item 
+\hyperlink{class_noeud_abstrait}{Noeud\+Abstrait} $\ast$ \hyperlink{group__inf2990_gaeb7b5cd0cad75b1ab4caa2f8a65d5fba}{obtenir\+Reference\+Noeud} ()
+\item 
+bool \hyperlink{group__inf2990_gad841f0b531514e5ffa98b591dc19004a}{obtenir\+Est\+Drag} ()
+\item 
+virtual void \hyperlink{group__inf2990_gace1e0b18f5e6a01d16c7ed2d55fffbe3}{visiter} (\hyperlink{class_arbre_rendu}{Arbre\+Rendu} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_ga06d7edfabeb6e0bcc7451128bed6edba}{visiter} (\hyperlink{class_noeud_table}{Noeud\+Table} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_ga46caa33e562f0f200c247562606ca63a}{visiter} (\hyperlink{class_noeud_poteau}{Noeud\+Poteau} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gaca7d5269422bb4564b03f6a73a381b8e}{visiter} (\hyperlink{class_noeud_mur}{Noeud\+Mur} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_ga3bc8e290c245c5c2e6df6b0669d9e72d}{visiter} (\hyperlink{class_noeud_ligne}{Noeud\+Ligne} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_ga73238504ddd7c749f407899c1660ea1d}{visiter} (\hyperlink{class_noeud_segment}{Noeud\+Segment} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gafcb35663383811eaca17cf5155c0b03d}{visiter} (\hyperlink{class_noeud_duplication}{Noeud\+Duplication} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_ga17b03f5673cb67859cb6ba724fef9190}{visiter} (\hyperlink{class_noeud_depart}{Noeud\+Depart} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gadada2d404915273990ff60d03e5857b0}{visiter} (\hyperlink{class_noeud_jonction}{Noeud\+Jonction} $\ast$noeud)
+\item 
+virtual void {\bfseries visiter} (\hyperlink{class_noeud_robot}{Noeud\+Robot} $\ast$noeud)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+glm\+::dvec3 {\bfseries position\+Relative\+\_\+} \{ glm\+::dvec3() \}\hypertarget{class_visiteur_abstrait_a56f8d1abe8a3cc316cdcfdb3730e9d5f}{}\label{class_visiteur_abstrait_a56f8d1abe8a3cc316cdcfdb3730e9d5f}
+
+\item 
+glm\+::dvec3 {\bfseries position\+Relative\+Avant\+\_\+} \{ glm\+::dvec3() \}\hypertarget{class_visiteur_abstrait_acfad330cb989c5baef39aa59a6013a81}{}\label{class_visiteur_abstrait_acfad330cb989c5baef39aa59a6013a81}
+
+\item 
+glm\+::dvec3 {\bfseries position\+Relative\+Apres\+\_\+} \{ glm\+::dvec3() \}\hypertarget{class_visiteur_abstrait_a55cec3f2baeee84bed64948c9ed94b75}{}\label{class_visiteur_abstrait_a55cec3f2baeee84bed64948c9ed94b75}
+
+\item 
+bool {\bfseries est\+Drag\+\_\+} \{ false \}\hypertarget{class_visiteur_abstrait_abaa36bdb41ac9f9932c7a4d1ccbe9774}{}\label{class_visiteur_abstrait_abaa36bdb41ac9f9932c7a4d1ccbe9774}
+
+\item 
+double {\bfseries angle\+Rotation\+\_\+} \{ 0.\+0 \}\hypertarget{class_visiteur_abstrait_a534b6a86b0f91dd604b47c4d00a47ac9}{}\label{class_visiteur_abstrait_a534b6a86b0f91dd604b47c4d00a47ac9}
+
+\item 
+double {\bfseries facteur\+Mise\+A\+Echelle\+\_\+} \{ 0.\+0 \}\hypertarget{class_visiteur_abstrait_a8eade6c59a550a5cbb9b68b2cc8ec0b0}{}\label{class_visiteur_abstrait_a8eade6c59a550a5cbb9b68b2cc8ec0b0}
+
+\item 
+bool {\bfseries est\+Affiche\+\_\+} \{ false \}\hypertarget{class_visiteur_abstrait_a1c0c63b97e92c80396086386200b2081}{}\label{class_visiteur_abstrait_a1c0c63b97e92c80396086386200b2081}
+
+\item 
+\hyperlink{class_noeud_abstrait}{Noeud\+Abstrait} $\ast$ {\bfseries reference\+Noeud\+\_\+} \{ nullptr \}\hypertarget{class_visiteur_abstrait_a3c79044bbcffb9db9ec8412d3142c2b7}{}\label{class_visiteur_abstrait_a3c79044bbcffb9db9ec8412d3142c2b7}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Classe de base du patron visiteur utilisée pour effectuer des manipulations sur l\textquotesingle{}arbre de rendu. 
+
+Cette classe abstraite comprend l\textquotesingle{}interface de base que doivent implanter tous les visiteurs concrets.
+
+\begin{DoxyAuthor}{Author}
+Olivier St-\/\+Amour 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016-\/01-\/13 
+\end{DoxyDate}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+D\+L\+L/\+Visiteur/\hyperlink{_visiteur_abstrait_8h}{Visiteur\+Abstrait.\+h}\item 
+Sources/\+D\+L\+L/\+Visiteur/Visteur\+Abstrait.\+cpp\end{DoxyCompactItemize}

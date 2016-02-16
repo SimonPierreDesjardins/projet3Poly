@@ -1,0 +1,152 @@
+.TH "EtatAbstrait" 3 "Mon Feb 15 2016" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+EtatAbstrait \- Classe de base pour chaque état\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <EtatAbstrait\&.h>\fP
+.PP
+Inherited by \fBEtatCreationLigne\fP, \fBEtatCreationMur\fP, \fBEtatCreationPoteau\fP, \fBEtatDeplacement\fP, \fBEtatDuplication\fP, \fBEtatLoupe\fP, \fBEtatMiseAEchelle\fP, \fBEtatRotation\fP, and \fBEtatSelection\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBEtatAbstrait\fP ()"
+.br
+.ti -1c
+.RI "virtual \fB~EtatAbstrait\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicDroitEnfonce\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicDroitRelache\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicGaucheEnfonce\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicGaucheRelache\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererMouvementSouris\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererMoletteSouris\fP (const int &delta)"
+.br
+.ti -1c
+.RI "void \fBgererPositionCurseur\fP (const glm::dvec3 &position)"
+.br
+.ti -1c
+.RI "virtual void \fBgererPositionCurseurConcret\fP (const bool &pointeurEstSurTable)"
+.br
+.ti -1c
+.RI "virtual void \fBassignerSymboleCurseur\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheEchappe\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheControlEnfoncee\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheControlRelachee\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererTouchePlus\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheMoins\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheAltEnfoncee\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheAltRelachee\fP ()"
+.br
+.ti -1c
+.RI "Etat \fBobtenirTypeEtat\fP () const "
+.br
+.in -1c
+.SS "Protected Member Functions"
+
+.in +1c
+.ti -1c
+.RI "virtual void \fBreinitialiser\fP ()"
+.br
+.ti -1c
+.RI "bool \fBestClickDrag\fP ()"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "Etat \fBtypeEtat_\fP { SELECTION }"
+.br
+.ti -1c
+.RI "\fBArbreRendu\fP * \fBarbre_\fP { nullptr }"
+.br
+.ti -1c
+.RI "vue::Vue * \fBvue_\fP { nullptr }"
+.br
+.ti -1c
+.RI "bool \fBcurseurEstSurTable_\fP { true }"
+.br
+.ti -1c
+.RI "bool \fBenCreation_\fP { false }"
+.br
+.ti -1c
+.RI "bool \fBtoucheCtrlEnfonce_\fP { false }"
+.br
+.ti -1c
+.RI "bool \fBtoucheAltEnfonce_\fP { false }"
+.br
+.ti -1c
+.RI "bool \fBclicGaucheEnfonce_\fP {false}"
+.br
+.ti -1c
+.RI "bool \fBclicDroitEnfonce_\fP {false}"
+.br
+.ti -1c
+.RI "int \fBancienX_\fP { 0 }"
+.br
+.ti -1c
+.RI "int \fBancienY_\fP { 0 }"
+.br
+.ti -1c
+.RI "glm::ivec2 \fBanchor\fP {glm::ivec2()}"
+.br
+.in -1c
+.SS "Static Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "static glm::ivec2 \fBcurrentPosition_\fP = { 0\&.0, 0\&.0 }"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Classe de base pour chaque état\&. 
+
+Cette classe abstraite comprend l'interface de base que doivent implanter tous les états pouvant être présent dans le modèle
+.PP
+\fBAuthor:\fP
+.RS 4
+Frédéric Grégoire 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2016-02-15 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for My Project from the source code\&.

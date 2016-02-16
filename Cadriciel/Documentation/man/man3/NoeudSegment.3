@@ -1,0 +1,54 @@
+.TH "NoeudSegment" 3 "Mon Feb 15 2016" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+NoeudSegment \- Chaque noeud de ce type représente un des segments qui composent une ligne noire\&. Celles-ci se situent habituellement sous un objet de type \fBNoeudLigne\fP\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <NoeudSegment\&.h>\fP
+.PP
+Inherits \fBNoeudAbstrait\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBNoeudSegment\fP (const std::string &typeNoeud)"
+.br
+.RI "\fIConstructeur\&. \fP"
+.ti -1c
+.RI "\fB~NoeudSegment\fP ()"
+.br
+.RI "\fIDestructeur\&. \fP"
+.ti -1c
+.RI "virtual void \fBafficherConcret\fP () const "
+.br
+.RI "\fIAffiche le segment\&. \fP"
+.ti -1c
+.RI "virtual void \fBaccepterVisiteur\fP (\fBVisiteurAbstrait\fP *visiteur)"
+.br
+.in -1c
+.SS "Additional Inherited Members"
+.SH "Detailed Description"
+.PP 
+Chaque noeud de ce type représente un des segments qui composent une ligne noire\&. Celles-ci se situent habituellement sous un objet de type \fBNoeudLigne\fP\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Frédéric Grégoire 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2016-01-20 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for My Project from the source code\&.

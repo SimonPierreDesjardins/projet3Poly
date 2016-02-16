@@ -1,0 +1,100 @@
+\hypertarget{class_facade_modele}{}\section{Facade\+Modele Class Reference}
+\label{class_facade_modele}\index{Facade\+Modele@{Facade\+Modele}}
+
+
+Classe qui constitue une interface (une façade) sur l\textquotesingle{}ensemble du modèle et des classes qui le composent.  
+
+
+
+
+{\ttfamily \#include $<$Facade\+Modele.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__inf2990_gad27e80f0e1f2bcbd11abe36cf50497cb}{$\sim$\+Facade\+Modele} ()
+\begin{DoxyCompactList}\small\item\em Destructeur. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_gabf12ccafbabf1049cb8327cf78699a1b}{initialiser\+Open\+GL} (H\+W\+ND h\+Wnd)
+\begin{DoxyCompactList}\small\item\em Crée un contexte Open\+GL et initialise celui-\/ci. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga4967547e0683bfdca700118df1c18bca}{charger\+Configuration} () const 
+\begin{DoxyCompactList}\small\item\em Charge la configuration à partir d\textquotesingle{}un fichier X\+ML. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga277d8d9cea21e20fb366a0d48525f2c9}{enregistrer\+Configuration} () const 
+\begin{DoxyCompactList}\small\item\em Enregistre la configuration courante dans un fichier X\+ML. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_gac7b831ce13626514e9637c4533d7c15d}{liberer\+Open\+GL} ()
+\begin{DoxyCompactList}\small\item\em Libère le contexte Open\+GL. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_gac884e818dab5fe049a37b3f6f1c5d8c6}{afficher} () const 
+\begin{DoxyCompactList}\small\item\em Affiche le contenu du modèle. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga23bed5e3b226e446cfee30084150f7f7}{afficher\+Base} () const 
+\begin{DoxyCompactList}\small\item\em Affiche la base du contenu du modèle. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_gac57fa53751a72f6e7bb6103ac6aef13e}{assigner\+Etat} (Etat etat)
+\begin{DoxyCompactList}\small\item\em Modifie l\textquotesingle{}etat courant. \end{DoxyCompactList}\item 
+\hyperlink{class_etat_abstrait}{Etat\+Abstrait} $\ast$ \hyperlink{group__inf2990_gaba4491fee6dc3a741e70ba5d38c4150a}{obtenir\+Etat} ()
+\item 
+void \hyperlink{group__inf2990_ga37b2fefcf895431ff7b6ce60763cd595}{assigner\+Mode} (Mode mode)
+\begin{DoxyCompactList}\small\item\em Modifie l\textquotesingle{}etat courant. \end{DoxyCompactList}\item 
+\hyperlink{class_mode_abstrait}{Mode\+Abstrait} $\ast$ \hyperlink{group__inf2990_gabd08d6e066c4e82d721976c5b8983801}{obtenir\+Mode} ()
+\item 
+int \hyperlink{group__inf2990_gac57319a76756a4c2bf7da299f20bf12f}{obtenir\+Nombre\+Selection} ()
+\item 
+bool {\bfseries obtenir\+Autorisation\+Input\+Souris} () const 
+\item 
+void {\bfseries assigner\+Autorisation\+Input\+Souris} (const bool \&autorisation)
+\item 
+bool {\bfseries obtenir\+Autorisation\+Input\+Clavier} () const 
+\item 
+void {\bfseries assigner\+Autorisation\+Input\+Clavier} (const bool \&autorisation)
+\item 
+double \hyperlink{group__inf2990_gad60c637fcf21d9278a78cb53afdf857b}{obtenir\+Angle\+Rotation} ()
+\item 
+double {\bfseries obtenir\+Facteur\+Mise\+A\+Echelle} ()
+\item 
+double \hyperlink{group__inf2990_ga7a89072370661808c54006961f45c072}{obtenir\+Position\+RelativeX} ()
+\item 
+double \hyperlink{group__inf2990_ga43e3b89e1a16eacd03570d4cb2fb9dd0}{obtenir\+Position\+RelativeY} ()
+\item 
+void \hyperlink{group__inf2990_ga3ee17405ead2f60ff80c440d9b2d36c7}{assigner\+Angle\+Rotation} (const double \&angle)
+\item 
+void {\bfseries assigner\+Facteur\+Mise\+A\+Echelle} (const double \&facteur\+Mise\+A\+Echelle)
+\item 
+void \hyperlink{group__inf2990_ga9142fed411fc847584017b419bc9576a}{assigner\+Position\+RelativeX} (const double \&position\+RelativeX)
+\item 
+void \hyperlink{group__inf2990_ga490588ee2934050306a526f81c09db50}{assigner\+Position\+RelativeY} (const double \&position\+RelativeY)
+\item 
+vue\+::\+Vue $\ast$ \hyperlink{group__inf2990_gaa56cf96b7e381e0f14e2c9a55be913bf}{obtenir\+Vue} ()
+\begin{DoxyCompactList}\small\item\em Retourne la vue courante. \end{DoxyCompactList}\item 
+\hyperlink{class_arbre_rendu_i_n_f2990}{Arbre\+Rendu\+I\+N\+F2990} $\ast$ \hyperlink{group__inf2990_gab3577b8dc7cbd9eb04af75a5a5620fab}{obtenir\+Arbre\+Rendu\+I\+N\+F2990} () const 
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}arbre de rendu. \end{DoxyCompactList}\item 
+\hyperlink{class_arbre_rendu_i_n_f2990}{Arbre\+Rendu\+I\+N\+F2990} $\ast$ \hyperlink{group__inf2990_ga12d5594db6a9507b24c7e1ffcd6751af}{obtenir\+Arbre\+Rendu\+I\+N\+F2990} ()
+\begin{DoxyCompactList}\small\item\em Retourne l\textquotesingle{}arbre de rendu. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga4c2a991fe2297e44eeee0de111fb08d2}{reinitialiser} ()
+\begin{DoxyCompactList}\small\item\em Réinitialise la scène. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga24dcb4e32cf104797158b398bafbfbb7}{animer} (float temps)
+\begin{DoxyCompactList}\small\item\em Anime la scène. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga54d4ccc521ad8744009999b7b07f36db}{stop\+Affichage} ()
+\item 
+void \hyperlink{group__inf2990_gac82abe61c32c702d94b5efbaed4dc7f0}{continuer\+Affichage} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{class_facade_modele}{Facade\+Modele} $\ast$ \hyperlink{group__inf2990_gaf52e6d65d1a911d3e1699fc30af97d38}{obtenir\+Instance} ()
+\begin{DoxyCompactList}\small\item\em Obtient l\textquotesingle{}instance unique de la classe. \end{DoxyCompactList}\item 
+static void \hyperlink{group__inf2990_gacbf0495fda26f5be37089470dc5f4372}{liberer\+Instance} ()
+\begin{DoxyCompactList}\small\item\em Libère l\textquotesingle{}instance unique de la classe. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Classe qui constitue une interface (une façade) sur l\textquotesingle{}ensemble du modèle et des classes qui le composent. 
+
+\begin{DoxyAuthor}{Author}
+Martin Bisson 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2007-\/02-\/20 
+\end{DoxyDate}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+D\+L\+L/\+Application/\hyperlink{_facade_modele_8h}{Facade\+Modele.\+h}\item 
+Sources/\+D\+L\+L/\+Application/\hyperlink{_facade_modele_8cpp}{Facade\+Modele.\+cpp}\end{DoxyCompactItemize}

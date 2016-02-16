@@ -1819,28 +1819,6 @@
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Class Index"><param name="Local" value="classes.html"><param name="ImageNumber" value="11"></OBJECT>
   <LI><OBJECT type="text/sitemap"><param name="Name" value="Class Hierarchy"><param name="Local" value="hierarchy.html"><param name="ImageNumber" value="1"></OBJECT>
     <UL>
-    <LI><OBJECT type="text/sitemap"><param name="Name" value="enable_shared_from_this"><param name="ImageNumber" value="1"></OBJECT>
-      <UL>
-      <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudAbstrait"><param name="Local" value="class_noeud_abstrait.html"><param name="ImageNumber" value="1"></OBJECT>
-        <UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudComposite"><param name="Local" value="class_noeud_composite.html"><param name="ImageNumber" value="1"></OBJECT>
-          <UL>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="ArbreRendu"><param name="Local" value="class_arbre_rendu.html"><param name="ImageNumber" value="1"></OBJECT>
-            <UL>
-            <LI><OBJECT type="text/sitemap"><param name="Name" value="ArbreRenduINF2990"><param name="Local" value="class_arbre_rendu_i_n_f2990.html"><param name="ImageNumber" value="11"></OBJECT>
-            </UL>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudDuplication"><param name="Local" value="class_noeud_duplication.html"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudLigne"><param name="Local" value="class_noeud_ligne.html"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudRobot"><param name="Local" value="class_noeud_robot.html"><param name="ImageNumber" value="11"></OBJECT>
-          <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudTable"><param name="Local" value="class_noeud_table.html"><param name="ImageNumber" value="11"></OBJECT>
-          </UL>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudDepart"><param name="Local" value="class_noeud_depart.html"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudJonction"><param name="Local" value="class_noeud_jonction.html"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudMur"><param name="Local" value="class_noeud_mur.html"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudPoteau"><param name="Local" value="class_noeud_poteau.html"><param name="ImageNumber" value="11"></OBJECT>
-        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudSegment"><param name="Local" value="class_noeud_segment.html"><param name="ImageNumber" value="11"></OBJECT>
-        </UL>
-      </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="EtatAbstrait"><param name="Local" value="class_etat_abstrait.html"><param name="ImageNumber" value="1"></OBJECT>
       <UL>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="EtatCreationLigne"><param name="Local" value="class_etat_creation_ligne.html"><param name="ImageNumber" value="11"></OBJECT>
@@ -1875,6 +1853,25 @@
       <LI><OBJECT type="text/sitemap"><param name="Name" value="ModeMenuPrincipal"><param name="Local" value="class_mode_menu_principal.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="ModeSimulation"><param name="Local" value="class_mode_simulation.html"><param name="ImageNumber" value="11"></OBJECT>
       <LI><OBJECT type="text/sitemap"><param name="Name" value="ModeTest"><param name="Local" value="class_mode_test.html"><param name="ImageNumber" value="11"></OBJECT>
+      </UL>
+    <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudAbstrait"><param name="Local" value="class_noeud_abstrait.html"><param name="ImageNumber" value="1"></OBJECT>
+      <UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudComposite"><param name="Local" value="class_noeud_composite.html"><param name="ImageNumber" value="1"></OBJECT>
+        <UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="ArbreRendu"><param name="Local" value="class_arbre_rendu.html"><param name="ImageNumber" value="1"></OBJECT>
+          <UL>
+          <LI><OBJECT type="text/sitemap"><param name="Name" value="ArbreRenduINF2990"><param name="Local" value="class_arbre_rendu_i_n_f2990.html"><param name="ImageNumber" value="11"></OBJECT>
+          </UL>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudDuplication"><param name="Local" value="class_noeud_duplication.html"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudLigne"><param name="Local" value="class_noeud_ligne.html"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudRobot"><param name="Local" value="class_noeud_robot.html"><param name="ImageNumber" value="11"></OBJECT>
+        <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudTable"><param name="Local" value="class_noeud_table.html"><param name="ImageNumber" value="11"></OBJECT>
+        </UL>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudDepart"><param name="Local" value="class_noeud_depart.html"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudJonction"><param name="Local" value="class_noeud_jonction.html"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudMur"><param name="Local" value="class_noeud_mur.html"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudPoteau"><param name="Local" value="class_noeud_poteau.html"><param name="ImageNumber" value="11"></OBJECT>
+      <LI><OBJECT type="text/sitemap"><param name="Name" value="NoeudSegment"><param name="Local" value="class_noeud_segment.html"><param name="ImageNumber" value="11"></OBJECT>
       </UL>
     <LI><OBJECT type="text/sitemap"><param name="Name" value="Singleton"><param name="ImageNumber" value="1"></OBJECT>
       <UL>

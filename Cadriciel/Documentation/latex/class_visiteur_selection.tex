@@ -1,0 +1,66 @@
+\hypertarget{class_visiteur_selection}{}\section{Visiteur\+Selection Class Reference}
+\label{class_visiteur_selection}\index{Visiteur\+Selection@{Visiteur\+Selection}}
+
+
+Visiteur permettant d\textquotesingle{}effectuer la sélection d\textquotesingle{}un objet.  
+
+
+
+
+{\ttfamily \#include $<$Visiteur\+Selection.\+h$>$}
+
+Inheritance diagram for Visiteur\+Selection\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_visiteur_selection}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__inf2990_ga6ff39909ddbd73aa075741e617f5aa4b}{Visiteur\+Selection} ()
+\begin{DoxyCompactList}\small\item\em Constructeur par défaut. \end{DoxyCompactList}\item 
+virtual \hyperlink{group__inf2990_gaf74044cdf22e6bdc2a4cd8c5afafdc60}{$\sim$\+Visiteur\+Selection} ()
+\begin{DoxyCompactList}\small\item\em Destructeur. \end{DoxyCompactList}\item 
+virtual void \hyperlink{group__inf2990_gabe06709bdd2c2b3c0d5536cb5622ad34}{visiter} (\hyperlink{class_arbre_rendu}{Arbre\+Rendu} $\ast$noeud)
+\begin{DoxyCompactList}\small\item\em Parcours du noeud\+Table. \end{DoxyCompactList}\item 
+virtual void \hyperlink{group__inf2990_ga12c860fc1d534fe9ceb5b259a9db8e7c}{visiter} (\hyperlink{class_noeud_table}{Noeud\+Table} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gacfa8636c164f0e4c6dcf04b527243de0}{visiter} (\hyperlink{class_noeud_poteau}{Noeud\+Poteau} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gaa5876b720f74393bf5828cee9c91b832}{visiter} (\hyperlink{class_noeud_mur}{Noeud\+Mur} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gafb6006277c5a24cc3481eefb85a98391}{visiter} (\hyperlink{class_noeud_ligne}{Noeud\+Ligne} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gafbc33dde6502a220782020f275896b51}{visiter} (\hyperlink{class_noeud_depart}{Noeud\+Depart} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_gaa0de6fd60803e1db2987d7dc67023839}{visiter} (\hyperlink{class_noeud_segment}{Noeud\+Segment} $\ast$noeud)
+\item 
+virtual void \hyperlink{group__inf2990_ga138fe6791d0659568518b71b4365fdd7}{visiter} (\hyperlink{class_noeud_jonction}{Noeud\+Jonction} $\ast$noeud)
+\item 
+void {\bfseries assigner\+Control} (bool ctrl\+Appuye)
+\item 
+void \hyperlink{group__inf2990_ga6f788cbce7f82a1fa7c65ae7f76b3b42}{assigner\+Position\+Rect\+Elast} (const glm\+::dvec3 \&position\+Premier\+Clic, const glm\+::dvec3 \&position\+Deuxieme\+Clic)
+\item 
+bool \hyperlink{group__inf2990_ga9653fe2c6211dc14b71b8523a198c599}{quad\+Est\+Dans\+Rectangle\+Elastique} (const utilitaire\+::\+Quad\+Englobant \&quad)
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Visiteur permettant d\textquotesingle{}effectuer la sélection d\textquotesingle{}un objet. 
+
+Visiteur permettant d\textquotesingle{}effectuer la vérification de la boite englobante d\textquotesingle{}un objet pour qu\textquotesingle{}il soit sur la table.
+
+\begin{DoxyAuthor}{Author}
+Frédéric Grégoire 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2016-\/02-\/15 
+\end{DoxyDate}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+D\+L\+L/\+Visiteur/\hyperlink{_visiteur_selection_8h}{Visiteur\+Selection.\+h}\item 
+Sources/\+D\+L\+L/\+Visiteur/\hyperlink{_visiteur_selection_8cpp}{Visiteur\+Selection.\+cpp}\end{DoxyCompactItemize}

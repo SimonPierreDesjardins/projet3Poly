@@ -1,0 +1,131 @@
+.TH "VisiteurAbstrait" 3 "Mon Feb 15 2016" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+VisiteurAbstrait \- Classe de base du patron visiteur utilisée pour effectuer des manipulations sur l'arbre de rendu\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <VisiteurAbstrait\&.h>\fP
+.PP
+Inherited by \fBVisiteurCreationLigne\fP, \fBVisiteurCreationMur\fP, \fBVisiteurCreationPoteau\fP, \fBVisiteurDeplacement\fP, \fBVisiteurDuplication\fP, \fBVisiteurMiseAEchelle\fP, \fBVisiteurMiseAJourQuad\fP, \fBVisiteurRotation\fP, \fBVisiteurSauvegarde\fP, \fBVisiteurSelection\fP, \fBVisiteurSuppression\fP, and \fBVisiteurVerificationQuad\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBVisiteurAbstrait\fP ()"
+.br
+.RI "\fIConstructeur par défaut\&. \fP"
+.ti -1c
+.RI "virtual \fB~VisiteurAbstrait\fP ()"
+.br
+.RI "\fIDestructeur\&. \fP"
+.ti -1c
+.RI "void \fBassignerPositionRelative\fP (glm::dvec3 positionRelative)"
+.br
+.ti -1c
+.RI "void \fBassignerPositionRelativeAvant\fP (glm::dvec3 positionRelativeAvant)"
+.br
+.ti -1c
+.RI "void \fBassignerPositionRelativeApres\fP (glm::dvec3 positionRelativeApres)"
+.br
+.ti -1c
+.RI "void \fBassignerAngleRotation\fP (double angleRotation)"
+.br
+.ti -1c
+.RI "void \fBassignerFacteurMiseAEchelle\fP (double facteurDimension)"
+.br
+.ti -1c
+.RI "void \fBassignerEstAffiche\fP (const bool &estAffiche)"
+.br
+.ti -1c
+.RI "void \fBassignerEstDrag\fP (const bool &estDrag)"
+.br
+.ti -1c
+.RI "\fBNoeudAbstrait\fP * \fBobtenirReferenceNoeud\fP ()"
+.br
+.ti -1c
+.RI "bool \fBobtenirEstDrag\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBArbreRendu\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudTable\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudPoteau\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudMur\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudLigne\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudSegment\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudDuplication\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudDepart\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudJonction\fP *noeud)"
+.br
+.ti -1c
+.RI "virtual void \fBvisiter\fP (\fBNoeudRobot\fP *noeud)"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "glm::dvec3 \fBpositionRelative_\fP { glm::dvec3() }"
+.br
+.ti -1c
+.RI "glm::dvec3 \fBpositionRelativeAvant_\fP { glm::dvec3() }"
+.br
+.ti -1c
+.RI "glm::dvec3 \fBpositionRelativeApres_\fP { glm::dvec3() }"
+.br
+.ti -1c
+.RI "bool \fBestDrag_\fP { false }"
+.br
+.ti -1c
+.RI "double \fBangleRotation_\fP { 0\&.0 }"
+.br
+.ti -1c
+.RI "double \fBfacteurMiseAEchelle_\fP { 0\&.0 }"
+.br
+.ti -1c
+.RI "bool \fBestAffiche_\fP { false }"
+.br
+.ti -1c
+.RI "\fBNoeudAbstrait\fP * \fBreferenceNoeud_\fP { nullptr }"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Classe de base du patron visiteur utilisée pour effectuer des manipulations sur l'arbre de rendu\&. 
+
+Cette classe abstraite comprend l'interface de base que doivent implanter tous les visiteurs concrets\&.
+.PP
+\fBAuthor:\fP
+.RS 4
+Olivier St-Amour 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2016-01-13 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for My Project from the source code\&.

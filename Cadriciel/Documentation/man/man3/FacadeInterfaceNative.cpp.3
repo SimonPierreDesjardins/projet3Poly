@@ -1,0 +1,102 @@
+.TH "Sources/DLL/Interface/FacadeInterfaceNative.cpp" 3 "Mon Feb 15 2016" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Sources/DLL/Interface/FacadeInterfaceNative.cpp \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string>\fP
+.br
+\fC#include 'glm\\glm\&.hpp'\fP
+.br
+\fC#include 'FacadeInterfaceNative\&.h'\fP
+.br
+\fC#include 'FacadeModele\&.h'\fP
+.br
+\fC#include 'AideGL\&.h'\fP
+.br
+\fC#include 'Vue\&.h'\fP
+.br
+\fC#include 'Camera\&.h'\fP
+.br
+\fC#include 'ArbreRenduINF2990\&.h'\fP
+.br
+\fC#include 'CompteurAffichage\&.h'\fP
+.br
+\fC#include 'EtatTypes\&.h'\fP
+.br
+\fC#include 'BancTests\&.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fB__declspec\fP (dllexport) void __cdecl initialiserOpenGL(int *handle)"
+.br
+.ti -1c
+.RI "\fBif\fP (autoriserInput)"
+.br
+.ti -1c
+.RI "\fBif\fP (\fBFacadeModele::obtenirInstance\fP() \->obtenirAutorisationInputSouris())"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "const int \fBVK_KEY_D\fP = 0x44"
+.br
+.ti -1c
+.RI "const int \fBVK_KEY_S\fP = 0x53"
+.br
+.ti -1c
+.RI "const int \fBVK_KEY_R\fP = 0x52"
+.br
+.ti -1c
+.RI "const int \fBVK_KEY_E\fP = 0x45"
+.br
+.ti -1c
+.RI "const int \fBVK_KEY_C\fP = 0x43"
+.br
+.ti -1c
+.RI "const int \fBVK_KEY_Z\fP = 0x5A"
+.br
+.ti -1c
+.RI "const int \fBVK_KEY_T\fP = 0x54"
+.br
+.ti -1c
+.RI "int \fBhauteur\fP"
+.br
+.ti -1c
+.RI "int \fBlongueur\fP"
+.br
+.ti -1c
+.RI "WPARAM \fBwParam\fP"
+.br
+.ti -1c
+.RI "WPARAM LPARAM \fBlParam\fP"
+.br
+.ti -1c
+.RI "bool \fBautoriserInput\fP = \fBFacadeModele::obtenirInstance\fP()\->obtenirAutorisationInputClavier()"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+
+.PP
+\fBAuthor:\fP
+.RS 4
+INF2990 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2014-08-16 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for My Project from the source code\&.

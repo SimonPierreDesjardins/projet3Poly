@@ -1,0 +1,77 @@
+\hypertarget{class_arbre_rendu}{}\section{Arbre\+Rendu Class Reference}
+\label{class_arbre_rendu}\index{Arbre\+Rendu@{Arbre\+Rendu}}
+
+
+Classe d\textquotesingle{}arbre de rendu qui contient la racine de l\textquotesingle{}arbre de rendu avec les usines qui permettent d\textquotesingle{}ajouter des noeuds à cet arbre.  
+
+
+
+
+{\ttfamily \#include $<$Arbre\+Rendu.\+h$>$}
+
+Inheritance diagram for Arbre\+Rendu\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{class_arbre_rendu}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{group__inf2990_gaef1e98a66c4f1d3b468c786edee45ae6}{Arbre\+Rendu} ()
+\begin{DoxyCompactList}\small\item\em Constructeur par défaut. \end{DoxyCompactList}\item 
+virtual \hyperlink{group__inf2990_gadb462923759da0ff632dad097b7bfdab}{$\sim$\+Arbre\+Rendu} ()
+\begin{DoxyCompactList}\small\item\em Destructeur. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga9d6dd6caf1139ae20e998b9bc12e4f88}{ajouter\+Usine} (const std\+::string \&type, std\+::unique\+\_\+ptr$<$ const \hyperlink{class_usine_abstraite}{Usine\+Abstraite} $>$ usine)
+\begin{DoxyCompactList}\small\item\em Ajoute une usine associée à un type de noeud. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \hyperlink{class_noeud_abstrait}{Noeud\+Abstrait} $>$ \hyperlink{group__inf2990_ga554972eadae0ba78b0ca5507bb1bde79}{creer\+Noeud} (const std\+::string \&type\+Nouveau\+Noeud) const 
+\begin{DoxyCompactList}\small\item\em Crée un nouveau noeud. \end{DoxyCompactList}\item 
+std\+::shared\+\_\+ptr$<$ \hyperlink{class_noeud_abstrait}{Noeud\+Abstrait} $>$ \hyperlink{group__inf2990_gabc51bdf3355cfa019d7319a484d99c9f}{ajouter\+Nouveau\+Noeud} (const std\+::string \&nom\+Parent, const std\+::string \&type\+Nouveau\+Noeud)
+\begin{DoxyCompactList}\small\item\em Crée et ajoute un nouveau noeud à l\textquotesingle{}arbre. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga3a48da8aedbe9ea5f4c183a07e51cbdc}{accepter\+Visiteur} (\hyperlink{class_visiteur_abstrait}{Visiteur\+Abstrait} $\ast$visiteur)
+\begin{DoxyCompactList}\small\item\em Accepter un visiteur. \end{DoxyCompactList}\item 
+void \hyperlink{group__inf2990_ga35250fdfe013915a44bd17b5e5ed7c93}{assigner\+Chemin\+Fichier\+Zone} (std\+::string chemin)
+\begin{DoxyCompactList}\small\item\em Assigne le chemin du fichier sélectionné par l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+F\+I\+LE $\ast$ \hyperlink{group__inf2990_gadd7c49de3ccb9d5c93d98a524f5a0ca4}{obtenir\+Fichier\+Zone} (std\+::string mode)
+\begin{DoxyCompactList}\small\item\em Retourne un pointeur vers le fichier sélectionné par l\textquotesingle{}utilisateur. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{group__inf2990_ga4aa0f8040fa05c5ecdfed670e1bf908b}{obtenir\+Chemin\+Fichier\+Zone\+Defaut} ()
+\begin{DoxyCompactList}\small\item\em Retourne le chemin vers le fichier de zone de base. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static unsigned int \hyperlink{group__inf2990_gacf0e53d52040b07cd6550fda79867bd5}{calculer\+Profondeur\+Maximale} ()
+\begin{DoxyCompactList}\small\item\em Calcule la profondeur maximale possible pour l\textquotesingle{}arbre de rendu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+F\+I\+LE $\ast$ \hyperlink{group__inf2990_ga3a833324a1b1498d54018dd6b45fba8f}{obtenir\+Fichier\+Zone\+Defaut} (std\+::string mode)
+\begin{DoxyCompactList}\small\item\em Retourne un pointeur vers le fichier de structure de base. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::string \hyperlink{class_arbre_rendu_a2dc3fd097cae37d9a8cb9d5989b08898}{chemin\+Fichier\+Zone\+Defaut} = \char`\"{}./Zones/zone\+\_\+par\+\_\+defaut.\+json\char`\"{}\hypertarget{class_arbre_rendu_a2dc3fd097cae37d9a8cb9d5989b08898}{}\label{class_arbre_rendu_a2dc3fd097cae37d9a8cb9d5989b08898}
+
+\begin{DoxyCompactList}\small\item\em Constante représentant le fichier zone contenant la structure de base. \end{DoxyCompactList}\item 
+std\+::string \hyperlink{class_arbre_rendu_ad8d94407279b476fba573f2c7840e5e0}{chemin\+Fichier\+Zone}\hypertarget{class_arbre_rendu_ad8d94407279b476fba573f2c7840e5e0}{}\label{class_arbre_rendu_ad8d94407279b476fba573f2c7840e5e0}
+
+\begin{DoxyCompactList}\small\item\em Chemin vers le fichier de zone sélectionné par l\textquotesingle{}utilisateur. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Classe d\textquotesingle{}arbre de rendu qui contient la racine de l\textquotesingle{}arbre de rendu avec les usines qui permettent d\textquotesingle{}ajouter des noeuds à cet arbre. 
+
+La profondeur de cet arbre est limitée par la taille de la pile des matrices et la taille de la pile des noms pour la sélection Open\+GL, étant donné que chaque niveau de l\textquotesingle{}arbre effectue un \char`\"{}push\char`\"{} sur chacune de ces piles lors du rendu. L\textquotesingle{}arbre ne vérifie pas que la profondeur reste sous la limite, mais il offre des fonctions permettant de le vérifier aisément.
+
+\begin{DoxyAuthor}{Author}
+Martin Bisson 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2007-\/01-\/28 
+\end{DoxyDate}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Sources/\+D\+L\+L/\+Arbre/\hyperlink{_arbre_rendu_8h}{Arbre\+Rendu.\+h}\item 
+Sources/\+D\+L\+L/\+Arbre/\hyperlink{_arbre_rendu_8cpp}{Arbre\+Rendu.\+cpp}\end{DoxyCompactItemize}

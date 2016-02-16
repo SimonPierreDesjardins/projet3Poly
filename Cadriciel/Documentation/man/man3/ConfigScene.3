@@ -1,0 +1,54 @@
+.TH "ConfigScene" 3 "Mon Feb 15 2016" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ConfigScene \- Les variables de configuration de la classe CScene\&. C'est une classe singleton\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ConfigScene\&.h>\fP
+.PP
+Inherits Singleton< ConfigScene >\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "void \fBcreerDOM\fP (tinyxml2::XMLDocument &document) const "
+.br
+.RI "\fICréer le DOM avec les valeurs\&. \fP"
+.ti -1c
+.RI "void \fBlireDOM\fP (tinyxml2::XMLDocument const &document)"
+.br
+.RI "\fILire les valeurs du DOM\&. \fP"
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static int \fBCALCULS_PAR_IMAGE\fP { 50 }"
+.br
+.RI "\fINombre de calculs par image\&. \fP"
+.in -1c
+.SH "Detailed Description"
+.PP 
+Les variables de configuration de la classe CScene\&. C'est une classe singleton\&. 
+
+
+.PP
+\fBAuthor:\fP
+.RS 4
+Jean-François Pérusse 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2007-01-10 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for My Project from the source code\&.

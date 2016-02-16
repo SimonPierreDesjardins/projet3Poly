@@ -1,0 +1,165 @@
+.TH "ModeAbstrait" 3 "Mon Feb 15 2016" "My Project" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+ModeAbstrait \- Classe qui représente le mode abstrait de notre machine à modes\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <ModeAbstrait\&.h>\fP
+.PP
+Inherited by \fBModeConfigure\fP, \fBModeEdition\fP, \fBModeMenuPrincipal\fP, \fBModeSimulation\fP, and \fBModeTest\fP\&.
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBModeAbstrait\fP ()"
+.br
+.ti -1c
+.RI "virtual \fB~ModeAbstrait\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBsauvegarder\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBcharger\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererTouchePlus\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheMoins\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheEchappe\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheB\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheC\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheD\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheE\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheJ\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheK\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheL\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheR\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheS\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheT\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheZ\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheCTRLavecS\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheCTRLavecN\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheCTRLavecO\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererTouche1\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererTouche2\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererTouche3\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererFlecheGauche\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererFlecheBas\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererFlecheHaut\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererFlecheDroit\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererBarreDespacement\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheArriere\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheControlEnfoncee\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheControlRelachee\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererToucheSupprimer\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicDroitEnfonce\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicDroitRelache\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicGaucheEnfonce\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererClicGaucheRelache\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererMouvementSouris\fP (const int &x, const int &y)"
+.br
+.ti -1c
+.RI "virtual void \fBgererMoletteSouris\fP (const int &delta)"
+.br
+.ti -1c
+.RI "int \fBobtenirTypeMode\fP ()"
+.br
+.in -1c
+.SS "Protected Attributes"
+
+.in +1c
+.ti -1c
+.RI "int \fBtypeMode_\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Classe qui représente le mode abstrait de notre machine à modes\&. 
+
+Cette classe s'occupe de déclarer les fonctions qui seront implémentés dans les états dérivés\&. 
+.PP
+\fBAuthor:\fP
+.RS 4
+Simon-Pierre Desjardins 
+.RE
+.PP
+\fBDate:\fP
+.RS 4
+2016-02-14 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for My Project from the source code\&.
