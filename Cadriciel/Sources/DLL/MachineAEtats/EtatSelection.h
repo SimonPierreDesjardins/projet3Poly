@@ -19,6 +19,13 @@ namespace vue
 	class Vue;
 };
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatSelection
+/// @brief État représentant la sélection d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatSelection : public EtatAbstrait
 {
 public:

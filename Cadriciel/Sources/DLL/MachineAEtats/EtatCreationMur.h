@@ -15,6 +15,13 @@
 #include "VisiteurTypes.h"
 #include <iostream>
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatCreationMur
+/// @brief État représentant la creation d'un mur
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatCreationMur : public EtatAbstrait
 {
 public:

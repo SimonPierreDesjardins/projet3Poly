@@ -34,6 +34,16 @@ enum Etat
 	ZOOM
 };
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatAbstrait
+/// @brief Classe de base pour chaque état
+///
+///        Cette classe abstraite comprend l'interface de base que doivent
+///        implanter tous les états pouvant être présent dans le modèle
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatAbstrait
 {
 public:

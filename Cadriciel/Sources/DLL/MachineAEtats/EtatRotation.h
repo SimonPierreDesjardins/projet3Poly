@@ -14,6 +14,13 @@
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatRotation
+/// @brief État représentant la rotation d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatRotation : public EtatAbstrait
 {
 public:

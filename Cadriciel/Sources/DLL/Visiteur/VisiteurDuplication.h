@@ -13,6 +13,13 @@
 
 #include "VisiteurAbstrait.h"
  
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurDuplication
+/// @brief Visiteur permettant d'effectuer une duplication d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurDuplication : public VisiteurAbstrait
 {
 public:

@@ -14,6 +14,13 @@
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatDeplacement
+/// @brief État représentant le déplacement d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatDeplacement : public EtatAbstrait
 {
 public:

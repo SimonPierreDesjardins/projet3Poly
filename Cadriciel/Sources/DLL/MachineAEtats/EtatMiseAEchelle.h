@@ -16,6 +16,13 @@
 #include "VisiteurVerificationQuad.h"
 #include "VisiteurMiseAEchelle.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatMiseAEchelle
+/// @brief État représentant la mise à échelle d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatMiseAEchelle : public EtatAbstrait
 {
 public:

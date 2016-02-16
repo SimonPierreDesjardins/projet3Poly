@@ -17,6 +17,13 @@ namespace utilitaire{
 	struct QuadEnglobant;
 };
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurMiseAJourQuad
+/// @brief Visiteur permettant de mettre à jour la boite englobante d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurMiseAJourQuad : public VisiteurAbstrait
 {
 public:
