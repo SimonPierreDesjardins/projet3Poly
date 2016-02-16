@@ -16,6 +16,13 @@
 #include <iostream>
 #include <vector>
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatCreationLigne
+/// @brief État représentant la creation d'une ligne
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatCreationLigne: public EtatAbstrait
 {
 public:
@@ -27,7 +34,8 @@ public:
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
 
 private:
 	std::unique_ptr<VisiteurCreationLigne> visiteurCreationLigne_{ nullptr };

@@ -15,6 +15,14 @@
 #include "VisiteurMiseAJourQuad.h"
 #include <memory>
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurSelection
+/// @brief Visiteur permettant d'effectuer la vérification de la boite englobante
+/// d'un objet pour qu'il soit sur la table.
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurVerificationQuad : public VisiteurAbstrait
 {
 public:

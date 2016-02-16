@@ -13,6 +13,7 @@
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "glm\glm.hpp"
+#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -104,12 +105,12 @@ void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)
 	EtatAbstrait::gererMouvementSouris(x, y);
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-	gererEstSurTable(positionVirtuelle);
+	gererPositionCurseur(positionVirtuelle);
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
+/// @fn void EtatCreationMur::gererEstSurTableConcret(const bool& positionEstSurTable)
 ///
 /// Cette fonction affiche l'objet si le curseur est sur la table et arrête
 /// d'afficher l'objet si le curseur n'est pas sur la table.
@@ -117,15 +118,31 @@ void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)
 /// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatCreationPoteau::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
-
 	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
+		std::cout << "in" << std::endl;
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
+		std::cout << "out" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymboleCurseur()
+///
+/// Cette fonction assigne le symbole interdit au curseur si celui-ci
+/// ne se trouve pas sur la table. 
+///
+////////////////////////////////////////////////////////////////////////
+void EtatCreationPoteau::assignerSymboleCurseur()
+{
+	if (!curseurEstSurTable_) {
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////

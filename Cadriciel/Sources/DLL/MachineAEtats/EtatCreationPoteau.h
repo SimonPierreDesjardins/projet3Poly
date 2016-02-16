@@ -15,6 +15,13 @@
 #include "VisiteurTypes.h"
 #include <iostream>
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatCreationPoteau
+/// @brief État représentant la creation d'un poteau
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatCreationPoteau : public EtatAbstrait
 {
 public:
@@ -24,7 +31,8 @@ public:
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);	
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
 
 private:
 	std::unique_ptr<VisiteurCreationPoteau> visiteurCreationPoteau_{ nullptr };

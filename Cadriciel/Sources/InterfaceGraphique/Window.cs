@@ -41,12 +41,12 @@ namespace InterfaceGraphique
             if(!arreterToutMessage_)
             {
                 // On veut seulement traiter les inputs sur le view_port.
-                if (m.HWnd == viewPort_.Handle || 
+                if (m.HWnd == viewPort_.Handle ||
                     m.Msg == WM_KEYUP          || 
                     m.Msg == WM_KEYDOWN        || 
                     m.Msg == WM_SYSKEYUP       || 
                     m.Msg == WM_SYSKEYDOWN     ||
-                    m.Msg == WM_MOUSEWHEEL)
+                    m.Msg == WM_MOUSEWHEEL)   
                 {
                     FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
                 }

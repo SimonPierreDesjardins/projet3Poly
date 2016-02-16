@@ -13,6 +13,13 @@
 
 #include "VisiteurAbstrait.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurCreationLigne
+/// @brief Visiteur permettant d'initialiser la création d'une ligne.
+///
+/// @author Olivier St-Amour
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurCreationLigne : public VisiteurAbstrait
 {
 public:

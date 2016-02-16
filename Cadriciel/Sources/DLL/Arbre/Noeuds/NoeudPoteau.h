@@ -21,7 +21,6 @@
 /// @author Frédéric Grégoire
 /// @date 2016-01-20
 ///////////////////////////////////////////////////////////////////////////
-
 class NoeudPoteau : public NoeudAbstrait
 {
 

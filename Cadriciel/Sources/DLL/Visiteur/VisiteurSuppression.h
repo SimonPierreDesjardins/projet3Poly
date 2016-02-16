@@ -13,6 +13,13 @@
 
 #include "VisiteurAbstrait.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurSuppression
+/// @brief Visiteur permettant d'effectuer la supression d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurSuppression : public VisiteurAbstrait
 {
 public:

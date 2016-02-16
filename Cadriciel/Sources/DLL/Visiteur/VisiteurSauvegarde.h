@@ -23,7 +23,7 @@ namespace rapidjson{
 }
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ArbreRenduINF2990
+/// @class VisiteurSauvegarde
 /// @brief Cette classe s'occupe de visiter chaque noeuds de l'arbre de rendu
 /// pour écrire leurs attributs dans un fichier Json
 /// et ainsi, permettre de les charger plus tard.

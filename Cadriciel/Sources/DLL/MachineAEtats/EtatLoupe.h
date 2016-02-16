@@ -14,7 +14,13 @@
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
 
-
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatLoupe
+/// @brief État représentant le zoom sur une partie de l'écran
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatLoupe : public EtatAbstrait
 {
 public:

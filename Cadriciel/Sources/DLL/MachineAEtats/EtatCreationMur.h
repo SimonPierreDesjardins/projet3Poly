@@ -15,6 +15,13 @@
 #include "VisiteurTypes.h"
 #include <iostream>
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatCreationMur
+/// @brief État représentant la creation d'un mur
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatCreationMur : public EtatAbstrait
 {
 public:
@@ -25,7 +32,8 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int&y);
 	virtual void gererToucheEchappe();
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
 
 private:
 	std::unique_ptr<VisiteurCreationMur> visiteurCreationMur_{ nullptr };

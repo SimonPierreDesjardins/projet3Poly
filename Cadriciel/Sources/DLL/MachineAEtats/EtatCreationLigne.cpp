@@ -48,7 +48,6 @@ EtatCreationLigne::~EtatCreationLigne()
 	ligne_ = nullptr;
 	segment_ = nullptr;
 	positionsClic_.clear();
-	assignerSymbolePointeur(true);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -138,7 +137,7 @@ void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	
-	gererEstSurTable(positionVirtuelle);
+	gererPositionCurseur(positionVirtuelle);
 
 	if (enCreation_) {
 		assert(segment_ != nullptr);
@@ -231,7 +230,7 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
+/// @fn void EtatCreationMur::gererPositionCurseurConcret(const bool& positionEstSurTable)
 ///
 /// Cette fonction affiche l'objet si le curseur est sur la table et arrête
 /// d'afficher l'objet si le curseur n'est pas sur la table.
@@ -239,10 +238,8 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 /// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatCreationLigne::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
-
 	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
 		if (segment_ != nullptr) {
@@ -257,12 +254,40 @@ void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool EtatCreationLigne::ligneEstSurTable()
+///
+///	Appel le visiteurMiseAJourQuad et le visiteurVerificationQuad pour 
+/// vérifier si la ligne est sur la table au moment de la création.
+///
+/// @return bool: True si la ligne est sur la table, sin non false.
+///
+////////////////////////////////////////////////////////////////////////
 bool EtatCreationLigne::ligneEstSurTable()
 {
 	arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 	arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	return visiteurVerificationQuad_->objetsDansZoneSimulation();
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymboleCurseur()
+///
+/// Cette fonction assigne le symbole interdit au curseur si celui-ci
+/// ne se trouve pas sur la table. 
+///
+////////////////////////////////////////////////////////////////////////
+void EtatCreationLigne::assignerSymboleCurseur()
+{
+	if (!curseurEstSurTable_)
+	{
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

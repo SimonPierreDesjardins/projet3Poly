@@ -529,6 +529,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
+		FacadeModele::obtenirInstance()->obtenirEtat()->assignerSymboleCurseur();
 		bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier();
 		if (autoriserInput) {
 			if (msg == WM_KEYDOWN) {
@@ -620,7 +621,6 @@ extern "C"
 						break;
 				}
 			}
-
 			// Répartition du traitement des touches relachées.
 			if (msg == WM_KEYUP) {
 				switch (wParam) {

@@ -15,7 +15,13 @@
 #include "VisiteurDuplication.h"
 #include "VisiteurVerificationQuad.h"
 
-
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatDuplication
+/// @brief État représentant la duplication d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatDuplication : public EtatAbstrait
 {
 public:
@@ -23,7 +29,8 @@ public:
 	virtual ~EtatDuplication();
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
 
 private:
 	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };

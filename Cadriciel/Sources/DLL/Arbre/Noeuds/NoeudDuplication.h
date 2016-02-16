@@ -16,6 +16,14 @@
 
 class VisiteurAbstrait;
 
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudDuplication
+/// @brief Noeud qui représente une duplication lors de l'utilisation 
+///		   de l'outil duplication.
+///
+/// @author Olivier St-Amour
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class NoeudDuplication : public NoeudComposite
 {
 public:

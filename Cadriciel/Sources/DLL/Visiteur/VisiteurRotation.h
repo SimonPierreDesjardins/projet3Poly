@@ -13,6 +13,13 @@
 
 #include "VisiteurAbstrait.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurRotation
+/// @brief Visiteur permettant d'effectuer la rotation d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurRotation : public VisiteurAbstrait
 {
 public:

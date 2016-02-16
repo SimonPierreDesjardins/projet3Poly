@@ -132,7 +132,7 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 	// Calculer la position virtuelle.
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-	gererEstSurTable(positionVirtuelle);
+	gererPositionCurseur(positionVirtuelle);
 
 	if (enCreation_)
 	{		
@@ -152,7 +152,7 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
+/// @fn void EtatCreationMur::gererPositionCurseurConcret(const bool& positionEstSurTable)
 ///
 /// Cette fonction affiche l'objet si le curseur est sur la table et arrête
 /// d'afficher l'objet si le curseur n'est pas sur la table.
@@ -160,28 +160,40 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 /// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatCreationMur::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
-
-	if (positionEstSurTable && !curseurEstSurTable_)
-	{
+	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
-		if (mur_ != nullptr)
-		{
+		if (mur_ != nullptr) {
 			mur_->assignerAffiche(true);
 		}
 	}
-	else if (!positionEstSurTable && curseurEstSurTable_)
-	{
+	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
-		if (mur_ != nullptr)
-		{
+		if (mur_ != nullptr) {
 			mur_->assignerAffiche(false);
 		}
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymboleCurseur()
+///
+/// Cette fonction assigne le symbole interdit au curseur si celui-ci
+/// ne se trouve pas sur la table. 
+///
+////////////////////////////////////////////////////////////////////////
+void EtatCreationMur::assignerSymboleCurseur()
+{
+	if (!curseurEstSurTable_) {
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
 	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+

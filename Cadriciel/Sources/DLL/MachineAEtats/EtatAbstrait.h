@@ -34,6 +34,16 @@ enum Etat
 	ZOOM
 };
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatAbstrait
+/// @brief Classe de base pour chaque état
+///
+///        Cette classe abstraite comprend l'interface de base que doivent
+///        implanter tous les états pouvant être présent dans le modèle
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatAbstrait
 {
 public:
@@ -48,14 +58,15 @@ public:
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
+	// Gestion du symbole du curseur.
+	void gererPositionCurseur(const glm::dvec3& position);
+	virtual void gererPositionCurseurConcret(const bool& pointeurEstSurTable);
+	virtual void assignerSymboleCurseur();
+
 	// Gestion de touches
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-
-	void gererEstSurTable(const glm::dvec3& position);
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
-	void assignerSymbolePointeur(bool estSymboleStandard);
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 	virtual void gererToucheAltEnfoncee();
@@ -65,24 +76,22 @@ public:
 protected:
 	virtual void reinitialiser();
 
+	Etat typeEtat_{ SELECTION };
+
 	ArbreRendu* arbre_{ nullptr };
 	vue::Vue* vue_{ nullptr };
 
 	bool estClickDrag();
-	
-	bool toucheCtrlEnfonce_{ false };
-	bool curseurEstSurTable_{ false };
-	bool toucheAltEnfonce_{ false };
+	bool curseurEstSurTable_{ true };
 	bool enCreation_{ false };
-	bool clicGaucheEnfonce_{false};
 
+	bool toucheCtrlEnfonce_{ false };
+	bool toucheAltEnfonce_{ false };
+	bool clicGaucheEnfonce_{false};
 	bool clicDroitEnfonce_{false};
 
 	int ancienX_{ 0 };
 	int ancienY_{ 0 };
-	
-	Etat typeEtat_{ SELECTION };
-
 	glm::ivec2 anchor{glm::ivec2()};
 	static glm::ivec2 currentPosition_;
 };

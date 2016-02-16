@@ -13,6 +13,13 @@
 
 #include "VisiteurAbstrait.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurCreationPoteau
+/// @brief Visiteur permettant d'initialiser la création d'un poteau
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurCreationPoteau : public VisiteurAbstrait
 {
 public:

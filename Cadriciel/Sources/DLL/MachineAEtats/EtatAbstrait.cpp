@@ -208,7 +208,7 @@ void EtatAbstrait::gererToucheAltRelachee()
 ///
 /// @fn void EtatAbstrait::gererTouchePlus()
 ///
-/// Cette fonction gère la touche +=, permet de faire un zoom avec la caméra
+/// Cette fonction gère la touche +=, permet de faire un zoom avant.
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererTouchePlus(){
@@ -222,9 +222,9 @@ void EtatAbstrait::gererTouchePlus(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::gererTouchePlus()
+/// @fn void EtatAbstrait::gererToucheMoins()
 ///
-/// Cette fonction gère la touche +=, permet de faire un zoom avec la caméra
+/// Cette fonction gère la touche -=, permet de faire un zoom arrière.
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheMoins(){
@@ -248,7 +248,7 @@ void EtatAbstrait::gererToucheMoins(){
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMoletteSouris(const int & delta){
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-		//TODO: 
+
 	}
 	else {
 		if (delta > 0) {
@@ -263,60 +263,50 @@ void EtatAbstrait::gererMoletteSouris(const int & delta){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
+/// @fn void EtatAbstrait::gererPositionCurseur(const glm::dvec3& position)
 ///
-/// Cette fonction vérifie que le curseur est sur la table
+/// Cette fonction vérifie que le curseur est sur la table 
+/// et appel la méthode concrète.
 ///
 /// @param const glm::dvec3& position: position de la souris
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
+void EtatAbstrait::gererPositionCurseur(const glm::dvec3& position)
 {
-	// TODO: Changer les constantes pour les dimensions dynamiques de la table.
 	const int MIN_X = -48;
 	const int MAX_X =  48;
 	const int MIN_Y = -24;
 	const int MAX_Y =  24;
 	bool positionEstSurTable = (MIN_X <= position.x && position.x <= MAX_X && MIN_Y <= position.y && position.y <= MAX_Y);
-	
-	gererEstSurTableConcret(positionEstSurTable);
+
+	gererPositionCurseurConcret(positionEstSurTable);
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
+/// @fn void EtatAbstrait::gererPositionCurseurConcret(const bool& positionEstSurTable)
 ///
-/// Cette fonction change l'image du curseur s'il n'est pas sur la table
+/// Implémentation concrète de la gestion de la position du curseur. Il s'agit 
+/// d'une méthode implémentée par les classes dérivées.
 ///
 /// @param bool positionEstSurTable: True si la souris est sur la table sinon false
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatAbstrait::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	if (!positionEstSurTable) {
-		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
-		SetCursor(Cursor);
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 ///
-/// Cette fonction assigne l'image du cursor lorsque ce n'est pas son symbole standard
-/// qui est affiché
-///
-/// @param bool estSymboleStandard: True si la souris est sur la table sinon false
+/// Cette fonction assigne l'image du curseur.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+void EtatAbstrait::assignerSymboleCurseur()
 {
-	//Pour forme de cursor voir http://msdn.microsoft.com/en-us/library/ms648391%28v=vs.85%29.aspx
-	if (!estSymboleStandard) {
-		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
-		SetCursor(Cursor);
-	}
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -325,9 +315,9 @@ void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::reinitialiser()
 {
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+

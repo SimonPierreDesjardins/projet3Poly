@@ -15,7 +15,13 @@
 #include "Utilitaire.h"
 #include <memory>
 
-
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurSelection
+/// @brief Visiteur permettant d'effectuer la sélection d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurSelection : public VisiteurAbstrait
 {
 public:
