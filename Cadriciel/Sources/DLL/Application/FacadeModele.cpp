@@ -560,11 +560,9 @@ double FacadeModele::obtenirFacteurMiseAEchelle()
 				if (enfant->obtenirType() == "ligneNoire" || enfant->obtenirType() == "depart") {
 					facteurMiseAEchelle = 1;
 				}
-			} 
-			else {
-					facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
-			}
-			trouve = true;
+				facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
+				trouve = true;
+			} 		
 		}
 	}
 	return facteurMiseAEchelle;
