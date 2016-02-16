@@ -41,7 +41,7 @@
             this.informationDone_.Name = "informationDone_";
             this.informationDone_.Size = new System.Drawing.Size(263, 23);
             this.informationDone_.TabIndex = 0;
-            this.informationDone_.Text = "Done";
+            this.informationDone_.Text = "Terminer";
             this.informationDone_.UseVisualStyleBackColor = true;
             // 
             // infoText_
