@@ -33,6 +33,7 @@ public:
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+	virtual void animer(float dt);
 
 private:
 	float angle_{ 0.f };

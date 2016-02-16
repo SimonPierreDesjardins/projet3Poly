@@ -63,6 +63,7 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
+	
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	
@@ -88,6 +89,16 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
+
+void NoeudRobot::animer(float dt)
+{
+	//float vitesse = 60;
+
+	//positionRelative_.x += (vitesse * dt)*sin(utilitaire::DEG_TO_RAD(angleRotation_));
+	//positionRelative_.y += (vitesse * dt)*cos(utilitaire::DEG_TO_RAD(angleRotation_));
+
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

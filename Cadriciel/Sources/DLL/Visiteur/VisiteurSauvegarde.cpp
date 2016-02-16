@@ -208,6 +208,30 @@ void VisiteurSauvegarde::visiter(NoeudJonction* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
+///
+/// Sauvegarde les noeuds lignes d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud mur de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
+{
+	writer->StartObject();
+	noeud->toJson(*writer);
+	if (noeud->obtenirNombreEnfants() > 0) {
+		writer->Key("noeudsEnfants");
+		writer->StartArray();
+		visiterEnfants(noeud);
+		writer->EndArray();
+	}
+	writer->EndObject();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn  void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
 ///
 /// Appel la méthode accepterVisiteur pour tous les enfants d'un noeud composite(ligne ou table)
