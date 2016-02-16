@@ -25,7 +25,6 @@
 ////////////////////////////////////////////////////////////////////////
 ModeTest::ModeTest()
 {
-	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
 	typeMode_ = TEST;
 }
 

@@ -81,12 +81,12 @@
             this.menuSimTest = new System.Windows.Forms.MenuStrip();
             this.fichierMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeEditionMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.vuesMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.orthographiqueMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.orbiteMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.premierePersonneMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.profilsMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
-            this.modeEditionMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.defautMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.customMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEdition_.SuspendLayout();
@@ -615,6 +615,13 @@
             this.menuPrincipalMenuSimTest.Text = "Menu principal";
             this.menuPrincipalMenuSimTest.Click += new System.EventHandler(this.menuPrincipalMenuSimTest_Click);
             // 
+            // modeEditionMenuSimTest
+            // 
+            this.modeEditionMenuSimTest.Name = "modeEditionMenuSimTest";
+            this.modeEditionMenuSimTest.Size = new System.Drawing.Size(154, 22);
+            this.modeEditionMenuSimTest.Text = "Mode Édition";
+            this.modeEditionMenuSimTest.Click += new System.EventHandler(this.modeEditionMenuSimTest_Click);
+            // 
             // vuesMenuSimTest
             // 
             this.vuesMenuSimTest.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -652,23 +659,16 @@
             this.profilsMenuSimTest.Size = new System.Drawing.Size(52, 20);
             this.profilsMenuSimTest.Text = "Profils";
             // 
-            // modeEditionMenuSimTest
-            // 
-            this.modeEditionMenuSimTest.Name = "modeEditionMenuSimTest";
-            this.modeEditionMenuSimTest.Size = new System.Drawing.Size(154, 22);
-            this.modeEditionMenuSimTest.Text = "Mode Édition";
-            this.modeEditionMenuSimTest.Click += new System.EventHandler(this.modeEditionMenuSimTest_Click);
-            // 
             // defautMenuSimTest
             // 
             this.defautMenuSimTest.Name = "defautMenuSimTest";
-            this.defautMenuSimTest.Size = new System.Drawing.Size(152, 22);
+            this.defautMenuSimTest.Size = new System.Drawing.Size(116, 22);
             this.defautMenuSimTest.Text = "Défaut";
             // 
             // customMenuSimTest
             // 
             this.customMenuSimTest.Name = "customMenuSimTest";
-            this.customMenuSimTest.Size = new System.Drawing.Size(152, 22);
+            this.customMenuSimTest.Size = new System.Drawing.Size(116, 22);
             this.customMenuSimTest.Text = "Custom";
             // 
             // Window
@@ -677,8 +677,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 428);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuEdition_);
+            this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);

@@ -295,7 +295,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void miseAEchelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            //Bouton E : Mise a échelle
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
             changeIconColor();
             outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -314,7 +315,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void sToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.SELECTION);
+            //Bouton S : sélection
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
             changeIconColor();
             outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -333,7 +335,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            //Bouton D : Déplacement
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
             changeIconColor();
             outilsDeplacement_.BackColor = Color.CadetBlue;
             viewPort_.Focus();
@@ -352,7 +355,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.ROTATION);
+            //Bouton R : Rotation
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
             changeIconColor();
             outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -371,7 +375,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+            //Bouton C : Duplication
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
             changeIconColor();
             outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -390,7 +395,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+            //Bouton P : Creation poteau
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
             changeIconColor();
             outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -409,7 +415,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void murToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+            //Bouton M : Creation mur
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
             changeIconColor();
             outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -428,7 +435,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+            //Bouton L : Creation ligne
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
             changeIconColor();
             outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -447,7 +455,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.ZOOM);
+            //Bouton Z : Zoom
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
             changeIconColor();
             outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
             viewPort_.Focus();
@@ -501,7 +510,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsSelection__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.SELECTION);
+            //Bouton S : sélection
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
             changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
         }
@@ -519,7 +529,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsDéplacement__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
+            //Bouton D : Déplacement
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
             changeIconColor();
             outilsDeplacement_.BackColor = Color.CadetBlue;
         }
@@ -537,7 +548,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsRotation__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.ROTATION);
+            //Bouton R : Rotation
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
             changeIconColor();
             outilsRotation_.BackColor = Color.CadetBlue;
         }
@@ -555,7 +567,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsMiseAEchelle__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
+            //Bouton E : Mise a échelle
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
             changeIconColor();
             outilsMiseAEchelle_.BackColor = Color.CadetBlue;
         }
@@ -573,7 +586,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsDuplication__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.DUPLICATION);
+            //Bouton C : Duplication
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
             changeIconColor();
             outilsDuplication_.BackColor = Color.CadetBlue;
         }
@@ -591,7 +605,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsZoom__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.ZOOM);
+            //Bouton Z : Zoom
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
             changeIconColor();
             outilsZoom_.BackColor = Color.CadetBlue;
         }
@@ -609,7 +624,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.CREATION_POTEAU);
+            //Bouton P : Creation poteau
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
             changeIconColor();
             outilsCreationPoteau_.BackColor = Color.CadetBlue;
         }
@@ -627,7 +643,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsCreationMurs__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.CREATION_MUR);
+            //Bouton M : Creation mur
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
             changeIconColor();
             outilsCreationMurs_.BackColor = Color.CadetBlue;
         }
@@ -645,7 +662,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void outilsCreationLigne__Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerEtat(Etat.CREATION_LIGNE_NOIRE);
+            //Bouton L : Creation ligne
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
             changeIconColor();
             outilsCreationLigne_.BackColor = Color.CadetBlue;
         }
@@ -1401,12 +1419,6 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void animer(double temps);
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerEtat(Etat etat);
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int obtenirEtat();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerMode(Mode mode);

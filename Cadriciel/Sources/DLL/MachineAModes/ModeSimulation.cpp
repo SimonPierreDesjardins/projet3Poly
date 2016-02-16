@@ -25,7 +25,6 @@
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::ModeSimulation()
 {
-	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
 	typeMode_ = SIMULATION;
 }
 

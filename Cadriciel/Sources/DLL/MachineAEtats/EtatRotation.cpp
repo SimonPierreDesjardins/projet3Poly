@@ -22,7 +22,6 @@
 ////////////////////////////////////////////////////////////////////////
 EtatRotation::EtatRotation()
 {
-	typeEtat_ = ROTATION;
 	visiteurRotation_ = std::make_unique<VisiteurRotation>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();

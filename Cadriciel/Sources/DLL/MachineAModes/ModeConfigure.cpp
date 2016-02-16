@@ -25,7 +25,6 @@
 ////////////////////////////////////////////////////////////////////////
 ModeConfigure::ModeConfigure()
 {
-	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
 	typeMode_ = CONFIGURE;
 }
 

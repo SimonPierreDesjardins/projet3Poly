@@ -23,7 +23,6 @@
 ////////////////////////////////////////////////////////////////////////
 EtatDuplication::EtatDuplication()
 {
-	typeEtat_ = DUPLICATION;
 	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();

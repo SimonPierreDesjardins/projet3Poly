@@ -13,6 +13,8 @@
 
 #include <memory>
 #include "glm\glm.hpp"
+#include <Windows.h>
+#include <Windowsx.h>
 
 
 enum Mode
@@ -45,54 +47,11 @@ public:
 	virtual void sauvegarder();
 	virtual void charger();
 
-	//Gestion des différentes touches et de leur effet selon le mode choisi
-	virtual void gererTouchePlus();
-	virtual void gererToucheMoins();
-
-	virtual void gererToucheEchappe();
-
-	virtual void gererToucheB();
-	virtual void gererToucheC();
-	virtual void gererToucheD();
-	virtual void gererToucheE();
-	virtual void gererToucheJ();
-	virtual void gererToucheK();
-	virtual void gererToucheL();
-	virtual void gererToucheR();
-	virtual void gererToucheS();
-	virtual void gererToucheT();
-	virtual void gererToucheZ();
-
-	virtual void gererToucheCTRLavecS();
-	virtual void gererToucheCTRLavecN();
-	virtual void gererToucheCTRLavecO();
-
-	virtual void gererTouche1();
-	virtual void gererTouche2();
-	virtual void gererTouche3();
-
-	virtual void gererFlecheGauche();
-	virtual void gererFlecheBas();
-	virtual void gererFlecheHaut();
-	virtual void gererFlecheDroit();
-
-	// Gestion des touches de modification
-	virtual void gererBarreDespacement();
-	virtual void gererToucheArriere();
-	virtual void gererToucheControlEnfoncee();
-	virtual void gererToucheControlRelachee();
-
-	virtual void gererToucheSupprimer();
-
-	// Gestion de la souris
-	virtual void gererClicDroitEnfonce(const int& x, const int& y);
-	virtual void gererClicDroitRelache(const int& x, const int& y);
-	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
-	virtual void gererClicGaucheRelache(const int& x, const int& y);
-	virtual void gererMouvementSouris(const int & x, const int& y);
-	virtual void gererMoletteSouris(const int & delta);
+	virtual void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	inline int obtenirTypeMode();
+
+	void assignerSymboleCurseur();
 
 protected:
 	int typeMode_;
