@@ -26,6 +26,15 @@ ComportementAbstrait::ComportementAbstrait()
 }
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementAbstrait::~ComportementAbstrait()
+///
+/// Destructeur
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 ComportementAbstrait::~ComportementAbstrait()
 {
 }
