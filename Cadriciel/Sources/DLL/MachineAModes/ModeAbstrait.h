@@ -61,6 +61,7 @@ public:
 	virtual void gererToucheR();
 	virtual void gererToucheS();
 	virtual void gererToucheT();
+	virtual void gererToucheW();
 	virtual void gererToucheZ();
 
 	virtual void gererToucheCTRLavecS();

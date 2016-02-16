@@ -27,6 +27,7 @@ const int VK_KEY_E = 0x45;
 const int VK_KEY_C = 0x43;
 const int VK_KEY_Z = 0x5A;
 const int VK_KEY_T = 0x54;
+const int VK_KEY_W = 0x57;
 
 extern "C"
 {
@@ -595,6 +596,9 @@ extern "C"
 						FacadeModele::obtenirInstance()->obtenirMode()->gererToucheT();
 						break;
 
+					case VK_KEY_W:
+						FacadeModele::obtenirInstance()->obtenirMode()->gererToucheW();
+						break;
 
 					case VK_DELETE :
 						FacadeModele::obtenirInstance()->obtenirMode()->gererToucheSupprimer();

@@ -17,6 +17,8 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+#include <iostream>
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudRobot::NoeudRobot(const std::string& typeNoeud)
@@ -63,6 +65,17 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
+	glColor4f(0.0, 0.0, 0.0, 1.0);
+
+	bool rotater = false;
+	if (!rotater)
+	{
+		glRotatef(90, 0.0, 0.0, 1.0);
+		rotater = true;
+	}
+
+	float angle = angleRotation_;
+	glRotatef(angle, 0.0, 0.0, 1.0);
 	
 	// Sauvegarde de la matrice.
 	glPushMatrix();
@@ -92,14 +105,11 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 
 void NoeudRobot::animer(float dt)
 {
-	//float vitesse = 60;
+	std::cout << dt << std::endl;
 
-	//positionRelative_.x += (vitesse * dt)*sin(utilitaire::DEG_TO_RAD(angleRotation_));
-	//positionRelative_.y += (vitesse * dt)*cos(utilitaire::DEG_TO_RAD(angleRotation_));
-
+	positionRelative_.x += (vitesseDroite_ * dt)*cos(utilitaire::DEG_TO_RAD(angleRotation_));
+	positionRelative_.y += (vitesseDroite_ * dt)*sin(utilitaire::DEG_TO_RAD(angleRotation_));
 }
-
-
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
