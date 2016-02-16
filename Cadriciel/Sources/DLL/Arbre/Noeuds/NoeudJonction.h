@@ -21,7 +21,6 @@
 /// @author Camille Gendreau
 /// @date 2007-01-24
 ///////////////////////////////////////////////////////////////////////////
-
 class NoeudJonction : public NoeudAbstrait
 {
 

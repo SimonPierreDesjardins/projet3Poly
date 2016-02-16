@@ -13,6 +13,17 @@
 
 #include "VisiteurAbstrait.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurCreationLigne
+/// @brief Classe de base du patron visiteur utilisée pour effectuer des
+///		   manipulations sur l'arbre de rendu.
+///
+///        Cette classe abstraite comprend l'interface de base que doivent
+///        implanter tous les visiteurs concrets. 
+///
+/// @author Olivier St-Amour
+/// @date 2016-01-13
+///////////////////////////////////////////////////////////////////////////
 class VisiteurCreationLigne : public VisiteurAbstrait
 {
 public:

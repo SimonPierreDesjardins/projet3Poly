@@ -116,3 +116,6 @@ void EtatRotation::reinitialiser()
 	visiteurRotation_->assignerAngleRotation((double)(positionInitialeY_- dernierePositionY_));
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurRotation_.get());
 }
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

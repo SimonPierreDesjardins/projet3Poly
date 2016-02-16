@@ -34,6 +34,16 @@ enum Etat
 	ZOOM
 };
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatAbstrait
+/// @brief Classe qui représente l'état abstrait de notre machine à états
+///
+///        Cette classe s'occupe de déclarer les fonctions qui seront implémentés 
+///	       dans les états dérivés.
+///
+/// @author Simon-Pierre Desjardins
+/// @date 2016-02-14
+///////////////////////////////////////////////////////////////////////////
 class EtatAbstrait
 {
 public:
@@ -66,23 +76,22 @@ public:
 protected:
 	virtual void reinitialiser();
 
+	Etat typeEtat_{ SELECTION };
+
 	ArbreRendu* arbre_{ nullptr };
 	vue::Vue* vue_{ nullptr };
 
 	bool estClickDrag();
-	bool toucheCtrlEnfonce_{ false };
 	bool curseurEstSurTable_{ true };
-	bool toucheAltEnfonce_{ false };
 	bool enCreation_{ false };
-	bool clicGaucheEnfonce_{false};
 
+	bool toucheCtrlEnfonce_{ false };
+	bool toucheAltEnfonce_{ false };
+	bool clicGaucheEnfonce_{false};
 	bool clicDroitEnfonce_{false};
 
 	int ancienX_{ 0 };
 	int ancienY_{ 0 };
-	
-	Etat typeEtat_{ SELECTION };
-
 	glm::ivec2 anchor{glm::ivec2()};
 	static glm::ivec2 currentPosition_;
 };

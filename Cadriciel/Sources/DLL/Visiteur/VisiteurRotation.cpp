@@ -234,3 +234,6 @@ void VisiteurRotation::assignerNouvellePositionRelative(NoeudAbstrait* noeud)
 	utilitaire::calculerPositionApresRotation(distanceCentreSelection, nouvelleDistanceCentreSelection, angleRotation_);
 	noeud->assignerPositionRelative(nouvelleDistanceCentreSelection + centreSelection_);
 }
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////
