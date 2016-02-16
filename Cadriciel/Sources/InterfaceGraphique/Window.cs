@@ -1123,6 +1123,21 @@ namespace InterfaceGraphique
                     outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
                     break;
 
+                case Keys.P:
+                    changeIconColor();
+                    outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                case Keys.M:
+                    changeIconColor();
+                    outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
+                case Keys.L:
+                    changeIconColor();
+                    outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
+                    break;
+
                 default:
                     break;
             }     
@@ -1376,19 +1391,6 @@ namespace InterfaceGraphique
 
 
     }
-
-    enum Etat
-    {
-        SELECTION,
-        DEPLACEMENT,
-        ROTATION,
-        MISE_A_ECHELLE,
-        DUPLICATION,
-        CREATION_POTEAU,
-        CREATION_MUR,
-        CREATION_LIGNE_NOIRE,
-        ZOOM
-    };
 
     enum Mode
     {
