@@ -48,14 +48,15 @@ public:
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
+	// Gestion du symbole du curseur.
+	void gererPositionCurseur(const glm::dvec3& position);
+	virtual void gererPositionCurseurConcret(const bool& pointeurEstSurTable);
+	virtual void assignerSymboleCurseur();
+
 	// Gestion de touches
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-
-	void gererEstSurTable(const glm::dvec3& position);
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
-	void assignerSymbolePointeur(bool estSymboleStandard);
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 	virtual void gererToucheAltEnfoncee();
@@ -69,9 +70,8 @@ protected:
 	vue::Vue* vue_{ nullptr };
 
 	bool estClickDrag();
-	
 	bool toucheCtrlEnfonce_{ false };
-	bool curseurEstSurTable_{ false };
+	bool curseurEstSurTable_{ true };
 	bool toucheAltEnfonce_{ false };
 	bool enCreation_{ false };
 	bool clicGaucheEnfonce_{false};

@@ -13,6 +13,7 @@
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "glm\glm.hpp"
+#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -104,7 +105,7 @@ void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)
 	EtatAbstrait::gererMouvementSouris(x, y);
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-	gererEstSurTable(positionVirtuelle);
+	gererPositionCurseur(positionVirtuelle);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -117,14 +118,30 @@ void EtatCreationPoteau::gererMouvementSouris(const int& x, const int& y)
 /// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatCreationPoteau::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatCreationPoteau::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
-
 	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
+		std::cout << "in" << std::endl;
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
+		std::cout << "out" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+///
+/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
+/// qui est affiché
+///
+////////////////////////////////////////////////////////////////////////
+void EtatCreationPoteau::assignerSymboleCurseur()
+{
+	if (!curseurEstSurTable_) {
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
 	}
 }

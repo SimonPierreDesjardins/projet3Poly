@@ -25,7 +25,8 @@ public:
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int&y);
 	virtual void gererToucheEchappe();
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
 
 private:
 	std::unique_ptr<VisiteurCreationMur> visiteurCreationMur_{ nullptr };

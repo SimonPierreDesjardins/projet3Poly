@@ -20,11 +20,10 @@
 /// @brief Classe qui représente le mode simulation de notre machine à modes
 ///
 ///        Cette classe s'occupe d'implémenter les fonctions du mode simulation
-
+///
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-
 class ModeSimulation : public ModeAbstrait
 {
 public:

@@ -132,7 +132,7 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 	// Calculer la position virtuelle.
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-	gererEstSurTable(positionVirtuelle);
+	gererPositionCurseur(positionVirtuelle);
 
 	if (enCreation_)
 	{		
@@ -160,24 +160,34 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 /// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatCreationMur::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatCreationMur::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
-
-	if (positionEstSurTable && !curseurEstSurTable_)
-	{
+	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
-		if (mur_ != nullptr)
-		{
+		if (mur_ != nullptr) {
 			mur_->assignerAffiche(true);
 		}
 	}
-	else if (!positionEstSurTable && curseurEstSurTable_)
-	{
+	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
-		if (mur_ != nullptr)
-		{
+		if (mur_ != nullptr) {
 			mur_->assignerAffiche(false);
 		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+///
+/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
+/// qui est affiché
+///
+////////////////////////////////////////////////////////////////////////
+void EtatCreationMur::assignerSymboleCurseur()
+{
+	if (!curseurEstSurTable_) {
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
 	}
 }

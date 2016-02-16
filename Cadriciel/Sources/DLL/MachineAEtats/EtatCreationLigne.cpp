@@ -48,7 +48,6 @@ EtatCreationLigne::~EtatCreationLigne()
 	ligne_ = nullptr;
 	segment_ = nullptr;
 	positionsClic_.clear();
-	assignerSymbolePointeur(true);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -138,7 +137,7 @@ void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	
-	gererEstSurTable(positionVirtuelle);
+	gererPositionCurseur(positionVirtuelle);
 
 	if (enCreation_) {
 		assert(segment_ != nullptr);
@@ -239,10 +238,8 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 /// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatCreationLigne::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	EtatAbstrait::gererEstSurTableConcret(positionEstSurTable);
-
 	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
 		if (segment_ != nullptr) {
@@ -262,4 +259,21 @@ bool EtatCreationLigne::ligneEstSurTable()
 	arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 	arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	return visiteurVerificationQuad_->objetsDansZoneSimulation();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+///
+/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
+/// qui est affiché
+///
+////////////////////////////////////////////////////////////////////////
+void EtatCreationLigne::assignerSymboleCurseur()
+{
+	if (!curseurEstSurTable_)
+	{
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
+	}
 }

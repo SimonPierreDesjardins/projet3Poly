@@ -14,15 +14,6 @@
 #include <memory>
 #include "glm\glm.hpp"
 
-///////////////////////////////////////////////////////////////////////////
-/// @class ModeAbstrait
-/// @brief Classe qui représente le mode abstrait de notre machine à modes
-///
-///        Cette classe s'occupe de déclarer les fonctions qui seront implémentés 
-///	       dans les états dérivés.
-/// @author Simon-Pierre Desjardins
-/// @date 2016-02-14
-///////////////////////////////////////////////////////////////////////////
 
 enum Mode
 {
@@ -33,6 +24,15 @@ enum Mode
 	TEST
 };
 
+///////////////////////////////////////////////////////////////////////////
+/// @class ModeAbstrait
+/// @brief Classe qui représente le mode abstrait de notre machine à modes
+///
+///        Cette classe s'occupe de déclarer les fonctions qui seront implémentés 
+///	       dans les états dérivés.
+/// @author Simon-Pierre Desjardins
+/// @date 2016-02-14
+///////////////////////////////////////////////////////////////////////////
 class ModeAbstrait
 {
 public:

@@ -26,7 +26,6 @@
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-
 class ModeEdition : public ModeAbstrait
 {
 public:

@@ -270,7 +270,7 @@ void EtatAbstrait::gererMoletteSouris(const int & delta){
 /// @param const glm::dvec3& position: position de la souris
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
+void EtatAbstrait::gererPositionCurseur(const glm::dvec3& position)
 {
 	// TODO: Changer les constantes pour les dimensions dynamiques de la table.
 	const int MIN_X = -48;
@@ -278,8 +278,8 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 	const int MIN_Y = -24;
 	const int MAX_Y =  24;
 	bool positionEstSurTable = (MIN_X <= position.x && position.x <= MAX_X && MIN_Y <= position.y && position.y <= MAX_Y);
-	
-	gererEstSurTableConcret(positionEstSurTable);
+
+	gererPositionCurseurConcret(positionEstSurTable);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -291,32 +291,22 @@ void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
 /// @param bool positionEstSurTable: True si la souris est sur la table sinon false
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatAbstrait::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	if (!positionEstSurTable) {
-		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
-		SetCursor(Cursor);
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 ///
-/// Cette fonction assigne l'image du cursor lorsque ce n'est pas son symbole standard
+/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
 /// qui est affiché
 ///
-/// @param bool estSymboleStandard: True si la souris est sur la table sinon false
-///
 ////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+void EtatAbstrait::assignerSymboleCurseur()
 {
-	//Pour forme de cursor voir http://msdn.microsoft.com/en-us/library/ms648391%28v=vs.85%29.aspx
-	if (!estSymboleStandard) {
-		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
-		SetCursor(Cursor);
-	}
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -325,5 +315,4 @@ void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::reinitialiser()
 {
-
 }

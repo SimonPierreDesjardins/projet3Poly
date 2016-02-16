@@ -27,7 +27,8 @@ public:
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
 
 private:
 	std::unique_ptr<VisiteurCreationLigne> visiteurCreationLigne_{ nullptr };

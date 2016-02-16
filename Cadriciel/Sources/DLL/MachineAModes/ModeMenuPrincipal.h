@@ -24,7 +24,6 @@
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-
 class ModeMenuPrincipal : public ModeAbstrait
 {
 public:

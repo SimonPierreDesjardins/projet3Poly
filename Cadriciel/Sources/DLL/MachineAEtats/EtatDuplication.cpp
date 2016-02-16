@@ -62,10 +62,8 @@ EtatDuplication::~EtatDuplication()
 /// @param bool positionEstSurTable: True si curseur est sur la table, sinon false.
 ///
 ////////////////////////////////////////////////////////////////////////
-void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
+void EtatDuplication::gererPositionCurseurConcret(const bool& positionEstSurTable)
 {
-	assignerSymbolePointeur(positionEstSurTable);
-
 	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
 		if (duplication_ != nullptr) {
@@ -125,6 +123,22 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 	glm::dvec3 positionVirtuelle;
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	
-	gererEstSurTable(positionVirtuelle);
+	gererPositionCurseur(positionVirtuelle);
 	duplication_->assignerPositionRelative(positionVirtuelle);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+///
+/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
+/// qui est affiché
+///
+////////////////////////////////////////////////////////////////////////
+void EtatDuplication::assignerSymboleCurseur()
+{
+	if (!curseurEstSurTable_) {
+		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
+		SetCursor(Cursor);
+	}
 }

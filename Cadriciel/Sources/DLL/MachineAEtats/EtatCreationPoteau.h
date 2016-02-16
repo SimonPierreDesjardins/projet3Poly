@@ -24,7 +24,8 @@ public:
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
-	virtual void gererEstSurTableConcret(bool positionEstSurTable);	
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
 
 private:
 	std::unique_ptr<VisiteurCreationPoteau> visiteurCreationPoteau_{ nullptr };
