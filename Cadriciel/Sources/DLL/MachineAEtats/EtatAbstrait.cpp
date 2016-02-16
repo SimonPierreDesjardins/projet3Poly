@@ -208,7 +208,7 @@ void EtatAbstrait::gererToucheAltRelachee()
 ///
 /// @fn void EtatAbstrait::gererTouchePlus()
 ///
-/// Cette fonction gère la touche +=, permet de faire un zoom avec la caméra
+/// Cette fonction gère la touche +=, permet de faire un zoom avant.
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererTouchePlus(){
@@ -222,9 +222,9 @@ void EtatAbstrait::gererTouchePlus(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::gererTouchePlus()
+/// @fn void EtatAbstrait::gererToucheMoins()
 ///
-/// Cette fonction gère la touche +=, permet de faire un zoom avec la caméra
+/// Cette fonction gère la touche -=, permet de faire un zoom arrière.
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererToucheMoins(){
@@ -248,7 +248,7 @@ void EtatAbstrait::gererToucheMoins(){
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMoletteSouris(const int & delta){
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-		//TODO: 
+
 	}
 	else {
 		if (delta > 0) {
@@ -263,16 +263,16 @@ void EtatAbstrait::gererMoletteSouris(const int & delta){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::gererEstSurTable(const glm::dvec3& position)
+/// @fn void EtatAbstrait::gererPositionCurseur(const glm::dvec3& position)
 ///
-/// Cette fonction vérifie que le curseur est sur la table
+/// Cette fonction vérifie que le curseur est sur la table 
+/// et appel la méthode concrète.
 ///
 /// @param const glm::dvec3& position: position de la souris
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererPositionCurseur(const glm::dvec3& position)
 {
-	// TODO: Changer les constantes pour les dimensions dynamiques de la table.
 	const int MIN_X = -48;
 	const int MAX_X =  48;
 	const int MIN_Y = -24;
@@ -284,9 +284,10 @@ void EtatAbstrait::gererPositionCurseur(const glm::dvec3& position)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::gererEstSurTableConcret(bool positionEstSurTable)
+/// @fn void EtatAbstrait::gererPositionCurseurConcret(const bool& positionEstSurTable)
 ///
-/// Cette fonction change l'image du curseur s'il n'est pas sur la table
+/// Implémentation concrète de la gestion de la position du curseur. Il s'agit 
+/// d'une méthode implémentée par les classes dérivées.
 ///
 /// @param bool positionEstSurTable: True si la souris est sur la table sinon false
 ///
@@ -299,8 +300,7 @@ void EtatAbstrait::gererPositionCurseurConcret(const bool& positionEstSurTable)
 ///
 /// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
 ///
-/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
-/// qui est affiché
+/// Cette fonction assigne l'image du curseur.
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::assignerSymboleCurseur()

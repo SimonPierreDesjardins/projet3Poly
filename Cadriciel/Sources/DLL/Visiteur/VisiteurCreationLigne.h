@@ -15,14 +15,10 @@
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurCreationLigne
-/// @brief Classe de base du patron visiteur utilisée pour effectuer des
-///		   manipulations sur l'arbre de rendu.
-///
-///        Cette classe abstraite comprend l'interface de base que doivent
-///        implanter tous les visiteurs concrets. 
+/// @brief Visiteur permettant d'initialiser la création d'une ligne.
 ///
 /// @author Olivier St-Amour
-/// @date 2016-01-13
+/// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
 class VisiteurCreationLigne : public VisiteurAbstrait
 {

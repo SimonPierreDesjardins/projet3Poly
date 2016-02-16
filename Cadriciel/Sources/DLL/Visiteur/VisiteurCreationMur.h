@@ -13,6 +13,13 @@
 
 #include "VisiteurAbstrait.h"
 
+///////////////////////////////////////////////////////////////////////////
+/// @class VisiteurCreationMur
+/// @brief Visiteur permettant d'initialiser la création d'un mur.
+///
+/// @author Olivier St-Amour
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class VisiteurCreationMur : public VisiteurAbstrait
 {
 public:

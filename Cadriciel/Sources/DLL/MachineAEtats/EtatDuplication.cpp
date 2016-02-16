@@ -54,7 +54,7 @@ EtatDuplication::~EtatDuplication()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatDuplication::gererEstSurTableConcret(bool positionEstSurTable)
+/// @fn void EtatCreationMur::gererPositionCurseurConcret(const bool& positionEstSurTable)
 ///
 /// Cette fonction affiche l'objet si le curseur est sur la table et arrête
 /// d'afficher l'objet si le curseur n'est pas sur la table.
@@ -129,10 +129,10 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+/// @fn void EtatAbstrait::assignerSymboleCurseur()
 ///
-/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
-/// qui est affiché
+/// Cette fonction assigne le symbole interdit au curseur si celui-ci
+/// ne se trouve pas sur la table. 
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatDuplication::assignerSymboleCurseur()

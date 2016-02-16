@@ -230,7 +230,7 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatCreationLigne::gererEstSurTableConcret(bool positionEstSurTable)
+/// @fn void EtatCreationMur::gererPositionCurseurConcret(const bool& positionEstSurTable)
 ///
 /// Cette fonction affiche l'objet si le curseur est sur la table et arrête
 /// d'afficher l'objet si le curseur n'est pas sur la table.
@@ -254,6 +254,16 @@ void EtatCreationLigne::gererPositionCurseurConcret(const bool& positionEstSurTa
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool EtatCreationLigne::ligneEstSurTable()
+///
+///	Appel le visiteurMiseAJourQuad et le visiteurVerificationQuad pour 
+/// vérifier si la ligne est sur la table au moment de la création.
+///
+/// @return bool: True si la ligne est sur la table, sin non false.
+///
+////////////////////////////////////////////////////////////////////////
 bool EtatCreationLigne::ligneEstSurTable()
 {
 	arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
@@ -263,10 +273,10 @@ bool EtatCreationLigne::ligneEstSurTable()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void EtatAbstrait::assignerSymbolePointeur(bool estSymboleStandard)
+/// @fn void EtatAbstrait::assignerSymboleCurseur()
 ///
-/// Cette fonction assigne l'image du curseur lorsque ce n'est pas son symbole standard
-/// qui est affiché
+/// Cette fonction assigne le symbole interdit au curseur si celui-ci
+/// ne se trouve pas sur la table. 
 ///
 ////////////////////////////////////////////////////////////////////////
 void EtatCreationLigne::assignerSymboleCurseur()
