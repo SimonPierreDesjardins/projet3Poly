@@ -24,6 +24,5 @@ var searchData=
   ['modetest',['ModeTest',['../class_mode_test.html',1,'ModeTest'],['../group__inf2990.html#ga8835d51c0957eb6d104e112309bf44f9',1,'ModeTest::ModeTest()']]],
   ['modetest_2ecpp',['ModeTest.cpp',['../_mode_test_8cpp.html',1,'']]],
   ['modetest_2eh',['ModeTest.h',['../_mode_test_8h.html',1,'']]],
-  ['modetypes',['ModeTypes',['../class_mode_types.html',1,'']]],
   ['modetypes_2eh',['ModeTypes.h',['../_mode_types_8h.html',1,'']]]
 ];

@@ -49,7 +49,6 @@ var hierarchy =
       [ "ModeSimulation", "class_mode_simulation.html", null ],
       [ "ModeTest", "class_mode_test.html", null ]
     ] ],
-    [ "ModeTypes", "class_mode_types.html", null ],
     [ "Singleton", null, [
       [ "BancTests", "class_banc_tests.html", null ],
       [ "ConfigScene", "class_config_scene.html", null ]

@@ -23,7 +23,6 @@ var annotated_dup =
     [ "ModeMenuPrincipal", "class_mode_menu_principal.html", "class_mode_menu_principal" ],
     [ "ModeSimulation", "class_mode_simulation.html", "class_mode_simulation" ],
     [ "ModeTest", "class_mode_test.html", "class_mode_test" ],
-    [ "ModeTypes", "class_mode_types.html", null ],
     [ "NoeudAbstrait", "class_noeud_abstrait.html", "class_noeud_abstrait" ],
     [ "NoeudAbstraitTest", "class_noeud_abstrait_test.html", "class_noeud_abstrait_test" ],
     [ "NoeudComposite", "class_noeud_composite.html", "class_noeud_composite" ],
