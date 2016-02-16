@@ -47,7 +47,7 @@ class VisiteurAbstrait;
 /// @author DGI-2990
 /// @date 2007-01-24
 ///////////////////////////////////////////////////////////////////////////
-class NoeudAbstrait : public std::enable_shared_from_this<NoeudAbstrait>
+class NoeudAbstrait 
 {
 public:
 	/// Constructeur.

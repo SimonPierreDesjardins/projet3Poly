@@ -802,7 +802,7 @@ namespace InterfaceGraphique
         {
             FonctionsNatives.suppression();
             supprimerToolStripMenuItem.Enabled = false;
-            panneauOperation_.Visible = false;
+            verificationDuNombreElementChoisi();
             viewPort_.Focus();
         }
 
