@@ -15,7 +15,13 @@
 #include "VisiteurDuplication.h"
 #include "VisiteurVerificationQuad.h"
 
-
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatDuplication
+/// @brief État représentant la duplication d'un objet
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatDuplication : public EtatAbstrait
 {
 public:

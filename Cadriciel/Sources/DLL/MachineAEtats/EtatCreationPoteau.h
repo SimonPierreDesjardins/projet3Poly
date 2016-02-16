@@ -15,6 +15,13 @@
 #include "VisiteurTypes.h"
 #include <iostream>
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatCreationPoteau
+/// @brief État représentant la creation d'un poteau
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatCreationPoteau : public EtatAbstrait
 {
 public:

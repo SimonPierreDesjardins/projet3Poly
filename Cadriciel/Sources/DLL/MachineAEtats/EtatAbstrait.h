@@ -36,13 +36,13 @@ enum Etat
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EtatAbstrait
-/// @brief Classe qui représente l'état abstrait de notre machine à états
+/// @brief Classe de base pour chaque état
 ///
-///        Cette classe s'occupe de déclarer les fonctions qui seront implémentés 
-///	       dans les états dérivés.
+///        Cette classe abstraite comprend l'interface de base que doivent
+///        implanter tous les états pouvant être présent dans le modèle
 ///
-/// @author Simon-Pierre Desjardins
-/// @date 2016-02-14
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
 class EtatAbstrait
 {

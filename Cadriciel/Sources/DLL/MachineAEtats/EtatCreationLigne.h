@@ -16,6 +16,13 @@
 #include <iostream>
 #include <vector>
 
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatCreationLigne
+/// @brief État représentant la creation d'une ligne
+///
+/// @author Frédéric Grégoire
+/// @date 2016-02-15
+///////////////////////////////////////////////////////////////////////////
 class EtatCreationLigne: public EtatAbstrait
 {
 public:
