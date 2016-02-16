@@ -13,7 +13,6 @@
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "glm\glm.hpp"
-#include <iostream>
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -122,11 +121,9 @@ void EtatCreationPoteau::gererPositionCurseurConcret(const bool& positionEstSurT
 {
 	if (positionEstSurTable && !curseurEstSurTable_) {
 		curseurEstSurTable_ = true;
-		std::cout << "in" << std::endl;
 	}
 	else if (!positionEstSurTable && curseurEstSurTable_) {
 		curseurEstSurTable_ = false;
-		std::cout << "out" << std::endl;
 	}
 }
 

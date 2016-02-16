@@ -282,7 +282,6 @@ void ModeEdition::gererTouche2()
 
 void ModeEdition::gererFlecheGauche()
 {
-	std::cout << "La fleche de gauche est appuyee" << std::endl;
 	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
 }
 
@@ -297,7 +296,6 @@ void ModeEdition::gererFlecheGauche()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererFlecheBas()
 {
-	std::cout << "La fleche du bas est appuyee" << std::endl;
 	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
 }
 ////////////////////////////////////////////////////////////////////////
@@ -311,7 +309,6 @@ void ModeEdition::gererFlecheBas()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererFlecheHaut()
 {
-	std::cout << "La fleche du haut est appuyee" << std::endl;
 	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
 }
 
@@ -326,7 +323,6 @@ void ModeEdition::gererFlecheHaut()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererFlecheDroit()
 {
-	std::cout << "La fleche de droite est appuyee" << std::endl;
 	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
 }
 
