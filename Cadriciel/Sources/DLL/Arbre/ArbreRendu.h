@@ -82,7 +82,7 @@ protected:
 	FILE* obtenirFichierZoneDefaut(std::string mode);
 
 	/// Constante représentant le fichier zone contenant la structure de base
-	const std::string cheminFichierZoneDefaut = "./../Zones/zone_par_defaut.json";
+	const std::string cheminFichierZoneDefaut = "./Zones/zone_par_defaut.json";
 
 	/// Chemin vers le fichier de zone sélectionné par l'utilisateur
 	std::string cheminFichierZone;
