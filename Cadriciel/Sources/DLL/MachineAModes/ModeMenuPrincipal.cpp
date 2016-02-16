@@ -27,6 +27,8 @@
 
 ModeMenuPrincipal::ModeMenuPrincipal()
 {
+	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
+	typeMode_ = MENU_PRINCIPAL;
 }
 
 ////////////////////////////////////////////////////////////////////////

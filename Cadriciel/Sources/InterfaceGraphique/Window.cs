@@ -147,6 +147,7 @@ namespace InterfaceGraphique
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(false);
+            afficherMenuEdition(true);
             panneauOperation_.Visible = false;
             FonctionsNatives.assignerMode(Mode.EDITION);
             verificationDuNombreElementChoisi();
@@ -176,6 +177,7 @@ namespace InterfaceGraphique
         /// @fn private void afficherMenuPrincipal(bool afficherMenu)
         ///
         /// Cette fonction ajuste la visibilité des composants de la fenêtre
+        /// pour le menu principal
         /// 
         /// @param bool afficherMenu: true si on veut afficher Menu sinon false
         ///
@@ -187,9 +189,60 @@ namespace InterfaceGraphique
             bouttonQuitter_.Visible = afficherMenu;
             bouttonSimulation_.Visible = afficherMenu;
             viewPort_.Visible = !afficherMenu;
-            menuEdition_.Visible = !afficherMenu;
-            barreOutils_.Visible = !afficherMenu;
-            panneauOperation_.Visible = !afficherMenu;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void afficherMenuEdition(bool afficherMenu)
+        ///
+        /// Cette fonction ajuste la visibilité des composants de la fenêtre
+        /// pour le menu édition
+        /// 
+        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void afficherMenuEdition(bool afficherMenu)
+        {
+            viewPort_.Visible = afficherMenu;
+            menuEdition_.Visible = afficherMenu;
+            barreOutils_.Visible = afficherMenu;
+            panneauOperation_.Visible = false;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void afficherMenuSimulation(bool afficherMenu)
+        ///
+        /// Cette fonction ajuste la visibilité des composants de la fenêtre
+        /// pour le menu de simulation
+        /// 
+        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void afficherMenuSimulation(bool afficherMenu)
+        {
+            menuSimTest.Visible = afficherMenu;
+            modeEditionMenuSimTest.Visible = !afficherMenu;
+            premierePersonneMenuSimTest.Visible = afficherMenu;
+            viewPort_.Visible = afficherMenu;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void afficherMenuTest(bool afficherMenu)
+        ///
+        /// Cette fonction ajuste la visibilité des composants de la fenêtre
+        /// pour le menu de test
+        /// 
+        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void afficherMenuTest(bool afficherMenu)
+        {
+            menuSimTest.Visible = afficherMenu;
+            modeEditionMenuSimTest.Visible = afficherMenu;
+            premierePersonneMenuSimTest.Visible = !afficherMenu;
+            viewPort_.Visible = afficherMenu;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -201,7 +254,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void changeIconColor()
         {
-            outilsDéplacement_.BackColor = System.Drawing.Color.Gray;
+            outilsDeplacement_.BackColor = System.Drawing.Color.Gray;
             outilsSelection_.BackColor = System.Drawing.Color.Gray;
             outilsRotation_.BackColor = System.Drawing.Color.Gray;
             outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
@@ -225,6 +278,7 @@ namespace InterfaceGraphique
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             afficherMenuPrincipal(true);
+            afficherMenuEdition(false);
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
@@ -239,7 +293,7 @@ namespace InterfaceGraphique
         /// @param EventsArgs e: evenement du click
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
+        private void miseAEchelleToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerEtat(Etat.MISE_A_ECHELLE);
             changeIconColor();
@@ -281,7 +335,7 @@ namespace InterfaceGraphique
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
             changeIconColor();
-            outilsDéplacement_.BackColor = Color.CadetBlue;
+            outilsDeplacement_.BackColor = Color.CadetBlue;
             viewPort_.Focus();
         }
 
@@ -467,7 +521,7 @@ namespace InterfaceGraphique
         {
             FonctionsNatives.assignerEtat(Etat.DEPLACEMENT);
             changeIconColor();
-            outilsDéplacement_.BackColor = Color.CadetBlue;
+            outilsDeplacement_.BackColor = Color.CadetBlue;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -608,7 +662,11 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void modeTestModeEdition__Click(object sender, EventArgs e)
         {
-            //FonctionsNatives.assignerMode(Mode.TEST);
+            FonctionsNatives.assignerMode(Mode.TEST);
+            afficherMenuPrincipal(false);
+            afficherMenuEdition(false);
+            afficherMenuTest(true);
+            viewPort_.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -623,7 +681,11 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void bouttonSimulation__Click(object sender, EventArgs e)
         {
-            //FonctionsNatives.assignerMode(Mode.SIMULATION);
+            afficherMenuPrincipal(false);
+            afficherMenuEdition(false);
+            afficherMenuSimulation(true);
+            FonctionsNatives.assignerMode(Mode.SIMULATION);
+            viewPort_.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -638,7 +700,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void bouttonConfiguration__Click(object sender, EventArgs e)
         {
-            //FonctionsNatives.assignerMode(Mode.CONFIGURE);
+            FonctionsNatives.assignerMode(Mode.CONFIGURE);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -925,7 +987,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         ///
-        /// Gère les touches lorsque le viewPort_ panel à le focus.
+        /// Gère les touches lorsque le viewPort_ panel à le focus selon le mode
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param PreviewKeyDownEventArgs e: evenement du clavier
@@ -933,7 +995,53 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            switch(e.KeyCode)
+            int mode = FonctionsNatives.obtenirMode();
+
+            switch(mode)
+            {
+                //Mode Menu_Principal
+                case 0:
+                    break;
+
+                //Mode Simulation
+                case 1:
+                    gererToucheSimulation(sender, e);
+                    break;
+                
+                //Mode Edition
+                case 2:
+                    gererToucheEdition(sender, e);
+                    break;
+
+                //Mode Configure
+                case 3:
+                    break;
+
+                //Mode Test
+                case 4:
+                    gererToucheTest(sender, e);
+                    break;
+
+                default:
+                    break;
+            }
+
+            
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void gererToucheEdition(object sender, PreviewKeyDownEventArgs e)
+        ///
+        /// Gère les touches pour le mode édition
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void gererToucheEdition(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
             {
                 case Keys.Delete:
                     verificationDuNombreElementChoisi();
@@ -954,6 +1062,14 @@ namespace InterfaceGraphique
                     }
                     break;
 
+                case Keys.Q:
+                    if (e.Control)
+                    {
+                        afficherMenuEdition(false);
+                        afficherMenuPrincipal(true);
+                    }
+                    break;
+
                 case Keys.O:
                     if (e.Control)
                         ouvrirZone();
@@ -966,14 +1082,14 @@ namespace InterfaceGraphique
 
                 case Keys.D:
                     changeIconColor();
-                    outilsDéplacement_.BackColor = Color.CadetBlue;
+                    outilsDeplacement_.BackColor = Color.CadetBlue;
                     break;
 
                 case Keys.R:
                     changeIconColor();
                     outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
                     break;
-                     
+
                 case Keys.E:
                     changeIconColor();
                     outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
@@ -992,6 +1108,54 @@ namespace InterfaceGraphique
                 default:
                     break;
             }     
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void gererToucheSimulation(object sender, PreviewKeyDownEventArgs e)
+        ///
+        /// Gère les touches pour le mode Simulation
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void gererToucheSimulation(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Q:
+                    if (e.Control)
+                    {
+                        afficherMenuSimulation(false);
+                        afficherMenuPrincipal(true);
+                    }
+                    break;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void gererToucheTest(object sender, PreviewKeyDownEventArgs e)
+        ///
+        /// Gère les touches pour le mode Test
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void gererToucheTest(object sender, PreviewKeyDownEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Q:
+                    if (e.Control)
+                    {
+                        afficherMenuTest(false);
+                        afficherMenuPrincipal(true);
+                    }
+                    break;
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1148,6 +1312,51 @@ namespace InterfaceGraphique
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
         }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void menuPrincipalMenuSimTest_Click(object sender, MouseEventArgs e)
+        ///
+        /// Affiche le menu principal lorsque le bouton Menu Principal est appuyé à partir
+        /// du menu de Simulation ou du menu de Test
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void menuPrincipalMenuSimTest_Click(object sender, EventArgs e)
+        {
+            afficherMenuSimulation(false);
+            afficherMenuTest(false);
+            afficherMenuEdition(false);
+            afficherMenuPrincipal(true);
+            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void modeEditionMenuSimTest_Click(object sender, MouseEventArgs e)
+        ///
+        /// Affiche le menu Edition lorsque le bouton Mode Edition est appuyé à partir
+        /// du menu de Test
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void modeEditionMenuSimTest_Click(object sender, EventArgs e)
+        {
+            afficherMenuSimulation(false);
+            afficherMenuTest(false);
+            afficherMenuPrincipal(false);
+            afficherMenuEdition(true);
+            changeIconColor();
+            outilsSelection_.BackColor = Color.CadetBlue;
+            FonctionsNatives.assignerMode(Mode.EDITION);
+            viewPort_.Focus();
+        }
+
+
     }
 
     enum Etat
