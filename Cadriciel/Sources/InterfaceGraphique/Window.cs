@@ -1137,6 +1137,12 @@ namespace InterfaceGraphique
                     outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
                     break;
 
+                case Keys.T:
+                    afficherMenuEdition(false);
+                    afficherMenuTest(true);
+                    FonctionsNatives.assignerMode(Mode.TEST);
+                    break;
+
                 default:
                     break;
             }     
