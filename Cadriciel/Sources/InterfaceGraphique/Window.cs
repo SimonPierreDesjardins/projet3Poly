@@ -880,7 +880,6 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.suppression();
             supprimerToolStripMenuItem.Enabled = false;
             verificationDuNombreElementChoisi();
             viewPort_.Focus();
@@ -1432,12 +1431,6 @@ namespace InterfaceGraphique
         public static extern void redimensionnerFenetre(int largeur, int hauteur);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void zoomIn();
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void zoomOut();
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirAffichagesParSeconde();
  
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -1472,9 +1465,6 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void charger();
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void suppression();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirNombreSelection();

@@ -185,34 +185,6 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void __cdecl zoomIn()
-	///
-	/// Cette fonction applique un zoom avant sur le présent volume de vision.
-	///
-	/// @return Aucune.
-	///
-	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl zoomIn()
-	{
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-	}
-
-	////////////////////////////////////////////////////////////////////////
-	///
-	/// @fn __declspec(dllexport) void __cdecl zoomOut()
-	///
-	/// Cette fonction applique un zoom arrière sur le présent volume de vision.
-	///
-	/// @return Aucune.
-	///
-	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl zoomOut()
-	{
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-	}
-
-	////////////////////////////////////////////////////////////////////////
-	///
 	/// @fn __declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
 	///
 	/// Cette fonction permet d'obtenir le nombre d'affichages par seconde.
@@ -334,18 +306,6 @@ extern "C"
 	__declspec(dllexport) void __cdecl nouvelleTable()
 	{
 		FacadeModele::obtenirInstance()->reinitialiser();
-	}
-
-	////////////////////////////////////////////////////////////////////////
-	///
-	/// @fn __declspec(dllexport) void __cdecl suppression()
-	///
-	/// Cette fonction permet de supprimer un objet selectionné
-	///
-	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl suppression()
-	{
-//		FacadeModele::obtenirInstance()->obtenirMode()->gererToucheSupprimer();
 	}
 	
 	////////////////////////////////////////////////////////////////////////
@@ -492,7 +452,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		FacadeModele::obtenirInstance()->obtenirMode()->assignerSymboleCurseur();
+		//FacadeModele::obtenirInstance()->obtenirMode()->assignerSymboleCurseur();
 		FacadeModele::obtenirInstance()->obtenirMode()->gererMessage(msg, wParam, lParam);
 	}
 }

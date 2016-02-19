@@ -51,8 +51,6 @@ public:
 
 	inline int obtenirTypeMode();
 
-	void assignerSymboleCurseur();
-
 protected:
 	int typeMode_;
 };

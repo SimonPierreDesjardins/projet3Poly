@@ -46,7 +46,7 @@ ModeEdition::ModeEdition()
 ////////////////////////////////////////////////////////////////////////
 ModeEdition::~ModeEdition()
 {
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
+	//FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -413,6 +413,7 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_MOUSEMOVE:
+			etat_->assignerSymboleCurseur();
 			etat_->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 

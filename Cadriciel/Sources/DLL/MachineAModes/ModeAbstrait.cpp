@@ -69,10 +69,6 @@ void ModeAbstrait::charger()
 {
 }
 
-void ModeAbstrait::assignerSymboleCurseur()
-{
-}
-
 void ModeAbstrait::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 }
