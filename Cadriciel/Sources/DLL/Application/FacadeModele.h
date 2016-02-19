@@ -54,14 +54,11 @@ public:
    /// Affiche la base du contenu du modèle.
    void afficherBase() const;
 
-   /// Modifie l'etat courant.
-   void assignerEtat(Etat etat);
-   // Obtenir l'etat courant.
-   inline EtatAbstrait* obtenirEtat();
+   
 
-   /// Modifie l'etat courant.
+   /// Modifie le Mode courant.
    void assignerMode(Mode mode);
-   // Obtenir l'etat courant.
+   // Obtenir le Mode courant.
    inline ModeAbstrait* obtenirMode();
 
    // Obtenir le nombre d'objet sélectionné
@@ -142,21 +139,6 @@ private:
    std::unique_ptr<EtatAbstrait> etat_{ nullptr };
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
 };
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline std::shared_ptr<EtatAbstrait> FacadeModele::obtenirEtat()
-///
-/// Cette fonction retourne l'état dans lequel se trouve présentement
-/// le modèle.
-///
-/// @return L'état courant.
-///
-////////////////////////////////////////////////////////////////////////
-inline EtatAbstrait* FacadeModele::obtenirEtat()
-{
-	return etat_.get();
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///

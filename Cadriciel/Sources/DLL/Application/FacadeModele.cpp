@@ -371,69 +371,7 @@ void FacadeModele::animer(float temps)
 	vue_->animer(temps);
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::modifierEtat (EtatAbstrait* etat)
-///
-/// Cette fonction change l'attribut etat_ pour la valeur de l'état en paramètre.
-///
-/// @param[in] etat : Nouvel état à traiter.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::assignerEtat(Etat etat)
-{
-		switch (etat) {
-			case SELECTION :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatSelection>();
-				break;
 
-			case DEPLACEMENT :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatDeplacement>();
-				break;
-
-			case ROTATION :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatRotation>();
-				break;
-
-			case MISE_A_ECHELLE :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatMiseAEchelle>();
-				break;
-
-			case DUPLICATION :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatDuplication>();
-				break;
-
-			case CREATION_POTEAU :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatCreationPoteau>();
-				break;
-
-			case CREATION_MUR :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatCreationMur>();
-				break;
-
-			case CREATION_LIGNE_NOIRE :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatCreationLigne>();
-				break;
-			
-			case ZOOM :
-				etat_.reset(nullptr);
-				etat_ = std::make_unique<EtatLoupe>();
-				break;
-
-			default:
-				break;
-		}
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///

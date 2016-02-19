@@ -206,6 +206,7 @@
     <ClInclude Include="Comportement\ComportementDeviation.h" />
     <ClInclude Include="Comportement\ComportementEvitement.h" />
     <ClInclude Include="Comportement\ComportementSuiviLigne.h" />
+    <ClInclude Include="Commande\CommandeRobot.h" />
     <ClInclude Include="Configuration\ConfigScene.h" />
     <ClInclude Include="Arbre\ArbreRendu.h" />
     <ClInclude Include="Arbre\ArbreRenduINF2990.h" />

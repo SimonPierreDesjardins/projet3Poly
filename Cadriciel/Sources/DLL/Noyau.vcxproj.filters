@@ -81,6 +81,9 @@
     </Filter>
     <Filter Include="Header Files\Comportement">
       <UniqueIdentifier>{06c11b55-5c44-4176-a672-98b35929bcf3}</UniqueIdentifier>
+	</Filter>
+    <Filter Include="Header Files\Commande">
+      <UniqueIdentifier>{201cd5c0-8623-4562-9071-0cc30d8ca945}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +218,7 @@
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp">
+      <Filter>Source Files\Visiteur</Filter>
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp">
@@ -434,6 +438,9 @@
     </ClInclude>
     <ClInclude Include="Comportement\ComportementSuiviLigne.h">
       <Filter>Header Files\Comportement</Filter>
+    </ClInclude>
+	<ClInclude Include="Commande\CommandeRobot.h">
+      <Filter>Header Files\Commande</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

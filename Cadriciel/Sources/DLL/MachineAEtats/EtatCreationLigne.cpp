@@ -25,7 +25,6 @@
 ////////////////////////////////////////////////////////////////////////
 EtatCreationLigne::EtatCreationLigne()
 {
-	typeEtat_ = CREATION_LIGNE_NOIRE;
 	visiteurCreationLigne_ = std::make_unique<VisiteurCreationLigne>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();

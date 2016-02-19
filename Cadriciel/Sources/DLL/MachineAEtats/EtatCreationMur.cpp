@@ -24,7 +24,6 @@
 ////////////////////////////////////////////////////////////////////////
 EtatCreationMur::EtatCreationMur()
 {
-	typeEtat_ = CREATION_MUR;
 	visiteurCreationMur_ = std::make_unique<VisiteurCreationMur>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();

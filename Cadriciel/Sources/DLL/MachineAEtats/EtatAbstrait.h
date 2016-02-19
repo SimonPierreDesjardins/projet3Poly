@@ -21,19 +21,6 @@ namespace vue
 	class Vue;
 };
 
-enum Etat
-{
-	SELECTION,
-	DEPLACEMENT,
-	ROTATION,
-	MISE_A_ECHELLE,
-	DUPLICATION,
-	CREATION_POTEAU,
-	CREATION_MUR,
-	CREATION_LIGNE_NOIRE,
-	ZOOM
-};
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class EtatAbstrait
 /// @brief Classe de base pour chaque état
@@ -71,12 +58,9 @@ public:
 	virtual void gererToucheMoins();
 	virtual void gererToucheAltEnfoncee();
 	virtual void gererToucheAltRelachee();
-	inline Etat obtenirTypeEtat() const;
 
 protected:
 	virtual void reinitialiser();
-
-	Etat typeEtat_{ SELECTION };
 
 	ArbreRendu* arbre_{ nullptr };
 	vue::Vue* vue_{ nullptr };
@@ -96,10 +80,6 @@ protected:
 	static glm::ivec2 currentPosition_;
 };
 
-inline Etat EtatAbstrait::obtenirTypeEtat() const
-{
-	return typeEtat_;
-}
 
 #endif /// ETAT_ABSTRAIT_H
 

@@ -19,8 +19,6 @@ extern "C"
 	__declspec(dllexport) void dessinerOpenGL();
 	__declspec(dllexport) void redimensionnerFenetre(int largeur, int hauteur);
 	__declspec(dllexport) void animer(double temps);
-	__declspec(dllexport) void zoomIn();
-	__declspec(dllexport) void zoomOut();
 	__declspec(dllexport) void sauvegarder();
 	__declspec(dllexport) void charger();
 	__declspec(dllexport) void assignerCheminFichierZone(char* chemin);
@@ -28,12 +26,9 @@ extern "C"
 	__declspec(dllexport) int  obtenirAffichagesParSeconde();
 	__declspec(dllexport) bool executerTests();
 
-	__declspec(dllexport) void assignerEtat(int etat);
-	__declspec(dllexport) int obtenirEtat();
 	__declspec(dllexport) void assignerMode(int mode);
 	__declspec(dllexport) int obtenirMode();
 
-	__declspec(dllexport) double obtenirAngleRotation();
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	__declspec(dllexport) bool peutRafraichir();
 

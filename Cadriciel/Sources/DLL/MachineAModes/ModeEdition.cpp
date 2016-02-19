@@ -16,6 +16,7 @@
 #include "Vue.h"
 #include "Projection.h"
 #include "VisiteurSauvegarde.h"
+#include "EtatTypes.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -29,8 +30,8 @@
 ////////////////////////////////////////////////////////////////////////
 ModeEdition::ModeEdition()
 {
-	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
 	typeMode_ = EDITION;
+	etat_ = make_unique < EtatSelection > ();
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 }
 
@@ -45,6 +46,7 @@ ModeEdition::ModeEdition()
 ////////////////////////////////////////////////////////////////////////
 ModeEdition::~ModeEdition()
 {
+	//FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -89,91 +91,6 @@ void ModeEdition::gererToucheMoins()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeEdition::gererToucheMoins()
-///
-/// Cette fonction permet de gérer la touche echappe dans le modeEdition.
-///
-/// Elle appelle la fonction gereToucheEchappe selon l'état obtenu.
-///
-////////////////////////////////////////////////////////////////////////
-
-void ModeEdition::gererToucheEchappe()
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheEchappe();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheC()
-///
-/// Cette fonction permet de gérer la touche C dans le modeEdition.
-///
-/// Elle assigne l'état DUPLICATION à l'instance obtenue.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheC()
-{
-	FacadeModele::obtenirInstance()->assignerEtat(DUPLICATION);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheD()
-///
-/// Cette fonction permet de gérer la touche D dans le modeEdition.
-///
-/// Elle assigne l'état DEPLACEMENT à l'instance obtenue.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheD()
-{
-	FacadeModele::obtenirInstance()->assignerEtat(DEPLACEMENT);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheE()
-///
-/// Cette fonction permet de gérer la touche E dans le modeEdition.
-///
-/// Elle assigne l'état MISE_A_ECHELLE à l'instance obtenue.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheE()
-{
-	FacadeModele::obtenirInstance()->assignerEtat(MISE_A_ECHELLE);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheR()
-///
-/// Cette fonction permet de gérer la touche R dans le modeEdition.
-///
-/// Elle assigne l'état ROTATION à l'instance obtenue.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheR()
-{
-	FacadeModele::obtenirInstance()->assignerEtat(ROTATION);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheS()
-///
-/// Cette fonction permet de gérer la touche S dans le modeEdition.
-///
-/// Elle assigne l'état SELECTION à l'instance obtenue.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheS()
-{
-	FacadeModele::obtenirInstance()->assignerEtat(SELECTION);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn void ModeEdition::gererToucheT()
 ///
 /// Cette fonction permet de gérer la touche T dans le modeEdition.
@@ -183,91 +100,7 @@ void ModeEdition::gererToucheS()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererToucheT()
 {
-	//FacadeModele::obtenirInstance()->assignerMode(TEST);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheZ()
-///
-/// Cette fonction permet de gérer la touche Z dans le modeEdition.
-///
-/// Elle assigne l'état ZOOM à l'instance obtenue.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheZ()
-{
-	FacadeModele::obtenirInstance()->assignerEtat(ZOOM);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheCTRLavecS()
-///
-/// Cette fonction permet de gérer la touche CTRL avec S dans le modeEdition.
-///
-/// Ne fait rien dans ce mode.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheCTRLavecS()
-{
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheCTRLavecN()
-///
-/// Cette fonction permet de gérer la touche CTRL avec N dans le modeEdition.
-///
-/// Ne fait rien dans ce mode.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheCTRLavecN()
-{
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheCTRLavecO()
-///
-/// Cette fonction permet de gérer la touche O dans le modeEdition.
-///
-/// Ne fait rien dans ce mode.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheCTRLavecO()
-{
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererTouche1()
-///
-/// Cette fonction permet de gérer la touche 1 dans le modeEdition.
-///
-/// Ne fait rien dans ce mode.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererTouche1()
-{
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererTouche2()
-///
-/// Cette fonction permet de gérer la touche 2 dans le modeEdition.
-///
-/// Ne fait rien dans ce mode.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererTouche2()
-{
-
+	FacadeModele::obtenirInstance()->assignerMode(TEST);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -328,34 +161,6 @@ void ModeEdition::gererFlecheDroit()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeEdition::gererToucheControlEnfoncee()
-///
-/// Cette fonction permet de gérer la touche CTRL enfoncee dans le modeEdition.
-///
-/// Elle appelle la fonction gererToucheControlEnfoncee selon l'état obtenu.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheControlEnfoncee()
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlEnfoncee();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheControlRelachee()
-///
-/// Cette fonction permet de gérer la touche CTRL relachee dans le modeEdition.
-///
-/// Elle appelle la fonction gererToucheControlRelachee selon l'état obtenu.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheControlRelachee()
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheControlRelachee();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn void ModeEdition::sauvegarder()
 ///
 /// Cette fonction permet de gérer la sauvegarde dans le modeEdition.
@@ -393,113 +198,6 @@ void ModeEdition::gererToucheSupprimer()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeEdition::gererToucheAltEnfoncee()
-///
-/// Cette fonction permet de gérer la touche ALT enfoncee dans le modeEdition.
-/// Elle appelle la fonction gererToucheAltEnfoncee selon l'état obtenu.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheAltEnfoncee()
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltEnfoncee();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheAltRelachee()
-///
-/// Cette fonction permet de gérer la touche ALT relachee dans le modeEdition.
-/// Elle appelle la fonction gererToucheAltRelachee selon l'état obtenu.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheAltRelachee()
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererToucheAltRelachee();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void  ModeEdition::gererClicDroitEnfonce(const int& x, const int& y)
-///
-/// Cette fonction permet de gérer le clic droit enfonce dans le modeEdition.
-/// Elle appelle la fonction gererClicDroitEnfonce selon l'état obtenu.
-///
-///@param[in] x : La position en x du curseur de la souris lors d'un clic droit.
-///@param[in] y : La position en y du curseur de la souris lors d'un clic droit.
-///
-////////////////////////////////////////////////////////////////////////
-void  ModeEdition::gererClicDroitEnfonce(const int& x, const int& y)
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitEnfonce(x,y);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void  ModeEdition::gererClicDroitRelache(const int& x, const int& y)
-///
-/// Cette fonction permet de gérer le clic droit relache dans le modeEdition.
-/// Elle appelle la fonction gererClicDroitRelache selon l'état obtenu.
-///
-///@param[in] x : La position en x du curseur de la souris lors d'un clic droit.
-///@param[in] y : La position en y du curseur de la souris lors d'un clic droit.
-///
-////////////////////////////////////////////////////////////////////////
-void  ModeEdition::gererClicDroitRelache(const int& x, const int& y)
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicDroitRelache(x,y);;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void  ModeEdition::gererClicGaucheEnfonce(const int& x, const int& y)
-///
-/// Cette fonction permet de gérer le clic gauche enfonce dans le modeEdition.
-/// Elle appelle la fonction gererClicGaucheEnfonce selon l'état obtenu.
-///
-///@param[in] x : La position en x du curseur de la souris lors d'un clic droit.
-///@param[in] y : La position en y du curseur de la souris lors d'un clic droit.
-///
-////////////////////////////////////////////////////////////////////////
-void  ModeEdition::gererClicGaucheEnfonce(const int& x, const int& y)
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheEnfonce(x,y);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void  ModeEdition::gererClicGaucheRelache(const int& x, const int& y)
-///
-/// Cette fonction permet de gérer le clic gauche relache dans le modeEdition.
-/// Elle appelle la fonction gererClicGaucheRelache selon l'état obtenu.
-///
-///@param[in] x : La position en x du curseur de la souris lors d'un clic droit.
-///@param[in] y : La position en y du curseur de la souris lors d'un clic droit.
-///
-////////////////////////////////////////////////////////////////////////
-void  ModeEdition::gererClicGaucheRelache(const int& x, const int& y)
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererClicGaucheRelache(x,y);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void  ModeEdition::gererMouvementSouris(const int& x, const int& y)
-///
-/// Cette fonction permet de gérer le mouvement de souris dans le modeEdition.
-/// Elle appelle la fonction gererMouvementSouris selon l'état obtenu.
-///
-///@param[in] x : La position en x du curseur de la souris lors d'un mouvement de souris.
-///@param[in] y : La position en y du curseur de la souris lors d'un mouvement de souris.
-///
-////////////////////////////////////////////////////////////////////////
-void  ModeEdition::gererMouvementSouris(const int& x, const int& y)
-{
-	FacadeModele::obtenirInstance()->obtenirEtat()->gererMouvementSouris(x,y);
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn void ModeEdition::gererMoletteSouris(const int & delta)
 ///
 /// Cette fonction permet de gérer la molette de le souris dans le modeEdition.
@@ -523,6 +221,209 @@ void ModeEdition::gererMoletteSouris(const int& delta)
 		}
 	}
 }
+
+void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier();
+
+	if (autoriserInput) {
+		if (msg == WM_KEYDOWN) {
+			switch (wParam) {
+			case VK_LEFT:
+				gererFlecheGauche();
+				break;
+
+			case VK_RIGHT:
+				gererFlecheDroit();
+				break;
+
+			case VK_UP:
+				gererFlecheHaut();
+				break;
+
+			case VK_DOWN:
+				gererFlecheBas();
+				break;
+
+			case VK_ESCAPE:
+				etat_->gererToucheEchappe();
+				break;
+
+			case VK_OEM_PLUS:
+				gererTouchePlus();
+				break;
+
+			case VK_OEM_MINUS:
+				gererToucheMoins();
+				break;
+
+			case VK_KEY_D:
+				etat_ = make_unique<EtatDeplacement>();
+				break;
+
+			case VK_KEY_S:
+				// Verification de controle pour ne pas changer d'outils lors du ctrl+s
+				if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
+					etat_ = make_unique<EtatSelection>();
+				}
+				break;
+
+			case VK_KEY_R:
+				etat_ = make_unique<EtatRotation>();
+				break;
+
+			case VK_KEY_E:
+				etat_ = make_unique<EtatMiseAEchelle>();
+				break;
+
+			case VK_KEY_C:
+				etat_ = make_unique<EtatDuplication>();
+				break;
+
+			case VK_KEY_Z:
+				etat_ = make_unique<EtatLoupe>();
+				break;
+
+			case VK_KEY_P:
+				etat_ = make_unique<EtatCreationPoteau>();
+				break;
+
+			case VK_KEY_M:
+				etat_ = make_unique<EtatCreationMur>();
+				break;
+
+			case VK_KEY_L:
+				etat_ = make_unique<EtatCreationLigne>();
+				break;
+
+			case VK_KEY_T:
+				gererToucheT();
+				break;
+
+
+			case VK_DELETE:
+				gererToucheSupprimer();
+				break;
+
+			case VK_MENU:
+				// Poursuivre.
+			case VK_LMENU:
+				// Poursuivre.
+			case VK_RMENU:
+				etat_->gererToucheAltEnfoncee();
+				break;
+
+			case VK_CONTROL:
+				// Poursuivre.
+			case VK_LCONTROL:
+				// Poursuivre.
+			case VK_RCONTROL:
+				// Poursuivre.
+				etat_->gererToucheControlEnfoncee();
+				break;
+
+			default:
+				break;
+			}
+		}
+		// Répartition du traitement des touches relachées.
+		if (msg == WM_KEYUP) {
+			switch (wParam) {
+			case VK_MENU:
+				// Poursuivre.
+			case VK_LMENU:
+				// Poursuivre.
+			case VK_RMENU:
+				etat_->gererToucheAltRelachee();
+				break;
+
+			case VK_CONTROL:
+				// Poursuivre.
+			case VK_RCONTROL:
+				// Poursuivre.
+			case VK_LCONTROL:
+				etat_->gererToucheControlRelachee();
+				break;
+
+			default:
+				break;
+			}
+		}
+		// Répartition du traitement des touches enfoncées provenant du système pour les différents types de claviers.
+		if (msg == WM_SYSKEYDOWN) {
+			switch (wParam)	{
+			case VK_MENU:
+				// Poursuivre.
+			case VK_LMENU:
+				// Poursuivre.
+			case VK_RMENU:
+				etat_->gererToucheAltEnfoncee();
+				break;
+
+			case VK_CONTROL:
+				// Poursuivre.
+			case VK_LCONTROL:
+				// Poursuivre.
+			case VK_RCONTROL:
+				etat_->gererToucheControlEnfoncee();
+				break;
+			}
+		}
+		// Répartition du traitement des touches relâchées provenant du système pour les différents types de claviers.
+		if (msg == WM_SYSKEYUP) {
+			switch (wParam) {
+			case VK_MENU:
+				// Poursuivre.
+			case VK_LMENU:
+				// Poursuivre.
+			case VK_RMENU:
+				etat_->gererToucheAltRelachee();
+				break;
+
+			case VK_CONTROL:
+				// Poursuivre.
+			case VK_RCONTROL:
+				// Poursuivre.
+			case VK_LCONTROL:
+				etat_->gererToucheControlRelachee();
+				break;
+			}
+		}
+	}
+	// Répartition du traitement des messages provenant de la souris.
+	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris()) {
+		switch (msg)
+		{
+		case WM_LBUTTONDBLCLK:
+		case WM_LBUTTONDOWN:
+			etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_LBUTTONUP:
+			etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_RBUTTONDBLCLK:
+		case WM_RBUTTONDOWN:
+			etat_->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_RBUTTONUP:
+			etat_->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEMOVE:
+			etat_->assignerSymboleCurseur();
+			etat_->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEWHEEL:
+			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			break;
+		}
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

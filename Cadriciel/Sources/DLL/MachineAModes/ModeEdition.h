@@ -16,6 +16,31 @@
 #include "VisiteurSuppression.h"
 #include <memory>
 #include "glm\glm.hpp"
+#include "EtatAbstrait.h"
+
+const int VK_KEY_D = 0x44;
+const int VK_KEY_S = 0x53;
+const int VK_KEY_R = 0x52;
+const int VK_KEY_E = 0x45;
+const int VK_KEY_C = 0x43;
+const int VK_KEY_Z = 0x5A;
+const int VK_KEY_T = 0x54;
+const int VK_KEY_P = 80;
+const int VK_KEY_L = 76;
+const int VK_KEY_M = 77;
+
+enum Etat
+{
+	SELECTION,
+	DEPLACEMENT,
+	ROTATION,
+	MISE_A_ECHELLE,
+	DUPLICATION,
+	CREATION_POTEAU,
+	CREATION_MUR,
+	CREATION_LIGNE_NOIRE,
+	ZOOM
+};
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeEdition
@@ -40,40 +65,13 @@ public:
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
 
-	virtual void gererToucheEchappe();
-
-	virtual void gererToucheC();
-	virtual void gererToucheD();
-	virtual void gererToucheE();
-	virtual void gererToucheR();
-	virtual void gererToucheS();
-	virtual void gererToucheT();
-	virtual void gererToucheZ();
-
-	virtual void gererToucheCTRLavecS();
-	virtual void gererToucheCTRLavecN();
-	virtual void gererToucheCTRLavecO();
-
-	virtual void gererTouche1();
-	virtual void gererTouche2();
-
 	virtual void gererFlecheGauche();
 	virtual void gererFlecheBas();
 	virtual void gererFlecheHaut();
 	virtual void gererFlecheDroit();
 
-	//Gestion de touches modificatrices
-	virtual void gererToucheControlEnfoncee();
-	virtual void gererToucheControlRelachee();
-	virtual void gererToucheAltEnfoncee();
-	virtual void gererToucheAltRelachee();
+	virtual void gererToucheT();
 
-	// Gestion de la souris
-	virtual void gererClicDroitEnfonce(const int& x, const int& y);
-	virtual void gererClicDroitRelache(const int& x, const int& y);
-	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
-	virtual void gererClicGaucheRelache(const int& x, const int& y);
-	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
 	virtual void gererToucheSupprimer();
@@ -81,6 +79,12 @@ public:
 	//Gestion du système de chargement et de sauvegarde
 	virtual void sauvegarder();
 	virtual void charger();
+
+	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+	inline Etat obtenirTypeEtat() const;
+
+	/// Modifie l'etat courant.
+	void assignerEtat(Etat etat);
 
 protected:
 
@@ -91,8 +95,9 @@ protected:
 	int ancienSourisX_{ 0 };
 	int ancienSourisY_{ 0 };
 
-};
+	std::unique_ptr<EtatAbstrait> etat_;
 
+};
 
 #endif /// MODE_EDITION_H
 
