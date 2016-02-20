@@ -76,6 +76,12 @@
     <Filter Include="Header Files\Interface">
       <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Commande">
+      <UniqueIdentifier>{90b9b5a1-34a3-494b-8820-16fec8ae4fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commande">
+      <UniqueIdentifier>{142a9849-c852-41b7-86a5-ba913c687583}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -222,6 +228,9 @@
     </ClCompile>
     <ClCompile Include="MachineAEtats\EtatSelection.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="Commande\CommandeRobot.cpp">
+      <Filter>Source Files\Commande</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +401,9 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Commande\CommandeRobot.h">
+      <Filter>Header Files\Commande</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
