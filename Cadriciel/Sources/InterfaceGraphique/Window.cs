@@ -719,6 +719,17 @@ namespace InterfaceGraphique
         private void bouttonConfiguration__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerMode(Mode.CONFIGURE);
+            Configure configuration = new Configure();
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+            FonctionsNatives.assignerAutorisationInputSouris(false);
+            DialogResult dialogresult = configuration.ShowDialog();
+            if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
+            {
+                configuration.Dispose();
+                viewPort_.Focus();
+            }
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+            FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
         ////////////////////////////////////////////////////////////////////////

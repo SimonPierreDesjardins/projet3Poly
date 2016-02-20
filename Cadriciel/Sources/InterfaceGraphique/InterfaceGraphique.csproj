@@ -57,6 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Configure.Designer.cs">
+      <DependentUpon>Configure.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormulairesSysFichiers\ExplorateurOuverture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,6 +95,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Configure.resx">
+      <DependentUpon>Configure.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurOuverture.resx">
       <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
     </EmbeddedResource>
