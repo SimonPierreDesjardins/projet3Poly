@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace InterfaceGraphique
 {
@@ -61,6 +62,7 @@ namespace InterfaceGraphique
 
         private void buttonDefProfil_Click(object sender, EventArgs e)
         {
+            
             checkBox1.Checked = false;
             checkBox2.Checked = false;
             checkBox3.Checked = false;
@@ -76,6 +78,19 @@ namespace InterfaceGraphique
 
         private void buttonSaveProfil_Click(object sender, EventArgs e)
         {
+            bool[] options = new bool[11];
+            options[0] = checkBox1.Checked;
+            options[1] = checkBox2.Checked;
+            options[2] = checkBox3.Checked;
+            options[3] = checkBox4.Checked;
+            options[4] = checkBox5.Checked;
+            options[5] = checkBox6.Checked;
+            options[6] = checkBox7.Checked;
+            options[7] = checkBox8.Checked;
+            options[8] = checkBox9.Checked;
+            options[9] = checkBox10.Checked;
+            options[10] = checkBox11.Checked;
+            FonctionsNatives.assignerOptionsProfil(options);
             comboBoxProfil.Items.Insert(comboBoxProfil.Items.Count, comboBoxProfil.Text);
         }
 
@@ -96,4 +111,10 @@ namespace InterfaceGraphique
             comboBoxProfil.SelectedIndex = 0;
         }
     }
+    static partial class FonctionsNatives{
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerOptionsProfil([MarshalAs(UnmanagedType.LPArray, SizeConst = 11)] bool[] options);
+    }
 }
+
+

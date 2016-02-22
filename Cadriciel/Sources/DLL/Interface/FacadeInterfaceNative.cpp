@@ -455,6 +455,10 @@ extern "C"
 		//FacadeModele::obtenirInstance()->obtenirMode()->assignerSymboleCurseur();
 		FacadeModele::obtenirInstance()->obtenirMode()->gererMessage(msg, wParam, lParam);
 	}
+
+	__declspec(dllexport) void __cdecl assignerOptionsProfil(bool options[11]){
+		
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

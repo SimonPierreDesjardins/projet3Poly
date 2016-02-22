@@ -81,9 +81,15 @@
     </Filter>
     <Filter Include="Header Files\Comportement">
       <UniqueIdentifier>{06c11b55-5c44-4176-a672-98b35929bcf3}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Header Files\Commande">
       <UniqueIdentifier>{201cd5c0-8623-4562-9071-0cc30d8ca945}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ProfilUtilisateur">
+      <UniqueIdentifier>{47265ae1-5a37-4726-b79d-cc508dac804f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ProfilUtilisateur">
+      <UniqueIdentifier>{a8172218-5e9e-4b05-b2ce-f5519fa2d1d2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +256,9 @@
     </ClCompile>
     <ClCompile Include="Comportement\ComportementSuiviLigne.cpp">
       <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="ProfilUtilisateur.cpp">
+      <Filter>Source Files\ProfilUtilisateur</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -439,8 +448,11 @@
     <ClInclude Include="Comportement\ComportementSuiviLigne.h">
       <Filter>Header Files\Comportement</Filter>
     </ClInclude>
-	<ClInclude Include="Commande\CommandeRobot.h">
+    <ClInclude Include="Commande\CommandeRobot.h">
       <Filter>Header Files\Commande</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfilUtilisateur.h">
+      <Filter>Header Files\ProfilUtilisateur</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
