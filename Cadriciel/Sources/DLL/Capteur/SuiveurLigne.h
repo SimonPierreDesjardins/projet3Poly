@@ -1,0 +1,32 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file SuiveurLigne.h
+/// @author Olivier St-Amour
+///
+/// version 2.1
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
+
+#ifndef SUIVEUR_LIGNE_H
+#define SUIVEUR_LIGNE_H
+
+///////////////////////////////////////////////////////////////////////////
+/// @class SuiveurLigne
+/// @brief Classe qui représente le suiveur de ligne. 
+///
+///        Cette classe s'occupe de gérer la détection de ligne. 
+///
+/// @author Olivier St-Amour
+/// @date 2016-02-23
+///////////////////////////////////////////////////////////////////////////
+class SuiveurLigne
+{
+public:
+	//Constructeur par défaut
+	SuiveurLigne();
+	//Destructeur
+	virtual ~SuiveurLigne();
+};
+
+#endif // SUIVEUR_LIGNE_H
