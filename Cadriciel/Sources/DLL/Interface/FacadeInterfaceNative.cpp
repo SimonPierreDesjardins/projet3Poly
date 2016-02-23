@@ -452,7 +452,6 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		//FacadeModele::obtenirInstance()->obtenirMode()->assignerSymboleCurseur();
 		FacadeModele::obtenirInstance()->obtenirMode()->gererMessage(msg, wParam, lParam);
 	}
 }

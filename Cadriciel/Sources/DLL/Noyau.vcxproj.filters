@@ -257,6 +257,9 @@
     <ClCompile Include="Commande\CommandeRobot.cpp">
       <Filter>Source Files\Commande</Filter>
     </ClCompile>
+    <ClCompile Include="Configuration\Configuration.cpp">
+      <Filter>Source Files\Configuration</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -445,8 +448,11 @@
     <ClInclude Include="Comportement\ComportementSuiviLigne.h">
       <Filter>Header Files\Comportement</Filter>
     </ClInclude>
-	<ClInclude Include="Commande\CommandeRobot.h">
+    <ClInclude Include="Commande\CommandeRobot.h">
       <Filter>Header Files\Commande</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration\Configuration.h">
+      <Filter>Header Files\Configuration</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
