@@ -35,6 +35,8 @@ public:
 	//Destructeur
 	virtual ~ModeSimulation();
 
+	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
 };

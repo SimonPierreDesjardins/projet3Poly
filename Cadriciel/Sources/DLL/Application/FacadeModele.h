@@ -60,9 +60,6 @@ public:
    // Obtenir le Mode courant.
    inline ModeAbstrait* obtenirMode();
 
-   // Obtenir le nombre d'objet sélectionné
-   int obtenirNombreSelection();
-
    // Obtient si le modèle est autorisé à recevoir des entrées utilisateurs. 
    inline bool obtenirAutorisationInputSouris() const; 
    // Assigne si le modèle est autorisé à recevoir des entrées utilisateurs. 
@@ -71,26 +68,7 @@ public:
    inline bool obtenirAutorisationInputClavier() const;
 
    inline void assignerAutorisationInputClavier(const bool& autorisation);
-
-
-   // Obtient l'angle de rotaion du noeud selectionné. 
-   double obtenirAngleRotation();
-   // Obtient le facteur de mise à échelle du noeud selectionné. 
-   double obtenirFacteurMiseAEchelle();
-   // Obtient la position relative en X du noeud selectionné.
-   double obtenirPositionRelativeX();
-   // Obtient la position relative en Y du noeud selectionné.
-   double obtenirPositionRelativeY();
-   // Assigne l'angle de rotaion du noeud selectionné. 
-   void assignerAngleRotation(const double& angle);
-   // Assigne le facteur de mise à échelle du noeud selectionné.
-   void assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle);
-   // Assigne la position relative en x du noeud sélectionné.
-   void assignerPositionRelativeX(const double& positionRelativeX);
-   // Assigne la position relative en x du noeud sélectionné. 
-   void assignerPositionRelativeY(const double& positionRelativeY);
   
-
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
    /// Retourne l'arbre de rendu.

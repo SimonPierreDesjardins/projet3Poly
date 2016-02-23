@@ -30,6 +30,7 @@ namespace InterfaceGraphique
             textBoxHoraire.Text = "A";
             textBoxAntiHoraire.Text = "D";
             textBoxModeManuel.Text = "Espace";
+            FonctionsNatives.chargerProfilParDefaut();
         }
 
         private bool caractereInvalide(object sender, KeyPressEventArgs e)
@@ -38,7 +39,11 @@ namespace InterfaceGraphique
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
+            {
                 textBoxAvancer.Text = e.KeyChar.ToString();
+                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.AVANCER);
+            }
+                
 
             textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);
         }
@@ -46,7 +51,11 @@ namespace InterfaceGraphique
         private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
-                textBoxReculer.Text = e.KeyChar.ToString();
+            {
+                textBoxReculer.Text = e.KeyChar.ToString().ToUpper();
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.RECULER);
+            }
+                
 
             textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
@@ -54,7 +63,11 @@ namespace InterfaceGraphique
         private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
+            {
                 textBoxAntiHoraire.Text = e.KeyChar.ToString();
+                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.ROTATION_DROITE);
+            }
+                
 
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
@@ -62,7 +75,11 @@ namespace InterfaceGraphique
         private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
+            {
                 textBoxHoraire.Text = e.KeyChar.ToString();
+                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.ROTATION_GAUCHE);
+            }
+                
 
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
@@ -70,8 +87,11 @@ namespace InterfaceGraphique
         private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
+            {
                 textBoxModeManuel.Text = e.KeyChar.ToString();
-
+                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.INVERSER_MODE_CONTROLE);
+            }
+                
             textBoxModeManuel.Select(textBoxModeManuel.Text.Length, 0);
         }
 
@@ -130,9 +150,25 @@ namespace InterfaceGraphique
             
         }
     }
+
+    enum TypeCommande
+    {
+	    INVERSER_MODE_CONTROLE,
+	    AVANCER,
+	    RECULER,
+	    ROTATION_GAUCHE,
+	    ROTATION_DROITE
+    };
+
     static partial class FonctionsNatives{
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerOptionsProfil([MarshalAs(UnmanagedType.LPArray, SizeConst = 11)] bool[] options);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void modifierToucheCommande(char touche, TypeCommande commande);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void chargerProfilParDefaut();
     }
 }
 

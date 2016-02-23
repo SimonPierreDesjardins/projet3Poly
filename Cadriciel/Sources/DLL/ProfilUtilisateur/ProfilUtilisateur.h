@@ -28,9 +28,10 @@ class ProfilUtilisateur
 		ProfilUtilisateur(std::string nomProfil, bool* options);
 		~ProfilUtilisateur();
 		void sauvegarder();
-		void modifierToucheCommande(const uint8_t& touche, const TypeCommande& controle);
+		void modifierToucheCommande(char touche, TypeCommande commande);
 		void chargerProfilParDefaut();
-private:
+
+	private:
 		void ouvrirFichierProfil();
 
 		std::string nomProfil_;
