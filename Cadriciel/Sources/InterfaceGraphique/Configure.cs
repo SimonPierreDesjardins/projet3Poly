@@ -31,32 +31,47 @@ namespace InterfaceGraphique
             textBoxModeManuel.Text = "Espace";
         }
 
-        private void caractereValide(object sender, KeyPressEventArgs e)
-        { e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back); }
+        private bool caractereInvalide(object sender, KeyPressEventArgs e)
+        { return e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back); }
 
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
-            caractereValide(sender, e);
+            if (!caractereInvalide(sender, e))
+                textBoxAvancer.Text = e.KeyChar.ToString();
+
+            textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);
         }
 
         private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
         {
-            caractereValide(sender, e);
+            if (!caractereInvalide(sender, e))
+                textBoxReculer.Text = e.KeyChar.ToString();
+
+            textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
 
         private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
-            caractereValide(sender, e);
+            if (!caractereInvalide(sender, e))
+                textBoxAntiHoraire.Text = e.KeyChar.ToString();
+
+            textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
 
         private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
-            caractereValide(sender, e);
+            if (!caractereInvalide(sender, e))
+                textBoxHoraire.Text = e.KeyChar.ToString();
+
+            textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
 
         private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
         {
-            caractereValide(sender, e);
+            if (!caractereInvalide(sender, e))
+                textBoxModeManuel.Text = e.KeyChar.ToString();
+
+            textBoxModeManuel.Select(textBoxModeManuel.Text.Length, 0);
         }
 
         private void buttonDefProfil_Click(object sender, EventArgs e)
@@ -81,7 +96,6 @@ namespace InterfaceGraphique
 
         private void buttonDeleteProfil_Click(object sender, EventArgs e)
         {
-            
             if (comboBoxProfil.SelectedIndex == -1)
             {}
             else if (comboBoxProfil.SelectedIndex != 0)
@@ -94,6 +108,11 @@ namespace InterfaceGraphique
         {
             //comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProfil.SelectedIndex = 0;
+        }
+
+        private void textBoxAvancer_KeyDown(object sender, KeyEventArgs e)
+        {
+            
         }
     }
 }
