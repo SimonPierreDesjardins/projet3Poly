@@ -43,6 +43,7 @@
             this.textBoxHoraire = new System.Windows.Forms.TextBox();
             this.textBoxReculer = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.buttonDeleteProfil = new System.Windows.Forms.Button();
             this.buttonFiniProfil = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.checkBox11 = new System.Windows.Forms.CheckBox();
@@ -63,7 +64,6 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
             this.buttonFiniDebug = new System.Windows.Forms.Button();
-            this.buttonDeleteProfil = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -173,6 +173,7 @@
             // 
             // textBoxAntiHoraire
             // 
+            this.textBoxAntiHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAntiHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAntiHoraire.Location = new System.Drawing.Point(286, 122);
             this.textBoxAntiHoraire.MaxLength = 1;
@@ -206,10 +207,12 @@
             this.textBoxAvancer.TabIndex = 3;
             this.textBoxAvancer.Text = "W";
             this.textBoxAvancer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxAvancer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxAvancer_KeyDown);
             this.textBoxAvancer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAvancer_KeyPress);
             // 
             // textBoxHoraire
             // 
+            this.textBoxHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxHoraire.Location = new System.Drawing.Point(22, 122);
             this.textBoxHoraire.MaxLength = 1;
@@ -222,6 +225,7 @@
             // 
             // textBoxReculer
             // 
+            this.textBoxReculer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxReculer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxReculer.Location = new System.Drawing.Point(155, 122);
             this.textBoxReculer.MaxLength = 1;
@@ -259,6 +263,16 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Gestion Profils";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // buttonDeleteProfil
+            // 
+            this.buttonDeleteProfil.Location = new System.Drawing.Point(347, 191);
+            this.buttonDeleteProfil.Name = "buttonDeleteProfil";
+            this.buttonDeleteProfil.Size = new System.Drawing.Size(81, 23);
+            this.buttonDeleteProfil.TabIndex = 28;
+            this.buttonDeleteProfil.Text = "Supprimer";
+            this.buttonDeleteProfil.UseVisualStyleBackColor = true;
+            this.buttonDeleteProfil.Click += new System.EventHandler(this.buttonDeleteProfil_Click);
             // 
             // buttonFiniProfil
             // 
@@ -459,16 +473,6 @@
             this.buttonFiniDebug.TabIndex = 0;
             this.buttonFiniDebug.Text = "Fini";
             this.buttonFiniDebug.UseVisualStyleBackColor = true;
-            // 
-            // buttonDeleteProfil
-            // 
-            this.buttonDeleteProfil.Location = new System.Drawing.Point(347, 191);
-            this.buttonDeleteProfil.Name = "buttonDeleteProfil";
-            this.buttonDeleteProfil.Size = new System.Drawing.Size(81, 23);
-            this.buttonDeleteProfil.TabIndex = 28;
-            this.buttonDeleteProfil.Text = "Supprimer";
-            this.buttonDeleteProfil.UseVisualStyleBackColor = true;
-            this.buttonDeleteProfil.Click += new System.EventHandler(this.buttonDeleteProfil_Click);
             // 
             // Configure
             // 

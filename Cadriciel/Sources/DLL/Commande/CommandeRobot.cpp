@@ -18,7 +18,7 @@
 /// @author Philippe Marcotte
 /// @date 2016-02-20
 ///////////////////////////////////////////////////////////////////////////
-CommandeRobot::CommandeRobot(Commande commande){
+CommandeRobot::CommandeRobot(TypeCommande commande){
 	typeCommande_ = commande;
 	switch (commande)
 	{

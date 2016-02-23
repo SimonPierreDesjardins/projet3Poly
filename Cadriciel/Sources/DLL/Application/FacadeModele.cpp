@@ -100,7 +100,6 @@ void FacadeModele::libererInstance()
 ////////////////////////////////////////////////////////////////////////
 FacadeModele::~FacadeModele()
 {
-	etat_ = nullptr;
 	mode_ = nullptr;
 	arbre_ = nullptr;
 	vue_ = nullptr;
@@ -123,9 +122,8 @@ FacadeModele::~FacadeModele()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::initialiserOpenGL(HWND hWnd)
 {
-	//assignerEtat(SELECTION);
 	assignerMode(MENU_PRINCIPAL);
-
+	profil_ = std::make_unique<ProfilUtilisateur>();
 	hWnd_ = hWnd;
 	bool succes{ aidegl::creerContexteGL(hWnd_, hDC_, hGLRC_) };
 	assert(succes && "Le contexte OpenGL n'a pu être créé.");

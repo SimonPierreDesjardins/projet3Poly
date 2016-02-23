@@ -466,11 +466,11 @@
     <ClInclude Include="Commande\CommandeRobot.h">
       <Filter>Header Files\Commande</Filter>
     </ClInclude>
-    <ClInclude Include="ControleRobot\ControleRobot.h">
-      <Filter>Header Files\ControleRobot</Filter>
-    </ClInclude>
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h">
       <Filter>Header Files\ProfilUtilisateur</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\ControleRobot.h">
+      <Filter>Header Files\ControleRobot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
