@@ -1,33 +1,37 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file ComporterSuiviLigne.h
+/// @file ComportementBalayage.h
 /// @author Olivier St-Amour
-/// @date 20016-02-16
+/// @date 2016-02-16
 /// @version 2.0
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef COMPORTEMENT_SUIVI_LIGNE
-#define COMPORETMENT_SUIVI_LIGNE
+#ifndef COMPORTEMENT_BALAYAGE
+#define COMPORETMENT_BALAYAGE
 
 #include "ComportementAbstrait.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ComportementBalayage
-/// @brief Classe qui implémente le comportement de suivi de ligne du robot.
+/// @brief Classe qui implémente le comportement de balayage du robot.
 ///
 /// @author Olivier St-Amour
 /// @date 2016-02-16
 ///////////////////////////////////////////////////////////////////////////
-class ComportementSuiviLigne : public ComportementAbstrait
+class ComportementBalayage : public ComportementAbstrait
 {
 public:
-	ComportementSuiviLigne();
-	virtual ~ComportementSuiviLigne();
+	ComportementBalayage();
+	virtual ~ComportementBalayage();
+
+	void initialiser();
+
+	void mettreAJour();
 };
 
-#endif // COMPORTEMENT_SUIVI_LIGNE
+#endif // COMPORTEMENT_BALAYAGE
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

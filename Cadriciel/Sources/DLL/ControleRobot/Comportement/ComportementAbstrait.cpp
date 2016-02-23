@@ -16,8 +16,6 @@
 ///
 /// Constructeur
 ///
-/// @param[in] Aucun
-///
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
@@ -37,6 +35,34 @@ ComportementAbstrait::ComportementAbstrait()
 ////////////////////////////////////////////////////////////////////////
 ComportementAbstrait::~ComportementAbstrait()
 {
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementAbstrait::~ComportementAbstrait()
+///
+/// Assigne au comportement le comportement qui devrait le suivre lorsque la condition de fin est atteinte.
+///
+/// @param[in] prochainComportement: Valeur enum indiquant le prochain comportement a adopter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ComportementAbstrait::assignerComportementSuivant(eComportement comportementSuivant){
+	comportementSuivant_ = comportementSuivant;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementAbstrait::~ComportementAbstrait()
+///
+/// Assigne au comportement le comportement qui devrait le suivre lorsque la condition de fin est atteinte.
+///
+/// @return le comportement suivant a adopter.
+///
+////////////////////////////////////////////////////////////////////////
+eComportement ComportementAbstrait::obtenirComportementSuivant(){
+	return comportementSuivant_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
