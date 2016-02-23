@@ -199,6 +199,7 @@
             // textBoxAvancer
             // 
             this.textBoxAvancer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBoxAvancer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAvancer.Location = new System.Drawing.Point(155, 30);
             this.textBoxAvancer.MaxLength = 1;

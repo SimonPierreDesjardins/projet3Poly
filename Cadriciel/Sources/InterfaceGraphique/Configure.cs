@@ -34,17 +34,15 @@ namespace InterfaceGraphique
         }
 
         private bool caractereInvalide(object sender, KeyPressEventArgs e)
-        { return e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back); }
+        { return e.Handled = !(char.IsLetter(e.KeyChar)); }
 
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
             {
-                textBoxAvancer.Text = e.KeyChar.ToString();
-                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.AVANCER);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.AVANCER);
             }
-                
-
+            textBoxAvancer.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.AVANCER).ToString();
             textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);
         }
 
@@ -52,11 +50,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                textBoxReculer.Text = e.KeyChar.ToString().ToUpper();
                 FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.RECULER);
             }
-                
-
+            textBoxReculer.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.RECULER).ToString();
             textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
 
@@ -64,11 +60,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                textBoxAntiHoraire.Text = e.KeyChar.ToString();
-                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.ROTATION_DROITE);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_DROITE);
             }
-                
-
+            textBoxAntiHoraire.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE).ToString();
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
 
@@ -76,11 +70,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                textBoxHoraire.Text = e.KeyChar.ToString();
-                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.ROTATION_GAUCHE);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_GAUCHE);
             }
-                
-
+            textBoxHoraire.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE).ToString();
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
 
@@ -88,10 +80,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                textBoxModeManuel.Text = e.KeyChar.ToString();
-                FonctionsNatives.modifierToucheCommande(e.KeyChar, TypeCommande.INVERSER_MODE_CONTROLE);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
             }
-                
+            textBoxModeManuel.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE).ToString();    
             textBoxModeManuel.Select(textBoxModeManuel.Text.Length, 0);
         }
 
@@ -145,9 +136,9 @@ namespace InterfaceGraphique
             comboBoxProfil.SelectedIndex = 0;
         }
 
-        private void textBoxAvancer_KeyDown(object sender, KeyEventArgs e)
+        private void textBoxAvancer_Enter(object sender, EventArgs e)
         {
-            
+            textBoxAvancer.BorderStyle = BorderStyle.FixedSingle;
         }
     }
 
@@ -169,6 +160,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void chargerProfilParDefaut();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern char obtenirToucheCommande(TypeCommande commande);
     }
 }
 
