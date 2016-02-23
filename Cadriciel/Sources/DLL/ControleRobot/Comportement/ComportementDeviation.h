@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file ComporterDefaut.h
+/// @file ComporterDeviation.h
 /// @author Olivier St-Amour
 /// @date 20016-02-16
 /// @version 2.0
@@ -8,26 +8,36 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef COMPORTEMENT_DEFAUT
-#define COMPORTEMENT_DEFAUT
+#ifndef COMPORTEMENT_DEVIATION
+#define COMPORTEMENT_DEVIATION
 
 #include "ComportementAbstrait.h"
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ComportementDefaut
-/// @brief Classe qui implémente le comportement par défaut du robot.
+/// @class ComportementDeviation
+/// @brief Classe qui implémente le comportement de deviation du robot.
 ///
 /// @author Olivier St-Amour
 /// @date 2016-02-16
 ///////////////////////////////////////////////////////////////////////////
-class ComportementDefaut : public ComportementAbstrait
+class ComportementDeviation : public ComportementAbstrait
 {
 public:
-	ComportementDefaut();
-	virtual ~ComportementDefaut();
+	ComportementDeviation();
+	virtual ~ComportementDeviation();
+
+	void initialiser();
+
+	void mettreAJour();
+
+	void setAngleMaxRotation();
+
+private:
+	double maxAngle;
+	double deltaAngle{ 0.0 };
 };
 
-#endif // COMPORTEMENT_DEFAUT
+#endif // COMPORTEMENT_DEVIATION
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
