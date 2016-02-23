@@ -76,7 +76,7 @@ public:
    /// Retourne l'arbre de rendu.
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
    /// Retourne le profil de l'utilisateur.
-   ProfilUtilisateur* obtenirProfilUtilisateur();
+   inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
    /// Réinitialise la scène.
    void reinitialiser();
 
@@ -187,9 +187,9 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-//ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur()
+ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur() const
 {
-	return nullptr;
+	return profil_.get();
 }
 
 ////////////////////////////////////////////////////////////////////////

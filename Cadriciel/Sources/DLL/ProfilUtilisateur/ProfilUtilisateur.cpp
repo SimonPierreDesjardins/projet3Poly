@@ -60,3 +60,10 @@ void ProfilUtilisateur::modifierToucheCommande(char touche, TypeCommande command
 	// Creer la commande dans la map.
 	commandes_.insert(std::make_pair(touche, std::make_unique<CommandeRobot>(commande)));
 }
+
+CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const
+{
+	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
+	return (it == commandes_.end()) ? nullptr : (*it).second.get();
+	return nullptr;
+}

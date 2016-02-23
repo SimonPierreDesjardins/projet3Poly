@@ -15,7 +15,6 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
-#include "ProfilUtilisateur.h"
 #include "CommandeRobot.h"
 
 ////////////////////////////////////////////////////////////////////////

@@ -30,8 +30,8 @@ class ProfilUtilisateur
 		void sauvegarder();
 		void chargerProfilParDefaut();
 
-		inline CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
-		inline void modifierToucheCommande(char touche, TypeCommande commande);
+		CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
+		void modifierToucheCommande(char touche, TypeCommande commande);
 
 	private:
 		void ouvrirFichierProfil();
@@ -42,20 +42,12 @@ class ProfilUtilisateur
 		FILE* profil_;
 		const std::string CHEMIN_PROFIL = "./../../Donnees";
 
-		//TODO: Assigner les 
 		std::vector<bool> options_;
 		std::vector<unsigned char> touches_;
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
 		//TODO: Mapping de l'affichage debugage.
 };
-
-
-inline CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const
-{
-	return commandes_[touche];
-}
-
 
 
 ////////////////////////////////////////////////
