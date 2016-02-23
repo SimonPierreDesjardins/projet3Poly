@@ -81,9 +81,12 @@
     </Filter>
     <Filter Include="Header Files\Comportement">
       <UniqueIdentifier>{06c11b55-5c44-4176-a672-98b35929bcf3}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Header Files\Commande">
-      <UniqueIdentifier>{201cd5c0-8623-4562-9071-0cc30d8ca945}</UniqueIdentifier>
+      <UniqueIdentifier>{90b9b5a1-34a3-494b-8820-16fec8ae4fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commande">
+      <UniqueIdentifier>{142a9849-c852-41b7-86a5-ba913c687583}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -250,6 +253,9 @@
     </ClCompile>
     <ClCompile Include="Comportement\ComportementSuiviLigne.cpp">
       <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Commande\CommandeRobot.cpp">
+      <Filter>Source Files\Commande</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
