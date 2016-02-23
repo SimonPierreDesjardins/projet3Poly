@@ -29,6 +29,14 @@ public:
 	void initialiser();
 
 	void mettreAJour();
+
+private:
+	// definit la rotation en cours.
+	int etatRotation{ 0 };
+
+	double angleCible{ 90.0 };
+
+	double deltaAngle{ 0.0 };
 };
 
 #endif // COMPORTEMENT_BALAYAGE

@@ -50,7 +50,7 @@ ComportementBalayage::~ComportementBalayage()
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementBalayage::initialiser(){
-
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -63,7 +63,26 @@ void ComportementBalayage::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementBalayage::mettreAJour(){
+	switch (etatRotation){
 
+	//TODO: Implementation
+	// Nous sommes dans la premiere rotation 90 deg antihoraire
+	case 0:
+		// continuer la rotation
+		// si tu atteins l'angle voulu
+			//change l'angle cible et delta angle
+
+	// Nous sommes dans la deuxieme rotation 180 deg horaire
+	case 1:
+		// rotation 180 deg horaire
+		// si tu atteins l'angle voulu
+			//change l'angle cible et delta angle
+	case 2:
+		// rotation 90 deg horaire
+		// si tu atteins l'angle voulu
+			//appel le changement de comportement
+
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
