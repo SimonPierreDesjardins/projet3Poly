@@ -48,7 +48,6 @@ ControleRobot::~ControleRobot()
 
 void ControleRobot::traiterCommande(CommandeRobot* commande)
 {
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////

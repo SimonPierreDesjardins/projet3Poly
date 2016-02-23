@@ -65,5 +65,4 @@ CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) con
 {
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
 	return (it == commandes_.end()) ? nullptr : (*it).second.get();
-	return nullptr;
 }
