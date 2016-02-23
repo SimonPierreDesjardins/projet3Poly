@@ -14,6 +14,7 @@
 #include "ModeAbstrait.h"
 #include <memory>
 #include "glm\glm.hpp"
+#include "CommandeRobot.h"
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeConfigure
@@ -34,9 +35,8 @@ public:
 	//Destructeur
 	virtual ~ModeConfigure();
 
-
 protected:
-
+	
 };
 
 

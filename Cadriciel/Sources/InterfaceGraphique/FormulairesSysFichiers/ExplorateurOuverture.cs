@@ -188,7 +188,14 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirButt_Click(object sender, EventArgs e)
         {
-            cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+            if (listView1.SelectedItems.Count > 0)
+            {
+                DialogResult = DialogResult.OK;
+                cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+            }
+            else
+                DialogResult = DialogResult.Cancel;
+
             Close();
         }
 
@@ -207,6 +214,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void annulerButt_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 

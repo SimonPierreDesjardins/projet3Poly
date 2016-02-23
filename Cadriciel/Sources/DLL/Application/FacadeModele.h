@@ -19,6 +19,7 @@
 #include "ArbreRenduINF2990.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
+#include "ProfilUtilisateur.h"
 
 class NoeudAbstrait;
 
@@ -54,8 +55,6 @@ public:
    /// Affiche la base du contenu du modèle.
    void afficherBase() const;
 
-   
-
    /// Modifie le Mode courant.
    void assignerMode(Mode mode);
    // Obtenir le Mode courant.
@@ -73,6 +72,7 @@ public:
 
    inline void assignerAutorisationInputClavier(const bool& autorisation);
 
+
    // Obtient l'angle de rotaion du noeud selectionné. 
    double obtenirAngleRotation();
    // Obtient le facteur de mise à échelle du noeud selectionné. 
@@ -81,7 +81,6 @@ public:
    double obtenirPositionRelativeX();
    // Obtient la position relative en Y du noeud selectionné.
    double obtenirPositionRelativeY();
-
    // Assigne l'angle de rotaion du noeud selectionné. 
    void assignerAngleRotation(const double& angle);
    // Assigne le facteur de mise à échelle du noeud selectionné.
@@ -90,6 +89,7 @@ public:
    void assignerPositionRelativeX(const double& positionRelativeX);
    // Assigne la position relative en x du noeud sélectionné. 
    void assignerPositionRelativeY(const double& positionRelativeY);
+  
 
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
@@ -97,7 +97,8 @@ public:
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
-
+   /// Retourne le profil de l'utilisateur.
+   inline ProfilUtilisateur* obtenirProfilUtilisateur();
    /// Réinitialise la scène.
    void reinitialiser();
 
@@ -135,9 +136,8 @@ private:
    std::unique_ptr<vue::Vue> vue_{ nullptr };
    /// Arbre de rendu contenant les différents objets de la scène.
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
-   
-   std::unique_ptr<EtatAbstrait> etat_{ nullptr };
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
+   std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -198,6 +198,20 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 {
    return arbre_.get();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur()
+///
+/// Cette fonction retourne le profil courant de l'utilisateur 
+///
+/// @return L'arbre de rendu de la scène.
+///
+////////////////////////////////////////////////////////////////////////
+inline ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur()
+{
+	return profil_.get();
 }
 
 ////////////////////////////////////////////////////////////////////////

@@ -96,7 +96,6 @@ protected:
 	int ancienSourisY_{ 0 };
 
 	std::unique_ptr<EtatAbstrait> etat_;
-
 };
 
 #endif /// MODE_EDITION_H
