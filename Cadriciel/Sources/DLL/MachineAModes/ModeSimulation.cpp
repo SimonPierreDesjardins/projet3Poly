@@ -15,6 +15,8 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
+#include "ProfilUtilisateur.h"
+#include "CommandeRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -27,6 +29,7 @@ ModeSimulation::ModeSimulation()
 {
 	typeMode_ = SIMULATION;
 	controleRobot_ = std::make_unique<ControleRobot>();
+	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -43,7 +46,15 @@ ModeSimulation::~ModeSimulation()
 
 void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-
+	if (msg == WM_KEYDOWN)
+	{
+		controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam));
+	}
+	else if (msg == WM_KEYUP)
+	{
+		std::unique_ptr<CommandeRobot> commande = std::make_unique<CommandeRobot>(ARRETER);
+		controleRobot_->traiterCommande(commande.get());
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

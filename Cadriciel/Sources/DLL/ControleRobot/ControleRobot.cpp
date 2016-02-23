@@ -9,7 +9,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ControleRobot.h"
-
+#include "CommandeRobot.h"
+#include "NoeudRobot.h"
+#include "FacadeModele.h"
+#include "ArbreRenduINF2990.h"
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ControleRobot::ControleRobot()
@@ -23,6 +26,11 @@
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::ControleRobot()
 {
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	NoeudAbstrait* table = arbre->chercher(0);
+	std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
+	table->ajouter(robot);
+	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -36,6 +44,11 @@ ControleRobot::ControleRobot()
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::~ControleRobot()
 {
+}
+
+void ControleRobot::traiterCommande(CommandeRobot* commande)
+{
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -28,14 +28,17 @@ class ProfilUtilisateur
 		ProfilUtilisateur(std::string nomProfil, bool* options);
 		~ProfilUtilisateur();
 		void sauvegarder();
-		void modifierToucheCommande(char touche, TypeCommande commande);
 		void chargerProfilParDefaut();
+
+		inline CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
+		inline void modifierToucheCommande(char touche, TypeCommande commande);
 
 	private:
 		void ouvrirFichierProfil();
 
 		std::string nomProfil_;
 		const int NOMBRE_OPTIONS{ 11 };
+
 		FILE* profil_;
 		const std::string CHEMIN_PROFIL = "./../../Donnees";
 
@@ -46,6 +49,15 @@ class ProfilUtilisateur
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
 		//TODO: Mapping de l'affichage debugage.
 };
+
+
+inline CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const
+{
+	return commandes_[touche];
+}
+
+
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

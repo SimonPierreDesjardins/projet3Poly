@@ -15,6 +15,9 @@
 #include <memory>
 #include "glm\glm.hpp"
 #include "ControleRobot.h"
+#include <unordered_map>
+
+class ProfilUtilisateur;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeSimulation
@@ -39,8 +42,8 @@ public:
 
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
+	ProfilUtilisateur* profil_;
 };
-
 
 #endif /// MODE_SIMULATION_H
 

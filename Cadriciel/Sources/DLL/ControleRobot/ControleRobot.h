@@ -11,6 +11,9 @@
 #ifndef CONTROLE_ROBOT_H
 #define CONTROLE_ROBOT_H
 
+class CommandeRobot;
+class NoeudRobot;
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
 /// @brief Classe qui permet de contrôler le robot. 
@@ -25,10 +28,10 @@ class ControleRobot
 {
 public:
 	ControleRobot();
-	virtual ~ControleRobot();
-
-private:
-
+	~ControleRobot();
+	
+	void traiterCommande(CommandeRobot* commande);
+	NoeudRobot* robot_;
 };
 
 #endif // CONTROLE_ROBOT_H

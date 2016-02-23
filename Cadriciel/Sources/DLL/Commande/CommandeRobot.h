@@ -19,7 +19,8 @@ enum TypeCommande
 	AVANCER,
 	RECULER,
 	ROTATION_GAUCHE,
-	ROTATION_DROITE
+	ROTATION_DROITE,
+	ARRETER
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -42,10 +43,10 @@ class CommandeRobot{
 
 	private:
 		/// Représente la nouvelle puissance du moteur de gauche
-		int puissanceMoteurG_{ 0 };
+		double vitesseMoteurG_{ 0 };
 
 		/// Représente la nouvelle puissance du moteur de droite
-		int puissanceMoteurD_{ 0 };
+		double vitesseMoteurD_{ 0 };
 
 		/// Représente si l'on change le mode d'utilisation du robot ou non. Si oui, celle-ci correspondra à un des deux modes d'utilisation (MODE_MANUEL ou MODE_AUTO)
 		TypeCommande typeCommande_;
