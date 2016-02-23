@@ -46,6 +46,8 @@ public:
 
 private:
 	float angle_{ 0.f };
+	float vitesseCouranteDroite_{ 0.f };
+	float vitesseCouranteGauche_{ 0.f };
 };
 
 #endif // __ARBRE_NOEUD_ROBOT_H__

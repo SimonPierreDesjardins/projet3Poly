@@ -117,11 +117,61 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(float dt)
 {
+	float acceleration = 200;
+
 	//Calcul de la résultante de la vitesse relative
-	float relativeGaucheDroite = vitesseGauche_ + vitesseDroite_;
+	if (vitesseDroite_ < 0)
+	{
+		if (vitesseCouranteDroite_ > vitesseDroite_)
+		{
+			vitesseCouranteDroite_ -= acceleration * dt;
+		}
+		else// if (vitesseCouranteDroite_ < vitesseDroite_)
+		{
+			//vitesseCouranteDroite_ = 0;
+			vitesseCouranteDroite_ += acceleration * dt;
+		}
+	}
+	else
+	{
+		if (vitesseCouranteDroite_ < vitesseDroite_)
+		{
+			vitesseCouranteDroite_ += acceleration * dt;
+		}
+		else// if (vitesseCouranteDroite_ > vitesseDroite_)
+		{
+			//vitesseCouranteDroite_ = 0;
+			vitesseCouranteDroite_ -= acceleration * dt;
+		}
+	}
+	if (vitesseGauche_ < 0)
+	{
+		if (vitesseCouranteGauche_ > vitesseGauche_)
+		{
+			vitesseCouranteGauche_ -= acceleration * dt;
+		}
+		else// if (vitesseCouranteGauche_ < vitesseGauche_)
+		{
+			//vitesseCouranteGauche_ = 0;
+			vitesseCouranteGauche_ += acceleration *dt;
+		}
+	}
+	else
+	{
+		if (vitesseCouranteGauche_ < vitesseGauche_)
+		{
+			vitesseCouranteGauche_ += acceleration * dt;
+		}
+		else// if (vitesseCouranteGauche_ > vitesseGauche_)
+		{
+			//vitesseCouranteGauche_ = 0;
+			vitesseCouranteGauche_ -= acceleration * dt;
+		}
+	}
+	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
 
 	//Calcul de la différence entre les vitesses de gauche et droite
-	vitesseRotation_ = vitesseDroite_ - vitesseGauche_;
+	vitesseRotation_ = vitesseCouranteDroite_ - vitesseCouranteGauche_;
 
 	//Calculs des nouvelles positions et du nouvel angle
 	angleRotation_ += dt*vitesseRotation_;
