@@ -61,7 +61,7 @@
             this.aideMenuEdition_ = new System.Windows.Forms.ToolStripMenuItem();
             this.barreOutils_ = new System.Windows.Forms.ToolStrip();
             this.outilsSelection_ = new System.Windows.Forms.ToolStripButton();
-            this.outilsDéplacement_ = new System.Windows.Forms.ToolStripButton();
+            this.outilsDeplacement_ = new System.Windows.Forms.ToolStripButton();
             this.outilsRotation_ = new System.Windows.Forms.ToolStripButton();
             this.outilsMiseAEchelle_ = new System.Windows.Forms.ToolStripButton();
             this.outilsDuplication_ = new System.Windows.Forms.ToolStripButton();
@@ -78,9 +78,21 @@
             this.panneauPositionX_ = new System.Windows.Forms.Label();
             this.panneauDimension_ = new System.Windows.Forms.Label();
             this.panneauRotation_ = new System.Windows.Forms.Label();
+            this.menuSimTest = new System.Windows.Forms.MenuStrip();
+            this.fichierMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuPrincipalMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeEditionMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.vuesMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.orthographiqueMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.orbiteMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.premierePersonneMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.profilsMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.defautMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.customMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
             this.panneauOperation_.SuspendLayout();
+            this.menuSimTest.SuspendLayout();
             this.SuspendLayout();
             // 
             // viewPort_
@@ -103,7 +115,6 @@
             // bouttonSimulation_
             // 
             this.bouttonSimulation_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonSimulation_.Enabled = false;
             this.bouttonSimulation_.Location = new System.Drawing.Point(225, 109);
             this.bouttonSimulation_.Name = "bouttonSimulation_";
             this.bouttonSimulation_.Size = new System.Drawing.Size(175, 23);
@@ -128,7 +139,6 @@
             // bouttonConfiguration_
             // 
             this.bouttonConfiguration_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonConfiguration_.Enabled = false;
             this.bouttonConfiguration_.Location = new System.Drawing.Point(225, 201);
             this.bouttonConfiguration_.Name = "bouttonConfiguration_";
             this.bouttonConfiguration_.Size = new System.Drawing.Size(175, 23);
@@ -163,6 +173,7 @@
             this.menuEdition_.Size = new System.Drawing.Size(623, 24);
             this.menuEdition_.TabIndex = 5;
             this.menuEdition_.Text = "menuStrip1";
+            this.menuEdition_.Visible = false;
             // 
             // fichierMenuEdition_
             // 
@@ -208,7 +219,6 @@
             // 
             // modeTestModeEdition_
             // 
-            this.modeTestModeEdition_.Enabled = false;
             this.modeTestModeEdition_.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.modeTestModeEdition_.Name = "modeTestModeEdition_";
             this.modeTestModeEdition_.Size = new System.Drawing.Size(158, 22);
@@ -278,7 +288,7 @@
             this.miseAEchelleMenuEdition_.Name = "miseAEchelleMenuEdition_";
             this.miseAEchelleMenuEdition_.Size = new System.Drawing.Size(164, 22);
             this.miseAEchelleMenuEdition_.Text = "Mise à échelle";
-            this.miseAEchelleMenuEdition_.Click += new System.EventHandler(this.miseAÉchelleToolStripMenuItem_Click);
+            this.miseAEchelleMenuEdition_.Click += new System.EventHandler(this.miseAEchelleToolStripMenuItem_Click);
             // 
             // duplicationMenuEdition_
             // 
@@ -300,21 +310,21 @@
             // poteauMenuEdition_
             // 
             this.poteauMenuEdition_.Name = "poteauMenuEdition_";
-            this.poteauMenuEdition_.Size = new System.Drawing.Size(133, 22);
+            this.poteauMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.poteauMenuEdition_.Text = "Poteau";
             this.poteauMenuEdition_.Click += new System.EventHandler(this.poteauToolStripMenuItem_Click);
             // 
             // murMenuEdition_
             // 
             this.murMenuEdition_.Name = "murMenuEdition_";
-            this.murMenuEdition_.Size = new System.Drawing.Size(133, 22);
+            this.murMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.murMenuEdition_.Text = "Mur";
             this.murMenuEdition_.Click += new System.EventHandler(this.murToolStripMenuItem_Click);
             // 
             // ligneNoireMenuEdition_
             // 
             this.ligneNoireMenuEdition_.Name = "ligneNoireMenuEdition_";
-            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(133, 22);
+            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.ligneNoireMenuEdition_.Text = "Ligne noire";
             this.ligneNoireMenuEdition_.Click += new System.EventHandler(this.ligneNoireToolStripMenuItem_Click);
             // 
@@ -372,7 +382,7 @@
             this.barreOutils_.Dock = System.Windows.Forms.DockStyle.None;
             this.barreOutils_.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.outilsSelection_,
-            this.outilsDéplacement_,
+            this.outilsDeplacement_,
             this.outilsRotation_,
             this.outilsMiseAEchelle_,
             this.outilsDuplication_,
@@ -389,6 +399,7 @@
             this.barreOutils_.Stretch = true;
             this.barreOutils_.TabIndex = 7;
             this.barreOutils_.Text = "toolStrip1";
+            this.barreOutils_.Visible = false;
             // 
             // outilsSelection_
             // 
@@ -400,15 +411,15 @@
             this.outilsSelection_.Text = "Sélection";
             this.outilsSelection_.Click += new System.EventHandler(this.outilsSelection__Click);
             // 
-            // outilsDéplacement_
+            // outilsDeplacement_
             // 
-            this.outilsDéplacement_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsDéplacement_.Image = global::InterfaceGraphique.Properties.Resources.ic_open_with;
-            this.outilsDéplacement_.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.outilsDéplacement_.Name = "outilsDéplacement_";
-            this.outilsDéplacement_.Size = new System.Drawing.Size(23, 20);
-            this.outilsDéplacement_.Text = "Déplacement";
-            this.outilsDéplacement_.Click += new System.EventHandler(this.outilsDéplacement__Click);
+            this.outilsDeplacement_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.outilsDeplacement_.Image = global::InterfaceGraphique.Properties.Resources.ic_open_with;
+            this.outilsDeplacement_.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.outilsDeplacement_.Name = "outilsDeplacement_";
+            this.outilsDeplacement_.Size = new System.Drawing.Size(23, 20);
+            this.outilsDeplacement_.Text = "Déplacement";
+            this.outilsDeplacement_.Click += new System.EventHandler(this.outilsDéplacement__Click);
             // 
             // outilsRotation_
             // 
@@ -497,6 +508,7 @@
             this.panneauOperation_.Name = "panneauOperation_";
             this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
             this.panneauOperation_.TabIndex = 8;
+            this.panneauOperation_.Visible = false;
             // 
             // textBoxPositionY_
             // 
@@ -574,19 +586,106 @@
             this.panneauRotation_.TabIndex = 0;
             this.panneauRotation_.Text = "Angle de rotation";
             // 
+            // menuSimTest
+            // 
+            this.menuSimTest.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fichierMenuSimTest,
+            this.vuesMenuSimTest,
+            this.profilsMenuSimTest});
+            this.menuSimTest.Location = new System.Drawing.Point(0, 0);
+            this.menuSimTest.Name = "menuSimTest";
+            this.menuSimTest.Size = new System.Drawing.Size(623, 24);
+            this.menuSimTest.TabIndex = 9;
+            this.menuSimTest.Text = "menuStrip1";
+            this.menuSimTest.Visible = false;
+            // 
+            // fichierMenuSimTest
+            // 
+            this.fichierMenuSimTest.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuPrincipalMenuSimTest,
+            this.modeEditionMenuSimTest});
+            this.fichierMenuSimTest.Name = "fichierMenuSimTest";
+            this.fichierMenuSimTest.Size = new System.Drawing.Size(54, 20);
+            this.fichierMenuSimTest.Text = "Fichier";
+            // 
+            // menuPrincipalMenuSimTest
+            // 
+            this.menuPrincipalMenuSimTest.Name = "menuPrincipalMenuSimTest";
+            this.menuPrincipalMenuSimTest.Size = new System.Drawing.Size(154, 22);
+            this.menuPrincipalMenuSimTest.Text = "Menu principal";
+            this.menuPrincipalMenuSimTest.Click += new System.EventHandler(this.menuPrincipalMenuSimTest_Click);
+            // 
+            // modeEditionMenuSimTest
+            // 
+            this.modeEditionMenuSimTest.Name = "modeEditionMenuSimTest";
+            this.modeEditionMenuSimTest.Size = new System.Drawing.Size(154, 22);
+            this.modeEditionMenuSimTest.Text = "Mode Édition";
+            this.modeEditionMenuSimTest.Click += new System.EventHandler(this.modeEditionMenuSimTest_Click);
+            // 
+            // vuesMenuSimTest
+            // 
+            this.vuesMenuSimTest.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.orthographiqueMenuSimTest,
+            this.orbiteMenuSimTest,
+            this.premierePersonneMenuSimTest});
+            this.vuesMenuSimTest.Name = "vuesMenuSimTest";
+            this.vuesMenuSimTest.Size = new System.Drawing.Size(44, 20);
+            this.vuesMenuSimTest.Text = "Vues";
+            // 
+            // orthographiqueMenuSimTest
+            // 
+            this.orthographiqueMenuSimTest.Name = "orthographiqueMenuSimTest";
+            this.orthographiqueMenuSimTest.Size = new System.Drawing.Size(173, 22);
+            this.orthographiqueMenuSimTest.Text = "Orthographique";
+            // 
+            // orbiteMenuSimTest
+            // 
+            this.orbiteMenuSimTest.Name = "orbiteMenuSimTest";
+            this.orbiteMenuSimTest.Size = new System.Drawing.Size(173, 22);
+            this.orbiteMenuSimTest.Text = "Orbite";
+            // 
+            // premierePersonneMenuSimTest
+            // 
+            this.premierePersonneMenuSimTest.Name = "premierePersonneMenuSimTest";
+            this.premierePersonneMenuSimTest.Size = new System.Drawing.Size(173, 22);
+            this.premierePersonneMenuSimTest.Text = "Première personne";
+            // 
+            // profilsMenuSimTest
+            // 
+            this.profilsMenuSimTest.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.defautMenuSimTest,
+            this.customMenuSimTest});
+            this.profilsMenuSimTest.Name = "profilsMenuSimTest";
+            this.profilsMenuSimTest.Size = new System.Drawing.Size(52, 20);
+            this.profilsMenuSimTest.Text = "Profils";
+            // 
+            // defautMenuSimTest
+            // 
+            this.defautMenuSimTest.Name = "defautMenuSimTest";
+            this.defautMenuSimTest.Size = new System.Drawing.Size(116, 22);
+            this.defautMenuSimTest.Text = "Défaut";
+            // 
+            // customMenuSimTest
+            // 
+            this.customMenuSimTest.Name = "customMenuSimTest";
+            this.customMenuSimTest.Size = new System.Drawing.Size(116, 22);
+            this.customMenuSimTest.Text = "Custom";
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 428);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuEdition_);
+            this.Controls.Add(this.barreOutils_);
+            this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);
             this.Controls.Add(this.bouttonEditeur_);
             this.Controls.Add(this.bouttonConfiguration_);
             this.Controls.Add(this.viewPort_);
+            this.MainMenuStrip = this.menuSimTest;
             this.MinimumSize = new System.Drawing.Size(100, 148);
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -600,6 +699,8 @@
             this.barreOutils_.PerformLayout();
             this.panneauOperation_.ResumeLayout(false);
             this.panneauOperation_.PerformLayout();
+            this.menuSimTest.ResumeLayout(false);
+            this.menuSimTest.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -639,7 +740,7 @@
         private System.Windows.Forms.ToolStripMenuItem ligneNoireMenuEdition_;
         private System.Windows.Forms.ToolStrip barreOutils_;
         private System.Windows.Forms.ToolStripButton outilsSelection_;
-        private System.Windows.Forms.ToolStripButton outilsDéplacement_;
+        private System.Windows.Forms.ToolStripButton outilsDeplacement_;
         private System.Windows.Forms.ToolStripButton outilsRotation_;
         private System.Windows.Forms.ToolStripButton outilsMiseAEchelle_;
         private System.Windows.Forms.ToolStripButton outilsDuplication_;
@@ -658,6 +759,17 @@
         private System.Windows.Forms.TextBox textboxDimension_;
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem supprimerToolStripMenuItem;
+        private System.Windows.Forms.MenuStrip menuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem fichierMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem menuPrincipalMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem modeEditionMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem vuesMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem orthographiqueMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem orbiteMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem premierePersonneMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem profilsMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem defautMenuSimTest;
+        private System.Windows.Forms.ToolStripMenuItem customMenuSimTest;
     }
 }
 

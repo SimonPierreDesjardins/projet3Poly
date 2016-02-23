@@ -76,6 +76,18 @@
     <Filter Include="Header Files\Interface">
       <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Comportement">
+      <UniqueIdentifier>{11e6f2e8-c93c-4f16-ada2-78cd49df364b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Comportement">
+      <UniqueIdentifier>{06c11b55-5c44-4176-a672-98b35929bcf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Commande">
+      <UniqueIdentifier>{90b9b5a1-34a3-494b-8820-16fec8ae4fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commande">
+      <UniqueIdentifier>{142a9849-c852-41b7-86a5-ba913c687583}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -210,6 +222,7 @@
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp">
       <Filter>Source Files\Visiteur</Filter>
+      <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp">
       <Filter>Source Files\Visiteur</Filter>
@@ -222,6 +235,30 @@
     </ClCompile>
     <ClCompile Include="MachineAEtats\EtatSelection.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
+    </ClCompile>
+    <ClCompile Include="Comportement\ComportementAbstrait.cpp">
+      <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Comportement\ComportementBalayage.cpp">
+      <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Comportement\ComportementDefaut.cpp">
+      <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Comportement\ComportementDeviation.cpp">
+      <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Comportement\ComportementEvitement.cpp">
+      <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Comportement\ComportementSuiviLigne.cpp">
+      <Filter>Source Files\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Commande\CommandeRobot.cpp">
+      <Filter>Source Files\Commande</Filter>
+    </ClCompile>
+    <ClCompile Include="Configuration\Configuration.cpp">
+      <Filter>Source Files\Configuration</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -392,6 +429,30 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="Comportement\ComportementAbstrait.h">
+      <Filter>Header Files\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="Comportement\ComportementBalayage.h">
+      <Filter>Header Files\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="Comportement\ComportementDefaut.h">
+      <Filter>Header Files\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="Comportement\ComportementDeviation.h">
+      <Filter>Header Files\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="Comportement\ComportementEvitement.h">
+      <Filter>Header Files\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="Comportement\ComportementSuiviLigne.h">
+      <Filter>Header Files\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="Commande\CommandeRobot.h">
+      <Filter>Header Files\Commande</Filter>
+    </ClInclude>
+    <ClInclude Include="Configuration\Configuration.h">
+      <Filter>Header Files\Configuration</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

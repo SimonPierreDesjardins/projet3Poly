@@ -22,7 +22,6 @@
 ////////////////////////////////////////////////////////////////////////
 EtatDeplacement::EtatDeplacement()
 {
-	typeEtat_ = DEPLACEMENT;
 	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
 	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();

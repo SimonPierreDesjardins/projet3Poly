@@ -27,6 +27,7 @@
 ModeSimulation::ModeSimulation()
 {
 	shared_ptr<NoeudRobot> robot = std::dynamic_pointer_cast<NoeudRobot>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud("NOM_ROBOT"));
+	typeMode_ = SIMULATION;
 }
 
 ////////////////////////////////////////////////////////////////////////
