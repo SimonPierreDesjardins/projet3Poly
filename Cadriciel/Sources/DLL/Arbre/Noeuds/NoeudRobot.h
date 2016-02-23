@@ -35,9 +35,11 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	virtual void animer(float dt);
 
+	//Permet de modifier les paramètres du robot
 	virtual void assignerVitesseRotation(float vitesse);
 	virtual void assignerVitesseDroite(float vitesse);
 	virtual void assignerVitesseGauche(float vitesse);
+	//Permet de récupérer les paramètres du robot. Inutilisées pour l'instant
 	virtual float obtenirVitesseDroite() const;
 	virtual float obtenirVitesseGauche() const;
 

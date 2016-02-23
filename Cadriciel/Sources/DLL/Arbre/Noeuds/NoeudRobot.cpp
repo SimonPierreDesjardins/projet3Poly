@@ -103,47 +103,107 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 	visiteur->visiter(this);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::animer(float dt)
+///
+/// Cette fonction calcule les changements effectuer aux attributs du robot selon les
+/// vitesses des moteurs de droite et de gauche
+///
+/// @param[in] dt: difference de temps entre deux animations (autour de 0,0166)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(float dt)
 {
-	std::cout << dt << std::endl;
-
-	/*positionRelative_.x += (vitesseDroite_ * dt)*cos(utilitaire::DEG_TO_RAD(angleRotation_));
-	positionRelative_.y += (vitesseDroite_ * dt)*sin(utilitaire::DEG_TO_RAD(angleRotation_));
-	angleRotation_ += vitesseRotation_*dt;*/
+	//Calcul de la résultante de la vitesse relative
 	float relativeGaucheDroite = vitesseGauche_ + vitesseDroite_;
-	//if (relativeGaucheDroite < 0)
-	//{ 
-	//	relativeGaucheDroite = -relativeGaucheDroite;
-	//}
+
+	//Calcul de la différence entre les vitesses de gauche et droite
 	vitesseRotation_ = vitesseDroite_ - vitesseGauche_;
+
+	//Calculs des nouvelles positions et du nouvel angle
 	angleRotation_ += dt*vitesseRotation_;
 	positionRelative_.x += dt*relativeGaucheDroite/10*cos(utilitaire::DEG_TO_RAD(angleRotation_));
 	positionRelative_.y += dt*relativeGaucheDroite/10*sin(utilitaire::DEG_TO_RAD(angleRotation_));
-	
-
-
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::obtenirVitesseDroite() const
+///
+/// Cette fonction retourne la vitesse du moteur de droite
+///
+/// @param[in] Aucune.
+///
+/// @return float : vitesse de rotation du moteur de droite.
+///
+////////////////////////////////////////////////////////////////////////
 float NoeudRobot::obtenirVitesseDroite() const
 {
 	return vitesseDroite_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::obtenirVitesseGauche() const
+///
+/// Cette fonction retourne la vitesse du moteur de gauche
+///
+/// @param[in] Aucune.
+///
+/// @return float : vitesse de rotation du moteur de gauche.
+///
+////////////////////////////////////////////////////////////////////////
 float NoeudRobot::obtenirVitesseGauche() const
 {
 	return vitesseGauche_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerVitesseDroite() const
+///
+/// Cette modifie la vitesse de rotation du moteur de droite.
+///
+/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de droite.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::assignerVitesseDroite(float vitesse)
 {
 	vitesseDroite_ = vitesse;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerVitesseGauche() const
+///
+/// Cette modifie la vitesse de rotation du moteur de gauche.
+///
+/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de gauche.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::assignerVitesseGauche(float vitesse)
 {
 	vitesseGauche_ = vitesse;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerVitesseRotation() const
+///
+/// Cette modifie la vitesse de rotation angulaire.
+///
+/// @param[in] vitesse : vitesse que l'on souhaite assigner à l'attribut vitesseRotation_.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
 	vitesseRotation_ = vitesse;
