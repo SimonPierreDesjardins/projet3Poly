@@ -168,6 +168,13 @@ public:
 	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
+	virtual void assignerVitesseDroite(float vitesse);
+	virtual void assignerVitesseGauche(float vitesse);
+	virtual void assignerVitesseRotation(float vitesse);
+
+	virtual float obtenirVitesseDroite() const;
+	virtual float obtenirVitesseGauche() const;
+
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };
@@ -217,6 +224,11 @@ protected:
 
 	/// Storage pour le dessin du modèle
 	opengl::VBO const*		vbo_{ nullptr };
+
+	//Vitesse des moteurs du robot
+	float vitesseDroite_{ 0.f };
+	float vitesseGauche_{ 0.f };
+	float vitesseRotation_{ 0.f };
 };
 
 
@@ -587,9 +599,6 @@ inline bool NoeudAbstrait::estDuplicable() const
 {
 	return estDuplicable_;
 }
-
-
-
 #endif // __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
 

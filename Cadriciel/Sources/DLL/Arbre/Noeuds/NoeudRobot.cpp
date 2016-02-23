@@ -107,8 +107,46 @@ void NoeudRobot::animer(float dt)
 {
 	std::cout << dt << std::endl;
 
-	positionRelative_.x += (vitesseDroite_ * dt)*cos(utilitaire::DEG_TO_RAD(angleRotation_));
+	/*positionRelative_.x += (vitesseDroite_ * dt)*cos(utilitaire::DEG_TO_RAD(angleRotation_));
 	positionRelative_.y += (vitesseDroite_ * dt)*sin(utilitaire::DEG_TO_RAD(angleRotation_));
+	angleRotation_ += vitesseRotation_*dt;*/
+	float relativeGaucheDroite = vitesseGauche_ + vitesseDroite_;
+	//if (relativeGaucheDroite < 0)
+	//{ 
+	//	relativeGaucheDroite = -relativeGaucheDroite;
+	//}
+	vitesseRotation_ = vitesseDroite_ - vitesseGauche_;
+	angleRotation_ += dt*vitesseRotation_;
+	positionRelative_.x += dt*relativeGaucheDroite/10*cos(utilitaire::DEG_TO_RAD(angleRotation_));
+	positionRelative_.y += dt*relativeGaucheDroite/10*sin(utilitaire::DEG_TO_RAD(angleRotation_));
+	
+
+
+}
+
+float NoeudRobot::obtenirVitesseDroite() const
+{
+	return vitesseDroite_;
+}
+
+float NoeudRobot::obtenirVitesseGauche() const
+{
+	return vitesseGauche_;
+}
+
+void NoeudRobot::assignerVitesseDroite(float vitesse)
+{
+	vitesseDroite_ = vitesse;
+}
+
+void NoeudRobot::assignerVitesseGauche(float vitesse)
+{
+	vitesseGauche_ = vitesse;
+}
+
+void NoeudRobot::assignerVitesseRotation(float vitesse)
+{
+	vitesseRotation_ = vitesse;
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

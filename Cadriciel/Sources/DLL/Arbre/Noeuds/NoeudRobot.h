@@ -35,37 +35,16 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	virtual void animer(float dt);
 
-	inline void assignerVitesseDroite(float vitesse);
-	inline void assignerVitesseGauche(float vitesse);
-	inline float obtenirVitesseDroite() const;
-	inline float obtenirVitesseGauche() const;
+	virtual void assignerVitesseRotation(float vitesse);
+	virtual void assignerVitesseDroite(float vitesse);
+	virtual void assignerVitesseGauche(float vitesse);
+	virtual float obtenirVitesseDroite() const;
+	virtual float obtenirVitesseGauche() const;
+
 
 private:
 	float angle_{ 0.f };
-	float vitesseDroite_{ 0.f };
-	float vitesseGauche_{ 0.f };
 };
-
-inline float NoeudRobot::obtenirVitesseDroite() const
-{
-	return vitesseDroite_;
-}
-
-inline float NoeudRobot::obtenirVitesseGauche() const
-{
-	return vitesseGauche_;
-}
-
-inline void NoeudRobot::assignerVitesseDroite(float vitesse)
-{
-	vitesseDroite_ = vitesse;
-}
-
-inline void NoeudRobot::assignerVitesseGauche(float vitesse)
-{
-	vitesseGauche_ = vitesse;
-}
-
 
 #endif // __ARBRE_NOEUD_ROBOT_H__
 

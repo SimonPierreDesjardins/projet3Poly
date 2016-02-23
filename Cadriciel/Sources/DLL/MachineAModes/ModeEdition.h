@@ -28,6 +28,14 @@ const int VK_KEY_T = 0x54;
 const int VK_KEY_P = 80;
 const int VK_KEY_L = 76;
 const int VK_KEY_M = 77;
+const int VK_KEY_W = 0x57;
+const int VK_KEY_A = 0x41;
+const int VK_KEY_Y = 'Y';
+const int VK_KEY_G = 'G';
+const int VK_KEY_H = 'H';
+const int VK_KEY_J = 'J';
+const int VK_KEY_N = 'N';
+
 
 enum Etat
 {
@@ -71,6 +79,11 @@ public:
 	virtual void gererFlecheDroit();
 
 	virtual void gererToucheT();
+	virtual void gererToucheY();
+	virtual void gererToucheG();
+	virtual void gererToucheH();
+	virtual void gererToucheJ();
+	virtual void gererToucheN();
 
 	virtual void gererMoletteSouris(const int & delta);
 

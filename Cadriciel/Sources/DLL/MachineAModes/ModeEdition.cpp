@@ -17,6 +17,7 @@
 #include "Projection.h"
 #include "VisiteurSauvegarde.h"
 #include "EtatTypes.h"
+#include "NoeudRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -31,8 +32,10 @@
 ModeEdition::ModeEdition()
 {
 	typeMode_ = EDITION;
-	etat_ = make_unique < EtatSelection > ();
+	etat_ = make_unique <EtatSelection>();
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
+	/*std::shared_ptr<noeudabstrait> robot = facademodele::obtenirinstance()->obtenirarbrerenduinf2990()->creernoeud(arbrerenduinf2990::nom_robot);
+	facademodele::obtenirinstance()->obtenirarbrerenduinf2990()->ajouter(robot);*/
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -103,6 +106,46 @@ void ModeEdition::gererToucheMoins()
 void ModeEdition::gererToucheT()
 {
 	//FacadeModele::obtenirInstance()->assignerMode(TEST);
+}
+
+void ModeEdition::gererToucheY()
+{
+	float vitesse = 30;
+	NoeudAbstrait* robot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0)->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	robot->assignerVitesseDroite(vitesse);
+	robot->assignerVitesseGauche(vitesse);
+}
+
+void ModeEdition::gererToucheG()
+{
+	float vitesse = 30;
+	NoeudAbstrait* robot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0)->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	robot->assignerVitesseDroite(vitesse);
+	robot->assignerVitesseGauche(-vitesse);
+}
+
+void ModeEdition::gererToucheH()
+{
+	float vitesse = 30;
+	NoeudAbstrait* robot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0)->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	robot->assignerVitesseDroite(-vitesse);
+	robot->assignerVitesseGauche(-vitesse);
+}
+
+void ModeEdition::gererToucheJ()
+{
+	float vitesse = 30;
+	NoeudAbstrait* robot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0)->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	robot->assignerVitesseDroite(-vitesse);
+	robot->assignerVitesseGauche(vitesse);
+}
+
+void ModeEdition::gererToucheN()
+{
+	float vitesse = 0;
+	NoeudAbstrait* robot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0)->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	robot->assignerVitesseDroite(0);
+	robot->assignerVitesseGauche(0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -302,6 +345,24 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				gererToucheT();
 				break;
 
+			case VK_KEY_Y:
+				gererToucheY();
+				break;
+
+			case VK_KEY_G:
+				gererToucheG();
+				break;
+			case VK_KEY_H:
+				gererToucheH();
+				break;
+
+			case VK_KEY_J:
+				gererToucheJ();
+				break;
+
+			case VK_KEY_N:
+				gererToucheN();
+				break;
 
 			case VK_DELETE:
 				gererToucheSupprimer();

@@ -547,6 +547,31 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele.coinMin.y;
 }
 
+void NoeudAbstrait::assignerVitesseDroite(float vitesse)
+{
+
+}
+
+void NoeudAbstrait::assignerVitesseGauche(float vitesse)
+{
+
+}
+
+void NoeudAbstrait::assignerVitesseRotation(float vitesse)
+{
+
+}
+
+float NoeudAbstrait::obtenirVitesseDroite() const
+{
+	return 0;
+}
+
+float NoeudAbstrait::obtenirVitesseGauche() const
+{
+	return 0;
+}
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////
