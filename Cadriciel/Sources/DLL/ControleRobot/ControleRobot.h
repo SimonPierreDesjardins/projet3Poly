@@ -11,6 +11,9 @@
 #ifndef CONTROLE_ROBOT_H
 #define CONTROLE_ROBOT_H
 
+#include "ComportementAbstrait.h"
+#include <memory>
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
 /// @brief Classe qui permet de contrôler le robot. 
@@ -27,8 +30,22 @@ public:
 	ControleRobot();
 	virtual ~ControleRobot();
 
-private:
+	void passerAuProchainComportement();
 
+
+	void inverserModeControle();
+	void passerAModeManuel();
+	void passerAModeAutomatique();
+
+	void assignerVitessesMoteurs(double vit_G, double vit_D);
+
+private:
+	bool manuel{ false };
+	
+	std::shared_ptr<ComportementAbstrait> comportement;
+
+	// devrait etre migree vers les capteurs
+	bool ligneDetectee();
 };
 
 #endif // CONTROLE_ROBOT_H

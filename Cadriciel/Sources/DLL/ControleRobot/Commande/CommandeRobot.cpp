@@ -51,11 +51,10 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 /// @author Philippe Marcotte
 /// @date 2016-02-20
 ///////////////////////////////////////////////////////////////////////////
-void CommandeRobot::executer(NoeudRobot* noeud){
-	//if (typeCommande == MODE_MANUEL || typeCommande == MODE_AUTO)
-		//noeud->modeUtilisation = typeCommande;
-	//noeud->puissanceMoteurG = puissanceMoteurG_;
-	//noeud->puissanceMoteurD = puissanceMoteurD_;
+void CommandeRobot::executer(ControleRobot* ia){
+	if (typeCommande_ == INVERSER_MODE_CONTROLE)
+		ia->inverserModeControle();
+	ia->assignerVitessesMoteurs( puissanceMoteurG_, puissanceMoteurD_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
