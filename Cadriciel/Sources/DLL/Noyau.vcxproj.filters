@@ -76,18 +76,6 @@
     <Filter Include="Header Files\Interface">
       <UniqueIdentifier>{6c8e2c48-de9f-4091-bc76-fed408577f6f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Comportement">
-      <UniqueIdentifier>{11e6f2e8-c93c-4f16-ada2-78cd49df364b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Comportement">
-      <UniqueIdentifier>{06c11b55-5c44-4176-a672-98b35929bcf3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Commande">
-      <UniqueIdentifier>{90b9b5a1-34a3-494b-8820-16fec8ae4fb2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Commande">
-      <UniqueIdentifier>{142a9849-c852-41b7-86a5-ba913c687583}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ControleRobot">
       <UniqueIdentifier>{ce970ad5-b4f6-4c0e-bdd9-c8c3edc45f40}</UniqueIdentifier>
     </Filter>
@@ -99,6 +87,18 @@
     </Filter>
     <Filter Include="Source Files\ProfilUtilisateur">
       <UniqueIdentifier>{a8172218-5e9e-4b05-b2ce-f5519fa2d1d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ControleRobot\Commande">
+      <UniqueIdentifier>{90b9b5a1-34a3-494b-8820-16fec8ae4fb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ControleRobot\Comportement">
+      <UniqueIdentifier>{06c11b55-5c44-4176-a672-98b35929bcf3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ControleRobot\Commande">
+      <UniqueIdentifier>{142a9849-c852-41b7-86a5-ba913c687583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ControleRobot\Comportement">
+      <UniqueIdentifier>{11e6f2e8-c93c-4f16-ada2-78cd49df364b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -248,32 +248,32 @@
     <ClCompile Include="MachineAEtats\EtatSelection.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
-    <ClCompile Include="Comportement\ComportementAbstrait.cpp">
-      <Filter>Source Files\Comportement</Filter>
-    </ClCompile>
-    <ClCompile Include="Comportement\ComportementBalayage.cpp">
-      <Filter>Source Files\Comportement</Filter>
-    </ClCompile>
-    <ClCompile Include="Comportement\ComportementDefaut.cpp">
-      <Filter>Source Files\Comportement</Filter>
-    </ClCompile>
-    <ClCompile Include="Comportement\ComportementDeviation.cpp">
-      <Filter>Source Files\Comportement</Filter>
-    </ClCompile>
-    <ClCompile Include="Comportement\ComportementEvitement.cpp">
-      <Filter>Source Files\Comportement</Filter>
-    </ClCompile>
-    <ClCompile Include="Comportement\ComportementSuiviLigne.cpp">
-      <Filter>Source Files\Comportement</Filter>
-    </ClCompile>
-    <ClCompile Include="Commande\CommandeRobot.cpp">
-      <Filter>Source Files\Commande</Filter>
-    </ClCompile>
     <ClCompile Include="ControleRobot\ControleRobot.cpp">
       <Filter>Source Files\ControleRobot</Filter>
     </ClCompile>
     <ClCompile Include="ProfilUtilisateur\ProfilUtilisateur.cpp">
       <Filter>Source Files\ProfilUtilisateur</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\Commande\CommandeRobot.cpp">
+      <Filter>Source Files\ControleRobot\Commande</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\Comportement\ComportementAbstrait.cpp">
+      <Filter>Source Files\ControleRobot\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\Comportement\ComportementBalayage.cpp">
+      <Filter>Source Files\ControleRobot\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\Comportement\ComportementDefaut.cpp">
+      <Filter>Source Files\ControleRobot\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\Comportement\ComportementDeviation.cpp">
+      <Filter>Source Files\ControleRobot\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\Comportement\ComportementEvitement.cpp">
+      <Filter>Source Files\ControleRobot\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\Comportement\ComportementSuiviLigne.cpp">
+      <Filter>Source Files\ControleRobot\Comportement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,32 +445,32 @@
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="Comportement\ComportementAbstrait.h">
-      <Filter>Header Files\Comportement</Filter>
-    </ClInclude>
-    <ClInclude Include="Comportement\ComportementBalayage.h">
-      <Filter>Header Files\Comportement</Filter>
-    </ClInclude>
-    <ClInclude Include="Comportement\ComportementDefaut.h">
-      <Filter>Header Files\Comportement</Filter>
-    </ClInclude>
-    <ClInclude Include="Comportement\ComportementDeviation.h">
-      <Filter>Header Files\Comportement</Filter>
-    </ClInclude>
-    <ClInclude Include="Comportement\ComportementEvitement.h">
-      <Filter>Header Files\Comportement</Filter>
-    </ClInclude>
-    <ClInclude Include="Comportement\ComportementSuiviLigne.h">
-      <Filter>Header Files\Comportement</Filter>
-    </ClInclude>
-    <ClInclude Include="Commande\CommandeRobot.h">
-      <Filter>Header Files\Commande</Filter>
-    </ClInclude>
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h">
       <Filter>Header Files\ProfilUtilisateur</Filter>
     </ClInclude>
     <ClInclude Include="ControleRobot\ControleRobot.h">
       <Filter>Header Files\ControleRobot</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Commande\CommandeRobot.h">
+      <Filter>Header Files\ControleRobot\Commande</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementAbstrait.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementBalayage.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementDefaut.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementDeviation.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementEvitement.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementSuiviLigne.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

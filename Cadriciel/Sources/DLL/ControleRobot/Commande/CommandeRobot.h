@@ -11,7 +11,7 @@
 #ifndef COMMANDE_ROBOT_H
 #define COMMANDE_ROBOT_H
 
-#include "NoeudRobot.h"
+#include "ControleRobot.h"
 
 enum TypeCommande
 {
@@ -39,13 +39,15 @@ class CommandeRobot{
 		CommandeRobot(TypeCommande commande);
 
 		/// Execute les changements associés à la commande sur le robot
-		void executer(NoeudRobot* noeud);
+		void executer(ControleRobot* ia);
+
+		void assignerVitessesMoteurs(double vit_g, double vit_d);
 
 	private:
-		/// Représente la nouvelle puissance du moteur de gauche
+		/// Représente la nouvelle vitesse du moteur de gauche
 		double vitesseMoteurG_{ 0 };
 
-		/// Représente la nouvelle puissance du moteur de droite
+		/// Représente la nouvelle vitesse du moteur de droite
 		double vitesseMoteurD_{ 0 };
 
 		/// Représente si l'on change le mode d'utilisation du robot ou non. Si oui, celle-ci correspondra à un des deux modes d'utilisation (MODE_MANUEL ou MODE_AUTO)

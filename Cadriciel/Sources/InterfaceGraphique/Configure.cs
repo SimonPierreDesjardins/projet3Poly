@@ -18,11 +18,6 @@ namespace InterfaceGraphique
             InitializeComponent();
         }
 
-        private void textBox4_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void buttonDefConfig_Click(object sender, EventArgs e)
         {
             textBoxAvancer.Text = "W";
@@ -34,7 +29,7 @@ namespace InterfaceGraphique
         }
 
         private bool caractereInvalide(object sender, KeyPressEventArgs e)
-        { return e.Handled = !(char.IsLetter(e.KeyChar)); }
+        { return e.Handled = !(char.IsLetterOrDigit(e.KeyChar)); }
 
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {

@@ -11,6 +11,10 @@
 #ifndef CONTROLE_ROBOT_H
 #define CONTROLE_ROBOT_H
 
+
+#include <memory>
+
+class ComportementAbstrait;
 class CommandeRobot;
 class NoeudRobot;
 
@@ -31,6 +35,24 @@ public:
 	~ControleRobot();
 	
 	void traiterCommande(CommandeRobot* commande);
+
+	void passerAuProchainComportement();
+
+
+	void inverserModeControle();
+	void passerAModeManuel();
+	void passerAModeAutomatique();
+
+	void assignerVitessesMoteurs(double vit_G, double vit_D);
+
+private:
+	bool manuel{ false };
+	
+	std::shared_ptr<ComportementAbstrait> comportement;
+
+	// devrait etre migree vers les capteurs
+	bool ligneDetectee();
+
 	NoeudRobot* robot_;
 };
 
