@@ -88,6 +88,12 @@
     <Filter Include="Source Files\Commande">
       <UniqueIdentifier>{142a9849-c852-41b7-86a5-ba913c687583}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ControleRobot">
+      <UniqueIdentifier>{ce970ad5-b4f6-4c0e-bdd9-c8c3edc45f40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ControleRobot">
+      <UniqueIdentifier>{81fc1aee-1507-4f4f-82b9-c5d1a680bc79}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -256,6 +262,9 @@
     </ClCompile>
     <ClCompile Include="Commande\CommandeRobot.cpp">
       <Filter>Source Files\Commande</Filter>
+    </ClCompile>
+    <ClCompile Include="ControleRobot\ControleRobot.cpp">
+      <Filter>Source Files\ControleRobot</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,8 +454,11 @@
     <ClInclude Include="Comportement\ComportementSuiviLigne.h">
       <Filter>Header Files\Comportement</Filter>
     </ClInclude>
-	<ClInclude Include="Commande\CommandeRobot.h">
+    <ClInclude Include="Commande\CommandeRobot.h">
       <Filter>Header Files\Commande</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\ControleRobot.h">
+      <Filter>Header Files\ControleRobot</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

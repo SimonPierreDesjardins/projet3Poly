@@ -14,6 +14,7 @@
 #include "ModeAbstrait.h"
 #include <memory>
 #include "glm\glm.hpp"
+#include "ControleRobot.h"
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeSimulation
@@ -34,9 +35,8 @@ public:
 	//Destructeur
 	virtual ~ModeSimulation();
 
-
-protected:
-
+private:
+	std::unique_ptr<ControleRobot> controleRobot_;
 };
 
 
