@@ -10,15 +10,16 @@ ProfilUtilisateur::ProfilUtilisateur(std::string nomProfil, bool* options){
 }
 
 ProfilUtilisateur::~ProfilUtilisateur(){
-	delete profil;
+	delete profil_;
 }
 
 void ProfilUtilisateur::sauvegarder(){
 	char writeBuffer[65536];
-	rapidjson::FileWriteStream os(profil, writeBuffer, sizeof(writeBuffer));
+	rapidjson::FileWriteStream os(profil_, writeBuffer, sizeof(writeBuffer));
 	rapidjson::Writer<rapidjson::FileWriteStream> writer();
 }
 
-void ProfilUtilisateur::ouvrirFichierProfil(){
-	profil = fopen((CHEMIN_PROFIL + nomProfil_).c_str(), "ab");
+void ProfilUtilisateur::ouvrirFichierProfil(std::string nomProfil){
+	nomProfil_ = nomProfil;
+	profil_ = fopen((CHEMIN_PROFIL + nomProfil_).c_str(), "ab");
 }

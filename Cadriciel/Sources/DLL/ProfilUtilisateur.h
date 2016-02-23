@@ -25,11 +25,12 @@ class ProfilUtilisateur{
 		ProfilUtilisateur(std::string nomProfil, bool* options);
 		~ProfilUtilisateur();
 		void sauvegarder();
+		void ouvrirFichierProfil(std::string nomProfil);
 	private:
 		std::vector<bool> options_;
 		std::string nomProfil_;
 		const int NOMBRE_OPTIONS{ 11 };
-		FILE* profil;
+		FILE* profil_;
 		const std::string CHEMIN_PROFIL = "./../../Donnees";
 		void ouvrirFichierProfil();
 };
