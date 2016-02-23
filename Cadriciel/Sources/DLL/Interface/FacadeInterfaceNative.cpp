@@ -18,6 +18,7 @@
 #include "CompteurAffichage.h"
 #include "EtatTypes.h"
 #include "BancTests.h"
+#include "ComportementTypes.h"
 
 extern "C"
 {
@@ -455,9 +456,56 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirMode()->gererMessage(msg, wParam, lParam);
 	}
 
-	__declspec(dllexport) void __cdecl assignerOptionsProfil(bool options[11]){
-		
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementSuivreLigne(eComportement comportementSuivant)
+	///
+	/// Cette fonction permet d'assigner le comportement suivi de ligne du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne. 
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(eComportement comportementSuivant){
+		std::unique_ptr<ComportementSuiviLigne> comportementPtr = std::make_unique<ComportementSuiviLigne>();
+		comportementPtr->assignerComportementSuivant(comportementSuivant);
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(SUIVIDELIGNE, std::move(comportementPtr));
 	}
+	
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementBalayage(eComportement comportementSuivant)
+	///
+	/// Cette fonction permet d'assigner le comportement balayage du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne.
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementBalayage(eComportement comportementSuivant);
+	
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementDeviation(eComportement comportementSuivant, double angle)
+	///
+	/// Cette fonction permet d'assigner le comportement deviation gauche ou droite du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne.
+	/// @param angle : l'angle de la déviation
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementDeviation(eComportement comportementSuivant, double angle);
+	
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementEvitement(eComportement comportementSuivant, double angle, double duree)
+	///
+	/// Cette fonction permet d'assigner le comportement deviation gauche ou droite du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne.
+	/// @param angle : l'angle de la déviation.
+	/// @param duree : la durée de l'évitement.
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementEvitement(eComportement comportementSuivant, double angle, double duree);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -30,6 +30,7 @@ class ProfilUtilisateur
 		~ProfilUtilisateur();
 		void sauvegarder();
 		void ouvrirFichierProfil(std::string nomProfil);
+		void assignerComportement(eComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement);
 	private:
 		std::vector<std::unique_ptr<ComportementAbstrait>> options_;
 		void modifierToucheCommande(const uint8_t& touche, const TypeCommande& controle);

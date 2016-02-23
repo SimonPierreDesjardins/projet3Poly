@@ -11,6 +11,7 @@
 
 #include <Windows.h>
 #include <Windowsx.h>
+#include "ComportementAbstrait.h"
 
 extern "C"
 {
@@ -50,7 +51,11 @@ extern "C"
 	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX);
 	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY);
 
-	__declspec(dllexport) void __cdecl assignerOptionsProfil(bool options[11]);
+	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(eComportement comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementBalayage(eComportement comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementDeviation(eComportement comportementSuivant, double angle);
+	__declspec(dllexport) void __cdecl assignerComportementEvitement(eComportement comportementSuivant, double angle, double duree);
+
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

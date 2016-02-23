@@ -94,3 +94,7 @@ void ProfilUtilisateur::modifierToucheCommande(const unsigned char& touche, cons
 	// Creer la commande dans la map.
 	commandes_.insert(std::make_pair(touche, std::make_unique<CommandeRobot>(commande)));
 }
+
+void ProfilUtilisateur::assignerComportement(eComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement){
+	options_.at(typeComportement).swap(comportement);
+}

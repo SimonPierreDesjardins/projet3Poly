@@ -472,8 +472,8 @@
     <ClInclude Include="ControleRobot\Comportement\ComportementSuiviLigne.h">
       <Filter>Header Files\ControleRobot\Comportement</Filter>
     </ClInclude>
-    <ClInclude Include="Comportement\ComportementTypes.h">
-      <Filter>Header Files\Comportement</Filter>
+    <ClInclude Include="ControleRobot\Comportement\ComportementTypes.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
