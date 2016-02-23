@@ -2,7 +2,7 @@
 /// @file ComporterEvitement.h
 /// @author Olivier St-Amour
 /// @date 20016-02-16
-/// @version 1.0
+/// @version 2.0
 ///
 /// @addtogroup inf2990 INF2990
 /// @{

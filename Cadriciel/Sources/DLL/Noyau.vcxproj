@@ -59,7 +59,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>X:\Bureau\3 Poly\INF2990\inf2990-06\Cadriciel\Sources\DLL\MachineAModes;X:\inf2990-06\Cadriciel\Sources\DLL\MachineAEtats;../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Comportement;Configuration;Interface;Tests;Visiteur;MachineAEtats;MachineAModes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>X:\Bureau\3 Poly\INF2990\inf2990-06\Cadriciel\Sources\DLL\MachineAModes;X:\inf2990-06\Cadriciel\Sources\DLL\MachineAEtats;../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Comportement;Configuration;Interface;Tests;Visiteur;MachineAEtats;MachineAModes;ControleRobot;Commande;ProfilUtilisateur;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;GLEW_BUILD;_DEBUG;_WINDOWS;_USRDLL;INF2990_EXPORTS;FTGL_LIBRARY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -149,11 +149,13 @@
     <ClCompile Include="Comportement\ComportementDeviation.cpp" />
     <ClCompile Include="Comportement\ComportementEvitement.cpp" />
     <ClCompile Include="Comportement\ComportementSuiviLigne.cpp" />
+    <ClCompile Include="Commande\CommandeRobot.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
     <ClCompile Include="Arbre\ArbreRendu.cpp" />
     <ClCompile Include="Arbre\ArbreRenduINF2990.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudAbstrait.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudComposite.cpp" />
+    <ClCompile Include="ControleRobot\ControleRobot.cpp" />
     <ClCompile Include="Interface\FacadeInterfaceNative.cpp" />
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp" />
@@ -171,7 +173,7 @@
     <ClCompile Include="MachineAModes\ModeMenuPrincipal.cpp" />
     <ClCompile Include="MachineAModes\ModeSimulation.cpp" />
     <ClCompile Include="MachineAModes\ModeTest.cpp" />
-    <ClCompile Include="ProfilUtilisateur.cpp" />
+    <ClCompile Include="ProfilUtilisateur\ProfilUtilisateur.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
@@ -214,6 +216,7 @@
     <ClInclude Include="Arbre\Usines\UsineNoeud.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudAbstrait.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudComposite.h" />
+    <ClInclude Include="ControleRobot\ControleRobot.h" />
     <ClInclude Include="Interface\FacadeInterfaceNative.h" />
     <ClInclude Include="MachineAEtats\EtatAbstrait.h" />
     <ClInclude Include="MachineAEtats\EtatCreationLigne.h" />
@@ -233,7 +236,7 @@
     <ClInclude Include="MachineAModes\ModeSimulation.h" />
     <ClInclude Include="MachineAModes\ModeTest.h" />
     <ClInclude Include="MachineAModes\ModeTypes.h" />
-    <ClInclude Include="ProfilUtilisateur.h" />
+    <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />

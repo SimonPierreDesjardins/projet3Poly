@@ -13,19 +13,21 @@
 
 #include "NoeudRobot.h"
 
-enum Commande{
+enum Commande
+{
+	MODE_MANUEL,
+	MODE_AUTO,
 	AVANCER,
 	RECULER,
-	ROTQ,
-	ROTDROITE,
-	MODEMANUEL,
-	MODEAUTO
+	ROTATION_GAUCHE,
+	ROTATION_DROITE
 };
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class CommandeRobot
 /// @brief Classe qui représente une commande qu'on envoie au robot
-///		   pour changer ses déplacements ou passer du mode manuel au mode automatique
+///		   pour changer ses déplacements ou passer du mode manuel au mode automatique.
+///		   Celle-ci fonctionne selon les principes du patron Visiteur.
 ///
 ///
 /// @author Philippe Marcotte
@@ -33,25 +35,21 @@ enum Commande{
 ///////////////////////////////////////////////////////////////////////////
 class CommandeRobot{
 	public:
-
-		/// Constructeur par paramètre permettant de changer la puissance des moteurs du robot
-		CommandeRobot(int puissanceMoteurG, int puissanceMoteurD);
-
-		/// Constructeur par paramètre permettant de changer le mode d'utilisation du robot
-		CommandeRobot(bool changeAManuel);
+		/// Constructeur par paramètre permettant de changer la puissance des moteurs du robot ou de changer le mode d'utilisation de celui-ci
+		CommandeRobot(Commande commande);
 
 		/// Execute les changements associés à la commande sur le robot
 		void executer(NoeudRobot* noeud);
 
 	private:
-		/// Représente la puissance du moteur de gauche
+		/// Représente la nouvelle puissance du moteur de gauche
 		int puissanceMoteurG_{ 0 };
 
-		/// Représente la puissance du moteur de droite
+		/// Représente la nouvelle puissance du moteur de droite
 		int puissanceMoteurD_{ 0 };
 
-		/// Représente si on change vesr le mode d'utilisation manuel ou non
-		bool changeAManuel_{ false };
+		/// Représente si l'on change le mode d'utilisation du robot ou non. Si oui, celle-ci correspondra à un des deux modes d'utilisation (MODE_MANUEL ou MODE_AUTO)
+		Commande typeCommande_;
 };
 
 #endif/// COMMANDE_ROBOT_H
