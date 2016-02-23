@@ -34,7 +34,8 @@ public:
 	//Destructeur
 	virtual ~ModeTest();
 
-
+	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+	
 protected:
 
 };

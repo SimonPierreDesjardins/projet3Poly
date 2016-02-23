@@ -35,6 +35,8 @@ public:
 	//Destructeur
 	virtual ~ModeConfigure();
 
+	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
 protected:
 	
 };

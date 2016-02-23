@@ -207,7 +207,6 @@
             this.textBoxAvancer.TabIndex = 3;
             this.textBoxAvancer.Text = "W";
             this.textBoxAvancer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxAvancer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxAvancer_KeyDown);
             this.textBoxAvancer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAvancer_KeyPress);
             // 
             // textBoxHoraire

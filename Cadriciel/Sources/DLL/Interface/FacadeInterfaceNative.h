@@ -49,6 +49,11 @@ extern "C"
 	__declspec(dllexport) void assignerFacteurGrandeur(double facteurMiseAEchelle);
 	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX);
 	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY);
+
+	__declspec(dllexport) void __cdecl assignerOptionsProfil(bool options[11]);
+
+	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
+	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

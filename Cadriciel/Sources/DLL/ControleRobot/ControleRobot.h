@@ -1,35 +1,40 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file ComportementAbstrait.h
+/// @file Comportement.h
 /// @author Olivier St-Amour
-/// @date 20016-02-16
+/// @date 20016-02-22
 /// @version 2.0
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef COMPORTEMENT_ABSTRAIT
-#define COMPORTEMENT_ABSTRAIT
+#ifndef CONTROLE_ROBOT_H
+#define CONTROLE_ROBOT_H
+
+class CommandeRobot;
+class NoeudRobot;
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ComportementAbstrait
-/// @brief Classe de base qui définit le comportement du robot.
+/// @class ControleRobot
+/// @brief Classe qui permet de contrôler le robot. 
 ///
-///        Cette classe abstraite comprend l'interface de base que doivent
-///        implanter tous les comportements que le robot peut adopter. 
+///        Cette classe permet de contrôler le robot de façon automatique ou 
+///		   de façon manuelle em recevant des commandes.
 ///		   
-///
 /// @author Olivier St-Amour
-/// @date 2016-02-16
+/// @date 2016-02-22
 ///////////////////////////////////////////////////////////////////////////
-class ComportementAbstrait
+class ControleRobot
 {
 public:
-	ComportementAbstrait();
-	virtual ~ComportementAbstrait();
+	ControleRobot();
+	~ControleRobot();
+	
+	void traiterCommande(CommandeRobot* commande);
+	NoeudRobot* robot_;
 };
 
-#endif // COMPORTEMENT_ABSTRAIT
+#endif // CONTROLE_ROBOT_H
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
