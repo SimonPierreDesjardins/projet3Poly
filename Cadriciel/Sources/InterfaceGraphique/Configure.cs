@@ -13,6 +13,9 @@ namespace InterfaceGraphique
 {
     public partial class Configure : Form
     {
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool HideCaret(IntPtr hWnd);
+
         public Configure()
         {
             InitializeComponent();
@@ -29,7 +32,7 @@ namespace InterfaceGraphique
         }
 
         private bool caractereInvalide(object sender, KeyPressEventArgs e)
-        { return e.Handled = !(char.IsLetterOrDigit(e.KeyChar)); }
+        { return e.Handled = !(/*char.IsLetterOrDigit(e.KeyChar)*/true); }
 
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -37,8 +40,9 @@ namespace InterfaceGraphique
             {
                 FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.AVANCER);
             }
-            textBoxAvancer.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.AVANCER).ToString();
-            textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.AVANCER);
+            textBoxAvancer.Text = afficherCaractere(caractere);
+            textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);    
         }
 
         private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
@@ -47,7 +51,8 @@ namespace InterfaceGraphique
             {
                 FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.RECULER);
             }
-            textBoxReculer.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.RECULER).ToString();
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.RECULER);
+            textBoxReculer.Text = afficherCaractere(caractere);
             textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
 
@@ -57,7 +62,8 @@ namespace InterfaceGraphique
             {
                 FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_DROITE);
             }
-            textBoxAntiHoraire.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE).ToString();
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE);
+            textBoxAntiHoraire.Text = afficherCaractere(caractere);
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
 
@@ -67,18 +73,39 @@ namespace InterfaceGraphique
             {
                 FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_GAUCHE);
             }
-            textBoxHoraire.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE).ToString();
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE);
+            textBoxHoraire.Text = afficherCaractere(caractere);
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
 
         private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
         {
+            
             if (!caractereInvalide(sender, e))
             {
                 FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
             }
-            textBoxModeManuel.Text = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE).ToString();    
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
+            textBoxModeManuel.Text = afficherCaractere(caractere);    
             textBoxModeManuel.Select(textBoxModeManuel.Text.Length, 0);
+        }
+
+        string afficherCaractere(char caractere)
+        {
+            string mot = caractere.ToString();
+            if (caractere == ' ')
+            {
+                mot = "ESPACE";
+            }
+            else if (caractere == '\r')
+            {
+                mot = "Enter";
+            }
+            else if (caractere == '\b')
+            {
+                mot = "Backspace";
+            }
+            return mot;
         }
 
         private void buttonDefProfil_Click(object sender, EventArgs e)
@@ -127,14 +154,9 @@ namespace InterfaceGraphique
 
         private void Configure_Load(object sender, EventArgs e)
         {
-            //comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProfil.SelectedIndex = 0;
         }
 
-        private void textBoxAvancer_Enter(object sender, EventArgs e)
-        {
-            textBoxAvancer.BorderStyle = BorderStyle.FixedSingle;
-        }
     }
 
     enum TypeCommande

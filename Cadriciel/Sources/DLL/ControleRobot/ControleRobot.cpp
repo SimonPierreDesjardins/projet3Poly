@@ -49,6 +49,16 @@ ControleRobot::ControleRobot()
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::~ControleRobot()
 {
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
+	{
+		enfant = table->chercher(i);
+		if (enfant->obtenirType() == "robot")
+		{
+			table->effacer(enfant);
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -62,7 +72,8 @@ ControleRobot::~ControleRobot()
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::traiterCommande(CommandeRobot* commande)
 {
-	commande->executer(this);
+	if (commande != nullptr)
+		commande->executer(this);
 }
 
 ////////////////////////////////////////////////////////////////////////

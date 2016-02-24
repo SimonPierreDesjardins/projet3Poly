@@ -173,11 +173,14 @@
             // 
             // textBoxAntiHoraire
             // 
+            this.textBoxAntiHoraire.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxAntiHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAntiHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAntiHoraire.HideSelection = false;
             this.textBoxAntiHoraire.Location = new System.Drawing.Point(286, 122);
-            this.textBoxAntiHoraire.MaxLength = 1;
+            this.textBoxAntiHoraire.MaxLength = 10;
             this.textBoxAntiHoraire.Name = "textBoxAntiHoraire";
+            this.textBoxAntiHoraire.ReadOnly = true;
             this.textBoxAntiHoraire.Size = new System.Drawing.Size(100, 49);
             this.textBoxAntiHoraire.TabIndex = 5;
             this.textBoxAntiHoraire.Text = "D";
@@ -186,10 +189,15 @@
             // 
             // textBoxModeManuel
             // 
+            this.textBoxModeManuel.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxModeManuel.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
+            this.textBoxModeManuel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxModeManuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxModeManuel.HideSelection = false;
             this.textBoxModeManuel.Location = new System.Drawing.Point(123, 219);
+            this.textBoxModeManuel.MaxLength = 10;
             this.textBoxModeManuel.Name = "textBoxModeManuel";
+            this.textBoxModeManuel.ReadOnly = true;
             this.textBoxModeManuel.Size = new System.Drawing.Size(167, 49);
             this.textBoxModeManuel.TabIndex = 4;
             this.textBoxModeManuel.Text = "ESPACE";
@@ -198,12 +206,16 @@
             // 
             // textBoxAvancer
             // 
+            this.textBoxAvancer.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxAvancer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAvancer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAvancer.HideSelection = false;
             this.textBoxAvancer.Location = new System.Drawing.Point(155, 30);
-            this.textBoxAvancer.MaxLength = 1;
+            this.textBoxAvancer.MaxLength = 10;
             this.textBoxAvancer.Name = "textBoxAvancer";
+            this.textBoxAvancer.ReadOnly = true;
+            this.textBoxAvancer.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.textBoxAvancer.Size = new System.Drawing.Size(100, 49);
             this.textBoxAvancer.TabIndex = 3;
             this.textBoxAvancer.Text = "W";
@@ -212,11 +224,14 @@
             // 
             // textBoxHoraire
             // 
+            this.textBoxHoraire.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxHoraire.HideSelection = false;
             this.textBoxHoraire.Location = new System.Drawing.Point(22, 122);
-            this.textBoxHoraire.MaxLength = 1;
+            this.textBoxHoraire.MaxLength = 10;
             this.textBoxHoraire.Name = "textBoxHoraire";
+            this.textBoxHoraire.ReadOnly = true;
             this.textBoxHoraire.Size = new System.Drawing.Size(100, 49);
             this.textBoxHoraire.TabIndex = 2;
             this.textBoxHoraire.Text = "A";
@@ -225,11 +240,14 @@
             // 
             // textBoxReculer
             // 
+            this.textBoxReculer.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxReculer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxReculer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxReculer.HideSelection = false;
             this.textBoxReculer.Location = new System.Drawing.Point(155, 122);
-            this.textBoxReculer.MaxLength = 1;
+            this.textBoxReculer.MaxLength = 10;
             this.textBoxReculer.Name = "textBoxReculer";
+            this.textBoxReculer.ReadOnly = true;
             this.textBoxReculer.Size = new System.Drawing.Size(100, 49);
             this.textBoxReculer.TabIndex = 1;
             this.textBoxReculer.Text = "S";
