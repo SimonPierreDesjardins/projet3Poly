@@ -17,6 +17,7 @@
 class ComportementAbstrait;
 class CommandeRobot;
 class NoeudRobot;
+class ArbreRendu;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -47,6 +48,8 @@ public:
 
 private:
 	bool manuel{ false };
+
+	ArbreRendu* arbre_;
 	
 	std::shared_ptr<ComportementAbstrait> comportement;
 

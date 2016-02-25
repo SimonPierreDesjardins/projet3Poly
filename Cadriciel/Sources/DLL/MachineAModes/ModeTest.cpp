@@ -26,6 +26,8 @@
 ModeTest::ModeTest()
 {
 	typeMode_ = TEST;
+	controleRobot_ = std::make_unique<ControleRobot>();
+	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 }
 
 

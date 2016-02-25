@@ -10,6 +10,7 @@
 #include "NoeudRobot.h"
 #include "Utilitaire.h"
 #include "VisiteurAbstrait.h"
+#include "FacadeModele.h"
 
 #include "GL/glew.h"
 #include <cmath>
@@ -32,6 +33,10 @@
 NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* depart = table->chercher(0);
+	positionRelative_ = depart->obtenirPositionRelative();
+	angleRotation_ = depart->obtenirAngleRotation() + 90;
 }
 
 
