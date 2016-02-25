@@ -43,6 +43,7 @@ ModeSimulation::ModeSimulation()
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::~ModeSimulation()
 {
+	int test = 0;
 }
 
 void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)

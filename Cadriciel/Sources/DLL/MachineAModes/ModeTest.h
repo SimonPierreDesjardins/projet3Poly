@@ -12,8 +12,11 @@
 #define MODE_TEST_H
 
 #include "ModeAbstrait.h"
+#include "ControleRobot.h"
 #include <memory>
 #include "glm\glm.hpp"
+
+class ProfilUtilisateur;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeTest
@@ -37,7 +40,8 @@ public:
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	
 protected:
-
+	std::unique_ptr<ControleRobot> controleRobot_;
+	ProfilUtilisateur* profil_;
 };
 
 

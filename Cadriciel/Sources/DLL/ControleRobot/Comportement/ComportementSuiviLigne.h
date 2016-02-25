@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file ComportementAbstrait.h
+/// @file ComporterSuiviLigne.h
 /// @author Olivier St-Amour
 /// @date 20016-02-16
 /// @version 2.0
@@ -8,28 +8,30 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-#ifndef COMPORTEMENT_ABSTRAIT
-#define COMPORTEMENT_ABSTRAIT
+#ifndef COMPORTEMENT_SUIVI_LIGNE
+#define COMPORETMENT_SUIVI_LIGNE
+
+#include "ComportementAbstrait.h"
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ComportementAbstrait
-/// @brief Classe de base qui définit le comportement du robot.
-///
-///        Cette classe abstraite comprend l'interface de base que doivent
-///        implanter tous les comportements que le robot peut adopter. 
-///		   
+/// @class ComportementBalayage
+/// @brief Classe qui implémente le comportement de suivi de ligne du robot.
 ///
 /// @author Olivier St-Amour
 /// @date 2016-02-16
 ///////////////////////////////////////////////////////////////////////////
-class ComportementAbstrait
+class ComportementSuiviLigne : public ComportementAbstrait
 {
 public:
-	ComportementAbstrait();
-	virtual ~ComportementAbstrait();
+	ComportementSuiviLigne();
+	virtual ~ComportementSuiviLigne();
+
+	void initialiser();
+
+	void mettreAJour();
 };
 
-#endif // COMPORTEMENT_ABSTRAIT
+#endif // COMPORTEMENT_SUIVI_LIGNE
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -76,6 +76,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 ////////////////////////////////////////////////////////////////////////
 ArbreRenduINF2990::~ArbreRenduINF2990()
 {
+	int test = 0;
 }
 
 
