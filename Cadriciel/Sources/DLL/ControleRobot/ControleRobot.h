@@ -11,13 +11,14 @@
 #ifndef CONTROLE_ROBOT_H
 #define CONTROLE_ROBOT_H
 
-
 #include <memory>
 
 class ComportementAbstrait;
 class CommandeRobot;
+class NoeudAbstrait;
 class NoeudRobot;
 class ArbreRendu;
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -50,13 +51,12 @@ private:
 	bool manuel{ false };
 
 	ArbreRendu* arbre_;
-	
+	NoeudAbstrait* table_;
+	NoeudRobot* robot_;
 	std::shared_ptr<ComportementAbstrait> comportement;
 
 	// devrait etre migree vers les capteurs
 	bool ligneDetectee();
-
-	NoeudRobot* robot_;
 };
 
 #endif // CONTROLE_ROBOT_H

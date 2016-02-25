@@ -31,10 +31,10 @@
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::ControleRobot()
 {
-	ArbreRendu* arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	NoeudAbstrait* table = arbre_->chercher(0);
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
-	table->ajouter(robot);
+	table_->ajouter(robot);
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 }
 
@@ -49,12 +49,8 @@ ControleRobot::ControleRobot()
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::~ControleRobot()
 {
-	/*if (arbre_ != nullptr)
-	{
-		NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-		NoeudAbstrait* enfant = table->chercher("robot");
-		table->effacer(enfant);
-	}*/
+	NoeudAbstrait* robot = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	table_->effacer(robot);
 }
 
 ////////////////////////////////////////////////////////////////////////
