@@ -149,8 +149,10 @@ void ControleRobot::inverserModeControle(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D){
-	//TODO: assigner la nouvelle vitesse au noeud du robot
+void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
+{
+	robot_->assignerVitesseGauche(vit_G);
+	robot_->assignerVitesseDroite(vit_D);
 }
 
 

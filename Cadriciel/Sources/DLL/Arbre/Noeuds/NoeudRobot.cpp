@@ -179,9 +179,9 @@ void NoeudRobot::animer(float dt)
 	vitesseRotation_ = vitesseCouranteDroite_ - vitesseCouranteGauche_;
 
 	//Calculs des nouvelles positions et du nouvel angle
-	angleRotation_ += dt*vitesseRotation_;
-	positionRelative_.x += dt*relativeGaucheDroite/10*cos(utilitaire::DEG_TO_RAD(angleRotation_));
-	positionRelative_.y += dt*relativeGaucheDroite/10*sin(utilitaire::DEG_TO_RAD(angleRotation_));
+	angleRotation_ += dt * vitesseRotation_;
+	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
+	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
 }
 
 ////////////////////////////////////////////////////////////////////////
