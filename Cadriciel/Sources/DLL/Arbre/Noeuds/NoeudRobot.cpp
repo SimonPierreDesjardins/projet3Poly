@@ -122,55 +122,53 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(float dt)
 {
-	float acceleration = 200;
-
 	//Calcul de la résultante de la vitesse relative
 	if (vitesseDroite_ < 0)
 	{
 		if (vitesseCouranteDroite_ > vitesseDroite_)
 		{
-			vitesseCouranteDroite_ -= acceleration * dt;
+			vitesseCouranteDroite_ -= acceleration_ * dt;
 		}
 		else// if (vitesseCouranteDroite_ < vitesseDroite_)
 		{
 			//vitesseCouranteDroite_ = 0;
-			vitesseCouranteDroite_ += acceleration * dt;
+			vitesseCouranteDroite_ += acceleration_ * dt;
 		}
 	}
 	else
 	{
 		if (vitesseCouranteDroite_ < vitesseDroite_)
 		{
-			vitesseCouranteDroite_ += acceleration * dt;
+			vitesseCouranteDroite_ += acceleration_ * dt;
 		}
 		else// if (vitesseCouranteDroite_ > vitesseDroite_)
 		{
 			//vitesseCouranteDroite_ = 0;
-			vitesseCouranteDroite_ -= acceleration * dt;
+			vitesseCouranteDroite_ -= acceleration_ * dt;
 		}
 	}
 	if (vitesseGauche_ < 0)
 	{
 		if (vitesseCouranteGauche_ > vitesseGauche_)
 		{
-			vitesseCouranteGauche_ -= acceleration * dt;
+			vitesseCouranteGauche_ -= acceleration_ * dt;
 		}
 		else// if (vitesseCouranteGauche_ < vitesseGauche_)
 		{
 			//vitesseCouranteGauche_ = 0;
-			vitesseCouranteGauche_ += acceleration *dt;
+			vitesseCouranteGauche_ += acceleration_ * dt;
 		}
 	}
 	else
 	{
 		if (vitesseCouranteGauche_ < vitesseGauche_)
 		{
-			vitesseCouranteGauche_ += acceleration * dt;
+			vitesseCouranteGauche_ += acceleration_ * dt;
 		}
 		else// if (vitesseCouranteGauche_ > vitesseGauche_)
 		{
 			//vitesseCouranteGauche_ = 0;
-			vitesseCouranteGauche_ -= acceleration * dt;
+			vitesseCouranteGauche_ -= acceleration_ * dt;
 		}
 	}
 	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
@@ -263,6 +261,7 @@ void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
 	vitesseRotation_ = vitesse;
 }
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

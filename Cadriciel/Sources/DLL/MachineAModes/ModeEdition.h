@@ -78,11 +78,6 @@ public:
 	virtual void gererFlecheDroit();
 
 	virtual void gererToucheT();
-	virtual void gererToucheY();
-	virtual void gererToucheG();
-	virtual void gererToucheH();
-	virtual void gererToucheJ();
-	virtual void gererToucheN();
 
 	virtual void gererMoletteSouris(const int & delta);
 

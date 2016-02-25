@@ -76,7 +76,6 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 ////////////////////////////////////////////////////////////////////////
 ArbreRenduINF2990::~ArbreRenduINF2990()
 {
-	int test = 0;
 }
 
 
@@ -120,14 +119,11 @@ void ArbreRenduINF2990::chargerZoneDefaut(){
 		ajouter(table);
 		shared_ptr<NoeudAbstrait> pointDepart = { creerNoeud(NOM_DEPART) };
 		table->ajouter(pointDepart);
-		/*shared_ptr<NoeudAbstrait> robot = { creerNoeud(NOM_ROBOT) };
-		table->ajouter(robot);*/
 		cheminFichierZone = cheminFichierZoneDefaut;
 		unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();
 		accepterVisiteur(visiteur.get());
 		return;
 	}
-
 	chargerZone(obtenirFichierZoneDefaut("rb"));
 }
 

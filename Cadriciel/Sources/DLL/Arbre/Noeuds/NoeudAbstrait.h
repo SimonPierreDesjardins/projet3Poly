@@ -168,13 +168,6 @@ public:
 	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
-	virtual void assignerVitesseDroite(float vitesse);
-	virtual void assignerVitesseGauche(float vitesse);
-	virtual void assignerVitesseRotation(float vitesse);
-
-	virtual float obtenirVitesseDroite() const;
-	virtual float obtenirVitesseGauche() const;
-
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };

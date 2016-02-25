@@ -65,7 +65,13 @@ ControleRobot::~ControleRobot()
 void ControleRobot::traiterCommande(CommandeRobot* commande)
 {
 	if (commande != nullptr)
-		commande->executer(this);
+	{
+		TypeCommande typeCommande = commande->obtenirTypeCommande();
+		if (typeCommande == INVERSER_MODE_CONTROLE || manuel)
+		{
+			commande->executer(this);
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -92,12 +98,13 @@ void ControleRobot::passerAuProchainComportement()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::passerAModeAutomatique(){
+void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	comportement = std::make_unique<ComportementDefaut>(ComportementDefaut());
 	comportement->initialiser();
-
-	while (!manuel){
+	//TODO: Ceci ne fonctionne pas la boucle infinie monopolise le traitement.
+	/*
+	while (!manuel) {
 		if (ligneDetectee()){
 			comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
 			comportement->initialiser();
@@ -105,7 +112,7 @@ void ControleRobot::passerAModeAutomatique(){
 
 		comportement->mettreAJour();
 	}
-
+	*/
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -168,7 +175,6 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 ////////////////////////////////////////////////////////////////////////
 bool ControleRobot::ligneDetectee(){
 	return true;
-
 }
 
 ///////////////////////////////////////////////////////////////////////////////

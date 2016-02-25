@@ -11,10 +11,11 @@
 #ifndef MODE_TEST_H
 #define MODE_TEST_H
 
-#include "ModeAbstrait.h"
-#include "ControleRobot.h"
 #include <memory>
 #include "glm\glm.hpp"
+
+#include "ModeAbstrait.h"
+#include "ControleRobot.h"
 
 class ProfilUtilisateur;
 
@@ -36,7 +37,7 @@ public:
 	ModeTest();
 	//Destructeur
 	virtual ~ModeTest();
-
+	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	
 protected:

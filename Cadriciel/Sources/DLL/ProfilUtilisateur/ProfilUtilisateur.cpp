@@ -55,7 +55,6 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 void ProfilUtilisateur::modifierToucheCommande(char touche, TypeCommande commande)
 {
 	// Mettre a jour la touche dans la table de commandes.
-
 	if (!estUtilise(touche))
 	{
 		commandes_.erase(touches_[commande]);
@@ -63,7 +62,6 @@ void ProfilUtilisateur::modifierToucheCommande(char touche, TypeCommande command
 		// Creer la commande dans la map.
 		commandes_.insert(std::make_pair(touche, std::make_unique<CommandeRobot>(commande)));
 	}
-	
 }
 
 CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const

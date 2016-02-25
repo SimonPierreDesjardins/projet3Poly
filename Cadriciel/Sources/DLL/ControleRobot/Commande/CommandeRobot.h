@@ -43,6 +43,8 @@ class CommandeRobot{
 
 		void assignerVitessesMoteurs(double vit_g, double vit_d);
 
+		inline TypeCommande obtenirTypeCommande();
+
 	private:
 		/// Représente la nouvelle vitesse du moteur de gauche
 		double vitesseMoteurG_{ 0 };
@@ -53,6 +55,14 @@ class CommandeRobot{
 		/// Représente si l'on change le mode d'utilisation du robot ou non. Si oui, celle-ci correspondra à un des deux modes d'utilisation (MODE_MANUEL ou MODE_AUTO)
 		TypeCommande typeCommande_;
 };
+
+
+
+inline TypeCommande CommandeRobot::obtenirTypeCommande()
+{
+	return typeCommande_;
+}
+
 
 #endif/// COMMANDE_ROBOT_H
 

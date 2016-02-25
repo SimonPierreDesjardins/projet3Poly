@@ -8,13 +8,15 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "ModeSimulation.h"
+
 #include <math.h>
+
+#include "ModeSimulation.h"
 #include "Utilitaire.h"
-#include <iostream>
-#include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
+#include "FacadeModele.h"
+
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
 
@@ -27,7 +29,6 @@
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::ModeSimulation()
 {
-	shared_ptr<NoeudRobot> robot = std::dynamic_pointer_cast<NoeudRobot>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud("NOM_ROBOT"));
 	typeMode_ = SIMULATION;
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
@@ -43,8 +44,18 @@ ModeSimulation::ModeSimulation()
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::~ModeSimulation()
 {
+	controleRobot_ = nullptr;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+///
+/// Fonction qui permet de traiter les entrées utilisateur en mode simulation. 
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_KEYDOWN)
@@ -53,8 +64,12 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 	else if (msg == WM_KEYUP)
 	{
-		std::unique_ptr<CommandeRobot> commande = std::make_unique<CommandeRobot>(ARRETER);
-		controleRobot_->traiterCommande(commande.get());
+		CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+		if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
+		{
+			std::unique_ptr<CommandeRobot> commande = std::make_unique<CommandeRobot>(ARRETER);
+			controleRobot_->traiterCommande(commande.get());
+		}
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////
