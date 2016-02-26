@@ -124,7 +124,6 @@ void ArbreRenduINF2990::chargerZoneDefaut(){
 		accepterVisiteur(visiteur.get());
 		return;
 	}
-
 	chargerZone(obtenirFichierZoneDefaut("rb"));
 }
 

@@ -9,9 +9,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ControleRobot.h"
+
+#include "CommandeRobot.h"
+#include "NoeudRobot.h"
+#include "FacadeModele.h"
+#include "ArbreRenduINF2990.h"
+
 #include "ComportementDefaut.h"
 #include "ComportementSuiviLigne.h"
-#include <thread>
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -26,6 +31,11 @@
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::ControleRobot()
 {
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
+	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
+	table_->ajouter(robot);
+	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -39,6 +49,29 @@ ControleRobot::ControleRobot()
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::~ControleRobot()
 {
+	NoeudAbstrait* robot = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	table_->effacer(robot);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::traiterCommande()
+///
+/// Demande au controlleur du robot de traiter la commande donnee.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::traiterCommande(CommandeRobot* commande)
+{
+	if (commande != nullptr)
+	{
+		TypeCommande typeCommande = commande->obtenirTypeCommande();
+		if (typeCommande == INVERSER_MODE_CONTROLE || manuel)
+		{
+			commande->executer(this);
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -65,12 +98,13 @@ void ControleRobot::passerAuProchainComportement()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::passerAModeAutomatique(){
+void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	comportement = std::make_unique<ComportementDefaut>(ComportementDefaut());
 	comportement->initialiser();
-
-	while (!manuel){
+	//TODO: Ceci ne fonctionne pas la boucle infinie monopolise le traitement.
+	/*
+	while (!manuel) {
 		if (ligneDetectee()){
 			comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
 			comportement->initialiser();
@@ -78,7 +112,7 @@ void ControleRobot::passerAModeAutomatique(){
 
 		comportement->mettreAJour();
 	}
-
+	*/
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -122,8 +156,10 @@ void ControleRobot::inverserModeControle(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D){
-	//TODO: assigner la nouvelle vitesse au noeud du robot
+void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
+{
+	robot_->assignerVitesseGauche(vit_G);
+	robot_->assignerVitesseDroite(vit_D);
 }
 
 
@@ -139,8 +175,8 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D){
 ////////////////////////////////////////////////////////////////////////
 bool ControleRobot::ligneDetectee(){
 	return true;
-
 }
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 //////////////////////////////////////////////////////////////////////////////

@@ -36,6 +36,8 @@ namespace InterfaceGraphique
         public void arreterToutMessage()
         { arreterToutMessage_ = true; }
 
+        private bool estEnPause = false;
+
         public bool PreFilterMessage(ref Message m)
         {
             if(!arreterToutMessage_)
@@ -221,7 +223,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void afficherMenuSimulation(bool afficherMenu)
         {
-            menuSimTest.Visible = afficherMenu;
+            menuSimTest.Visible = false;
             modeEditionMenuSimTest.Visible = !afficherMenu;
             premierePersonneMenuSimTest.Visible = afficherMenu;
             viewPort_.Visible = afficherMenu;
@@ -1171,14 +1173,27 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(object sender, PreviewKeyDownEventArgs e)
         {
+            
+
             switch (e.KeyCode)
             {
                 case Keys.Q:
                     if (e.Control)
                     {
+                        estEnPause = false;
+                        picturePause.Visible = estEnPause;
                         afficherMenuSimulation(false);
                         afficherMenuPrincipal(true);
                     }
+                    break;
+
+                case Keys.Escape:
+                    estEnPause = !estEnPause;
+                    picturePause.Visible = estEnPause;
+                    menuSimTest.Visible = estEnPause;
+                    break;
+
+                default:
                     break;
             }
         }
@@ -1380,6 +1395,8 @@ namespace InterfaceGraphique
             afficherMenuEdition(false);
             afficherMenuPrincipal(true);
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+            estEnPause = false;
+            picturePause.Visible = estEnPause;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1404,7 +1421,6 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerMode(Mode.EDITION);
             viewPort_.Focus();
         }
-
 
     }
 

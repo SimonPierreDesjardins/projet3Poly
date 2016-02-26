@@ -18,16 +18,23 @@
 #include "glm\glm.hpp"
 #include "EtatAbstrait.h"
 
-const int VK_KEY_D = 0x44;
-const int VK_KEY_S = 0x53;
-const int VK_KEY_R = 0x52;
-const int VK_KEY_E = 0x45;
-const int VK_KEY_C = 0x43;
-const int VK_KEY_Z = 0x5A;
-const int VK_KEY_T = 0x54;
-const int VK_KEY_P = 80;
-const int VK_KEY_L = 76;
-const int VK_KEY_M = 77;
+const int VK_KEY_W = 'W';
+const int VK_KEY_A = 'A';
+const int VK_KEY_Y = 'Y';
+const int VK_KEY_G = 'G';
+const int VK_KEY_H = 'H';
+const int VK_KEY_J = 'J';
+const int VK_KEY_N = 'N';
+const int VK_KEY_D = 'D';
+const int VK_KEY_S = 'S';
+const int VK_KEY_R = 'R';
+const int VK_KEY_E = 'E';
+const int VK_KEY_C = 'C';
+const int VK_KEY_Z = 'Z';
+const int VK_KEY_T = 'T';
+const int VK_KEY_P = 'P';
+const int VK_KEY_L = 'L';
+const int VK_KEY_M = 'M';
 
 enum Etat
 {

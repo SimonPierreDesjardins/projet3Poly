@@ -11,8 +11,14 @@
 #ifndef CONTROLE_ROBOT_H
 #define CONTROLE_ROBOT_H
 
-#include "ComportementAbstrait.h"
 #include <memory>
+
+class ComportementAbstrait;
+class CommandeRobot;
+class NoeudAbstrait;
+class NoeudRobot;
+class ArbreRendu;
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -28,7 +34,9 @@ class ControleRobot
 {
 public:
 	ControleRobot();
-	virtual ~ControleRobot();
+	~ControleRobot();
+	
+	void traiterCommande(CommandeRobot* commande);
 
 	void passerAuProchainComportement();
 
@@ -41,7 +49,10 @@ public:
 
 private:
 	bool manuel{ false };
-	
+
+	ArbreRendu* arbre_;
+	NoeudAbstrait* table_;
+	NoeudRobot* robot_;
 	std::shared_ptr<ComportementAbstrait> comportement;
 
 	// devrait etre migree vers les capteurs

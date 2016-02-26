@@ -14,7 +14,6 @@
 /// @brief Constructeur par paramètre d'une CommandeRobot.
 ///		   Elle définie la puissance des moteurs selon le type de commande.
 ///
-///
 /// @author Philippe Marcotte
 /// @date 2016-02-20
 ///////////////////////////////////////////////////////////////////////////
@@ -23,21 +22,28 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 	switch (commande)
 	{
 	case AVANCER:
-		puissanceMoteurD_ = 100;
-		puissanceMoteurG_ = 100;
+		vitesseMoteurD_ = 100.0;
+		vitesseMoteurG_ = 100.0;
 		break;
+	
 	case RECULER:
-		puissanceMoteurD_ = -100;
-		puissanceMoteurG_ = -100;
+		vitesseMoteurD_ = -100.0;
+		vitesseMoteurG_ = -100.0;
 		break;
+	
 	case ROTATION_GAUCHE:
-		puissanceMoteurD_ = 100;
-		puissanceMoteurG_ = -100;
+		vitesseMoteurD_ = 100.0;
+		vitesseMoteurG_ = -100.0;
 		break;
+	
 	case ROTATION_DROITE:
-		puissanceMoteurD_ = -100;
-		puissanceMoteurG_ = 100;
+		vitesseMoteurD_ = -100.0;
+		vitesseMoteurG_ = 100.0;
 		break;
+	
+	case ARRETER:
+		vitesseMoteurD_ = 0.0;
+		vitesseMoteurG_ = 0.0;
 	default:
 		break;
 	}
@@ -54,7 +60,7 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 void CommandeRobot::executer(ControleRobot* ia){
 	if (typeCommande_ == INVERSER_MODE_CONTROLE)
 		ia->inverserModeControle();
-	ia->assignerVitessesMoteurs( puissanceMoteurG_, puissanceMoteurD_);
+	ia->assignerVitessesMoteurs( vitesseMoteurG_, vitesseMoteurD_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

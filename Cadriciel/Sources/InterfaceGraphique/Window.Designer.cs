@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.viewPort_ = new System.Windows.Forms.Panel();
+            this.picturePause = new System.Windows.Forms.PictureBox();
             this.bouttonSimulation_ = new System.Windows.Forms.Button();
             this.bouttonEditeur_ = new System.Windows.Forms.Button();
             this.bouttonConfiguration_ = new System.Windows.Forms.Button();
@@ -89,6 +90,8 @@
             this.profilsMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.defautMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.customMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewPort_.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).BeginInit();
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
             this.panneauOperation_.SuspendLayout();
@@ -101,16 +104,29 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort_.AutoSize = true;
-            this.viewPort_.Location = new System.Drawing.Point(0, 27);
+            this.viewPort_.Controls.Add(this.picturePause);
+            this.viewPort_.Location = new System.Drawing.Point(0, 0);
             this.viewPort_.MinimumSize = new System.Drawing.Size(100, 100);
             this.viewPort_.Name = "viewPort_";
             this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort_.Size = new System.Drawing.Size(623, 402);
+            this.viewPort_.Size = new System.Drawing.Size(623, 429);
             this.viewPort_.TabIndex = 0;
             this.viewPort_.Visible = false;
             this.viewPort_.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
             this.viewPort_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
             this.viewPort_.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
+            // 
+            // picturePause
+            // 
+            this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picturePause.Image = global::InterfaceGraphique.Properties.Resources.pauseNoire;
+            this.picturePause.Location = new System.Drawing.Point(267, 154);
+            this.picturePause.Name = "picturePause";
+            this.picturePause.Size = new System.Drawing.Size(96, 96);
+            this.picturePause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picturePause.TabIndex = 0;
+            this.picturePause.TabStop = false;
+            this.picturePause.Visible = false;
             // 
             // bouttonSimulation_
             // 
@@ -310,21 +326,21 @@
             // poteauMenuEdition_
             // 
             this.poteauMenuEdition_.Name = "poteauMenuEdition_";
-            this.poteauMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.poteauMenuEdition_.Size = new System.Drawing.Size(133, 22);
             this.poteauMenuEdition_.Text = "Poteau";
             this.poteauMenuEdition_.Click += new System.EventHandler(this.poteauToolStripMenuItem_Click);
             // 
             // murMenuEdition_
             // 
             this.murMenuEdition_.Name = "murMenuEdition_";
-            this.murMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.murMenuEdition_.Size = new System.Drawing.Size(133, 22);
             this.murMenuEdition_.Text = "Mur";
             this.murMenuEdition_.Click += new System.EventHandler(this.murToolStripMenuItem_Click);
             // 
             // ligneNoireMenuEdition_
             // 
             this.ligneNoireMenuEdition_.Name = "ligneNoireMenuEdition_";
-            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(133, 22);
             this.ligneNoireMenuEdition_.Text = "Ligne noire";
             this.ligneNoireMenuEdition_.Click += new System.EventHandler(this.ligneNoireToolStripMenuItem_Click);
             // 
@@ -677,9 +693,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 428);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.menuEdition_);
-            this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuSimTest);
+            this.Controls.Add(this.barreOutils_);
+            this.Controls.Add(this.menuEdition_);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);
             this.Controls.Add(this.bouttonEditeur_);
@@ -693,6 +709,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
             this.Resize += new System.EventHandler(this.Window_Resize);
+            this.viewPort_.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).EndInit();
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
             this.barreOutils_.ResumeLayout(false);
@@ -770,6 +788,7 @@
         private System.Windows.Forms.ToolStripMenuItem profilsMenuSimTest;
         private System.Windows.Forms.ToolStripMenuItem defautMenuSimTest;
         private System.Windows.Forms.ToolStripMenuItem customMenuSimTest;
+        private System.Windows.Forms.PictureBox picturePause;
     }
 }
 

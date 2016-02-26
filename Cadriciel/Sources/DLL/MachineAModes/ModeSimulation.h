@@ -11,10 +11,13 @@
 #ifndef MODE_SIMULATION_H
 #define MODE_SIMULATION_H
 
-#include "ModeAbstrait.h"
 #include <memory>
 #include "glm\glm.hpp"
+#include "ModeAbstrait.h"
 #include "ControleRobot.h"
+#include <unordered_map>
+
+class ProfilUtilisateur;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeSimulation
@@ -31,14 +34,15 @@ public:
 
 	//Constructeur par défaut
 	ModeSimulation();
-
 	//Destructeur
 	virtual ~ModeSimulation();
+	//Gestion des entrées utilisateur
+	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
+	ProfilUtilisateur* profil_;
 };
-
 
 #endif /// MODE_SIMULATION_H
 

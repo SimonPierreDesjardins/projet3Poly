@@ -16,7 +16,6 @@
 #include <Windows.h>
 #include <Windowsx.h>
 
-
 enum Mode
 {
 	MENU_PRINCIPAL,
