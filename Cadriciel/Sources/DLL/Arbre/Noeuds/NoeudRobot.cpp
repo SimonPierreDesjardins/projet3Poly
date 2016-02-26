@@ -38,7 +38,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	NoeudAbstrait* depart = table->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
-	angleRotation_ = depart->obtenirAngleRotation() + 90;
+	angleRotation_ = depart->obtenirAngleRotation();
 }
 
 
@@ -70,18 +70,50 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	glColor4f(0.0, 0.0, 0.0, 1.0);
-
-	bool rotater = false;
-	if (!rotater)
-	{
-		glRotatef(90, 0.0, 0.0, 1.0);
-		rotater = true;
-	}
 
 	float angle = angleRotation_;
+
 	glRotatef(angle, 0.0, 0.0, 1.0);
 	
+	//Debugage du suiveur de ligne.
+	// Capteur optique gauche.
+	glPushMatrix();
+	glColor3f(0.0, 1.0, 0.0);
+	glTranslated(4.8523, 0.995, 0.0);
+	glBegin(GL_QUADS);
+	glVertex3d(-0.1, -0.1, 5.0);
+	glVertex3d(0.1, -0.1, 5.0);
+	glVertex3d(0.1, 0.1, 5.0);
+	glVertex3d(-0.1, 0.1, 5.0);
+	glEnd();
+	glPopMatrix();
+	
+	// Capteur optique centre.
+	glPushMatrix();
+	glColor3f(0.0, 1.0, 0.0);
+	glTranslated(4.8523, 0.07, 0.0);
+	glBegin(GL_QUADS);
+	glVertex3d(-0.1, -0.1, 5.0);
+	glVertex3d(0.1, -0.1, 5.0);
+	glVertex3d(0.1, 0.1, 5.0);
+	glVertex3d(-0.1, 0.1, 5.0);
+	glEnd();
+	glPopMatrix();
+
+	// Capteur optique droite.
+	glPushMatrix();
+	glColor3f(0.0, 1.0, 0.0);
+	glTranslated(4.8523, -0.853, 0.0);
+	glBegin(GL_QUADS);
+	glVertex3d(-0.1, -0.1, 5.0);
+	glVertex3d(0.1, -0.1, 5.0);
+	glVertex3d(0.1, 0.1, 5.0);
+	glVertex3d(-0.1, 0.1, 5.0);
+	glEnd();
+	glPopMatrix();
+
+	glColor4f(0.0, 0.0, 0.0, 1.0);
+
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	
@@ -89,6 +121,8 @@ void NoeudRobot::afficherConcret() const
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
+
+
 }
 
 ////////////////////////////////////////////////////////////////////////

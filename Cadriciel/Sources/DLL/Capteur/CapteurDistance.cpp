@@ -3,11 +3,9 @@
 
 CapteurDistance::CapteurDistance()
 {
-
 }
 
 
 CapteurDistance::~CapteurDistance()
 {
-
 }

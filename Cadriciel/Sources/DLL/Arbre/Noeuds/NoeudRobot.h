@@ -10,10 +10,10 @@
 #ifndef __ARBRE_NOEUD_ROBOT_H__
 #define __ARBRE_NOEUD_ROBOT_H__
 
-
 #include "NoeudComposite.h"
 #include "GL/glew.h"
-
+#include "SuiveurLigne.h"
+#include "CapteurDistance.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
@@ -39,6 +39,7 @@ public:
 	void assignerVitesseRotation(float vitesse);
 	void assignerVitesseDroite(float vitesse);
 	void assignerVitesseGauche(float vitesse);
+
 	//Permet de récupérer les paramètres du robot. Inutilisées pour l'instant
 	float obtenirVitesseDroite() const;
 	float obtenirVitesseGauche() const;
@@ -49,6 +50,9 @@ private:
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 	float acceleration_{ 200.0 };
+	
+	SuiveurLigne SuiveurLigne_;
+	std::vector<CapteurDistance> capteursDistance_;
 };
 
 #endif // __ARBRE_NOEUD_ROBOT_H__

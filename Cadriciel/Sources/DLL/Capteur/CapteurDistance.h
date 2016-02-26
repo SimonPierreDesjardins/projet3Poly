@@ -13,7 +13,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class CapteurDistance
-/// @brief Classe qui représente le capteur de distance du robot.  
+/// @brief Classe qui représente un capteur de distance du robot.  
 ///
 ///        Cette classe s'occupe de gérer la détection des poteaux et des murs. 
 ///
@@ -26,7 +26,10 @@ public:
 	//Constructeur par défaut
 	CapteurDistance();
 	//Destructeur
-	virtual ~CapteurDistance();
+	~CapteurDistance();
+
+private:
+	bool estActif_{ true };
 };
 
 #endif // CAPTEUR_DISTANCE_H
