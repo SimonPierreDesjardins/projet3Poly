@@ -20,9 +20,21 @@ class CapteurOptique;
 
 enum PositionCapteur
 {
-	GAUCHE,
-	CENTRE,
-	DROITE
+	CAPTEUR_OPTIQUE_DROIT,
+	CAPTEUR_OPTIQUE_CENTRE,
+	CAPTEUR_OPTIQUE_GAUCHE,
+};
+
+enum EtatSuiveurLigne
+{
+	AUCUNE,					// 0x000
+	DROIT,					// 0x001
+	CENTRE,					// 0x010
+	CENTRE_DROIT,			// 0x011
+	GAUCHE,					// 0x100
+	GAUCHE_DROIT,			// 0x101
+	GAUCHE_CENTRE,			// 0x110
+	GAUCHE_CENTRE_DROIT		// 0x111	
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -41,8 +53,9 @@ public:
 	SuiveurLigne();
 	//Destructeur
 	~SuiveurLigne();
-
-	bool obtenirEtatCapteur(const PositionCapteur& position);
+	// Retourne l'état des capteurs optiques sur les 3 premiers bits.
+	uint8_t obtenirEtatCapteurs() const;
+	void mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot);
 		
 private:
 	static const glm::dvec3 POSITION_RELATIVE_GAUCHE;

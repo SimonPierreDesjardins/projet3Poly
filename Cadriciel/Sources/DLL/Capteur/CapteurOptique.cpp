@@ -27,5 +27,6 @@ void CapteurOptique::mettreAJourEtat(const glm::dvec3& positionRobot, const doub
 	utilitaire::calculerPositionApresRotation(positionRelative_, positionApresRotation, angleRotationRobot);
 	positionCourante_ = positionRobot + positionApresRotation;
 	visiteur_->assignerPositionCapteurOptique(positionCourante_);
+	arbre_->accepterVisiteur(visiteur_);
 	ligneEstDetectee_ = visiteur_->ligneEstDetectee();
 }

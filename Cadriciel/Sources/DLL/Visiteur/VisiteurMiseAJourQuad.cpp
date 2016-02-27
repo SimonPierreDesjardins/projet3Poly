@@ -284,6 +284,20 @@ void VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
 	}
 	noeud->assignerQuadEnglobantCourant(quad);
 }
+
+void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
+{
+	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
+	glm::dvec3 tmp = { 0.0, 0.0, 0.0 };
+	for (int i = 0; i < quad.N_COINS; i++) {
+		tmp = quad.coins[i];
+		utilitaire::calculerPositionApresRotation(tmp, quad.coins[i], noeud->obtenirAngleRotation());
+		quad.coins[i] += noeud->obtenirPositionRelative();
+	}
+	noeud->assignerQuadEnglobantCourant(quad);
+	noeud->mettreAJourCapteurs();
+}
+
 ///TODO: A mettre dans utilitaire.
 glm::dvec3 VisiteurMiseAJourQuad::calculerPositionVirtuelle(const utilitaire::QuadEnglobant& quad)
 {

@@ -36,7 +36,7 @@ public:
 	//Destructeur
 	~CapteurOptique();
 	//Accès à l'état du capteur	
-	inline bool ligneEstDetectee();
+	inline bool ligneEstDetectee() const;
 	//Mise à jour de l'état du capteur
 	void mettreAJourEtat(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
@@ -48,7 +48,7 @@ private:
 	ArbreRendu* arbre_{ nullptr };
 };
 
-inline bool CapteurOptique::ligneEstDetectee()
+inline bool CapteurOptique::ligneEstDetectee() const
 {
 	return ligneEstDetectee_;
 }

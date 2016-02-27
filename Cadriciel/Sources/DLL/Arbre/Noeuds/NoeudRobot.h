@@ -43,15 +43,18 @@ public:
 	//Permet de récupérer les paramètres du robot. Inutilisées pour l'instant
 	float obtenirVitesseDroite() const;
 	float obtenirVitesseGauche() const;
-
-
+	
+	void mettreAJourCapteurs();
+	// Retourne l'états des capeurs du robot.
+	// Les 3 premiers indiquent la détection d'une ligne pour les 3 capteurs optiques du suiveur de ligne.
+	uint8_t obtenirEtatSuiveurLigne();
 private:
 	float angle_{ 0.f };
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 	float acceleration_{ 200.0 };
 	
-	SuiveurLigne SuiveurLigne_;
+	SuiveurLigne suiveurLigne_;
 	std::vector<CapteurDistance> capteursDistance_;
 };
 

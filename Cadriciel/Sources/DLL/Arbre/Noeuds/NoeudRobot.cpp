@@ -70,15 +70,21 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-
 	float angle = angleRotation_;
-
 	glRotatef(angle, 0.0, 0.0, 1.0);
-	
+	uint8_t etat = suiveurLigne_.obtenirEtatCapteurs();
+	std::cout << (int)etat << std::endl;
 	//Debugage du suiveur de ligne.
 	// Capteur optique gauche.
 	glPushMatrix();
-	glColor3f(0.0, 1.0, 0.0);
+	if ((etat & 0x04) == 0x04)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else
+	{
+		glColor3f(0.0, 0.0, 0.0);
+	}
 	glTranslated(4.8523, 0.995, 0.0);
 	glBegin(GL_QUADS);
 	glVertex3d(-0.1, -0.1, 5.0);
@@ -90,7 +96,14 @@ void NoeudRobot::afficherConcret() const
 	
 	// Capteur optique centre.
 	glPushMatrix();
-	glColor3f(0.0, 1.0, 0.0);
+	if ((etat & 0x02) == 0x02)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else
+	{
+		glColor3f(0.0, 0.0, 0.0);
+	}
 	glTranslated(4.8523, 0.07, 0.0);
 	glBegin(GL_QUADS);
 	glVertex3d(-0.1, -0.1, 5.0);
@@ -102,7 +115,14 @@ void NoeudRobot::afficherConcret() const
 
 	// Capteur optique droite.
 	glPushMatrix();
-	glColor3f(0.0, 1.0, 0.0);
+	if ((etat & 0x01) == 0x01)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else 
+	{
+		glColor3f(0.0, 0.0, 0.0);
+	}
 	glTranslated(4.8523, -0.853, 0.0);
 	glBegin(GL_QUADS);
 	glVertex3d(-0.1, -0.1, 5.0);
@@ -121,8 +141,6 @@ void NoeudRobot::afficherConcret() const
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
-
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -294,6 +312,11 @@ void NoeudRobot::assignerVitesseGauche(float vitesse)
 void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
 	vitesseRotation_ = vitesse;
+}
+
+void NoeudRobot::mettreAJourCapteurs()
+{
+	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

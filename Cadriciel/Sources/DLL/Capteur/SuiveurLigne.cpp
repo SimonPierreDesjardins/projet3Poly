@@ -8,22 +8,38 @@ const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_DROITE{ 4.8523, -0.853, 0.0 };
 SuiveurLigne::SuiveurLigne()
 {
 	visiteurDetectionLigne_ = std::make_unique<VisiteurDetectionLigne>();
-	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_GAUCHE, visiteurDetectionLigne_.get()));
-	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_CENTRE, visiteurDetectionLigne_.get()));
 	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_DROITE, visiteurDetectionLigne_.get()));
+	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_CENTRE, visiteurDetectionLigne_.get()));
+	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_GAUCHE, visiteurDetectionLigne_.get()));
 }
-
 
 SuiveurLigne::~SuiveurLigne()
 {
 }
 
-bool SuiveurLigne::obtenirEtatCapteur(const PositionCapteur& position)
+uint8_t SuiveurLigne::obtenirEtatCapteurs() const
 {
-	bool etat = false;
-	if (position < capteursOptique_.size())
+	uint8_t etat = 0;
+	if (capteursOptique_[CAPTEUR_OPTIQUE_DROIT].ligneEstDetectee())
 	{
-		etat = capteursOptique_[position].ligneEstDetectee();
+		etat |= 0x01;
+		
+	}
+	if (capteursOptique_[CAPTEUR_OPTIQUE_CENTRE].ligneEstDetectee())
+	{
+		etat |= 0x02;
+	}
+	if (capteursOptique_[CAPTEUR_OPTIQUE_GAUCHE].ligneEstDetectee())
+	{
+		etat |= 0x04;
 	}
 	return etat;
+}
+
+void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot)
+{
+	for (int i = 0; i < capteursOptique_.size(); i++)
+	{
+		capteursOptique_[i].mettreAJourEtat(positionRobot, angleRobot);
+	}
 }

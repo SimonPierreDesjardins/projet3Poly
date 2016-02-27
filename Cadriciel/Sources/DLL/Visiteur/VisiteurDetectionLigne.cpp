@@ -25,7 +25,7 @@ void VisiteurDetectionLigne::visiter(NoeudTable* noeud)
 	
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && !ligneEstDetectee_; i++)
 	{
-		noeud->accepterVisiteur(this);
+		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
 
