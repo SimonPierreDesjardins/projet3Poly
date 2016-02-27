@@ -24,13 +24,18 @@ class ComportementDeviation : public ComportementAbstrait
 {
 public:
 	ComportementDeviation();
+	ComportementDeviation(eComportement prochainComportement, double angleMax);
 	virtual ~ComportementDeviation();
 
 	void initialiser();
 
 	void mettreAJour();
 
-	void setAngleMaxRotation();
+	void setAngleMaxRotation(double angle);
+
+	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+	virtual void fromJson(const rapidjson::Value& comportementJSON);
 
 private:
 	double maxAngle;

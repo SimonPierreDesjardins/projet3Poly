@@ -19,53 +19,83 @@ ProfilUtilisateur::ProfilUtilisateur()
 
 ProfilUtilisateur::ProfilUtilisateur(std::string nomProfil)
 {
-	options_.push_back(std::make_unique<ComportementSuiviLigne>());
-	options_.push_back(std::make_unique<ComportementBalayage>());
-	options_.push_back(std::make_unique<ComportementDeviation>());
-	options_.push_back(std::make_unique<ComportementDeviation>());
-	options_.push_back(std::make_unique<ComportementEvitement>());
-	options_.push_back(std::make_unique<ComportementEvitement>());
 	nomProfil_ = nomProfil;
-	chargerProfilParDefaut();
+	chargerProfil();
 }
 
 ProfilUtilisateur::~ProfilUtilisateur()
 {
-	//delete profil_;
+
 }
 
 void ProfilUtilisateur::sauvegarder()
 {
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(profil_, writeBuffer, sizeof(writeBuffer));
-	rapidjson::Writer<rapidjson::FileWriteStream> writer();
-
-
+	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
+	writer.StartObject();
+	writer.Key("nomProfil");
+	writer.String(nomProfil_.c_str());
+	writer.Key("comportements");
+	writer.StartArray();
+	for (std::vector<std::unique_ptr<ComportementAbstrait>>::iterator itr = comportements_.begin(); itr!= comportements_.end(); itr++)
+	{
+		writer.StartObject();
+		(*itr)->toJSON(writer);
+		writer.EndObject();
+	}
+	writer.EndArray();
+	writer.EndObject();
+	fclose(profil_);
 }
 
-void ProfilUtilisateur::ouvrirFichierProfil(std::string nomProfil){
+void ProfilUtilisateur::changerProfil(std::string nomProfil){
 	nomProfil_ = nomProfil;
-	ouvrirFichierProfil();
+	comportements_.clear();
+	chargerProfil();
 }
 
-void ProfilUtilisateur::ouvrirFichierProfil()
+void ProfilUtilisateur::chargerProfil()
 {
 	errno_t err;
 	if (err = fopen_s(&profil_, (CHEMIN_PROFIL + nomProfil_).c_str(), "ab") != 0){
 		std::cout << "Erreur lors de l'ouverture du fichier profil : " << err << std::endl;
 	}
+
+	rapidjson::Document doc;
+	char readBuffer[65536];
+	rapidjson::FileReadStream is(profil_, readBuffer, sizeof(readBuffer));
+	doc.ParseStream(is);
+	fclose(profil_);
+
+	rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin();
+	this->nomProfil_ = itr->value.GetString();
+	itr++;
+
+	const rapidjson::Value& comportements = itr->value;
+
+	assert(comportements.IsArray());
+
+	comportements_.push_back(std::make_unique<ComportementDefaut>(comportements[DEFAUT]));
+	comportements_.push_back(std::make_unique<ComportementSuiviLigne>(comportements[SUIVIDELIGNE]));
+	comportements_.push_back(std::make_unique<ComportementBalayage>(comportements[BALAYAGE180]));
+	comportements_.push_back(std::make_unique<ComportementDeviation>(comportements[DEVIATIONVERSLAGAUCHE]));
+	comportements_.push_back(std::make_unique<ComportementDeviation>(comportements[DEVIATIONVERSLADROITE]));
+	comportements_.push_back(std::make_unique<ComportementEvitement>(comportements[EVITEMENTPARLAGAUCHE]));
+	comportements_.push_back(std::make_unique<ComportementEvitement>(comportements[EVITEMENTPARLADROITE]));
 }
 
 void ProfilUtilisateur::chargerProfilParDefaut()
 {
 	struct stat buffer;
-	nomProfil_ = "profil_par_defaut.json";
+	nomProfil_ = "defaut.profil";
 	if (stat((CHEMIN_PROFIL + nomProfil_).c_str(), &buffer) != 0) {
 		if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
 			CreateDirectory(wideString.c_str(), NULL);
 		}
+
 		touches_.resize(5);
 		touches_[INVERSER_MODE_CONTROLE] = ' ';
 		touches_[AVANCER] = 'w';
@@ -79,11 +109,19 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 		commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE)));
 		commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE)));
 
+		comportements_.push_back(std::make_unique<ComportementDefaut>(BALAYAGE180));
+		comportements_.push_back(std::make_unique<ComportementSuiviLigne>(BALAYAGE180));
+		comportements_.push_back(std::make_unique<ComportementBalayage>(DEVIATIONVERSLAGAUCHE));		
+		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 50.0));
+		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 50.0));
+		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 5.0, 50.0));
+		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 5.0, 50.0));
+
 		sauvegarder();
 		return;
 	}
 
-	ouvrirFichierProfil();
+	chargerProfil();
 }
 
 void ProfilUtilisateur::modifierToucheCommande(const unsigned char& touche, const TypeCommande& commande)
@@ -95,6 +133,7 @@ void ProfilUtilisateur::modifierToucheCommande(const unsigned char& touche, cons
 	commandes_.insert(std::make_pair(touche, std::make_unique<CommandeRobot>(commande)));
 }
 
-void ProfilUtilisateur::assignerComportement(eComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement){
-	options_.at(typeComportement).swap(comportement);
+void ProfilUtilisateur::assignerComportement(eComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement)
+{
+	comportements_.at(typeComportement).swap(comportement);
 }

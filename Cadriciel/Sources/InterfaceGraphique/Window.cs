@@ -33,6 +33,7 @@ namespace InterfaceGraphique
         private const int WM_MOUSEWHEEL =   0x020A;
 
         bool arreterToutMessage_;
+
         public void arreterToutMessage()
         { arreterToutMessage_ = true; }
 

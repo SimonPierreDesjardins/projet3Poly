@@ -24,6 +24,7 @@ class ComportementEvitement : public ComportementAbstrait
 {
 public:
 	ComportementEvitement();
+	ComportementEvitement(eComportement prochainComportement, double maxTemps, double maxAngle);
 	virtual ~ComportementEvitement();
 
 	void initialiser();
@@ -34,13 +35,16 @@ public:
 
 	void setTempsMaxReculons();
 
+	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+	virtual void fromJson(const rapidjson::Value& comportementJSON);
+
 private:
 	double maxTemps;
 	double deltaTemps{ 0.0 };
 
 	double maxAngle;
 	double deltaAngle{ 0.0 };
-
 
 };
 

@@ -12,6 +12,12 @@
 #define COMPORTEMENT_ABSTRAIT
 
 #include <memory>
+#include "rapidjson\writer.h"
+#include "rapidjson\document.h"
+
+namespace rapidjson {
+	class FileWriteStream;
+}
 
 enum eComportement {
 	DEFAUT,
@@ -38,6 +44,8 @@ class ComportementAbstrait
 {
 public:
 	ComportementAbstrait();
+	ComportementAbstrait(eComportement prochainComportement);
+	ComportementAbstrait(const rapidjson::Value& comportementJSON);
 	virtual ~ComportementAbstrait();
 
 	// Assure la reinitialisation du comportement avant son execution
@@ -49,6 +57,11 @@ public:
 	eComportement obtenirComportementSuivant();
 
 	void assignerComportementSuivant(eComportement prochainComportement);
+
+	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+protected:
+	virtual void fromJson(const rapidjson::Value& comportementJSON);
 
 private:
 	// Le comportement a adopter une fois les conditions de fin de ce comportement sont atteintes.
