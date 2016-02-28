@@ -22,11 +22,11 @@ void VisiteurDetectionLigne::visiter(ArbreRendu* noeud)
 
 void VisiteurDetectionLigne::visiter(NoeudTable* noeud)
 {
-	
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && !ligneEstDetectee_; i++)
 	{
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
+    capteur_->assignerLigneEstDetectee(ligneEstDetectee_);
 }
 
 
@@ -34,14 +34,16 @@ void VisiteurDetectionLigne::visiter(NoeudLigne* noeud)
 {
 	bool capteurEstSurLigne = false;
 	NoeudAbstrait* enfant = nullptr;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && !ligneEstDetectee_; i++)
+    unsigned int n = noeud->obtenirNombreEnfants();
+	for (unsigned int i = 0; i < n && !ligneEstDetectee_; i++)
 	{
 		enfant = noeud->chercher(i);
-		capteurEstSurLigne = utilitaire::calculerPointEstDansQuad(positionCapteur_, enfant->obtenirQuadEnglobantCourant());
+        utilitaire::QuadEnglobant quad = enfant->obtenirQuadEnglobantCourant();
+		capteurEstSurLigne = utilitaire::calculerPointEstDansQuad(positionCapteur_,
+                                                                  quad);
 		if (capteurEstSurLigne)
 		{
-			ligneEstDetectee_ = true;
+			ligneEstDetectee_ = true; 
 		}
 	}
 }
-

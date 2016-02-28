@@ -12,6 +12,7 @@
 #define VISITEUR_DETECTION_LIGNE_H
 
 #include "VisiteurAbstrait.h"
+#include "CapteurOptique.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDetectionLigne
@@ -29,28 +30,42 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurDetectionLigne();
 
+    /// Assigner une référence à un capteur optique.
+	inline void assignerCapteurOptique(CapteurOptique* capteur);
+    /// Assigner la position d'un capteur optique.
 	inline void assignerPositionCapteurOptique(const glm::dvec3& positionCapteur);
+    /// Obtenir si la ligne été détectée.
 	inline bool	ligneEstDetectee();
 
+    /// Visiter l'arbre de rendu.
 	virtual void visiter(ArbreRendu* noeud);
+    /// Visiter la table.
 	virtual void visiter(NoeudTable* noeud);
+    /// Visiter une ligne.
 	virtual void visiter(NoeudLigne* noeud);
 
 private:
+    CapteurOptique* capteur_;
+    
 	bool ligneEstDetectee_{ false };
 	glm::dvec3 positionCapteur_;
 };
 
-
-inline void VisiteurDetectionLigne::assignerPositionCapteurOptique(const glm::dvec3& positionCapteur)
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn CapteurOptique::assignerCapteurOptique(CapteurOptique* capteur)
+///
+/// Cette méthode une référence au capteur.
+///
+/// @param[in] capteur : le pointeur qui référence le capteur.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
+inline void VisiteurDetectionLigne::assignerCapteurOptique(CapteurOptique* capteur)
 {
-	positionCapteur_ = positionCapteur;
-}
-
-
-inline bool	VisiteurDetectionLigne::ligneEstDetectee()
-{
-	return ligneEstDetectee_;
+    capteur_ = capteur;
+    positionCapteur_ = capteur->obtenirPositionCourante();
 }
 
 #endif // VISITEUR_DETECTION_LIGNE_H

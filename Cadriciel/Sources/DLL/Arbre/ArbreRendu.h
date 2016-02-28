@@ -10,9 +10,7 @@
 #ifndef __ARBRE_ARBRERENDU_H__
 #define __ARBRE_ARBRERENDU_H__
 
-
 #include "NoeudComposite.h"
-
 
 #include <map>
 #include <memory>

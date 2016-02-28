@@ -17,7 +17,9 @@
 #include "VisiteurDetectionLigne.h"
 
 class CapteurOptique;
+class ArbreRendu;
 
+// Énumération permettant d'associer une position à un index dans le vecteur.
 enum PositionCapteur
 {
 	CAPTEUR_OPTIQUE_DROIT,
@@ -25,6 +27,7 @@ enum PositionCapteur
 	CAPTEUR_OPTIQUE_GAUCHE,
 };
 
+// Énumération permettant de différencier les différentes valeurs de retour.
 enum EtatSuiveurLigne
 {
 	AUCUNE,					// 0x000
@@ -64,6 +67,7 @@ private:
 
 	std::vector<CapteurOptique> capteursOptique_;
 	std::unique_ptr<VisiteurDetectionLigne> visiteurDetectionLigne_{ nullptr };
+	ArbreRendu* arbre_{ nullptr };
 };
 
 #endif // SUIVEUR_LIGNE_H

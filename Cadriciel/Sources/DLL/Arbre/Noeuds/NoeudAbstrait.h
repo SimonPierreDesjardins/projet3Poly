@@ -7,6 +7,7 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
+
 #ifndef __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 #define __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
@@ -18,7 +19,6 @@
 #include "glm\glm.hpp"
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
-
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 
@@ -592,8 +592,8 @@ inline bool NoeudAbstrait::estDuplicable() const
 {
 	return estDuplicable_;
 }
-#endif // __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
+#endif // __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
