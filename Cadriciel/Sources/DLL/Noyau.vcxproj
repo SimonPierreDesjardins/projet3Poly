@@ -185,6 +185,7 @@
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
     <ClCompile Include="Visiteur\VisiteurDeplacement.cpp" />
     <ClCompile Include="Visiteur\VisiteurDetectionLigne.cpp" />
+    <ClCompile Include="Visiteur\VisiteurDetectionObstacle.cpp" />
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp" />
@@ -253,6 +254,7 @@
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
     <ClInclude Include="Visiteur\VisiteurDeplacement.h" />
     <ClInclude Include="Visiteur\VisiteurDetectionLigne.h" />
+    <ClInclude Include="Visiteur\VisiteurDetectionObstacle.h" />
     <ClInclude Include="Visiteur\VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h" />

@@ -1,71 +1,72 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file VisiteurDetectionLigne.h
+/// @file VisiteurDetectionObstacle.h
 /// @author Olivier St-Amour
-/// @date 2016-02-26
+/// @date 2016-02-28
 /// @version 2.1
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef VISITEUR_DETECTION_LIGNE_H
-#define VISITEUR_DETECTION_LIGNE_H
+#ifndef VISITEUR_DETECTION_OBSTACLE_H
+#define VISITEUR_DETECTION_OBSTACLE_H
 
 #include "VisiteurAbstrait.h"
-#include "CapteurOptique.h"
+#include "CapteurDistance.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDetectionLigne
-/// @brief Visiteur permettant à un capteur optique 
-///		   de détecter une ligne à une certaine position. 
+/// @brief Visiteur permettant à un capteur de distance de détecter un 
+///        mur ou un poteau.
 ///
 /// @author Olivier St-Amour
-/// @date 2016-02-26
+/// @date 2016-02-28
 ///////////////////////////////////////////////////////////////////////////
-class VisiteurDetectionLigne : public VisiteurAbstrait
+class VisiteurDetectionObstacle : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurDetectionLigne();
+	VisiteurDetectionObstacle();
 	/// Destructeur.
-	virtual ~VisiteurDetectionLigne();
+	virtual ~VisiteurDetectionObstacle();
 
     /// Assigner une référence à un capteur optique.
-	inline void assignerCapteurOptique(CapteurOptique* capteur);
+	inline void assignerCapteurDistance(CapteurDistance* capteur);
 
     /// Visiter l'arbre de rendu.
 	virtual void visiter(ArbreRendu* noeud);
     /// Visiter la table.
 	virtual void visiter(NoeudTable* noeud);
-    /// Visiter une ligne.
-	virtual void visiter(NoeudLigne* noeud);
+    /// Visiter un poteau.
+	virtual void visiter(NoeudPoteau* noeud);
+    /// Visiter un mur.
+	virtual void visiter(NoeudMur* noeud);
 
 private:
-    CapteurOptique* capteur_;
+    CapteurDistance* capteur_;
     
-	bool ligneEstDetectee_{ false };
+	bool obstacleEstDetecte_{ false };
 	glm::dvec3 positionCapteur_;
 };
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
-/// @fn CapteurOptique::assignerCapteurOptique(CapteurOptique* capteur)
+/// @fn CapteurOptique::assignerCapteurDistance(CapteurDistance* capteur)
 ///
-/// Cette assigne méthode une référence au capteur.
+/// Cette méthode assigne une référence au capteur.
 ///
 /// @param[in] capteur : le pointeur qui référence le capteur.
 ///
 /// @return Aucune. 
 ///
 ////////////////////////////////////////////////////////////////////////////////
-inline void VisiteurDetectionLigne::assignerCapteurOptique(CapteurOptique* capteur)
+inline void VisiteurDetectionObstacle::assignerCapteurDistance(CapteurDistance* capteur)
 {
-    capteur_ = capteur;
-    positionCapteur_ = capteur->obtenirPositionCourante();
 }
 
-#endif // VISITEUR_DETECTION_LIGNE_H
+#endif // VISITEUR_DETECTION_OBSTACLE_H
 
 ////////////////////////////////////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////////////////////////////////////
+

@@ -40,14 +40,20 @@ public:
 	void assignerVitesseDroite(float vitesse);
 	void assignerVitesseGauche(float vitesse);
 
-	//Permet de récupérer les paramètres du robot. Inutilisées pour l'instant
+	//Permet de récupérer les paramètres du robot.
 	float obtenirVitesseDroite() const;
 	float obtenirVitesseGauche() const;
-	
+    
+    // Mise à jour des capteurs du robot. 	
 	void mettreAJourCapteurs();
 	// Retourne l'états des capeurs du robot.
 	// Les 3 premiers indiquent la détection d'une ligne pour les 3 capteurs optiques du suiveur de ligne.
 	uint8_t obtenirEtatSuiveurLigne();
+
+    // Méthodes d'affichage permettant le débogage.
+    void afficherCapteursOptique() const;
+    void afficherCapteursDistance() const;
+
 private:
 	float angle_{ 0.f };
 	float vitesseCouranteDroite_{ 0.f };

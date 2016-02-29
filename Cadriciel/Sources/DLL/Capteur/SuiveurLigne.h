@@ -30,14 +30,14 @@ enum PositionCapteur
 // Énumération permettant de différencier les différentes valeurs de retour.
 enum EtatSuiveurLigne
 {
-	AUCUNE,					// 0x000
-	DROIT,					// 0x001
-	CENTRE,					// 0x010
-	CENTRE_DROIT,			// 0x011
-	GAUCHE,					// 0x100
-	GAUCHE_DROIT,			// 0x101
-	GAUCHE_CENTRE,			// 0x110
-	GAUCHE_CENTRE_DROIT		// 0x111	
+	AUCUNE,					// 000
+	DROIT,					// 001
+	CENTRE,					// 010
+	CENTRE_DROIT,			// 011
+	GAUCHE,					// 100
+	GAUCHE_DROIT,			// 101
+	GAUCHE_CENTRE,			// 110
+	GAUCHE_CENTRE_DROIT		// 111	
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -58,6 +58,7 @@ public:
 	~SuiveurLigne();
 	// Retourne l'état des capteurs optiques sur les 3 premiers bits.
 	uint8_t obtenirEtatCapteurs() const;
+    // Mettre à jour l'état des capteurs et leur position.
 	void mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot);
 		
 private:

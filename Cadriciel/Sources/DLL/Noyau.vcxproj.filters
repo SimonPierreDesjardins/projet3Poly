@@ -293,6 +293,9 @@
     <ClCompile Include="Visiteur\VisiteurDetectionLigne.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurDetectionObstacle.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -500,6 +503,9 @@
       <Filter>Header Files\Capteur</Filter>
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurDetectionLigne.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurDetectionObstacle.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>
