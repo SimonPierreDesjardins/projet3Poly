@@ -296,6 +296,9 @@
     <ClCompile Include="Visiteur\VisiteurDetectionObstacle.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\PhysiqueTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -507,6 +510,9 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurDetectionObstacle.h">
       <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\PhysiqueTest.h">
+      <Filter>Header Files\Tests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

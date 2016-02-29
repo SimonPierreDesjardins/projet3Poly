@@ -53,6 +53,9 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <PostBuildEventUseInBuild>true</PostBuildEventUseInBuild>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Midl>
       <TargetEnvironment>X64</TargetEnvironment>
@@ -83,13 +86,11 @@
       <TargetMachine>MachineX64</TargetMachine>
       <AdditionalOptions>/NODEFAULTLIB:LIBCMT %(AdditionalOptions)</AdditionalOptions>
     </Link>
-    <PostBuildEvent>
-      <Command>
-      </Command>
-    </PostBuildEvent>
+    <PostBuildEvent />
     <PostBuildEvent>
       <Message>
       </Message>
+      <Command>..\..\Exe\InterfaceGraphique.exe testsC++</Command>
     </PostBuildEvent>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
@@ -180,6 +181,7 @@
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
+    <ClCompile Include="Tests\PhysiqueTest.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
@@ -248,6 +250,7 @@
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
+    <ClInclude Include="Tests\PhysiqueTest.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />

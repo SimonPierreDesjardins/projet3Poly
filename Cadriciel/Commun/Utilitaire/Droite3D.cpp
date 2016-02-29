@@ -229,6 +229,13 @@ namespace math {
 	}
 
 
+    double Droite3D::calculerProjectionPoint(const glm::dvec3& point)
+    {
+        glm::dvec3 u = point - pointDroite_;
+        glm::dvec3 v = glm::normalize(direction_);
+        return glm::dot(u, v);
+    }
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn glm::dvec3 Droite3D::perpendiculaireDroite(const glm::dvec3& point)

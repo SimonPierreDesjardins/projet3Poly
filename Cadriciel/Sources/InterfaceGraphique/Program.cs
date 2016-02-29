@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 namespace InterfaceGraphique
-{
+{ 
     static class Program
     {
         private const int NB_IMAGES_PAR_SECONDE = 60;

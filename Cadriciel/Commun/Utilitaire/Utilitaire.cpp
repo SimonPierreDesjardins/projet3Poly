@@ -671,19 +671,19 @@ namespace utilitaire {
 	}
 
     void calculerIntervalleProjection(math::Droite3D& droite, const QuadEnglobant& quad,
-        glm::dvec3& min, glm::dvec3& max)
+        double& min, double& max)
     {
-        glm::dvec3 projection = droite.perpendiculaireDroite(quad.coins[0]);
+        double projection = droite.calculerProjectionPoint(quad.coins[0]);
         min = projection;
         max = projection;
-        for (int i = 1; i < quad.N_COINS; i++)
+        for (int i = 0; i < quad.N_COINS; i++)
         {
-            projection = droite.perpendiculaireDroite(quad.coins[i]);
-            if (projection.x > max.x || projection.y > max.y)
+            projection = droite.calculerProjectionPoint(quad.coins[i]);
+            if (projection > max)
             {
                 max = projection;
             }
-            else if (projection.x < min.x || projection.y < min.y)
+            else if (projection < min)
             {
                 min = projection;
             }
@@ -693,23 +693,27 @@ namespace utilitaire {
     bool calculerIntersectionProjection(math::Droite3D& droite, 
         const QuadEnglobant& quad1, const QuadEnglobant& quad2)
     {
-        glm::dvec3 min1;
-        glm::dvec3 max1;
+        double min1, max1; 
         calculerIntervalleProjection(droite, quad1, min1, max1);
-        glm::dvec3 min2;
-        glm::dvec3 max2;
-        calculerIntervalleProjection(droite, quad2, min2, max2);
+        std::cout << "min1: " << min1 << ", max1: " << max1 << std::endl;
 
-        return (DANS_LIMITESXY(min1, min2, max2) || DANS_LIMITESXY(max1, min2, max2));
+        double min2, max2;
+        calculerIntervalleProjection(droite, quad2, min2, max2);
+        std::cout << "min2: " << min2 << ", max2: " << max2 << std::endl;
+
+        // min1 ----- max1 ---------- min2 --- max2
+        bool disjonction12 = max1 < min2;
+        // min2 ----- max2 ---------- min1 --- max2
+        bool disjonction21 = max2 < min1;
+        return !(disjonction12 || disjonction21);
     }
 
-    math::Droite3D calculerDroitePerpendiculaire(const glm::dvec3& point1, 
-                                                 const glm::dvec3& point2)
+    glm::dvec3 calculerPointPerpendiculaire(const glm::dvec3& point1, 
+                                             const glm::dvec3& point2)
     {
         glm::dvec3 vecteur = point2 - point1;
-        glm::dvec3 perpendiculaire = {-vecteur.y, vecteur.x, 0.0} ;
-        glm::dvec3 point3 = point1 + perpendiculaire; 
-        return math::Droite3D(point1, point3);
+        glm::dvec3 vecteurP =  {-vecteur.y, vecteur.x, 0.0};
+        return point1 + vecteurP;
     }
 
     bool calculerIntersectionDeuxQuads(const QuadEnglobant& quad1, 
@@ -717,20 +721,25 @@ namespace utilitaire {
     {
         const int N = 4;
         int j = 0; 
-        bool estIntersection = false;
-        for (int i = 0; i < quad1.N_COINS && !estIntersection; i++)
+        bool estIntersection = true;
+        for (int i = 0; i < quad1.N_COINS && estIntersection; i++)
         {
             j = (i + 1) % N;
-            math::Droite3D droite = calculerDroitePerpendiculaire(quad1.coins[i],
-                                                                  quad1.coins[j]);
+            glm::dvec3 pointP = calculerPointPerpendiculaire(quad1.coins[i], 
+                                                             quad1.coins[j]);
+            std::cout << "segment: " << i << ", " << j << std::endl;
+            math::Droite3D droite(quad1.coins[i], pointP);
             estIntersection = calculerIntersectionProjection(droite, quad1, quad2);       
-        }
-        for (int i = 0; i < quad2.N_COINS && !estIntersection; i++)
-        {
-            j = (i + 1) % N;
-            math::Droite3D droite = calculerDroitePerpendiculaire(quad2.coins[i],
-                                                                  quad2.coins[j]);
-            estIntersection = calculerIntersectionProjection(droite, quad1, quad2);       
+            std::cout << "intersection: " << estIntersection << std::endl;
+            if (estIntersection)
+            {
+                glm::dvec3 perpendiculaire = calculerPointPerpendiculaire(quad2.coins[i], 
+                                                                           quad2.coins[j]);
+                std::cout << "segment: " << i << ", " << j << std::endl;
+                math::Droite3D droite(quad1.coins[i], perpendiculaire);
+                estIntersection = calculerIntersectionProjection(droite, quad2, quad1);       
+                std::cout << "intersection: " << estIntersection << std::endl;
+            }
         }
         return estIntersection;
     }

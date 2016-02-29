@@ -276,8 +276,8 @@ namespace utilitaire {
 	bool calculerPointEstDansQuad(const glm::dvec3& point, 
                                   const QuadEnglobant& quad);
 
-    bool calculerIntersectionDeuxQuads(const QuadEnglobant quad1, 
-                                       const QuadEnglobant quad2);
+    bool calculerIntersectionDeuxQuads(const QuadEnglobant& quad1, 
+                                       const QuadEnglobant& quad2);
 } // Fin du namespace utilitaire.
 
 
