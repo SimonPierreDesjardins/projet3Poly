@@ -70,7 +70,6 @@ FacadeModele* FacadeModele::obtenirInstance()
 	if (instance_.get() == nullptr)
 	{
 		instance_ = std::unique_ptr<FacadeModele>(new FacadeModele());
-		ProfilUtilisateur::ProfilUtilisateur();
 	}
 	return instance_.get();
 }
@@ -292,6 +291,9 @@ void FacadeModele::afficher() const
 
 	// Afficher la scène
 	afficherBase();
+
+	// Mise à jour des quads englobants des formes.	
+	arbre_->mettreAJourQuad();
 
 	// Compte de l'affichage
 	utilitaire::CompteurAffichage::obtenirInstance()->signalerAffichage();

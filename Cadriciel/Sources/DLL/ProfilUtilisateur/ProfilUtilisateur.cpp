@@ -36,15 +36,13 @@ bool ProfilUtilisateur::ouvrirProfil(){
 
 bool ProfilUtilisateur::sauvegarder(std::string nomProfil){
 	nomProfil_ = nomProfil;
-	if(!ouvrirProfil())
-		return false;
 	sauvegarder();
-	fclose(profil_);
 	return true;
 }
 
 void ProfilUtilisateur::sauvegarder()
 {
+	ouvrirProfil();
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(profil_, writeBuffer, sizeof(writeBuffer));
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
@@ -61,6 +59,7 @@ void ProfilUtilisateur::sauvegarder()
 	}
 	writer.EndArray();
 	writer.EndObject();
+	fclose(profil_);
 }
 
 bool ProfilUtilisateur::changerProfil(std::string nomProfil){
@@ -101,6 +100,7 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 {
 	struct stat buffer;
 	nomProfil_ = "defaut.profil";
+
 	if (stat((CHEMIN_PROFIL + nomProfil_).c_str(), &buffer) != 0) {
 		if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;

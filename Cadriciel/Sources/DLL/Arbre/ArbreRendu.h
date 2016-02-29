@@ -10,16 +10,14 @@
 #ifndef __ARBRE_ARBRERENDU_H__
 #define __ARBRE_ARBRERENDU_H__
 
-
 #include "NoeudComposite.h"
-
 
 #include <map>
 #include <memory>
 #include "UsineNoeud.h"
+#include "VisiteurMiseAJourQuad.h"
 
 class NoeudAbstrait;
-class VisiteurAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRendu
@@ -64,6 +62,9 @@ public:
    /// Calcule la profondeur maximale possible pour l'arbre de rendu.
    static unsigned int calculerProfondeurMaximale();
 
+	/// 
+	void mettreAJourQuad();
+
 	/// Accepter un visiteur.
 	void accepterVisiteur(VisiteurAbstrait* visiteur);
 
@@ -97,7 +98,6 @@ public:
 	void assignerPositionRelativeY(const double& positionRelativeY);
 
 protected:
-
 	/// Retourne un pointeur vers le fichier de structure de base
 	FILE* obtenirFichierZoneDefaut(std::string mode);
 
@@ -108,13 +108,15 @@ protected:
 	std::string cheminFichierZone;
 
 private:
-
-   /// Définition du type pour l'association du nom d'un type vers l'usine
-   /// correspondante.
+    /// Définition du type pour l'association du nom d'un type vers l'usine
+	/// correspondante.
 	using RegistreUsines = std::map<std::string, std::unique_ptr<const UsineAbstraite>>;
 
-   /// Association du nom d'un type vers l'usine correspondante.
-   RegistreUsines usines_;   
+	/// Association du nom d'un type vers l'usine correspondante.
+	RegistreUsines usines_;   
+
+	/// Visiteur permettant de mettre à jour les boites englobantes des enfants.
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_;
 };
 
 

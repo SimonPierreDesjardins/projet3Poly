@@ -38,7 +38,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	NoeudAbstrait* depart = table->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
-	angleRotation_ = depart->obtenirAngleRotation() + 90;
+	angleRotation_ = depart->obtenirAngleRotation();
 }
 
 
@@ -70,21 +70,16 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	glColor4f(0.0, 0.0, 0.0, 1.0);
+	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
-	bool rotater = false;
-	if (!rotater)
-	{
-		glRotatef(90, 0.0, 0.0, 1.0);
-		rotater = true;
-	}
+	//Debugage du suiveur de ligne.
+    afficherCapteursOptique();
 
-	float angle = angleRotation_;
-	glRotatef(angle, 0.0, 0.0, 1.0);
-	
+    //Debugage de capteurs de distance.
+    afficherCapteursDistance();
+
 	// Sauvegarde de la matrice.
 	glPushMatrix();
-	
 	// Affichage du modèle.
 	vbo_->dessiner();
 	// Restauration de la matrice.
@@ -262,6 +257,78 @@ void NoeudRobot::assignerVitesseRotation(float vitesse)
 	vitesseRotation_ = vitesse;
 }
 
+void NoeudRobot::mettreAJourCapteurs()
+{
+	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
+}
+
+void NoeudRobot::afficherCapteursOptique() const
+{
+	uint8_t etat = suiveurLigne_.obtenirEtatCapteurs();
+	// Capteur optique gauche.
+	glPushMatrix();
+	if ((etat & 0x04) == 0x04)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else
+	{
+		glColor3f(0.0, 0.0, 0.0);
+	}
+	glTranslated(4.8523, 0.995, 0.0);
+	glBegin(GL_QUADS);
+	glVertex3d(-0.1, -0.1, 5.0);
+	glVertex3d(0.1, -0.1, 5.0);
+	glVertex3d(0.1, 0.1, 5.0);
+	glVertex3d(-0.1, 0.1, 5.0);
+	glEnd();
+	glPopMatrix();
+	
+	// Capteur optique centre.
+	glPushMatrix();
+	if ((etat & 0x02) == 0x02)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else
+	{
+		glColor3f(0.0, 0.0, 0.0);
+	}
+	glTranslated(4.8523, 0.07, 0.0);
+	glBegin(GL_QUADS);
+	glVertex3d(-0.1, -0.1, 5.0);
+	glVertex3d(0.1, -0.1, 5.0);
+	glVertex3d(0.1, 0.1, 5.0);
+	glVertex3d(-0.1, 0.1, 5.0);
+	glEnd();
+	glPopMatrix();
+
+	// Capteur optique droite.
+	glPushMatrix();
+	if ((etat & 0x01) == 0x01)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else 
+	{
+		glColor3f(0.0, 0.0, 0.0);
+	}
+	glTranslated(4.8523, -0.853, 0.0);
+	glBegin(GL_QUADS);
+	glVertex3d(-0.1, -0.1, 5.0);
+	glVertex3d(0.1, -0.1, 5.0);
+	glVertex3d(0.1, 0.1, 5.0);
+	glVertex3d(-0.1, 0.1, 5.0);
+	glEnd();
+	glPopMatrix();
+
+	glColor4f(0.0, 0.0, 0.0, 1.0);
+}
+
+void NoeudRobot::afficherCapteursDistance() const
+{
+
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

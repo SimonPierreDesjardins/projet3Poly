@@ -100,6 +100,12 @@
     <Filter Include="Source Files\ControleRobot\Comportement">
       <UniqueIdentifier>{11e6f2e8-c93c-4f16-ada2-78cd49df364b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Capteur">
+      <UniqueIdentifier>{e450fe66-d717-4268-b29e-71f13079791e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Capteur">
+      <UniqueIdentifier>{02784ad6-fa7c-488e-ac9a-13173e06fc32}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -274,6 +280,21 @@
     </ClCompile>
     <ClCompile Include="ControleRobot\Comportement\ComportementSuiviLigne.cpp">
       <Filter>Source Files\ControleRobot\Comportement</Filter>
+    </ClCompile>
+    <ClCompile Include="Capteur\CapteurDistance.cpp">
+      <Filter>Source Files\Capteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Capteur\SuiveurLigne.cpp">
+      <Filter>Source Files\Capteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Capteur\CapteurOptique.cpp">
+      <Filter>Source Files\Capteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurDetectionLigne.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurDetectionObstacle.cpp">
+      <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -474,6 +495,21 @@
     </ClInclude>
     <ClInclude Include="ControleRobot\Comportement\ComportementAbstrait.h">
       <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="Capteur\CapteurDistance.h">
+      <Filter>Header Files\Capteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Capteur\SuiveurLigne.h">
+      <Filter>Header Files\Capteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Capteur\CapteurOptique.h">
+      <Filter>Header Files\Capteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurDetectionLigne.h">
+      <Filter>Header Files\Visiteur</Filter>
+    </ClInclude>
+    <ClInclude Include="Visiteur\VisiteurDetectionObstacle.h">
+      <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
