@@ -12,12 +12,13 @@
 #include <windows.h>
 #include <fstream>
 #include <limits>
+#include <vector>
+#include <iostream>
 
 #include "scene.h"
 #include "Modele3D.h"
 #include "Noeud.h"
-
-#include <iostream>
+#include "Droite3D.h"
 
 #include "glm\gtx\norm.hpp"
 
@@ -196,6 +197,11 @@ namespace utilitaire {
 		return (DANS_INTERVALLE(x, xMin, xMax) && DANS_INTERVALLE(y, yMin, yMax));
 	}
 
+    bool DANS_LIMITESXY(const glm::dvec3& point, 
+        const glm::dvec3& min, const glm::dvec3& max)
+    {
+        return DANS_LIMITESXY(point.x, min.x, max.x, point.y, min.y, max.y);
+    }
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -663,6 +669,71 @@ namespace utilitaire {
 		}
 		return pointEstDansQuad;
 	}
+
+    void calculerIntervalleProjection(math::Droite3D& droite, const QuadEnglobant& quad,
+        glm::dvec3& min, glm::dvec3& max)
+    {
+        glm::dvec3 projection = droite.perpendiculaireDroite(quad.coins[0]);
+        min = projection;
+        max = projection;
+        for (int i = 1; i < quad.N_COINS; i++)
+        {
+            projection = droite.perpendiculaireDroite(quad.coins[i]);
+            if (projection.x > max.x || projection.y > max.y)
+            {
+                max = projection;
+            }
+            else if (projection.x < min.x || projection.y < min.y)
+            {
+                min = projection;
+            }
+        }
+    }
+
+    bool calculerIntersectionProjection(math::Droite3D& droite, 
+        const QuadEnglobant& quad1, const QuadEnglobant& quad2)
+    {
+        glm::dvec3 min1;
+        glm::dvec3 max1;
+        calculerIntervalleProjection(droite, quad1, min1, max1);
+        glm::dvec3 min2;
+        glm::dvec3 max2;
+        calculerIntervalleProjection(droite, quad2, min2, max2);
+
+        return (DANS_LIMITESXY(min1, min2, max2) || DANS_LIMITESXY(max1, min2, max2));
+    }
+
+    math::Droite3D calculerDroitePerpendiculaire(const glm::dvec3& point1, 
+                                                 const glm::dvec3& point2)
+    {
+        glm::dvec3 vecteur = point2 - point1;
+        glm::dvec3 perpendiculaire = {-vecteur.y, vecteur.x, 0.0} ;
+        glm::dvec3 point3 = point1 + perpendiculaire; 
+        return math::Droite3D(point1, point3);
+    }
+
+    bool calculerIntersectionDeuxQuads(const QuadEnglobant& quad1, 
+                                       const QuadEnglobant& quad2)
+    {
+        const int N = 4;
+        int j = 0; 
+        bool estIntersection = false;
+        for (int i = 0; i < quad1.N_COINS && !estIntersection; i++)
+        {
+            j = (i + 1) % N;
+            math::Droite3D droite = calculerDroitePerpendiculaire(quad1.coins[i],
+                                                                  quad1.coins[j]);
+            estIntersection = calculerIntersectionProjection(droite, quad1, quad2);       
+        }
+        for (int i = 0; i < quad2.N_COINS && !estIntersection; i++)
+        {
+            j = (i + 1) % N;
+            math::Droite3D droite = calculerDroitePerpendiculaire(quad2.coins[i],
+                                                                  quad2.coins[j]);
+            estIntersection = calculerIntersectionProjection(droite, quad1, quad2);       
+        }
+        return estIntersection;
+    }
 }; // Fin de l'espace de nom utilitaire.
 
 ///////////////////////////////////////////////////////////////////////////
