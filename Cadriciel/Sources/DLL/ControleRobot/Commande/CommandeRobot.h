@@ -12,15 +12,7 @@
 #define COMMANDE_ROBOT_H
 
 #include "ControleRobot.h"
-
-enum TypeCommande
-{
-	INVERSER_MODE_CONTROLE,
-	AVANCER,
-	RECULER,
-	ROTATION_GAUCHE,
-	ROTATION_DROITE
-};
+#include "./../../Enum/TypeCommandeEnum.cs"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class CommandeRobot

@@ -24,7 +24,9 @@ class ComportementEvitement : public ComportementAbstrait
 {
 public:
 	ComportementEvitement();
-	ComportementEvitement(eComportement prochainComportement, double maxTemps, double maxAngle);
+	ComportementEvitement(TypeComportement prochainComportement);
+	ComportementEvitement(const rapidjson::Value& comportementJSON);
+	ComportementEvitement(TypeComportement prochainComportement, double maxTemps, double maxAngle);
 	virtual ~ComportementEvitement();
 
 	void initialiser();

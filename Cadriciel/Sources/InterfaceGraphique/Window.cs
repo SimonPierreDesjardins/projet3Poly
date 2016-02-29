@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using ModeEnum;
 
 namespace InterfaceGraphique
 {    
@@ -1408,15 +1409,6 @@ namespace InterfaceGraphique
 
 
     }
-
-    enum Mode
-    {
-        MENU_PRINCIPAL,
-        SIMULATION,
-        EDITION,
-        CONFIGURE,
-        TEST
-    };
 
     ////////////////////////////////////////////////////////////////////////
     ///

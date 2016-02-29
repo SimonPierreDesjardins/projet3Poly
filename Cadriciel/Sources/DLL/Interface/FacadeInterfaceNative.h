@@ -11,7 +11,6 @@
 
 #include <Windows.h>
 #include <Windowsx.h>
-#include "ComportementAbstrait.h"
 
 extern "C"
 {
@@ -51,10 +50,11 @@ extern "C"
 	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX);
 	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY);
 
-	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(eComportement comportementSuivant);
-	__declspec(dllexport) void __cdecl assignerComportementBalayage(eComportement comportementSuivant);
-	__declspec(dllexport) void __cdecl assignerComportementDeviation(eComportement comportementSuivant, double angle);
-	__declspec(dllexport) void __cdecl assignerComportementEvitement(eComportement comportementSuivant, double angle, double duree);
+	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(TypeComportement comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementBalayage(TypeComportement comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation);
+	__declspec(dllexport) void __cdecl assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement);
+	__declspec(dllexport) void __cdecl modifierToucheCommande(const unsigned char& touche, const TypeCommande& commande);
 
 }
 

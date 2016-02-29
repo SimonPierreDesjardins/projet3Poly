@@ -14,20 +14,11 @@
 #include <memory>
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
+#include "./../../Enum/TypeComportementEnum.cs"
 
 namespace rapidjson {
 	class FileWriteStream;
 }
-
-enum eComportement {
-	DEFAUT,
-	SUIVIDELIGNE,
-	BALAYAGE180,
-	DEVIATIONVERSLAGAUCHE,
-	DEVIATIONVERSLADROITE,
-	EVITEMENTPARLAGAUCHE,
-	EVITEMENTPARLADROITE
-};
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ComportementAbstrait
@@ -44,7 +35,7 @@ class ComportementAbstrait
 {
 public:
 	ComportementAbstrait();
-	ComportementAbstrait(eComportement prochainComportement);
+	ComportementAbstrait(TypeComportement prochainComportement);
 	ComportementAbstrait(const rapidjson::Value& comportementJSON);
 	virtual ~ComportementAbstrait();
 
@@ -54,9 +45,9 @@ public:
 	// Traite l'execution du comportement
 	virtual void mettreAJour() = 0;
 
-	eComportement obtenirComportementSuivant();
+	TypeComportement obtenirComportementSuivant();
 
-	void assignerComportementSuivant(eComportement prochainComportement);
+	void assignerComportementSuivant(TypeComportement prochainComportement);
 
 	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
@@ -65,7 +56,7 @@ protected:
 
 private:
 	// Le comportement a adopter une fois les conditions de fin de ce comportement sont atteintes.
-	eComportement comportementSuivant_;
+	TypeComportement comportementSuivant_;
 };
 
 #endif // COMPORTEMENT_ABSTRAIT

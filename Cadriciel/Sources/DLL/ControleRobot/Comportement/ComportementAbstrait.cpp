@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementAbstrait.h"
+#include "rapidjson\filewritestream.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -25,7 +26,7 @@ ComportementAbstrait::ComportementAbstrait()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementAbstrait::ComportementAbstrait(eComportement prochainComportement)
+/// @fn ComportementAbstrait::ComportementAbstrait(TypeComportement prochainComportement)
 ///
 /// Constructeur par paramètre
 ///
@@ -34,7 +35,7 @@ ComportementAbstrait::ComportementAbstrait()
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementAbstrait::ComportementAbstrait(eComportement prochainComportement){
+ComportementAbstrait::ComportementAbstrait(TypeComportement prochainComportement){
 	this->comportementSuivant_ = prochainComportement;
 }
 
@@ -77,7 +78,7 @@ ComportementAbstrait::~ComportementAbstrait()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ComportementAbstrait::assignerComportementSuivant(eComportement comportementSuivant){
+void ComportementAbstrait::assignerComportementSuivant(TypeComportement comportementSuivant){
 	comportementSuivant_ = comportementSuivant;
 }
 
@@ -90,7 +91,7 @@ void ComportementAbstrait::assignerComportementSuivant(eComportement comportemen
 /// @return le comportement suivant a adopter.
 ///
 ////////////////////////////////////////////////////////////////////////
-eComportement ComportementAbstrait::obtenirComportementSuivant(){
+TypeComportement ComportementAbstrait::obtenirComportementSuivant(){
 	return comportementSuivant_;
 }
 
@@ -122,7 +123,7 @@ void ComportementAbstrait::toJSON(rapidjson::Writer<rapidjson::FileWriteStream>&
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementAbstrait::fromJson(const rapidjson::Value& comportementJSON){
-	this->comportementSuivant_ = eComportement(comportementJSON.MemberBegin()->value.GetInt());
+	this->comportementSuivant_ = TypeComportement(comportementJSON.MemberBegin()->value.GetInt());
 }
 
 ///////////////////////////////////////////////////////////////////////////////

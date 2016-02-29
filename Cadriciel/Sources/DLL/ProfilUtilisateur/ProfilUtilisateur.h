@@ -28,15 +28,17 @@ class ProfilUtilisateur
 		ProfilUtilisateur();
 		ProfilUtilisateur(std::string nomProfil);
 		~ProfilUtilisateur();
-		void sauvegarder();
-		void changerProfil(std::string nomProfil);
-		void assignerComportement(eComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement);
+		bool sauvegarder(std::string nomProfil);
+		bool changerProfil(std::string nomProfil);
+		void assignerComportement(TypeComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement);
+		void modifierToucheCommande(const uint8_t& touche, const TypeCommande& controle);
 
 	private:
+		void sauvegarder();
+		bool ouvrirProfil();
 		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
-		void modifierToucheCommande(const uint8_t& touche, const TypeCommande& controle);
 		void chargerProfilParDefaut();
-		void chargerProfil();
+		bool chargerProfil();
 		std::string nomProfil_;
 		const int NOMBRE_OPTIONS{ 11 };
 		FILE* profil_;

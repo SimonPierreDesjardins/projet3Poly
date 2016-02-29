@@ -24,6 +24,8 @@ class ComportementBalayage : public ComportementAbstrait
 {
 public:
 	ComportementBalayage();
+	ComportementBalayage(TypeComportement comportement);
+	ComportementBalayage(const rapidjson::Value& comportementJSON);
 	virtual ~ComportementBalayage();
 
 	void initialiser();

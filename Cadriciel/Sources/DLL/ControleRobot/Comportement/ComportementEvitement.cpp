@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementEvitement.h"
+#include "rapidjson\filewritestream.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -27,7 +28,33 @@ ComportementEvitement::ComportementEvitement()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementDeviation::ComportementDeviation(eComportement prochainComportement, double angleMax)
+/// @fn ComportementEvitement::ComportementEvitement(TypeComportement prochainComportement)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] prochainComportement : le comportement que le robot adopte une fois le comportement actuel terminé
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementEvitement::ComportementEvitement(TypeComportement prochainComportement) : ComportementAbstrait(prochainComportement){}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementEvitement::ComportementEvitement(const rapidjson::Value& comportementJSON)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] comportementJSON : le comportement en format JSON
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementEvitement::ComportementEvitement(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement, double angleMax)
 ///
 /// Constructeur par paramètres
 ///
@@ -38,7 +65,7 @@ ComportementEvitement::ComportementEvitement()
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementEvitement::ComportementEvitement(eComportement prochainComportement, double maxTemps, double maxAngle) : ComportementAbstrait(prochainComportement){
+ComportementEvitement::ComportementEvitement(TypeComportement prochainComportement, double maxTemps, double maxAngle) : ComportementAbstrait(prochainComportement){
 	this->maxTemps = maxTemps;
 	this->maxAngle = maxAngle;
 }

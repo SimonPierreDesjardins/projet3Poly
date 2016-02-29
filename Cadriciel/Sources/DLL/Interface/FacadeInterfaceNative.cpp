@@ -19,6 +19,7 @@
 #include "EtatTypes.h"
 #include "BancTests.h"
 #include "ComportementTypes.h"
+#include "CommandeRobot.h"
 
 extern "C"
 {
@@ -458,14 +459,14 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void __cdecl assignerComportementSuivreLigne(eComportement comportementSuivant)
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementSuivreLigne(TypeComportement comportementSuivant)
 	///
 	/// Cette fonction permet d'assigner le comportement suivi de ligne du robot au profil de l'utilisateur.
 	///
 	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne. 
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(eComportement comportementSuivant){
+	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(TypeComportement comportementSuivant){
 		std::unique_ptr<ComportementSuiviLigne> comportementPtr = std::make_unique<ComportementSuiviLigne>();
 		comportementPtr->assignerComportementSuivant(comportementSuivant);
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(SUIVIDELIGNE, std::move(comportementPtr));
@@ -473,14 +474,14 @@ extern "C"
 	
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void __cdecl assignerComportementBalayage(eComportement comportementSuivant)
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementBalayage(TypeComportement comportementSuivant)
 	///
 	/// Cette fonction permet d'assigner le comportement balayage du robot au profil de l'utilisateur.
 	///
 	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne.
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl assignerComportementBalayage(eComportement comportementSuivant){
+	__declspec(dllexport) void __cdecl assignerComportementBalayage(TypeComportement comportementSuivant){
 		std::unique_ptr<ComportementBalayage> comportementPtr = std::make_unique<ComportementBalayage>();
 		comportementPtr->assignerComportementSuivant(comportementSuivant);
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(BALAYAGE180, std::move(comportementPtr));
@@ -488,7 +489,7 @@ extern "C"
 	
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void __cdecl assignerComportementDeviation(eComportement comportementSuivant, double angle, eComportement typeDeviation)
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation)
 	///
 	/// Cette fonction permet d'assigner le comportement deviation gauche ou droite du robot au profil de l'utilisateur.
 	///
@@ -497,7 +498,7 @@ extern "C"
 	///@param typeDeviation : représente si c'est une déviation à gauche ou à droite
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl assignerComportementDeviation(eComportement comportementSuivant, double angle, eComportement typeDeviation){
+	__declspec(dllexport) void __cdecl assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation){
 		std::unique_ptr<ComportementDeviation> comportementPtr = std::make_unique<ComportementDeviation>();
 		comportementPtr->assignerComportementSuivant(comportementSuivant);
 		comportementPtr->setAngleMaxRotation(angle);
@@ -506,7 +507,7 @@ extern "C"
 	
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void __cdecl assignerComportementEvitement(eComportement comportementSuivant, double angle, double duree, eComportement typeEvitement)
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement)
 	///
 	/// Cette fonction permet d'assigner le comportement deviation gauche ou droite du robot au profil de l'utilisateur.
 	///
@@ -516,10 +517,14 @@ extern "C"
 	/// @param typeEvitement : représente si c'est un évitement vers la gauche ou la droite
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl assignerComportementEvitement(eComportement comportementSuivant, double angle, double duree, eComportement typeEvitement){
+	__declspec(dllexport) void __cdecl assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement){
 		std::unique_ptr<ComportementEvitement> comportementPtr = std::make_unique<ComportementEvitement>();
 		comportementPtr->assignerComportementSuivant(comportementSuivant);
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(typeEvitement, std::move(comportementPtr));
+	}
+
+	__declspec(dllexport) void __cdecl modifierToucheCommande(const unsigned char& touche, const TypeCommande& commande){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande(touche, commande);
 	}
 }
 

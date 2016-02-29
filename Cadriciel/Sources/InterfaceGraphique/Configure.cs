@@ -8,14 +8,41 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using TypeCommandeEnum;
+using TypeComportementEnum;
 
 namespace InterfaceGraphique
 {
     public partial class Configure : Form
     {
+
         public Configure()
         {
             InitializeComponent();
+            List<TypeComportement> comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
+
+            suiviLigneCB.DataSource = comportementsList;
+
+            balayageCB.BindingContext = new BindingContext();
+            balayageCB.DataSource = comportementsList;
+
+            deviationGCB.BindingContext = new BindingContext();
+            deviationGCB.DataSource = comportementsList;
+
+            deviationDCB.BindingContext = new BindingContext();
+            deviationDCB.DataSource = comportementsList;
+
+            evitementGCB.BindingContext = new BindingContext();
+            evitementGCB.DataSource = comportementsList;
+
+            evitementDCB.BindingContext = new BindingContext();
+            evitementDCB.DataSource = comportementsList;
+
+            capteurDistanceDangerCB.BindingContext = new BindingContext();
+            capteurDistanceDangerCB.DataSource = comportementsList;
+
+            capteurDistanceSecuritaireCB.BindingContext = new BindingContext();
+            capteurDistanceSecuritaireCB.DataSource = comportementsList;
         }
 
         private void textBox4_KeyDown(object sender, KeyEventArgs e)
@@ -37,16 +64,19 @@ namespace InterfaceGraphique
 
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!caractereInvalide(sender, e))
+            if (!caractereInvalide(sender, e)) 
                 textBoxAvancer.Text = e.KeyChar.ToString();
+                
+            
 
-            textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);
+            textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);    
         }
 
         private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
                 textBoxReculer.Text = e.KeyChar.ToString();
+            
 
             textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
@@ -55,6 +85,7 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
                 textBoxAntiHoraire.Text = e.KeyChar.ToString();
+            
 
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
@@ -63,6 +94,7 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
                 textBoxHoraire.Text = e.KeyChar.ToString();
+            
 
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
@@ -71,13 +103,13 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
                 textBoxModeManuel.Text = e.KeyChar.ToString();
+            
 
             textBoxModeManuel.Select(textBoxModeManuel.Text.Length, 0);
         }
 
         private void buttonDefProfil_Click(object sender, EventArgs e)
         {
-            
             capteurDistanceChkBox.Checked = false;
             capteurLigneChkBox.Checked = false;
         }
@@ -207,10 +239,44 @@ namespace InterfaceGraphique
         {
 
         }
+
+        private void capteurDistanceChkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            capteurDistanceOptionsPnl.Enabled = capteurDistanceChkBox.Checked;
+        }
+
+        private void buttonSaveProfil_Click_1(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDeviationGNumBox.Value), TypeComportement.DEVIATIONVERSLAGAUCHE);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDeviationDNumBox.Value), TypeComportement.DEVIATIONVERSLADROITE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEvitementGNumBox.Value), Convert.ToDouble(dureeEvitementGNumBox.Value), TypeComportement.EVITEMENTPARLAGAUCHE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEvitementDNumBox.Value), Convert.ToDouble(dureeEvitementDNumBox.Value), TypeComportement.EVITEMENTPARLADROITE);
+            
+            FonctionsNatives.modifierToucheCommande(textBoxAvancer.Text[0], TypeCommande.AVANCER);
+            FonctionsNatives.modifierToucheCommande(textBoxReculer.Text[0], TypeCommande.RECULER);
+            FonctionsNatives.modifierToucheCommande(textBoxAntiHoraire.Text[0], TypeCommande.ROTATION_DROITE);
+            FonctionsNatives.modifierToucheCommande(textBoxHoraire.Text[0], TypeCommande.ROTATION_GAUCHE);
+            FonctionsNatives.modifierToucheCommande(textBoxModeManuel.Text[0], TypeCommande.INVERSER_MODE_CONTROLE);
+        }
     }
     static partial class FonctionsNatives{
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerOptionsProfil([MarshalAs(UnmanagedType.LPArray, SizeConst = 11)] bool[] options);
+        public static extern void assignerComportementSuivreLigne(TypeComportement comportementSuivant);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerComportementBalayage(TypeComportement comportementSuivant);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void modifierToucheCommande(char touche, TypeCommande commande);
+
     }
 }
 

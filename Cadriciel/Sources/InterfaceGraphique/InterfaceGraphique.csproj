@@ -175,6 +175,12 @@
   <ItemGroup>
     <None Include="Resources\law2.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Enum\Enum.csproj">
+      <Project>{c6fb0f99-403a-43a9-86b5-c8ca99ac438a}</Project>
+      <Name>Enum</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>$(TargetName).exe testsC++</PostBuildEvent>

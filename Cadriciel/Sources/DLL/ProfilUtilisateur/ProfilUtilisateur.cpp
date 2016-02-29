@@ -3,13 +3,13 @@
 #include "rapidjson\reader.h"
 #include "rapidjson\filewritestream.h"
 #include "rapidjson\filereadstream.h"
-#include "CommandeRobot.h"
 #include <sys\stat.h>
 #include <windows.h>
 #include <locale>
 #include <codecvt>
 #include <iostream>
 #include "ComportementTypes.h"
+
 
 ProfilUtilisateur::ProfilUtilisateur()
 {
@@ -26,6 +26,21 @@ ProfilUtilisateur::ProfilUtilisateur(std::string nomProfil)
 ProfilUtilisateur::~ProfilUtilisateur()
 {
 
+}
+
+bool ProfilUtilisateur::ouvrirProfil(){
+	errno_t err;
+	err = fopen_s(&profil_, (CHEMIN_PROFIL + nomProfil_).c_str(), "ab");
+	return err == 0;
+}
+
+bool ProfilUtilisateur::sauvegarder(std::string nomProfil){
+	nomProfil_ = nomProfil;
+	if(!ouvrirProfil())
+		return false;
+	sauvegarder();
+	fclose(profil_);
+	return true;
 }
 
 void ProfilUtilisateur::sauvegarder()
@@ -46,22 +61,18 @@ void ProfilUtilisateur::sauvegarder()
 	}
 	writer.EndArray();
 	writer.EndObject();
-	fclose(profil_);
 }
 
-void ProfilUtilisateur::changerProfil(std::string nomProfil){
+bool ProfilUtilisateur::changerProfil(std::string nomProfil){
 	nomProfil_ = nomProfil;
 	comportements_.clear();
-	chargerProfil();
+	return chargerProfil();
 }
 
-void ProfilUtilisateur::chargerProfil()
+bool ProfilUtilisateur::chargerProfil()
 {
-	errno_t err;
-	if (err = fopen_s(&profil_, (CHEMIN_PROFIL + nomProfil_).c_str(), "ab") != 0){
-		std::cout << "Erreur lors de l'ouverture du fichier profil : " << err << std::endl;
-	}
-
+	if(!ouvrirProfil())
+		return false;
 	rapidjson::Document doc;
 	char readBuffer[65536];
 	rapidjson::FileReadStream is(profil_, readBuffer, sizeof(readBuffer));
@@ -83,6 +94,7 @@ void ProfilUtilisateur::chargerProfil()
 	comportements_.push_back(std::make_unique<ComportementDeviation>(comportements[DEVIATIONVERSLADROITE]));
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportements[EVITEMENTPARLAGAUCHE]));
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportements[EVITEMENTPARLADROITE]));
+	return true;
 }
 
 void ProfilUtilisateur::chargerProfilParDefaut()
@@ -133,7 +145,7 @@ void ProfilUtilisateur::modifierToucheCommande(const unsigned char& touche, cons
 	commandes_.insert(std::make_pair(touche, std::make_unique<CommandeRobot>(commande)));
 }
 
-void ProfilUtilisateur::assignerComportement(eComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement)
+void ProfilUtilisateur::assignerComportement(TypeComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement)
 {
 	comportements_.at(typeComportement).swap(comportement);
 }

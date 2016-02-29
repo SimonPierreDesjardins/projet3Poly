@@ -9,6 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementDeviation.h"
+#include "rapidjson\filewritestream.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -27,7 +28,33 @@ ComportementDeviation::ComportementDeviation()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementDeviation::ComportementDeviation(eComportement prochainComportement, double angleMax)
+/// @fn ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] prochainComportement : le comportement que le robot adopte une fois le comportement actuel terminé
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement) : ComportementAbstrait(prochainComportement){}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::ComportementDeviation(const rapidjson::Value& comportementJSON)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] comportementJSON : le comportement en format JSON
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDeviation::ComportementDeviation(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement, double angleMax)
 ///
 /// Constructeur par paramètres
 ///
@@ -37,7 +64,7 @@ ComportementDeviation::ComportementDeviation()
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDeviation::ComportementDeviation(eComportement prochainComportement, double angleMax) : ComportementAbstrait(prochainComportement){
+ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement, double angleMax) : ComportementAbstrait(prochainComportement){
 	this->maxAngle = angleMax;
 }
 

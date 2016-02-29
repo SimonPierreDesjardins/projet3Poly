@@ -25,6 +25,31 @@ ComportementDefaut::ComportementDefaut()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDefaut::ComportementDefaut(TypeComportement prochainComportement)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] prochainComportement : le comportement que le robot adopte une fois le comportement actuel terminé
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDefaut::ComportementDefaut(TypeComportement prochainComportement) : ComportementAbstrait(prochainComportement){}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] comportementJSON : le comportement en format JSON
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
 
 ////////////////////////////////////////////////////////////////////////
 ///

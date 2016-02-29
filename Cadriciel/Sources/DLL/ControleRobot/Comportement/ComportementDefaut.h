@@ -24,6 +24,8 @@ class ComportementDefaut : public ComportementAbstrait
 {
 public:
 	ComportementDefaut();
+	ComportementDefaut(TypeComportement prochainComportement);
+	ComportementDefaut(const rapidjson::Value& comportementJSON);
 	virtual ~ComportementDefaut();
 
 	void initialiser();

@@ -24,7 +24,9 @@ class ComportementDeviation : public ComportementAbstrait
 {
 public:
 	ComportementDeviation();
-	ComportementDeviation(eComportement prochainComportement, double angleMax);
+	ComportementDeviation(TypeComportement prochainComportement);
+	ComportementDeviation(const rapidjson::Value& comportementJSON);
+	ComportementDeviation(TypeComportement prochainComportement, double angleMax);
 	virtual ~ComportementDeviation();
 
 	void initialiser();
