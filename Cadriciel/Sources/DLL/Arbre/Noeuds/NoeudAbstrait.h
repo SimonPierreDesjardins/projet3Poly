@@ -217,6 +217,11 @@ protected:
 
 	/// Storage pour le dessin du modèle
 	opengl::VBO const*		vbo_{ nullptr };
+
+	//Vitesse des moteurs du robot
+	float vitesseDroite_{ 0.f };
+	float vitesseGauche_{ 0.f };
+	float vitesseRotation_{ 0.f };
 };
 
 
@@ -587,9 +592,6 @@ inline bool NoeudAbstrait::estDuplicable() const
 {
 	return estDuplicable_;
 }
-
-
-
 #endif // __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
 

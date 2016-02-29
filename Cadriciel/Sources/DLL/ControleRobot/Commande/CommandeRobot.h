@@ -14,6 +14,7 @@
 #include "ControleRobot.h"
 #include "./../../Enum/TypeCommandeEnum.cs"
 
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class CommandeRobot
 /// @brief Classe qui représente une commande qu'on envoie au robot
@@ -34,16 +35,26 @@ class CommandeRobot{
 
 		void assignerVitessesMoteurs(double vit_g, double vit_d);
 
-	private:
-		/// Représente la nouvelle puissance du moteur de gauche
-		double puissanceMoteurG_{ 0 };
+		inline TypeCommande obtenirTypeCommande();
 
-		/// Représente la nouvelle puissance du moteur de droite
-		double puissanceMoteurD_{ 0 };
+	private:
+		/// Représente la nouvelle vitesse du moteur de gauche
+		double vitesseMoteurG_{ 0 };
+
+		/// Représente la nouvelle vitesse du moteur de droite
+		double vitesseMoteurD_{ 0 };
 
 		/// Représente si l'on change le mode d'utilisation du robot ou non. Si oui, celle-ci correspondra à un des deux modes d'utilisation (MODE_MANUEL ou MODE_AUTO)
 		TypeCommande typeCommande_;
 };
+
+
+
+inline TypeCommande CommandeRobot::obtenirTypeCommande()
+{
+	return typeCommande_;
+}
+
 
 #endif/// COMMANDE_ROBOT_H
 

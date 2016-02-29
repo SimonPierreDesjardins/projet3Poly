@@ -97,6 +97,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Configure.resx">
       <DependentUpon>Configure.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurOuverture.resx">
       <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
@@ -176,10 +177,20 @@
     <None Include="Resources\law2.png" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ProjectReference Include="..\Enum\Enum.csproj">
       <Project>{c6fb0f99-403a-43a9-86b5-c8ca99ac438a}</Project>
       <Name>Enum</Name>
     </ProjectReference>
+=======
+    <None Include="Resources\player_pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pause.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pauseNoire.png" />
+>>>>>>> develop
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

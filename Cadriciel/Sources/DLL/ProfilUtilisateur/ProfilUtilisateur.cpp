@@ -134,18 +134,38 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 	}
 
 	chargerProfil();
+
 }
 
-void ProfilUtilisateur::modifierToucheCommande(const unsigned char& touche, const TypeCommande& commande)
+void ProfilUtilisateur::modifierToucheCommande(const uint8_t& touche,const TypeCommande& commande)
 {
-	// Mettre a jour la touche dans la table de commandes.
-	commandes_.erase(touches_.at(commande));
-	touches_[commande] = touche;
-	// Creer la commande dans la map.
-	commandes_.insert(std::make_pair(touche, std::make_unique<CommandeRobot>(commande)));
+	if (!estUtilise(touche))
+	{
+		commandes_.erase(touches_[commande]);
+		touches_[commande] = touche;
+		// Creer la commande dans la map.
+		commandes_.insert(std::make_pair(touche, std::make_unique<CommandeRobot>(commande)));
+	}
 }
 
 void ProfilUtilisateur::assignerComportement(TypeComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement)
 {
 	comportements_.at(typeComportement).swap(comportement);
+}
+
+CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const
+{
+	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
+	return (it == commandes_.end()) ? nullptr : (*it).second.get();
+}
+
+bool ProfilUtilisateur::estUtilise(char touche)
+{
+	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
+	return it != commandes_.end();
+}
+
+char ProfilUtilisateur::obtenirToucheCommande(int commande)
+{
+	return touches_[commande];
 }

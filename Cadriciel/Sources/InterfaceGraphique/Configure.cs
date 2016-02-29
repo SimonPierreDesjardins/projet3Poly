@@ -15,6 +15,11 @@ namespace InterfaceGraphique
 {
     public partial class Configure : Form
     {
+<<<<<<< HEAD
+=======
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        static extern bool HideCaret(IntPtr hWnd);
+>>>>>>> develop
 
         public Configure()
         {
@@ -45,11 +50,6 @@ namespace InterfaceGraphique
             capteurDistanceSecuritaireCB.DataSource = comportementsList;
         }
 
-        private void textBox4_KeyDown(object sender, KeyEventArgs e)
-        {
-
-        }
-
         private void buttonDefConfig_Click(object sender, EventArgs e)
         {
             textBoxAvancer.Text = "W";
@@ -57,55 +57,116 @@ namespace InterfaceGraphique
             textBoxHoraire.Text = "A";
             textBoxAntiHoraire.Text = "D";
             textBoxModeManuel.Text = "Espace";
+            FonctionsNatives.chargerProfilParDefaut();
         }
 
         private bool caractereInvalide(object sender, KeyPressEventArgs e)
-        { return e.Handled = !(char.IsLetter(e.KeyChar) || e.KeyChar == (char)Keys.Back); }
+        { return e.Handled = !(/*char.IsLetterOrDigit(e.KeyChar)*/true); }
 
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
+<<<<<<< HEAD
             if (!caractereInvalide(sender, e)) 
                 textBoxAvancer.Text = e.KeyChar.ToString();
                 
             
 
+=======
+            if (!caractereInvalide(sender, e))
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.AVANCER);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.AVANCER);
+            textBoxAvancer.Text = afficherCaractere(caractere);
+>>>>>>> develop
             textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);    
         }
 
         private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
+<<<<<<< HEAD
                 textBoxReculer.Text = e.KeyChar.ToString();
             
 
+=======
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.RECULER);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.RECULER);
+            textBoxReculer.Text = afficherCaractere(caractere);
+>>>>>>> develop
             textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
 
         private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
+<<<<<<< HEAD
                 textBoxAntiHoraire.Text = e.KeyChar.ToString();
             
 
+=======
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_DROITE);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE);
+            textBoxAntiHoraire.Text = afficherCaractere(caractere);
+>>>>>>> develop
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
 
         private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
+<<<<<<< HEAD
                 textBoxHoraire.Text = e.KeyChar.ToString();
             
 
+=======
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_GAUCHE);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE);
+            textBoxHoraire.Text = afficherCaractere(caractere);
+>>>>>>> develop
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
 
         private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
         {
+            
             if (!caractereInvalide(sender, e))
+<<<<<<< HEAD
                 textBoxModeManuel.Text = e.KeyChar.ToString();
             
 
+=======
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
+            textBoxModeManuel.Text = afficherCaractere(caractere);    
+>>>>>>> develop
             textBoxModeManuel.Select(textBoxModeManuel.Text.Length, 0);
+        }
+
+        string afficherCaractere(char caractere)
+        {
+            string mot = caractere.ToString();
+            if (caractere == ' ')
+            {
+                mot = "ESPACE";
+            }
+            else if (caractere == '\r')
+            {
+                mot = "Enter";
+            }
+            else if (caractere == '\b')
+            {
+                mot = "Backspace";
+            }
+            return mot;
         }
 
         private void buttonDefProfil_Click(object sender, EventArgs e)
@@ -131,10 +192,10 @@ namespace InterfaceGraphique
 
         private void Configure_Load(object sender, EventArgs e)
         {
-            //comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxProfil.SelectedIndex = 0;
         }
 
+<<<<<<< HEAD
         private void textBoxAvancer_KeyDown(object sender, KeyEventArgs e)
         {
 
@@ -260,9 +321,22 @@ namespace InterfaceGraphique
             FonctionsNatives.modifierToucheCommande(textBoxHoraire.Text[0], TypeCommande.ROTATION_GAUCHE);
             FonctionsNatives.modifierToucheCommande(textBoxModeManuel.Text[0], TypeCommande.INVERSER_MODE_CONTROLE);
         }
+=======
+>>>>>>> develop
     }
+
+    enum TypeCommande
+    {
+	    INVERSER_MODE_CONTROLE,
+	    AVANCER,
+	    RECULER,
+	    ROTATION_GAUCHE,
+	    ROTATION_DROITE
+    };
+
     static partial class FonctionsNatives{
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+<<<<<<< HEAD
         public static extern void assignerComportementSuivreLigne(TypeComportement comportementSuivant);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -277,6 +351,18 @@ namespace InterfaceGraphique
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void modifierToucheCommande(char touche, TypeCommande commande);
 
+=======
+        public static extern void assignerOptionsProfil([MarshalAs(UnmanagedType.LPArray, SizeConst = 11)] bool[] options);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void modifierToucheCommande(char touche, TypeCommande commande);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void chargerProfilParDefaut();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern char obtenirToucheCommande(TypeCommande commande);
+>>>>>>> develop
     }
 }
 

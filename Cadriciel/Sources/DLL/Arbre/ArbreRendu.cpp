@@ -11,6 +11,8 @@
 #include "UsineNoeud.h"
 #include "NoeudAbstrait.h"
 #include "VisiteurAbstrait.h"
+#include "FacadeModele.h"
+#include "VisiteurTypes.h"
 
 #include "GL/glew.h"
 
@@ -220,6 +222,302 @@ FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode)
 std::string ArbreRendu::obtenirCheminFichierZoneDefaut()
 {
 	return cheminFichierZoneDefaut;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn int FacadeModele::obtenirNombreSelection()
+///
+/// Cette fonction permet d'obtenir le nombre d'objet selectionné
+///
+/// @return int : le nombre d'objet selectionné
+///
+////////////////////////////////////////////////////////////////////////
+int ArbreRendu::obtenirNombreSelection()
+{
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	int nbSelection = 0;
+	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990() == nullptr) {
+		nbSelection = 0;
+	}
+	else {
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				nbSelection += 1;
+			}
+		}
+	}
+	return nbSelection;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double FacadeModele::obtenirAngleRotation()
+///
+/// Cette fonction permet d'obtenir l'angle de rotation d'un objet
+///
+/// @return doublee : l'angle de rotation de l'objet
+///
+////////////////////////////////////////////////////////////////////////
+double ArbreRendu::obtenirAngleRotation()
+{
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	bool trouve = false;
+	double angle;
+	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990() == nullptr) {
+		angle = 0;
+	}
+	else {
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				angle = enfant->obtenirAngleRotation();
+				trouve = true;
+			}
+		}
+	}
+	return angle;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double FacadeModele::obtenirFacteurGrandeur()
+///
+/// Cette fonction permet d'obtenir le facteur de grandissement d'un objet
+///
+/// @return doublee : le facteur de grandissement d'un objet
+///
+////////////////////////////////////////////////////////////////////////
+double ArbreRendu::obtenirFacteurMiseAEchelle()
+{
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	bool trouve = false;
+	double facteurMiseAEchelle;
+	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990() == nullptr) {
+		facteurMiseAEchelle = 1;
+	}
+	else {
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				if (enfant->obtenirType() == "ligneNoire" || enfant->obtenirType() == "depart") {
+					facteurMiseAEchelle = 1;
+				}
+				facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
+				trouve = true;
+			}
+		}
+	}
+	return facteurMiseAEchelle;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double FacadeModele::obtenirPositionRelativeX()
+///
+/// Cette fonction permet d'obtenir la position relative en X
+///
+/// @return doublee : la position relative en X
+///
+////////////////////////////////////////////////////////////////////////
+double ArbreRendu::obtenirPositionRelativeX()
+{
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	bool trouve = false;
+	double positionX;
+	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990() == nullptr) {
+		positionX = 0;
+	}
+	else {
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				positionX = enfant->obtenirPositionRelative()[0];
+				trouve = true;
+			}
+		}
+	}
+	return positionX;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double FacadeModele::obtenirPositionRelativeY()
+///
+/// Cette fonction permet d'obtenir la position relative en Y
+///
+/// @return doublee : la position relative en Y
+///
+////////////////////////////////////////////////////////////////////////
+double ArbreRendu::obtenirPositionRelativeY()
+{
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	bool trouve = false;
+	double positionY;
+	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990() == nullptr) {
+		positionY = 0;
+	}
+	else {
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				positionY = enfant->obtenirPositionRelative()[1];
+				trouve = true;
+			}
+		}
+	}
+	return positionY;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerAngleRotation(double angle)
+///
+/// Cette fonction assigne un angle de rotation à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: l'angle a assigner a l'objet
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRendu::assignerAngleRotation(const double& angle)
+{
+	std::unique_ptr<VisiteurRotation> visiteur = std::make_unique <VisiteurRotation>();
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
+
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne()) {
+
+			double angleAvantChangement = enfant->obtenirAngleRotation();
+			visiteur->assignerAngleRotation(angle - angleAvantChangement);
+			enfant->accepterVisiteur(visiteur.get());
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			
+			if (!visiteurQuad->objetsDansZoneSimulation()) {
+				visiteur->assignerAngleRotation(angleAvantChangement - angle);
+				enfant->accepterVisiteur(visiteur.get());
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerFacteurGrandeur(double facteurMiseAEchelle)
+///
+/// Cette fonction assigne un facteur de mise à échelle à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: facteur de mise à échelle
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRendu::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
+{
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
+
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table");
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne()) {
+			double facteurAvantChangement = enfant->obtenirFacteurMiseAEchelle();
+			enfant->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			
+			if (!visiteurQuad->objetsDansZoneSimulation()) {
+				enfant->assignerFacteurMiseAEchelle(facteurAvantChangement);
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
+///
+/// Cette fonction assigne une position en X à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: position en X de l'objet
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
+{
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
+
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne()) {
+			double positionXAvantChangement = enfant->obtenirPositionRelative()[0];
+
+			glm::dvec3 position = enfant->obtenirPositionRelative();
+			position[0] = positionRelativeX;
+			enfant->assignerPositionRelative(position);
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			
+			if (!visiteurQuad->objetsDansZoneSimulation()) {
+				position[0] = positionXAvantChangement;
+				enfant->assignerPositionRelative(position);
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
+///
+/// Cette fonction assigne une position en Y à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: position en Y de l'objet
+///
+////////////////////////////////////////////////////////////////////////
+void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
+{
+	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
+
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* enfant;
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+		enfant = table->chercher(i);
+		if (enfant->estSelectionne()) {
+			double positionYAvantChangement = enfant->obtenirPositionRelative()[1];
+
+			glm::dvec3 position = enfant->obtenirPositionRelative();
+			position[1] = positionRelativeY;
+			enfant->assignerPositionRelative(position);
+
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
+			
+			if (!visiteurQuad->objetsDansZoneSimulation()) {
+				position[1] = positionYAvantChangement;
+				enfant->assignerPositionRelative(position);
+			}
+		}
+	}
 }
 
 ////////////////////////////////////////////////

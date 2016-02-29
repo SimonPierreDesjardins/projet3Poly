@@ -11,7 +11,8 @@ enum TypeCommande
         AVANCER,
         RECULER,
         ROTATION_GAUCHE,
-        ROTATION_DROITE
+        ROTATION_DROITE,
+        ARRETER
     };
 
 #if !__LINE__

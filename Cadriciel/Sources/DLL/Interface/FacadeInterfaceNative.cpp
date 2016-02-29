@@ -253,7 +253,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double __cdecl obtenirAngleRotation()
 	{
-		return FacadeModele::obtenirInstance()->obtenirAngleRotation();
+		return FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirAngleRotation();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -267,7 +267,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double __cdecl obtenirFacteurGrandeur()
 	{
-		return FacadeModele::obtenirInstance()->obtenirFacteurMiseAEchelle();
+		return FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirFacteurMiseAEchelle();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -281,7 +281,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double __cdecl obtenirPositionRelativeX()
 	{
-		return FacadeModele::obtenirInstance()->obtenirPositionRelativeX();
+		return FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirPositionRelativeX();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -295,7 +295,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) double __cdecl obtenirPositionRelativeY()
 	{
-		return FacadeModele::obtenirInstance()->obtenirPositionRelativeY();
+		return FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirPositionRelativeY();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -321,7 +321,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) int __cdecl obtenirNombreSelection()
 	{
-		return FacadeModele::obtenirInstance()->obtenirNombreSelection();
+		return FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirNombreSelection();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -391,7 +391,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void assignerAngleRotation(double angle)
 	{
-		FacadeModele::obtenirInstance()->assignerAngleRotation(angle);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerAngleRotation(angle);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -405,7 +405,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerFacteurGrandeur(double facteurMiseAEchelle)
 	{
-		FacadeModele::obtenirInstance()->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -419,7 +419,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerPositionRelativeX(double positionRelativeX)
 	{
-		FacadeModele::obtenirInstance()->assignerPositionRelativeX(positionRelativeX);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerPositionRelativeX(positionRelativeX);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -433,7 +433,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerPositionRelativeY(double positionRelativeY)
 	{
-		FacadeModele::obtenirInstance()->assignerPositionRelativeY(positionRelativeY);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerPositionRelativeY(positionRelativeY);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -525,6 +525,21 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl modifierToucheCommande(const unsigned char& touche, const TypeCommande& commande){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande(touche, commande);
+	}
+
+	/*__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande(touche, (TypeCommande)commande);
+	}*/
+
+	__declspec(dllexport) void __cdecl chargerProfilParDefaut()
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerProfilParDefaut();
+	}
+
+	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande)
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirToucheCommande(commande);
 	}
 }
 

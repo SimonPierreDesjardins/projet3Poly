@@ -451,9 +451,6 @@
     <ClInclude Include="ControleRobot\ControleRobot.h">
       <Filter>Header Files\ControleRobot</Filter>
     </ClInclude>
-    <ClInclude Include="ControleRobot\Commande\CommandeRobot.h">
-      <Filter>Header Files\ControleRobot\Commande</Filter>
-    </ClInclude>
     <ClInclude Include="ControleRobot\Comportement\ComportementAbstrait.h">
       <Filter>Header Files\ControleRobot\Comportement</Filter>
     </ClInclude>
@@ -474,6 +471,9 @@
     </ClInclude>
     <ClInclude Include="ControleRobot\Comportement\ComportementTypes.h">
       <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Commande\CommandeRobot.h">
+      <Filter>Header Files\ControleRobot\Commande</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

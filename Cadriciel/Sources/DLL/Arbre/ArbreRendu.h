@@ -76,6 +76,26 @@ public:
 	/// Retourne le chemin vers le fichier de zone de base
 	std::string obtenirCheminFichierZoneDefaut();
 
+	// Obtenir le nombre d'objet sélectionné
+	int obtenirNombreSelection();
+
+	// Obtient l'angle de rotaion du noeud selectionné. 
+	double obtenirAngleRotation();
+	// Obtient le facteur de mise à échelle du noeud selectionné. 
+	double obtenirFacteurMiseAEchelle();
+	// Obtient la position relative en X du noeud selectionné.
+	double obtenirPositionRelativeX();
+	// Obtient la position relative en Y du noeud selectionné.
+	double obtenirPositionRelativeY();
+	// Assigne l'angle de rotaion du noeud selectionné. 
+	void assignerAngleRotation(const double& angle);
+	// Assigne le facteur de mise à échelle du noeud selectionné.
+	void assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle);
+	// Assigne la position relative en x du noeud sélectionné.
+	void assignerPositionRelativeX(const double& positionRelativeX);
+	// Assigne la position relative en x du noeud sélectionné. 
+	void assignerPositionRelativeY(const double& positionRelativeY);
+
 protected:
 
 	/// Retourne un pointeur vers le fichier de structure de base

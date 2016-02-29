@@ -17,6 +17,7 @@
 #include "Projection.h"
 #include "VisiteurSauvegarde.h"
 #include "EtatTypes.h"
+#include "NoeudRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -31,7 +32,7 @@
 ModeEdition::ModeEdition()
 {
 	typeMode_ = EDITION;
-	etat_ = make_unique < EtatSelection > ();
+	etat_ = make_unique <EtatSelection>();
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 }
 
@@ -301,7 +302,6 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_T:
 				gererToucheT();
 				break;
-
 
 			case VK_DELETE:
 				gererToucheSupprimer();
