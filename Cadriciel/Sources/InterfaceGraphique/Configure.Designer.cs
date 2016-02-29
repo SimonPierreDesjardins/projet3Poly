@@ -124,7 +124,6 @@
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.buttonSaveProfil);
             this.splitContainer1.Panel1.Controls.Add(this.buttonDefProfil);
-            this.splitContainer1.Panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Panel1_Paint);
             // 
             // splitContainer1.Panel2
             // 
@@ -213,7 +212,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Configuration control";
             this.tabPage1.UseVisualStyleBackColor = true;
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // label5
             // 
@@ -265,14 +263,9 @@
             this.textBoxAntiHoraire.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxAntiHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAntiHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-<<<<<<< HEAD
             this.textBoxAntiHoraire.Location = new System.Drawing.Point(447, 202);
             this.textBoxAntiHoraire.MaxLength = 1;
-=======
             this.textBoxAntiHoraire.HideSelection = false;
-            this.textBoxAntiHoraire.Location = new System.Drawing.Point(286, 122);
-            this.textBoxAntiHoraire.MaxLength = 10;
->>>>>>> develop
             this.textBoxAntiHoraire.Name = "textBoxAntiHoraire";
             this.textBoxAntiHoraire.ReadOnly = true;
             this.textBoxAntiHoraire.Size = new System.Drawing.Size(100, 49);
@@ -286,13 +279,8 @@
             this.textBoxModeManuel.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxModeManuel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxModeManuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-<<<<<<< HEAD
             this.textBoxModeManuel.Location = new System.Drawing.Point(284, 299);
-=======
             this.textBoxModeManuel.HideSelection = false;
-            this.textBoxModeManuel.Location = new System.Drawing.Point(123, 219);
-            this.textBoxModeManuel.MaxLength = 10;
->>>>>>> develop
             this.textBoxModeManuel.Name = "textBoxModeManuel";
             this.textBoxModeManuel.ReadOnly = true;
             this.textBoxModeManuel.Size = new System.Drawing.Size(167, 49);
@@ -306,14 +294,9 @@
             this.textBoxAvancer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAvancer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-<<<<<<< HEAD
             this.textBoxAvancer.Location = new System.Drawing.Point(316, 110);
             this.textBoxAvancer.MaxLength = 1;
-=======
             this.textBoxAvancer.HideSelection = false;
-            this.textBoxAvancer.Location = new System.Drawing.Point(155, 30);
-            this.textBoxAvancer.MaxLength = 10;
->>>>>>> develop
             this.textBoxAvancer.Name = "textBoxAvancer";
             this.textBoxAvancer.ReadOnly = true;
             this.textBoxAvancer.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -321,24 +304,16 @@
             this.textBoxAvancer.TabIndex = 3;
             this.textBoxAvancer.Text = "W";
             this.textBoxAvancer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-<<<<<<< HEAD
-=======
             this.textBoxAvancer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAvancer_KeyPress);
->>>>>>> develop
             // 
             // textBoxHoraire
             // 
             this.textBoxHoraire.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-<<<<<<< HEAD
             this.textBoxHoraire.Location = new System.Drawing.Point(183, 202);
             this.textBoxHoraire.MaxLength = 1;
-=======
             this.textBoxHoraire.HideSelection = false;
-            this.textBoxHoraire.Location = new System.Drawing.Point(22, 122);
-            this.textBoxHoraire.MaxLength = 10;
->>>>>>> develop
             this.textBoxHoraire.Name = "textBoxHoraire";
             this.textBoxHoraire.ReadOnly = true;
             this.textBoxHoraire.Size = new System.Drawing.Size(100, 49);
@@ -351,14 +326,9 @@
             this.textBoxReculer.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxReculer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxReculer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-<<<<<<< HEAD
             this.textBoxReculer.Location = new System.Drawing.Point(316, 202);
             this.textBoxReculer.MaxLength = 1;
-=======
             this.textBoxReculer.HideSelection = false;
-            this.textBoxReculer.Location = new System.Drawing.Point(155, 122);
-            this.textBoxReculer.MaxLength = 10;
->>>>>>> develop
             this.textBoxReculer.Name = "textBoxReculer";
             this.textBoxReculer.ReadOnly = true;
             this.textBoxReculer.Size = new System.Drawing.Size(100, 49);
@@ -377,7 +347,6 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Gestion Profils";
             this.tabPage2.UseVisualStyleBackColor = true;
-            this.tabPage2.Click += new System.EventHandler(this.tabPage2_Click);
             // 
             // groupBox2
             // 
@@ -623,7 +592,6 @@
             this.groupBox1.TabIndex = 59;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Capteurs";
-            this.groupBox1.Enter += new System.EventHandler(this.groupBox1_Enter_1);
             // 
             // label8
             // 
@@ -674,7 +642,6 @@
             this.capteurDistanceOptionsPnl.Name = "capteurDistanceOptionsPnl";
             this.capteurDistanceOptionsPnl.Size = new System.Drawing.Size(537, 64);
             this.capteurDistanceOptionsPnl.TabIndex = 40;
-            this.capteurDistanceOptionsPnl.Paint += new System.Windows.Forms.PaintEventHandler(this.capteurDistanceOptionsPnl_Paint);
             // 
             // zoneSecuritaireLbl
             // 
@@ -702,7 +669,6 @@
             this.zoneDangerLbl.Size = new System.Drawing.Size(68, 13);
             this.zoneDangerLbl.TabIndex = 57;
             this.zoneDangerLbl.Text = "Zone danger";
-            this.zoneDangerLbl.Click += new System.EventHandler(this.label8_Click_2);
             // 
             // longueurZoneSecuritaireCapteurDistanceTB
             // 
@@ -750,7 +716,6 @@
             this.capteurDistanceProchComportementSecuritaireLbl.Name = "capteurDistanceProchComportementSecuritaireLbl";
             this.capteurDistanceProchComportementSecuritaireLbl.Size = new System.Drawing.Size(0, 13);
             this.capteurDistanceProchComportementSecuritaireLbl.TabIndex = 32;
-            this.capteurDistanceProchComportementSecuritaireLbl.Click += new System.EventHandler(this.capteurDistanceProchComportementSecuritaireLbl_Click);
             // 
             // capteurDistanceChkBox
             // 

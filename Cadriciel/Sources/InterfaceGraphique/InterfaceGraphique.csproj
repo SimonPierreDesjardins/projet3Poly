@@ -39,7 +39,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -177,12 +177,10 @@
     <None Include="Resources\law2.png" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD
     <ProjectReference Include="..\Enum\Enum.csproj">
       <Project>{c6fb0f99-403a-43a9-86b5-c8ca99ac438a}</Project>
       <Name>Enum</Name>
     </ProjectReference>
-=======
     <None Include="Resources\player_pause.png" />
   </ItemGroup>
   <ItemGroup>
@@ -190,11 +188,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pauseNoire.png" />
->>>>>>> develop
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>$(TargetName).exe testsC++</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
