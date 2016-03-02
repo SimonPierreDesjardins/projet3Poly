@@ -30,6 +30,7 @@ ArbreRendu::ArbreRendu()
 {
 	// On ne veut pas que ce noeud soit sélectionnable.
 	assignerEstSelectionnable(false);
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 }
 
 
@@ -205,7 +206,6 @@ FILE* ArbreRendu::obtenirFichierZoneDefaut(std::string mode)
 	if (err = fopen_s(&fichierZone, cheminFichierZoneDefaut.c_str(), mode.c_str()) != 0) {
 		return NULL;
 	}
-
 	return fichierZone;
 }
 
@@ -518,6 +518,11 @@ void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
 			}
 		}
 	}
+}
+
+void ArbreRendu::mettreAJourQuad()
+{
+	accepterVisiteur(visiteurMiseAJourQuad_.get());
 }
 
 ////////////////////////////////////////////////

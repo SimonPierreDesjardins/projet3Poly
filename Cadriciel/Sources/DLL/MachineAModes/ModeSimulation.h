@@ -34,10 +34,9 @@ public:
 
 	//Constructeur par défaut
 	ModeSimulation();
-
 	//Destructeur
 	virtual ~ModeSimulation();
-
+	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:

@@ -7,6 +7,7 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
+
 #ifndef __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 #define __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
 
@@ -18,7 +19,6 @@
 #include "glm\glm.hpp"
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
-
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 
@@ -217,6 +217,11 @@ protected:
 
 	/// Storage pour le dessin du modèle
 	opengl::VBO const*		vbo_{ nullptr };
+
+	//Vitesse des moteurs du robot
+	float vitesseDroite_{ 0.f };
+	float vitesseGauche_{ 0.f };
+	float vitesseRotation_{ 0.f };
 };
 
 
@@ -588,10 +593,7 @@ inline bool NoeudAbstrait::estDuplicable() const
 	return estDuplicable_;
 }
 
-
-
 #endif // __ARBRE_NOEUDS_NOEUDABSTRAIT_H__
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

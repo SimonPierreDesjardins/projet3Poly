@@ -18,6 +18,13 @@
 #include "glm\glm.hpp"
 #include "EtatAbstrait.h"
 
+const int VK_KEY_W = 'W';
+const int VK_KEY_A = 'A';
+const int VK_KEY_Y = 'Y';
+const int VK_KEY_G = 'G';
+const int VK_KEY_H = 'H';
+const int VK_KEY_J = 'J';
+const int VK_KEY_N = 'N';
 const int VK_KEY_D = 'D';
 const int VK_KEY_S = 'S';
 const int VK_KEY_R = 'R';

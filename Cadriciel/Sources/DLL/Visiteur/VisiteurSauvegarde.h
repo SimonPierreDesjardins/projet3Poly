@@ -58,11 +58,14 @@ public:
 	/// Sauvegarde en JSON d'un NoeudSegment.
 	virtual void visiter(NoeudSegment* noeud);
 
-	/// Sauvegarde en JSON d'un NoeudDuplication.
+	/// Sauvegarde en JSON d'un NoeudDepart.
 	virtual void visiter(NoeudDepart* noeud);
 
-	/// Sauvegarde en JSON d'un NoeudDuplication.
+	/// Sauvegarde en JSON d'un NoeudJonction.
 	virtual void visiter(NoeudJonction* noeud);
+
+	/// Sauvegarde en JSON d'un NoeudRobot
+	virtual void visiter(NoeudRobot* noeud);
 private:
 
 	/// Objet pour écrire dans un fichier.

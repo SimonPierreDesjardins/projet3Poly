@@ -42,6 +42,7 @@ public:
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudJonction* noeud);
 	virtual void visiter(NoeudDepart* noeud);
+	virtual void visiter(NoeudRobot* noeud);
 
 private:
 	glm::dvec3 calculerPositionVirtuelle(const utilitaire::QuadEnglobant& quad);

@@ -14,7 +14,6 @@
 /// @brief Constructeur par paramètre d'une CommandeRobot.
 ///		   Elle définie la puissance des moteurs selon le type de commande.
 ///
-///
 /// @author Philippe Marcotte
 /// @date 2016-02-20
 ///////////////////////////////////////////////////////////////////////////

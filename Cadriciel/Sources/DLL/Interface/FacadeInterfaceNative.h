@@ -54,6 +54,9 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
+
+	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande);
+
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

@@ -468,6 +468,11 @@ extern "C"
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerProfilParDefaut();
 	}
+
+	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande)
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirToucheCommande(commande);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -33,6 +33,10 @@ class ProfilUtilisateur
 		CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
 		void modifierToucheCommande(char touche, TypeCommande commande);
 
+		bool estUtilise(char touche);
+
+		char obtenirToucheCommande(int commande);
+
 	private:
 		void ouvrirFichierProfil();
 
