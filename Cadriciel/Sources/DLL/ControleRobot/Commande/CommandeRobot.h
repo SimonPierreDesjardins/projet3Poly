@@ -45,6 +45,8 @@ class CommandeRobot{
 
 		inline TypeCommande obtenirTypeCommande();
 
+		inline bool provientUtilisateur();
+
 	private:
 		/// Représente la nouvelle vitesse du moteur de gauche
 		double vitesseMoteurG_{ 0 };
@@ -57,12 +59,19 @@ class CommandeRobot{
 };
 
 
-
+///////////////////////////////////////////////////////////////////////////
+/// @fn CommandeRobot::obtenirTypeCommande()
+/// @brief Fonction permettant d'obtenir la nature de la commande.
+///
+/// @return Retourne le type de commande associé.
+///
+/// @author Philippe Marcotte
+/// @date 2016-02-20
+///////////////////////////////////////////////////////////////////////////
 inline TypeCommande CommandeRobot::obtenirTypeCommande()
 {
 	return typeCommande_;
 }
-
 
 #endif/// COMMANDE_ROBOT_H
 

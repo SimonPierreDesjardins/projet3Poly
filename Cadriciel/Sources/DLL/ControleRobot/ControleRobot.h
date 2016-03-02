@@ -12,6 +12,7 @@
 #define CONTROLE_ROBOT_H
 
 #include <memory>
+#include <thread>
 
 class ComportementAbstrait;
 class CommandeRobot;
@@ -35,8 +36,8 @@ class ControleRobot
 public:
 	ControleRobot();
 	~ControleRobot();
-	
-	void traiterCommande(CommandeRobot* commande);
+
+	void traiterCommande(CommandeRobot* commande, bool provientUtilisateur);
 
 	void passerAuProchainComportement();
 
@@ -44,6 +45,11 @@ public:
 	void inverserModeControle();
 	void passerAModeManuel();
 	void passerAModeAutomatique();
+
+	// Fonctions pour gérer multithreading robot
+	void initialiserBoucleRobot();
+	void terminerBoucleRobot();
+	void boucleInfinieLogiqueRobot();
 
 	void assignerVitessesMoteurs(double vit_G, double vit_D);
 
@@ -54,6 +60,9 @@ private:
 	NoeudAbstrait* table_;
 	NoeudRobot* robot_;
 	std::shared_ptr<ComportementAbstrait> comportement;
+
+	// Pointeur vers le thread d'exécution du robot
+	std::unique_ptr<thread> logiqueRobot;
 
 	// devrait etre migree vers les capteurs
 	bool ligneDetectee();

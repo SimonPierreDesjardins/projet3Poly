@@ -58,16 +58,20 @@ ControleRobot::~ControleRobot()
 /// @fn ControleRobot::traiterCommande()
 ///
 /// Demande au controlleur du robot de traiter la commande donnee.
+/// Le traitement de la commande dépend du mode du robot. Si le robot est en manuel, les commandes utilisateurs sont traitées.
+/// Sinon, les commandes de l'IA sont traitées. La commande d'inversion de mode est toujours traitée.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::traiterCommande(CommandeRobot* commande)
+void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilisateur)
 {
 	if (commande != nullptr)
 	{
 		TypeCommande typeCommande = commande->obtenirTypeCommande();
-		if (typeCommande == INVERSER_MODE_CONTROLE || manuel)
+
+		// Execute la commande que si elle sert à inverser le mode de contrôle.
+		if ((typeCommande == INVERSER_MODE_CONTROLE) || (manuel == provientUtilisateur))
 		{
 			commande->executer(this);
 		}
@@ -102,17 +106,28 @@ void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	comportement = std::make_unique<ComportementDefaut>(ComportementDefaut());
 	comportement->initialiser();
-	//TODO: Ceci ne fonctionne pas la boucle infinie monopolise le traitement.
-	/*
+}
+
+void ControleRobot::initialiserBoucleRobot(){
+	
+	logiqueRobot = new thread(&ControleRobot::boucleInfinieLogiqueRobot, this);
+	logiqueRobot -> detach();
+}
+
+void ControleRobot::terminerBoucleRobot(){
+	logiqueRobot(boucleInfinieLogiqueRobot);
+}
+
+void ControleRobot::boucleInfinieLogiqueRobot(){
 	while (!manuel) {
-		if (ligneDetectee()){
-			comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
-			comportement->initialiser();
-		}
+		/*if (ligneDetectee()){
+		comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
+		comportement->initialiser();
+		}*/
 
 		comportement->mettreAJour();
 	}
-	*/
+
 }
 
 ////////////////////////////////////////////////////////////////////////

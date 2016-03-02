@@ -78,6 +78,7 @@ void ComportementBalayage::mettreAJour(){
 		// si tu atteins l'angle voulu
 			//change l'angle cible et delta angle
 	case 2:
+		;
 		// rotation 90 deg horaire
 		// si tu atteins l'angle voulu
 			//appel le changement de comportement
