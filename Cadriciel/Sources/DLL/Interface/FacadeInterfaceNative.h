@@ -11,8 +11,6 @@
 
 #include <Windows.h>
 #include <Windowsx.h>
-#include "ComportementAbstrait.h"
-#include "CommandeRobot.h"
 
 extern "C"
 {
@@ -52,13 +50,12 @@ extern "C"
 	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX);
 	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY);
 
-	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(TypeComportement comportementSuivant);
-	__declspec(dllexport) void __cdecl assignerComportementBalayage(TypeComportement comportementSuivant);
-	__declspec(dllexport) void __cdecl assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation);
-	__declspec(dllexport) void __cdecl assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement);
-	__declspec(dllexport) void __cdecl modifierToucheCommande(const unsigned char& touche, const TypeCommande& commande);
-
-	//__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
+	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(int comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementBalayage(int comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation);
+	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement);
+	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl);
+	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
 
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande);

@@ -1,0 +1,38 @@
+﻿#if !__LINE__
+namespace ConfigureControlEnum
+{
+    public
+#endif
+
+        // shared enum for both C, C++ and C#
+enum ConfigureControl
+    {
+        PROFIL_CB,
+        AVANCER_TXT_BOX,
+        RECULER_TXT_BOX,
+        ROTATION_GAUCHE_TXT_BOX,
+        ROTATION_DROITE_TXT_BOX,
+        MODE_TXT_BOX,
+        SUIVI_LIGNE_CB,
+        BALAYAGE_CB,
+        DEVIATION_GAUCHE_CB,
+        DEVIATION_GAUCHE_TXT_BOX,
+        DEVIATION_DROITE_CB,
+        DEVIATION_DROITE_TXT_BOX,
+        EVITEMENT_GAUCHE_CB,
+        EVITEMENT_GAUCHE_ANGLE_TXT_BOX,
+        EVITEMENT_GAUCHE_DUREE_TXT_BOX,
+        EVITEMENT_DROITE_CB,
+        EVITEMENT_DROITE_ANGLE_TXT_BOX,
+        EVITEMENT_DROITE_DUREE_TXT_BOX,
+        CAPTEUR_DISTANCE_CHK_BOX,
+        CAPTEUR_DISTANCE_DANGER_CB,
+        CAPTEUR_DISTANCE_DANGER_TXT_BOX,
+        CAPTEUR_DISTANCE_SECURITAIRE_CB,
+        CAPTEUR_DISTANCE_SECURITAIRE_TXT_BOX,
+        CAPTEUR_LIGNE_CHK_BOX,
+    };
+
+#if !__LINE__
+}
+#endif

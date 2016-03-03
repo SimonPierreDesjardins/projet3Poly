@@ -50,7 +50,9 @@ ComportementEvitement::ComportementEvitement(TypeComportement prochainComporteme
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementEvitement::ComportementEvitement(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
+ComportementEvitement::ComportementEvitement(const rapidjson::Value& comportementJSON){
+	fromJson(comportementJSON);
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

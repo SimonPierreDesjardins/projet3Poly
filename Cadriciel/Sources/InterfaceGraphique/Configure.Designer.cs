@@ -34,7 +34,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.buttonSaveProfil = new System.Windows.Forms.Button();
             this.buttonDefProfil = new System.Windows.Forms.Button();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.configureTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -47,7 +47,13 @@
             this.textBoxHoraire = new System.Windows.Forms.TextBox();
             this.textBoxReculer = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comportementGroupBox = new System.Windows.Forms.GroupBox();
+            this.dureeEDTxtBox = new System.Windows.Forms.TextBox();
+            this.angleEDTxtBox = new System.Windows.Forms.TextBox();
+            this.dureeEGTxtBox = new System.Windows.Forms.TextBox();
+            this.angleEGTxtBox = new System.Windows.Forms.TextBox();
+            this.angleDDTxtBox = new System.Windows.Forms.TextBox();
+            this.angleDGTxtBox = new System.Windows.Forms.TextBox();
             this.suiviLigneProchComportementLbl = new System.Windows.Forms.Label();
             this.parametresLbl = new System.Windows.Forms.Label();
             this.dureeEvitementDLbl = new System.Windows.Forms.Label();
@@ -68,7 +74,7 @@
             this.suiviLigneCB = new System.Windows.Forms.ComboBox();
             this.deviationGLbl = new System.Windows.Forms.Label();
             this.suiviLigneLbl = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.capteurGroupBox = new System.Windows.Forms.GroupBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.capteurLigneChkBox = new System.Windows.Forms.CheckBox();
@@ -85,29 +91,17 @@
             this.capteurDistanceChkBox = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label7 = new System.Windows.Forms.Label();
-            this.angleDeviationGNumBox = new System.Windows.Forms.NumericUpDown();
-            this.angleDeviationDNumBox = new System.Windows.Forms.NumericUpDown();
-            this.angleEvitementGNumBox = new System.Windows.Forms.NumericUpDown();
-            this.dureeEvitementGNumBox = new System.Windows.Forms.NumericUpDown();
-            this.angleEvitementDNumBox = new System.Windows.Forms.NumericUpDown();
-            this.dureeEvitementDNumBox = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
+            this.configureTabs.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.comportementGroupBox.SuspendLayout();
+            this.capteurGroupBox.SuspendLayout();
             this.capteurDistanceOptionsPnl.SuspendLayout();
             this.tabPage3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.angleDeviationGNumBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleDeviationDNumBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleEvitementGNumBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dureeEvitementGNumBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleEvitementDNumBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dureeEvitementDNumBox)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -127,7 +121,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
+            this.splitContainer1.Panel2.Controls.Add(this.configureTabs);
             this.splitContainer1.Size = new System.Drawing.Size(715, 531);
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 0;
@@ -150,6 +144,7 @@
             this.comboBoxProfil.Name = "comboBoxProfil";
             this.comboBoxProfil.Size = new System.Drawing.Size(166, 21);
             this.comboBoxProfil.TabIndex = 0;
+            this.comboBoxProfil.Tag = "0";
             // 
             // label6
             // 
@@ -179,19 +174,19 @@
             this.buttonDefProfil.Text = "Défaut";
             this.buttonDefProfil.UseVisualStyleBackColor = true;
             // 
-            // tabControl1
+            // configureTabs
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.configureTabs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Location = new System.Drawing.Point(0, 3);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(715, 497);
-            this.tabControl1.TabIndex = 2;
+            this.configureTabs.Controls.Add(this.tabPage1);
+            this.configureTabs.Controls.Add(this.tabPage2);
+            this.configureTabs.Controls.Add(this.tabPage3);
+            this.configureTabs.Location = new System.Drawing.Point(0, 3);
+            this.configureTabs.Name = "configureTabs";
+            this.configureTabs.SelectedIndex = 0;
+            this.configureTabs.Size = new System.Drawing.Size(715, 497);
+            this.configureTabs.TabIndex = 2;
             // 
             // tabPage1
             // 
@@ -263,13 +258,14 @@
             this.textBoxAntiHoraire.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxAntiHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAntiHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAntiHoraire.HideSelection = false;
             this.textBoxAntiHoraire.Location = new System.Drawing.Point(447, 202);
             this.textBoxAntiHoraire.MaxLength = 1;
-            this.textBoxAntiHoraire.HideSelection = false;
             this.textBoxAntiHoraire.Name = "textBoxAntiHoraire";
             this.textBoxAntiHoraire.ReadOnly = true;
             this.textBoxAntiHoraire.Size = new System.Drawing.Size(100, 49);
             this.textBoxAntiHoraire.TabIndex = 5;
+            this.textBoxAntiHoraire.Tag = "4";
             this.textBoxAntiHoraire.Text = "D";
             this.textBoxAntiHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -279,14 +275,16 @@
             this.textBoxModeManuel.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxModeManuel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxModeManuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBoxModeManuel.Location = new System.Drawing.Point(284, 299);
             this.textBoxModeManuel.HideSelection = false;
+            this.textBoxModeManuel.Location = new System.Drawing.Point(284, 299);
             this.textBoxModeManuel.Name = "textBoxModeManuel";
             this.textBoxModeManuel.ReadOnly = true;
             this.textBoxModeManuel.Size = new System.Drawing.Size(167, 49);
             this.textBoxModeManuel.TabIndex = 4;
+            this.textBoxModeManuel.Tag = "5";
             this.textBoxModeManuel.Text = "ESPACE";
             this.textBoxModeManuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxModeManuel.TextChanged += new System.EventHandler(this.textBoxModeManuel_TextChanged);
             // 
             // textBoxAvancer
             // 
@@ -294,14 +292,15 @@
             this.textBoxAvancer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAvancer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxAvancer.HideSelection = false;
             this.textBoxAvancer.Location = new System.Drawing.Point(316, 110);
             this.textBoxAvancer.MaxLength = 1;
-            this.textBoxAvancer.HideSelection = false;
             this.textBoxAvancer.Name = "textBoxAvancer";
             this.textBoxAvancer.ReadOnly = true;
             this.textBoxAvancer.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.textBoxAvancer.Size = new System.Drawing.Size(100, 49);
             this.textBoxAvancer.TabIndex = 3;
+            this.textBoxAvancer.Tag = "1";
             this.textBoxAvancer.Text = "W";
             this.textBoxAvancer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxAvancer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAvancer_KeyPress);
@@ -311,13 +310,14 @@
             this.textBoxHoraire.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxHoraire.HideSelection = false;
             this.textBoxHoraire.Location = new System.Drawing.Point(183, 202);
             this.textBoxHoraire.MaxLength = 1;
-            this.textBoxHoraire.HideSelection = false;
             this.textBoxHoraire.Name = "textBoxHoraire";
             this.textBoxHoraire.ReadOnly = true;
             this.textBoxHoraire.Size = new System.Drawing.Size(100, 49);
             this.textBoxHoraire.TabIndex = 2;
+            this.textBoxHoraire.Tag = "3";
             this.textBoxHoraire.Text = "A";
             this.textBoxHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -326,20 +326,21 @@
             this.textBoxReculer.BackColor = System.Drawing.SystemColors.Window;
             this.textBoxReculer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxReculer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBoxReculer.HideSelection = false;
             this.textBoxReculer.Location = new System.Drawing.Point(316, 202);
             this.textBoxReculer.MaxLength = 1;
-            this.textBoxReculer.HideSelection = false;
             this.textBoxReculer.Name = "textBoxReculer";
             this.textBoxReculer.ReadOnly = true;
             this.textBoxReculer.Size = new System.Drawing.Size(100, 49);
             this.textBoxReculer.TabIndex = 1;
+            this.textBoxReculer.Tag = "2";
             this.textBoxReculer.Text = "S";
             this.textBoxReculer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.groupBox2);
-            this.tabPage2.Controls.Add(this.groupBox1);
+            this.tabPage2.Controls.Add(this.comportementGroupBox);
+            this.tabPage2.Controls.Add(this.capteurGroupBox);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -348,41 +349,101 @@
             this.tabPage2.Text = "Gestion Profils";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
+            // comportementGroupBox
             // 
-            this.groupBox2.Controls.Add(this.dureeEvitementDNumBox);
-            this.groupBox2.Controls.Add(this.angleEvitementDNumBox);
-            this.groupBox2.Controls.Add(this.dureeEvitementGNumBox);
-            this.groupBox2.Controls.Add(this.angleEvitementGNumBox);
-            this.groupBox2.Controls.Add(this.angleDeviationDNumBox);
-            this.groupBox2.Controls.Add(this.angleDeviationGNumBox);
-            this.groupBox2.Controls.Add(this.suiviLigneProchComportementLbl);
-            this.groupBox2.Controls.Add(this.parametresLbl);
-            this.groupBox2.Controls.Add(this.dureeEvitementDLbl);
-            this.groupBox2.Controls.Add(this.dureeEvitementGLbl);
-            this.groupBox2.Controls.Add(this.angleEvitementDLbl);
-            this.groupBox2.Controls.Add(this.evitementDCB);
-            this.groupBox2.Controls.Add(this.evitementDLbl);
-            this.groupBox2.Controls.Add(this.angleDeviationDLbl);
-            this.groupBox2.Controls.Add(this.deviationDCB);
-            this.groupBox2.Controls.Add(this.deviationDLbl);
-            this.groupBox2.Controls.Add(this.angleEvitementGLbl);
-            this.groupBox2.Controls.Add(this.balayageLbl);
-            this.groupBox2.Controls.Add(this.balayageCB);
-            this.groupBox2.Controls.Add(this.evitementGCB);
-            this.groupBox2.Controls.Add(this.evitementLbl);
-            this.groupBox2.Controls.Add(this.angleDeviationGLbl);
-            this.groupBox2.Controls.Add(this.deviationGCB);
-            this.groupBox2.Controls.Add(this.suiviLigneCB);
-            this.groupBox2.Controls.Add(this.deviationGLbl);
-            this.groupBox2.Controls.Add(this.suiviLigneLbl);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(6, 8);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(696, 308);
-            this.groupBox2.TabIndex = 60;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Comportement";
+            this.comportementGroupBox.Controls.Add(this.dureeEDTxtBox);
+            this.comportementGroupBox.Controls.Add(this.angleEDTxtBox);
+            this.comportementGroupBox.Controls.Add(this.dureeEGTxtBox);
+            this.comportementGroupBox.Controls.Add(this.angleEGTxtBox);
+            this.comportementGroupBox.Controls.Add(this.angleDDTxtBox);
+            this.comportementGroupBox.Controls.Add(this.angleDGTxtBox);
+            this.comportementGroupBox.Controls.Add(this.suiviLigneProchComportementLbl);
+            this.comportementGroupBox.Controls.Add(this.parametresLbl);
+            this.comportementGroupBox.Controls.Add(this.dureeEvitementDLbl);
+            this.comportementGroupBox.Controls.Add(this.dureeEvitementGLbl);
+            this.comportementGroupBox.Controls.Add(this.angleEvitementDLbl);
+            this.comportementGroupBox.Controls.Add(this.evitementDCB);
+            this.comportementGroupBox.Controls.Add(this.evitementDLbl);
+            this.comportementGroupBox.Controls.Add(this.angleDeviationDLbl);
+            this.comportementGroupBox.Controls.Add(this.deviationDCB);
+            this.comportementGroupBox.Controls.Add(this.deviationDLbl);
+            this.comportementGroupBox.Controls.Add(this.angleEvitementGLbl);
+            this.comportementGroupBox.Controls.Add(this.balayageLbl);
+            this.comportementGroupBox.Controls.Add(this.balayageCB);
+            this.comportementGroupBox.Controls.Add(this.evitementGCB);
+            this.comportementGroupBox.Controls.Add(this.evitementLbl);
+            this.comportementGroupBox.Controls.Add(this.angleDeviationGLbl);
+            this.comportementGroupBox.Controls.Add(this.deviationGCB);
+            this.comportementGroupBox.Controls.Add(this.suiviLigneCB);
+            this.comportementGroupBox.Controls.Add(this.deviationGLbl);
+            this.comportementGroupBox.Controls.Add(this.suiviLigneLbl);
+            this.comportementGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comportementGroupBox.Location = new System.Drawing.Point(6, 8);
+            this.comportementGroupBox.Name = "comportementGroupBox";
+            this.comportementGroupBox.Size = new System.Drawing.Size(696, 308);
+            this.comportementGroupBox.TabIndex = 60;
+            this.comportementGroupBox.TabStop = false;
+            this.comportementGroupBox.Text = "Comportement";
+            // 
+            // dureeEDTxtBox
+            // 
+            this.dureeEDTxtBox.Location = new System.Drawing.Point(563, 283);
+            this.dureeEDTxtBox.Name = "dureeEDTxtBox";
+            this.dureeEDTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.dureeEDTxtBox.TabIndex = 91;
+            this.dureeEDTxtBox.Tag = "17";
+            this.dureeEDTxtBox.TextChanged += new System.EventHandler(this.dureeEDTxtBox_TextChanged);
+            this.dureeEDTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dureeEDTxtBox_KeyDown);
+            // 
+            // angleEDTxtBox
+            // 
+            this.angleEDTxtBox.Location = new System.Drawing.Point(563, 257);
+            this.angleEDTxtBox.Name = "angleEDTxtBox";
+            this.angleEDTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.angleEDTxtBox.TabIndex = 90;
+            this.angleEDTxtBox.Tag = "16";
+            this.angleEDTxtBox.TextChanged += new System.EventHandler(this.angleEDTxtBox_TextChanged);
+            this.angleEDTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.angleEDTxtBox_KeyDown);
+            // 
+            // dureeEGTxtBox
+            // 
+            this.dureeEGTxtBox.Location = new System.Drawing.Point(563, 220);
+            this.dureeEGTxtBox.Name = "dureeEGTxtBox";
+            this.dureeEGTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.dureeEGTxtBox.TabIndex = 89;
+            this.dureeEGTxtBox.Tag = "14";
+            this.dureeEGTxtBox.TextChanged += new System.EventHandler(this.dureeEGTxtBox_TextChanged);
+            this.dureeEGTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dureeEGTxtBox_KeyDown);
+            // 
+            // angleEGTxtBox
+            // 
+            this.angleEGTxtBox.Location = new System.Drawing.Point(563, 194);
+            this.angleEGTxtBox.Name = "angleEGTxtBox";
+            this.angleEGTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.angleEGTxtBox.TabIndex = 88;
+            this.angleEGTxtBox.Tag = "13";
+            this.angleEGTxtBox.TextChanged += new System.EventHandler(this.angleEGTxtBox_TextChanged);
+            this.angleEGTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.angleEGTxtBox_KeyDown);
+            // 
+            // angleDDTxtBox
+            // 
+            this.angleDDTxtBox.Location = new System.Drawing.Point(563, 152);
+            this.angleDDTxtBox.Name = "angleDDTxtBox";
+            this.angleDDTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.angleDDTxtBox.TabIndex = 87;
+            this.angleDDTxtBox.Tag = "11";
+            this.angleDDTxtBox.TextChanged += new System.EventHandler(this.angleDDTxtBox_TextChanged);
+            this.angleDDTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.angleDDTxtBox_KeyDown);
+            // 
+            // angleDGTxtBox
+            // 
+            this.angleDGTxtBox.Location = new System.Drawing.Point(563, 114);
+            this.angleDGTxtBox.Name = "angleDGTxtBox";
+            this.angleDGTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.angleDGTxtBox.TabIndex = 86;
+            this.angleDGTxtBox.Tag = "9";
+            this.angleDGTxtBox.TextChanged += new System.EventHandler(this.angleDGTxtBox_TextChanged);
+            this.angleDGTxtBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.angleDGTxtBox_KeyDown);
             // 
             // suiviLigneProchComportementLbl
             // 
@@ -442,6 +503,7 @@
             this.evitementDCB.Name = "evitementDCB";
             this.evitementDCB.Size = new System.Drawing.Size(121, 21);
             this.evitementDCB.TabIndex = 76;
+            this.evitementDCB.Tag = "15";
             // 
             // evitementDLbl
             // 
@@ -457,7 +519,7 @@
             // 
             this.angleDeviationDLbl.AutoSize = true;
             this.angleDeviationDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleDeviationDLbl.Location = new System.Drawing.Point(523, 152);
+            this.angleDeviationDLbl.Location = new System.Drawing.Point(523, 154);
             this.angleDeviationDLbl.Name = "angleDeviationDLbl";
             this.angleDeviationDLbl.Size = new System.Drawing.Size(34, 13);
             this.angleDeviationDLbl.TabIndex = 73;
@@ -467,16 +529,17 @@
             // 
             this.deviationDCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deviationDCB.FormattingEnabled = true;
-            this.deviationDCB.Location = new System.Drawing.Point(268, 149);
+            this.deviationDCB.Location = new System.Drawing.Point(268, 151);
             this.deviationDCB.Name = "deviationDCB";
             this.deviationDCB.Size = new System.Drawing.Size(121, 21);
             this.deviationDCB.TabIndex = 72;
+            this.deviationDCB.Tag = "10";
             // 
             // deviationDLbl
             // 
             this.deviationDLbl.AutoSize = true;
             this.deviationDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.deviationDLbl.Location = new System.Drawing.Point(13, 152);
+            this.deviationDLbl.Location = new System.Drawing.Point(13, 154);
             this.deviationDLbl.Name = "deviationDLbl";
             this.deviationDLbl.Size = new System.Drawing.Size(90, 13);
             this.deviationDLbl.TabIndex = 71;
@@ -510,6 +573,7 @@
             this.balayageCB.Name = "balayageCB";
             this.balayageCB.Size = new System.Drawing.Size(121, 21);
             this.balayageCB.TabIndex = 67;
+            this.balayageCB.Tag = "7";
             // 
             // evitementGCB
             // 
@@ -519,6 +583,7 @@
             this.evitementGCB.Name = "evitementGCB";
             this.evitementGCB.Size = new System.Drawing.Size(121, 21);
             this.evitementGCB.TabIndex = 66;
+            this.evitementGCB.Tag = "12";
             // 
             // evitementLbl
             // 
@@ -548,6 +613,7 @@
             this.deviationGCB.Name = "deviationGCB";
             this.deviationGCB.Size = new System.Drawing.Size(121, 21);
             this.deviationGCB.TabIndex = 62;
+            this.deviationGCB.Tag = "8";
             // 
             // suiviLigneCB
             // 
@@ -557,6 +623,7 @@
             this.suiviLigneCB.Name = "suiviLigneCB";
             this.suiviLigneCB.Size = new System.Drawing.Size(121, 21);
             this.suiviLigneCB.TabIndex = 61;
+            this.suiviLigneCB.Tag = "6";
             // 
             // deviationGLbl
             // 
@@ -578,20 +645,20 @@
             this.suiviLigneLbl.TabIndex = 59;
             this.suiviLigneLbl.Text = "Suivi de ligne";
             // 
-            // groupBox1
+            // capteurGroupBox
             // 
-            this.groupBox1.Controls.Add(this.label8);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.capteurLigneChkBox);
-            this.groupBox1.Controls.Add(this.capteurDistanceOptionsPnl);
-            this.groupBox1.Controls.Add(this.capteurDistanceChkBox);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(6, 323);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(695, 139);
-            this.groupBox1.TabIndex = 59;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Capteurs";
+            this.capteurGroupBox.Controls.Add(this.label8);
+            this.capteurGroupBox.Controls.Add(this.label9);
+            this.capteurGroupBox.Controls.Add(this.capteurLigneChkBox);
+            this.capteurGroupBox.Controls.Add(this.capteurDistanceOptionsPnl);
+            this.capteurGroupBox.Controls.Add(this.capteurDistanceChkBox);
+            this.capteurGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capteurGroupBox.Location = new System.Drawing.Point(6, 323);
+            this.capteurGroupBox.Name = "capteurGroupBox";
+            this.capteurGroupBox.Size = new System.Drawing.Size(695, 139);
+            this.capteurGroupBox.TabIndex = 59;
+            this.capteurGroupBox.TabStop = false;
+            this.capteurGroupBox.Text = "Capteurs";
             // 
             // label8
             // 
@@ -622,6 +689,7 @@
             this.capteurLigneChkBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.capteurLigneChkBox.Size = new System.Drawing.Size(67, 17);
             this.capteurLigneChkBox.TabIndex = 39;
+            this.capteurLigneChkBox.Tag = "23";
             this.capteurLigneChkBox.Text = "     Ligne";
             this.capteurLigneChkBox.UseVisualStyleBackColor = true;
             // 
@@ -676,6 +744,7 @@
             this.longueurZoneSecuritaireCapteurDistanceTB.Name = "longueurZoneSecuritaireCapteurDistanceTB";
             this.longueurZoneSecuritaireCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
             this.longueurZoneSecuritaireCapteurDistanceTB.TabIndex = 34;
+            this.longueurZoneSecuritaireCapteurDistanceTB.Tag = "22";
             // 
             // capteurDistanceDangerCB
             // 
@@ -684,6 +753,7 @@
             this.capteurDistanceDangerCB.Name = "capteurDistanceDangerCB";
             this.capteurDistanceDangerCB.Size = new System.Drawing.Size(121, 21);
             this.capteurDistanceDangerCB.TabIndex = 56;
+            this.capteurDistanceDangerCB.Tag = "19";
             // 
             // capteurDistanceSecuritaireCB
             // 
@@ -692,6 +762,7 @@
             this.capteurDistanceSecuritaireCB.Name = "capteurDistanceSecuritaireCB";
             this.capteurDistanceSecuritaireCB.Size = new System.Drawing.Size(121, 21);
             this.capteurDistanceSecuritaireCB.TabIndex = 55;
+            this.capteurDistanceSecuritaireCB.Tag = "21";
             // 
             // longueurZoneDangerCapteurDistanceTB
             // 
@@ -699,6 +770,7 @@
             this.longueurZoneDangerCapteurDistanceTB.Name = "longueurZoneDangerCapteurDistanceTB";
             this.longueurZoneDangerCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
             this.longueurZoneDangerCapteurDistanceTB.TabIndex = 30;
+            this.longueurZoneDangerCapteurDistanceTB.Tag = "20";
             // 
             // longueurZoneSecuritaireCapteurDistanceLbl
             // 
@@ -726,6 +798,7 @@
             this.capteurDistanceChkBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.capteurDistanceChkBox.Size = new System.Drawing.Size(68, 17);
             this.capteurDistanceChkBox.TabIndex = 37;
+            this.capteurDistanceChkBox.Tag = "18";
             this.capteurDistanceChkBox.Text = "Distance";
             this.capteurDistanceChkBox.UseVisualStyleBackColor = true;
             this.capteurDistanceChkBox.CheckedChanged += new System.EventHandler(this.capteurDistanceChkBox_CheckedChanged);
@@ -751,48 +824,6 @@
             this.label7.TabIndex = 1;
             this.label7.Text = "DONT LOOK HERE YET! \r\nCONTACT THE TECHNICIEN IT\'S BROKEN!\r\n";
             // 
-            // angleDeviationGNumBox
-            // 
-            this.angleDeviationGNumBox.Location = new System.Drawing.Point(564, 115);
-            this.angleDeviationGNumBox.Name = "angleDeviationGNumBox";
-            this.angleDeviationGNumBox.Size = new System.Drawing.Size(120, 20);
-            this.angleDeviationGNumBox.TabIndex = 86;
-            // 
-            // angleDeviationDNumBox
-            // 
-            this.angleDeviationDNumBox.Location = new System.Drawing.Point(563, 150);
-            this.angleDeviationDNumBox.Name = "angleDeviationDNumBox";
-            this.angleDeviationDNumBox.Size = new System.Drawing.Size(120, 20);
-            this.angleDeviationDNumBox.TabIndex = 87;
-            // 
-            // angleEvitementGNumBox
-            // 
-            this.angleEvitementGNumBox.Location = new System.Drawing.Point(563, 195);
-            this.angleEvitementGNumBox.Name = "angleEvitementGNumBox";
-            this.angleEvitementGNumBox.Size = new System.Drawing.Size(120, 20);
-            this.angleEvitementGNumBox.TabIndex = 88;
-            // 
-            // dureeEvitementGNumBox
-            // 
-            this.dureeEvitementGNumBox.Location = new System.Drawing.Point(563, 221);
-            this.dureeEvitementGNumBox.Name = "dureeEvitementGNumBox";
-            this.dureeEvitementGNumBox.Size = new System.Drawing.Size(120, 20);
-            this.dureeEvitementGNumBox.TabIndex = 89;
-            // 
-            // angleEvitementDNumBox
-            // 
-            this.angleEvitementDNumBox.Location = new System.Drawing.Point(563, 257);
-            this.angleEvitementDNumBox.Name = "angleEvitementDNumBox";
-            this.angleEvitementDNumBox.Size = new System.Drawing.Size(120, 20);
-            this.angleEvitementDNumBox.TabIndex = 90;
-            // 
-            // dureeEvitementDNumBox
-            // 
-            this.dureeEvitementDNumBox.Location = new System.Drawing.Point(563, 283);
-            this.dureeEvitementDNumBox.Name = "dureeEvitementDNumBox";
-            this.dureeEvitementDNumBox.Size = new System.Drawing.Size(120, 20);
-            this.dureeEvitementDNumBox.TabIndex = 91;
-            // 
             // Configure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -807,24 +838,18 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
+            this.configureTabs.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.comportementGroupBox.ResumeLayout(false);
+            this.comportementGroupBox.PerformLayout();
+            this.capteurGroupBox.ResumeLayout(false);
+            this.capteurGroupBox.PerformLayout();
             this.capteurDistanceOptionsPnl.ResumeLayout(false);
             this.capteurDistanceOptionsPnl.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.angleDeviationGNumBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleDeviationDNumBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleEvitementGNumBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dureeEvitementGNumBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.angleEvitementDNumBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dureeEvitementDNumBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -832,7 +857,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl configureTabs;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
@@ -864,8 +889,8 @@
         private System.Windows.Forms.ComboBox capteurDistanceDangerCB;
         private System.Windows.Forms.ComboBox capteurDistanceSecuritaireCB;
         private System.Windows.Forms.Label zoneSecuritaireLbl;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox capteurGroupBox;
+        private System.Windows.Forms.GroupBox comportementGroupBox;
         private System.Windows.Forms.Label suiviLigneProchComportementLbl;
         private System.Windows.Forms.Label parametresLbl;
         private System.Windows.Forms.Label dureeEvitementDLbl;
@@ -888,12 +913,12 @@
         private System.Windows.Forms.Label suiviLigneLbl;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.NumericUpDown dureeEvitementDNumBox;
-        private System.Windows.Forms.NumericUpDown angleEvitementDNumBox;
-        private System.Windows.Forms.NumericUpDown dureeEvitementGNumBox;
-        private System.Windows.Forms.NumericUpDown angleEvitementGNumBox;
-        private System.Windows.Forms.NumericUpDown angleDeviationDNumBox;
-        private System.Windows.Forms.NumericUpDown angleDeviationGNumBox;
+        private System.Windows.Forms.TextBox dureeEDTxtBox;
+        private System.Windows.Forms.TextBox angleEDTxtBox;
+        private System.Windows.Forms.TextBox dureeEGTxtBox;
+        private System.Windows.Forms.TextBox angleEGTxtBox;
+        private System.Windows.Forms.TextBox angleDDTxtBox;
+        private System.Windows.Forms.TextBox angleDGTxtBox;
 
     }
 }

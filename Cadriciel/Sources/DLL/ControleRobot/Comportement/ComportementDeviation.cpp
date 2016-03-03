@@ -50,7 +50,9 @@ ComportementDeviation::ComportementDeviation(TypeComportement prochainComporteme
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDeviation::ComportementDeviation(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
+ComportementDeviation::ComportementDeviation(const rapidjson::Value& comportementJSON){
+	fromJson(comportementJSON);
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

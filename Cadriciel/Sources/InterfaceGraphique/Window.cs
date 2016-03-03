@@ -33,6 +33,8 @@ namespace InterfaceGraphique
         private const int WM_MOUSEMOVE =    0x0200;
         private const int WM_MOUSEWHEEL =   0x020A;
 
+        private Configure configuration;
+
         bool arreterToutMessage_;
 
         public void arreterToutMessage()
@@ -76,6 +78,8 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
+            configuration = new Configure();
+            FonctionsNatives.chargerProfilParDefaut();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -723,13 +727,11 @@ namespace InterfaceGraphique
         private void bouttonConfiguration__Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerMode(Mode.CONFIGURE);
-            Configure configuration = new Configure();
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
             DialogResult dialogresult = configuration.ShowDialog();
             if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
             {
-                configuration.Dispose();
                 viewPort_.Focus();
             }
             FonctionsNatives.assignerAutorisationInputClavier(true);

@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using TypeCommandeEnum;
 using TypeComportementEnum;
+using ConfigureControlEnum;
 
 namespace InterfaceGraphique
 {
@@ -18,34 +19,38 @@ namespace InterfaceGraphique
 
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         static extern bool HideCaret(IntPtr hWnd);
+        private List<TypeComportement> comportementsList;
+        System.Text.RegularExpressions.Regex regex;
 
         public Configure()
         {
             InitializeComponent();
-            List<TypeComportement> comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
-            suiviLigneCB.DataSource = comportementsList;
+            comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
-            balayageCB.BindingContext = new BindingContext();
-            balayageCB.DataSource = comportementsList;
+            setUpAllControls(this);
 
-            deviationGCB.BindingContext = new BindingContext();
-            deviationGCB.DataSource = comportementsList;
+            
 
-            deviationDCB.BindingContext = new BindingContext();
-            deviationDCB.DataSource = comportementsList;
+        }
 
-            evitementGCB.BindingContext = new BindingContext();
-            evitementGCB.DataSource = comportementsList;
+        void setUpAllControls(Control control)
+        {
+            foreach (Control item in control.Controls)
+            {
+                if (item.Tag != null)
+                {
+                    if (item.GetType().Equals(typeof(ComboBox)))
+                    {
+                        ComboBox combo = item as ComboBox;
+                        combo.BindingContext = new BindingContext();
+                        combo.DataSource = comportementsList;
+                    }
+                    FonctionsNatives.setHandle((IntPtr)item.Handle, Int32.Parse((String)item.Tag));
+                }
 
-            evitementDCB.BindingContext = new BindingContext();
-            evitementDCB.DataSource = comportementsList;
-
-            capteurDistanceDangerCB.BindingContext = new BindingContext();
-            capteurDistanceDangerCB.DataSource = comportementsList;
-
-            capteurDistanceSecuritaireCB.BindingContext = new BindingContext();
-            capteurDistanceSecuritaireCB.DataSource = comportementsList;
+                setUpAllControls(item);
+            }
         }
 
         private void buttonDefConfig_Click(object sender, EventArgs e)
@@ -146,16 +151,6 @@ namespace InterfaceGraphique
             comboBoxProfil.Items.Insert(comboBoxProfil.Items.Count, comboBoxProfil.Text);
         }
 
-        private void buttonDeleteProfil_Click(object sender, EventArgs e)
-        {
-            if (comboBoxProfil.SelectedIndex == -1)
-            {}
-            else if (comboBoxProfil.SelectedIndex != 0)
-            {
-                comboBoxProfil.Items.RemoveAt(comboBoxProfil.SelectedIndex);
-            }
-        }
-
         private void Configure_Load(object sender, EventArgs e)
         {
             comboBoxProfil.SelectedIndex = 0;
@@ -170,28 +165,138 @@ namespace InterfaceGraphique
         {
             FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
             FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDeviationGNumBox.Value), TypeComportement.DEVIATIONVERSLAGAUCHE);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDeviationDNumBox.Value), TypeComportement.DEVIATIONVERSLADROITE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEvitementGNumBox.Value), Convert.ToDouble(dureeEvitementGNumBox.Value), TypeComportement.EVITEMENTPARLAGAUCHE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEvitementDNumBox.Value), Convert.ToDouble(dureeEvitementDNumBox.Value), TypeComportement.EVITEMENTPARLADROITE);
-            
-            FonctionsNatives.modifierToucheCommande(textBoxAvancer.Text[0], TypeCommande.AVANCER);
-            FonctionsNatives.modifierToucheCommande(textBoxReculer.Text[0], TypeCommande.RECULER);
-            FonctionsNatives.modifierToucheCommande(textBoxAntiHoraire.Text[0], TypeCommande.ROTATION_DROITE);
-            FonctionsNatives.modifierToucheCommande(textBoxHoraire.Text[0], TypeCommande.ROTATION_GAUCHE);
-            FonctionsNatives.modifierToucheCommande(textBoxModeManuel.Text[0], TypeCommande.INVERSER_MODE_CONTROLE);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text), TypeComportement.DEVIATIONVERSLAGAUCHE);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text), TypeComportement.DEVIATIONVERSLADROITE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text), Convert.ToDouble(dureeEGTxtBox.Text), TypeComportement.EVITEMENTPARLAGAUCHE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text), Convert.ToDouble(dureeEDTxtBox.Text), TypeComportement.EVITEMENTPARLADROITE);
+        }
+
+        private bool empecherTextChangedEvent = false;
+
+        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
+        {
+            if (empecherTextChangedEvent)
+                return;
+            empecherTextChangedEvent = true;
+            TextBox textBox = sender as TextBox;
+            textBox.Text = afficherCaractere(textBox.Text[0]);
+            empecherTextChangedEvent = false;
+        }
+        
+        private bool degreeValidation(string aTester)
+        {
+            double nombre;
+            bool reussi;
+            reussi = Double.TryParse(aTester.Replace('.', ','), out nombre);
+            if (reussi)
+                if (nombre < 0.00 || nombre > 360.00 || BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
+                    reussi = false;
+
+            return reussi;
+        }
+
+        private bool tempsValidation(string aTester)
+        {
+            double nombre;
+            bool reussi;
+            reussi = Double.TryParse(aTester.Replace('.', ','), out nombre);
+            if (reussi)
+                if (BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
+                    reussi = false;
+
+            return reussi;
+        }
+
+        private void angleEtDureeValidation(TextBox box, bool estDegree)
+        {
+            if (empecherTextChangedEvent)
+                return;
+            empecherTextChangedEvent = true;
+
+            if (box.Text == "")
+                box.Text = "0";
+            else if(!decimalCheck(box))
+                if (estDegree ? !degreeValidation(box.Text) : !tempsValidation(box.Text))
+                    box.Text = oldText;
+
+            empecherTextChangedEvent = false;
+        }
+        
+        
+        private bool decimalCheck(TextBox box)
+        {
+            if (box.Text.Count(f => f == '.' | f == ',') == 1 && (box.Text.IndexOf('.') > box.TextLength - 3 || box.Text.IndexOf(',') > box.TextLength - 3))
+                if (box.Tag as Object[] == null)
+                {
+                    box.Tag = new Object[2] { box.Tag, 1 };
+                    return true;
+                }
+            return false;
+        }
+
+        private string oldText;
+
+        private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, true);
+        }
+
+        private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, true);
+        }
+
+        private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        private void angleEGTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, true);
+        }
+
+        private void angleEGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        private void dureeEGTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, false);
+        }
+
+        private void dureeEGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        private void angleEDTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, true);
+        }
+
+        private void angleEDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        private void dureeEDTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, false);
+        }
+
+        private void dureeEDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
         }
 
     }
-
-    enum TypeCommande
-    {
-	    INVERSER_MODE_CONTROLE,
-	    AVANCER,
-	    RECULER,
-	    ROTATION_GAUCHE,
-	    ROTATION_DROITE
-    };
 
     static partial class FonctionsNatives{
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -214,6 +319,12 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern char obtenirToucheCommande(TypeCommande commande);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setHandle(IntPtr handle, int ctrl);
+
+        [DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
     }
 }
 

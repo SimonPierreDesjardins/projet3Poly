@@ -12,6 +12,9 @@
 #include <unordered_map>
 #include "CommandeRobot.h"
 #include "ComportementAbstrait.h"
+#include "./../../Enum/ConfigureControlEnum.cs"
+#include <deque>
+#include <Windows.h>
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ProfilUtilisateur
@@ -40,9 +43,11 @@ class ProfilUtilisateur
 
 		char obtenirToucheCommande(int commande);
 
+		void setConfigureHandles(HWND handle, ConfigureControl ctrl);
+
 	private:
 		void sauvegarder();
-		bool ouvrirProfil();
+		bool ouvrirProfil(std::string readOrWrite);
 		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
 		
 		bool chargerProfil();
@@ -50,9 +55,14 @@ class ProfilUtilisateur
 		const int NOMBRE_OPTIONS{ 11 };
 
 		FILE* profil_;
+
 		const std::string CHEMIN_PROFIL = "./../../Donnees/";
 
-		std::vector<unsigned char> touches_;
+		const std::string EXTENSION_PROFIL = ".profil";
+
+		std::unordered_map<ConfigureControl, HWND> configureHandles;
+
+		std::vector<char> touches_;
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
 		//TODO: Mapping de l'affichage debugage.
