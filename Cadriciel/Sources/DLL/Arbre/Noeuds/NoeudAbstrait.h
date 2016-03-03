@@ -19,6 +19,7 @@
 #include "glm\glm.hpp"
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
+#include "RectangleEnglobant.h"
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 
@@ -80,6 +81,12 @@ public:
 	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
 	/// Obtenir la boite englobante du modèle.
 	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
+    /// Obtenir le rectangle englobant du noeud.
+    inline RectangleEnglobant obtenirRectangleEnglobant() const;
+    /// Mettre à jour le rectangle englobant du noeud.
+    inline void mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
+        const double& hauteur, const double& largeur);
+
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
 
@@ -190,8 +197,11 @@ protected:
 	/// Quadrilatère englobant le noeud.
 	utilitaire::QuadEnglobant quadEnglobantCourant_;
 
-	/// Quadrilatère englobant le modèle
+	/// Quadrilatère englobant le modèle.
 	utilitaire::QuadEnglobant quadEnglobantModele_;
+
+    // Rectangle englobant le modèle.
+    RectangleEnglobant rectangleEnglobant_;
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -209,8 +219,6 @@ protected:
 	bool				    estDuplicable_{ true };
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
-
-
 
 	/// Modèle 3D correspondant à ce noeud.
 	modele::Modele3D const* modele_{ nullptr };
@@ -415,6 +423,19 @@ inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() con
 	return quadEnglobantModele_;
 }
 
+inline RectangleEnglobant NoeudAbstrait::obtenirRectangleEnglobant() const
+{
+    return rectangleEnglobant_;
+}
+
+inline void NoeudAbstrait::mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
+    const double& hauteur, const double& largeur)
+{
+    rectangleEnglobant_.assignerCentre(centre);
+    rectangleEnglobant_.assignerAngle(angle);
+    rectangleEnglobant_.assignerHauteur(hauteur);
+    rectangleEnglobant_.assignerLargeur(largeur);
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline const std::string& NoeudAbstrait::obtenirType() const

@@ -11,6 +11,8 @@
 
 #include "PhysiqueTest.h"
 #include "Utilitaire.h"
+#include "RectangleEnglobant.h"
+
 
 // Enregistrement de la suite de tests au sein du registre
 CPPUNIT_TEST_SUITE_REGISTRATION(PhysiqueTest);
@@ -102,6 +104,31 @@ void PhysiqueTest::testIntersectionQuad()
 }
 
 
+void PhysiqueTest::testPointDansRectangle()
+{
+    glm::dvec3 positionRectangle = { 20.0, 20.0, 0.0 };
+    RectangleEnglobant rectangle(positionRectangle, 0.0, 2.0, 10.0);
+    glm::dvec3 point{ 0.0, 0.0, 0.0 };
+    double angle = 0.0;
+    for (int i = 0; i < 361; i++)
+    {
+        rectangle.assignerAngle((double)(i));
+        point = { 19.5, 19.5, 0.0 };
+        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+
+        point = { 20.5, 19.5, 0.0 };
+        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+
+        point = { 19.5, 20.5, 0.0 };
+        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+
+        point = { 20.5, 20.5, 0.0 };
+        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+        
+        point = { 0.0, 0.0, 0.0 };
+        CPPUNIT_ASSERT(!rectangle.calculerPointEstDansRectangle(point));
+    }
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

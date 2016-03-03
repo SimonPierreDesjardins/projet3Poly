@@ -33,7 +33,8 @@ class PhysiqueTest : public CppUnit::TestFixture
 	// de la macro CPPUNIT_TEST sinon ce dernier ne sera pas exécuté !
 	// =================================================================
   CPPUNIT_TEST_SUITE( PhysiqueTest );
-  CPPUNIT_TEST( testIntersectionQuad );
+  CPPUNIT_TEST(testIntersectionQuad);
+  CPPUNIT_TEST(testPointDansRectangle);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -55,6 +56,8 @@ public:
 
 	/// Cas de test: verification de l'intersection de deux quads.
 	void testIntersectionQuad();
+
+    void testPointDansRectangle();
 
 private:
     utilitaire::QuadEnglobant quad1_;
