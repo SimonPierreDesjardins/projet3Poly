@@ -49,6 +49,9 @@ ControleRobot::ControleRobot()
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::~ControleRobot()
 {
+
+	
+
 	NoeudAbstrait* robot = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
 	table_->effacer(robot);
 }
@@ -106,16 +109,20 @@ void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	comportement = std::make_unique<ComportementDefaut>(ComportementDefaut());
 	comportement->initialiser();
+	initialiserBoucleRobot();
 }
 
 void ControleRobot::initialiserBoucleRobot(){
 	
-	logiqueRobot = new thread(&ControleRobot::boucleInfinieLogiqueRobot, this);
+	logiqueRobot = std::make_unique<std::thread>(&ControleRobot::boucleInfinieLogiqueRobot, this);
 	logiqueRobot -> detach();
 }
 
 void ControleRobot::terminerBoucleRobot(){
-	logiqueRobot(boucleInfinieLogiqueRobot);
+	// Tuer le thread
+	if ((logiqueRobot != nullptr) && (logiqueRobot->joinable())){
+		logiqueRobot->join();
+	}
 }
 
 void ControleRobot::boucleInfinieLogiqueRobot(){
@@ -141,6 +148,7 @@ void ControleRobot::boucleInfinieLogiqueRobot(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeManuel(){
 	manuel = true;
+	terminerBoucleRobot();
 }
 
 ////////////////////////////////////////////////////////////////////////

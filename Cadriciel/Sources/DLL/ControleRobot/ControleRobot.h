@@ -62,7 +62,7 @@ private:
 	std::shared_ptr<ComportementAbstrait> comportement;
 
 	// Pointeur vers le thread d'exécution du robot
-	std::unique_ptr<thread> logiqueRobot;
+	std::unique_ptr<std::thread> logiqueRobot;
 
 	// devrait etre migree vers les capteurs
 	bool ligneDetectee();
