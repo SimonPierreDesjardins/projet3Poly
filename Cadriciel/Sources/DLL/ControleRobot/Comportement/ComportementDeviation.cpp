@@ -21,7 +21,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDeviation::ComportementDeviation()
+ComportementDeviation::ComportementDeviation(ControleRobot* noeudRobot) :ComportementAbstrait(noeudRobot)
 {
 }
 
@@ -54,9 +54,9 @@ void ComportementDeviation::initialiser(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementDeviation::mettreAJour()
+/// @fn ComportementDefaut::mettreAJour()
 ///
-/// Implementation qui ramene le comportement a son etat initial
+/// Vérifie si le comportement doit changer ou procéder à une prochaine action sur sa liste.
 ///
 /// @return Aucune.
 ///

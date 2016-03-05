@@ -21,7 +21,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementSuiviLigne::ComportementSuiviLigne()
+ComportementSuiviLigne::ComportementSuiviLigne(ControleRobot* noeudRobot) :ComportementAbstrait(noeudRobot)
 {
 }
 
@@ -54,9 +54,9 @@ void ComportementSuiviLigne::initialiser(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementSuiviLigne::mettreAJour()
+/// @fn ComportementDefaut::mettreAJour()
 ///
-/// Implementation qui ramene le comportement a son etat initial
+/// Vérifie si le comportement doit changer ou procéder à une prochaine action sur sa liste.
 ///
 /// @return Aucune.
 ///

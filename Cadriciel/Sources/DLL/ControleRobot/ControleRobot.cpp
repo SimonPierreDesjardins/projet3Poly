@@ -15,6 +15,10 @@
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
+// Inclusion pour l'Enum de comportements
+#include "ComportementAbstrait.h"
+
+// TEMPORAIRE!!! Inclusion pour création du comportement par defaut
 #include "ComportementDefaut.h"
 #include "ComportementSuiviLigne.h"
 
@@ -36,6 +40,7 @@ ControleRobot::ControleRobot()
 	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
 	table_->ajouter(robot);
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+	passerAModeAutomatique();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -49,11 +54,11 @@ ControleRobot::ControleRobot()
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::~ControleRobot()
 {
-
-	
-
+	//Nous utilisons ceci pour terminer le thread d'IA du robot
+	passerAModeManuel();
 	NoeudAbstrait* robot = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
 	table_->effacer(robot);
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -85,15 +90,26 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 ///
 /// @fn ControleRobot::assignerComportement(std::shared_ptr<ComportementAbstrait> nouveauComportement)
 ///
-/// Assigne un nouveau comportement à suivre au robot.
+/// Assigne un nouveau comportement à suivre au robot de façon threadsafe et memory safe.
 ///
 /// @param nouveauComportement: Le pointeur au comportement assigné.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::passerAuProchainComportement()
+void ControleRobot::assignerComportement(eComportement nouveauComportement)
 {
+	mutexComportement.lock();
+	if (comportement_ != nullptr){
+		delete comportement_;
+	}
+
+	// ce if est temporaire, remplacer par recherche de comportement dans profil
+	if (nouveauComportement == DEFAUT){
+		comportement_ = new ComportementDefaut(this);
+		comportement_->initialiser();
+	}
+	mutexComportement.unlock();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -107,19 +123,20 @@ void ControleRobot::passerAuProchainComportement()
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
-	comportement = std::make_unique<ComportementDefaut>(ComportementDefaut());
-	comportement->initialiser();
+	assignerComportement(DEFAUT);
 	initialiserBoucleRobot();
 }
 
 void ControleRobot::initialiserBoucleRobot(){
 	
 	logiqueRobot = std::make_unique<std::thread>(&ControleRobot::boucleInfinieLogiqueRobot, this);
-	logiqueRobot -> detach();
+	//logiqueRobot -> detach();
 }
 
 void ControleRobot::terminerBoucleRobot(){
 	// Tuer le thread
+	// Le thread roule une fonction tant que manuel = false, alors on change la condition
+	manuel = true;
 	if ((logiqueRobot != nullptr) && (logiqueRobot->joinable())){
 		logiqueRobot->join();
 	}
@@ -131,8 +148,9 @@ void ControleRobot::boucleInfinieLogiqueRobot(){
 		comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
 		comportement->initialiser();
 		}*/
-
-		comportement->mettreAJour();
+		mutexComportement.lock();
+		comportement_->mettreAJour();
+		mutexComportement.unlock();
 	}
 
 }

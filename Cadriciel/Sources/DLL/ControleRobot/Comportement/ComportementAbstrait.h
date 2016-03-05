@@ -13,6 +13,8 @@
 
 #include <memory>
 
+class ControleRobot;
+
 enum eComportement {
 	DEFAUT,
 	SUIVIDELIGNE,
@@ -37,7 +39,7 @@ enum eComportement {
 class ComportementAbstrait
 {
 public:
-	ComportementAbstrait();
+	ComportementAbstrait(ControleRobot* controleRobot);
 	virtual ~ComportementAbstrait();
 
 	// Assure la reinitialisation du comportement avant son execution
@@ -50,9 +52,11 @@ public:
 
 	void assignerComportementSuivant(eComportement prochainComportement);
 
-private:
+protected:
 	// Le comportement a adopter une fois les conditions de fin de ce comportement sont atteintes.
 	eComportement comportementSuivant_;
+
+	std::shared_ptr<ControleRobot> controleRobot_;
 };
 
 #endif // COMPORTEMENT_ABSTRAIT

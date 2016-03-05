@@ -23,7 +23,7 @@
 class ComportementDeviation : public ComportementAbstrait
 {
 public:
-	ComportementDeviation();
+	ComportementDeviation(ControleRobot* noeudRobot);
 	virtual ~ComportementDeviation();
 
 	void initialiser();

@@ -21,7 +21,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementEvitement::ComportementEvitement()
+ComportementEvitement::ComportementEvitement(ControleRobot* noeudRobot) :ComportementAbstrait(noeudRobot)
 {
 }
 
@@ -54,15 +54,15 @@ void ComportementEvitement::initialiser(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementEvitement::mettreAJour()
+/// @fn ComportementDefaut::mettreAJour()
 ///
-/// Implementation qui ramene le comportement a son etat initial
+/// Vérifie si le comportement doit changer ou procéder à une prochaine action sur sa liste.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementEvitement::mettreAJour(){
-
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////

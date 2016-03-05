@@ -13,8 +13,9 @@
 
 #include <memory>
 #include <thread>
+#include "ComportementAbstrait.h"
+#include <mutex>
 
-class ComportementAbstrait;
 class CommandeRobot;
 class NoeudAbstrait;
 class NoeudRobot;
@@ -39,7 +40,7 @@ public:
 
 	void traiterCommande(CommandeRobot* commande, bool provientUtilisateur);
 
-	void passerAuProchainComportement();
+	void assignerComportement(eComportement nouveauComportement);
 
 
 	void inverserModeControle();
@@ -59,7 +60,12 @@ private:
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;
 	NoeudRobot* robot_;
-	std::shared_ptr<ComportementAbstrait> comportement;
+
+	// Pointeur vers le comportement présentement adopté par le robot.
+	ComportementAbstrait* comportement_;
+
+	//Mutex servant à traiter l'accès au comportement du robot.
+	std::mutex mutexComportement;
 
 	// Pointeur vers le thread d'exécution du robot
 	std::unique_ptr<std::thread> logiqueRobot;

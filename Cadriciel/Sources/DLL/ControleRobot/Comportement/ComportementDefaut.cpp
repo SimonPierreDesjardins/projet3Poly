@@ -9,6 +9,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementDefaut.h"
+#include "ControleRobot.h"
+#include "CommandeRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -16,12 +18,12 @@
 ///
 /// Constructeur
 ///
-/// @param[in] Aucun
+/// @param[in] controleRobot: Le controlleur du robot auquel le comportement passera des commandes
 ///
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDefaut::ComportementDefaut()
+ComportementDefaut::ComportementDefaut(ControleRobot* controleRobot):ComportementAbstrait(controleRobot)
 {
 }
 
@@ -56,13 +58,13 @@ void ComportementDefaut::initialiser(){
 ///
 /// @fn ComportementDefaut::mettreAJour()
 ///
-/// Implementation qui ramene le comportement a son etat initial
+/// Vérifie si le comportement doit changer ou procéder à une prochaine action sur sa liste.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDefaut::mettreAJour(){
-
+	controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
