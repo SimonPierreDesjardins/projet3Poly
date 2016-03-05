@@ -21,6 +21,7 @@
 // TEMPORAIRE!!! Inclusion pour création du comportement par defaut
 #include "ComportementDefaut.h"
 #include "ComportementSuiviLigne.h"
+#include "ComportementBalayage.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -40,6 +41,7 @@ ControleRobot::ControleRobot()
 	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
 	table_->ajouter(robot);
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+	comportement_ = nullptr;
 	passerAModeAutomatique();
 }
 
@@ -99,74 +101,32 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::assignerComportement(eComportement nouveauComportement)
 {
+	// Nous devons vérouiller l'accès au comportement temporairement pour sa modification
 	mutexComportement.lock();
-	if (comportement_ != nullptr){
-		delete comportement_;
-	}
 
-	// ce if est temporaire, remplacer par recherche de comportement dans profil
-	if (nouveauComportement == DEFAUT){
+	//ComportementAbstrait* ancienComportement = comportement_;
+
+	//TODO: ce switch est temporaire, remplacer par recherche de comportement dans profil
+	switch (nouveauComportement){
+	case DEFAUT:
 		comportement_ = new ComportementDefaut(this);
-		comportement_->initialiser();
+		break;
+	case BALAYAGE180:
+		comportement_ = new ComportementBalayage(this);
+		break;
 	}
-	mutexComportement.unlock();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn ControleRobot::passerAModeAutomatique()
-///
-/// Dit au controleur de robot de gerer la passation au mode automatique.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void ControleRobot::passerAModeAutomatique() {
-	manuel = false;
-	assignerComportement(DEFAUT);
-	initialiserBoucleRobot();
-}
-
-void ControleRobot::initialiserBoucleRobot(){
 	
-	logiqueRobot = std::make_unique<std::thread>(&ControleRobot::boucleInfinieLogiqueRobot, this);
-	//logiqueRobot -> detach();
-}
 
-void ControleRobot::terminerBoucleRobot(){
-	// Tuer le thread
-	// Le thread roule une fonction tant que manuel = false, alors on change la condition
-	manuel = true;
-	if ((logiqueRobot != nullptr) && (logiqueRobot->joinable())){
-		logiqueRobot->join();
-	}
-}
+	// Initialisation du comportement
+	comportement_->initialiser();
 
-void ControleRobot::boucleInfinieLogiqueRobot(){
-	while (!manuel) {
-		/*if (ligneDetectee()){
-		comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
-		comportement->initialiser();
-		}*/
-		mutexComportement.lock();
-		comportement_->mettreAJour();
-		mutexComportement.unlock();
-	}
+	// CECI PLANTE POUR UNE RAISON QUELCONQUE, LE MUTEX N'AIDE EN RIEN
+	//	if (ancienComportement != nullptr){
+	//		delete ancienComportement;
+	//	}
 
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn ControleRobot::passerAModeManuel()
-///
-/// Dit au controleur de robot de gerer la passation au mode manuel.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void ControleRobot::passerAModeManuel(){
-	manuel = true;
-	terminerBoucleRobot();
+	// Libération du mutex, l'accès au comportement redevient valide
+	mutexComportement.unlock();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -187,6 +147,95 @@ void ControleRobot::inverserModeControle(){
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::passerAModeAutomatique()
+///
+/// Dit au controleur de robot de gerer la passation au mode automatique.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::passerAModeAutomatique() {
+	manuel = false;
+	//TODO: Ceci doit ammener au comportement par defaut dans profil
+	assignerComportement(BALAYAGE180);
+	initialiserBoucleRobot();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::passerAModeManuel()
+///
+/// Dit au controleur de robot de gerer la passation au mode manuel.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::passerAModeManuel(){
+	manuel = true;
+	terminerBoucleRobot();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::initialiserBoucleRobot()
+///
+/// Initialise le thread de boucle d'éxécution du robot. Appel à l'exécution de boucleInfinieLogiqueRobot.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::initialiserBoucleRobot(){
+	logiqueRobot = std::make_unique<std::thread>(&ControleRobot::boucleInfinieLogiqueRobot, this);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::terminerBoucleRobot()
+///
+/// Termine le thread de boucle d'éxécution du robot. Aleterne temporairement manuel pour join le thread.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::terminerBoucleRobot(){
+
+	// On garde temporairemtn la valeur de manuel
+	bool man = manuel;
+
+	// Le thread roule une fonction tant que manuel = false, alors on change la condition
+	manuel = true;
+
+	// Fermeture du thread s'il est joignable
+	if ((logiqueRobot != nullptr) && (logiqueRobot->joinable())){
+		logiqueRobot->join();
+	}
+
+	// Nous redonnons à manuel sa valeur de départ
+	manuel = man;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::boucleInfinieLogiqueRobot()
+///
+/// Appel la mise à jour du comportement tant que manuel est faux. S'exécute normalement dans un thread différent.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::boucleInfinieLogiqueRobot(){
+	while (!manuel) {
+		/*if (ligneDetectee()){
+		comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
+		comportement->initialiser();
+		}*/
+		comportement_->mettreAJour();
+	}
+
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -203,7 +252,18 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 	robot_->assignerVitesseDroite(vit_D);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::obtenirNoeud()
+///
+/// Retourne la référence au noeud du robot dans l'arbre de rendu.
+///
+/// @return Pointeur vers le noeud de noeud de rendu du robot.
+///
+////////////////////////////////////////////////////////////////////////
+NoeudRobot* ControleRobot::obtenirNoeud(){
+	return robot_;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

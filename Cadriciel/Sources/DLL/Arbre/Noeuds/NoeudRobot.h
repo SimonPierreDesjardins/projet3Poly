@@ -55,7 +55,6 @@ public:
     void afficherCapteursDistance() const;
 
 private:
-	float angle_{ 0.f };
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 	float acceleration_{ 200.0 };

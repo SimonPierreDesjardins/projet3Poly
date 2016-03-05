@@ -17,13 +17,13 @@
 /// @class ComportementBalayage
 /// @brief Classe qui implémente le comportement de balayage du robot.
 ///
-/// @author Olivier St-Amour
+/// @author Olivier St-Amour, Camille Gendreau
 /// @date 2016-02-16
 ///////////////////////////////////////////////////////////////////////////
 class ComportementBalayage : public ComportementAbstrait
 {
 public:
-	ComportementBalayage(ControleRobot* noeudRobot);
+	ComportementBalayage(ControleRobot* controleRobot);
 	virtual ~ComportementBalayage();
 
 	void initialiser();

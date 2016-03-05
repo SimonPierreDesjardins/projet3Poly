@@ -38,27 +38,37 @@ public:
 	ControleRobot();
 	~ControleRobot();
 
+	// Demande au robot de traiter une commande donnée
 	void traiterCommande(CommandeRobot* commande, bool provientUtilisateur);
 
+	// Assigne le comportement correspondant à l'enum à l'IA du robot.
 	void assignerComportement(eComportement nouveauComportement);
 
+	// perme d'obtenir le noeud du robot. Souvent appelé par les comportements pour vérifier des conditions.
+	NoeudRobot* obtenirNoeud();
 
+	// Fonctions permettant d'alterner entre les modes de contrôle
 	void inverserModeControle();
 	void passerAModeManuel();
 	void passerAModeAutomatique();
+
+	// Peut-être rendre ceci privé, l'ajustement de moteurs devrait se faire par commandes
+	void assignerVitessesMoteurs(double vit_G, double vit_D);
+
+private:
 
 	// Fonctions pour gérer multithreading robot
 	void initialiserBoucleRobot();
 	void terminerBoucleRobot();
 	void boucleInfinieLogiqueRobot();
 
-	void assignerVitessesMoteurs(double vit_G, double vit_D);
-
-private:
+	// définit si oui ou non le robot est en mode manuel
 	bool manuel{ false };
 
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;
+
+	// pointeur vers le noeud du robot
 	NoeudRobot* robot_;
 
 	// Pointeur vers le comportement présentement adopté par le robot.

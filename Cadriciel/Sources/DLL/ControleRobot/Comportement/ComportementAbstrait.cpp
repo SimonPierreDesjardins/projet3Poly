@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// @file ComporterAbstrait.cpp
-/// @author Olivier St-Amour
+/// @author Olivier St-Amour, Camille Gendreau
 /// @date 20016-02-16
 /// @version 1.0
 ///
