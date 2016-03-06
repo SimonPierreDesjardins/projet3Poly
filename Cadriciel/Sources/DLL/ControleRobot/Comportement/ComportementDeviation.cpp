@@ -9,6 +9,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementDeviation.h"
+#include "ControleRobot.h"
+#include "CommandeRobot.h"
+#include "NoeudRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -21,7 +24,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDeviation::ComportementDeviation(ControleRobot* noeudRobot) :ComportementAbstrait(noeudRobot)
+ComportementDeviation::ComportementDeviation(ControleRobot* controleRobot) :ComportementAbstrait(controleRobot)
 {
 }
 
@@ -49,12 +52,13 @@ ComportementDeviation::~ComportementDeviation()
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDeviation::initialiser(){
-
+	angleCible_ = controleRobot_->obtenirNoeud()->obtenirAngleRotation() + maxAngle_;
+	gauche = maxAngle_ >= 0;
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementDefaut::mettreAJour()
+/// @fn ComportementDeviation::mettreAJour()
 ///
 /// Vérifie si le comportement doit changer ou procéder à une prochaine action sur sa liste.
 ///
@@ -62,10 +66,45 @@ void ComportementDeviation::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDeviation::mettreAJour(){
+	
+	//Si une ligne est trouvée nous passons à la suivie de ligne
+	if (controleRobot_->ligneDetectee()){
+		controleRobot_->assignerComportement(SUIVIDELIGNE);
+	}
 
+	bool angleAtteinte = false;
+
+	if (gauche){
+		// Dévier à gauche et vérifier angle
+		controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
+		angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() > angleCible_;
+	}
+	else{
+		// Dévier à droite et vérifier angle
+		controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
+		angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() < angleCible_;
+	}
+
+	if (angleAtteinte){
+		// TODO: Assigner le comportement suivant
+		controleRobot_->assignerComportement(DEFAUT);
+	}
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::setAngleMaxRotation(double angle)
+///
+/// Ajuste l'angle pour la déviation
+///
+/// @param[in] angle: l'angle à partir duquel on change decomportement. negatif implique une deviation vers la droite.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ComportementDeviation::setAngleMaxRotation(double angle){
+	maxAngle_ = angle;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 //////////////////////////////////////////////////////////////////////////////

@@ -18,10 +18,11 @@
 // Inclusion pour l'Enum de comportements
 #include "ComportementAbstrait.h"
 
-// TEMPORAIRE!!! Inclusion pour création du comportement par defaut
+// TODO: TEMPORAIRE!!! Inclusion pour création des comportements par tests
 #include "ComportementDefaut.h"
 #include "ComportementSuiviLigne.h"
 #include "ComportementBalayage.h"
+#include "ComportementDeviation.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -107,12 +108,26 @@ void ControleRobot::assignerComportement(eComportement nouveauComportement)
 	//ComportementAbstrait* ancienComportement = comportement_;
 
 	//TODO: ce switch est temporaire, remplacer par recherche de comportement dans profil
+	ComportementDeviation* compDev;
 	switch (nouveauComportement){
 	case DEFAUT:
 		comportement_ = new ComportementDefaut(this);
 		break;
 	case BALAYAGE180:
 		comportement_ = new ComportementBalayage(this);
+		break;
+	case SUIVIDELIGNE:
+		comportement_ = new ComportementSuiviLigne(this);
+		break;
+	case DEVIATIONVERSLADROITE:
+		compDev = new ComportementDeviation(this);
+		compDev->setAngleMaxRotation(-30.0);
+		comportement_ = compDev;
+		break;
+	case DEVIATIONVERSLAGAUCHE:
+		compDev = new ComportementDeviation(this);
+		compDev->setAngleMaxRotation(30.0);
+		comportement_ = compDev;
 		break;
 	}
 	
@@ -159,7 +174,7 @@ void ControleRobot::inverserModeControle(){
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	//TODO: Ceci doit ammener au comportement par defaut dans profil
-	assignerComportement(BALAYAGE180);
+	assignerComportement(DEVIATIONVERSLADROITE);
 	initialiserBoucleRobot();
 }
 
@@ -267,15 +282,18 @@ NoeudRobot* ControleRobot::obtenirNoeud(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ControleRobot::passerAModeManuel()
+/// @fn ControleRobot::ligneDetectee()
 ///
-/// NON IMPLEMENTEE: Devrait etre migree vers classe des capteurs. Retourne vrai si une ligne est detectee par les capteurs
+/// Fonction indiquant si le robot détecte une ligne. Utilisée par les comportements pour ne pas qu'ils aient
+/// à passer par le noeud du robot.
 ///
 /// @return Si oui ou non une ligne est detectee.
 ///
 ////////////////////////////////////////////////////////////////////////
 bool ControleRobot::ligneDetectee(){
-	return true;
+	//TODO: Décommenter pour que le suiveur de ligne fournisse la réponse.
+	//return 	obtenirNoeud()->obtenirEtatSuiveurLigne() != 0x00;
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

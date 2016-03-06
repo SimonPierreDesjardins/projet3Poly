@@ -40,6 +40,16 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 		vitesseMoteurD_ = -100.0;
 		vitesseMoteurG_ = 100.0;
 		break;
+
+	case DEVIATION_GAUCHE:
+		vitesseMoteurD_ = 100.0;
+		vitesseMoteurG_ = 50.0;
+		break;
+
+	case DEVIATION_DROITE:
+		vitesseMoteurD_ = 50.0;
+		vitesseMoteurG_ = 100.0;
+		break;
 	
 	case ARRETER:
 		vitesseMoteurD_ = 0.0;

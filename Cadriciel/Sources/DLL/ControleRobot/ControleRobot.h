@@ -55,6 +55,9 @@ public:
 	// Peut-être rendre ceci privé, l'ajustement de moteurs devrait se faire par commandes
 	void assignerVitessesMoteurs(double vit_G, double vit_D);
 
+	// Permet aux comportements de savoir si une ligne est détectée
+	bool ligneDetectee();
+
 private:
 
 	// Fonctions pour gérer multithreading robot
@@ -79,9 +82,6 @@ private:
 
 	// Pointeur vers le thread d'exécution du robot
 	std::unique_ptr<std::thread> logiqueRobot;
-
-	// devrait etre migree vers les capteurs
-	bool ligneDetectee();
 };
 
 #endif // CONTROLE_ROBOT_H

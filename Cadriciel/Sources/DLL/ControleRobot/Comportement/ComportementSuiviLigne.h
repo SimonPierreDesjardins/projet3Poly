@@ -23,7 +23,7 @@
 class ComportementSuiviLigne : public ComportementAbstrait
 {
 public:
-	ComportementSuiviLigne(ControleRobot* noeudRobot);
+	ComportementSuiviLigne(ControleRobot* controleRobot);
 	virtual ~ComportementSuiviLigne();
 
 	void initialiser();
@@ -31,7 +31,7 @@ public:
 	void mettreAJour();
 };
 
-#endif // COMPORTEMENT_SUIVI_LIGNE
+#endif COMPORTEMENT_SUIVI_LIGNE
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

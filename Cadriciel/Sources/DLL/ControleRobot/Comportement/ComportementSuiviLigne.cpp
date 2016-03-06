@@ -9,6 +9,9 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementSuiviLigne.h"
+#include "ControleRobot.h"
+#include "NoeudRobot.h"
+#include "CommandeRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -21,7 +24,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementSuiviLigne::ComportementSuiviLigne(ControleRobot* noeudRobot) :ComportementAbstrait(noeudRobot)
+ComportementSuiviLigne::ComportementSuiviLigne(ControleRobot* controleRobot) :ComportementAbstrait(controleRobot)
 {
 }
 
@@ -62,7 +65,26 @@ void ComportementSuiviLigne::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementSuiviLigne::mettreAJour(){
+	//TODO: Décommenter ceci pour assurer fonctionnement dynamique du robot.
+	//uint8_t etatSuiveurLigne = controleRobot_->obtenirNoeud()->obtenirEtatSuiveurLigne();
+	uint8_t etatSuiveurLigne = 0x00;
 
+	// Détection d'une ligne à gauche
+	if ((etatSuiveurLigne & 0x04) == 0x04){
+		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
+	}
+	// Détection d'une ligne à gauche
+	else if ((etatSuiveurLigne & 0x01) == 0x01){
+		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
+	}
+	// Sinon, si ligne au centre, aller tout droit.
+	else if ((etatSuiveurLigne & 0x02) == 0x02){
+		controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
+	}
+	// TODO: Sinon, si rien n'est détecté, passer au comportement profil.
+	else {
+		controleRobot_->assignerComportement(BALAYAGE180);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

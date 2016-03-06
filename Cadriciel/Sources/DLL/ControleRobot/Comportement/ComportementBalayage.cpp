@@ -68,9 +68,14 @@ void ComportementBalayage::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementBalayage::mettreAJour(){
+
+	//Si une ligne est trouvée nous passons à la suivie de ligne
+	if (controleRobot_->ligneDetectee()){
+		controleRobot_->assignerComportement(SUIVIDELIGNE);
+	}
+
 	switch (etatRotation){
 
-	//TODO: Implementation
 	// Nous sommes dans la premiere rotation 90 deg antihoraire
 	case 0:
 		// Envoie la commande de rotation anti-horaire

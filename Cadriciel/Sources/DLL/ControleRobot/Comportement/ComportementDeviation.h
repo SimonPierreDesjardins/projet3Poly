@@ -23,18 +23,24 @@
 class ComportementDeviation : public ComportementAbstrait
 {
 public:
-	ComportementDeviation(ControleRobot* noeudRobot);
+	ComportementDeviation(ControleRobot* controleRobot);
 	virtual ~ComportementDeviation();
 
 	void initialiser();
 
 	void mettreAJour();
 
-	void setAngleMaxRotation();
+	void setAngleMaxRotation(double angle);
 
 private:
-	double maxAngle;
-	double deltaAngle{ 0.0 };
+	// La variation relative d'angle maximale que la déviation doit atteindre
+	double maxAngle_;
+
+	// L'angle que doit atteindre le robot pour que la déviation soit considérée accomplie.
+	double angleCible_;
+
+	// Définit si la déviation doit se faire vers la gauche ou bien vers la droite
+	bool gauche;
 };
 
 #endif // COMPORTEMENT_DEVIATION

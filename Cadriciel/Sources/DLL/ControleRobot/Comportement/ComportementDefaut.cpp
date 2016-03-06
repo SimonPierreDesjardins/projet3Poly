@@ -64,6 +64,11 @@ void ComportementDefaut::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDefaut::mettreAJour(){
+	//Si une ligne est trouvée nous passons à la suivie de ligne
+	if (controleRobot_->ligneDetectee()){
+		controleRobot_->assignerComportement(SUIVIDELIGNE);
+	}
+
 	controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
 }
 
