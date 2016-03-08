@@ -170,7 +170,8 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 	{
 		if (robot_->obtenirRectangleEnglobant().calculerRectangleEstEnIntersection(noeud->obtenirRectangleEnglobant()))
 		{
-
+			robot_->assignerVitesseDroite(-robot_->obtenirVitesseDroite());
+			robot_->assignerVitesseGauche(-robot_->obtenirVitesseGauche());
 		}
 	}
 }
@@ -222,6 +223,15 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 		quad.coins[i] += (positionVirtuelleParent + noeud->obtenirPositionRelative());
 	}
 	noeud->assignerQuadEnglobantCourant(quad);
+
+	if (robot_ != nullptr)
+	{
+		if (robot_->obtenirRectangleEnglobant().calculerRectangleEstEnIntersection(noeud->obtenirRectangleEnglobant()))
+		{
+			robot_->assignerVitesseDroite(-robot_->obtenirVitesseDroite());
+			robot_->assignerVitesseGauche(-robot_->obtenirVitesseGauche());
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

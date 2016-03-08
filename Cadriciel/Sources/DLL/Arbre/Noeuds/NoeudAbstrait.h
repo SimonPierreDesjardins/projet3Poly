@@ -175,6 +175,15 @@ public:
 	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
+	//Permet de modifier les paramètres du robot
+	virtual void assignerVitesseRotation(float vitesse);
+	virtual void assignerVitesseDroite(float vitesse);
+	virtual void assignerVitesseGauche(float vitesse);
+
+	//Permet de récupérer les paramètres du robot.
+	virtual float obtenirVitesseDroite() const;
+	virtual float obtenirVitesseGauche() const;
+
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };
