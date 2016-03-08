@@ -33,7 +33,7 @@
     </Filter>
     <Filter Include="Source Files\Vue">
       <UniqueIdentifier>{d793df3c-6f32-4920-b637-7341da8393c4}</UniqueIdentifier>
-	</Filter>
+    </Filter>
     <Filter Include="Source Files\Collisions">
       <UniqueIdentifier>{f5f3c9f6-e1af-4957-b241-14a533b9388b}</UniqueIdentifier>
     </Filter>
