@@ -40,9 +40,14 @@ public:
 	void assignerVitesseDroite(float vitesse);
 	void assignerVitesseGauche(float vitesse);
 
+	void assignerVitesseDroiteCourante(float vitesse);
+	void assignerVitesseGaucheCourante(float vitesse);
+
 	//Permet de récupérer les paramètres du robot.
 	float obtenirVitesseDroite() const;
 	float obtenirVitesseGauche() const;
+	float obtenirVitesseDroiteCourante() const;
+	float obtenirVitesseGaucheCourante() const;
     
     // Mise à jour des capteurs du robot. 	
 	void mettreAJourCapteurs();
@@ -56,8 +61,6 @@ public:
 
 private:
 	float angle_{ 0.f };
-	float vitesseCouranteDroite_{ 0.f };
-	float vitesseCouranteGauche_{ 0.f };
 	float acceleration_{ 200.0 };
 	
 	SuiveurLigne suiveurLigne_;

@@ -560,6 +560,15 @@ void NoeudAbstrait::assignerVitesseGauche(float vitesse)
 {
 
 }
+void NoeudAbstrait::assignerVitesseDroiteCourante(float vitesse)
+{
+
+}
+void NoeudAbstrait::assignerVitesseGaucheCourante(float vitesse)
+{
+
+}
+
 
 //Permet de récupérer les paramètres du robot.
 float NoeudAbstrait::obtenirVitesseDroite() const
@@ -570,6 +579,15 @@ float NoeudAbstrait::obtenirVitesseGauche() const
 {
 	return 0.0;
 }
+float NoeudAbstrait::obtenirVitesseDroiteCourante() const
+{
+	return 0.0;
+}
+float NoeudAbstrait::obtenirVitesseGaucheCourante() const
+{
+	return 0.0;
+}
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

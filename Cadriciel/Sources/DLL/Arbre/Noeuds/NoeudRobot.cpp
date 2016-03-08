@@ -232,6 +232,37 @@ float NoeudRobot::obtenirVitesseGauche() const
 {
 	return vitesseGauche_;
 }
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::obtenirVitesseDroiteCourante() const
+///
+/// Cette fonction retourne la vitesse du moteur de droite
+///
+/// @param[in] Aucune.
+///
+/// @return float : vitesse de rotation du moteur de droite.
+///
+////////////////////////////////////////////////////////////////////////
+float NoeudRobot::obtenirVitesseDroiteCourante() const
+{
+	return vitesseCouranteDroite_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::obtenirVitesseGaucheCourante() const
+///
+/// Cette fonction retourne la vitesse du moteur de gauche
+///
+/// @param[in] Aucune.
+///
+/// @return float : vitesse de rotation du moteur de gauche.
+///
+////////////////////////////////////////////////////////////////////////
+float NoeudRobot::obtenirVitesseGaucheCourante() const
+{
+	return vitesseCouranteGauche_;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -279,6 +310,14 @@ void NoeudRobot::assignerVitesseGauche(float vitesse)
 void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
 	vitesseRotation_ = vitesse;
+}
+void NoeudRobot::assignerVitesseDroiteCourante(float vitesse)
+{
+	vitesseCouranteDroite_ = vitesse;
+}
+void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
+{
+	vitesseCouranteGauche_ = vitesse;
 }
 
 void NoeudRobot::mettreAJourCapteurs()
