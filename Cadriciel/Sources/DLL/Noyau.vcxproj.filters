@@ -308,6 +308,12 @@
     <ClCompile Include="Physique\RectangleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
+    <ClCompile Include="Physique\CercleEnglobant.cpp">
+      <Filter>Source Files\Physique</Filter>
+    </ClCompile>
+    <ClCompile Include="Physique\FormeEnglobante.cpp">
+      <Filter>Source Files\Physique</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -524,6 +530,12 @@
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="Physique\RectangleEnglobant.h">
+      <Filter>Header Files\Physique</Filter>
+    </ClInclude>
+    <ClInclude Include="Physique\CercleEnglobant.h">
+      <Filter>Header Files\Physique</Filter>
+    </ClInclude>
+    <ClInclude Include="Physique\FormeEnglobanteAbstraite.h">
       <Filter>Header Files\Physique</Filter>
     </ClInclude>
   </ItemGroup>

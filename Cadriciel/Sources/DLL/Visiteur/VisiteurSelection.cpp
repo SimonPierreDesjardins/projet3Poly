@@ -155,7 +155,7 @@ void VisiteurSelection::visiter(NoeudPoteau* noeud)
     RectangleEnglobant rectangle = noeud->obtenirRectangleEnglobant();
 	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
 	//bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
-    bool pointEstDansQuad = rectangle.calculerPointEstDansRectangle(positionRelative_);
+    bool pointEstDansQuad = rectangle.calculerPointEstDansForme(positionRelative_);
 
 	if ((estDrag_ && quadEstDansRectangle) ||
 	   (!estDrag_ && pointEstDansQuad)) {
@@ -184,7 +184,7 @@ void VisiteurSelection::visiter(NoeudMur* noeud)
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
 	//bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
-    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansRectangle(positionRelative_);
+    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansForme(positionRelative_);
 	if ((estDrag_ && quadEstDansRectangle) ||
 	   (!estDrag_ && pointEstDansQuad)) {
 		if (ctrlAppuye_) {
@@ -237,7 +237,7 @@ void VisiteurSelection::visiter(NoeudDepart* noeud)
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
 	//bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
-    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansRectangle(positionRelative_);
+    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansForme(positionRelative_);
 	if ((estDrag_ && quadEstDansRectangle) ||
 	   (!estDrag_ && pointEstDansQuad)) {
 		if (ctrlAppuye_) {
@@ -267,7 +267,7 @@ void VisiteurSelection::visiter(NoeudSegment* noeud)
 
 	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
 	//bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
-    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansRectangle(positionRelative_);
+    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansForme(positionRelative_);
 	if ((estDrag_ && quadEstDansRectangle) ||
 	   (!estDrag_ && pointEstDansQuad)) {
 		if (ctrlAppuye_) {
@@ -295,7 +295,7 @@ void VisiteurSelection::visiter(NoeudJonction* noeud)
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
 	NoeudAbstrait* pere = noeud->obtenirParent();
 //	bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
-    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansRectangle(positionRelative_);
+    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerPointEstDansForme(positionRelative_);
 	if (!estDrag_ && pointEstDansQuad) {
 		if (ctrlAppuye_) {
 			pere->inverserSelection();

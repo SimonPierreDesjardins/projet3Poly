@@ -177,6 +177,8 @@
     <ClCompile Include="MachineAModes\ModeMenuPrincipal.cpp" />
     <ClCompile Include="MachineAModes\ModeSimulation.cpp" />
     <ClCompile Include="MachineAModes\ModeTest.cpp" />
+    <ClCompile Include="Physique\CercleEnglobant.cpp" />
+    <ClCompile Include="Physique\FormeEnglobante.cpp" />
     <ClCompile Include="Physique\RectangleEnglobant.cpp" />
     <ClCompile Include="ProfilUtilisateur\ProfilUtilisateur.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
@@ -247,6 +249,8 @@
     <ClInclude Include="MachineAModes\ModeSimulation.h" />
     <ClInclude Include="MachineAModes\ModeTest.h" />
     <ClInclude Include="MachineAModes\ModeTypes.h" />
+    <ClInclude Include="Physique\CercleEnglobant.h" />
+    <ClInclude Include="Physique\FormeEnglobanteAbstraite.h" />
     <ClInclude Include="Physique\RectangleEnglobant.h" />
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
     <ClInclude Include="Tests\BancTests.h" />
