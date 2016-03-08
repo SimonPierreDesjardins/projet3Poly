@@ -22,6 +22,10 @@ namespace InterfaceGraphique
         private List<TypeComportement> comportementsList;
         System.Text.RegularExpressions.Regex regex;
 
+        bool afficherDebugComportement = false;
+        bool afficherDebugEclairage = false;
+        bool afficherDebugCapteurs = false;
+
         public Configure()
         {
             InitializeComponent();
@@ -166,6 +170,7 @@ namespace InterfaceGraphique
         private void Configure_Load(object sender, EventArgs e)
         {
             //comboBoxProfil.SelectedIndex = 0;
+            enableOptionAffichage();
         }
 
         private void capteurDistanceChkBox_CheckedChanged(object sender, EventArgs e)
@@ -308,6 +313,78 @@ namespace InterfaceGraphique
             oldText = (sender as TextBox).Text;
         }
 
+        private void OptionAffichage_CheckedChanged(object sender, EventArgs e)
+        {
+            enableOptionAffichage();
+            setBooleanAffichageComportement();
+            setBooleanAffichageEclairage();
+            setBooleanAffichageCapteurs();
+        }
+
+        private void enableOptionAffichage()
+        {
+            if (OptionAffichage.Checked)
+            {
+                comboBox_capteur.Enabled = true;
+                comboBox_comportement.Enabled = true;
+                comboBox_eclairage.Enabled = true;
+            }
+            else
+            {
+                comboBox_capteur.Enabled = false;
+                comboBox_comportement.Enabled = false;
+                comboBox_eclairage.Enabled = false;
+            }
+        }
+
+        private void comboBox_comportement_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setBooleanAffichageComportement();
+        }
+
+        private void setBooleanAffichageComportement()
+        {
+            if (comboBox_comportement.Enabled)
+            {
+                if (comboBox_comportement.SelectedIndex == 0)
+                    afficherDebugComportement = true;
+            }
+            else
+                afficherDebugComportement = false;
+        }
+
+        private void comboBox_eclairage_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setBooleanAffichageEclairage();
+        }
+
+        private void setBooleanAffichageEclairage()
+        {
+            if (comboBox_eclairage.Enabled)
+            {
+                if (comboBox_eclairage.SelectedIndex == 0)
+                    afficherDebugEclairage = true;
+            }
+            else
+                afficherDebugEclairage = false;
+        }
+
+        private void comboBox_capteur_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            setBooleanAffichageCapteurs();
+        }
+
+        private void setBooleanAffichageCapteurs()
+        {
+            if (comboBox_capteur.Enabled)
+            {
+                if (comboBox_capteur.SelectedIndex == 0)
+                    afficherDebugCapteurs = true;
+            }
+            else
+                afficherDebugCapteurs = false;
+        }
+
     }
 
     static partial class FonctionsNatives{
@@ -340,6 +417,15 @@ namespace InterfaceGraphique
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerAffichageComportement(bool afficherDebugComportement);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerAffichageEclairage(bool afficherDebugEclairage);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerAffichageCapteurs(bool afficherDebugCapteurs);
     }
 }
 

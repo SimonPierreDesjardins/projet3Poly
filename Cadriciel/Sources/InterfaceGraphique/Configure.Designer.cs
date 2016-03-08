@@ -90,7 +90,13 @@
             this.capteurDistanceProchComportementSecuritaireLbl = new System.Windows.Forms.Label();
             this.capteurDistanceChkBox = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.label7 = new System.Windows.Forms.Label();
+            this.OptionAffichage = new System.Windows.Forms.CheckBox();
+            this.comboBox_capteur = new System.Windows.Forms.ComboBox();
+            this.comboBox_eclairage = new System.Windows.Forms.ComboBox();
+            this.comboBox_comportement = new System.Windows.Forms.ComboBox();
+            this.ZoneCapteurs = new System.Windows.Forms.Label();
+            this.EtatEclairage = new System.Windows.Forms.Label();
+            this.ChangeComportement = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -803,7 +809,13 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.label7);
+            this.tabPage3.Controls.Add(this.OptionAffichage);
+            this.tabPage3.Controls.Add(this.comboBox_capteur);
+            this.tabPage3.Controls.Add(this.comboBox_eclairage);
+            this.tabPage3.Controls.Add(this.comboBox_comportement);
+            this.tabPage3.Controls.Add(this.ZoneCapteurs);
+            this.tabPage3.Controls.Add(this.EtatEclairage);
+            this.tabPage3.Controls.Add(this.ChangeComportement);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -812,15 +824,82 @@
             this.tabPage3.Text = "Option Débogage";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // label7
+            // OptionAffichage
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(22, 112);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(391, 48);
-            this.label7.TabIndex = 1;
-            this.label7.Text = "DONT LOOK HERE YET! \r\nCONTACT THE TECHNICIEN IT\'S BROKEN!\r\n";
+            this.OptionAffichage.AutoSize = true;
+            this.OptionAffichage.Location = new System.Drawing.Point(147, 78);
+            this.OptionAffichage.Name = "OptionAffichage";
+            this.OptionAffichage.Size = new System.Drawing.Size(259, 17);
+            this.OptionAffichage.TabIndex = 7;
+            this.OptionAffichage.Text = "Permettre de rendre actif l\'affichage de débogage";
+            this.OptionAffichage.UseVisualStyleBackColor = true;
+            this.OptionAffichage.CheckedChanged += new System.EventHandler(this.OptionAffichage_CheckedChanged);
+            // 
+            // comboBox_capteur
+            // 
+            this.comboBox_capteur.FormattingEnabled = true;
+            this.comboBox_capteur.Items.AddRange(new object[] {
+            "Oui",
+            "Non"});
+            this.comboBox_capteur.Location = new System.Drawing.Point(238, 322);
+            this.comboBox_capteur.MaxDropDownItems = 2;
+            this.comboBox_capteur.Name = "comboBox_capteur";
+            this.comboBox_capteur.Size = new System.Drawing.Size(66, 21);
+            this.comboBox_capteur.TabIndex = 6;
+            this.comboBox_capteur.SelectedIndexChanged += new System.EventHandler(this.comboBox_capteur_SelectedIndexChanged);
+            // 
+            // comboBox_eclairage
+            // 
+            this.comboBox_eclairage.FormattingEnabled = true;
+            this.comboBox_eclairage.Items.AddRange(new object[] {
+            "Oui",
+            "Non"});
+            this.comboBox_eclairage.Location = new System.Drawing.Point(238, 234);
+            this.comboBox_eclairage.MaxDropDownItems = 2;
+            this.comboBox_eclairage.Name = "comboBox_eclairage";
+            this.comboBox_eclairage.Size = new System.Drawing.Size(66, 21);
+            this.comboBox_eclairage.TabIndex = 5;
+            this.comboBox_eclairage.SelectedIndexChanged += new System.EventHandler(this.comboBox_eclairage_SelectedIndexChanged);
+            // 
+            // comboBox_comportement
+            // 
+            this.comboBox_comportement.FormattingEnabled = true;
+            this.comboBox_comportement.Items.AddRange(new object[] {
+            "Oui",
+            "Non"});
+            this.comboBox_comportement.Location = new System.Drawing.Point(238, 139);
+            this.comboBox_comportement.MaxDropDownItems = 2;
+            this.comboBox_comportement.Name = "comboBox_comportement";
+            this.comboBox_comportement.Size = new System.Drawing.Size(66, 21);
+            this.comboBox_comportement.TabIndex = 4;
+            this.comboBox_comportement.SelectedIndexChanged += new System.EventHandler(this.comboBox_comportement_SelectedIndexChanged);
+            // 
+            // ZoneCapteurs
+            // 
+            this.ZoneCapteurs.AutoSize = true;
+            this.ZoneCapteurs.Location = new System.Drawing.Point(323, 330);
+            this.ZoneCapteurs.Name = "ZoneCapteurs";
+            this.ZoneCapteurs.Size = new System.Drawing.Size(180, 13);
+            this.ZoneCapteurs.TabIndex = 3;
+            this.ZoneCapteurs.Text = "Identification des zones de capteurs ";
+            // 
+            // EtatEclairage
+            // 
+            this.EtatEclairage.AutoSize = true;
+            this.EtatEclairage.Location = new System.Drawing.Point(323, 242);
+            this.EtatEclairage.Name = "EtatEclairage";
+            this.EtatEclairage.Size = new System.Drawing.Size(204, 13);
+            this.EtatEclairage.TabIndex = 2;
+            this.EtatEclairage.Text = "Activation ou désactivation d\'un éclairage";
+            // 
+            // ChangeComportement
+            // 
+            this.ChangeComportement.AutoSize = true;
+            this.ChangeComportement.Location = new System.Drawing.Point(323, 147);
+            this.ChangeComportement.Name = "ChangeComportement";
+            this.ChangeComportement.Size = new System.Drawing.Size(152, 13);
+            this.ChangeComportement.TabIndex = 1;
+            this.ChangeComportement.Text = "Changement de comportement";
             // 
             // Configure
             // 
@@ -874,7 +953,6 @@
         private System.Windows.Forms.Button buttonDefProfil;
         private System.Windows.Forms.ComboBox comboBoxProfil;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.CheckBox capteurLigneChkBox;
         private System.Windows.Forms.CheckBox capteurDistanceChkBox;
         private System.Windows.Forms.Panel capteurDistanceOptionsPnl;
@@ -917,6 +995,13 @@
         private System.Windows.Forms.TextBox angleEGTxtBox;
         private System.Windows.Forms.TextBox angleDDTxtBox;
         private System.Windows.Forms.TextBox angleDGTxtBox;
+        private System.Windows.Forms.CheckBox OptionAffichage;
+        private System.Windows.Forms.ComboBox comboBox_capteur;
+        private System.Windows.Forms.ComboBox comboBox_eclairage;
+        private System.Windows.Forms.ComboBox comboBox_comportement;
+        private System.Windows.Forms.Label ZoneCapteurs;
+        private System.Windows.Forms.Label EtatEclairage;
+        private System.Windows.Forms.Label ChangeComportement;
 
     }
 }

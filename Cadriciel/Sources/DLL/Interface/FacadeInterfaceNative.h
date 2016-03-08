@@ -61,6 +61,9 @@ extern "C"
 
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande);
 
+	__declspec(dllexport) void __cdecl assignerAffichageComportement(bool afficherDebugComportement);
+	__declspec(dllexport) void __cdecl assignerAffichageEclairage(bool afficherDebugEclairage);
+	__declspec(dllexport) void __cdecl assignerAffichageCapteurs(bool afficherDebugCapteurs);
 
 }
 
