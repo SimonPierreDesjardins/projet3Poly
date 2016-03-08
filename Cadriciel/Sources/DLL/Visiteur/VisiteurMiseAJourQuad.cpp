@@ -168,8 +168,11 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 
 	if (robot_ != nullptr)
 	{
+		if (robot_->obtenirRectangleEnglobant().calculerRectangleEstEnIntersection(noeud->obtenirRectangleEnglobant()))
+		{
+
+		}
 	}
-	
 }
 
 ////////////////////////////////////////////////////////////////////////
