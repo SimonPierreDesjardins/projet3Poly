@@ -24,7 +24,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementBalayage::ComportementBalayage(ControleRobot* controleRobot) :ComportementAbstrait(controleRobot)
+ComportementBalayage::ComportementBalayage()
 {
 }
 

@@ -115,32 +115,32 @@ void ControleRobot::assignerComportement(eComportement nouveauComportement)
 	ComportementEvitement* compEvit;
 	switch (nouveauComportement){
 	case DEFAUT:
-		comportement_ = new ComportementDefaut(this);
+		comportement_ = new ComportementDefaut();
 		break;
 	case BALAYAGE180:
-		comportement_ = new ComportementBalayage(this);
+		comportement_ = new ComportementBalayage();
 		break;
 	case SUIVIDELIGNE:
-		comportement_ = new ComportementSuiviLigne(this);
+		comportement_ = new ComportementSuiviLigne();
 		break;
 	case DEVIATIONVERSLADROITE:
-		compDev = new ComportementDeviation(this);
+		compDev = new ComportementDeviation();
 		compDev->setAngleMaxRotation(-30.0);
 		comportement_ = compDev;
 		break;
 	case DEVIATIONVERSLAGAUCHE:
-		compDev = new ComportementDeviation(this);
+		compDev = new ComportementDeviation();
 		compDev->setAngleMaxRotation(30.0);
 		comportement_ = compDev;
 		break;
 	case EVITEMENTPARLADROITE:
-		compEvit = new ComportementEvitement(this);
+		compEvit = new ComportementEvitement();
 		compEvit->setAngleMaxRotation(30.0);
 		compEvit->setTempsMaxReculons(2.0);
 		comportement_ = compEvit;
 		break;
 	case EVITEMENTPARLAGAUCHE:
-		compEvit = new ComportementEvitement(this);
+		compEvit = new ComportementEvitement();
 		compEvit->setAngleMaxRotation(-30.0);
 		compEvit->setTempsMaxReculons(2.0);
 		comportement_ = compEvit;
@@ -152,7 +152,8 @@ void ControleRobot::assignerComportement(eComportement nouveauComportement)
 		//TODO: obtenir le nom du comportement suivant
 	}
 
-	// Initialisation du comportement
+	// Assignation du controleur au comportement et initialisation
+	comportement_->assignerRobot(this);
 	comportement_->initialiser();
 
 	// CECI PLANTE POUR UNE RAISON QUELCONQUE, LE MUTEX N'AIDE EN RIEN

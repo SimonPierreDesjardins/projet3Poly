@@ -22,9 +22,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementAbstrait::ComportementAbstrait(ControleRobot* controleRobot)
+ComportementAbstrait::ComportementAbstrait()
 {
-	controleRobot_ = std::unique_ptr<ControleRobot>(controleRobot);
 }
 
 
@@ -39,6 +38,21 @@ ComportementAbstrait::ComportementAbstrait(ControleRobot* controleRobot)
 ////////////////////////////////////////////////////////////////////////
 ComportementAbstrait::~ComportementAbstrait()
 {
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementAbstrait::~ComportementAbstrait()
+///
+/// Assigne au comportement le comportement qui devrait le suivre lorsque la condition de fin est atteinte.
+///
+/// @param[in] prochainComportement: Valeur enum indiquant le prochain comportement a adopter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ComportementAbstrait::assignerRobot(ControleRobot* controleRobot){
+	controleRobot_ = std::unique_ptr<ControleRobot>(controleRobot);
 }
 
 ////////////////////////////////////////////////////////////////////////

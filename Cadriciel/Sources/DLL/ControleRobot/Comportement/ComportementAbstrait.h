@@ -40,7 +40,7 @@ enum eComportement {
 class ComportementAbstrait
 {
 public:
-	ComportementAbstrait(ControleRobot* controleRobot);
+	ComportementAbstrait();
 	virtual ~ComportementAbstrait();
 
 	// Assure la reinitialisation du comportement avant son execution
@@ -49,6 +49,10 @@ public:
 	// Traite l'execution du comportement
 	virtual void mettreAJour() = 0;
 
+	// Assigne le robot au shared_ptr
+	void assignerRobot(ControleRobot* controleRobot);
+
+	// Obtient l'enum du comportement suivant
 	eComportement obtenirComportementSuivant();
 
 	void assignerComportementSuivant(eComportement prochainComportement);

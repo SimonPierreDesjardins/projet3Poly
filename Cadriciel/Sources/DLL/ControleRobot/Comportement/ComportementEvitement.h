@@ -24,7 +24,7 @@
 class ComportementEvitement : public ComportementAbstrait
 {
 public:
-	ComportementEvitement(ControleRobot* noeudRobot);
+	ComportementEvitement();
 	virtual ~ComportementEvitement();
 
 	void initialiser();

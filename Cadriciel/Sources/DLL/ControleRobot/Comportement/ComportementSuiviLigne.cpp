@@ -15,16 +15,14 @@
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementSuiviLigne::ComportementSuiviLigne(ControleRobot* controleRobot)
+/// @fn ComportementSuiviLigne::ComportementSuiviLigne()
 ///
 /// Constructeur
-///
-/// @param[in] controleRobot: Le controlleur du robot auquel le comportement passera des commandes
 ///
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementSuiviLigne::ComportementSuiviLigne(ControleRobot* controleRobot) :ComportementAbstrait(controleRobot)
+ComportementSuiviLigne::ComportementSuiviLigne()
 {
 }
 

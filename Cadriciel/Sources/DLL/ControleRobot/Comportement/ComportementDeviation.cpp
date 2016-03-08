@@ -24,7 +24,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDeviation::ComportementDeviation(ControleRobot* controleRobot) :ComportementAbstrait(controleRobot)
+ComportementDeviation::ComportementDeviation()
 {
 }
 

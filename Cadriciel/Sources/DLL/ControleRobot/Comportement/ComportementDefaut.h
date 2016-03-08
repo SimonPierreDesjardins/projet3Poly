@@ -23,7 +23,7 @@
 class ComportementDefaut : public ComportementAbstrait
 {
 public:
-	ComportementDefaut(ControleRobot* controleRobot);
+	ComportementDefaut();
 	virtual ~ComportementDefaut();
 
 	void initialiser();

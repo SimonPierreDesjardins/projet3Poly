@@ -23,7 +23,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDefaut::ComportementDefaut(ControleRobot* controleRobot):ComportementAbstrait(controleRobot)
+ComportementDefaut::ComportementDefaut()
 {
 }
 

@@ -23,7 +23,7 @@
 class ComportementSuiviLigne : public ComportementAbstrait
 {
 public:
-	ComportementSuiviLigne(ControleRobot* controleRobot);
+	ComportementSuiviLigne();
 	virtual ~ComportementSuiviLigne();
 
 	void initialiser();

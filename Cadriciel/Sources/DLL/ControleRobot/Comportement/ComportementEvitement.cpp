@@ -15,16 +15,14 @@
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementEvitement::ComportementEvitement(ControleRobot* controleRobot)
+/// @fn ComportementEvitement::ComportementEvitement()
 ///
 /// Constructeur
-///
-/// @param[in] controleRobot: Pointeur vers le controleur du robot auquel le comportement est assigné
 ///
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementEvitement::ComportementEvitement(ControleRobot* controleRobot) :ComportementAbstrait(controleRobot)
+ComportementEvitement::ComportementEvitement()
 {
 }
 
