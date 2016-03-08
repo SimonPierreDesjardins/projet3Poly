@@ -37,6 +37,7 @@ namespace InterfaceGraphique
 
         bool arreterToutMessage_;
 
+
         public void arreterToutMessage()
         { arreterToutMessage_ = true; }
 
