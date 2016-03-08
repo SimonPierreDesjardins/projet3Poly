@@ -25,7 +25,6 @@
 EtatSelection::EtatSelection()
 {
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	vue_ = FacadeModele::obtenirInstance()->obtenirVue();
 }
@@ -122,7 +121,6 @@ void EtatSelection::gererClicGauche(const int& x, const int& y)
 	} 
 	visiteurSelection_->assignerPositionRelative(positionRelative);
 	if (arbre_ != nullptr) {
-		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurSelection_.get());
 	}
 }
@@ -149,7 +147,6 @@ void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const 
 	visiteurSelection_->assignerPositionRectElast(positionRelativeAvant, positionRelativeApres);
 
 	if (arbre_ != nullptr) {
-		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurSelection_.get());
 	}
 }

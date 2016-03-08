@@ -107,6 +107,9 @@ protected:
 	/// Chemin vers le fichier de zone sélectionné par l'utilisateur
 	std::string cheminFichierZone;
 
+	/// Visiteur permettant de mettre à jour les boites englobantes des enfants.
+	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_;
+
 private:
     /// Définition du type pour l'association du nom d'un type vers l'usine
 	/// correspondante.
@@ -115,8 +118,7 @@ private:
 	/// Association du nom d'un type vers l'usine correspondante.
 	RegistreUsines usines_;   
 
-	/// Visiteur permettant de mettre à jour les boites englobantes des enfants.
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_;
+	
 };
 
 

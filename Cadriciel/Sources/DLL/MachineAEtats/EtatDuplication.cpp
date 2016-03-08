@@ -24,7 +24,6 @@
 EtatDuplication::EtatDuplication()
 {
 	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 
 	// On commence une duplication.
@@ -94,7 +93,6 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
 	if (curseurEstSurTable_ && !estClickDrag()) {
 		if (arbre_ != nullptr) {
-			arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 		}
 		bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
