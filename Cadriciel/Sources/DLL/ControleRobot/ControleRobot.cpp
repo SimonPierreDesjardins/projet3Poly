@@ -10,6 +10,8 @@
 
 #include "ControleRobot.h"
 
+#include <iostream>
+
 #include "CommandeRobot.h"
 #include "NoeudRobot.h"
 #include "FacadeModele.h"
@@ -145,6 +147,10 @@ void ControleRobot::assignerComportement(eComportement nouveauComportement)
 		break;
 	}
 	
+	if (debug){
+		std::cout << "Passage au comportement: " << comportement_ -> obtenirNomComportement() << endl;
+		//TODO: obtenir le nom du comportement suivant
+	}
 
 	// Initialisation du comportement
 	comportement_->initialiser();

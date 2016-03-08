@@ -68,6 +68,9 @@ private:
 	// définit si oui ou non le robot est en mode manuel
 	bool manuel{ false };
 
+	// définit si en mode debug
+	bool debug{ true };
+
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;
 

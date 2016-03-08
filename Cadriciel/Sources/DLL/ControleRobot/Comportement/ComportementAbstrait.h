@@ -12,6 +12,7 @@
 #define COMPORTEMENT_ABSTRAIT
 
 #include <memory>
+#include <string>
 
 class ControleRobot;
 
@@ -51,6 +52,8 @@ public:
 	eComportement obtenirComportementSuivant();
 
 	void assignerComportementSuivant(eComportement prochainComportement);
+
+	virtual std::string obtenirNomComportement();
 
 protected:
 	// Le comportement a adopter une fois les conditions de fin de ce comportement sont atteintes.
