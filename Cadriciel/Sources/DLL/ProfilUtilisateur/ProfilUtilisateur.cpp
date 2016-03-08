@@ -14,6 +14,8 @@
 #include <CommCtrl.h>
 #include <windowsx.h>
 #include <atlstr.h>
+#include <fstream>
+#include <sstream>
 
 
 ProfilUtilisateur::ProfilUtilisateur()
@@ -33,8 +35,12 @@ ProfilUtilisateur::~ProfilUtilisateur()
 }
 
 bool ProfilUtilisateur::ouvrirProfil(std::string readOrWrite){
+	return ouvrir(nomProfil_ + EXTENSION_PROFIL, readOrWrite, profil_);
+}
+
+bool ProfilUtilisateur::ouvrir(std::string nomFichier, std::string readOrWrite, FILE*& fichier){
 	errno_t err;
-	err = fopen_s(&profil_, (CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL).c_str(), readOrWrite.c_str());
+	err = fopen_s(&fichier, (CHEMIN_PROFIL + nomFichier).c_str(), readOrWrite.c_str());
 	return err == 0;
 }
 
@@ -79,51 +85,55 @@ void ProfilUtilisateur::sauvegarder()
 bool ProfilUtilisateur::changerProfil(std::string nomProfil){
 	nomProfil_ = nomProfil;
 	comportements_.clear();
+	touches_.clear();
+	commandes_.clear();
 	return chargerProfil();
 }
 
 bool ProfilUtilisateur::chargerProfil()
 {
-	if(!ouvrirProfil("rb"))
-		return false;
 	rapidjson::Document doc;
 	char readBuffer[65536];
 	rapidjson::FileReadStream is(profil_, readBuffer, sizeof(readBuffer));
 	doc.ParseStream(is);
 	fclose(profil_);
+
 	rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin();
+
 	this->nomProfil_ = itr->value.GetString();
+	std::wstring ws;
+	ws.assign(nomProfil_.begin(), nomProfil_.end());
+	ComboBox_SelectString(configureHandles.at(PROFIL_CB), 0, ws.c_str());
+
 	itr++;
 
 	const rapidjson::Value& touches = itr->value;
 
-	TCHAR texte[2];
-	texte[1] = '\0';
-	touches_.clear();
-	int size = touches.Size();
-	touches_.resize(size);
-	texte[0] = touches_.at(INVERSER_MODE_CONTROLE) = char(touches[INVERSER_MODE_CONTROLE].GetInt());
-	SendMessage(configureHandles.at(MODE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)texte);
+	touches_.resize(touches.Size());
 
-	texte[0] = touches_.at(AVANCER) = char(touches[AVANCER].GetInt());
-	SendMessage(configureHandles.at(AVANCER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)texte);
+	touches_.at(INVERSER_MODE_CONTROLE) = char(touches[INVERSER_MODE_CONTROLE].GetInt());
+	SendMessage(configureHandles.at(MODE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(INVERSER_MODE_CONTROLE));
 
-	texte[0] = touches_.at(RECULER) = char(touches[RECULER].GetInt());
-	SendMessage(configureHandles.at(RECULER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)texte);
+	touches_.at(AVANCER) = char(touches[AVANCER].GetInt());
+	SendMessage(configureHandles.at(AVANCER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(AVANCER));
 
-	texte[0] = touches_.at(ROTATION_GAUCHE) = char(touches[ROTATION_GAUCHE].GetInt());
-	SendMessage(configureHandles.at(ROTATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)texte);
+	touches_.at(RECULER) = char(touches[RECULER].GetInt());
+	SendMessage(configureHandles.at(RECULER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(RECULER));
 
-	texte[0] = touches_.at(ROTATION_DROITE) = char(touches[ROTATION_DROITE].GetInt());
-	SendMessage(configureHandles.at(ROTATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)texte);
-	/*for (size_t i = 0; i < size; i++)
-	{
-		touches_.at(i) = unsigned char(touches[i].GetInt());
-		texte[0] = touches_[i];
-		SendMessage(configureHandles.at(i), WM_SETTEXT, 0, (LPARAM)texte);
-	}*/
+	touches_.at(ROTATION_GAUCHE) = char(touches[ROTATION_GAUCHE].GetInt());
+	SendMessage(configureHandles.at(ROTATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(ROTATION_GAUCHE));
+
+	touches_.at(ROTATION_DROITE) = char(touches[ROTATION_DROITE].GetInt());
+	SendMessage(configureHandles.at(ROTATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(ROTATION_DROITE));
+
+	commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
+	commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER)));
+	commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER)));
+	commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE)));
+	commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE)));
 
 	itr++;
+
 	const rapidjson::Value& comportements = itr->value;
 
 	assert(comportements.IsArray());
@@ -138,47 +148,21 @@ bool ProfilUtilisateur::chargerProfil()
 
 	comportements_.push_back(std::make_unique<ComportementDeviation>(comportements[DEVIATIONVERSLAGAUCHE]));
 	ComboBox_SetCurSel(configureHandles.at(DEVIATION_GAUCHE_CB), comportements_.at(DEVIATIONVERSLAGAUCHE)->obtenirComportementSuivant());
-	std::string stringTmp = std::to_string(comportements[DEVIATIONVERSLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5);
-	TCHAR * tcharTmp = new TCHAR[stringTmp.length() + 1];
-	tcharTmp[stringTmp.length()] = 0;
-	std::copy(stringTmp.begin(), stringTmp.end(), tcharTmp);
-	SendMessage(configureHandles.at(DEVIATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)tcharTmp);
+	SendMessage(configureHandles.at(DEVIATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[DEVIATIONVERSLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementDeviation>(comportements[DEVIATIONVERSLADROITE]));
 	ComboBox_SetCurSel(configureHandles.at(DEVIATION_DROITE_CB), comportements_.at(DEVIATIONVERSLADROITE)->obtenirComportementSuivant());
-	stringTmp = std::to_string(comportements[DEVIATIONVERSLADROITE]["maxAngle"].GetDouble()).substr(0, 5);
-	tcharTmp = new TCHAR[stringTmp.length() + 1];
-	tcharTmp[stringTmp.length()] = 0;
-	std::copy(stringTmp.begin(), stringTmp.end(), tcharTmp);
-	SendMessage(configureHandles.at(DEVIATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)tcharTmp);
+	SendMessage(configureHandles.at(DEVIATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[DEVIATIONVERSLADROITE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportements[EVITEMENTPARLAGAUCHE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_GAUCHE_CB), comportements_.at(EVITEMENTPARLAGAUCHE)->obtenirComportementSuivant());
-	stringTmp = std::to_string(comportements[EVITEMENTPARLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5);
-	tcharTmp = new TCHAR[stringTmp.length() + 1];
-	tcharTmp[stringTmp.length()] = 0;
-	std::copy(stringTmp.begin(), stringTmp.end(), tcharTmp);
-	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)tcharTmp);
-	stringTmp = std::to_string(comportements[EVITEMENTPARLAGAUCHE]["maxTemps"].GetDouble()).substr(0, 5);
-	tcharTmp = new TCHAR[stringTmp.length() + 1];
-	tcharTmp[stringTmp.length()] = 0;
-	std::copy(stringTmp.begin(), stringTmp.end(), tcharTmp);
-	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)tcharTmp);
+	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[EVITEMENTPARLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[EVITEMENTPARLAGAUCHE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportements[EVITEMENTPARLADROITE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_DROITE_CB), comportements_.at(EVITEMENTPARLADROITE)->obtenirComportementSuivant());
-	stringTmp = std::to_string(comportements[EVITEMENTPARLADROITE]["maxAngle"].GetDouble());
-	tcharTmp = new TCHAR[stringTmp.length() + 1];
-	tcharTmp[stringTmp.length()] = 0;
-	std::copy(stringTmp.begin(), stringTmp.end(), tcharTmp);
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)tcharTmp);
-	stringTmp = std::to_string(comportements[EVITEMENTPARLADROITE]["maxTemps"].GetDouble());
-	tcharTmp = new TCHAR[stringTmp.length() + 1];
-	tcharTmp[stringTmp.length()] = 0;
-	std::copy(stringTmp.begin(), stringTmp.end(), tcharTmp);
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)tcharTmp);
-
-	delete [] tcharTmp;
+	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[EVITEMENTPARLADROITE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_DROITE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[EVITEMENTPARLADROITE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
 
 	return true;
 }
@@ -186,38 +170,21 @@ bool ProfilUtilisateur::chargerProfil()
 void ProfilUtilisateur::chargerProfilParDefaut()
 {
 	struct stat buffer;
-	nomProfil_ = "défaut";
-
-	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL)) {
-		if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
+	nomProfil_ = "defaut";
+	if (!ouvrirProfil("rb"))
+		return;
+	fseek(profil_, 0, SEEK_END);
+	int size = ftell(profil_);
+	fseek(profil_, 0, SEEK_SET);
+	
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL) || size <= 0)
+		if (!utilitaire::fichierExiste(CHEMIN_PROFIL)){
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
 			CreateDirectory(wideString.c_str(), NULL);
 		}
 
-		touches_.resize(5);
-		touches_[INVERSER_MODE_CONTROLE] = ' ';
-		touches_[AVANCER] = 'w';
-		touches_[RECULER] = 'w';
-		touches_[ROTATION_GAUCHE] = 'a';
-		touches_[ROTATION_DROITE] = 'd';
 
-		commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
-		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER)));
-		commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER)));
-		commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE)));
-		commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE)));
-
-		comportements_.push_back(std::make_unique<ComportementDefaut>(BALAYAGE180));
-		comportements_.push_back(std::make_unique<ComportementSuiviLigne>(BALAYAGE180));
-		comportements_.push_back(std::make_unique<ComportementBalayage>(DEVIATIONVERSLAGAUCHE));		
-		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 50.0));
-		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 50.0));
-		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 5.0, 50.0));
-		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 5.0, 50.0));
-
-		sauvegarder();
-	}
 
 	chargerProfil();
 
@@ -258,4 +225,20 @@ char ProfilUtilisateur::obtenirToucheCommande(int commande)
 
 void ProfilUtilisateur::setConfigureHandles(HWND handle, ConfigureControl ctrl){
 	configureHandles.insert(std::make_pair(ctrl, handle));
+}
+
+void ProfilUtilisateur::assignerProfils(){
+	std::ifstream fichier(CHEMIN_PROFIL + "profilsListe");
+
+	std::string ligne;
+
+	HWND profilCbHandle = configureHandles.at(PROFIL_CB);
+
+	while (std::getline(fichier, ligne)){
+		std::wstring ws;
+		ws.assign(ligne.begin(), ligne.end());
+		ComboBox_AddString(profilCbHandle, ws.c_str());
+	}
+
+	fichier.close();
 }

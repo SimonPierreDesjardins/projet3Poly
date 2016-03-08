@@ -45,9 +45,15 @@ class ProfilUtilisateur
 
 		void setConfigureHandles(HWND handle, ConfigureControl ctrl);
 
+		void assignerProfils();
+
 	private:
 		void sauvegarder();
+
 		bool ouvrirProfil(std::string readOrWrite);
+
+		bool ouvrir(std::string nomFichier, std::string readOrWrite, FILE*& fichier);
+
 		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
 		
 		bool chargerProfil();

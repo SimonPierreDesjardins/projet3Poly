@@ -542,6 +542,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setConfigureHandles(handle, static_cast<ConfigureControl>(ctrl));
 	}
+
+	__declspec(dllexport) void __cdecl assignerProfils(){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerProfils();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

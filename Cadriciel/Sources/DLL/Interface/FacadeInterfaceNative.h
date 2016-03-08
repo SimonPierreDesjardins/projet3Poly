@@ -57,6 +57,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl);
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
+	__declspec(dllexport) void __cdecl assignerProfils();
 
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande);
 

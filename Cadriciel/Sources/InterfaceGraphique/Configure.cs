@@ -28,9 +28,13 @@ namespace InterfaceGraphique
 
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
-            setUpAllControls(this);
+            FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
-            
+            FonctionsNatives.assignerProfils();
+
+            setUpAllControls(configureTabs);
+
+            FonctionsNatives.chargerProfilParDefaut();
 
         }
 
@@ -322,6 +326,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setHandle(IntPtr handle, int ctrl);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerProfils();
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);

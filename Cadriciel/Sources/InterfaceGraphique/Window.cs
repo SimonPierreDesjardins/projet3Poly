@@ -79,7 +79,6 @@ namespace InterfaceGraphique
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
             configuration = new Configure();
-            FonctionsNatives.chargerProfilParDefaut();
         }
 
         ////////////////////////////////////////////////////////////////////////

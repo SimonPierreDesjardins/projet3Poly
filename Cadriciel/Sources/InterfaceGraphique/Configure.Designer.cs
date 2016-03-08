@@ -138,8 +138,6 @@
             // comboBoxProfil
             // 
             this.comboBoxProfil.FormattingEnabled = true;
-            this.comboBoxProfil.Items.AddRange(new object[] {
-            "Défaut"});
             this.comboBoxProfil.Location = new System.Drawing.Point(57, 3);
             this.comboBoxProfil.Name = "comboBoxProfil";
             this.comboBoxProfil.Size = new System.Drawing.Size(166, 21);
