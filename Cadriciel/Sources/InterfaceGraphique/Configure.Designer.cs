@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.retourMenuButt = new System.Windows.Forms.Button();
             this.buttonDeleteProfil = new System.Windows.Forms.Button();
             this.comboBoxProfil = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.buttonSaveProfil = new System.Windows.Forms.Button();
+            this.buttonCréerProfil = new System.Windows.Forms.Button();
             this.buttonDefProfil = new System.Windows.Forms.Button();
             this.configureTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -113,10 +114,11 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.retourMenuButt);
             this.splitContainer1.Panel1.Controls.Add(this.buttonDeleteProfil);
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxProfil);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
-            this.splitContainer1.Panel1.Controls.Add(this.buttonSaveProfil);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonCréerProfil);
             this.splitContainer1.Panel1.Controls.Add(this.buttonDefProfil);
             // 
             // splitContainer1.Panel2
@@ -126,9 +128,19 @@
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 0;
             // 
+            // retourMenuButt
+            // 
+            this.retourMenuButt.Location = new System.Drawing.Point(611, 2);
+            this.retourMenuButt.Name = "retourMenuButt";
+            this.retourMenuButt.Size = new System.Drawing.Size(92, 23);
+            this.retourMenuButt.TabIndex = 29;
+            this.retourMenuButt.Text = "Retour au menu";
+            this.retourMenuButt.UseVisualStyleBackColor = true;
+            this.retourMenuButt.Click += new System.EventHandler(this.retourMenuButt_Click);
+            // 
             // buttonDeleteProfil
             // 
-            this.buttonDeleteProfil.Location = new System.Drawing.Point(434, 2);
+            this.buttonDeleteProfil.Location = new System.Drawing.Point(381, 2);
             this.buttonDeleteProfil.Name = "buttonDeleteProfil";
             this.buttonDeleteProfil.Size = new System.Drawing.Size(81, 23);
             this.buttonDeleteProfil.TabIndex = 28;
@@ -137,12 +149,14 @@
             // 
             // comboBoxProfil
             // 
+            this.comboBoxProfil.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxProfil.FormattingEnabled = true;
             this.comboBoxProfil.Location = new System.Drawing.Point(57, 3);
             this.comboBoxProfil.Name = "comboBoxProfil";
             this.comboBoxProfil.Size = new System.Drawing.Size(166, 21);
             this.comboBoxProfil.TabIndex = 0;
             this.comboBoxProfil.Tag = "0";
+            this.comboBoxProfil.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfil_SelectedIndexChanged);
             // 
             // label6
             // 
@@ -153,19 +167,18 @@
             this.label6.TabIndex = 26;
             this.label6.Text = "Profil";
             // 
-            // buttonSaveProfil
+            // buttonCréerProfil
             // 
-            this.buttonSaveProfil.Location = new System.Drawing.Point(266, 2);
-            this.buttonSaveProfil.Name = "buttonSaveProfil";
-            this.buttonSaveProfil.Size = new System.Drawing.Size(81, 23);
-            this.buttonSaveProfil.TabIndex = 13;
-            this.buttonSaveProfil.Text = "Sauvegarder";
-            this.buttonSaveProfil.UseVisualStyleBackColor = true;
-            this.buttonSaveProfil.Click += new System.EventHandler(this.buttonSaveProfil_Click_1);
+            this.buttonCréerProfil.Location = new System.Drawing.Point(266, 2);
+            this.buttonCréerProfil.Name = "buttonCréerProfil";
+            this.buttonCréerProfil.Size = new System.Drawing.Size(81, 23);
+            this.buttonCréerProfil.TabIndex = 13;
+            this.buttonCréerProfil.Text = "Créer";
+            this.buttonCréerProfil.UseVisualStyleBackColor = true;
             // 
             // buttonDefProfil
             // 
-            this.buttonDefProfil.Location = new System.Drawing.Point(602, 2);
+            this.buttonDefProfil.Location = new System.Drawing.Point(496, 2);
             this.buttonDefProfil.Name = "buttonDefProfil";
             this.buttonDefProfil.Size = new System.Drawing.Size(81, 23);
             this.buttonDefProfil.TabIndex = 12;
@@ -266,6 +279,7 @@
             this.textBoxAntiHoraire.Tag = "4";
             this.textBoxAntiHoraire.Text = "D";
             this.textBoxAntiHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxAntiHoraire.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAntiHoraire_KeyPress);
             // 
             // textBoxModeManuel
             // 
@@ -282,7 +296,7 @@
             this.textBoxModeManuel.Tag = "5";
             this.textBoxModeManuel.Text = "ESPACE";
             this.textBoxModeManuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxModeManuel.TextChanged += new System.EventHandler(this.textBoxModeManuel_TextChanged);
+            this.textBoxModeManuel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxModeManuel_KeyPress);
             // 
             // textBoxAvancer
             // 
@@ -318,6 +332,7 @@
             this.textBoxHoraire.Tag = "3";
             this.textBoxHoraire.Text = "A";
             this.textBoxHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxHoraire.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxHoraire_KeyPress);
             // 
             // textBoxReculer
             // 
@@ -334,6 +349,7 @@
             this.textBoxReculer.Tag = "2";
             this.textBoxReculer.Text = "S";
             this.textBoxReculer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxReculer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReculer_KeyPress);
             // 
             // tabPage2
             // 
@@ -827,10 +843,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(715, 531);
+            this.ControlBox = false;
             this.Controls.Add(this.splitContainer1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "Configure";
             this.Text = "Configure";
-            this.Load += new System.EventHandler(this.Configure_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -870,7 +888,7 @@
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Button buttonDeleteProfil;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button buttonSaveProfil;
+        private System.Windows.Forms.Button buttonCréerProfil;
         private System.Windows.Forms.Button buttonDefProfil;
         private System.Windows.Forms.ComboBox comboBoxProfil;
         private System.Windows.Forms.TabPage tabPage3;
@@ -917,6 +935,7 @@
         private System.Windows.Forms.TextBox angleEGTxtBox;
         private System.Windows.Forms.TextBox angleDDTxtBox;
         private System.Windows.Forms.TextBox angleDGTxtBox;
+        private System.Windows.Forms.Button retourMenuButt;
 
     }
 }

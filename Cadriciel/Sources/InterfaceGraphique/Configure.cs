@@ -20,12 +20,11 @@ namespace InterfaceGraphique
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         static extern bool HideCaret(IntPtr hWnd);
         private List<TypeComportement> comportementsList;
-        System.Text.RegularExpressions.Regex regex;
 
         public Configure()
         {
             InitializeComponent();
-
+            this.KeyPreview = true;
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
             FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
@@ -122,18 +121,6 @@ namespace InterfaceGraphique
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
 
-        private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            
-            if (!caractereInvalide(sender, e))
-            {
-                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
-            }
-            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
-            textBoxModeManuel.Text = afficherCaractere(caractere);    
-            textBoxModeManuel.Select(textBoxModeManuel.Text.Length, 0);
-        }
-
         string afficherCaractere(char caractere)
         {
             string mot = caractere.ToString();
@@ -163,35 +150,19 @@ namespace InterfaceGraphique
             comboBoxProfil.Items.Insert(comboBoxProfil.Items.Count, comboBoxProfil.Text);
         }
 
-        private void Configure_Load(object sender, EventArgs e)
-        {
-            //comboBoxProfil.SelectedIndex = 0;
-        }
-
         private void capteurDistanceChkBox_CheckedChanged(object sender, EventArgs e)
         {
             capteurDistanceOptionsPnl.Enabled = capteurDistanceChkBox.Checked;
         }
 
-        private void buttonSaveProfil_Click_1(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
-            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text), TypeComportement.DEVIATIONVERSLAGAUCHE);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text), TypeComportement.DEVIATIONVERSLADROITE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text), Convert.ToDouble(dureeEGTxtBox.Text), TypeComportement.EVITEMENTPARLAGAUCHE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text), Convert.ToDouble(dureeEDTxtBox.Text), TypeComportement.EVITEMENTPARLADROITE);
-        }
-
         private bool empecherTextChangedEvent = false;
 
-        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
+        private void modeManuelValidation(TextBox textBox, char key)
         {
             if (empecherTextChangedEvent)
                 return;
             empecherTextChangedEvent = true;
-            TextBox textBox = sender as TextBox;
-            textBox.Text = afficherCaractere(textBox.Text[0]);
+            textBox.Text = afficherCaractere(key);
             empecherTextChangedEvent = false;
         }
         
@@ -223,6 +194,7 @@ namespace InterfaceGraphique
         {
             if (empecherTextChangedEvent)
                 return;
+
             empecherTextChangedEvent = true;
 
             if (box.Text == "")
@@ -308,6 +280,39 @@ namespace InterfaceGraphique
             oldText = (sender as TextBox).Text;
         }
 
+        private void retourMenuButt_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.',',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
+            this.DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!caractereInvalide(sender, e))
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
+            textBoxModeManuel.Text = afficherCaractere(caractere);
+            textBoxModeManuel.Select(textBoxReculer.Text.Length, 0);
+        }
+
+        private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            FonctionsNatives.changerProfil();
+            textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
+            textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
+            textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
+            textBoxHoraire.Text = afficherCaractere(textBoxHoraire.Text[0]);
+            textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
+        }
+
     }
 
     static partial class FonctionsNatives{
@@ -336,7 +341,7 @@ namespace InterfaceGraphique
         public static extern void setHandle(IntPtr handle, int ctrl);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerProfils();
+        public static extern void changerProfil();
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);

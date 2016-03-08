@@ -101,9 +101,9 @@ bool ProfilUtilisateur::chargerProfil()
 	rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin();
 
 	this->nomProfil_ = itr->value.GetString();
-	//std::wstring ws;
-	//ws.assign(nomProfil_.begin(), nomProfil_.end());
-	//ComboBox_SelectString(configureHandles.at(PROFIL_CB), 0, ws.c_str());
+	std::wstring ws;
+	ws.assign(nomProfil_.begin(), nomProfil_.end());
+	ComboBox_SelectString(configureHandles.at(PROFIL_CB), 0, ws.c_str());
 
 	itr++;
 
@@ -215,7 +215,7 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 
 void ProfilUtilisateur::modifierToucheCommande(const uint8_t& touche,const TypeCommande& commande)
 {
-	if (!estUtilise(touche))
+	if (!toucheEstUtilise(touche))
 	{
 		commandes_.erase(touches_[commande]);
 		touches_[commande] = touche;
@@ -235,7 +235,7 @@ CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) con
 	return (it == commandes_.end()) ? nullptr : (*it).second.get();
 }
 
-bool ProfilUtilisateur::estUtilise(char touche)
+bool ProfilUtilisateur::toucheEstUtilise(char touche)
 {
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
 	return it != commandes_.end();
