@@ -35,12 +35,12 @@ ProfilUtilisateur::~ProfilUtilisateur()
 }
 
 bool ProfilUtilisateur::ouvrirProfil(std::string readOrWrite){
-	return ouvrir(nomProfil_ + EXTENSION_PROFIL, readOrWrite, profil_);
+	return ouvrir(CHEMIN_PROFIL + nomProfil_, readOrWrite, profil_);
 }
 
 bool ProfilUtilisateur::ouvrir(std::string nomFichier, std::string readOrWrite, FILE*& fichier){
 	errno_t err;
-	err = fopen_s(&fichier, (CHEMIN_PROFIL + nomFichier).c_str(), readOrWrite.c_str());
+	err = fopen_s(&fichier, (nomFichier).c_str(), readOrWrite.c_str());
 	return err == 0;
 }
 
@@ -82,15 +82,15 @@ void ProfilUtilisateur::sauvegarder()
 	fclose(profil_);
 }
 
-bool ProfilUtilisateur::changerProfil(){
-	nomProfil_ = profils_.at(ComboBox_GetCurSel(configureHandles.at(PROFIL_CB)));
+bool ProfilUtilisateur::changerProfil(std::string nomProfil){
+	nomProfil_ = nomProfil;
 
-	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL))
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_))
 		sauvegarder();
 
-	comportements_.clear();
+	/*comportements_.clear();
 	touches_.clear();
-	commandes_.clear();
+	commandes_.clear();*/
 
 	return chargerProfil();
 }
@@ -119,19 +119,26 @@ bool ProfilUtilisateur::chargerProfil()
 	touches_.resize(touches.Size());
 
 	touches_.at(INVERSER_MODE_CONTROLE) = char(touches[INVERSER_MODE_CONTROLE].GetInt());
-	SendMessage(configureHandles.at(MODE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(INVERSER_MODE_CONTROLE));
+	TCHAR* wtouches = new TCHAR[2];
+	wtouches[1] = '\0';
+	wtouches[0] = touches_.at(INVERSER_MODE_CONTROLE);
+	SendMessage(configureHandles.at(MODE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(AVANCER) = char(touches[AVANCER].GetInt());
-	SendMessage(configureHandles.at(AVANCER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(AVANCER));
+	wtouches[0] = touches_.at(AVANCER);
+	SendMessage(configureHandles.at(AVANCER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(RECULER) = char(touches[RECULER].GetInt());
-	SendMessage(configureHandles.at(RECULER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(RECULER));
+	wtouches[0] = touches_.at(RECULER);
+	SendMessage(configureHandles.at(RECULER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(ROTATION_GAUCHE) = char(touches[ROTATION_GAUCHE].GetInt());
-	SendMessage(configureHandles.at(ROTATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(ROTATION_GAUCHE));
+	wtouches[0] = touches_.at(ROTATION_GAUCHE);
+	SendMessage(configureHandles.at(ROTATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(ROTATION_DROITE) = char(touches[ROTATION_DROITE].GetInt());
-	SendMessage(configureHandles.at(ROTATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)touches_.at(ROTATION_DROITE));
+	wtouches[0] = touches_.at(ROTATION_DROITE);
+	SendMessage(configureHandles.at(ROTATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
 	commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER)));
@@ -177,7 +184,7 @@ bool ProfilUtilisateur::chargerProfil()
 void ProfilUtilisateur::chargerProfilParDefaut()
 {
 	nomProfil_ = "defaut";
-	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL)){
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_)){
 		if (!utilitaire::fichierExiste(CHEMIN_PROFIL)){
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
@@ -185,10 +192,10 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 		}
 		touches_.resize(5);
 		touches_.at(INVERSER_MODE_CONTROLE) = ' ';
-		touches_.at(AVANCER) = 'W';
-		touches_.at(RECULER) = 'S';
-		touches_.at(ROTATION_GAUCHE) = 'A';
-		touches_.at(ROTATION_DROITE) = 'D';
+		touches_.at(AVANCER) = 'w';
+		touches_.at(RECULER) = 's';
+		touches_.at(ROTATION_GAUCHE) = 'a';
+		touches_.at(ROTATION_DROITE) = 'd';
 
 		commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
 		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER)));
@@ -256,14 +263,3 @@ void ProfilUtilisateur::setConfigureHandles(HWND handle, ConfigureControl ctrl){
 	configureHandles.insert(std::make_pair(ctrl, handle));
 }
 
-void ProfilUtilisateur::assignerProfils(){
-	std::ifstream fichier(CHEMIN_PROFIL + "profilsListe");
-
-	std::string ligne;
-	
-	while (std::getline(fichier, ligne)){
-		profils_.push_back(ligne);
-	}
-
-	fichier.close();
-}

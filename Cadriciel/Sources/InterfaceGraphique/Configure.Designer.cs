@@ -163,6 +163,7 @@
             this.comboBoxProfil.TabIndex = 0;
             this.comboBoxProfil.Tag = "0";
             this.comboBoxProfil.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfil_SelectedIndexChanged);
+            this.comboBoxProfil.Leave += new System.EventHandler(this.comboBoxProfil_Leave);
             // 
             // label6
             // 
@@ -283,7 +284,6 @@
             this.textBoxAntiHoraire.Size = new System.Drawing.Size(100, 49);
             this.textBoxAntiHoraire.TabIndex = 5;
             this.textBoxAntiHoraire.Tag = "4";
-            this.textBoxAntiHoraire.Text = "D";
             this.textBoxAntiHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxAntiHoraire.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAntiHoraire_KeyPress);
             // 
@@ -300,8 +300,8 @@
             this.textBoxModeManuel.Size = new System.Drawing.Size(167, 49);
             this.textBoxModeManuel.TabIndex = 4;
             this.textBoxModeManuel.Tag = "5";
-            this.textBoxModeManuel.Text = "ESPACE";
             this.textBoxModeManuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxModeManuel.TextChanged += new System.EventHandler(this.textBoxModeManuel_TextChanged);
             this.textBoxModeManuel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxModeManuel_KeyPress);
             // 
             // textBoxAvancer
@@ -319,7 +319,6 @@
             this.textBoxAvancer.Size = new System.Drawing.Size(100, 49);
             this.textBoxAvancer.TabIndex = 3;
             this.textBoxAvancer.Tag = "1";
-            this.textBoxAvancer.Text = "W";
             this.textBoxAvancer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxAvancer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxAvancer_KeyPress);
             // 
@@ -336,7 +335,6 @@
             this.textBoxHoraire.Size = new System.Drawing.Size(100, 49);
             this.textBoxHoraire.TabIndex = 2;
             this.textBoxHoraire.Tag = "3";
-            this.textBoxHoraire.Text = "A";
             this.textBoxHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxHoraire.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxHoraire_KeyPress);
             // 
@@ -353,7 +351,6 @@
             this.textBoxReculer.Size = new System.Drawing.Size(100, 49);
             this.textBoxReculer.TabIndex = 1;
             this.textBoxReculer.Tag = "2";
-            this.textBoxReculer.Text = "S";
             this.textBoxReculer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.textBoxReculer.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxReculer_KeyPress);
             // 

@@ -28,19 +28,22 @@ namespace InterfaceGraphique
         public Configure()
         {
             InitializeComponent();
-            this.KeyPreview = true;
+
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
             FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
             assignerProfilsCB();
 
-            FonctionsNatives.assignerProfils();
-
             setUpAllControls(configureTabs);
 
             FonctionsNatives.chargerProfilParDefaut();
 
+            textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
+            textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
+            textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
+            textBoxHoraire.Text = afficherCaractere(textBoxHoraire.Text[0]);
+            textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
         }
 
         private void assignerProfilsCB(){
@@ -317,7 +320,7 @@ namespace InterfaceGraphique
 
         private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FonctionsNatives.changerProfil();
+            FonctionsNatives.changerProfil((string)(sender as ComboBox).SelectedItem);
             textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
             textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
             textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
@@ -397,6 +400,16 @@ namespace InterfaceGraphique
                 afficherDebugCapteurs = false;
         }
 
+        private void comboBoxProfil_Leave(object sender, EventArgs e)
+        {
+            //FonctionsNatives.changerProfil((string)comboBoxProfil.SelectedValue);
+        }
+
+        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
+        {
+            Console.Write("allo");
+        }
+
     }
 
     static partial class FonctionsNatives{
@@ -425,10 +438,7 @@ namespace InterfaceGraphique
         public static extern void setHandle(IntPtr handle, int ctrl);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void changerProfil();
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerProfils();
+        public static extern void changerProfil(string nomProfil);
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);

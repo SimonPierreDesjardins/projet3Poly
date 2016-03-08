@@ -543,12 +543,9 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setConfigureHandles(handle, static_cast<ConfigureControl>(ctrl));
 	}
 
-	__declspec(dllexport) void __cdecl assignerProfils(){
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerProfils();
-	}
 
-	__declspec(dllexport) void __cdecl changerProfil(){
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil();
+	__declspec(dllexport) void __cdecl changerProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
 	}
 }
 

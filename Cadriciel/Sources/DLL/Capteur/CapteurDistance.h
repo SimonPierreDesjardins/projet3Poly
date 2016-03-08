@@ -11,7 +11,7 @@
 #ifndef CAPTEUR_DISTANCE_H
 #define CAPTEUR_DISTANCE_H
 
-//#include "./../../Enum/TypeComportementEnum.cs"
+#include "ComportementAbstrait.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class CapteurDistance
@@ -32,9 +32,9 @@ public:
 
 	void assignerActif(bool estActif);
 
-	void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
+	void assignerParametreZoneDanger(TypeComportement comportement, double distance);
 
-	void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
+	void assignerParametreZoneSecuritaire(TypeComportement comportement, double distance);
 
 private:
 	bool estActif_{ true };
