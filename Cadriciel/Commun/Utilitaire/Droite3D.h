@@ -58,7 +58,9 @@ namespace math {
       bool      intersectionSegment(const glm::dvec3& point1, const glm::dvec3& point2);
       /// Calcule la distance entre un point et la droite.
       double    distancePoint(const glm::dvec3& centre);
-      /// Trouve le point de rencontre entre la droite et une perpendiculaire à partir d'un point.
+      /// Calcule la projection du point sur la droite. 
+      double    calculerProjectionPoint(const glm::dvec3& point);
+       /// Trouve le point de rencontre entre la droite et une perpendiculaire à partir d'un point.             
       glm::dvec3 perpendiculaireDroite(const glm::dvec3& point);
 
       /// Avoir le vecteur directeur de la droite.
