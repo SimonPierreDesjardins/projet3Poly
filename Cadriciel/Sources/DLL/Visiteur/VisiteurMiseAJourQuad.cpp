@@ -10,6 +10,7 @@
 #include "VisiteurMiseAJourQuad.h"
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
+#include "FacadeModele.h"
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -25,6 +26,8 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurMiseAJourQuad::VisiteurMiseAJourQuad()
 {
+	ArbreRendu* arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	NoeudAbstrait* table_ = arbre_->chercher(0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -55,7 +58,8 @@ VisiteurMiseAJourQuad::~VisiteurMiseAJourQuad()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(ArbreRendu* noeud)
 {
-	noeud->chercher("table")->accepterVisiteur(this);
+	robot_ = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	table_->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -132,6 +136,11 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 		quad.coins[i] += (positionVirtuelleParent + noeud->obtenirPositionRelative());
 	}
 	noeud->assignerQuadEnglobantCourant(quad);
+
+	if (robot_ != nullptr)
+	{
+	}
+	
 }
 
 ////////////////////////////////////////////////////////////////////////

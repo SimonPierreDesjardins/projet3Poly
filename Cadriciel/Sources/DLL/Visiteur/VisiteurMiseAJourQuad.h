@@ -46,6 +46,9 @@ public:
 
 private:
 	glm::dvec3 calculerPositionVirtuelle(const utilitaire::QuadEnglobant& quad);
+	NoeudAbstrait* table_;
+	ArbreRendu* arbre_;
+	NoeudAbstrait* robot_;
 };
 
 #endif // VISITEUR_MISE_A_JOUR_QUAD
