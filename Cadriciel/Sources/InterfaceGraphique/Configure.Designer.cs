@@ -854,7 +854,7 @@
             this.comboBox_eclairage.Items.AddRange(new object[] {
             "Oui",
             "Non"});
-            this.comboBox_eclairage.Location = new System.Drawing.Point(238, 234);
+            this.comboBox_eclairage.Location = new System.Drawing.Point(238, 231);
             this.comboBox_eclairage.MaxDropDownItems = 2;
             this.comboBox_eclairage.Name = "comboBox_eclairage";
             this.comboBox_eclairage.Size = new System.Drawing.Size(66, 21);
@@ -886,7 +886,7 @@
             // EtatEclairage
             // 
             this.EtatEclairage.AutoSize = true;
-            this.EtatEclairage.Location = new System.Drawing.Point(323, 242);
+            this.EtatEclairage.Location = new System.Drawing.Point(323, 239);
             this.EtatEclairage.Name = "EtatEclairage";
             this.EtatEclairage.Size = new System.Drawing.Size(204, 13);
             this.EtatEclairage.TabIndex = 2;
