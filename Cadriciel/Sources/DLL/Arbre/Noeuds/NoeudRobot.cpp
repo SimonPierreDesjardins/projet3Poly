@@ -118,54 +118,78 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 void NoeudRobot::animer(float dt)
 {
 	//Calcul de la résultante de la vitesse relative
-	if (vitesseDroite_ < 0)
+	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
+	if (diffD < 0)
 	{
-		if (vitesseCouranteDroite_ > vitesseDroite_)
-		{
-			vitesseCouranteDroite_ -= acceleration_ * dt;
-		}
-		else// if (vitesseCouranteDroite_ < vitesseDroite_)
-		{
-			//vitesseCouranteDroite_ = 0;
-			vitesseCouranteDroite_ += acceleration_ * dt;
-		}
+		diffD = -diffD;
+	}
+	if (diffG < 0)
+	{
+		diffG = -diffG;
+	}
+	if (diffD < (acceleration_ * dt) && vitesseDroite_ == 0)
+	{
+		vitesseCouranteDroite_ = 0;
 	}
 	else
 	{
-		if (vitesseCouranteDroite_ < vitesseDroite_)
+		if (vitesseDroite_ < 0)
 		{
-			vitesseCouranteDroite_ += acceleration_ * dt;
+			if (vitesseCouranteDroite_ > vitesseDroite_)
+			{
+				vitesseCouranteDroite_ -= acceleration_ * dt;
+			}
+			else// if (vitesseCouranteDroite_ < vitesseDroite_)
+			{
+				//vitesseCouranteDroite_ = 0;
+				vitesseCouranteDroite_ += acceleration_ * dt;
+			}
 		}
-		else// if (vitesseCouranteDroite_ > vitesseDroite_)
+		else
 		{
-			//vitesseCouranteDroite_ = 0;
-			vitesseCouranteDroite_ -= acceleration_ * dt;
+			if (vitesseCouranteDroite_ < vitesseDroite_)
+			{
+				vitesseCouranteDroite_ += acceleration_ * dt;
+			}
+			else// if (vitesseCouranteDroite_ > vitesseDroite_)
+			{
+				//vitesseCouranteDroite_ = 0;
+				vitesseCouranteDroite_ -= acceleration_ * dt;
+			}
 		}
 	}
-	if (vitesseGauche_ < 0)
+	if (diffG < (acceleration_*dt) && vitesseGauche_ == 0)
 	{
-		if (vitesseCouranteGauche_ > vitesseGauche_)
-		{
-			vitesseCouranteGauche_ -= acceleration_ * dt;
-		}
-		else// if (vitesseCouranteGauche_ < vitesseGauche_)
-		{
-			//vitesseCouranteGauche_ = 0;
-			vitesseCouranteGauche_ += acceleration_ * dt;
-		}
+		vitesseCouranteGauche_ = 0;
 	}
 	else
 	{
-		if (vitesseCouranteGauche_ < vitesseGauche_)
+		if (vitesseGauche_ < 0)
 		{
-			vitesseCouranteGauche_ += acceleration_ * dt;
+			if (vitesseCouranteGauche_ > vitesseGauche_)
+			{
+				vitesseCouranteGauche_ -= acceleration_ * dt;
+			}
+			else// if (vitesseCouranteGauche_ < vitesseGauche_)
+			{
+				//vitesseCouranteGauche_ = 0;
+				vitesseCouranteGauche_ += acceleration_ * dt;
+			}
 		}
-		else// if (vitesseCouranteGauche_ > vitesseGauche_)
+		else
 		{
-			//vitesseCouranteGauche_ = 0;
-			vitesseCouranteGauche_ -= acceleration_ * dt;
+			if (vitesseCouranteGauche_ < vitesseGauche_)
+			{
+				vitesseCouranteGauche_ += acceleration_ * dt;
+			}
+			else// if (vitesseCouranteGauche_ > vitesseGauche_)
+			{
+				//vitesseCouranteGauche_ = 0;
+				vitesseCouranteGauche_ -= acceleration_ * dt;
+			}
 		}
 	}
+	
 	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
 
 	//Calcul de la différence entre les vitesses de gauche et droite
