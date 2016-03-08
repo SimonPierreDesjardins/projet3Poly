@@ -24,6 +24,8 @@ class ComportementSuiviLigne : public ComportementAbstrait
 {
 public:
 	ComportementSuiviLigne();
+	ComportementSuiviLigne(TypeComportement prochainComportement);
+	ComportementSuiviLigne(const rapidjson::Value& comportementJSON);
 	virtual ~ComportementSuiviLigne();
 
 	void initialiser();

@@ -25,6 +25,9 @@ class ComportementEvitement : public ComportementAbstrait
 {
 public:
 	ComportementEvitement();
+	ComportementEvitement(TypeComportement prochainComportement);
+	ComportementEvitement(const rapidjson::Value& comportementJSON);
+	ComportementEvitement(TypeComportement prochainComportement, double maxTemps, double maxAngle);
 	virtual ~ComportementEvitement();
 
 	void initialiser();
@@ -34,6 +37,10 @@ public:
 	void setAngleMaxRotation(double angle);
 
 	void setTempsMaxReculons(double temps);
+
+	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+	virtual void fromJson(const rapidjson::Value& comportementJSON);
 
 private:
 	// Flag informant le comportement qu'il s'agit d'un évitement pivot gauche

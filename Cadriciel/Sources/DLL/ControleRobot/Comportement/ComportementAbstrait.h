@@ -14,17 +14,16 @@
 #include <memory>
 #include <string>
 
+#include "rapidjson\writer.h"
+#include "rapidjson\document.h"
+
+#include "./../../Enum/TypeComportementEnum.cs"
+
 class ControleRobot;
 
-enum eComportement {
-	DEFAUT,
-	SUIVIDELIGNE,
-	BALAYAGE180,
-	DEVIATIONVERSLAGAUCHE,
-	DEVIATIONVERSLADROITE,
-	EVITEMENTPARLAGAUCHE,
-	EVITEMENTPARLADROITE
-};
+namespace rapidjson {
+	class FileWriteStream;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ComportementAbstrait
@@ -41,6 +40,8 @@ class ComportementAbstrait
 {
 public:
 	ComportementAbstrait();
+	ComportementAbstrait(TypeComportement prochainComportement);
+	ComportementAbstrait(const rapidjson::Value& comportementJSON);
 	virtual ~ComportementAbstrait();
 
 	// Assure la reinitialisation du comportement avant son execution
@@ -52,16 +53,21 @@ public:
 	// Assigne le robot au shared_ptr
 	void assignerRobot(ControleRobot* controleRobot);
 
-	// Obtient l'enum du comportement suivant
-	eComportement obtenirComportementSuivant();
-
-	void assignerComportementSuivant(eComportement prochainComportement);
-
 	virtual std::string obtenirNomComportement();
+
+	TypeComportement obtenirComportementSuivant();
+
+	void assignerComportementSuivant(TypeComportement prochainComportement);
+
+	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+protected:
+	virtual void fromJson(const rapidjson::Value& comportementJSON);
 
 protected:
 	// Le comportement a adopter une fois les conditions de fin de ce comportement sont atteintes.
-	eComportement comportementSuivant_;
+
+	TypeComportement comportementSuivant_;
 
 	std::shared_ptr<ControleRobot> controleRobot_;
 };

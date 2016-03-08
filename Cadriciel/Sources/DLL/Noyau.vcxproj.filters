@@ -478,17 +478,8 @@
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h">
-      <Filter>Header Files\ProfilUtilisateur</Filter>
-    </ClInclude>
     <ClInclude Include="ControleRobot\ControleRobot.h">
       <Filter>Header Files\ControleRobot</Filter>
-    </ClInclude>
-    <ClInclude Include="ControleRobot\Commande\CommandeRobot.h">
-      <Filter>Header Files\ControleRobot\Commande</Filter>
-    </ClInclude>
-    <ClInclude Include="ControleRobot\Comportement\ComportementAbstrait.h">
-      <Filter>Header Files\ControleRobot\Comportement</Filter>
     </ClInclude>
     <ClInclude Include="ControleRobot\Comportement\ComportementBalayage.h">
       <Filter>Header Files\ControleRobot\Comportement</Filter>
@@ -503,6 +494,18 @@
       <Filter>Header Files\ControleRobot\Comportement</Filter>
     </ClInclude>
     <ClInclude Include="ControleRobot\Comportement\ComportementSuiviLigne.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementTypes.h">
+      <Filter>Header Files\ControleRobot\Comportement</Filter>
+    </ClInclude>
+    <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h">
+      <Filter>Header Files\ProfilUtilisateur</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Commande\CommandeRobot.h">
+      <Filter>Header Files\ControleRobot\Commande</Filter>
+    </ClInclude>
+    <ClInclude Include="ControleRobot\Comportement\ComportementAbstrait.h">
       <Filter>Header Files\ControleRobot\Comportement</Filter>
     </ClInclude>
     <ClInclude Include="Capteur\CapteurDistance.h">

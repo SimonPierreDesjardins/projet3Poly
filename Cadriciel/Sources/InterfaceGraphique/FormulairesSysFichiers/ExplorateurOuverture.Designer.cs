@@ -152,7 +152,6 @@
             // 
             // ouvrirButt
             // 
-            this.ouvrirButt.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ouvrirButt.Location = new System.Drawing.Point(44, 18);
             this.ouvrirButt.Name = "ouvrirButt";
             this.ouvrirButt.Size = new System.Drawing.Size(75, 23);

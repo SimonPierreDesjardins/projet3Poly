@@ -42,7 +42,7 @@ public:
 	void traiterCommande(CommandeRobot* commande, bool provientUtilisateur);
 
 	// Assigne le comportement correspondant à l'enum à l'IA du robot.
-	void assignerComportement(eComportement nouveauComportement);
+	void assignerComportement(TypeComportement nouveauComportement);
 
 	// perme d'obtenir le noeud du robot. Souvent appelé par les comportements pour vérifier des conditions.
 	NoeudRobot* obtenirNoeud();

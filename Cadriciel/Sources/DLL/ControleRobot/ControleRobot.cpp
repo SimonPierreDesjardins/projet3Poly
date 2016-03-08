@@ -103,7 +103,7 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::assignerComportement(eComportement nouveauComportement)
+void ControleRobot::assignerComportement(TypeComportement nouveauComportement)
 {
 	// Nous devons vérouiller l'accès au comportement temporairement pour sa modification
 	mutexComportement.lock();

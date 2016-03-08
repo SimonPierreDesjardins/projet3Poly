@@ -11,6 +11,8 @@
 #ifndef CAPTEUR_DISTANCE_H
 #define CAPTEUR_DISTANCE_H
 
+//#include "./../../Enum/TypeComportementEnum.cs"
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class CapteurDistance
 /// @brief Classe qui représente un capteur de distance du robot.  
@@ -27,6 +29,12 @@ public:
 	CapteurDistance();
 	//Destructeur
 	~CapteurDistance();
+
+	void assignerActif(bool estActif);
+
+	void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
+
+	void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
 
 private:
 	bool estActif_{ true };
