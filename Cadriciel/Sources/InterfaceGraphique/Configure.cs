@@ -29,7 +29,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
-            assignerProfils();
+            assignerProfilsCB();
+
+            FonctionsNatives.assignerProfils();
 
             setUpAllControls(configureTabs);
 
@@ -37,7 +39,7 @@ namespace InterfaceGraphique
 
         }
 
-        private void assignerProfils(){
+        private void assignerProfilsCB(){
             string line;
 
             // Read the file and display it line by line.
@@ -342,6 +344,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void changerProfil();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerProfils();
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);

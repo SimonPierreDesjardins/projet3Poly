@@ -546,6 +546,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerProfils(){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerProfils();
 	}
+
+	__declspec(dllexport) void __cdecl changerProfil(){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

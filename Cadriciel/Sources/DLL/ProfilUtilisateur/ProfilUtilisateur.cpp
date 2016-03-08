@@ -82,16 +82,23 @@ void ProfilUtilisateur::sauvegarder()
 	fclose(profil_);
 }
 
-bool ProfilUtilisateur::changerProfil(std::string nomProfil){
-	nomProfil_ = nomProfil;
+bool ProfilUtilisateur::changerProfil(){
+	nomProfil_ = profils_.at(ComboBox_GetCurSel(configureHandles.at(PROFIL_CB)));
+
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL))
+		sauvegarder();
+
 	comportements_.clear();
 	touches_.clear();
 	commandes_.clear();
+
 	return chargerProfil();
 }
 
 bool ProfilUtilisateur::chargerProfil()
 {
+	if (!ouvrirProfil("rb"))
+		return false;
 	rapidjson::Document doc;
 	char readBuffer[65536];
 	rapidjson::FileReadStream is(profil_, readBuffer, sizeof(readBuffer));
@@ -199,8 +206,7 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 
 		sauvegarder();
 	}
-	if (!ouvrirProfil("rb"))
-		return;
+	
 	
 	/*fseek(profil_, 0, SEEK_END);
 	int size = ftell(profil_);
@@ -254,15 +260,9 @@ void ProfilUtilisateur::assignerProfils(){
 	std::ifstream fichier(CHEMIN_PROFIL + "profilsListe");
 
 	std::string ligne;
-
-	HWND profilCbHandle = configureHandles.at(PROFIL_CB);
-	int indexProfil = 0;
 	
 	while (std::getline(fichier, ligne)){
-		std::wstring ws;
-		ws.assign(ligne.begin(), ligne.end());
-		//ComboBox_InsertString(profilCbHandle, 0, ws.c_str());
-		ComboBox_AddString(profilCbHandle, ws.c_str());
+		profils_.push_back(ligne);
 	}
 
 	fichier.close();

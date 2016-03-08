@@ -44,6 +44,8 @@ public:
 	// Mise à jour de l'état du capteur.
 	void mettreAJourPosition(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
+	void assignerActif(bool estActif);
+
 private:
 	bool ligneEstDetectee_{ false };
 	glm::dvec3 positionRelative_{ 0.0, 0.0, 0.0 };

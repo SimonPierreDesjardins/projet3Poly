@@ -5,15 +5,14 @@ namespace TypeCommandeEnum
 #endif
 
         // shared enum for both C, C++ and C#
-enum TypeCommande
-    {
-        INVERSER_MODE_CONTROLE,
-        AVANCER,
-        RECULER,
-        ROTATION_GAUCHE,
-        ROTATION_DROITE,
-        ARRETER
-    };
+enum TypeCommande{
+    INVERSER_MODE_CONTROLE,
+    AVANCER,
+    RECULER,
+    ROTATION_GAUCHE,
+    ROTATION_DROITE,
+    ARRETER
+};
 
 #if !__LINE__
 }

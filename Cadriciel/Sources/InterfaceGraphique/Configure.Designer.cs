@@ -34,7 +34,7 @@
             this.comboBoxProfil = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.buttonCréerProfil = new System.Windows.Forms.Button();
-            this.buttonDefProfil = new System.Windows.Forms.Button();
+            this.modifierProfilButt = new System.Windows.Forms.Button();
             this.configureTabs = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label5 = new System.Windows.Forms.Label();
@@ -119,7 +119,7 @@
             this.splitContainer1.Panel1.Controls.Add(this.comboBoxProfil);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.buttonCréerProfil);
-            this.splitContainer1.Panel1.Controls.Add(this.buttonDefProfil);
+            this.splitContainer1.Panel1.Controls.Add(this.modifierProfilButt);
             // 
             // splitContainer1.Panel2
             // 
@@ -140,7 +140,7 @@
             // 
             // buttonDeleteProfil
             // 
-            this.buttonDeleteProfil.Location = new System.Drawing.Point(381, 2);
+            this.buttonDeleteProfil.Location = new System.Drawing.Point(496, 2);
             this.buttonDeleteProfil.Name = "buttonDeleteProfil";
             this.buttonDeleteProfil.Size = new System.Drawing.Size(81, 23);
             this.buttonDeleteProfil.TabIndex = 28;
@@ -176,14 +176,14 @@
             this.buttonCréerProfil.Text = "Créer";
             this.buttonCréerProfil.UseVisualStyleBackColor = true;
             // 
-            // buttonDefProfil
+            // modifierProfilButt
             // 
-            this.buttonDefProfil.Location = new System.Drawing.Point(496, 2);
-            this.buttonDefProfil.Name = "buttonDefProfil";
-            this.buttonDefProfil.Size = new System.Drawing.Size(81, 23);
-            this.buttonDefProfil.TabIndex = 12;
-            this.buttonDefProfil.Text = "Défaut";
-            this.buttonDefProfil.UseVisualStyleBackColor = true;
+            this.modifierProfilButt.Location = new System.Drawing.Point(381, 2);
+            this.modifierProfilButt.Name = "modifierProfilButt";
+            this.modifierProfilButt.Size = new System.Drawing.Size(81, 23);
+            this.modifierProfilButt.TabIndex = 12;
+            this.modifierProfilButt.Text = "Modifier";
+            this.modifierProfilButt.UseVisualStyleBackColor = true;
             // 
             // configureTabs
             // 
@@ -889,7 +889,7 @@
         private System.Windows.Forms.Button buttonDeleteProfil;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button buttonCréerProfil;
-        private System.Windows.Forms.Button buttonDefProfil;
+        private System.Windows.Forms.Button modifierProfilButt;
         private System.Windows.Forms.ComboBox comboBoxProfil;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Label label7;

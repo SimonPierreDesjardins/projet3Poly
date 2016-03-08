@@ -32,7 +32,7 @@ class ProfilUtilisateur
 		ProfilUtilisateur(std::string nomProfil);
 		~ProfilUtilisateur();
 		bool sauvegarder(std::string nomProfil);
-		bool changerProfil(std::string nomProfil);
+		bool changerProfil();
 		void assignerComportement(TypeComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement);
 		void modifierToucheCommande(const uint8_t& touche, const TypeCommande& controle);
 		void chargerProfilParDefaut();
@@ -71,7 +71,8 @@ class ProfilUtilisateur
 		std::vector<char> touches_;
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
-		//TODO: Mapping de l'affichage debugage.
+
+		std::vector<std::string> profils_;
 };
 
 
