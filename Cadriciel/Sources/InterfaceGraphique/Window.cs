@@ -42,6 +42,7 @@ namespace InterfaceGraphique
         { arreterToutMessage_ = true; }
 
         private bool estEnPause = false;
+        private bool PasserEnSimulation = false;
 
         public bool PreFilterMessage(ref Message m)
         {
@@ -707,10 +708,14 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void bouttonSimulation__Click(object sender, EventArgs e)
         {
-            afficherMenuPrincipal(false);
-            afficherMenuEdition(false);
-            afficherMenuSimulation(true);
-            FonctionsNatives.assignerMode(Mode.SIMULATION);
+            ouvrirZone(true);
+            if (PasserEnSimulation)
+            {
+                afficherMenuPrincipal(false);
+                afficherMenuEdition(false);
+                afficherMenuSimulation(true);
+                FonctionsNatives.assignerMode(Mode.SIMULATION);
+            }
             viewPort_.Focus();
         }
 
@@ -988,7 +993,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirMenuEdition__Click(object sender, EventArgs e)
         {
-            ouvrirZone();
+            ouvrirZone(false);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -999,17 +1004,22 @@ namespace InterfaceGraphique
         /// le bouton ouvrir est appuyer sur le menu
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void ouvrirZone()
+        private void ouvrirZone(bool afficherZoneDefaut)
         {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture();
+            ExplorateurOuverture explorateur = new ExplorateurOuverture(afficherZoneDefaut);
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
-            if (explorateur.ShowDialog() == DialogResult.OK)
+            DialogResult dialogresult = explorateur.ShowDialog();
+            if (dialogresult == DialogResult.OK)
             {
                 FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.charger();
                 enregistrerMenuEdition_.Enabled = true;
+                PasserEnSimulation = true;
             }
+            if (dialogresult == DialogResult.Cancel)
+                PasserEnSimulation = false;
+
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
@@ -1099,6 +1109,7 @@ namespace InterfaceGraphique
                 case Keys.Q:
                     if (e.Control)
                     {
+                        FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         afficherMenuEdition(false);
                         afficherMenuPrincipal(true);
                     }
@@ -1106,7 +1117,7 @@ namespace InterfaceGraphique
 
                 case Keys.O:
                     if (e.Control)
-                        ouvrirZone();
+                        ouvrirZone(false);
                     break;
 
                 case Keys.N:
@@ -1184,10 +1195,13 @@ namespace InterfaceGraphique
                 case Keys.Q:
                     if (e.Control)
                     {
+                        afficherMenuSimulation(false);
+                        afficherMenuTest(false);
+                        afficherMenuEdition(false);
+                        afficherMenuPrincipal(true);
+                        FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         estEnPause = false;
                         picturePause.Visible = estEnPause;
-                        afficherMenuSimulation(false);
-                        afficherMenuPrincipal(true);
                     }
                     break;
 
@@ -1219,6 +1233,7 @@ namespace InterfaceGraphique
                 case Keys.Q:
                     if (e.Control)
                     {
+                        FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         afficherMenuTest(false);
                         afficherMenuPrincipal(true);
                     }
