@@ -8,30 +8,32 @@ RectangleEnglobant::RectangleEnglobant()
 {
 }
 
+
 RectangleEnglobant::RectangleEnglobant(const glm::dvec3& centre, const double& angle, 
     const double& hauteur, const double& largeur)
-        : positionCentre_(centre), angle_(angle), hauteur_(hauteur), largeur_(largeur)
+        : FormeEnglobanteAbstraite(centre), angle_(angle), hauteur_(hauteur), largeur_(largeur)
 {
         
 }
+
 
 RectangleEnglobant::~RectangleEnglobant()
 {
 }
 
 
-bool RectangleEnglobant::calculerPointEstDansRectangle(const glm::dvec3& point) const
+bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
 {
     // Obtenir les vecteurs unitaires qui représentent l'orientation du rectangle.
     glm::dvec3 orientationLargeur, orientationHauteur;
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);
 
     // Le vecteur qui représente la distance entre le centre du rectangle et le point.
-    glm::dvec3 v = point - positionCentre_;
+    glm::dvec3 distancePointCentre = point - positionCentre_;
 
     // La projection du vecteur sur la largeur et la hauteur du rectangle
-    double projectionHauteur = glm::dot(v, orientationHauteur);
-    double projectionLargeur = glm::dot(v, orientationLargeur);
+    double projectionHauteur = glm::dot(distancePointCentre, orientationHauteur);
+    double projectionLargeur = glm::dot(distancePointCentre, orientationLargeur);
     
     // Si les projections se situent dans le rectangle, le point est également dans le rectangle.
     return utilitaire::DANS_LIMITESXY(projectionHauteur, -hauteur_ / 2.0, hauteur_ / 2.0,
@@ -39,12 +41,45 @@ bool RectangleEnglobant::calculerPointEstDansRectangle(const glm::dvec3& point) 
 }
 
 
-bool RectangleEnglobant::calculerRectangleEstEnIntersection(const RectangleEnglobant& rectangle)
+bool RectangleEnglobant::calculerIntersectionRectangle(const RectangleEnglobant& rectangle) const
 {     
-    std::vector<glm::dvec3> distances;
-    rectangle.calculerDistancesCoins(distances, positionCentre_);
+    const int LARGEUR = 0;
+    const int HAUTEUR = 1;
 
-    return false;
+    const int N_RECTANGLES = 2;
+    const int N_ORIENTATIONS = 2;
+
+    const int N_COINS = 4;
+
+    const RectangleEnglobant* rectangles[N_RECTANGLES];
+    rectangles[0] = this;
+    rectangles[1] = &rectangle;
+
+    bool enIntersection = true;
+    for (int i = 0; i < N_RECTANGLES && enIntersection; i++)
+    {
+        glm::dvec3 orientations[N_ORIENTATIONS];
+        rectangles[i]->calculerVecteursOrientation(orientations[LARGEUR], orientations[HAUTEUR]);
+
+        glm::dvec3 distances[N_COINS];
+        // Index circulaire.
+        int j = (i + 1) % 2;
+         
+        rectangles[j]->calculerDistancesPoint(distances, rectangles[i]->obtenirPositionCentre());
+        double dimensions[N_ORIENTATIONS];
+        dimensions[HAUTEUR] = rectangles[i]->hauteur_;
+        dimensions[LARGEUR] = rectangles[i]->largeur_;
+
+        // Intérer sur chacun de sur chaque droite du rectangle
+        for (int i = 0; i < N_ORIENTATIONS && enIntersection; i++)
+        {
+            double min, max;
+            rectangles[i]->calculerIntervalleProjection(distances, orientations[i], min, max);
+            enIntersection = !rectangles[i]->calculerDisjonctionSurIntervalle(min, max,
+                -dimensions[i] / 2.0, dimensions[i] / 2.0);
+        }
+    }
+    return enIntersection;
 }
 
 
@@ -69,9 +104,10 @@ double RectangleEnglobant::calculerRayon() const
     return glm::distance(orientationHauteur, orientationLargeur);
 }
 
-void RectangleEnglobant::calculerDistancesCoins(std::vector<glm::dvec3>& distances, const glm::dvec3& point) const
+
+void RectangleEnglobant::calculerDistancesPoint(glm::dvec3 distances[4], 
+    const glm::dvec3& point) const
 {
-    distances.clear();
 
     glm::dvec3 orientationLargeur, orientationHauteur;
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);
@@ -81,40 +117,22 @@ void RectangleEnglobant::calculerDistancesCoins(std::vector<glm::dvec3>& distanc
     glm::dvec3 distanceCentreLargeur = orientationLargeur * largeur_;
 
     // Calculer les coins pour chacun des cadrans. 
-    distances.push_back( distancePointCentre + distanceCentreHauteur + distanceCentreLargeur );
-    distances.push_back( distancePointCentre - distanceCentreHauteur + distanceCentreLargeur );
-    distances.push_back( distancePointCentre - distanceCentreHauteur - distanceCentreLargeur );
-    distances.push_back( distancePointCentre + distanceCentreHauteur - distanceCentreLargeur );
+    distances[0] = ( distancePointCentre + distanceCentreHauteur + distanceCentreLargeur );
+    distances[1] = ( distancePointCentre - distanceCentreHauteur + distanceCentreLargeur );
+    distances[2] = ( distancePointCentre - distanceCentreHauteur - distanceCentreLargeur );
+    distances[3] = ( distancePointCentre + distanceCentreHauteur - distanceCentreLargeur );
 }
 
-bool RectangleEnglobant::calculerIntersectionProjection(const std::vector<glm::dvec3>& distances) const
-{
-    glm::dvec3 orientationLargeur, orientationHauteur;
-    calculerVecteursOrientation(orientationHauteur, orientationLargeur);
-    
-    bool intersection = true;
 
-    double minL, maxL; 
-    calculerIntervalleProjection(distances, orientationLargeur, minL, maxL);
-    intersection = calculerDisjonctionSurIntervalle(minL, maxL, -largeur_ / 2.0, largeur_ / 2.0);
-    if (intersection)
-    {
-        double minH, maxH;
-        calculerIntervalleProjection(distances, orientationHauteur, minH, maxH);
-        intersection = calculerDisjonctionSurIntervalle(minH, maxH, -hauteur_ / 2.0, hauteur_ / 2.0);
-    }
-    return intersection;
-}
-
-void RectangleEnglobant::calculerIntervalleProjection(const std::vector<glm::dvec3>& distances, const glm::dvec3& orientation,
-    double& min, double& max) const
+void RectangleEnglobant::calculerIntervalleProjection(glm::dvec3 distances[4], 
+    const glm::dvec3& orientation, double& min, double& max) const
 {
     double projection = 0.0;
 
     min = glm::dot(distances[0], orientation);
     max = glm::dot(distances[0], orientation);
 
-    for (int i = 1; i < distances.size(); i++)
+    for (int i = 1; i < 4; i++)
     {
         projection = glm::dot(distances[i], orientation);
 
@@ -129,6 +147,8 @@ void RectangleEnglobant::calculerIntervalleProjection(const std::vector<glm::dve
         }
     }
 }
+
+
 bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, const double& max1,
     const double& min2, const double& max2) const
 {
@@ -137,5 +157,22 @@ bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, co
     bool disjonction12 = max1 < min2;
     // min2 ----- max2 ---------- min1 --- max1
     bool disjonction21 = max2 < min1;
-    return !(disjonction12 || disjonction21);
+
+    return disjonction12 || disjonction21;
+}
+
+
+void RectangleEnglobant::mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, const double& angle,
+    const double& largeur, const double& hauteur)
+{
+    positionCentre_ = positionCentre;
+    angle_ = angle;
+    largeur_ = largeur;
+    hauteur_ = hauteur;
+}
+
+
+bool RectangleEnglobant::calculerIntersectionCercle(const CercleEnglobant& cercle) const
+{
+    return true;
 }

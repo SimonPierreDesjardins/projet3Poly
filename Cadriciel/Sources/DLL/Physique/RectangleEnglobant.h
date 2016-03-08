@@ -11,6 +11,8 @@
 #ifndef RECTANGLE_ENGLOBANT_H
 #define RECTANGLE_ENGLOBANT_H
 
+#include "FormeEnglobanteAbstraite.h"
+
 #include <glm/glm.hpp> 
 #include <vector>
 
@@ -24,47 +26,52 @@
 /// @author Olivier St-Amour
 /// @date 2016-02-22
 ///////////////////////////////////////////////////////////////////////////
-class RectangleEnglobant
+class RectangleEnglobant : public FormeEnglobanteAbstraite
 {
 public:
+    // Constructeur par défaut.
     RectangleEnglobant();
+    // Constructeur par paramètres.
     RectangleEnglobant(const glm::dvec3& centre, const double& angle, 
         const double& hauteur, const double& largeur);
+    // Destructeur.
     ~RectangleEnglobant();
 
-    inline void assignerPositionCentre(const glm::dvec3& positionCentre);
     inline void assignerAngle(const double& angle);
     inline void assignerHauteur(const double& hauteur);
     inline void assignerLargeur(const double& largeur);
     
-    inline glm::dvec3 obtenirPositionCentre() const;
     inline double obtenirAngle() const;
     inline double obtenirHauteur() const;
     inline double obtenirLargeur() const;
 
-    bool calculerPointEstDansRectangle(const glm::dvec3& point) const;
-    bool calculerRectangleEstEnIntersection(const RectangleEnglobant& rectangle);
+    // Permet de calculer si un point se trouve dans une forme englobante.
+    virtual bool calculerPointEstDansForme(const glm::dvec3& point) const;
+    // Permet de calculer si une forme est en intersection avec un cercle.
+    virtual bool calculerIntersectionCercle(const CercleEnglobant& cercle) const;
+    // Permet de calculer si une forme est en intersection avec un rectangle.
+    virtual bool calculerIntersectionRectangle(const RectangleEnglobant& rectangle) const;
+    // Permet de mettre à jour les attributs de la forme.
+    virtual void mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, const double& angle,
+        const double& largeur, const double& hauteur);
 
-    
-    void calculerDistancesCoins(std::vector<glm::dvec3>& distances, const glm::dvec3& point) const;
     void calculerVecteursOrientation(glm::dvec3& orientationLargeur, glm::dvec3& orientationHauteur) const;
+
     double calculerRayon() const;
-    bool calculerIntersectionProjection(const std::vector<glm::dvec3>& distances) const;
-    void calculerIntervalleProjection(const std::vector<glm::dvec3>& distances, const glm::dvec3& orientation,
-        double& min, double& max) const;
-    bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
-        const double& min2, const double& max2) const;
+
 private:
-    glm::dvec3 positionCentre_{ 0.0, 0.0, 0.0 };
     double angle_{ 0.0 };
     double hauteur_{ 0.0 };
     double largeur_{ 0.0 };
-};
 
-inline void RectangleEnglobant::assignerPositionCentre(const glm::dvec3& centre)
-{
-    positionCentre_ = centre;
-}
+    void calculerIntervalleProjection(glm::dvec3 distances[4], const glm::dvec3& orientation,
+        double& min, double& max) const;
+
+    bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
+        const double& min2, const double& max2) const;
+
+    void calculerDistancesPoint(glm::dvec3 distances[4], const glm::dvec3& point) const;
+};
 
 inline void RectangleEnglobant::assignerAngle(const double& angle)
 {
@@ -79,11 +86,6 @@ inline void RectangleEnglobant::assignerHauteur(const double& hauteur)
 inline void RectangleEnglobant::assignerLargeur(const double& largeur)
 {
     largeur_ = largeur;
-}
-
-inline glm::dvec3 RectangleEnglobant::obtenirPositionCentre() const
-{
-    return positionCentre_;
 }
 
 inline double RectangleEnglobant::obtenirAngle() const
