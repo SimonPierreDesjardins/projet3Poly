@@ -12,6 +12,7 @@
 
 // Inclusions cppunit pour l'exécution des tests
 #include <cppunit/CompilerOutputter.h>
+#include <cppunit/TextOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 #include <cppunit/ui/text/TestRunner.h>
 
@@ -50,12 +51,11 @@ bool BancTests::executer()
 	// Cela permettra à Visual Studio d'interpréter la sortie de cppunit,
 	// d'indiquer les erreurs trouvées par les tests et leur numéro de ligne
 	// en tant qu'erreurs survenant au niveau du processus de compilation.
-	runner.setOutputter(new CppUnit::CompilerOutputter{ &runner.result(),
+	runner.setOutputter(new CppUnit::TextOutputter{ &runner.result(),
 		std::cerr });
 	// Exécuter les tests
 	return runner.run();
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
