@@ -30,7 +30,7 @@ ArbreRendu::ArbreRendu()
 {
 	// On ne veut pas que ce noeud soit sélectionnable.
 	assignerEstSelectionnable(false);
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
+
 }
 
 
@@ -389,7 +389,6 @@ void ArbreRendu::assignerAngleRotation(const double& angle)
 {
 	std::unique_ptr<VisiteurRotation> visiteur = std::make_unique <VisiteurRotation>();
 	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
 
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	NoeudAbstrait* enfant;
@@ -402,7 +401,6 @@ void ArbreRendu::assignerAngleRotation(const double& angle)
 			visiteur->assignerAngleRotation(angle - angleAvantChangement);
 			enfant->accepterVisiteur(visiteur.get());
 
-			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
 			
 			if (!visiteurQuad->objetsDansZoneSimulation()) {
@@ -426,7 +424,6 @@ void ArbreRendu::assignerAngleRotation(const double& angle)
 void ArbreRendu::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
 {
 	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
 
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table");
 	NoeudAbstrait* enfant;
@@ -436,7 +433,6 @@ void ArbreRendu::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
 			double facteurAvantChangement = enfant->obtenirFacteurMiseAEchelle();
 			enfant->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
 
-			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
 			
 			if (!visiteurQuad->objetsDansZoneSimulation()) {
@@ -459,7 +455,6 @@ void ArbreRendu::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
 void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
 {
 	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
 
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	NoeudAbstrait* enfant;
@@ -472,7 +467,6 @@ void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
 			position[0] = positionRelativeX;
 			enfant->assignerPositionRelative(position);
 
-			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
 			
 			if (!visiteurQuad->objetsDansZoneSimulation()) {
@@ -496,7 +490,6 @@ void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
 void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
 {
 	std::unique_ptr<VisiteurVerificationQuad> visiteurQuad = std::make_unique <VisiteurVerificationQuad>();
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJour = std::make_unique <VisiteurMiseAJourQuad>();
 
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	NoeudAbstrait* enfant;
@@ -509,7 +502,6 @@ void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
 			position[1] = positionRelativeY;
 			enfant->assignerPositionRelative(position);
 
-			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAJour.get());
 			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurQuad.get());
 			
 			if (!visiteurQuad->objetsDansZoneSimulation()) {

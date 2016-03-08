@@ -33,7 +33,6 @@ public:
 	virtual void assignerSymboleCurseur();
 
 private:
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
 	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
 

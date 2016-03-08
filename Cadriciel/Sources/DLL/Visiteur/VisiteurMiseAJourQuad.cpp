@@ -26,8 +26,8 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurMiseAJourQuad::VisiteurMiseAJourQuad()
 {
-	ArbreRendu* arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	NoeudAbstrait* table_ = arbre_->chercher(0);
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	table_ = arbre_->chercher(0);
 }
 
 ////////////////////////////////////////////////////////////////////////

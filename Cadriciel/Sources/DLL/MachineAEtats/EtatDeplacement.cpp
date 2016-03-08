@@ -23,7 +23,6 @@
 EtatDeplacement::EtatDeplacement()
 {
 	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
@@ -74,7 +73,6 @@ void EtatDeplacement::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
 	if (arbre_ != nullptr) {
-		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	}
 	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
