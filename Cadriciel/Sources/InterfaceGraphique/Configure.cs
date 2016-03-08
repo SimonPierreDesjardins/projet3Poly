@@ -30,12 +30,25 @@ namespace InterfaceGraphique
 
             FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
-            FonctionsNatives.assignerProfils();
+            assignerProfils();
 
             setUpAllControls(configureTabs);
 
             FonctionsNatives.chargerProfilParDefaut();
 
+        }
+
+        private void assignerProfils(){
+            string line;
+
+            // Read the file and display it line by line.
+            System.IO.StreamReader file =
+               new System.IO.StreamReader("./../../Donnees/profilsListe");
+
+            while ((line = file.ReadLine()) != null)
+                comboBoxProfil.Items.Add(line);
+
+            file.Close();
         }
 
         void setUpAllControls(Control control)
@@ -59,11 +72,6 @@ namespace InterfaceGraphique
 
         private void buttonDefConfig_Click(object sender, EventArgs e)
         {
-            textBoxAvancer.Text = "W";
-            textBoxReculer.Text = "S";
-            textBoxHoraire.Text = "A";
-            textBoxAntiHoraire.Text = "D";
-            textBoxModeManuel.Text = "Espace";
             FonctionsNatives.chargerProfilParDefaut();
         }
 
@@ -157,7 +165,7 @@ namespace InterfaceGraphique
 
         private void Configure_Load(object sender, EventArgs e)
         {
-            comboBoxProfil.SelectedIndex = 0;
+            //comboBoxProfil.SelectedIndex = 0;
         }
 
         private void capteurDistanceChkBox_CheckedChanged(object sender, EventArgs e)

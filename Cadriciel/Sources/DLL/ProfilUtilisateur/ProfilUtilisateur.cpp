@@ -101,9 +101,9 @@ bool ProfilUtilisateur::chargerProfil()
 	rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin();
 
 	this->nomProfil_ = itr->value.GetString();
-	std::wstring ws;
-	ws.assign(nomProfil_.begin(), nomProfil_.end());
-	ComboBox_SelectString(configureHandles.at(PROFIL_CB), 0, ws.c_str());
+	//std::wstring ws;
+	//ws.assign(nomProfil_.begin(), nomProfil_.end());
+	//ComboBox_SelectString(configureHandles.at(PROFIL_CB), 0, ws.c_str());
 
 	itr++;
 
@@ -169,23 +169,46 @@ bool ProfilUtilisateur::chargerProfil()
 
 void ProfilUtilisateur::chargerProfilParDefaut()
 {
-	struct stat buffer;
 	nomProfil_ = "defaut";
-	if (!ouvrirProfil("rb"))
-		return;
-	fseek(profil_, 0, SEEK_END);
-	int size = ftell(profil_);
-	fseek(profil_, 0, SEEK_SET);
-	
-	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL) || size <= 0)
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_ + EXTENSION_PROFIL)){
 		if (!utilitaire::fichierExiste(CHEMIN_PROFIL)){
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
 			CreateDirectory(wideString.c_str(), NULL);
 		}
+		touches_.resize(5);
+		touches_.at(INVERSER_MODE_CONTROLE) = ' ';
+		touches_.at(AVANCER) = 'W';
+		touches_.at(RECULER) = 'S';
+		touches_.at(ROTATION_GAUCHE) = 'A';
+		touches_.at(ROTATION_DROITE) = 'D';
 
+		commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
+		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER)));
+		commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER)));
+		commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE)));
+		commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE)));
 
+		comportements_.push_back(std::make_unique<ComportementDefaut>());
+		comportements_.push_back(std::make_unique<ComportementSuiviLigne>(DEFAUT));
+		comportements_.push_back(std::make_unique<ComportementBalayage>(DEFAUT));
+		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 10));
+		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 10));
+		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10 , 3));
+		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10, 3));
 
+		sauvegarder();
+	}
+	if (!ouvrirProfil("rb"))
+		return;
+	
+	/*fseek(profil_, 0, SEEK_END);
+	int size = ftell(profil_);
+	fseek(profil_, 0, SEEK_SET);
+	if (size == 0){
+
+	}*/
+	
 	chargerProfil();
 
 }
@@ -233,10 +256,12 @@ void ProfilUtilisateur::assignerProfils(){
 	std::string ligne;
 
 	HWND profilCbHandle = configureHandles.at(PROFIL_CB);
-
+	int indexProfil = 0;
+	
 	while (std::getline(fichier, ligne)){
 		std::wstring ws;
 		ws.assign(ligne.begin(), ligne.end());
+		//ComboBox_InsertString(profilCbHandle, 0, ws.c_str());
 		ComboBox_AddString(profilCbHandle, ws.c_str());
 	}
 
