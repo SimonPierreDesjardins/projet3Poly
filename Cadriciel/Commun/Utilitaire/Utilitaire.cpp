@@ -695,11 +695,9 @@ namespace utilitaire {
     {
         double min1, max1; 
         calculerIntervalleProjection(droite, quad1, min1, max1);
-        std::cout << "min1: " << min1 << ", max1: " << max1 << std::endl;
 
         double min2, max2;
         calculerIntervalleProjection(droite, quad2, min2, max2);
-        std::cout << "min2: " << min2 << ", max2: " << max2 << std::endl;
 
         // min1 ----- max1 ---------- min2 --- max2
         bool disjonction12 = max1 < min2;
@@ -727,18 +725,14 @@ namespace utilitaire {
             j = (i + 1) % N;
             glm::dvec3 pointP = calculerPointPerpendiculaire(quad1.coins[i], 
                                                              quad1.coins[j]);
-            std::cout << "segment: " << i << ", " << j << std::endl;
             math::Droite3D droite(quad1.coins[i], pointP);
             estIntersection = calculerIntersectionProjection(droite, quad1, quad2);       
-            std::cout << "intersection: " << estIntersection << std::endl;
             if (estIntersection)
             {
                 glm::dvec3 perpendiculaire = calculerPointPerpendiculaire(quad2.coins[i], 
                                                                            quad2.coins[j]);
-                std::cout << "segment: " << i << ", " << j << std::endl;
                 math::Droite3D droite(quad1.coins[i], perpendiculaire);
                 estIntersection = calculerIntersectionProjection(droite, quad2, quad1);       
-                std::cout << "intersection: " << estIntersection << std::endl;
             }
         }
         return estIntersection;

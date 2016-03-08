@@ -12,6 +12,7 @@
 #define RECTANGLE_ENGLOBANT_H
 
 #include <glm/glm.hpp> 
+#include <vector>
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class RectangleEnglobant
@@ -31,29 +32,38 @@ public:
         const double& hauteur, const double& largeur);
     ~RectangleEnglobant();
 
-    inline void assignerCentre(const glm::dvec3& centre);
+    inline void assignerPositionCentre(const glm::dvec3& positionCentre);
     inline void assignerAngle(const double& angle);
     inline void assignerHauteur(const double& hauteur);
     inline void assignerLargeur(const double& largeur);
     
-    inline glm::dvec3 obtenirCentre() const;
+    inline glm::dvec3 obtenirPositionCentre() const;
     inline double obtenirAngle() const;
     inline double obtenirHauteur() const;
     inline double obtenirLargeur() const;
 
-    bool calculerPointEstDansRectangle(const glm::dvec3& point);
+    bool calculerPointEstDansRectangle(const glm::dvec3& point) const;
     bool calculerRectangleEstEnIntersection(const RectangleEnglobant& rectangle);
 
+    
+    void calculerDistancesCoins(std::vector<glm::dvec3>& distances, const glm::dvec3& point) const;
+    void calculerVecteursOrientation(glm::dvec3& orientationLargeur, glm::dvec3& orientationHauteur) const;
+    double calculerRayon() const;
+    bool calculerIntersectionProjection(const std::vector<glm::dvec3>& distances) const;
+    void calculerIntervalleProjection(const std::vector<glm::dvec3>& distances, const glm::dvec3& orientation,
+        double& min, double& max) const;
+    bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
+        const double& min2, const double& max2) const;
 private:
-    glm::dvec3 centre_{ 0.0, 0.0, 0.0 };
+    glm::dvec3 positionCentre_{ 0.0, 0.0, 0.0 };
     double angle_{ 0.0 };
     double hauteur_{ 0.0 };
     double largeur_{ 0.0 };
 };
 
-inline void RectangleEnglobant::assignerCentre(const glm::dvec3& centre)
+inline void RectangleEnglobant::assignerPositionCentre(const glm::dvec3& centre)
 {
-    centre_ = centre;
+    positionCentre_ = centre;
 }
 
 inline void RectangleEnglobant::assignerAngle(const double& angle)
@@ -71,9 +81,9 @@ inline void RectangleEnglobant::assignerLargeur(const double& largeur)
     largeur_ = largeur;
 }
 
-inline glm::dvec3 RectangleEnglobant::obtenirCentre() const
+inline glm::dvec3 RectangleEnglobant::obtenirPositionCentre() const
 {
-    return centre_;
+    return positionCentre_;
 }
 
 inline double RectangleEnglobant::obtenirAngle() const

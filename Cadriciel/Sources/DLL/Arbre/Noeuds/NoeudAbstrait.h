@@ -431,7 +431,7 @@ inline RectangleEnglobant NoeudAbstrait::obtenirRectangleEnglobant() const
 inline void NoeudAbstrait::mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
     const double& hauteur, const double& largeur)
 {
-    rectangleEnglobant_.assignerCentre(centre);
+    rectangleEnglobant_.assignerPositionCentre(centre);
     rectangleEnglobant_.assignerAngle(angle);
     rectangleEnglobant_.assignerHauteur(hauteur);
     rectangleEnglobant_.assignerLargeur(largeur);

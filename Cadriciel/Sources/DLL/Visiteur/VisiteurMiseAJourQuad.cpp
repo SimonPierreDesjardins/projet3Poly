@@ -99,7 +99,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudDuplication* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
     noeud->mettreAJourRectangleEnglobant(position, 0.0, 0.0, 0.0);
@@ -142,7 +142,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
 
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
@@ -186,7 +186,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
 
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
@@ -235,7 +235,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudLigne* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
     noeud->mettreAJourRectangleEnglobant(position, 0.0, 0.0, 0.0);
@@ -277,7 +277,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudSegment* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
 
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
@@ -326,7 +326,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudJonction* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
 
@@ -371,7 +371,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
     double angle = noeud->obtenirAngleRotation();
@@ -400,12 +400,12 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
     glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
     if (parent != nullptr)
     {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirCentre();
+        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
     double angle = noeud->obtenirAngleRotation();
 
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
+	quad = noeud->obtenirQuadEnglobantModele();
     double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
     double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
 
