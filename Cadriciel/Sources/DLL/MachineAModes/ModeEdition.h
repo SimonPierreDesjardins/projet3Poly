@@ -85,7 +85,6 @@ public:
 
 	//Gestion du système de chargement et de sauvegarde
 	virtual void sauvegarder();
-	virtual void charger();
 
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	inline Etat obtenirTypeEtat() const;
