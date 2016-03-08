@@ -168,6 +168,12 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 
 	if (robot_ != nullptr)
 	{
+		if (robot_->obtenirRectangleEnglobant().calculerRectangleEstEnIntersection(noeud->obtenirRectangleEnglobant()))
+		{
+			robot_->assignerVitesseDroite(-robot_->obtenirVitesseDroite());
+			robot_->assignerVitesseGauche(-robot_->obtenirVitesseGauche());
+
+		}
 	}
 	
 }
