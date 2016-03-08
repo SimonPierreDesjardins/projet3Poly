@@ -55,7 +55,7 @@ void ComportementEvitement::initialiser(){
 	startTime_ = time(nullptr);
 	angleCible_ = controleRobot_->obtenirNoeud()->obtenirAngleRotation() + maxAngle_;
 	gauche = maxAngle_ >= 0;
-	ignorerLigne_ = false;
+	ignorerLigne_ = true;
 
 }
 

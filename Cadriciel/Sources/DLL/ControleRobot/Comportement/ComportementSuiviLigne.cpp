@@ -65,26 +65,49 @@ void ComportementSuiviLigne::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementSuiviLigne::mettreAJour(){
-	//TODO: Décommenter ceci pour assurer fonctionnement dynamique du robot.
-	uint8_t etatSuiveurLigne = controleRobot_->obtenirNoeud()->obtenirSuiveurLigne() ->obtenirEtatCapteurs();
-	//uint8_t etatSuiveurLigne = 0x00;
+	uint8_t etatSuiveurLigne = controleRobot_->obtenirNoeud()->obtenirSuiveurLigne()->obtenirEtatCapteurs();
 
-	// Détection d'une ligne à gauche
-	if ((etatSuiveurLigne & 0x04) == 0x04){
-		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
+	// Tant que nous n'avons pas perdu la ligne, on la suit
+	if (!rechercheLigne){
+
+		switch (etatSuiveurLigne){
+		case (0x07) :
+		case(0x04) :
+			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
+			break;
+		case(0x06) :
+			controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
+			break;
+		case(0x01) :
+			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
+			break;
+		case(0x03) :
+			controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
+			break;
+		case(0x02) :
+			controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
+			break;
+		default:
+			// On a perdu la ligne
+			rechercheLigne = true;
+			heurePerteLigne_ = time(nullptr);
+			break;
+		}
 	}
-	// Détection d'une ligne à gauche
-	else if ((etatSuiveurLigne & 0x01) == 0x01){
-		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
+	// Si nous avons perdu la ligne, on se laisse une chance
+	else{
+		// ligne retrouvée!
+		if (etatSuiveurLigne != 0x00){
+			rechercheLigne = false;
+		}
+		// trop tard, change de comportement
+		else if (difftime(time(nullptr), heurePerteLigne_) > 1.0){
+			// TODO: obtenir le comportement du profil
+			controleRobot_->assignerComportement(DEFAUT);
+		}
+
 	}
-	// Sinon, si ligne au centre, aller tout droit.
-	else if ((etatSuiveurLigne & 0x02) == 0x02){
-		controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
-	}
-	// TODO: Sinon, si rien n'est détecté, passer au comportement profil.
-	else {
-		controleRobot_->assignerComportement(BALAYAGE180);
-	}
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////

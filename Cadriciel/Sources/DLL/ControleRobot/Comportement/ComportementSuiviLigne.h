@@ -12,7 +12,7 @@
 #define COMPORETMENT_SUIVI_LIGNE
 
 #include "ComportementAbstrait.h"
-
+#include <ctime>
 ///////////////////////////////////////////////////////////////////////////
 /// @class ComportementBalayage
 /// @brief Classe qui implémente le comportement de suivi de ligne du robot.
@@ -29,6 +29,13 @@ public:
 	void initialiser();
 
 	void mettreAJour();
+
+private:
+
+	time_t heurePerteLigne_;
+
+	// Flag dictant si le suiveur de ligne tente de brièvement retrouver sa ligne
+	bool rechercheLigne{ true };
 };
 
 #endif COMPORTEMENT_SUIVI_LIGNE
