@@ -23,6 +23,7 @@
 #include "ComportementSuiviLigne.h"
 #include "ComportementBalayage.h"
 #include "ComportementDeviation.h"
+#include "ComportementEvitement.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -109,6 +110,7 @@ void ControleRobot::assignerComportement(eComportement nouveauComportement)
 
 	//TODO: ce switch est temporaire, remplacer par recherche de comportement dans profil
 	ComportementDeviation* compDev;
+	ComportementEvitement* compEvit;
 	switch (nouveauComportement){
 	case DEFAUT:
 		comportement_ = new ComportementDefaut(this);
@@ -128,6 +130,18 @@ void ControleRobot::assignerComportement(eComportement nouveauComportement)
 		compDev = new ComportementDeviation(this);
 		compDev->setAngleMaxRotation(30.0);
 		comportement_ = compDev;
+		break;
+	case EVITEMENTPARLADROITE:
+		compEvit = new ComportementEvitement(this);
+		compEvit->setAngleMaxRotation(30.0);
+		compEvit->setTempsMaxReculons(2.0);
+		comportement_ = compEvit;
+		break;
+	case EVITEMENTPARLAGAUCHE:
+		compEvit = new ComportementEvitement(this);
+		compEvit->setAngleMaxRotation(-30.0);
+		compEvit->setTempsMaxReculons(2.0);
+		comportement_ = compEvit;
 		break;
 	}
 	
@@ -174,7 +188,7 @@ void ControleRobot::inverserModeControle(){
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	//TODO: Ceci doit ammener au comportement par defaut dans profil
-	assignerComportement(DEVIATIONVERSLADROITE);
+	assignerComportement(EVITEMENTPARLAGAUCHE);
 	initialiserBoucleRobot();
 }
 
@@ -242,10 +256,6 @@ void ControleRobot::terminerBoucleRobot(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::boucleInfinieLogiqueRobot(){
 	while (!manuel) {
-		/*if (ligneDetectee()){
-		comportement = std::make_unique<ComportementSuiviLigne>(ComportementSuiviLigne());
-		comportement->initialiser();
-		}*/
 		comportement_->mettreAJour();
 	}
 
@@ -292,8 +302,7 @@ NoeudRobot* ControleRobot::obtenirNoeud(){
 ////////////////////////////////////////////////////////////////////////
 bool ControleRobot::ligneDetectee(){
 	//TODO: Décommenter pour que le suiveur de ligne fournisse la réponse.
-	//return 	obtenirNoeud()->obtenirEtatSuiveurLigne() != 0x00;
-	return false;
+	return 	obtenirNoeud()->obtenirSuiveurLigne() -> obtenirEtatCapteurs() != 0x00;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

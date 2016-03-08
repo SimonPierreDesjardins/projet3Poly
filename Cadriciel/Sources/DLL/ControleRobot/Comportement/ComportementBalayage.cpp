@@ -19,7 +19,7 @@
 ///
 /// Constructeur
 ///
-/// @param[in] controleRobot: une référence au controlleur du robot.
+/// @param[in] controleRobot: Pointeur vers le controleur du robot auquel le comportement est assigné
 ///
 /// @return Aucune (constructeur).
 ///

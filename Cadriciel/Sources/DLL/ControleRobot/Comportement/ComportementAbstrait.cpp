@@ -13,16 +13,18 @@
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementAbstrait::ComportementAbstrait()
+/// @fn ComportementAbstrait::ComportementAbstrait(ControleRobot* controleRobot)
 ///
 /// Constructeur
+///
+/// @param[in] controleRobot: Pointeur vers le controleur du robot auquel le comportement est assigné
 ///
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementAbstrait::ComportementAbstrait(ControleRobot* noeudRobot)
+ComportementAbstrait::ComportementAbstrait(ControleRobot* controleRobot)
 {
-	controleRobot_ = std::unique_ptr<ControleRobot>(noeudRobot);
+	controleRobot_ = std::unique_ptr<ControleRobot>(controleRobot);
 }
 
 

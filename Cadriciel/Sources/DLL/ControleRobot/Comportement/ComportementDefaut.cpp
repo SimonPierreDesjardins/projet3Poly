@@ -14,7 +14,7 @@
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementAbstrait::ComportementDefaut()
+/// @fn ComportementDefaut::ComportementDefaut(ControleRobot* controleRobot)
 ///
 /// Constructeur
 ///

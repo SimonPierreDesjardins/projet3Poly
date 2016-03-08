@@ -48,7 +48,7 @@ public:
 	void mettreAJourCapteurs();
 	// Retourne l'états des capeurs du robot.
 	// Les 3 premiers indiquent la détection d'une ligne pour les 3 capteurs optiques du suiveur de ligne.
-	uint8_t obtenirEtatSuiveurLigne();
+	SuiveurLigne* obtenirSuiveurLigne();
 
     // Méthodes d'affichage permettant le débogage.
     void afficherCapteursOptique() const;

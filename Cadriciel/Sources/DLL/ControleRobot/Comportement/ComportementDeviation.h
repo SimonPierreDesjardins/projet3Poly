@@ -41,6 +41,9 @@ private:
 
 	// Définit si la déviation doit se faire vers la gauche ou bien vers la droite
 	bool gauche;
+
+	// Flag dictant au comportement d'ignorer la ligne
+	bool ignorerLigne_;
 };
 
 #endif // COMPORTEMENT_DEVIATION

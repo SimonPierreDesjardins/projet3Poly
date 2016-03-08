@@ -19,7 +19,7 @@
 ///
 /// Constructeur
 ///
-/// @param[in] Aucun
+/// @param[in] controleRobot: Pointeur vers le controleur du robot auquel le comportement est assigné
 ///
 /// @return Aucune (constructeur).
 ///
@@ -54,6 +54,7 @@ ComportementDeviation::~ComportementDeviation()
 void ComportementDeviation::initialiser(){
 	angleCible_ = controleRobot_->obtenirNoeud()->obtenirAngleRotation() + maxAngle_;
 	gauche = maxAngle_ >= 0;
+	ignorerLigne_ = true;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -66,14 +67,20 @@ void ComportementDeviation::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDeviation::mettreAJour(){
-	
-	//Si une ligne est trouvée nous passons à la suivie de ligne
+	//TODO: Implémenter l'exception
+	//Implémentation de l'exception Rapport d'élicitation p.22
 	if (controleRobot_->ligneDetectee()){
-		controleRobot_->assignerComportement(SUIVIDELIGNE);
+		if (!ignorerLigne_){
+			controleRobot_->assignerComportement(SUIVIDELIGNE);
+		}
+	}
+	else{
+		ignorerLigne_ = false;
 	}
 
 	bool angleAtteinte = false;
 
+	// Rotation du robot
 	if (gauche){
 		// Dévier à gauche et vérifier angle
 		controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
