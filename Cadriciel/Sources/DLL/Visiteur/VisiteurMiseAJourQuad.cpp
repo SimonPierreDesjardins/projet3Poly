@@ -486,7 +486,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
         positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-	//position.x += 13.75;
+	position.x -= 1.35;
     double angle = noeud->obtenirAngleRotation();
 
 	quad = noeud->obtenirQuadEnglobantModele();
