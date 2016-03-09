@@ -62,21 +62,22 @@ bool RectangleEnglobant::calculerIntersectionRectangle(const RectangleEnglobant&
         rectangles[i]->calculerVecteursOrientation(orientations[LARGEUR], orientations[HAUTEUR]);
 
         glm::dvec3 distances[N_COINS];
-        // Index circulaire.
-        int j = (i + 1) % 2;
+
+        // Index circulaire pour obtenir le prochain rectangle.
+        int k = (i + 1) % 2;
          
-        rectangles[j]->calculerDistancesPoint(distances, rectangles[i]->obtenirPositionCentre());
+        rectangles[k]->calculerDistancesPoint(distances, rectangles[i]->obtenirPositionCentre());
         double dimensions[N_ORIENTATIONS];
         dimensions[HAUTEUR] = rectangles[i]->hauteur_;
         dimensions[LARGEUR] = rectangles[i]->largeur_;
 
         // Intérer sur chacun de sur chaque droite du rectangle
-        for (int i = 0; i < N_ORIENTATIONS && enIntersection; i++)
+        for (int j = 0; j < N_ORIENTATIONS && enIntersection; j++)
         {
             double min, max;
-            rectangles[i]->calculerIntervalleProjection(distances, orientations[i], min, max);
+            rectangles[i]->calculerIntervalleProjection(distances, orientations[j], min, max);
             enIntersection = !rectangles[i]->calculerDisjonctionSurIntervalle(min, max,
-                -dimensions[i] / 2.0, dimensions[i] / 2.0);
+                -dimensions[j] / 2.0, dimensions[j] / 2.0);
         }
     }
     return enIntersection;
@@ -113,8 +114,8 @@ void RectangleEnglobant::calculerDistancesPoint(glm::dvec3 distances[4],
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);
 
     glm::dvec3 distancePointCentre = point - positionCentre_;
-    glm::dvec3 distanceCentreHauteur = orientationHauteur * hauteur_;
-    glm::dvec3 distanceCentreLargeur = orientationLargeur * largeur_;
+    glm::dvec3 distanceCentreHauteur = orientationHauteur * hauteur_ / 2.0;
+    glm::dvec3 distanceCentreLargeur = orientationLargeur * largeur_ / 2.0;
 
     // Calculer les coins pour chacun des cadrans. 
     distances[0] = ( distancePointCentre + distanceCentreHauteur + distanceCentreLargeur );
