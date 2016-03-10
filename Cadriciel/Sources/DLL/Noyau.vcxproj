@@ -185,6 +185,7 @@
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
     <ClCompile Include="Tests\PhysiqueTest.cpp" />
+    <ClCompile Include="VisiteurDetectionRobot.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
@@ -257,6 +258,7 @@
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
     <ClInclude Include="Tests\PhysiqueTest.h" />
+    <ClInclude Include="VisiteurDetectionRobot.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />

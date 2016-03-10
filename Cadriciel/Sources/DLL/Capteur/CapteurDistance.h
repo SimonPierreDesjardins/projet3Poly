@@ -11,6 +11,25 @@
 #ifndef CAPTEUR_DISTANCE_H
 #define CAPTEUR_DISTANCE_H
 
+#include "RectangleEnglobant.h"
+
+class NoeudPoteau;
+class NoeudMur;
+
+enum PositionCapteurDistance
+{
+    CAPTEUR_DISTANCE_DROITE,
+    CAPTEUR_DISTANCE_CENTRE,
+    CAPTEUR_DISTANCE_GAUCHE
+};
+
+enum EtatCapteurDistance
+{
+    AUCUNE_DETECTION,
+    DETECTION_ZONE_SECURITAIRE,
+    DETECTION_ZONE_DANGER
+};
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class CapteurDistance
 /// @brief Classe qui représente un capteur de distance du robot.  
@@ -23,13 +42,59 @@
 class CapteurDistance
 {
 public:
-	//Constructeur par défaut
-	CapteurDistance();
-	//Destructeur
-	~CapteurDistance();
+    // Constructeur par défaut.
+    CapteurDistance();
+    // Constructeur par paramètres.
+    CapteurDistance(glm::dvec3 positionCentre, const double& angle);
+    //Destructeur
+    ~CapteurDistance();
+
+    // Méthodes permettant de mettre à jour l'état du capteur.
+    void verifierDetection(NoeudPoteau* noeud);
+    void verifierDetection(NoeudMur* noeud);
+
+    // Méthode permettant de manipuler l'état du capteur.
+    inline EtatCapteurDistance obtenirEtat();
+    inline void reinitialiserEtat();
+
+    // Méthode permettant de manipuler la largeur des zones de détection.
+    inline void assignerHauteurZoneSecuritaire(const double& hauteur);
+    inline void assignerHauteurZoneDanger(const double& hauteur);
+
+    //TODO: Ajouter les méthodes pour assigner un prochain comportement (danger/securitaire)
+
+    // Méthode permettant de mettre à jour 
+	void mettreAJourPosition(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
 private:
+    static const double LARGEUR;
+    static const double MAX_HAUTEUR_TOTALE;
+
 	bool estActif_{ true };
+    EtatCapteurDistance etat_{ AUCUNE_DETECTION };
+
+    RectangleEnglobant zoneSecuritaire_;
+    RectangleEnglobant zoneDanger_;
 };
+
+inline void CapteurDistance::assignerHauteurZoneSecuritaire(const double& hauteur)
+{
+    zoneSecuritaire_.assignerHauteur(hauteur);
+}
+
+inline void CapteurDistance::assignerHauteurZoneDanger(const double& hauteur)
+{
+    zoneDanger_.assignerHauteur(hauteur);
+}
+
+inline EtatCapteurDistance CapteurDistance::obtenirEtat()
+{
+    return etat_;
+}
+
+inline void CapteurDistance::reinitialiserEtat()
+{
+    etat_ = AUCUNE_DETECTION;
+}
 
 #endif // CAPTEUR_DISTANCE_H

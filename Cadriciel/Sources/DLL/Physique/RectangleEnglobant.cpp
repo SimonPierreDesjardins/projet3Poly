@@ -41,7 +41,7 @@ bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) cons
 }
 
 
-bool RectangleEnglobant::calculerIntersectionRectangle(const RectangleEnglobant& rectangle) const
+bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {     
     const int LARGEUR = 0;
     const int HAUTEUR = 1;
@@ -173,7 +173,7 @@ void RectangleEnglobant::mettreAJourFormeEnglobante(const glm::dvec3& positionCe
 }
 
 
-bool RectangleEnglobant::calculerIntersectionCercle(const CercleEnglobant& cercle) const
+bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
     return true;
 }

@@ -39,9 +39,9 @@ public:
 
     virtual bool calculerPointEstDansForme(const glm::dvec3& point) const;
 
-    virtual bool calculerIntersectionCercle(const CercleEnglobant& cercle) const;
+    virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
 
-    virtual bool calculerIntersectionRectangle(const RectangleEnglobant& rectangle) const;
+    virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
 
     virtual void mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, const double& angle,
         const double& largeur, const double& hauteur);

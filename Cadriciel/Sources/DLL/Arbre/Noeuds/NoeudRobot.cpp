@@ -39,6 +39,10 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	NoeudAbstrait* depart = table->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
+
+    capteursDistance_[CAPTEUR_DISTANCE_DROITE] = CapteurDistance();
+    capteursDistance_[CAPTEUR_DISTANCE_CENTRE] = CapteurDistance();
+    capteursDistance_[CAPTEUR_DISTANCE_GAUCHE] = CapteurDistance();
 }
 
 
@@ -72,11 +76,14 @@ void NoeudRobot::afficherConcret() const
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
-	//Debugage du suiveur de ligne.
+	// Debugage du suiveur de ligne.
     afficherCapteursOptique();
 
-    //Debugage de capteurs de distance.
+    // Debugage de capteurs de distance.
     afficherCapteursDistance();
+
+    // Debugage de la boite englobante.
+    afficherFormeEnglobante();
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
@@ -115,7 +122,7 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::animer(float dt)
+void NoeudRobot::animer(const float& dt)
 {
 	//Calcul de la résultante de la vitesse relative
 	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
@@ -325,6 +332,17 @@ void NoeudRobot::mettreAJourCapteurs()
 	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
 }
 
+
+inline CapteurDistance* NoeudRobot::obtenirCapteursDistance(PositionCapteurDistance position)
+{
+    CapteurDistance* capteur = nullptr;
+    if (position < N_CAPTEUR_DISTANCE)
+    {
+        capteur = &capteursDistance_[position];
+    }
+    return capteur;
+}
+
 void NoeudRobot::afficherCapteursOptique() const
 {
 	uint8_t etat = suiveurLigne_.obtenirEtatCapteurs();
@@ -388,6 +406,20 @@ void NoeudRobot::afficherCapteursOptique() const
 	glColor4f(0.0, 0.0, 0.0, 1.0);
 }
 
+void NoeudRobot::afficherFormeEnglobante() const
+{
+    double hauteur = rectangleEnglobant_.obtenirHauteur();
+    double largeur = rectangleEnglobant_.obtenirLargeur();
+    glPushMatrix();
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_QUADS);
+	glVertex3d(largeur / 2.0 + 1.35, hauteur / 2.0, 5.0);
+	glVertex3d(-largeur / 2.0 + 1.35, hauteur / 2.0, 5.0);
+	glVertex3d(-largeur / 2.0 + 1.35, -hauteur / 2.0, 5.0);
+	glVertex3d(largeur / 2.0 + 1.35, -hauteur / 2.0, 5.0);
+	glEnd();
+    glPopMatrix();
+}
 void NoeudRobot::afficherCapteursDistance() const
 {
 

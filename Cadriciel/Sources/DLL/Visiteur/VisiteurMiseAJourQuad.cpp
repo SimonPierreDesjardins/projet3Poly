@@ -171,7 +171,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 	{
 		if (!estCollision_)
 		{
-			if (robot_->obtenirRectangleEnglobant().calculerIntersectionRectangle(noeud->obtenirRectangleEnglobant()))
+			if (robot_->obtenirRectangleEnglobant().calculerIntersection(noeud->obtenirRectangleEnglobant()))
 			{
 				estCollision_ = true;
 
@@ -259,7 +259,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 	{
 		if (!estCollision_)
 		{
-			if (robot_->obtenirRectangleEnglobant().calculerIntersectionRectangle(noeud->obtenirRectangleEnglobant()))
+			if (robot_->obtenirRectangleEnglobant().calculerIntersection(noeud->obtenirRectangleEnglobant()))
 			{
 				estCollision_ = true;
 			
@@ -272,9 +272,8 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 			float bobette = -robot_->obtenirVitesseGaucheCourante();
 			robot_->assignerVitesseDroiteCourante(bob);
 			robot_->assignerVitesseGaucheCourante(bobette);
-			robot_->assignerVitesseDroite(0);
-			robot_->assignerVitesseGauche(0);
 
+            /*
 			if (robot_->obtenirVitesseDroiteCourante() > 0 && robot_->obtenirVitesseGaucheCourante() > 0)
 			{
 				while (robot_->obtenirVitesseDroiteCourante() < 0 && robot_->obtenirVitesseGaucheCourante() < 0)
@@ -289,8 +288,8 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 					robot_->animer(0.016);
 				}
 			}
+            */
 			estCollision_ = false;
-				
 		}
 	}
 }
@@ -486,7 +485,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
         positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-	position.x -= 1.35;
+	position.x += 1.35;
     double angle = noeud->obtenirAngleRotation();
 
 	quad = noeud->obtenirQuadEnglobantModele();

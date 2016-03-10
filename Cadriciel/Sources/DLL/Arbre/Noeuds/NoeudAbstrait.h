@@ -157,7 +157,7 @@ public:
 	/// Affiche le noeud de manière concrète.
 	virtual void afficherConcret() const;
 	/// Anime le noeud.
-	virtual void animer(float dt);
+	virtual void animer(const float& dt);
 
 	/// Accepter un visiteur.
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur) = 0;

@@ -15,6 +15,8 @@
 #include <memory>
 #include "glm\glm.hpp"
 
+class NoeudLigne;
+
 ////////////////////////////////////////////////////////////////////////////////
 /// @class CapteurOptique
 /// @brief Classe représentant l'un des 3 capteurs optiques du suiveur de ligne  
@@ -40,6 +42,8 @@ public:
     inline void assignerLigneEstDetectee(const bool& ligneEstDetectee);
     // Obtenir la position courante.  
     inline glm::dvec3 obtenirPositionCourante() const;
+
+    void verifierDetection(NoeudLigne* ligne);
 
 	// Mise à jour de l'état du capteur.
 	void mettreAJourPosition(const glm::dvec3& positionRobot, const double& angleRotationRobot);

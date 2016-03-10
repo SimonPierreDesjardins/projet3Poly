@@ -20,7 +20,7 @@ class CapteurOptique;
 class ArbreRendu;
 
 // Énumération permettant d'associer une position à un index dans le vecteur.
-enum PositionCapteur
+enum PositionCapteurOptique
 {
 	CAPTEUR_OPTIQUE_DROIT,
 	CAPTEUR_OPTIQUE_CENTRE,
@@ -60,6 +60,8 @@ public:
 	uint8_t obtenirEtatCapteurs() const;
     // Mettre à jour l'état des capteurs et leur position.
 	void mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot);
+
+    void verifierDetection(NoeudLigne* ligne);
 		
 private:
 	static const glm::dvec3 POSITION_RELATIVE_GAUCHE;

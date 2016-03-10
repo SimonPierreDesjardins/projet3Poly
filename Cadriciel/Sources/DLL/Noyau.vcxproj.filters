@@ -314,6 +314,9 @@
     <ClCompile Include="Physique\FormeEnglobante.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
+    <ClCompile Include="VisiteurDetectionRobot.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -537,6 +540,9 @@
     </ClInclude>
     <ClInclude Include="Physique\FormeEnglobanteAbstraite.h">
       <Filter>Header Files\Physique</Filter>
+    </ClInclude>
+    <ClInclude Include="VisiteurDetectionRobot.h">
+      <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

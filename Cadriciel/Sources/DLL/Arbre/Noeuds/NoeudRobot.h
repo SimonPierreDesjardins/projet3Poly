@@ -14,6 +14,7 @@
 #include "GL/glew.h"
 #include "SuiveurLigne.h"
 #include "CapteurDistance.h"
+#include "RectangleEnglobant.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
@@ -33,7 +34,7 @@ public:
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
-	virtual void animer(float dt);
+	virtual void animer(const float& dt);
 
 	//Permet de modifier les paramètres du robot
 	void assignerVitesseRotation(float vitesse);
@@ -55,17 +56,28 @@ public:
 	// Les 3 premiers indiquent la détection d'une ligne pour les 3 capteurs optiques du suiveur de ligne.
 	uint8_t obtenirEtatSuiveurLigne();
 
+    inline SuiveurLigne* obtenirSuiveurLigne();     
+    CapteurDistance* obtenirCapteursDistance(PositionCapteurDistance position);
+
     // Méthodes d'affichage permettant le débogage.
     void afficherCapteursOptique() const;
     void afficherCapteursDistance() const;
+    void afficherFormeEnglobante() const;
 
 private:
 	float angle_{ 0.f };
 	float acceleration_{ 200.0 };
-	
+    
+    static const int N_CAPTEUR_DISTANCE{ 3 };
+
 	SuiveurLigne suiveurLigne_;
-	std::vector<CapteurDistance> capteursDistance_;
+	CapteurDistance capteursDistance_[N_CAPTEUR_DISTANCE];
 };
+
+inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
+{
+    return &suiveurLigne_;
+}
 
 #endif // __ARBRE_NOEUD_ROBOT_H__
 

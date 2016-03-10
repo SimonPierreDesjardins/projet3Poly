@@ -20,13 +20,13 @@ bool CercleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
 }
 
 
-bool CercleEnglobant::calculerIntersectionCercle(const CercleEnglobant& cercle) const
+bool CercleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
     return true;
 }
 
 
-bool CercleEnglobant::calculerIntersectionRectangle(const RectangleEnglobant& rectangle) const
+bool CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {
     return true;
 }

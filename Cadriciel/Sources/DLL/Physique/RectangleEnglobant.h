@@ -48,9 +48,9 @@ public:
     // Permet de calculer si un point se trouve dans une forme englobante.
     virtual bool calculerPointEstDansForme(const glm::dvec3& point) const;
     // Permet de calculer si une forme est en intersection avec un cercle.
-    virtual bool calculerIntersectionCercle(const CercleEnglobant& cercle) const;
+    virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
     // Permet de calculer si une forme est en intersection avec un rectangle.
-    virtual bool calculerIntersectionRectangle(const RectangleEnglobant& rectangle) const;
+    virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
     // Permet de mettre à jour les attributs de la forme.
     virtual void mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, const double& angle,
         const double& largeur, const double& hauteur);
