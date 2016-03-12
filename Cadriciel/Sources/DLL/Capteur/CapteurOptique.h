@@ -51,6 +51,8 @@ public:
 
     void afficher() const;
 
+	void assignerActif(bool estActif);
+
 private:
 	bool ligneEstDetectee_{ false };
 	glm::dvec3 positionRelative_{ 0.0, 0.0, 0.0 };

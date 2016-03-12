@@ -50,12 +50,21 @@ extern "C"
 	__declspec(dllexport) void assignerPositionRelativeX(double positionRelativeX);
 	__declspec(dllexport) void assignerPositionRelativeY(double positionRelativeY);
 
-	__declspec(dllexport) void __cdecl assignerOptionsProfil(bool options[11]);
-
+	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(int comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementBalayage(int comportementSuivant);
+	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation);
+	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement);
+	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl);
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
+	__declspec(dllexport) void __cdecl assignerProfils();
+	__declspec(dllexport) void __cdecl changerProfil();
 
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande);
+
+	__declspec(dllexport) void __cdecl assignerAffichageComportement(bool afficherDebugComportement);
+	__declspec(dllexport) void __cdecl assignerAffichageEclairage(bool afficherDebugEclairage);
+	__declspec(dllexport) void __cdecl assignerAffichageCapteurs(bool afficherDebugCapteurs);
 
 }
 

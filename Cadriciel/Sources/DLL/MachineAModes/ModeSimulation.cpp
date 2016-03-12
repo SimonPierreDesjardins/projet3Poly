@@ -65,7 +65,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         const bool estRepetition = (bool)(lParam & (1 << 30));
         if (!estRepetition)
         {
-		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam));
+		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
             std::cout << "Commande" << std::endl;
         }
 	}
@@ -75,7 +75,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
 		{
 			std::unique_ptr<CommandeRobot> commande = std::make_unique<CommandeRobot>(ARRETER);
-			controleRobot_->traiterCommande(commande.get());
+			controleRobot_->traiterCommande(commande.get(), true);
 		}
 	}
 }

@@ -230,6 +230,7 @@
     <ClInclude Include="ControleRobot\Comportement\ComportementDeviation.h" />
     <ClInclude Include="ControleRobot\Comportement\ComportementEvitement.h" />
     <ClInclude Include="ControleRobot\Comportement\ComportementSuiviLigne.h" />
+    <ClInclude Include="ControleRobot\Comportement\ComportementTypes.h" />
     <ClInclude Include="ControleRobot\ControleRobot.h" />
     <ClInclude Include="Interface\FacadeInterfaceNative.h" />
     <ClInclude Include="MachineAEtats\EtatAbstrait.h" />

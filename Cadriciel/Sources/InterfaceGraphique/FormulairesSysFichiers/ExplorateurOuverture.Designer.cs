@@ -142,8 +142,10 @@
             // 
             // annulerButt
             // 
+            this.annulerButt.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.annulerButt.Location = new System.Drawing.Point(284, 18);
             this.annulerButt.Name = "annulerButt";
+            this.annulerButt.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.annulerButt.Size = new System.Drawing.Size(75, 23);
             this.annulerButt.TabIndex = 1;
             this.annulerButt.Text = "Annuler";
@@ -152,7 +154,6 @@
             // 
             // ouvrirButt
             // 
-            this.ouvrirButt.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.ouvrirButt.Location = new System.Drawing.Point(44, 18);
             this.ouvrirButt.Name = "ouvrirButt";
             this.ouvrirButt.Size = new System.Drawing.Size(75, 23);

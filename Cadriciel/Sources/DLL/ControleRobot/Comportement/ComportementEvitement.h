@@ -12,6 +12,7 @@
 #define COMPORTEMENT_EVITEMENT
 
 #include "ComportementAbstrait.h"
+#include <ctime>
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ComportementBalayage
@@ -24,24 +25,40 @@ class ComportementEvitement : public ComportementAbstrait
 {
 public:
 	ComportementEvitement();
+	ComportementEvitement(TypeComportement prochainComportement);
+	ComportementEvitement(const rapidjson::Value& comportementJSON);
+	ComportementEvitement(TypeComportement prochainComportement, double maxTemps, double maxAngle);
 	virtual ~ComportementEvitement();
 
 	void initialiser();
 
 	void mettreAJour();
 
-	void setAngleMaxRotation();
+	void setAngleMaxRotation(double angle);
 
-	void setTempsMaxReculons();
+	void setTempsMaxReculons(double temps);
+
+	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+	virtual void fromJson(const rapidjson::Value& comportementJSON);
 
 private:
-	double maxTemps;
-	double deltaTemps{ 0.0 };
+	// Flag informant le comportement qu'il s'agit d'un évitement pivot gauche
+	bool gauche;
 
-	double maxAngle;
-	double deltaAngle{ 0.0 };
+	// Flag dictant au comportement d'ignorer les lignes rencontrées
+	bool ignorerLigne_;
 
+	time_t startTime_;
 
+	// Le nombre de secondes que le comportement force le reculons
+	double maxTemps_;
+
+	// L'angle relative a atteindre pour que le pivot soit complet
+	double maxAngle_;
+
+	// L'angle absolue a atteindre pour changement de comportment
+	double angleCible_;
 };
 
 #endif // COMPORTEMENT_EVITEMENT

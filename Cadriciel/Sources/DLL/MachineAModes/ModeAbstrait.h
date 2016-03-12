@@ -15,15 +15,8 @@
 #include "glm\glm.hpp"
 #include <Windows.h>
 #include <Windowsx.h>
+#include "./../../Enum/ModeEnum.cs"
 
-enum Mode
-{
-	MENU_PRINCIPAL,
-	SIMULATION,
-	EDITION,
-	CONFIGURE,
-	TEST
-};
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeAbstrait
@@ -52,6 +45,7 @@ public:
 
 protected:
 	int typeMode_;
+
 };
 
 ////////////////////////////////////////////////////////////////////////

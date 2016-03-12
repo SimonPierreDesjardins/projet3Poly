@@ -54,9 +54,6 @@ public:
     
 
 	// Retourne l'états des capeurs du robot.
-	// Les 3 premiers indiquent la détection d'une ligne pour les 3 capteurs optiques du suiveur de ligne.
-	uint8_t obtenirEtatSuiveurLigne();
-
     inline SuiveurLigne* obtenirSuiveurLigne();     
     CapteurDistance* obtenirCapteurDistance(PositionCapteurDistance position);
 
@@ -75,6 +72,8 @@ private:
     static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_DROITE;
 
 	float angle_{ 0.f };
+	float vitesseCouranteDroite_{ 0.f };
+	float vitesseCouranteGauche_{ 0.f };
 	float acceleration_{ 200.0 };
    
 	SuiveurLigne suiveurLigne_;

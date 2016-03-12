@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// @file ComporterDefaut.cpp
-/// @author Olivier St-Amour
+/// @author Olivier St-Amour, Camille Gendreau
 /// @date 20016-02-16
 /// @version 1.0
 ///
@@ -9,14 +9,16 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementDefaut.h"
+#include "ControleRobot.h"
+#include "CommandeRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ComportementAbstrait::ComportementDefaut()
+/// @fn ComportementDefaut::ComportementDefaut(ControleRobot* controleRobot)
 ///
 /// Constructeur
 ///
-/// @param[in] Aucun
+/// @param[in] controleRobot: Le controlleur du robot auquel le comportement passera des commandes
 ///
 /// @return Aucune (constructeur).
 ///
@@ -25,6 +27,31 @@ ComportementDefaut::ComportementDefaut()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDefaut::ComportementDefaut(TypeComportement prochainComportement)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] prochainComportement : le comportement que le robot adopte une fois le comportement actuel terminé
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDefaut::ComportementDefaut(TypeComportement prochainComportement) : ComportementAbstrait(prochainComportement){}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] comportementJSON : le comportement en format JSON
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -56,13 +83,18 @@ void ComportementDefaut::initialiser(){
 ///
 /// @fn ComportementDefaut::mettreAJour()
 ///
-/// Implementation qui ramene le comportement a son etat initial
+/// Vérifie si le comportement doit changer ou procéder à une prochaine action sur sa liste.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDefaut::mettreAJour(){
+	//Si une ligne est trouvée nous passons à la suivie de ligne
+	if (controleRobot_->ligneDetectee()){
+		controleRobot_->assignerComportement(SUIVIDELIGNE);
+	}
 
+	controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

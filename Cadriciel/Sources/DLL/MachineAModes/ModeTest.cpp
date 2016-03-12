@@ -56,7 +56,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_KEYDOWN)
 	{
-		controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam));
+		controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
 	}
 	else if (msg == WM_KEYUP)
 	{
@@ -64,7 +64,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
 		{
 			std::unique_ptr<CommandeRobot> commande = std::make_unique<CommandeRobot>(ARRETER);
-			controleRobot_->traiterCommande(commande.get());
+			controleRobot_->traiterCommande(commande.get(), true);
 		}
 	}
 }

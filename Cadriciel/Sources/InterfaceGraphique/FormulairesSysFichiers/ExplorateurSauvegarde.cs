@@ -87,8 +87,6 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void PopulateTreeView()
         {
-            
-            
             DirectoryInfo info = new DirectoryInfo(@cheminDossierZone);
             if (info.Exists)
             {
@@ -214,6 +212,7 @@ namespace InterfaceGraphique
             }
             else
                 DialogResult = DialogResult.Cancel;
+
             Close();
         }
 
@@ -232,6 +231,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void annulerButt_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 

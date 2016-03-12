@@ -30,6 +30,8 @@ enum EtatCapteurDistance
     DETECTION_ZONE_DANGER
 };
 
+//#include "./../../Enum/TypeComportementEnum.cs"
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class CapteurDistance
 /// @brief Classe qui représente un capteur de distance du robot.  
@@ -72,6 +74,12 @@ public:
     static const double HAUTEUR;
     static const double MAX_LARGEUR_TOTALE;
     static const double LARGEUR_DEFAUT;
+
+	void assignerActif(bool estActif);
+
+	void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
+
+	void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
 
 private:
 	bool estActif_{ true };

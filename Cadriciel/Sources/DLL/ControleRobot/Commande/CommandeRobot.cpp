@@ -22,23 +22,33 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 	switch (commande)
 	{
 	case AVANCER:
-		vitesseMoteurD_ = 100.0;
-		vitesseMoteurG_ = 100.0;
+		vitesseMoteurD_ = 30.0;
+		vitesseMoteurG_ = 30.0;
 		break;
 	
 	case RECULER:
-		vitesseMoteurD_ = -100.0;
-		vitesseMoteurG_ = -100.0;
+		vitesseMoteurD_ = -30.0;
+		vitesseMoteurG_ = -30.0;
 		break;
 	
 	case ROTATION_GAUCHE:
-		vitesseMoteurD_ = 100.0;
-		vitesseMoteurG_ = -100.0;
+		vitesseMoteurD_ = 30.0;
+		vitesseMoteurG_ = -30.0;
 		break;
 	
 	case ROTATION_DROITE:
-		vitesseMoteurD_ = -100.0;
-		vitesseMoteurG_ = 100.0;
+		vitesseMoteurD_ = -30.0;
+		vitesseMoteurG_ = 30.0;
+		break;
+
+	case DEVIATION_GAUCHE:
+		vitesseMoteurD_ = 30.0;
+		vitesseMoteurG_ = 10.0;
+		break;
+
+	case DEVIATION_DROITE:
+		vitesseMoteurD_ = 10.0;
+		vitesseMoteurG_ = 30.0;
 		break;
 	
 	case ARRETER:
@@ -62,6 +72,7 @@ void CommandeRobot::executer(ControleRobot* ia){
 		ia->inverserModeControle();
 	ia->assignerVitessesMoteurs( vitesseMoteurG_, vitesseMoteurD_);
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
