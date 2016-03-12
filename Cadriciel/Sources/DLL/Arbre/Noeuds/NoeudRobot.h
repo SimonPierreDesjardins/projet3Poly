@@ -52,26 +52,32 @@ public:
     
     // Mise à jour des capteurs du robot. 	
 	void mettreAJourCapteurs();
+
 	// Retourne l'états des capeurs du robot.
 	// Les 3 premiers indiquent la détection d'une ligne pour les 3 capteurs optiques du suiveur de ligne.
 	uint8_t obtenirEtatSuiveurLigne();
 
     inline SuiveurLigne* obtenirSuiveurLigne();     
-    CapteurDistance* obtenirCapteursDistance(PositionCapteurDistance position);
+    CapteurDistance* obtenirCapteurDistance(PositionCapteurDistance position);
 
     // Méthodes d'affichage permettant le débogage.
     void afficherCapteursOptique() const;
     void afficherCapteursDistance() const;
     void afficherFormeEnglobante() const;
 
-private:
-	float angle_{ 0.f };
-	float acceleration_{ 200.0 };
-    
     static const int N_CAPTEUR_DISTANCE{ 3 };
 
+private:
+
+    static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_GAUCHE;
+    static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_CENTRE;
+    static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_DROITE;
+
+	float angle_{ 0.f };
+	float acceleration_{ 200.0 };
+   
 	SuiveurLigne suiveurLigne_;
-	CapteurDistance capteursDistance_[N_CAPTEUR_DISTANCE];
+    CapteurDistance capteursDistance_[N_CAPTEUR_DISTANCE];
 };
 
 inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
@@ -80,7 +86,6 @@ inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
 }
 
 #endif // __ARBRE_NOEUD_ROBOT_H__
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

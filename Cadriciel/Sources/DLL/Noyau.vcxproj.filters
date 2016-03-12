@@ -311,11 +311,11 @@
     <ClCompile Include="Physique\CercleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
-    <ClCompile Include="Physique\FormeEnglobante.cpp">
-      <Filter>Source Files\Physique</Filter>
-    </ClCompile>
     <ClCompile Include="VisiteurDetectionRobot.cpp">
       <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Physique\FormeEnglobante.Abstraite.cpp">
+      <Filter>Source Files\Physique</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

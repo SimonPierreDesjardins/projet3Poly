@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file FormeEnglobante.h
+/// @file FormeEnglobanteAbstraite.h
 /// @author Olivier St-Amour
 /// @date 2016-03-02
-/// @version 2.2
+/// @version 2.4
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
