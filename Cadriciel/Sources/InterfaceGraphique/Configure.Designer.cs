@@ -76,9 +76,17 @@
             this.deviationGLbl = new System.Windows.Forms.Label();
             this.suiviLigneLbl = new System.Windows.Forms.Label();
             this.capteurGroupBox = new System.Windows.Forms.GroupBox();
+            this.suiveurLigneCB = new System.Windows.Forms.ComboBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.capteurDist3CB = new System.Windows.Forms.ComboBox();
+            this.capteurDist2CB = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.capteurDist1CB = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.capteurLigneChkBox = new System.Windows.Forms.CheckBox();
             this.capteurDistanceOptionsPnl = new System.Windows.Forms.Panel();
             this.zoneSecuritaireLbl = new System.Windows.Forms.Label();
             this.longueurZoneDangerCapteurDistanceLbl = new System.Windows.Forms.Label();
@@ -89,7 +97,6 @@
             this.longueurZoneDangerCapteurDistanceTB = new System.Windows.Forms.TextBox();
             this.longueurZoneSecuritaireCapteurDistanceLbl = new System.Windows.Forms.Label();
             this.capteurDistanceProchComportementSecuritaireLbl = new System.Windows.Forms.Label();
-            this.capteurDistanceChkBox = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.OptionAffichage = new System.Windows.Forms.CheckBox();
             this.comboBox_capteur = new System.Windows.Forms.ComboBox();
@@ -130,13 +137,13 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.configureTabs);
-            this.splitContainer1.Size = new System.Drawing.Size(715, 531);
+            this.splitContainer1.Size = new System.Drawing.Size(766, 544);
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 0;
             // 
             // retourMenuButt
             // 
-            this.retourMenuButt.Location = new System.Drawing.Point(611, 2);
+            this.retourMenuButt.Location = new System.Drawing.Point(648, 2);
             this.retourMenuButt.Name = "retourMenuButt";
             this.retourMenuButt.Size = new System.Drawing.Size(92, 23);
             this.retourMenuButt.TabIndex = 29;
@@ -146,12 +153,13 @@
             // 
             // buttonDeleteProfil
             // 
-            this.buttonDeleteProfil.Location = new System.Drawing.Point(496, 2);
+            this.buttonDeleteProfil.Location = new System.Drawing.Point(527, 2);
             this.buttonDeleteProfil.Name = "buttonDeleteProfil";
             this.buttonDeleteProfil.Size = new System.Drawing.Size(81, 23);
             this.buttonDeleteProfil.TabIndex = 28;
             this.buttonDeleteProfil.Text = "Supprimer";
             this.buttonDeleteProfil.UseVisualStyleBackColor = true;
+            this.buttonDeleteProfil.Click += new System.EventHandler(this.buttonDeleteProfil_Click);
             // 
             // comboBoxProfil
             // 
@@ -163,7 +171,6 @@
             this.comboBoxProfil.TabIndex = 0;
             this.comboBoxProfil.Tag = "0";
             this.comboBoxProfil.SelectedIndexChanged += new System.EventHandler(this.comboBoxProfil_SelectedIndexChanged);
-            this.comboBoxProfil.Leave += new System.EventHandler(this.comboBoxProfil_Leave);
             // 
             // label6
             // 
@@ -176,21 +183,24 @@
             // 
             // buttonCréerProfil
             // 
-            this.buttonCréerProfil.Location = new System.Drawing.Point(266, 2);
+            this.buttonCréerProfil.AutoSize = true;
+            this.buttonCréerProfil.Location = new System.Drawing.Point(264, 2);
             this.buttonCréerProfil.Name = "buttonCréerProfil";
-            this.buttonCréerProfil.Size = new System.Drawing.Size(81, 23);
+            this.buttonCréerProfil.Size = new System.Drawing.Size(102, 23);
             this.buttonCréerProfil.TabIndex = 13;
-            this.buttonCréerProfil.Text = "Créer";
+            this.buttonCréerProfil.Text = "Nouveau profil";
             this.buttonCréerProfil.UseVisualStyleBackColor = true;
+            this.buttonCréerProfil.Click += new System.EventHandler(this.buttonCréerProfil_Click);
             // 
             // modifierProfilButt
             // 
-            this.modifierProfilButt.Location = new System.Drawing.Point(381, 2);
+            this.modifierProfilButt.Location = new System.Drawing.Point(406, 2);
             this.modifierProfilButt.Name = "modifierProfilButt";
             this.modifierProfilButt.Size = new System.Drawing.Size(81, 23);
             this.modifierProfilButt.TabIndex = 12;
             this.modifierProfilButt.Text = "Modifier";
             this.modifierProfilButt.UseVisualStyleBackColor = true;
+            this.modifierProfilButt.Click += new System.EventHandler(this.modifierProfilButt_Click);
             // 
             // configureTabs
             // 
@@ -203,7 +213,7 @@
             this.configureTabs.Location = new System.Drawing.Point(0, 3);
             this.configureTabs.Name = "configureTabs";
             this.configureTabs.SelectedIndex = 0;
-            this.configureTabs.Size = new System.Drawing.Size(715, 497);
+            this.configureTabs.Size = new System.Drawing.Size(766, 510);
             this.configureTabs.TabIndex = 2;
             // 
             // tabPage1
@@ -221,7 +231,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(707, 471);
+            this.tabPage1.Size = new System.Drawing.Size(758, 484);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Configuration control";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -361,7 +371,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(707, 471);
+            this.tabPage2.Size = new System.Drawing.Size(758, 484);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Gestion Profils";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -397,14 +407,14 @@
             this.comportementGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.comportementGroupBox.Location = new System.Drawing.Point(6, 8);
             this.comportementGroupBox.Name = "comportementGroupBox";
-            this.comportementGroupBox.Size = new System.Drawing.Size(696, 308);
+            this.comportementGroupBox.Size = new System.Drawing.Size(746, 308);
             this.comportementGroupBox.TabIndex = 60;
             this.comportementGroupBox.TabStop = false;
             this.comportementGroupBox.Text = "Comportement";
             // 
             // dureeEDTxtBox
             // 
-            this.dureeEDTxtBox.Location = new System.Drawing.Point(563, 283);
+            this.dureeEDTxtBox.Location = new System.Drawing.Point(610, 283);
             this.dureeEDTxtBox.Name = "dureeEDTxtBox";
             this.dureeEDTxtBox.Size = new System.Drawing.Size(121, 20);
             this.dureeEDTxtBox.TabIndex = 91;
@@ -414,7 +424,7 @@
             // 
             // angleEDTxtBox
             // 
-            this.angleEDTxtBox.Location = new System.Drawing.Point(563, 257);
+            this.angleEDTxtBox.Location = new System.Drawing.Point(610, 257);
             this.angleEDTxtBox.Name = "angleEDTxtBox";
             this.angleEDTxtBox.Size = new System.Drawing.Size(121, 20);
             this.angleEDTxtBox.TabIndex = 90;
@@ -424,7 +434,7 @@
             // 
             // dureeEGTxtBox
             // 
-            this.dureeEGTxtBox.Location = new System.Drawing.Point(563, 220);
+            this.dureeEGTxtBox.Location = new System.Drawing.Point(610, 220);
             this.dureeEGTxtBox.Name = "dureeEGTxtBox";
             this.dureeEGTxtBox.Size = new System.Drawing.Size(121, 20);
             this.dureeEGTxtBox.TabIndex = 89;
@@ -434,7 +444,7 @@
             // 
             // angleEGTxtBox
             // 
-            this.angleEGTxtBox.Location = new System.Drawing.Point(563, 194);
+            this.angleEGTxtBox.Location = new System.Drawing.Point(610, 194);
             this.angleEGTxtBox.Name = "angleEGTxtBox";
             this.angleEGTxtBox.Size = new System.Drawing.Size(121, 20);
             this.angleEGTxtBox.TabIndex = 88;
@@ -444,7 +454,7 @@
             // 
             // angleDDTxtBox
             // 
-            this.angleDDTxtBox.Location = new System.Drawing.Point(563, 152);
+            this.angleDDTxtBox.Location = new System.Drawing.Point(610, 152);
             this.angleDDTxtBox.Name = "angleDDTxtBox";
             this.angleDDTxtBox.Size = new System.Drawing.Size(121, 20);
             this.angleDDTxtBox.TabIndex = 87;
@@ -454,7 +464,7 @@
             // 
             // angleDGTxtBox
             // 
-            this.angleDGTxtBox.Location = new System.Drawing.Point(563, 114);
+            this.angleDGTxtBox.Location = new System.Drawing.Point(610, 114);
             this.angleDGTxtBox.Name = "angleDGTxtBox";
             this.angleDGTxtBox.Size = new System.Drawing.Size(121, 20);
             this.angleDGTxtBox.TabIndex = 86;
@@ -466,7 +476,7 @@
             // 
             this.suiviLigneProchComportementLbl.AutoSize = true;
             this.suiviLigneProchComportementLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.suiviLigneProchComportementLbl.Location = new System.Drawing.Point(262, 16);
+            this.suiviLigneProchComportementLbl.Location = new System.Drawing.Point(279, 16);
             this.suiviLigneProchComportementLbl.Name = "suiviLigneProchComportementLbl";
             this.suiviLigneProchComportementLbl.Size = new System.Drawing.Size(132, 13);
             this.suiviLigneProchComportementLbl.TabIndex = 85;
@@ -476,7 +486,7 @@
             // 
             this.parametresLbl.AutoSize = true;
             this.parametresLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.parametresLbl.Location = new System.Drawing.Point(588, 16);
+            this.parametresLbl.Location = new System.Drawing.Point(635, 16);
             this.parametresLbl.Name = "parametresLbl";
             this.parametresLbl.Size = new System.Drawing.Size(70, 13);
             this.parametresLbl.TabIndex = 84;
@@ -486,7 +496,7 @@
             // 
             this.dureeEvitementDLbl.AutoSize = true;
             this.dureeEvitementDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dureeEvitementDLbl.Location = new System.Drawing.Point(523, 285);
+            this.dureeEvitementDLbl.Location = new System.Drawing.Point(570, 285);
             this.dureeEvitementDLbl.Name = "dureeEvitementDLbl";
             this.dureeEvitementDLbl.Size = new System.Drawing.Size(36, 13);
             this.dureeEvitementDLbl.TabIndex = 81;
@@ -496,7 +506,7 @@
             // 
             this.dureeEvitementGLbl.AutoSize = true;
             this.dureeEvitementGLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dureeEvitementGLbl.Location = new System.Drawing.Point(523, 223);
+            this.dureeEvitementGLbl.Location = new System.Drawing.Point(570, 223);
             this.dureeEvitementGLbl.Name = "dureeEvitementGLbl";
             this.dureeEvitementGLbl.Size = new System.Drawing.Size(36, 13);
             this.dureeEvitementGLbl.TabIndex = 79;
@@ -506,7 +516,7 @@
             // 
             this.angleEvitementDLbl.AutoSize = true;
             this.angleEvitementDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleEvitementDLbl.Location = new System.Drawing.Point(523, 259);
+            this.angleEvitementDLbl.Location = new System.Drawing.Point(570, 259);
             this.angleEvitementDLbl.Name = "angleEvitementDLbl";
             this.angleEvitementDLbl.Size = new System.Drawing.Size(34, 13);
             this.angleEvitementDLbl.TabIndex = 77;
@@ -514,11 +524,12 @@
             // 
             // evitementDCB
             // 
+            this.evitementDCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.evitementDCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.evitementDCB.FormattingEnabled = true;
-            this.evitementDCB.Location = new System.Drawing.Point(268, 256);
+            this.evitementDCB.Location = new System.Drawing.Point(282, 256);
             this.evitementDCB.Name = "evitementDCB";
-            this.evitementDCB.Size = new System.Drawing.Size(121, 21);
+            this.evitementDCB.Size = new System.Drawing.Size(185, 21);
             this.evitementDCB.TabIndex = 76;
             this.evitementDCB.Tag = "15";
             // 
@@ -536,7 +547,7 @@
             // 
             this.angleDeviationDLbl.AutoSize = true;
             this.angleDeviationDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleDeviationDLbl.Location = new System.Drawing.Point(523, 154);
+            this.angleDeviationDLbl.Location = new System.Drawing.Point(570, 154);
             this.angleDeviationDLbl.Name = "angleDeviationDLbl";
             this.angleDeviationDLbl.Size = new System.Drawing.Size(34, 13);
             this.angleDeviationDLbl.TabIndex = 73;
@@ -544,11 +555,12 @@
             // 
             // deviationDCB
             // 
+            this.deviationDCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.deviationDCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deviationDCB.FormattingEnabled = true;
-            this.deviationDCB.Location = new System.Drawing.Point(268, 151);
+            this.deviationDCB.Location = new System.Drawing.Point(282, 151);
             this.deviationDCB.Name = "deviationDCB";
-            this.deviationDCB.Size = new System.Drawing.Size(121, 21);
+            this.deviationDCB.Size = new System.Drawing.Size(185, 21);
             this.deviationDCB.TabIndex = 72;
             this.deviationDCB.Tag = "10";
             // 
@@ -566,7 +578,7 @@
             // 
             this.angleEvitementGLbl.AutoSize = true;
             this.angleEvitementGLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleEvitementGLbl.Location = new System.Drawing.Point(523, 197);
+            this.angleEvitementGLbl.Location = new System.Drawing.Point(570, 197);
             this.angleEvitementGLbl.Name = "angleEvitementGLbl";
             this.angleEvitementGLbl.Size = new System.Drawing.Size(34, 13);
             this.angleEvitementGLbl.TabIndex = 69;
@@ -584,21 +596,23 @@
             // 
             // balayageCB
             // 
+            this.balayageCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.balayageCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.balayageCB.FormattingEnabled = true;
-            this.balayageCB.Location = new System.Drawing.Point(268, 76);
+            this.balayageCB.Location = new System.Drawing.Point(282, 76);
             this.balayageCB.Name = "balayageCB";
-            this.balayageCB.Size = new System.Drawing.Size(121, 21);
+            this.balayageCB.Size = new System.Drawing.Size(185, 21);
             this.balayageCB.TabIndex = 67;
             this.balayageCB.Tag = "7";
             // 
             // evitementGCB
             // 
+            this.evitementGCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.evitementGCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.evitementGCB.FormattingEnabled = true;
-            this.evitementGCB.Location = new System.Drawing.Point(268, 194);
+            this.evitementGCB.Location = new System.Drawing.Point(282, 194);
             this.evitementGCB.Name = "evitementGCB";
-            this.evitementGCB.Size = new System.Drawing.Size(121, 21);
+            this.evitementGCB.Size = new System.Drawing.Size(185, 21);
             this.evitementGCB.TabIndex = 66;
             this.evitementGCB.Tag = "12";
             // 
@@ -616,7 +630,7 @@
             // 
             this.angleDeviationGLbl.AutoSize = true;
             this.angleDeviationGLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleDeviationGLbl.Location = new System.Drawing.Point(523, 117);
+            this.angleDeviationGLbl.Location = new System.Drawing.Point(570, 117);
             this.angleDeviationGLbl.Name = "angleDeviationGLbl";
             this.angleDeviationGLbl.Size = new System.Drawing.Size(34, 13);
             this.angleDeviationGLbl.TabIndex = 63;
@@ -624,21 +638,23 @@
             // 
             // deviationGCB
             // 
+            this.deviationGCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.deviationGCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.deviationGCB.FormattingEnabled = true;
-            this.deviationGCB.Location = new System.Drawing.Point(268, 114);
+            this.deviationGCB.Location = new System.Drawing.Point(282, 114);
             this.deviationGCB.Name = "deviationGCB";
-            this.deviationGCB.Size = new System.Drawing.Size(121, 21);
+            this.deviationGCB.Size = new System.Drawing.Size(185, 21);
             this.deviationGCB.TabIndex = 62;
             this.deviationGCB.Tag = "8";
             // 
             // suiviLigneCB
             // 
+            this.suiviLigneCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.suiviLigneCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.suiviLigneCB.FormattingEnabled = true;
-            this.suiviLigneCB.Location = new System.Drawing.Point(268, 41);
+            this.suiviLigneCB.Location = new System.Drawing.Point(282, 41);
             this.suiviLigneCB.Name = "suiviLigneCB";
-            this.suiviLigneCB.Size = new System.Drawing.Size(121, 21);
+            this.suiviLigneCB.Size = new System.Drawing.Size(185, 21);
             this.suiviLigneCB.TabIndex = 61;
             this.suiviLigneCB.Tag = "6";
             // 
@@ -664,24 +680,133 @@
             // 
             // capteurGroupBox
             // 
+            this.capteurGroupBox.Controls.Add(this.suiveurLigneCB);
+            this.capteurGroupBox.Controls.Add(this.label13);
+            this.capteurGroupBox.Controls.Add(this.label12);
+            this.capteurGroupBox.Controls.Add(this.label10);
+            this.capteurGroupBox.Controls.Add(this.label11);
+            this.capteurGroupBox.Controls.Add(this.capteurDist3CB);
+            this.capteurGroupBox.Controls.Add(this.capteurDist2CB);
+            this.capteurGroupBox.Controls.Add(this.label7);
+            this.capteurGroupBox.Controls.Add(this.capteurDist1CB);
             this.capteurGroupBox.Controls.Add(this.label8);
             this.capteurGroupBox.Controls.Add(this.label9);
-            this.capteurGroupBox.Controls.Add(this.capteurLigneChkBox);
             this.capteurGroupBox.Controls.Add(this.capteurDistanceOptionsPnl);
-            this.capteurGroupBox.Controls.Add(this.capteurDistanceChkBox);
             this.capteurGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capteurGroupBox.Location = new System.Drawing.Point(6, 323);
             this.capteurGroupBox.Name = "capteurGroupBox";
-            this.capteurGroupBox.Size = new System.Drawing.Size(695, 139);
+            this.capteurGroupBox.Size = new System.Drawing.Size(745, 151);
             this.capteurGroupBox.TabIndex = 59;
             this.capteurGroupBox.TabStop = false;
             this.capteurGroupBox.Text = "Capteurs";
+            // 
+            // suiveurLigneCB
+            // 
+            this.suiveurLigneCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.suiveurLigneCB.FormattingEnabled = true;
+            this.suiveurLigneCB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.suiveurLigneCB.Location = new System.Drawing.Point(93, 121);
+            this.suiveurLigneCB.Name = "suiveurLigneCB";
+            this.suiveurLigneCB.Size = new System.Drawing.Size(56, 21);
+            this.suiveurLigneCB.TabIndex = 97;
+            this.suiveurLigneCB.Tag = "25";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(4, 124);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(83, 13);
+            this.label13.TabIndex = 96;
+            this.label13.Text = "Suiveur de ligne";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(4, 16);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(109, 13);
+            this.label12.TabIndex = 95;
+            this.label12.Text = "Capteurs distance";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(4, 93);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(53, 13);
+            this.label10.TabIndex = 93;
+            this.label10.Text = "Capteur 3";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(4, 61);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(53, 13);
+            this.label11.TabIndex = 94;
+            this.label11.Text = "Capteur 2";
+            // 
+            // capteurDist3CB
+            // 
+            this.capteurDist3CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capteurDist3CB.FormattingEnabled = true;
+            this.capteurDist3CB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.capteurDist3CB.Location = new System.Drawing.Point(93, 85);
+            this.capteurDist3CB.Name = "capteurDist3CB";
+            this.capteurDist3CB.Size = new System.Drawing.Size(56, 21);
+            this.capteurDist3CB.TabIndex = 90;
+            this.capteurDist3CB.Tag = "24";
+            // 
+            // capteurDist2CB
+            // 
+            this.capteurDist2CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capteurDist2CB.FormattingEnabled = true;
+            this.capteurDist2CB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.capteurDist2CB.Location = new System.Drawing.Point(93, 58);
+            this.capteurDist2CB.Name = "capteurDist2CB";
+            this.capteurDist2CB.Size = new System.Drawing.Size(56, 21);
+            this.capteurDist2CB.TabIndex = 89;
+            this.capteurDist2CB.Tag = "23";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(4, 34);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 13);
+            this.label7.TabIndex = 92;
+            this.label7.Text = "Capteur 1";
+            // 
+            // capteurDist1CB
+            // 
+            this.capteurDist1CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capteurDist1CB.FormattingEnabled = true;
+            this.capteurDist1CB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.capteurDist1CB.Location = new System.Drawing.Point(93, 31);
+            this.capteurDist1CB.Name = "capteurDist1CB";
+            this.capteurDist1CB.Size = new System.Drawing.Size(56, 21);
+            this.capteurDist1CB.TabIndex = 88;
+            this.capteurDist1CB.Tag = "22";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(262, 16);
+            this.label8.Location = new System.Drawing.Point(309, 16);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(132, 13);
             this.label8.TabIndex = 87;
@@ -691,24 +816,11 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(588, 16);
+            this.label9.Location = new System.Drawing.Point(635, 16);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(70, 13);
             this.label9.TabIndex = 86;
             this.label9.Text = "Paramètres";
-            // 
-            // capteurLigneChkBox
-            // 
-            this.capteurLigneChkBox.AutoSize = true;
-            this.capteurLigneChkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capteurLigneChkBox.Location = new System.Drawing.Point(14, 116);
-            this.capteurLigneChkBox.Name = "capteurLigneChkBox";
-            this.capteurLigneChkBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.capteurLigneChkBox.Size = new System.Drawing.Size(67, 17);
-            this.capteurLigneChkBox.TabIndex = 39;
-            this.capteurLigneChkBox.Tag = "23";
-            this.capteurLigneChkBox.Text = "     Ligne";
-            this.capteurLigneChkBox.UseVisualStyleBackColor = true;
             // 
             // capteurDistanceOptionsPnl
             // 
@@ -721,11 +833,10 @@
             this.capteurDistanceOptionsPnl.Controls.Add(this.longueurZoneDangerCapteurDistanceTB);
             this.capteurDistanceOptionsPnl.Controls.Add(this.longueurZoneSecuritaireCapteurDistanceLbl);
             this.capteurDistanceOptionsPnl.Controls.Add(this.capteurDistanceProchComportementSecuritaireLbl);
-            this.capteurDistanceOptionsPnl.Enabled = false;
             this.capteurDistanceOptionsPnl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capteurDistanceOptionsPnl.Location = new System.Drawing.Point(155, 42);
+            this.capteurDistanceOptionsPnl.Location = new System.Drawing.Point(169, 42);
             this.capteurDistanceOptionsPnl.Name = "capteurDistanceOptionsPnl";
-            this.capteurDistanceOptionsPnl.Size = new System.Drawing.Size(537, 64);
+            this.capteurDistanceOptionsPnl.Size = new System.Drawing.Size(570, 64);
             this.capteurDistanceOptionsPnl.TabIndex = 40;
             // 
             // zoneSecuritaireLbl
@@ -740,7 +851,7 @@
             // longueurZoneDangerCapteurDistanceLbl
             // 
             this.longueurZoneDangerCapteurDistanceLbl.AutoSize = true;
-            this.longueurZoneDangerCapteurDistanceLbl.Location = new System.Drawing.Point(273, 10);
+            this.longueurZoneDangerCapteurDistanceLbl.Location = new System.Drawing.Point(304, 10);
             this.longueurZoneDangerCapteurDistanceLbl.Name = "longueurZoneDangerCapteurDistanceLbl";
             this.longueurZoneDangerCapteurDistanceLbl.Size = new System.Drawing.Size(114, 13);
             this.longueurZoneDangerCapteurDistanceLbl.TabIndex = 29;
@@ -757,42 +868,44 @@
             // 
             // longueurZoneSecuritaireCapteurDistanceTB
             // 
-            this.longueurZoneSecuritaireCapteurDistanceTB.Location = new System.Drawing.Point(408, 32);
+            this.longueurZoneSecuritaireCapteurDistanceTB.Location = new System.Drawing.Point(439, 32);
             this.longueurZoneSecuritaireCapteurDistanceTB.Name = "longueurZoneSecuritaireCapteurDistanceTB";
             this.longueurZoneSecuritaireCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
             this.longueurZoneSecuritaireCapteurDistanceTB.TabIndex = 34;
-            this.longueurZoneSecuritaireCapteurDistanceTB.Tag = "22";
+            this.longueurZoneSecuritaireCapteurDistanceTB.Tag = "21";
             // 
             // capteurDistanceDangerCB
             // 
+            this.capteurDistanceDangerCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.capteurDistanceDangerCB.FormattingEnabled = true;
             this.capteurDistanceDangerCB.Location = new System.Drawing.Point(113, 6);
             this.capteurDistanceDangerCB.Name = "capteurDistanceDangerCB";
-            this.capteurDistanceDangerCB.Size = new System.Drawing.Size(121, 21);
+            this.capteurDistanceDangerCB.Size = new System.Drawing.Size(185, 21);
             this.capteurDistanceDangerCB.TabIndex = 56;
-            this.capteurDistanceDangerCB.Tag = "19";
+            this.capteurDistanceDangerCB.Tag = "18";
             // 
             // capteurDistanceSecuritaireCB
             // 
+            this.capteurDistanceSecuritaireCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.capteurDistanceSecuritaireCB.FormattingEnabled = true;
             this.capteurDistanceSecuritaireCB.Location = new System.Drawing.Point(113, 36);
             this.capteurDistanceSecuritaireCB.Name = "capteurDistanceSecuritaireCB";
-            this.capteurDistanceSecuritaireCB.Size = new System.Drawing.Size(121, 21);
+            this.capteurDistanceSecuritaireCB.Size = new System.Drawing.Size(185, 21);
             this.capteurDistanceSecuritaireCB.TabIndex = 55;
-            this.capteurDistanceSecuritaireCB.Tag = "21";
+            this.capteurDistanceSecuritaireCB.Tag = "20";
             // 
             // longueurZoneDangerCapteurDistanceTB
             // 
-            this.longueurZoneDangerCapteurDistanceTB.Location = new System.Drawing.Point(408, 6);
+            this.longueurZoneDangerCapteurDistanceTB.Location = new System.Drawing.Point(439, 6);
             this.longueurZoneDangerCapteurDistanceTB.Name = "longueurZoneDangerCapteurDistanceTB";
             this.longueurZoneDangerCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
             this.longueurZoneDangerCapteurDistanceTB.TabIndex = 30;
-            this.longueurZoneDangerCapteurDistanceTB.Tag = "20";
+            this.longueurZoneDangerCapteurDistanceTB.Tag = "19";
             // 
             // longueurZoneSecuritaireCapteurDistanceLbl
             // 
             this.longueurZoneSecuritaireCapteurDistanceLbl.AutoSize = true;
-            this.longueurZoneSecuritaireCapteurDistanceLbl.Location = new System.Drawing.Point(273, 36);
+            this.longueurZoneSecuritaireCapteurDistanceLbl.Location = new System.Drawing.Point(304, 36);
             this.longueurZoneSecuritaireCapteurDistanceLbl.Name = "longueurZoneSecuritaireCapteurDistanceLbl";
             this.longueurZoneSecuritaireCapteurDistanceLbl.Size = new System.Drawing.Size(129, 13);
             this.longueurZoneSecuritaireCapteurDistanceLbl.TabIndex = 33;
@@ -806,20 +919,6 @@
             this.capteurDistanceProchComportementSecuritaireLbl.Size = new System.Drawing.Size(0, 13);
             this.capteurDistanceProchComportementSecuritaireLbl.TabIndex = 32;
             // 
-            // capteurDistanceChkBox
-            // 
-            this.capteurDistanceChkBox.AutoSize = true;
-            this.capteurDistanceChkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capteurDistanceChkBox.Location = new System.Drawing.Point(16, 50);
-            this.capteurDistanceChkBox.Name = "capteurDistanceChkBox";
-            this.capteurDistanceChkBox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.capteurDistanceChkBox.Size = new System.Drawing.Size(68, 17);
-            this.capteurDistanceChkBox.TabIndex = 37;
-            this.capteurDistanceChkBox.Tag = "18";
-            this.capteurDistanceChkBox.Text = "Distance";
-            this.capteurDistanceChkBox.UseVisualStyleBackColor = true;
-            this.capteurDistanceChkBox.CheckedChanged += new System.EventHandler(this.capteurDistanceChkBox_CheckedChanged);
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.OptionAffichage);
@@ -832,7 +931,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(707, 471);
+            this.tabPage3.Size = new System.Drawing.Size(758, 484);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Option Débogage";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -918,13 +1017,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(715, 531);
+            this.ClientSize = new System.Drawing.Size(766, 544);
             this.ControlBox = false;
             this.Controls.Add(this.splitContainer1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Configure";
             this.Text = "Configure";
+            this.Load += new System.EventHandler(this.Configure_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -968,8 +1068,6 @@
         private System.Windows.Forms.Button modifierProfilButt;
         private System.Windows.Forms.ComboBox comboBoxProfil;
         private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.CheckBox capteurLigneChkBox;
-        private System.Windows.Forms.CheckBox capteurDistanceChkBox;
         private System.Windows.Forms.Panel capteurDistanceOptionsPnl;
         private System.Windows.Forms.Label longueurZoneDangerCapteurDistanceLbl;
         private System.Windows.Forms.TextBox longueurZoneSecuritaireCapteurDistanceTB;
@@ -1018,5 +1116,14 @@
         private System.Windows.Forms.Label ZoneCapteurs;
         private System.Windows.Forms.Label EtatEclairage;
         private System.Windows.Forms.Label ChangeComportement;
+        private System.Windows.Forms.ComboBox capteurDist1CB;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox capteurDist2CB;
+        private System.Windows.Forms.ComboBox capteurDist3CB;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox suiveurLigneCB;
     }
 }

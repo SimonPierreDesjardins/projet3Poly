@@ -20,6 +20,14 @@
 
 ProfilUtilisateur::ProfilUtilisateur()
 {
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL))
+		changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
+	
+	
+	std::ifstream fichierDernierProfilR(CHEMIN_PROFIL + DERNIER_PROFIL);
+	std::getline(fichierDernierProfilR, nomProfil_);
+	fichierDernierProfilR.close();
+
 }
 
 
@@ -32,6 +40,12 @@ ProfilUtilisateur::ProfilUtilisateur(std::string nomProfil)
 ProfilUtilisateur::~ProfilUtilisateur()
 {
 
+}
+
+void ProfilUtilisateur::changerDernierProfil(std::string nomProfil){
+	std::ofstream fichierDernierProfilW(CHEMIN_PROFIL + DERNIER_PROFIL);
+	fichierDernierProfilW << nomProfil;
+	fichierDernierProfilW.close();
 }
 
 bool ProfilUtilisateur::ouvrirProfil(std::string readOrWrite){
@@ -58,7 +72,7 @@ void ProfilUtilisateur::sauvegarder()
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 	writer.StartObject();
 		writer.Key("nomProfil");
-		writer.String(nomProfil_.c_str());
+		writer.String(nomProfil_.substr(0,nomProfil_.find_first_of('.')).c_str());
 
 		writer.Key("touches");
 		writer.StartArray();
@@ -78,6 +92,20 @@ void ProfilUtilisateur::sauvegarder()
 			}
 		writer.EndArray();
 
+		writer.Key("capteursDistance");
+		writer.StartArray();
+			for (std::vector<CapteurDistance>::iterator itr = capteursDistance_.begin(); itr != capteursDistance_.end(); itr++){
+				writer.StartObject();
+					itr->toJSON(writer);
+				writer.EndObject();
+			}
+		writer.EndArray();
+
+		writer.Key("suiveurLigne");
+		writer.StartObject();
+			suiveurLigne_.toJSON(writer);
+		writer.EndObject();
+
 	writer.EndObject();
 	fclose(profil_);
 }
@@ -85,12 +113,16 @@ void ProfilUtilisateur::sauvegarder()
 bool ProfilUtilisateur::changerProfil(std::string nomProfil){
 	nomProfil_ = nomProfil;
 
+	changerDernierProfil(nomProfil_);
+
 	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_))
 		sauvegarder();
+	
 
-	/*comportements_.clear();
+	comportements_.clear();
 	touches_.clear();
-	commandes_.clear();*/
+	commandes_.clear();
+	capteursDistance_.clear();
 
 	return chargerProfil();
 }
@@ -178,12 +210,43 @@ bool ProfilUtilisateur::chargerProfil()
 	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[EVITEMENTPARLADROITE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
 	SendMessage(configureHandles.at(EVITEMENT_DROITE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportements[EVITEMENTPARLADROITE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
 
+	itr++;
+
+	const rapidjson::Value& capteursDistance = itr->value;
+
+	assert(capteursDistance.IsArray());
+
+	//bonne version à utiliser quand merge avec oli
+	/*ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_DANGER_CB), capteursDistance[0]["comportementDanger"].GetInt());
+	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistance[0]["distanceDanger"].GetDouble()).substr(0, 5).c_str());
+	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_CB), capteursDistance[0]["comportementSecuritaire"].GetInt());
+	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistance[0]["distanceSecuritaire"].GetDouble()).substr(0, 5).c_str());*/
+
+	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_DANGER_CB), 0);
+	SendMessage(configureHandles.at(CAPTEUR_DISTANCE_DANGER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(5.0).substr(0, 5).c_str());
+	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_CB), 0);
+	SendMessage(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(5.0).substr(0, 5).c_str());
+
+	for (unsigned i = 0; i < capteursDistance.Size(); i++){
+		//capteursDistance_.push_back(CapteurDistance(capteursDistance[i]));
+		//ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(CAPTEUR_DIST1_CB + i)), 1 - capteursDistance[i]["estActif"].GetBool());
+		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
+		ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(CAPTEUR_DIST1_CB + i)), 0);
+	}
+
+	itr++;
+
+	//suiveurLigne_.assignerActif(itr->value.MemberBegin()->value.GetBool());
+	//ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 1 - itr->value.MemberBegin()->value.GetBool());
+
+	suiveurLigne_.assignerActif(true);
+	ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 0);
+
 	return true;
 }
 
 void ProfilUtilisateur::chargerProfilParDefaut()
 {
-	nomProfil_ = "defaut";
 	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_)){
 		if (!utilitaire::fichierExiste(CHEMIN_PROFIL)){
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
@@ -210,6 +273,12 @@ void ProfilUtilisateur::chargerProfilParDefaut()
 		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 10));
 		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10 , 3));
 		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10, 3));
+
+		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
+		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
+		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
+
+		suiveurLigne_.assignerActif(true);
 
 		sauvegarder();
 	}
@@ -263,3 +332,18 @@ void ProfilUtilisateur::setConfigureHandles(HWND handle, ConfigureControl ctrl){
 	configureHandles.insert(std::make_pair(ctrl, handle));
 }
 
+std::string ProfilUtilisateur::obtenirExtensionProfils(){
+	return EXTENSION_PROFIL;
+}
+
+std::string ProfilUtilisateur::obtenirCheminProfils(){
+	return CHEMIN_PROFIL;
+}
+
+void ProfilUtilisateur::supprimerProfil(std::string nomProfil){
+	remove((CHEMIN_PROFIL + nomProfil).c_str());
+}
+
+std::string ProfilUtilisateur::obtenirNomProfilDefaut(){
+	return PROFIL_DEFAUT;
+}

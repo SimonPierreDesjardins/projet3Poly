@@ -501,9 +501,7 @@ extern "C"
 	///
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation){
-		std::unique_ptr<ComportementDeviation> comportementPtr = std::make_unique<ComportementDeviation>();
-		comportementPtr->assignerComportementSuivant(static_cast<TypeComportement>(comportementSuivant));
-		comportementPtr->setAngleMaxRotation(angle);
+		std::unique_ptr<ComportementDeviation> comportementPtr = std::make_unique<ComportementDeviation>(static_cast<TypeComportement>(comportementSuivant), angle);
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeDeviation), std::move(comportementPtr));
 	}
 	
@@ -520,8 +518,7 @@ extern "C"
 	///
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement){
-		std::unique_ptr<ComportementEvitement> comportementPtr = std::make_unique<ComportementEvitement>();
-		comportementPtr->assignerComportementSuivant(static_cast<TypeComportement>(comportementSuivant));
+		std::unique_ptr<ComportementEvitement> comportementPtr = std::make_unique<ComportementEvitement>(static_cast<TypeComportement>(comportementSuivant), duree, angle);
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeEvitement), std::move(comportementPtr));
 	}
 
@@ -529,9 +526,17 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande((uint8_t)touche, static_cast<TypeCommande>(commande));
 	}
 
+	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomProfilDefaut().c_str());
+	}
+
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut()
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerProfilParDefaut();
+	}
+
+	__declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->sauvegarder(std::string(nomProfil));
 	}
 
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande)
@@ -546,6 +551,18 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl changerProfil(char* nomProfil){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
+	}
+
+	__declspec(dllexport) void __cdecl obtenirCheminProfils(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCheminProfils().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirExtensionProfils().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->supprimerProfil(std::string(nomProfil));
 	}
 }
 

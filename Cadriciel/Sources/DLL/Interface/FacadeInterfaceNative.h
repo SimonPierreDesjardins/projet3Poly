@@ -54,10 +54,18 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerComportementBalayage(int comportementSuivant);
 	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation);
 	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement);
+
 	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl);
+
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
+
+	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* chemin, int longueur);
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
+
 	__declspec(dllexport) void __cdecl assignerProfils();
+
+	__declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil);
+
 	__declspec(dllexport) void __cdecl changerProfil(char* nomProfil);
 
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande);
@@ -65,6 +73,11 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerAffichageComportement(bool afficherDebugComportement);
 	__declspec(dllexport) void __cdecl assignerAffichageEclairage(bool afficherDebugEclairage);
 	__declspec(dllexport) void __cdecl assignerAffichageCapteurs(bool afficherDebugCapteurs);
+
+	__declspec(dllexport) void __cdecl obtenirCheminProfils(char* chemin, int longueur);
+	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* chemin, int longueur);
+
+	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil);
 
 }
 
