@@ -15,6 +15,7 @@
 #include <thread>
 #include "ComportementAbstrait.h"
 #include <mutex>
+#include <vector>
 
 class CommandeRobot;
 class NoeudAbstrait;
@@ -58,6 +59,8 @@ public:
 	// Permet aux comportements de savoir si une ligne est détectée
 	bool ligneDetectee();
 
+	void assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur);
+
 private:
 
 	// Fonctions pour gérer multithreading robot
@@ -76,6 +79,8 @@ private:
 
 	// pointeur vers le noeud du robot
 	NoeudRobot* robot_;
+
+	std::vector<std::unique_ptr<ComportementAbstrait>>* vecteurComportements_;
 
 	// Pointeur vers le comportement présentement adopté par le robot.
 	ComportementAbstrait* comportement_;

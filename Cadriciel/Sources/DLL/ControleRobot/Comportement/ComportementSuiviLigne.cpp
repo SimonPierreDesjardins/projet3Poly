@@ -125,9 +125,8 @@ void ComportementSuiviLigne::mettreAJour(){
 			rechercheLigne = false;
 		}
 		// trop tard, change de comportement
-		else if (difftime(time(nullptr), heurePerteLigne_) > 1.0){
-			// TODO: obtenir le comportement du profil
-			controleRobot_->assignerComportement(DEFAUT);
+		else if (difftime(time(nullptr), heurePerteLigne_) > 1.6){
+			controleRobot_->assignerComportement(comportementSuivant_);
 		}
 
 	}

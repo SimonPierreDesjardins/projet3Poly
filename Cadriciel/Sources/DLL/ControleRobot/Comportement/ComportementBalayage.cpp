@@ -133,7 +133,7 @@ void ComportementBalayage::mettreAJour(){
 		// si tu atteins l'angle voulu
 		if (controleRobot_->obtenirNoeud()->obtenirAngleRotation() > angleCible){
 			//TODO: Changer ceci au comportement suivant
-			controleRobot_->assignerComportement(DEFAUT);
+			controleRobot_->assignerComportement(comportementSuivant_);
 		}
 		break;
 

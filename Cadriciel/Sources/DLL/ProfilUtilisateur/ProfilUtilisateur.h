@@ -47,6 +47,8 @@ class ProfilUtilisateur
 
 		void assignerProfils();
 
+		std::vector<std::unique_ptr<ComportementAbstrait>>* obtenirVecteurComportements();
+
 	private:
 		void sauvegarder();
 

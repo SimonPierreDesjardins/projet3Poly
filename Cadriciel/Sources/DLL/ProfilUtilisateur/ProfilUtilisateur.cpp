@@ -235,6 +235,20 @@ void ProfilUtilisateur::assignerComportement(TypeComportement typeComportement, 
 	comportements_.at(typeComportement).swap(comportement);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::vector<std::unique_ptr<ComportementAbstrait>>* ProfilUtilisateur::obtenirVecteurComportements()
+///
+/// Retourne le pointeur au vecteur des comportements configurés par l'utilisateur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+
+std::vector<std::unique_ptr<ComportementAbstrait>>* ProfilUtilisateur::obtenirVecteurComportements(){
+	return &comportements_;
+}
+
 CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const
 {
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
