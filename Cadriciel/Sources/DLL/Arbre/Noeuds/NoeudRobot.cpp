@@ -20,6 +20,10 @@
 
 #include <iostream>
 
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 1.85, 5.0 };
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.47, -2.0688, 5.0 };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudRobot::NoeudRobot(const std::string& typeNoeud)
@@ -40,9 +44,9 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
 
-    capteursDistance_[CAPTEUR_DISTANCE_DROITE] = CapteurDistance();
-    capteursDistance_[CAPTEUR_DISTANCE_CENTRE] = CapteurDistance();
-    capteursDistance_[CAPTEUR_DISTANCE_GAUCHE] = CapteurDistance();
+    capteursDistance_[CAPTEUR_DISTANCE_DROITE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_DROITE, angleRotation_ + 45.0);
+    capteursDistance_[CAPTEUR_DISTANCE_CENTRE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_CENTRE, angleRotation_);
+    capteursDistance_[CAPTEUR_DISTANCE_GAUCHE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_GAUCHE, angleRotation_ + 45.0);
 }
 
 
@@ -124,6 +128,8 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(const float& dt)
 {
+    mettreAJourCapteurs();
+
 	//Calcul de la résultante de la vitesse relative
 	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
 	if (diffD < 0)
@@ -330,10 +336,13 @@ void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
 void NoeudRobot::mettreAJourCapteurs()
 {
 	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
+    for (int i = 0; i < N_CAPTEUR_DISTANCE; i++)
+    {
+        capteursDistance_[i].mettreAJourPosition(positionRelative_, angleRotation_);
+    }
 }
 
-
-inline CapteurDistance* NoeudRobot::obtenirCapteursDistance(PositionCapteurDistance position)
+CapteurDistance* NoeudRobot::obtenirCapteurDistance(PositionCapteurDistance position)
 {
     CapteurDistance* capteur = nullptr;
     if (position < N_CAPTEUR_DISTANCE)

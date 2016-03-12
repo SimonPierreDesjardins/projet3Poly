@@ -199,7 +199,9 @@ protected:
 	GLenum					modePolygones_{ GL_FILL };
 
 	/// Position relative du noeud.
-	glm::dvec3				positionRelative_{ 0, 0, 0 };
+	glm::dvec3				positionRelative_{ 0.0, 0.0, 0.0 };
+
+    glm::dvec3              positionCourante_{ 0.0, 0.0, 0.0 };
 
 	/// Angle de rotation sur le plan xy
 	double					angleRotation_{ 0 };

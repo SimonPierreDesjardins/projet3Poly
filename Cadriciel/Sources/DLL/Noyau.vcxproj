@@ -178,7 +178,7 @@
     <ClCompile Include="MachineAModes\ModeSimulation.cpp" />
     <ClCompile Include="MachineAModes\ModeTest.cpp" />
     <ClCompile Include="Physique\CercleEnglobant.cpp" />
-    <ClCompile Include="Physique\FormeEnglobante.cpp" />
+    <ClCompile Include="Physique\FormeEnglobante.Abstraite.cpp" />
     <ClCompile Include="Physique\RectangleEnglobant.cpp" />
     <ClCompile Include="ProfilUtilisateur\ProfilUtilisateur.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />

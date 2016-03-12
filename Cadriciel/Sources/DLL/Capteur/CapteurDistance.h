@@ -45,7 +45,7 @@ public:
     // Constructeur par défaut.
     CapteurDistance();
     // Constructeur par paramètres.
-    CapteurDistance(glm::dvec3 positionCentre, const double& angle);
+    CapteurDistance(const glm::dvec3& positionCentre, const double& angle);
     //Destructeur
     ~CapteurDistance();
 
