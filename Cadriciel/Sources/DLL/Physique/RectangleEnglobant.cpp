@@ -163,8 +163,8 @@ bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, co
 }
 
 
-void RectangleEnglobant::mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, const double& angle,
-    const double& largeur, const double& hauteur)
+void RectangleEnglobant::mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, 
+    const double& largeur, const double& hauteur, const double& angle)
 {
     positionCentre_ = positionCentre;
     angle_ = angle;

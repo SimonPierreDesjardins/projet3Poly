@@ -85,3 +85,21 @@ void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const do
         arbre_->accepterVisiteur(visiteurDetectionLigne_.get());        
 	}
 }
+
+void SuiveurLigne::afficher() const
+{
+    for (int i = 0; i < capteursOptique_.size(); i++)
+    {
+        capteursOptique_[i].afficher();
+    }
+}
+
+
+void SuiveurLigne::verifierDetection(NoeudLigne* ligne)
+{
+    //TODO: if (estActif_) 
+    for (int i = 0; i < capteursOptique_.size(); i++)
+    {
+        capteursOptique_[i].verifierDetection(ligne);
+    }
+}

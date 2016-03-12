@@ -34,7 +34,7 @@ public:
     inline RectangleEnglobant obtenirRectangleEngobant() const;
 
 	/// Affiche la table.
-    virtual void animer(const float& dt);
+    virtual void animer(float dt);
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 

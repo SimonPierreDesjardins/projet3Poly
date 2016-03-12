@@ -20,6 +20,8 @@
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
 
+#include <iostream>
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeSimulation::ModeSimulation()
@@ -58,9 +60,14 @@ ModeSimulation::~ModeSimulation()
 ////////////////////////////////////////////////////////////////////////
 void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if (msg == WM_KEYDOWN)
+	if (msg == WM_KEYDOWN )
 	{
-		controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam));
+        const bool estRepetition = (bool)(lParam & (1 << 30));
+        if (!estRepetition)
+        {
+		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam));
+            std::cout << "Commande" << std::endl;
+        }
 	}
 	else if (msg == WM_KEYUP)
 	{

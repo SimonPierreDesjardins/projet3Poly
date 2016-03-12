@@ -51,7 +51,7 @@ NoeudMur::~NoeudMur()
 
 }
 
-void NoeudMur::animer(const float& dt)
+void NoeudMur::animer(float dt)
 {
 
 }

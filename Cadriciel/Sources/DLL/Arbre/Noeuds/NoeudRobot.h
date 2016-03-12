@@ -15,6 +15,7 @@
 #include "SuiveurLigne.h"
 #include "CapteurDistance.h"
 #include "RectangleEnglobant.h"
+#include "VisiteurDetectionRobot.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
@@ -34,7 +35,8 @@ public:
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
-	virtual void animer(const float& dt);
+	virtual void animer(float dt);
+    
 
 	//Permet de modifier les paramètres du robot
 	void assignerVitesseRotation(float vitesse);
@@ -50,8 +52,6 @@ public:
 	float obtenirVitesseDroiteCourante() const;
 	float obtenirVitesseGaucheCourante() const;
     
-    // Mise à jour des capteurs du robot. 	
-	void mettreAJourCapteurs();
 
 	// Retourne l'états des capeurs du robot.
 	// Les 3 premiers indiquent la détection d'une ligne pour les 3 capteurs optiques du suiveur de ligne.
@@ -60,14 +60,15 @@ public:
     inline SuiveurLigne* obtenirSuiveurLigne();     
     CapteurDistance* obtenirCapteurDistance(PositionCapteurDistance position);
 
-    // Méthodes d'affichage permettant le débogage.
-    void afficherCapteursOptique() const;
-    void afficherCapteursDistance() const;
     void afficherFormeEnglobante() const;
 
     static const int N_CAPTEUR_DISTANCE{ 3 };
 
 private:
+    // Mise à jour
+	void mettreAJourCapteurs();
+    void mettreAJourPosition(const float& dt);
+    void mettreAJourRectangleEnglobant();
 
     static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_GAUCHE;
     static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_CENTRE;
@@ -78,6 +79,7 @@ private:
    
 	SuiveurLigne suiveurLigne_;
     CapteurDistance capteursDistance_[N_CAPTEUR_DISTANCE];
+    std::unique_ptr<VisiteurDetectionRobot> visiteur_;
 };
 
 inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()

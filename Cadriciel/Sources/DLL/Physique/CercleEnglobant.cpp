@@ -33,9 +33,9 @@ bool CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) 
 
 
 void CercleEnglobant::mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, 
-    const double& angle, const double& largeur, const double& hauteur)
+    const double& rayon)
 {
-    rayon_ = largeur ? largeur > hauteur : hauteur;
+    rayon_ = rayon;
     positionCentre_ = positionCentre;
 }
 

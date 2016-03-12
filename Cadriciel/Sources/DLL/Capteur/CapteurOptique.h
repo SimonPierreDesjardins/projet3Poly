@@ -43,10 +43,13 @@ public:
     // Obtenir la position courante.  
     inline glm::dvec3 obtenirPositionCourante() const;
 
+    // Verifier la détection d'une ligne.
     void verifierDetection(NoeudLigne* ligne);
 
 	// Mise à jour de l'état du capteur.
 	void mettreAJourPosition(const glm::dvec3& positionRobot, const double& angleRotationRobot);
+
+    void afficher() const;
 
 private:
 	bool ligneEstDetectee_{ false };

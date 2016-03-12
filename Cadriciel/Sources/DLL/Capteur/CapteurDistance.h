@@ -64,17 +64,26 @@ public:
     //TODO: Ajouter les méthodes pour assigner un prochain comportement (danger/securitaire)
 
     // Méthode permettant de mettre à jour 
-	void mettreAJourPosition(const glm::dvec3& positionRobot, const double& angleRotationRobot);
+	void mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot);
+
+    // Afficher le capteur de distance.
+    void afficher() const;
+
+    static const double HAUTEUR;
+    static const double MAX_LARGEUR_TOTALE;
+    static const double LARGEUR_DEFAUT;
 
 private:
-    static const double LARGEUR;
-    static const double MAX_HAUTEUR_TOTALE;
-
 	bool estActif_{ true };
+
     EtatCapteurDistance etat_{ AUCUNE_DETECTION };
+    glm::dvec3 positionCapteur_;
 
     RectangleEnglobant zoneSecuritaire_;
     RectangleEnglobant zoneDanger_;
+    
+    glm::dvec3 positionRelative_;
+    double angleRelatif_;
 };
 
 inline void CapteurDistance::assignerHauteurZoneSecuritaire(const double& hauteur)
@@ -98,3 +107,7 @@ inline void CapteurDistance::reinitialiserEtat()
 }
 
 #endif // CAPTEUR_DISTANCE_H
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

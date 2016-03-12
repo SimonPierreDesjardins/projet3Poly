@@ -5,6 +5,7 @@
 #include "Utilitaire.h"
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
+#include "NoeudLigne.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
@@ -72,4 +73,44 @@ void CapteurOptique::mettreAJourPosition(const glm::dvec3& positionRobot,
                                               positionApresRotation, 
                                               angleRotationRobot);
     positionCourante_ = positionApresRotation + positionRobot;	
+}
+
+
+void CapteurOptique::afficher() const
+{
+    glPushMatrix();
+	if (ligneEstDetectee_)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else
+	{
+		glColor3f(0.0, 0.0, 0.0);
+	}
+
+	glTranslated(positionRelative_.x, positionRelative_.y, 0.0);
+
+	glBegin(GL_QUADS);
+	glVertex3d(-0.1, -0.1, 5.0);
+	glVertex3d(0.1, -0.1, 5.0);
+	glVertex3d(0.1, 0.1, 5.0);
+	glVertex3d(-0.1, 0.1, 5.0);
+	glEnd();
+	glPopMatrix();
+
+}
+
+// Verifier la détection d'une ligne.
+void CapteurOptique::verifierDetection(NoeudLigne* ligne)
+{
+    ligneEstDetectee_ = false;
+	NoeudAbstrait* enfant = nullptr;
+    unsigned int n = ligne->obtenirNombreEnfants();
+	for (unsigned int i = 0; i < n && !ligneEstDetectee_; i++)
+	{
+		enfant = ligne->chercher(i);
+        utilitaire::QuadEnglobant quad = enfant->obtenirQuadEnglobantCourant();
+		ligneEstDetectee_ = utilitaire::calculerPointEstDansQuad(positionCourante_,
+            quad);
+	}
 }

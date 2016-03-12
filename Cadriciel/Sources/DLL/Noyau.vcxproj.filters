@@ -311,10 +311,10 @@
     <ClCompile Include="Physique\CercleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
-    <ClCompile Include="VisiteurDetectionRobot.cpp">
+    <ClCompile Include="Visiteur\VisiteurDetectionRobot.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
-    <ClCompile Include="Physique\FormeEnglobante.Abstraite.cpp">
+    <ClCompile Include="Physique\FormeEnglobanteAbstraite.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
   </ItemGroup>
@@ -541,7 +541,7 @@
     <ClInclude Include="Physique\FormeEnglobanteAbstraite.h">
       <Filter>Header Files\Physique</Filter>
     </ClInclude>
-    <ClInclude Include="VisiteurDetectionRobot.h">
+    <ClInclude Include="Visiteur\VisiteurDetectionRobot.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
   </ItemGroup>

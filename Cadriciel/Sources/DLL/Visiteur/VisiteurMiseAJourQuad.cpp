@@ -484,6 +484,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
     {
         positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
+
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
 	position.x += 1.35;
     double angle = noeud->obtenirAngleRotation();
@@ -492,7 +493,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
     double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
     double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
 
-    noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
+    //noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
 
     // Mise à jour du quad englobant.
 	glm::dvec3 tmp = { 0.0, 0.0, 0.0 };
@@ -502,7 +503,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
 		quad.coins[i] += noeud->obtenirPositionRelative();
 	}
 	noeud->assignerQuadEnglobantCourant(quad);
-	noeud->mettreAJourCapteurs();
+	//noeud->mettreAJourCapteurs();
 }
 
 ///TODO: A mettre dans utilitaire.

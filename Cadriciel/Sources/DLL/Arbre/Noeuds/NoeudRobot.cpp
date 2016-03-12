@@ -8,21 +8,23 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 #include "NoeudRobot.h"
+
 #include "Utilitaire.h"
-#include "VisiteurAbstrait.h"
-#include "FacadeModele.h"
 
 #include "GL/glew.h"
 #include <cmath>
+#include <iostream>
 
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
-#include <iostream>
+#include "VisiteurAbstrait.h"
+#include "FacadeModele.h"
+#include "ArbreRenduINF2990.h"
 
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
-const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 1.85, 5.0 };
-const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.47, -2.0688, 5.0 };
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -39,12 +41,17 @@ const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.47, -2.0688,
 NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
-	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-	NoeudAbstrait* depart = table->chercher(0);
+    
+	NoeudAbstrait* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+    NoeudAbstrait* table = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
+	NoeudAbstrait* depart = table->chercher(ArbreRenduINF2990::NOM_DEPART);
+    
+    visiteur_ = make_unique<VisiteurDetectionRobot>();
+
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
 
-    capteursDistance_[CAPTEUR_DISTANCE_DROITE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_DROITE, angleRotation_ + 45.0);
+    capteursDistance_[CAPTEUR_DISTANCE_DROITE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_DROITE, angleRotation_ - 45.0);
     capteursDistance_[CAPTEUR_DISTANCE_CENTRE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_CENTRE, angleRotation_);
     capteursDistance_[CAPTEUR_DISTANCE_GAUCHE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_GAUCHE, angleRotation_ + 45.0);
 }
@@ -80,11 +87,14 @@ void NoeudRobot::afficherConcret() const
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
-	// Debugage du suiveur de ligne.
-    afficherCapteursOptique();
+    // Débugage des capteurs de distance.
+    suiveurLigne_.afficher();
 
-    // Debugage de capteurs de distance.
-    afficherCapteursDistance();
+    // Débugage des capteurs de distance.
+    for (int i = 0; i < N_CAPTEUR_DISTANCE; i++)
+    {
+        capteursDistance_[i].afficher();
+    }
 
     // Debugage de la boite englobante.
     afficherFormeEnglobante();
@@ -126,10 +136,11 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::animer(const float& dt)
+void NoeudRobot::animer(float dt)
 {
     mettreAJourCapteurs();
-
+    mettreAJourPosition(dt);
+    mettreAJourRectangleEnglobant();
 	//Calcul de la résultante de la vitesse relative
 	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
 	if (diffD < 0)
@@ -333,14 +344,6 @@ void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
 	vitesseCouranteGauche_ = vitesse;
 }
 
-void NoeudRobot::mettreAJourCapteurs()
-{
-	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
-    for (int i = 0; i < N_CAPTEUR_DISTANCE; i++)
-    {
-        capteursDistance_[i].mettreAJourPosition(positionRelative_, angleRotation_);
-    }
-}
 
 CapteurDistance* NoeudRobot::obtenirCapteurDistance(PositionCapteurDistance position)
 {
@@ -352,68 +355,6 @@ CapteurDistance* NoeudRobot::obtenirCapteurDistance(PositionCapteurDistance posi
     return capteur;
 }
 
-void NoeudRobot::afficherCapteursOptique() const
-{
-	uint8_t etat = suiveurLigne_.obtenirEtatCapteurs();
-	// Capteur optique gauche.
-	glPushMatrix();
-	if ((etat & 0x04) == 0x04)
-	{
-		glColor3f(1.0, 0.0, 0.0);
-	}
-	else
-	{
-		glColor3f(0.0, 0.0, 0.0);
-	}
-	glTranslated(4.8523, 0.995, 0.0);
-	glBegin(GL_QUADS);
-	glVertex3d(-0.1, -0.1, 5.0);
-	glVertex3d(0.1, -0.1, 5.0);
-	glVertex3d(0.1, 0.1, 5.0);
-	glVertex3d(-0.1, 0.1, 5.0);
-	glEnd();
-	glPopMatrix();
-	
-	// Capteur optique centre.
-	glPushMatrix();
-	if ((etat & 0x02) == 0x02)
-	{
-		glColor3f(1.0, 0.0, 0.0);
-	}
-	else
-	{
-		glColor3f(0.0, 0.0, 0.0);
-	}
-	glTranslated(4.8523, 0.07, 0.0);
-	glBegin(GL_QUADS);
-	glVertex3d(-0.1, -0.1, 5.0);
-	glVertex3d(0.1, -0.1, 5.0);
-	glVertex3d(0.1, 0.1, 5.0);
-	glVertex3d(-0.1, 0.1, 5.0);
-	glEnd();
-	glPopMatrix();
-
-	// Capteur optique droite.
-	glPushMatrix();
-	if ((etat & 0x01) == 0x01)
-	{
-		glColor3f(1.0, 0.0, 0.0);
-	}
-	else 
-	{
-		glColor3f(0.0, 0.0, 0.0);
-	}
-	glTranslated(4.8523, -0.853, 0.0);
-	glBegin(GL_QUADS);
-	glVertex3d(-0.1, -0.1, 5.0);
-	glVertex3d(0.1, -0.1, 5.0);
-	glVertex3d(0.1, 0.1, 5.0);
-	glVertex3d(-0.1, 0.1, 5.0);
-	glEnd();
-	glPopMatrix();
-
-	glColor4f(0.0, 0.0, 0.0, 1.0);
-}
 
 void NoeudRobot::afficherFormeEnglobante() const
 {
@@ -429,10 +370,26 @@ void NoeudRobot::afficherFormeEnglobante() const
 	glEnd();
     glPopMatrix();
 }
-void NoeudRobot::afficherCapteursDistance() const
+
+void NoeudRobot::mettreAJourCapteurs()
+{
+	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
+    for (int i = 0; i < N_CAPTEUR_DISTANCE; i++)
+    {
+        capteursDistance_[i].mettreAJour(positionRelative_, angleRotation_);
+    }
+}
+
+void NoeudRobot::mettreAJourPosition(const float& dt)
 {
 
 }
+
+void NoeudRobot::mettreAJourRectangleEnglobant()
+{
+
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

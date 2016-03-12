@@ -62,6 +62,8 @@ public:
 	void mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot);
 
     void verifierDetection(NoeudLigne* ligne);
+
+    void afficher() const;
 		
 private:
 	static const glm::dvec3 POSITION_RELATIVE_GAUCHE;

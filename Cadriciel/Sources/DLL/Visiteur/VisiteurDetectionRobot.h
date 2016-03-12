@@ -8,14 +8,10 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef VISITEUR_DETECTION_LIGNE_H
-#define VISITEUR_DETECTION_LIGNE_H
-
-#include <vector>
+#ifndef VISITEUR_DETECTION_ROBOT_H
+#define VISITEUR_DETECTION_ROBOT_H
 
 #include "VisiteurAbstrait.h"
-#include "CapteurOptique.h"
-
 
 class SuiveurLigne;
 class CapteurDistance;
@@ -31,10 +27,12 @@ class CapteurDistance;
 class VisiteurDetectionRobot : public VisiteurAbstrait
 {
 public:
-	/// Constructeur par défaut.
+	/// Désactiver le constructeur par défaut.
 	VisiteurDetectionRobot();
+    
     /// Constructeur par paramètres.
-    VisiteurDetectionRobot(NoeudRobot* robot);
+    VisiteurDetectionRobot(NoeudRobot* robot, SuiveurLigne* suiveurLigne, CapteurDistance capteursDistance[3]);
+
 	/// Destructeur.
 	virtual ~VisiteurDetectionRobot();
 
@@ -50,7 +48,9 @@ public:
     virtual void visiter(NoeudMur* noeud);
 
 private:
-    NoeudRobot* robot_;
+    NoeudRobot* robot_{ nullptr };
+    SuiveurLigne* suiveurLigne_{ nullptr };
+    CapteurDistance* capteursDistance_{ nullptr };
 };
 
 #endif // VISITEUR_DETECTION_LIGNE_H

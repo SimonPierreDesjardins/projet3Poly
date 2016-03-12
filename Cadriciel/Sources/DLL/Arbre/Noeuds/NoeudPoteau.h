@@ -34,7 +34,7 @@ public:
     inline CercleEnglobant obtenirCercleEnglobant();
 
      
-    virtual void animer(const float& dt);
+    virtual void animer(float dt);
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);

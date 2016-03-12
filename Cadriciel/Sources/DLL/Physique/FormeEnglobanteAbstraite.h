@@ -48,9 +48,6 @@ public:
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const = 0;
     // Permet de calculer si une forme est en intersection avec un rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const = 0;
-    // Permet de mettre à jour les attributs de la forme.
-    virtual void mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, const double& angle,
-        const double& largeur, const double& hauteur) = 0;
     
 protected:
     glm::dvec3 positionCentre_{ 0.0, 0.0, 0.0 };

@@ -438,7 +438,7 @@ void NoeudAbstrait::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::animer(const float& dt)
+void NoeudAbstrait::animer(float dt)
 {
 }
 

@@ -106,11 +106,11 @@ void PhysiqueTest::testIntersectionQuad()
 void PhysiqueTest::testIntersectionRectangleRectangle()
 {
     glm::dvec3 position = { 0.0, 0.0, 0.0 };
-    RectangleEnglobant rectangle1 = RectangleEnglobant(position, 0.0, 4.0, 3.0);
+    RectangleEnglobant rectangle1 = RectangleEnglobant(position, 4.0, 3.0, 0.0);
 
     // Test sur un cas de rectangle éloigné avec un angle identique.
     position = { 30.0, 30.0, 0.0};
-    RectangleEnglobant rectangle2 = RectangleEnglobant(position, 0.0, 4.0, 3.0);
+    RectangleEnglobant rectangle2 = RectangleEnglobant(position, 4.0, 3.0, 0.0);
     bool intersection = rectangle1.calculerIntersection(rectangle2);
     CPPUNIT_ASSERT(!intersection);
     

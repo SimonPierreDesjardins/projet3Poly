@@ -37,7 +37,7 @@ NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
 }
 
 
-void NoeudPoteau::animer(const float& dt)
+void NoeudPoteau::animer(float dt)
 {
 }
 
