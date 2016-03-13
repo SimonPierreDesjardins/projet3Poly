@@ -2,13 +2,16 @@
 
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
-/// Constructeur par défaut.
+
+#include "CapteurDistance.h"
+#include "SuiveurLigne.h"
+
+
 VisiteurDetectionRobot::VisiteurDetectionRobot()
 {
 }
 
 
-/// Constructeur par paramètres.
 VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot, 
     SuiveurLigne* suiveurLigne, CapteurDistance capteurDistance[3])
         : robot_(robot), suiveurLigne_(suiveurLigne), capteursDistance_(capteurDistance)
@@ -16,20 +19,17 @@ VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot,
 }
 
 
-/// Destructeur.
 VisiteurDetectionRobot::~VisiteurDetectionRobot()
 {
 }
 
 
-/// Visiter l'arbre de rendu.
 void VisiteurDetectionRobot::visiter(ArbreRendu* noeud)
 {
     noeud->chercher(ArbreRenduINF2990::NOM_TABLE)->accepterVisiteur(this);
 }
 
 
-/// Visiter la table.
 void VisiteurDetectionRobot::visiter(NoeudTable* noeud)
 {
     int nEnfants = noeud->obtenirNombreEnfants();
@@ -40,18 +40,22 @@ void VisiteurDetectionRobot::visiter(NoeudTable* noeud)
 }
 
 
-/// Visiter une ligne.
 void VisiteurDetectionRobot::visiter(NoeudLigne* noeud)
 {
     suiveurLigne_->verifierDetection(noeud);
 }
 
-/// Visiter un poteau.
+
 void VisiteurDetectionRobot::visiter(NoeudPoteau* noeud)
 {
+    for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
+    {
+        capteursDistance_[i].verifierDetection(noeud);
+    }
 }
 
-/// Visiter un mur.
+
 void VisiteurDetectionRobot::visiter(NoeudMur* noeud)
 {
+
 }

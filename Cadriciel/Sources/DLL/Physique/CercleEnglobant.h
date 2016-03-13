@@ -43,8 +43,8 @@ public:
 
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
 
-    virtual void mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, 
-        const double& rayon);
+    void mettreAJour(const glm::dvec3& positionCentre, const double& rayon);
+
 private:
     double rayon_;
 };

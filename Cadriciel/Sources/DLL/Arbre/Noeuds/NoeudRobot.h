@@ -37,12 +37,10 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	virtual void animer(float dt);
     
-
 	//Permet de modifier les paramètres du robot
 	void assignerVitesseRotation(float vitesse);
 	void assignerVitesseDroite(float vitesse);
 	void assignerVitesseGauche(float vitesse);
-
 	void assignerVitesseDroiteCourante(float vitesse);
 	void assignerVitesseGaucheCourante(float vitesse);
 
@@ -52,14 +50,13 @@ public:
 	float obtenirVitesseDroiteCourante() const;
 	float obtenirVitesseGaucheCourante() const;
     
-
 	// Retourne l'états des capeurs du robot.
     inline SuiveurLigne* obtenirSuiveurLigne();     
     CapteurDistance* obtenirCapteurDistance(PositionCapteurDistance position);
 
     void afficherFormeEnglobante() const;
 
-    static const int N_CAPTEUR_DISTANCE{ 3 };
+    static const int N_CAPTEURS_DISTANCE{ 3 };
 
 private:
     // Mise à jour
@@ -77,8 +74,10 @@ private:
 	float acceleration_{ 200.0 };
    
 	SuiveurLigne suiveurLigne_;
-    CapteurDistance capteursDistance_[N_CAPTEUR_DISTANCE];
-    std::unique_ptr<VisiteurDetectionRobot> visiteur_;
+    CapteurDistance capteursDistance_[N_CAPTEURS_DISTANCE];
+
+    std::unique_ptr<VisiteurDetectionRobot> visiteur_{ nullptr };
+    ArbreRendu* arbre_{ nullptr };
 };
 
 inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()

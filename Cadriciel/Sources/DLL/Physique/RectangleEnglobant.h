@@ -32,8 +32,8 @@ public:
     // Constructeur par défaut.
     RectangleEnglobant();
     // Constructeur par paramètres.
-    RectangleEnglobant(const glm::dvec3& centre, const double& hauteur,
-        const double& largeur, const double& angle);
+    RectangleEnglobant(const glm::dvec3& centre, const double & angle, 
+        const double& hauteur, const double& largeur);
     // Destructeur.
     ~RectangleEnglobant();
 
@@ -52,10 +52,10 @@ public:
     // Permet de calculer si une forme est en intersection avec un rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
     // Permet de mettre à jour les attributs de la forme.
-    virtual void mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, 
-        const double& hauteur, const double& largeur, const double& angle);
+    void mettreAJour(const glm::dvec3& positionCentre, const double& angle,  
+        const double& hauteur, const double& largeur);
 
-    void calculerVecteursOrientation(glm::dvec3& orientationLargeur, glm::dvec3& orientationHauteur) const;
+    void calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const;
 
     double calculerRayon() const;
 

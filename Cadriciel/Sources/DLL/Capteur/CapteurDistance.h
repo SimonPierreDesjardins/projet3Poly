@@ -66,23 +66,26 @@ public:
     //TODO: Ajouter les méthodes pour assigner un prochain comportement (danger/securitaire)
 
     // Méthode permettant de mettre à jour 
-	void mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot);
+    void mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
     // Afficher le capteur de distance.
-    void afficher() const;
+    void afficher(const glm::dvec3& positionRobot) const;
 
     static const double HAUTEUR;
     static const double MAX_LARGEUR_TOTALE;
     static const double LARGEUR_DEFAUT;
 
-	void assignerActif(bool estActif);
+    void assignerActif(bool estActif);
 
-	void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
+    void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
 
-	void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
+    void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
 
 private:
-	bool estActif_{ true };
+    bool estActif_{ true };
+    
+    double largeurDanger_{ 5.0 };
+    double largeurSecuritaire_{ 5.0 };
 
     EtatCapteurDistance etat_{ AUCUNE_DETECTION };
     glm::dvec3 positionCapteur_;

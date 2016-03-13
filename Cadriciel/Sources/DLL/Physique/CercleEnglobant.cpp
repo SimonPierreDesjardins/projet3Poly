@@ -32,7 +32,7 @@ bool CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) 
 }
 
 
-void CercleEnglobant::mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, 
+void CercleEnglobant::mettreAJour(const glm::dvec3& positionCentre, 
     const double& rayon)
 {
     rayon_ = rayon;

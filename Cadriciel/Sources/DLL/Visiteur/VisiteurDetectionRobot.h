@@ -31,7 +31,7 @@ public:
 	VisiteurDetectionRobot();
     
     /// Constructeur par paramètres.
-    VisiteurDetectionRobot(NoeudRobot* robot, SuiveurLigne* suiveurLigne, CapteurDistance capteursDistance[3]);
+    VisiteurDetectionRobot(NoeudRobot* robot, SuiveurLigne* suiveurLigne, CapteurDistance* capteursDistance);
 
 	/// Destructeur.
 	virtual ~VisiteurDetectionRobot();
@@ -50,7 +50,7 @@ public:
 private:
     NoeudRobot* robot_{ nullptr };
     SuiveurLigne* suiveurLigne_{ nullptr };
-    CapteurDistance* capteursDistance_{ nullptr };
+    CapteurDistance* capteursDistance_;
 };
 
 #endif // VISITEUR_DETECTION_LIGNE_H

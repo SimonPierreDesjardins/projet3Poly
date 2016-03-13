@@ -25,7 +25,7 @@ RectangleEnglobant::~RectangleEnglobant()
 bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
 {
     // Obtenir les vecteurs unitaires qui représentent l'orientation du rectangle.
-    glm::dvec3 orientationLargeur, orientationHauteur;
+    glm::dvec3 orientationHauteur, orientationLargeur;
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);
 
     // Le vecteur qui représente la distance entre le centre du rectangle et le point.
@@ -43,8 +43,8 @@ bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) cons
 
 bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {     
-    const int LARGEUR = 0;
-    const int HAUTEUR = 1;
+    const int HAUTEUR = 0;
+    const int LARGEUR = 1;
 
     const int N_RECTANGLES = 2;
     const int N_ORIENTATIONS = 2;
@@ -59,7 +59,7 @@ bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangl
     for (int i = 0; i < N_RECTANGLES && enIntersection; i++)
     {
         glm::dvec3 orientations[N_ORIENTATIONS];
-        rectangles[i]->calculerVecteursOrientation(orientations[LARGEUR], orientations[HAUTEUR]);
+        rectangles[i]->calculerVecteursOrientation(orientations[HAUTEUR], orientations[LARGEUR]);
 
         glm::dvec3 distances[N_COINS];
 
@@ -84,7 +84,7 @@ bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangl
 }
 
 
-void RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationLargeur, glm::dvec3& orientationHauteur) const
+void RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const
 {
     orientationLargeur = { glm::cos(utilitaire::DEG_TO_RAD(angle_)),
                            glm::sin(utilitaire::DEG_TO_RAD(angle_)),
@@ -110,7 +110,7 @@ void RectangleEnglobant::calculerDistancesPoint(glm::dvec3 distances[4],
     const glm::dvec3& point) const
 {
 
-    glm::dvec3 orientationLargeur, orientationHauteur;
+    glm::dvec3 orientationHauteur, orientationLargeur;
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);
 
     glm::dvec3 distancePointCentre = point - positionCentre_;
@@ -163,13 +163,13 @@ bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, co
 }
 
 
-void RectangleEnglobant::mettreAJourFormeEnglobante(const glm::dvec3& positionCentre, 
-    const double& largeur, const double& hauteur, const double& angle)
+void RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
+    const double& angle, const double& hauteur, const double& largeur)
 {
     positionCentre_ = positionCentre;
     angle_ = angle;
-    largeur_ = largeur;
     hauteur_ = hauteur;
+    largeur_ = largeur;
 }
 
 

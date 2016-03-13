@@ -41,12 +41,12 @@ const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5
 NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
-    
-	NoeudAbstrait* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-    NoeudAbstrait* table = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+    NoeudAbstrait* table = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 	NoeudAbstrait* depart = table->chercher(ArbreRenduINF2990::NOM_DEPART);
     
-    visiteur_ = make_unique<VisiteurDetectionRobot>();
+    // À modifier avec le merge du profile.
+    visiteur_ = make_unique<VisiteurDetectionRobot>(this, &suiveurLigne_, capteursDistance_);
 
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
@@ -91,9 +91,9 @@ void NoeudRobot::afficherConcret() const
     suiveurLigne_.afficher();
 
     // Débugage des capteurs de distance.
-    for (int i = 0; i < N_CAPTEUR_DISTANCE; i++)
+    for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_[i].afficher();
+        capteursDistance_[i].afficher(positionRelative_);
     }
 
     // Debugage de la boite englobante.
@@ -141,88 +141,8 @@ void NoeudRobot::animer(float dt)
     mettreAJourCapteurs();
     mettreAJourPosition(dt);
     mettreAJourRectangleEnglobant();
-	//Calcul de la résultante de la vitesse relative
-	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
-	if (diffD < 0)
-	{
-		diffD = -diffD;
-	}
-	if (diffG < 0)
-	{
-		diffG = -diffG;
-	}
-	if (diffD < (acceleration_ * dt) && vitesseDroite_ == 0)
-	{
-		vitesseCouranteDroite_ = 0;
-	}
-	else
-	{
-		if (vitesseDroite_ < 0)
-		{
-			if (vitesseCouranteDroite_ > vitesseDroite_)
-			{
-				vitesseCouranteDroite_ -= acceleration_ * dt;
-			}
-			else// if (vitesseCouranteDroite_ < vitesseDroite_)
-			{
-				//vitesseCouranteDroite_ = 0;
-				vitesseCouranteDroite_ += acceleration_ * dt;
-			}
-		}
-		else
-		{
-			if (vitesseCouranteDroite_ < vitesseDroite_)
-			{
-				vitesseCouranteDroite_ += acceleration_ * dt;
-			}
-			else// if (vitesseCouranteDroite_ > vitesseDroite_)
-			{
-				//vitesseCouranteDroite_ = 0;
-				vitesseCouranteDroite_ -= acceleration_ * dt;
-			}
-		}
-	}
-	if (diffG < (acceleration_*dt) && vitesseGauche_ == 0)
-	{
-		vitesseCouranteGauche_ = 0;
-	}
-	else
-	{
-		if (vitesseGauche_ < 0)
-		{
-			if (vitesseCouranteGauche_ > vitesseGauche_)
-			{
-				vitesseCouranteGauche_ -= acceleration_ * dt;
-			}
-			else// if (vitesseCouranteGauche_ < vitesseGauche_)
-			{
-				//vitesseCouranteGauche_ = 0;
-				vitesseCouranteGauche_ += acceleration_ * dt;
-			}
-		}
-		else
-		{
-			if (vitesseCouranteGauche_ < vitesseGauche_)
-			{
-				vitesseCouranteGauche_ += acceleration_ * dt;
-			}
-			else// if (vitesseCouranteGauche_ > vitesseGauche_)
-			{
-				//vitesseCouranteGauche_ = 0;
-				vitesseCouranteGauche_ -= acceleration_ * dt;
-			}
-		}
-	}
-	
-	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
 
-	//Calcul de la différence entre les vitesses de gauche et droite
-	vitesseRotation_ = vitesseCouranteDroite_ - vitesseCouranteGauche_;
-
-	//Calculs des nouvelles positions et du nouvel angle
-	angleRotation_ += dt * vitesseRotation_;
-	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
-	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
+    arbre_->accepterVisiteur(visiteur_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -335,10 +255,14 @@ void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
 	vitesseRotation_ = vitesse;
 }
+
+
 void NoeudRobot::assignerVitesseDroiteCourante(float vitesse)
 {
 	vitesseCouranteDroite_ = vitesse;
 }
+
+
 void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
 {
 	vitesseCouranteGauche_ = vitesse;
@@ -348,7 +272,7 @@ void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
 CapteurDistance* NoeudRobot::obtenirCapteurDistance(PositionCapteurDistance position)
 {
     CapteurDistance* capteur = nullptr;
-    if (position < N_CAPTEUR_DISTANCE)
+    if (position < N_CAPTEURS_DISTANCE)
     {
         capteur = &capteursDistance_[position];
     }
@@ -374,7 +298,7 @@ void NoeudRobot::afficherFormeEnglobante() const
 void NoeudRobot::mettreAJourCapteurs()
 {
 	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
-    for (int i = 0; i < N_CAPTEUR_DISTANCE; i++)
+    for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
     {
         capteursDistance_[i].mettreAJour(positionRelative_, angleRotation_);
     }
@@ -382,12 +306,93 @@ void NoeudRobot::mettreAJourCapteurs()
 
 void NoeudRobot::mettreAJourPosition(const float& dt)
 {
+	//Calcul de la résultante de la vitesse relative
+	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
+	if (diffD < 0)
+	{
+		diffD = -diffD;
+	}
+	if (diffG < 0)
+	{
+		diffG = -diffG;
+	}
+	if (diffD < (acceleration_ * dt) && vitesseDroite_ == 0)
+	{
+		vitesseCouranteDroite_ = 0;
+	}
+	else
+	{
+		if (vitesseDroite_ < 0)
+		{
+			if (vitesseCouranteDroite_ > vitesseDroite_)
+			{
+				vitesseCouranteDroite_ -= acceleration_ * dt;
+			}
+			else// if (vitesseCouranteDroite_ < vitesseDroite_)
+			{
+				//vitesseCouranteDroite_ = 0;
+				vitesseCouranteDroite_ += acceleration_ * dt;
+			}
+		}
+		else
+		{
+			if (vitesseCouranteDroite_ < vitesseDroite_)
+			{
+				vitesseCouranteDroite_ += acceleration_ * dt;
+			}
+			else// if (vitesseCouranteDroite_ > vitesseDroite_)
+			{
+				//vitesseCouranteDroite_ = 0;
+				vitesseCouranteDroite_ -= acceleration_ * dt;
+			}
+		}
+	}
+	if (diffG < (acceleration_*dt) && vitesseGauche_ == 0)
+	{
+		vitesseCouranteGauche_ = 0;
+	}
+	else
+	{
+		if (vitesseGauche_ < 0)
+		{
+			if (vitesseCouranteGauche_ > vitesseGauche_)
+			{
+				vitesseCouranteGauche_ -= acceleration_ * dt;
+			}
+			else// if (vitesseCouranteGauche_ < vitesseGauche_)
+			{
+				//vitesseCouranteGauche_ = 0;
+				vitesseCouranteGauche_ += acceleration_ * dt;
+			}
+		}
+		else
+		{
+			if (vitesseCouranteGauche_ < vitesseGauche_)
+			{
+				vitesseCouranteGauche_ += acceleration_ * dt;
+			}
+			else// if (vitesseCouranteGauche_ > vitesseGauche_)
+			{
+				//vitesseCouranteGauche_ = 0;
+				vitesseCouranteGauche_ -= acceleration_ * dt;
+			}
+		}
+	}
+	
+	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
 
+	//Calcul de la différence entre les vitesses de gauche et droite
+	vitesseRotation_ = vitesseCouranteDroite_ - vitesseCouranteGauche_;
+
+	//Calculs des nouvelles positions et du nouvel angle
+	angleRotation_ += dt * vitesseRotation_;
+	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
+	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
 }
 
 void NoeudRobot::mettreAJourRectangleEnglobant()
 {
-
+    //TOOD: Implémenter la position courante dans tous les noeuds.
 }
 
 ///////////////////////////////////////////////////////////////////////////////
