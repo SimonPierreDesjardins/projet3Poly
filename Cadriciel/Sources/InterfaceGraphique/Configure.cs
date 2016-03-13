@@ -46,6 +46,8 @@ namespace InterfaceGraphique
 
             nomProfilDefaut = str.ToString();
 
+            comboBoxProfil.Items.Clear();
+
             string[] fichiersProfile = System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils);
             if (fichiersProfile.Length == 0)
             {
@@ -362,10 +364,13 @@ namespace InterfaceGraphique
         {
             if (etatCreationProfil == creationProfil.ATTENTE_CREATION)
             {
-                comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDown;
+                comboBoxProfil.DropDownStyle = ComboBoxStyle.Simple;
                 comboBoxProfil.Focus();
                 buttonCréerProfil.Text = "Confirmer création";
                 etatCreationProfil = creationProfil.ATTENTE_CONFIRMATION;
+                modifierProfilButt.Enabled = false;
+                buttonDeleteProfil.Enabled = false;
+                retourMenuButt.Enabled = false;
             }
             else
             {
@@ -381,6 +386,9 @@ namespace InterfaceGraphique
                 comboBoxProfil.SelectedIndex = comboBoxProfil.Items.Count - 1;
                 comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
                 etatCreationProfil = creationProfil.ATTENTE_CREATION;
+                modifierProfilButt.Enabled = true;
+                buttonDeleteProfil.Enabled = true;
+                retourMenuButt.Enabled = true;
             }
             
         }
@@ -416,6 +424,10 @@ namespace InterfaceGraphique
                 tabEnabled = true;
                 modifierProfilButt.Text = "Enregistrer";
                 etatModificationProfil = modificationProfil.ATTENTE_CONFIRMATION;
+                buttonCréerProfil.Enabled = false;
+                buttonDeleteProfil.Enabled = false;
+                retourMenuButt.Enabled = false;
+                comboBoxProfil.Enabled = false;
             }
             else
             {
@@ -432,6 +444,10 @@ namespace InterfaceGraphique
                 tabEnabled = false;
                 modifierProfilButt.Text = "Modifier";
                 etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
+                buttonCréerProfil.Enabled = true;
+                buttonDeleteProfil.Enabled = true;
+                retourMenuButt.Enabled = true;
+                comboBoxProfil.Enabled = true;
             }
 
             foreach (Control tab in configureTabs.TabPages)
