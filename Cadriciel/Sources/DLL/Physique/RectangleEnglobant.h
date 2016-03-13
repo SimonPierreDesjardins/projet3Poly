@@ -37,32 +37,34 @@ public:
     // Destructeur.
     ~RectangleEnglobant();
 
+    // Modifications des attributs.
     inline void assignerAngle(const double& angle);
     inline void assignerHauteur(const double& hauteur);
     inline void assignerLargeur(const double& largeur);
     
+    // Accès aux attributs.
     inline double obtenirAngle() const;
     inline double obtenirHauteur() const;
     inline double obtenirLargeur() const;
 
     // Permet de calculer si un point se trouve dans une forme englobante.
     virtual bool calculerPointEstDansForme(const glm::dvec3& point) const;
-    // Permet de calculer si une forme est en intersection avec un cercle.
+    // Permet de calculer si le rectangle est en intersection avec un cercle.
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
-    // Permet de calculer si une forme est en intersection avec un rectangle.
+    // Permet de calculer si le rectangle est en intersection avec un autre rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
     // Permet de mettre à jour les attributs de la forme.
     void mettreAJour(const glm::dvec3& positionCentre, const double& angle,  
         const double& hauteur, const double& largeur);
 
+    // Calcule des vecteurs d'orientation unitaire.
     void calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const;
 
+    // Calcule d'un cercle autour du rectangle.
     double calculerRayon() const;
 
 private:
-    double angle_{ 0.0 };
-    double hauteur_{ 0.0 };
-    double largeur_{ 0.0 };
+    void calculerDistancesPoint(glm::dvec3 distances[4], const glm::dvec3& point) const;
 
     void calculerIntervalleProjection(glm::dvec3 distances[4], const glm::dvec3& orientation,
         double& min, double& max) const;
@@ -70,7 +72,9 @@ private:
     bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
         const double& min2, const double& max2) const;
 
-    void calculerDistancesPoint(glm::dvec3 distances[4], const glm::dvec3& point) const;
+    double angle_{ 0.0 };
+    double hauteur_{ 0.0 };
+    double largeur_{ 0.0 };
 };
 
 inline void RectangleEnglobant::assignerAngle(const double& angle)

@@ -54,32 +54,28 @@ public:
     // Méthodes permettant de mettre à jour l'état du capteur.
     void verifierDetection(NoeudPoteau* noeud);
     void verifierDetection(NoeudMur* noeud);
+    void mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
     // Méthode permettant de manipuler l'état du capteur.
     inline EtatCapteurDistance obtenirEtat();
     inline void reinitialiserEtat();
 
+    // Méthode de modification des attributs.
+    void assignerActif(bool estActif);
+    void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
+    void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
+
     // Méthode permettant de manipuler la largeur des zones de détection.
-    inline void assignerHauteurZoneSecuritaire(const double& hauteur);
-    inline void assignerHauteurZoneDanger(const double& hauteur);
-
-    //TODO: Ajouter les méthodes pour assigner un prochain comportement (danger/securitaire)
-
-    // Méthode permettant de mettre à jour 
-    void mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot);
+    inline void assignerLargeurZoneSecuritaire(const double& largeur);
+    inline void assignerLargeurZoneDanger(const double& largeur);
 
     // Afficher le capteur de distance.
-    void afficher(const glm::dvec3& positionRobot) const;
+    void afficher() const;
 
+    // Attributs constants publiques.
     static const double HAUTEUR;
     static const double MAX_LARGEUR_TOTALE;
     static const double LARGEUR_DEFAUT;
-
-    void assignerActif(bool estActif);
-
-    void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
-
-    void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
 
 private:
     bool estActif_{ true };
@@ -97,21 +93,68 @@ private:
     double angleRelatif_;
 };
 
-inline void CapteurDistance::assignerHauteurZoneSecuritaire(const double& hauteur)
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void CapteurDistance::assignerHauteurZoneSecuritaire(const double& largeur)
+///
+/// Cettre méthode permet d'assigner une largeur à la zone sécuritaire du
+/// capteur de distance.
+///
+/// @param[in] hauteur : indique la hauteur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////////////
+inline void CapteurDistance::assignerLargeurZoneSecuritaire(const double& largeur)
 {
-    zoneSecuritaire_.assignerHauteur(hauteur);
+    zoneSecuritaire_.assignerLargeur(largeur);
 }
 
-inline void CapteurDistance::assignerHauteurZoneDanger(const double& hauteur)
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// inline void CapteurDistance::assignerHauteurZoneDanger(const double& largeur)
+///
+/// Cettre méthode permet d'assigner une largeur à la zone de danger du
+/// capteur de distance.
+///
+/// @param[in] hauteur : indique la hauteur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////////////
+inline void CapteurDistance::assignerLargeurZoneDanger(const double& largeur)
 {
-    zoneDanger_.assignerHauteur(hauteur);
+    zoneDanger_.assignerLargeur(largeur);
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// inline EtatCapteurDistance CapteurDistance::obtenirEtat()
+///
+/// Cette méthode retourne l'état du capteur de distance.
+///
+/// @return Un enum indiquant s'il y a une détection dans l'une des zones de
+///         détection.
+///
+////////////////////////////////////////////////////////////////////////////////
 inline EtatCapteurDistance CapteurDistance::obtenirEtat()
 {
     return etat_;
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// inline void CapteurDistance::reinitialiserEtat()
+///
+/// Cette méthode permet de réinitialiser l'état du capteur à aucune détection.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////////////
 inline void CapteurDistance::reinitialiserEtat()
 {
     etat_ = AUCUNE_DETECTION;

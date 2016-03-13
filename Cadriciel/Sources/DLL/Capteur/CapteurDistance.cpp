@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+/// @file   CapteurDistance.cpp
+/// @author Olivier St-Amour
+/// @date   2016-03-13
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////////////////////////////////////
+
 #include <glm/glm.hpp>
 
 #include "Utilitaire.h"
@@ -8,31 +17,76 @@
 #include "NoeudPoteau.h"
 #include "NoeudMur.h"
 
-#include <iostream>
-
 const double CapteurDistance::HAUTEUR = 0.75;
 const double CapteurDistance::MAX_LARGEUR_TOTALE = 30.0;
 const double CapteurDistance::LARGEUR_DEFAUT = 5.0;
 
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn CapteurDistance::CapteurDistance()
+///
+/// Constructeur par défaut
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////////////
 CapteurDistance::CapteurDistance()
 {
 }
 
 
-CapteurDistance::~CapteurDistance()
-{
-}
-
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn CapteurDistance::CapteurDistance(const glm::dvec3& positionRelative, const double& angleRelatif)
+///
+/// Constructeur par paramètres.
+///
+/// @param[in] positionRelative : La position relative à la position du robot.
+///
+/// @param[in] angleRelatif : L'angle relatif à l'angle de rotation du robot.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////////////
 CapteurDistance::CapteurDistance(const glm::dvec3& positionRelative, const double& angleRelatif)
     : positionRelative_(positionRelative), angleRelatif_(angleRelatif)
 { 
 }
 
-// Méthodes permettant de mettre à jour l'état du capteur.
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn CapteurDistance::~CapteurDistance()
+///
+/// Destructeur
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////////////
+CapteurDistance::~CapteurDistance()
+{
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// void CapteurDistance::verifierDetection(NoeudPoteau* poteau)
+///
+/// Cette méthode permet de faire la vérification de la détection sur un poteau
+/// à l'aide de sa forme englobante. La détection en zone de danger est priorisée
+/// sur la détection en zone sécuritaire.
+///
+/// @param[in] poteau : Un pointeur sur un poteau.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
 void CapteurDistance::verifierDetection(NoeudPoteau* poteau)
 {
     RectangleEnglobant rectangle = poteau->obtenirRectangleEnglobant();
-    // Si le capteur se trouve déjà en état de zone de danger, on le laisse dans cet état.
+    // Si le capteur se trouve déjà en détection de zone de danger, 
+    // on le laisse dans cet état.
     if (etat_ != DETECTION_ZONE_DANGER)
     {
         bool danger = zoneDanger_.calculerIntersection(rectangle);
@@ -60,10 +114,25 @@ void CapteurDistance::verifierDetection(NoeudPoteau* poteau)
     }
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// void CapteurDistance::verifierDetection(NoeudMur* mur)
+///
+/// Cette méthode permet de faire la vérification de la détection sur un mur
+/// à l'aide de sa forme englobante. La détection en zone de danger est priorisée
+/// sur la détection en zone sécuritaire.
+///
+/// @param[in] mur : Un pointeur sur un mur.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
 void CapteurDistance::verifierDetection(NoeudMur* mur)
 {
     RectangleEnglobant rectangle = mur->obtenirRectangleEnglobant();
-    // Si le capteur se trouve déjà en état de zone de danger, on le laisse dans cet état.
+    // Si le capteur se trouve déjà en détection de  zone de danger,
+    // on le laisse dans cet état.
     if (etat_ != DETECTION_ZONE_DANGER)
     {
         bool danger = zoneDanger_.calculerIntersection(rectangle);
@@ -91,6 +160,21 @@ void CapteurDistance::verifierDetection(NoeudMur* mur)
     }
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn void CapteurDistance::mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot)
+///
+/// Cette méthode permet de faire la mise à jour du rectangle englobant du
+/// capteur.
+///
+/// @param[in] positionRobot : La position courante du robot.
+///
+/// @param[in] angleRotationRobot : L'angle de rotation courant du robot.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
 void CapteurDistance::mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot)
 {
     // Calculer la courante position du capteur.
@@ -117,13 +201,24 @@ void CapteurDistance::mettreAJour(const glm::dvec3& positionRobot, const double&
     etat_ = AUCUNE_DETECTION;
 }
 
-void CapteurDistance::afficher(const glm::dvec3& positionRobot) const
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn void CapteurDistance::afficher() const
+///
+/// Méthode permettant d'afficher le capteur dans la scène à des fins de 
+/// débogage. La zone de danger est jaune et la zone sécuritaire est verte quand
+/// il n'y a pas de détection. S'il y a un détection, les zones deviennt rouge.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
+void CapteurDistance::afficher() const
 {
     double largeurDanger = zoneDanger_.obtenirLargeur();
     double hauteurDanger = zoneDanger_.obtenirHauteur();
 
     //Dessiner la zone de danger.
-
     glPushMatrix();
     if (etat_ == DETECTION_ZONE_DANGER)
         glColor3f(1.0, 0.0, 0.0);
@@ -143,7 +238,7 @@ void CapteurDistance::afficher(const glm::dvec3& positionRobot) const
     double largeurSecuritaire = zoneSecuritaire_.obtenirLargeur();
     double hauteurSecuritaire = zoneSecuritaire_.obtenirHauteur();
 
-    //Dessiner la zone de danger.
+    //Dessiner la zone sécuritaire.
     if (etat_ == DETECTION_ZONE_SECURITAIRE)
         glColor3f(1.0, 0.0, 0.0);
     else
@@ -160,3 +255,7 @@ void CapteurDistance::afficher(const glm::dvec3& positionRobot) const
     glPopMatrix();
     glColor4f(0.0, 0.0, 0.0, 1.0);
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+/// @}
+/////////////////////////////////////////////////////////////////////////////////

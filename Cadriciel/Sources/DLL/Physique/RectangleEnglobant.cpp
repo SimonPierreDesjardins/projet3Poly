@@ -63,15 +63,18 @@ bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangl
 
         glm::dvec3 distances[N_COINS];
 
-        // Index circulaire pour obtenir le prochain rectangle.
+        // Index circulaire pour obtenir l'autre rectangle.
         int k = (i + 1) % 2;
          
+        // Calcule des distances entre le centre du rectangle courant et les 4 coins de l'autre rectangle. 
         rectangles[k]->calculerDistancesPoint(distances, rectangles[i]->obtenirPositionCentre());
+
+        // On place les dimensions dans un tableau afin de pouvoir les utiliser dans une boucle.
         double dimensions[N_ORIENTATIONS];
         dimensions[HAUTEUR] = rectangles[i]->hauteur_;
         dimensions[LARGEUR] = rectangles[i]->largeur_;
 
-        // Intérer sur chacun de sur chaque droite du rectangle
+        // Projeter les distances sur chaque vecteur d'orientation du rectangle puis vérifier la disjonction.
         for (int j = 0; j < N_ORIENTATIONS && enIntersection; j++)
         {
             double min, max;
@@ -86,10 +89,15 @@ bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangl
 
 void RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const
 {
+    // Calcule du vecteur qui représente la hauteur.
     orientationLargeur = { glm::cos(utilitaire::DEG_TO_RAD(angle_)),
                            glm::sin(utilitaire::DEG_TO_RAD(angle_)),
                            0.0 };
+
+    // Calcule rapide de la perpendiculaire du vecteur.
     orientationHauteur = { -orientationLargeur.y, orientationLargeur.x, 0.0 };
+
+    // On normalise les vecteurs pour faciliter d'autres calcules.
     glm::normalize(orientationLargeur);
     glm::normalize(orientationHauteur);
 }
@@ -100,8 +108,10 @@ double RectangleEnglobant::calculerRayon() const
     // Obtenir les vecteurs unitaires qui représente l'orientation du rectangle.
     glm::dvec3 orientationLargeur, orientationHauteur;
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);
+
     orientationHauteur *= hauteur_;
     orientationLargeur *= largeur_;
+
     return glm::distance(orientationHauteur, orientationLargeur);
 }
 
@@ -109,15 +119,16 @@ double RectangleEnglobant::calculerRayon() const
 void RectangleEnglobant::calculerDistancesPoint(glm::dvec3 distances[4], 
     const glm::dvec3& point) const
 {
-
     glm::dvec3 orientationHauteur, orientationLargeur;
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);
 
+    // Caculer la distance entre le point et le centre puis 
+    // la distance entre le centre et les 2 dimensions.
     glm::dvec3 distancePointCentre = point - positionCentre_;
     glm::dvec3 distanceCentreHauteur = orientationHauteur * hauteur_ / 2.0;
     glm::dvec3 distanceCentreLargeur = orientationLargeur * largeur_ / 2.0;
 
-    // Calculer les coins pour chacun des cadrans. 
+    // Calculer la distance des coins pour chacun des cadrans. 
     distances[0] = ( distancePointCentre + distanceCentreHauteur + distanceCentreLargeur );
     distances[1] = ( distancePointCentre - distanceCentreHauteur + distanceCentreLargeur );
     distances[2] = ( distancePointCentre - distanceCentreHauteur - distanceCentreLargeur );
@@ -130,6 +141,7 @@ void RectangleEnglobant::calculerIntervalleProjection(glm::dvec3 distances[4],
 {
     double projection = 0.0;
 
+    // Initialiser les min/max au premier index.
     min = glm::dot(distances[0], orientation);
     max = glm::dot(distances[0], orientation);
 
@@ -137,7 +149,7 @@ void RectangleEnglobant::calculerIntervalleProjection(glm::dvec3 distances[4],
     {
         projection = glm::dot(distances[i], orientation);
 
-        // Trouver les min/max pour la projection sur la hauteur.
+        // Trouver les min/max pour la projection.
         if (projection < min)
         {
             min = projection;
@@ -153,10 +165,12 @@ void RectangleEnglobant::calculerIntervalleProjection(glm::dvec3 distances[4],
 bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, const double& max1,
     const double& min2, const double& max2) const
 {
-    // Il y a une disjonction si les deux points ne se trouvent pas dans l'intervalle.
-    // min1 ----- max1 ---------- min2 --- max2
+    // Il y a une disjonction si les deux extrémités ne se trouvent pas dans le même intervalle
+    // que les deux autres extrémités.
+
+    // min1 --- max1 ---------- min2 --- max2
     bool disjonction12 = max1 < min2;
-    // min2 ----- max2 ---------- min1 --- max1
+    // min2 --- max2 ---------- min1 --- max1
     bool disjonction21 = max2 < min1;
 
     return disjonction12 || disjonction21;

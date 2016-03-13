@@ -1,3 +1,12 @@
+////////////////////////////////////////////////////////////////////////////////
+/// @file   CapteurOptique.cpp
+/// @author Olivier St-Amour
+/// @date   2016-03-13
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////////////////////////////////////
+
 #include "CapteurOptique.h"
 
 #include <glm/glm.hpp>
@@ -76,6 +85,17 @@ void CapteurOptique::mettreAJourPosition(const glm::dvec3& positionRobot,
 }
 
 
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn void CapteurOptique::afficher() const
+///
+/// Méthode permettant d'afficher le capteur dans la scène à des fins de 
+/// débogage. Le capteur est rouge lorsqu'il détecte une linge, si non il est
+/// noire.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
 void CapteurOptique::afficher() const
 {
     glPushMatrix();
@@ -100,7 +120,18 @@ void CapteurOptique::afficher() const
 
 }
 
-// Verifier la détection d'une ligne.
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn void CapteurOptique::verifierDetection(NoeudLigne* ligne)
+///
+/// Cette méthode permet de faire la vérification de la détection d'une ligne
+/// à l'aide de sa forme englobante. 
+///
+/// @param[in] ligne : Un pointeur sur une ligne.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
 void CapteurOptique::verifierDetection(NoeudLigne* ligne)
 {
     ligneEstDetectee_ = false;
@@ -114,3 +145,7 @@ void CapteurOptique::verifierDetection(NoeudLigne* ligne)
             quad);
 	}
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+/// @}
+/////////////////////////////////////////////////////////////////////////////////

@@ -93,7 +93,7 @@ void NoeudRobot::afficherConcret() const
     // Débugage des capteurs de distance.
     for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_[i].afficher(positionRelative_);
+        capteursDistance_[i].afficher();
     }
 
     // Debugage de la boite englobante.
