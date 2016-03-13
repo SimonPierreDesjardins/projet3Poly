@@ -60,9 +60,35 @@ void CapteurDistance::verifierDetection(NoeudPoteau* poteau)
     }
 }
 
-void verifierDetection(NoeudMur* noeud)
+void CapteurDistance::verifierDetection(NoeudMur* mur)
 {
-
+    RectangleEnglobant rectangle = mur->obtenirRectangleEnglobant();
+    // Si le capteur se trouve déjà en état de zone de danger, on le laisse dans cet état.
+    if (etat_ != DETECTION_ZONE_DANGER)
+    {
+        bool danger = zoneDanger_.calculerIntersection(rectangle);
+        if (!danger)
+        {
+            // Si le poteau n'est pas en zone de danger et on se trouve 
+            // déjà en détection de zone sécuritaire, on le laisse dans cet état.
+            if (etat_ != DETECTION_ZONE_SECURITAIRE) 
+            {
+                bool securitaire = zoneSecuritaire_.calculerIntersection(rectangle);
+                if (!securitaire) 
+                {
+                    etat_ = AUCUNE_DETECTION;
+                } 
+                else 
+                {
+                    etat_ = DETECTION_ZONE_SECURITAIRE;
+                }
+            }
+        }
+        else 
+        {
+            etat_ = DETECTION_ZONE_DANGER;
+        }
+    }
 }
 
 void CapteurDistance::mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot)

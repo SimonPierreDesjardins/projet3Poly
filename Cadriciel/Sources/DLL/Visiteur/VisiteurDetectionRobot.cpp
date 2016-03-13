@@ -57,5 +57,8 @@ void VisiteurDetectionRobot::visiter(NoeudPoteau* noeud)
 
 void VisiteurDetectionRobot::visiter(NoeudMur* noeud)
 {
-
+    for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
+    {
+        capteursDistance_[i].verifierDetection(noeud);
+    }
 }
