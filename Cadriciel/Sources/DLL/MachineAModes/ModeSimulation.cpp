@@ -66,7 +66,6 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         if (!estRepetition)
         {
 		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
-            std::cout << "Commande" << std::endl;
         }
 	}
 	else if (msg == WM_KEYUP)
@@ -74,8 +73,13 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
 		if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
 		{
-			std::unique_ptr<CommandeRobot> commande = std::make_unique<CommandeRobot>(ARRETER);
-			controleRobot_->traiterCommande(commande.get(), true);
+            // Obtenir la commande associée et inverser la vitesse des moteurs.
+            CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+            commande->inverserVitesseMoteurs();
+			controleRobot_->traiterCommande(commande, true);
+
+            // Rétablir l'état initial de la commande.
+            commande->inverserVitesseMoteurs();
 		}
 	}
 }

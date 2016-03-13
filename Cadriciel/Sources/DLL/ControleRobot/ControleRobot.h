@@ -54,12 +54,12 @@ public:
 
 	// Peut-être rendre ceci privé, l'ajustement de moteurs devrait se faire par commandes
 	void assignerVitessesMoteurs(double vit_G, double vit_D);
+    void ajouterVitessesMoteurs(double vit_G, double vit_D);
 
 	// Permet aux comportements de savoir si une ligne est détectée
 	bool ligneDetectee();
 
 private:
-
 	// Fonctions pour gérer multithreading robot
 	void initialiserBoucleRobot();
 	void terminerBoucleRobot();
