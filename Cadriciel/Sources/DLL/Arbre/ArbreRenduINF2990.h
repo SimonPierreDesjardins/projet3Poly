@@ -66,6 +66,9 @@ public:
 
 	/// La chaîne représentant le type du point de départ. 
 	static const std::string NOM_JONCTION;
+
+	/// La chaîne représentant le type du robot.
+	static const std::string NOM_ROUES;
    
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre

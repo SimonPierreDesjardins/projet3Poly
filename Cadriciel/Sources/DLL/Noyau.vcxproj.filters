@@ -308,6 +308,9 @@
     <ClCompile Include="Physique\RectangleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
+    <ClCompile Include="Arbre\Noeuds\NoeudRoues.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -528,6 +531,9 @@
     </ClInclude>
     <ClInclude Include="Physique\RectangleEnglobant.h">
       <Filter>Header Files\Physique</Filter>
+    </ClInclude>
+    <ClInclude Include="Arbre\Noeuds\NoeudRoues.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

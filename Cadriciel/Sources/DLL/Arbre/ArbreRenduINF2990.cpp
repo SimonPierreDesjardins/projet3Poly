@@ -38,6 +38,8 @@ const std::string ArbreRenduINF2990::NOM_DUPLICATION{ "duplication" };
 const std::string ArbreRenduINF2990::NOM_DEPART{ "depart" };
 /// La chaîne représentant le type du point de départ.
 const std::string ArbreRenduINF2990::NOM_JONCTION{ "jonction" };
+/// La chaîne représentant le type du point de départ.
+const std::string ArbreRenduINF2990::NOM_ROUES{ "roues" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -63,6 +65,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_DUPLICATION, std::make_unique<UsineNoeud<NoeudDuplication>>(NOM_DUPLICATION, std::string{ "media/modeles/tableFinale.obj" }));
 	ajouterUsine(NOM_DEPART, std::make_unique<UsineNoeud<NoeudDepart>>(NOM_DEPART, std::string{ "media/modeles/FlecheDepartFinale.obj" }));
 	ajouterUsine(NOM_JONCTION, std::make_unique<UsineNoeud<NoeudJonction>>(NOM_JONCTION, std::string{ "media/modeles/junctionCircleFinale.obj" }));
+	ajouterUsine(NOM_ROUES, std::make_unique<UsineNoeud<NoeudRoues>>(NOM_ROUES, std::string{ "media/modeles/roue.obj" }));
 }
 
 ////////////////////////////////////////////////////////////////////////
