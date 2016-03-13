@@ -17,6 +17,9 @@
 #include <Windows.h>
 #include "CapteurDistance.h"
 #include "SuiveurLigne.h"
+#include <array>
+
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ProfilUtilisateur
@@ -64,7 +67,11 @@ class ProfilUtilisateur
 
 		void supprimerProfil(std::string nomProfil);
 
-		
+		void assignerCapteurDistance(bool estActif[], TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
+
+		void assignerSuiveurLigne(bool estActif);
+
+		void assignerOptionsDebogages(bool optionsDebogages[]);
 
 	private:
 		void changerDernierProfil(std::string nomProfil);
@@ -78,7 +85,9 @@ class ProfilUtilisateur
 		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
 		
 		bool chargerProfil();
+
 		std::string nomProfil_;
+
 		const int NOMBRE_OPTIONS{ 11 };
 
 		FILE* profil_;
@@ -102,6 +111,16 @@ class ProfilUtilisateur
 		std::vector<CapteurDistance> capteursDistance_;
 
 		SuiveurLigne suiveurLigne_;
+
+		enum optionsDebogagesEnum
+		{
+			ETAT_DEBOGAGE,
+			DEBOGAGE_COMPORTEMENTS,
+			DEBOGAGE_ECLAIRAGE,
+			DEBOGAGE_CAPTEURS
+		};
+
+		std::array<bool, 4> optionsDebogages_;
 };
 
 

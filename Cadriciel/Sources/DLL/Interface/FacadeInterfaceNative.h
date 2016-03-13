@@ -55,6 +55,12 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation);
 	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement);
 
+	__declspec(dllexport) void __cdecl assignerCapteurDistance(bool estActif1, bool estActif2, bool estActif3, int comportementDanger, double distanceDanger, int comportementSecuritaire, double distanceSecuritaire);
+
+	__declspec(dllexport) void __cdecl assignerSuiveurLigne(bool estActif);
+
+	__declspec(dllexport) void __cdecl assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs);
+
 	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl);
 
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);

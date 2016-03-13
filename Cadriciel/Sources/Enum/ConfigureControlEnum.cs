@@ -32,7 +32,11 @@ enum ConfigureControl
         CAPTEUR_DIST1_CB,
         CAPTEUR_DIST2_CB,
         CAPTEUR_DIST3_CB,
-        SUIVEUR_LIGNE_CB
+        SUIVEUR_LIGNE_CB,
+        DEBUG_OPTIONS_CB,
+        DEBUG_COMPORTEMENTS_CB,
+        DEBUG_ECLAIRAGE_CB,
+        DEBUG_CAPTEURS_CB
     };
 
 #if !__LINE__

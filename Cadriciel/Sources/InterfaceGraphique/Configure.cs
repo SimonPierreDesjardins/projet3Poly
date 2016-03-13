@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using TypeCommandeEnum;
 using TypeComportementEnum;
-using ConfigureControlEnum;
 
 namespace InterfaceGraphique
 {
@@ -25,10 +24,6 @@ namespace InterfaceGraphique
         private string extensionProfils;
         private string nomProfilDefaut;
         private int indexProfilDefaut;
-
-        bool afficherDebugComportement = false;
-        bool afficherDebugEclairage = false;
-        bool afficherDebugCapteurs = false;
 
         public Configure()
         {
@@ -350,78 +345,6 @@ namespace InterfaceGraphique
             textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
         }
 
-        private void OptionAffichage_CheckedChanged(object sender, EventArgs e)
-        {
-            enableOptionAffichage();
-            setBooleanAffichageComportement();
-            setBooleanAffichageEclairage();
-            setBooleanAffichageCapteurs();
-        }
-
-        private void enableOptionAffichage()
-        {
-            if (OptionAffichage.Checked)
-            {
-                comboBox_capteur.Enabled = true;
-                comboBox_comportement.Enabled = true;
-                comboBox_eclairage.Enabled = true;
-            }
-            else
-            {
-                comboBox_capteur.Enabled = false;
-                comboBox_comportement.Enabled = false;
-                comboBox_eclairage.Enabled = false;
-            }
-        }
-
-        private void comboBox_comportement_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setBooleanAffichageComportement();
-        }
-
-        private void setBooleanAffichageComportement()
-        {
-            if (comboBox_comportement.Enabled)
-            {
-                if (comboBox_comportement.SelectedIndex == 0)
-                    afficherDebugComportement = true;
-            }
-            else
-                afficherDebugComportement = false;
-        }
-
-        private void comboBox_eclairage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setBooleanAffichageEclairage();
-        }
-
-        private void setBooleanAffichageEclairage()
-        {
-            if (comboBox_eclairage.Enabled)
-            {
-                if (comboBox_eclairage.SelectedIndex == 0)
-                    afficherDebugEclairage = true;
-            }
-            else
-                afficherDebugEclairage = false;
-        }
-
-        private void comboBox_capteur_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setBooleanAffichageCapteurs();
-        }
-
-        private void setBooleanAffichageCapteurs()
-        {
-            if (comboBox_capteur.Enabled)
-            {
-                if (comboBox_capteur.SelectedIndex == 0)
-                    afficherDebugCapteurs = true;
-            }
-            else
-                afficherDebugCapteurs = false;
-        }
-
         private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
         {
             Console.Write("allo");
@@ -502,6 +425,9 @@ namespace InterfaceGraphique
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
                 FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
                 FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
+                FonctionsNatives.assignerCapteurDistance(capteurDist1CB.SelectedIndex == 0, capteurDist2CB.SelectedIndex == 0, capteurDist3CB.SelectedIndex == 0, (TypeComportement)capteurDistanceDangerCB.SelectedValue, Convert.ToDouble(longueurZoneDangerCapteurDistanceTB.Text.Replace('.', ',')), (TypeComportement)capteurDistanceSecuritaireCB.SelectedValue, Convert.ToDouble(longueurZoneSecuritaireCapteurDistanceTB.Text.Replace('.', ',')));
+                FonctionsNatives.assignerSuiveurLigne(suiveurLigneCB.SelectedIndex == 0);
+                FonctionsNatives.assignerOptionsDebogages(optionsDebogagesCB.SelectedIndex == 0, comboBox_comportement.SelectedIndex == 0, comboBox_eclairage.SelectedIndex == 0, comboBox_capteur.SelectedIndex == 0);
                 FonctionsNatives.sauvegarderProfil(comboBoxProfil.Text + extensionProfils);
                 tabEnabled = false;
                 modifierProfilButt.Text = "Modifier";
@@ -512,6 +438,14 @@ namespace InterfaceGraphique
             {
                 tab.Enabled = tabEnabled;
             }
+        }
+
+        private void optionsDebogagesCB_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            bool estActif = optionsDebogagesCB.SelectedIndex == 0;
+            comboBox_comportement.Enabled = estActif;
+            comboBox_eclairage.Enabled = estActif;
+            comboBox_capteur.Enabled = estActif;
         }
 
     }
@@ -532,11 +466,14 @@ namespace InterfaceGraphique
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void sauvegarderProfil(string nomProfil);
 
-        //[DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void assignerCapteurDistance(int indexCapteur, bool estActif, );
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerCapteurDistance(bool estActif1, bool estActif2, bool estActif3, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
 
-        //[DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement);
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerSuiveurLigne(bool estActif);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void modifierToucheCommande(char touche, TypeCommande commande);

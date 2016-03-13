@@ -98,7 +98,8 @@
             this.longueurZoneSecuritaireCapteurDistanceLbl = new System.Windows.Forms.Label();
             this.capteurDistanceProchComportementSecuritaireLbl = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.OptionAffichage = new System.Windows.Forms.CheckBox();
+            this.optionsDebogagesCB = new System.Windows.Forms.ComboBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.comboBox_capteur = new System.Windows.Forms.ComboBox();
             this.comboBox_eclairage = new System.Windows.Forms.ComboBox();
             this.comboBox_comportement = new System.Windows.Forms.ComboBox();
@@ -218,6 +219,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.BackColor = System.Drawing.Color.Transparent;
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label3);
@@ -233,8 +235,7 @@
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(758, 484);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Configuration control";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.tabPage1.Text = "Touches clavier";
             // 
             // label5
             // 
@@ -373,7 +374,7 @@
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage2.Size = new System.Drawing.Size(758, 484);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Gestion Profils";
+            this.tabPage2.Text = "Comportements & capteurs";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // comportementGroupBox
@@ -707,7 +708,7 @@
             this.suiveurLigneCB.Items.AddRange(new object[] {
             "Actif",
             "Inactif"});
-            this.suiveurLigneCB.Location = new System.Drawing.Point(93, 121);
+            this.suiveurLigneCB.Location = new System.Drawing.Point(106, 121);
             this.suiveurLigneCB.Name = "suiveurLigneCB";
             this.suiveurLigneCB.Size = new System.Drawing.Size(56, 21);
             this.suiveurLigneCB.TabIndex = 97;
@@ -716,10 +717,10 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(4, 124);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(83, 13);
+            this.label13.Size = new System.Drawing.Size(99, 13);
             this.label13.TabIndex = 96;
             this.label13.Text = "Suiveur de ligne";
             // 
@@ -737,7 +738,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(4, 93);
+            this.label10.Location = new System.Drawing.Point(13, 88);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(53, 13);
             this.label10.TabIndex = 93;
@@ -747,7 +748,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(4, 61);
+            this.label11.Location = new System.Drawing.Point(13, 61);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 13);
             this.label11.TabIndex = 94;
@@ -760,7 +761,7 @@
             this.capteurDist3CB.Items.AddRange(new object[] {
             "Actif",
             "Inactif"});
-            this.capteurDist3CB.Location = new System.Drawing.Point(93, 85);
+            this.capteurDist3CB.Location = new System.Drawing.Point(106, 85);
             this.capteurDist3CB.Name = "capteurDist3CB";
             this.capteurDist3CB.Size = new System.Drawing.Size(56, 21);
             this.capteurDist3CB.TabIndex = 90;
@@ -773,7 +774,7 @@
             this.capteurDist2CB.Items.AddRange(new object[] {
             "Actif",
             "Inactif"});
-            this.capteurDist2CB.Location = new System.Drawing.Point(93, 58);
+            this.capteurDist2CB.Location = new System.Drawing.Point(106, 58);
             this.capteurDist2CB.Name = "capteurDist2CB";
             this.capteurDist2CB.Size = new System.Drawing.Size(56, 21);
             this.capteurDist2CB.TabIndex = 89;
@@ -783,7 +784,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(4, 34);
+            this.label7.Location = new System.Drawing.Point(13, 34);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 13);
             this.label7.TabIndex = 92;
@@ -796,7 +797,7 @@
             this.capteurDist1CB.Items.AddRange(new object[] {
             "Actif",
             "Inactif"});
-            this.capteurDist1CB.Location = new System.Drawing.Point(93, 31);
+            this.capteurDist1CB.Location = new System.Drawing.Point(106, 31);
             this.capteurDist1CB.Name = "capteurDist1CB";
             this.capteurDist1CB.Size = new System.Drawing.Size(56, 21);
             this.capteurDist1CB.TabIndex = 88;
@@ -851,7 +852,7 @@
             // longueurZoneDangerCapteurDistanceLbl
             // 
             this.longueurZoneDangerCapteurDistanceLbl.AutoSize = true;
-            this.longueurZoneDangerCapteurDistanceLbl.Location = new System.Drawing.Point(304, 10);
+            this.longueurZoneDangerCapteurDistanceLbl.Location = new System.Drawing.Point(321, 9);
             this.longueurZoneDangerCapteurDistanceLbl.Name = "longueurZoneDangerCapteurDistanceLbl";
             this.longueurZoneDangerCapteurDistanceLbl.Size = new System.Drawing.Size(114, 13);
             this.longueurZoneDangerCapteurDistanceLbl.TabIndex = 29;
@@ -868,7 +869,7 @@
             // 
             // longueurZoneSecuritaireCapteurDistanceTB
             // 
-            this.longueurZoneSecuritaireCapteurDistanceTB.Location = new System.Drawing.Point(439, 32);
+            this.longueurZoneSecuritaireCapteurDistanceTB.Location = new System.Drawing.Point(441, 36);
             this.longueurZoneSecuritaireCapteurDistanceTB.Name = "longueurZoneSecuritaireCapteurDistanceTB";
             this.longueurZoneSecuritaireCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
             this.longueurZoneSecuritaireCapteurDistanceTB.TabIndex = 34;
@@ -896,7 +897,7 @@
             // 
             // longueurZoneDangerCapteurDistanceTB
             // 
-            this.longueurZoneDangerCapteurDistanceTB.Location = new System.Drawing.Point(439, 6);
+            this.longueurZoneDangerCapteurDistanceTB.Location = new System.Drawing.Point(441, 6);
             this.longueurZoneDangerCapteurDistanceTB.Name = "longueurZoneDangerCapteurDistanceTB";
             this.longueurZoneDangerCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
             this.longueurZoneDangerCapteurDistanceTB.TabIndex = 30;
@@ -905,7 +906,7 @@
             // longueurZoneSecuritaireCapteurDistanceLbl
             // 
             this.longueurZoneSecuritaireCapteurDistanceLbl.AutoSize = true;
-            this.longueurZoneSecuritaireCapteurDistanceLbl.Location = new System.Drawing.Point(304, 36);
+            this.longueurZoneSecuritaireCapteurDistanceLbl.Location = new System.Drawing.Point(306, 39);
             this.longueurZoneSecuritaireCapteurDistanceLbl.Name = "longueurZoneSecuritaireCapteurDistanceLbl";
             this.longueurZoneSecuritaireCapteurDistanceLbl.Size = new System.Drawing.Size(129, 13);
             this.longueurZoneSecuritaireCapteurDistanceLbl.TabIndex = 33;
@@ -921,7 +922,8 @@
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.OptionAffichage);
+            this.tabPage3.Controls.Add(this.optionsDebogagesCB);
+            this.tabPage3.Controls.Add(this.label14);
             this.tabPage3.Controls.Add(this.comboBox_capteur);
             this.tabPage3.Controls.Add(this.comboBox_eclairage);
             this.tabPage3.Controls.Add(this.comboBox_comportement);
@@ -933,22 +935,36 @@
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage3.Size = new System.Drawing.Size(758, 484);
             this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "Option Débogage";
+            this.tabPage3.Text = "Options de débogage";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // OptionAffichage
+            // optionsDebogagesCB
             // 
-            this.OptionAffichage.AutoSize = true;
-            this.OptionAffichage.Location = new System.Drawing.Point(147, 78);
-            this.OptionAffichage.Name = "OptionAffichage";
-            this.OptionAffichage.Size = new System.Drawing.Size(259, 17);
-            this.OptionAffichage.TabIndex = 7;
-            this.OptionAffichage.Text = "Permettre de rendre actif l\'affichage de débogage";
-            this.OptionAffichage.UseVisualStyleBackColor = true;
-            this.OptionAffichage.CheckedChanged += new System.EventHandler(this.OptionAffichage_CheckedChanged);
+            this.optionsDebogagesCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.optionsDebogagesCB.FormattingEnabled = true;
+            this.optionsDebogagesCB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.optionsDebogagesCB.Location = new System.Drawing.Point(163, 81);
+            this.optionsDebogagesCB.MaxDropDownItems = 2;
+            this.optionsDebogagesCB.Name = "optionsDebogagesCB";
+            this.optionsDebogagesCB.Size = new System.Drawing.Size(66, 21);
+            this.optionsDebogagesCB.TabIndex = 9;
+            this.optionsDebogagesCB.Tag = "26";
+            this.optionsDebogagesCB.SelectionChangeCommitted += new System.EventHandler(this.optionsDebogagesCB_SelectionChangeCommitted);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(235, 84);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(103, 13);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "Affichage débogage";
             // 
             // comboBox_capteur
             // 
+            this.comboBox_capteur.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_capteur.FormattingEnabled = true;
             this.comboBox_capteur.Items.AddRange(new object[] {
             "Oui",
@@ -958,10 +974,11 @@
             this.comboBox_capteur.Name = "comboBox_capteur";
             this.comboBox_capteur.Size = new System.Drawing.Size(66, 21);
             this.comboBox_capteur.TabIndex = 6;
-            this.comboBox_capteur.SelectedIndexChanged += new System.EventHandler(this.comboBox_capteur_SelectedIndexChanged);
+            this.comboBox_capteur.Tag = "29";
             // 
             // comboBox_eclairage
             // 
+            this.comboBox_eclairage.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_eclairage.FormattingEnabled = true;
             this.comboBox_eclairage.Items.AddRange(new object[] {
             "Oui",
@@ -971,10 +988,11 @@
             this.comboBox_eclairage.Name = "comboBox_eclairage";
             this.comboBox_eclairage.Size = new System.Drawing.Size(66, 21);
             this.comboBox_eclairage.TabIndex = 5;
-            this.comboBox_eclairage.SelectedIndexChanged += new System.EventHandler(this.comboBox_eclairage_SelectedIndexChanged);
+            this.comboBox_eclairage.Tag = "28";
             // 
             // comboBox_comportement
             // 
+            this.comboBox_comportement.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_comportement.FormattingEnabled = true;
             this.comboBox_comportement.Items.AddRange(new object[] {
             "Oui",
@@ -984,12 +1002,12 @@
             this.comboBox_comportement.Name = "comboBox_comportement";
             this.comboBox_comportement.Size = new System.Drawing.Size(66, 21);
             this.comboBox_comportement.TabIndex = 4;
-            this.comboBox_comportement.SelectedIndexChanged += new System.EventHandler(this.comboBox_comportement_SelectedIndexChanged);
+            this.comboBox_comportement.Tag = "27";
             // 
             // ZoneCapteurs
             // 
             this.ZoneCapteurs.AutoSize = true;
-            this.ZoneCapteurs.Location = new System.Drawing.Point(323, 330);
+            this.ZoneCapteurs.Location = new System.Drawing.Point(323, 325);
             this.ZoneCapteurs.Name = "ZoneCapteurs";
             this.ZoneCapteurs.Size = new System.Drawing.Size(180, 13);
             this.ZoneCapteurs.TabIndex = 3;
@@ -998,7 +1016,7 @@
             // EtatEclairage
             // 
             this.EtatEclairage.AutoSize = true;
-            this.EtatEclairage.Location = new System.Drawing.Point(323, 239);
+            this.EtatEclairage.Location = new System.Drawing.Point(323, 234);
             this.EtatEclairage.Name = "EtatEclairage";
             this.EtatEclairage.Size = new System.Drawing.Size(204, 13);
             this.EtatEclairage.TabIndex = 2;
@@ -1007,7 +1025,7 @@
             // ChangeComportement
             // 
             this.ChangeComportement.AutoSize = true;
-            this.ChangeComportement.Location = new System.Drawing.Point(323, 147);
+            this.ChangeComportement.Location = new System.Drawing.Point(323, 142);
             this.ChangeComportement.Name = "ChangeComportement";
             this.ChangeComportement.Size = new System.Drawing.Size(152, 13);
             this.ChangeComportement.TabIndex = 1;
@@ -1109,7 +1127,6 @@
         private System.Windows.Forms.TextBox angleDDTxtBox;
         private System.Windows.Forms.TextBox angleDGTxtBox;
         private System.Windows.Forms.Button retourMenuButt;
-        private System.Windows.Forms.CheckBox OptionAffichage;
         private System.Windows.Forms.ComboBox comboBox_capteur;
         private System.Windows.Forms.ComboBox comboBox_eclairage;
         private System.Windows.Forms.ComboBox comboBox_comportement;
@@ -1125,5 +1142,7 @@
         private System.Windows.Forms.ComboBox capteurDist3CB;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox suiveurLigneCB;
+        private System.Windows.Forms.ComboBox optionsDebogagesCB;
+        private System.Windows.Forms.Label label14;
     }
 }
