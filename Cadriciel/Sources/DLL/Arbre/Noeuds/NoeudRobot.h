@@ -40,6 +40,7 @@ public:
 	void assignerVitesseDroite(float vitesse);
 	void assignerVitesseGauche(float vitesse);
 
+	//Permet de positionner les roues
 	void positionnerRoues();
 
 	//Permet de récupérer les paramètres du robot.
