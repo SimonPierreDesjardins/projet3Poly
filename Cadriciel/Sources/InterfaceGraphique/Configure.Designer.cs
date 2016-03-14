@@ -49,11 +49,6 @@
             this.textBoxReculer = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.comportementGroupBox = new System.Windows.Forms.GroupBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.capteurDist1CB = new System.Windows.Forms.ComboBox();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.tabPage6 = new System.Windows.Forms.TabPage();
             this.dureeEDTxtBox = new System.Windows.Forms.TextBox();
             this.angleEDTxtBox = new System.Windows.Forms.TextBox();
             this.dureeEGTxtBox = new System.Windows.Forms.TextBox();
@@ -81,24 +76,48 @@
             this.deviationGLbl = new System.Windows.Forms.Label();
             this.suiviLigneLbl = new System.Windows.Forms.Label();
             this.capteurGroupBox = new System.Windows.Forms.GroupBox();
+            this.capteursDistTabs = new System.Windows.Forms.TabControl();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.longueurSecuritaireDroitTxtBox = new System.Windows.Forms.TextBox();
+            this.zoneDangerDroitCB = new System.Windows.Forms.ComboBox();
+            this.zoneSecuritaireDroitCB = new System.Windows.Forms.ComboBox();
+            this.longueurDangerDroitTxtBox = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.capteurDistDroitCB = new System.Windows.Forms.ComboBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.longueurSecuritaireCentreCB = new System.Windows.Forms.TextBox();
+            this.zoneDangerCentreCB = new System.Windows.Forms.ComboBox();
+            this.zoneSecuritaireCentreCB = new System.Windows.Forms.ComboBox();
+            this.longueurDangerCentreTxtBox = new System.Windows.Forms.TextBox();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.capteurDistCentreCB = new System.Windows.Forms.ComboBox();
+            this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.longueurSecuritaireGaucheTxtBox = new System.Windows.Forms.TextBox();
+            this.zoneDangerGaucheCB = new System.Windows.Forms.ComboBox();
+            this.zoneSecuritaireGaucheCB = new System.Windows.Forms.ComboBox();
+            this.lonuguerDangerGaucheTxtBox = new System.Windows.Forms.TextBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.label26 = new System.Windows.Forms.Label();
+            this.capteurDistGaucheCB = new System.Windows.Forms.ComboBox();
             this.suiveurLigneCB = new System.Windows.Forms.ComboBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.capteurDist3CB = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.capteurDistanceOptionsPnl = new System.Windows.Forms.Panel();
-            this.zoneSecuritaireLbl = new System.Windows.Forms.Label();
-            this.longueurZoneDangerCapteurDistanceLbl = new System.Windows.Forms.Label();
-            this.zoneDangerLbl = new System.Windows.Forms.Label();
-            this.longueurZoneSecuritaireCapteurDistanceTB = new System.Windows.Forms.TextBox();
-            this.capteurDistanceDangerCB = new System.Windows.Forms.ComboBox();
-            this.capteurDistanceSecuritaireCB = new System.Windows.Forms.ComboBox();
-            this.longueurZoneDangerCapteurDistanceTB = new System.Windows.Forms.TextBox();
-            this.longueurZoneSecuritaireCapteurDistanceLbl = new System.Windows.Forms.Label();
-            this.capteurDistanceProchComportementSecuritaireLbl = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.optionsDebogagesCB = new System.Windows.Forms.ComboBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -108,38 +127,6 @@
             this.ZoneCapteurs = new System.Windows.Forms.Label();
             this.EtatEclairage = new System.Windows.Forms.Label();
             this.ChangeComportement = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label16 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.comboBox4 = new System.Windows.Forms.ComboBox();
-            this.textBox4 = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label23 = new System.Windows.Forms.Label();
-            this.comboBox5 = new System.Windows.Forms.ComboBox();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.comboBox6 = new System.Windows.Forms.ComboBox();
-            this.comboBox7 = new System.Windows.Forms.ComboBox();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.comboBox8 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -148,16 +135,15 @@
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.comportementGroupBox.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.tabPage6.SuspendLayout();
             this.capteurGroupBox.SuspendLayout();
-            this.capteurDistanceOptionsPnl.SuspendLayout();
-            this.tabPage3.SuspendLayout();
+            this.capteursDistTabs.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -179,7 +165,7 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.configureTabs);
-            this.splitContainer1.Size = new System.Drawing.Size(956, 544);
+            this.splitContainer1.Size = new System.Drawing.Size(748, 553);
             this.splitContainer1.SplitterDistance = 27;
             this.splitContainer1.TabIndex = 0;
             // 
@@ -255,7 +241,7 @@
             this.configureTabs.Location = new System.Drawing.Point(0, 3);
             this.configureTabs.Name = "configureTabs";
             this.configureTabs.SelectedIndex = 0;
-            this.configureTabs.Size = new System.Drawing.Size(956, 510);
+            this.configureTabs.Size = new System.Drawing.Size(748, 519);
             this.configureTabs.TabIndex = 2;
             // 
             // tabPage1
@@ -274,7 +260,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(948, 484);
+            this.tabPage1.Size = new System.Drawing.Size(740, 493);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Touches clavier";
             // 
@@ -413,14 +399,13 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(948, 484);
+            this.tabPage2.Size = new System.Drawing.Size(740, 493);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Comportements & capteurs";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // comportementGroupBox
             // 
-            this.comportementGroupBox.Controls.Add(this.tabControl1);
             this.comportementGroupBox.Controls.Add(this.dureeEDTxtBox);
             this.comportementGroupBox.Controls.Add(this.angleEDTxtBox);
             this.comportementGroupBox.Controls.Add(this.dureeEGTxtBox);
@@ -454,67 +439,6 @@
             this.comportementGroupBox.TabIndex = 60;
             this.comportementGroupBox.TabStop = false;
             this.comportementGroupBox.Text = "Comportement";
-            // 
-            // tabControl1
-            // 
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Controls.Add(this.tabPage5);
-            this.tabControl1.Controls.Add(this.tabPage6);
-            this.tabControl1.Location = new System.Drawing.Point(35, 150);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(670, 100);
-            this.tabControl1.TabIndex = 61;
-            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.panel1);
-            this.tabPage4.Controls.Add(this.capteurDist1CB);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(662, 74);
-            this.tabPage4.TabIndex = 0;
-            this.tabPage4.Text = "Capteur droit";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // capteurDist1CB
-            // 
-            this.capteurDist1CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capteurDist1CB.FormattingEnabled = true;
-            this.capteurDist1CB.Items.AddRange(new object[] {
-            "Actif",
-            "Inactif"});
-            this.capteurDist1CB.Location = new System.Drawing.Point(10, 22);
-            this.capteurDist1CB.Name = "capteurDist1CB";
-            this.capteurDist1CB.Size = new System.Drawing.Size(56, 21);
-            this.capteurDist1CB.TabIndex = 88;
-            this.capteurDist1CB.Tag = "22";
-            this.capteurDist1CB.SelectedIndexChanged += new System.EventHandler(this.capteurDist1CB_SelectedIndexChanged);
-            // 
-            // tabPage5
-            // 
-            this.tabPage5.Controls.Add(this.panel2);
-            this.tabPage5.Controls.Add(this.comboBox5);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(662, 74);
-            this.tabPage5.TabIndex = 1;
-            this.tabPage5.Text = "Capteur centre";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // tabPage6
-            // 
-            this.tabPage6.Controls.Add(this.panel3);
-            this.tabPage6.Controls.Add(this.comboBox8);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
-            this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Size = new System.Drawing.Size(662, 74);
-            this.tabPage6.TabIndex = 2;
-            this.tabPage6.Text = "Capteur gauche";
-            this.tabPage6.UseVisualStyleBackColor = true;
             // 
             // dureeEDTxtBox
             // 
@@ -784,22 +708,396 @@
             // 
             // capteurGroupBox
             // 
+            this.capteurGroupBox.Controls.Add(this.capteursDistTabs);
             this.capteurGroupBox.Controls.Add(this.suiveurLigneCB);
             this.capteurGroupBox.Controls.Add(this.label13);
             this.capteurGroupBox.Controls.Add(this.label12);
-            this.capteurGroupBox.Controls.Add(this.label10);
-            this.capteurGroupBox.Controls.Add(this.label11);
-            this.capteurGroupBox.Controls.Add(this.capteurDist3CB);
             this.capteurGroupBox.Controls.Add(this.label8);
             this.capteurGroupBox.Controls.Add(this.label9);
-            this.capteurGroupBox.Controls.Add(this.capteurDistanceOptionsPnl);
             this.capteurGroupBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capteurGroupBox.Location = new System.Drawing.Point(6, 323);
             this.capteurGroupBox.Name = "capteurGroupBox";
-            this.capteurGroupBox.Size = new System.Drawing.Size(745, 151);
+            this.capteurGroupBox.Size = new System.Drawing.Size(745, 164);
             this.capteurGroupBox.TabIndex = 59;
             this.capteurGroupBox.TabStop = false;
             this.capteurGroupBox.Text = "Capteurs";
+            // 
+            // capteursDistTabs
+            // 
+            this.capteursDistTabs.Controls.Add(this.tabPage4);
+            this.capteursDistTabs.Controls.Add(this.tabPage5);
+            this.capteursDistTabs.Controls.Add(this.tabPage6);
+            this.capteursDistTabs.Location = new System.Drawing.Point(6, 32);
+            this.capteursDistTabs.Multiline = true;
+            this.capteursDistTabs.Name = "capteursDistTabs";
+            this.capteursDistTabs.SelectedIndex = 0;
+            this.capteursDistTabs.Size = new System.Drawing.Size(733, 100);
+            this.capteursDistTabs.TabIndex = 61;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.panel1);
+            this.tabPage4.Controls.Add(this.capteurDistDroitCB);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(725, 74);
+            this.tabPage4.TabIndex = 0;
+            this.tabPage4.Text = "Capteur droit";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label7);
+            this.panel1.Controls.Add(this.label15);
+            this.panel1.Controls.Add(this.label16);
+            this.panel1.Controls.Add(this.longueurSecuritaireDroitTxtBox);
+            this.panel1.Controls.Add(this.zoneDangerDroitCB);
+            this.panel1.Controls.Add(this.zoneSecuritaireDroitCB);
+            this.panel1.Controls.Add(this.longueurDangerDroitTxtBox);
+            this.panel1.Controls.Add(this.label17);
+            this.panel1.Controls.Add(this.label18);
+            this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel1.Location = new System.Drawing.Point(155, 5);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(567, 64);
+            this.panel1.TabIndex = 89;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(27, 36);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(83, 13);
+            this.label7.TabIndex = 58;
+            this.label7.Text = "Zone sécuritaire";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(325, 9);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(114, 13);
+            this.label15.TabIndex = 29;
+            this.label15.Text = "Longueur zone danger";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(27, 9);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(68, 13);
+            this.label16.TabIndex = 57;
+            this.label16.Text = "Zone danger";
+            // 
+            // longueurSecuritaireDroitTxtBox
+            // 
+            this.longueurSecuritaireDroitTxtBox.Location = new System.Drawing.Point(445, 36);
+            this.longueurSecuritaireDroitTxtBox.Name = "longueurSecuritaireDroitTxtBox";
+            this.longueurSecuritaireDroitTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.longueurSecuritaireDroitTxtBox.TabIndex = 34;
+            this.longueurSecuritaireDroitTxtBox.Tag = "27";
+            // 
+            // zoneDangerDroitCB
+            // 
+            this.zoneDangerDroitCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zoneDangerDroitCB.FormattingEnabled = true;
+            this.zoneDangerDroitCB.Location = new System.Drawing.Point(117, 6);
+            this.zoneDangerDroitCB.Name = "zoneDangerDroitCB";
+            this.zoneDangerDroitCB.Size = new System.Drawing.Size(185, 21);
+            this.zoneDangerDroitCB.TabIndex = 56;
+            this.zoneDangerDroitCB.Tag = "18";
+            // 
+            // zoneSecuritaireDroitCB
+            // 
+            this.zoneSecuritaireDroitCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zoneSecuritaireDroitCB.FormattingEnabled = true;
+            this.zoneSecuritaireDroitCB.Location = new System.Drawing.Point(117, 33);
+            this.zoneSecuritaireDroitCB.Name = "zoneSecuritaireDroitCB";
+            this.zoneSecuritaireDroitCB.Size = new System.Drawing.Size(185, 21);
+            this.zoneSecuritaireDroitCB.TabIndex = 55;
+            this.zoneSecuritaireDroitCB.Tag = "21";
+            // 
+            // longueurDangerDroitTxtBox
+            // 
+            this.longueurDangerDroitTxtBox.Location = new System.Drawing.Point(445, 6);
+            this.longueurDangerDroitTxtBox.Name = "longueurDangerDroitTxtBox";
+            this.longueurDangerDroitTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.longueurDangerDroitTxtBox.TabIndex = 30;
+            this.longueurDangerDroitTxtBox.Tag = "24";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(310, 39);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(129, 13);
+            this.label17.TabIndex = 33;
+            this.label17.Text = "Longueur zone sécuritaire";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(7, 9);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(0, 13);
+            this.label18.TabIndex = 32;
+            // 
+            // capteurDistDroitCB
+            // 
+            this.capteurDistDroitCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capteurDistDroitCB.FormattingEnabled = true;
+            this.capteurDistDroitCB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.capteurDistDroitCB.Location = new System.Drawing.Point(47, 23);
+            this.capteurDistDroitCB.Name = "capteurDistDroitCB";
+            this.capteurDistDroitCB.Size = new System.Drawing.Size(56, 21);
+            this.capteurDistDroitCB.TabIndex = 88;
+            this.capteurDistDroitCB.Tag = "30";
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.panel2);
+            this.tabPage5.Controls.Add(this.capteurDistCentreCB);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(725, 74);
+            this.tabPage5.TabIndex = 1;
+            this.tabPage5.Text = "Capteur centre";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.label10);
+            this.panel2.Controls.Add(this.label11);
+            this.panel2.Controls.Add(this.label19);
+            this.panel2.Controls.Add(this.longueurSecuritaireCentreCB);
+            this.panel2.Controls.Add(this.zoneDangerCentreCB);
+            this.panel2.Controls.Add(this.zoneSecuritaireCentreCB);
+            this.panel2.Controls.Add(this.longueurDangerCentreTxtBox);
+            this.panel2.Controls.Add(this.label20);
+            this.panel2.Controls.Add(this.label21);
+            this.panel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel2.Location = new System.Drawing.Point(155, 5);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(567, 64);
+            this.panel2.TabIndex = 91;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(27, 36);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(83, 13);
+            this.label10.TabIndex = 58;
+            this.label10.Text = "Zone sécuritaire";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(325, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(114, 13);
+            this.label11.TabIndex = 29;
+            this.label11.Text = "Longueur zone danger";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(27, 9);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(68, 13);
+            this.label19.TabIndex = 57;
+            this.label19.Text = "Zone danger";
+            // 
+            // longueurSecuritaireCentreCB
+            // 
+            this.longueurSecuritaireCentreCB.Location = new System.Drawing.Point(445, 36);
+            this.longueurSecuritaireCentreCB.Name = "longueurSecuritaireCentreCB";
+            this.longueurSecuritaireCentreCB.Size = new System.Drawing.Size(121, 20);
+            this.longueurSecuritaireCentreCB.TabIndex = 34;
+            this.longueurSecuritaireCentreCB.Tag = "28";
+            // 
+            // zoneDangerCentreCB
+            // 
+            this.zoneDangerCentreCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zoneDangerCentreCB.FormattingEnabled = true;
+            this.zoneDangerCentreCB.Location = new System.Drawing.Point(117, 6);
+            this.zoneDangerCentreCB.Name = "zoneDangerCentreCB";
+            this.zoneDangerCentreCB.Size = new System.Drawing.Size(185, 21);
+            this.zoneDangerCentreCB.TabIndex = 56;
+            this.zoneDangerCentreCB.Tag = "19";
+            // 
+            // zoneSecuritaireCentreCB
+            // 
+            this.zoneSecuritaireCentreCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zoneSecuritaireCentreCB.FormattingEnabled = true;
+            this.zoneSecuritaireCentreCB.Location = new System.Drawing.Point(117, 33);
+            this.zoneSecuritaireCentreCB.Name = "zoneSecuritaireCentreCB";
+            this.zoneSecuritaireCentreCB.Size = new System.Drawing.Size(185, 21);
+            this.zoneSecuritaireCentreCB.TabIndex = 55;
+            this.zoneSecuritaireCentreCB.Tag = "22";
+            // 
+            // longueurDangerCentreTxtBox
+            // 
+            this.longueurDangerCentreTxtBox.Location = new System.Drawing.Point(445, 6);
+            this.longueurDangerCentreTxtBox.Name = "longueurDangerCentreTxtBox";
+            this.longueurDangerCentreTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.longueurDangerCentreTxtBox.TabIndex = 30;
+            this.longueurDangerCentreTxtBox.Tag = "25";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(310, 39);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(129, 13);
+            this.label20.TabIndex = 33;
+            this.label20.Text = "Longueur zone sécuritaire";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(7, 9);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(0, 13);
+            this.label21.TabIndex = 32;
+            // 
+            // capteurDistCentreCB
+            // 
+            this.capteurDistCentreCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capteurDistCentreCB.FormattingEnabled = true;
+            this.capteurDistCentreCB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.capteurDistCentreCB.Location = new System.Drawing.Point(47, 23);
+            this.capteurDistCentreCB.Name = "capteurDistCentreCB";
+            this.capteurDistCentreCB.Size = new System.Drawing.Size(56, 21);
+            this.capteurDistCentreCB.TabIndex = 90;
+            this.capteurDistCentreCB.Tag = "31";
+            // 
+            // tabPage6
+            // 
+            this.tabPage6.Controls.Add(this.panel3);
+            this.tabPage6.Controls.Add(this.capteurDistGaucheCB);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Name = "tabPage6";
+            this.tabPage6.Size = new System.Drawing.Size(725, 74);
+            this.tabPage6.TabIndex = 2;
+            this.tabPage6.Text = "Capteur gauche";
+            this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.label22);
+            this.panel3.Controls.Add(this.label23);
+            this.panel3.Controls.Add(this.label24);
+            this.panel3.Controls.Add(this.longueurSecuritaireGaucheTxtBox);
+            this.panel3.Controls.Add(this.zoneDangerGaucheCB);
+            this.panel3.Controls.Add(this.zoneSecuritaireGaucheCB);
+            this.panel3.Controls.Add(this.lonuguerDangerGaucheTxtBox);
+            this.panel3.Controls.Add(this.label25);
+            this.panel3.Controls.Add(this.label26);
+            this.panel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.panel3.Location = new System.Drawing.Point(155, 5);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(567, 64);
+            this.panel3.TabIndex = 91;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(27, 36);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(83, 13);
+            this.label22.TabIndex = 58;
+            this.label22.Text = "Zone sécuritaire";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(325, 9);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(114, 13);
+            this.label23.TabIndex = 29;
+            this.label23.Text = "Longueur zone danger";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(27, 9);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(68, 13);
+            this.label24.TabIndex = 57;
+            this.label24.Text = "Zone danger";
+            // 
+            // longueurSecuritaireGaucheTxtBox
+            // 
+            this.longueurSecuritaireGaucheTxtBox.Location = new System.Drawing.Point(445, 36);
+            this.longueurSecuritaireGaucheTxtBox.Name = "longueurSecuritaireGaucheTxtBox";
+            this.longueurSecuritaireGaucheTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.longueurSecuritaireGaucheTxtBox.TabIndex = 34;
+            this.longueurSecuritaireGaucheTxtBox.Tag = "29";
+            // 
+            // zoneDangerGaucheCB
+            // 
+            this.zoneDangerGaucheCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zoneDangerGaucheCB.FormattingEnabled = true;
+            this.zoneDangerGaucheCB.Location = new System.Drawing.Point(117, 6);
+            this.zoneDangerGaucheCB.Name = "zoneDangerGaucheCB";
+            this.zoneDangerGaucheCB.Size = new System.Drawing.Size(185, 21);
+            this.zoneDangerGaucheCB.TabIndex = 56;
+            this.zoneDangerGaucheCB.Tag = "20";
+            // 
+            // zoneSecuritaireGaucheCB
+            // 
+            this.zoneSecuritaireGaucheCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.zoneSecuritaireGaucheCB.FormattingEnabled = true;
+            this.zoneSecuritaireGaucheCB.Location = new System.Drawing.Point(117, 33);
+            this.zoneSecuritaireGaucheCB.Name = "zoneSecuritaireGaucheCB";
+            this.zoneSecuritaireGaucheCB.Size = new System.Drawing.Size(185, 21);
+            this.zoneSecuritaireGaucheCB.TabIndex = 55;
+            this.zoneSecuritaireGaucheCB.Tag = "23";
+            // 
+            // lonuguerDangerGaucheTxtBox
+            // 
+            this.lonuguerDangerGaucheTxtBox.Location = new System.Drawing.Point(445, 6);
+            this.lonuguerDangerGaucheTxtBox.Name = "lonuguerDangerGaucheTxtBox";
+            this.lonuguerDangerGaucheTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.lonuguerDangerGaucheTxtBox.TabIndex = 30;
+            this.lonuguerDangerGaucheTxtBox.Tag = "26";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(310, 39);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(129, 13);
+            this.label25.TabIndex = 33;
+            this.label25.Text = "Longueur zone sécuritaire";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(7, 9);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(0, 13);
+            this.label26.TabIndex = 32;
+            // 
+            // capteurDistGaucheCB
+            // 
+            this.capteurDistGaucheCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.capteurDistGaucheCB.FormattingEnabled = true;
+            this.capteurDistGaucheCB.Items.AddRange(new object[] {
+            "Actif",
+            "Inactif"});
+            this.capteurDistGaucheCB.Location = new System.Drawing.Point(47, 23);
+            this.capteurDistGaucheCB.Name = "capteurDistGaucheCB";
+            this.capteurDistGaucheCB.Size = new System.Drawing.Size(56, 21);
+            this.capteurDistGaucheCB.TabIndex = 90;
+            this.capteurDistGaucheCB.Tag = "32";
             // 
             // suiveurLigneCB
             // 
@@ -808,17 +1106,17 @@
             this.suiveurLigneCB.Items.AddRange(new object[] {
             "Actif",
             "Inactif"});
-            this.suiveurLigneCB.Location = new System.Drawing.Point(106, 121);
+            this.suiveurLigneCB.Location = new System.Drawing.Point(106, 134);
             this.suiveurLigneCB.Name = "suiveurLigneCB";
             this.suiveurLigneCB.Size = new System.Drawing.Size(56, 21);
             this.suiveurLigneCB.TabIndex = 97;
-            this.suiveurLigneCB.Tag = "25";
+            this.suiveurLigneCB.Tag = "33";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(4, 124);
+            this.label13.Location = new System.Drawing.Point(4, 137);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(99, 13);
             this.label13.TabIndex = 96;
@@ -833,39 +1131,6 @@
             this.label12.Size = new System.Drawing.Size(109, 13);
             this.label12.TabIndex = 95;
             this.label12.Text = "Capteurs distance";
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(13, 88);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 13);
-            this.label10.TabIndex = 93;
-            this.label10.Text = "Capteur 3";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(13, 61);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(53, 13);
-            this.label11.TabIndex = 94;
-            this.label11.Text = "Capteur 2";
-            // 
-            // capteurDist3CB
-            // 
-            this.capteurDist3CB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capteurDist3CB.FormattingEnabled = true;
-            this.capteurDist3CB.Items.AddRange(new object[] {
-            "Actif",
-            "Inactif"});
-            this.capteurDist3CB.Location = new System.Drawing.Point(106, 85);
-            this.capteurDist3CB.Name = "capteurDist3CB";
-            this.capteurDist3CB.Size = new System.Drawing.Size(56, 21);
-            this.capteurDist3CB.TabIndex = 90;
-            this.capteurDist3CB.Tag = "24";
             // 
             // label8
             // 
@@ -887,107 +1152,6 @@
             this.label9.TabIndex = 86;
             this.label9.Text = "Paramètres";
             // 
-            // capteurDistanceOptionsPnl
-            // 
-            this.capteurDistanceOptionsPnl.Controls.Add(this.zoneSecuritaireLbl);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.longueurZoneDangerCapteurDistanceLbl);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.zoneDangerLbl);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.longueurZoneSecuritaireCapteurDistanceTB);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.capteurDistanceDangerCB);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.capteurDistanceSecuritaireCB);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.longueurZoneDangerCapteurDistanceTB);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.longueurZoneSecuritaireCapteurDistanceLbl);
-            this.capteurDistanceOptionsPnl.Controls.Add(this.capteurDistanceProchComportementSecuritaireLbl);
-            this.capteurDistanceOptionsPnl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.capteurDistanceOptionsPnl.Location = new System.Drawing.Point(169, 42);
-            this.capteurDistanceOptionsPnl.Name = "capteurDistanceOptionsPnl";
-            this.capteurDistanceOptionsPnl.Size = new System.Drawing.Size(570, 64);
-            this.capteurDistanceOptionsPnl.TabIndex = 40;
-            // 
-            // zoneSecuritaireLbl
-            // 
-            this.zoneSecuritaireLbl.AutoSize = true;
-            this.zoneSecuritaireLbl.Location = new System.Drawing.Point(27, 36);
-            this.zoneSecuritaireLbl.Name = "zoneSecuritaireLbl";
-            this.zoneSecuritaireLbl.Size = new System.Drawing.Size(83, 13);
-            this.zoneSecuritaireLbl.TabIndex = 58;
-            this.zoneSecuritaireLbl.Text = "Zone sécuritaire";
-            // 
-            // longueurZoneDangerCapteurDistanceLbl
-            // 
-            this.longueurZoneDangerCapteurDistanceLbl.AutoSize = true;
-            this.longueurZoneDangerCapteurDistanceLbl.Location = new System.Drawing.Point(321, 9);
-            this.longueurZoneDangerCapteurDistanceLbl.Name = "longueurZoneDangerCapteurDistanceLbl";
-            this.longueurZoneDangerCapteurDistanceLbl.Size = new System.Drawing.Size(114, 13);
-            this.longueurZoneDangerCapteurDistanceLbl.TabIndex = 29;
-            this.longueurZoneDangerCapteurDistanceLbl.Text = "Longueur zone danger";
-            // 
-            // zoneDangerLbl
-            // 
-            this.zoneDangerLbl.AutoSize = true;
-            this.zoneDangerLbl.Location = new System.Drawing.Point(27, 9);
-            this.zoneDangerLbl.Name = "zoneDangerLbl";
-            this.zoneDangerLbl.Size = new System.Drawing.Size(68, 13);
-            this.zoneDangerLbl.TabIndex = 57;
-            this.zoneDangerLbl.Text = "Zone danger";
-            // 
-            // longueurZoneSecuritaireCapteurDistanceTB
-            // 
-            this.longueurZoneSecuritaireCapteurDistanceTB.Location = new System.Drawing.Point(441, 36);
-            this.longueurZoneSecuritaireCapteurDistanceTB.Name = "longueurZoneSecuritaireCapteurDistanceTB";
-            this.longueurZoneSecuritaireCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
-            this.longueurZoneSecuritaireCapteurDistanceTB.TabIndex = 34;
-            this.longueurZoneSecuritaireCapteurDistanceTB.Tag = "21";
-            this.longueurZoneSecuritaireCapteurDistanceTB.TextChanged += new System.EventHandler(this.longueurZoneSecuritaireCapteurDistanceTB_TextChanged);
-            this.longueurZoneSecuritaireCapteurDistanceTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.longueurZoneSecuritaireCapteurDistanceTB_KeyDown);
-            // 
-            // capteurDistanceDangerCB
-            // 
-            this.capteurDistanceDangerCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.capteurDistanceDangerCB.FormattingEnabled = true;
-            this.capteurDistanceDangerCB.Location = new System.Drawing.Point(113, 6);
-            this.capteurDistanceDangerCB.Name = "capteurDistanceDangerCB";
-            this.capteurDistanceDangerCB.Size = new System.Drawing.Size(185, 21);
-            this.capteurDistanceDangerCB.TabIndex = 56;
-            this.capteurDistanceDangerCB.Tag = "18";
-            // 
-            // capteurDistanceSecuritaireCB
-            // 
-            this.capteurDistanceSecuritaireCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.capteurDistanceSecuritaireCB.FormattingEnabled = true;
-            this.capteurDistanceSecuritaireCB.Location = new System.Drawing.Point(113, 36);
-            this.capteurDistanceSecuritaireCB.Name = "capteurDistanceSecuritaireCB";
-            this.capteurDistanceSecuritaireCB.Size = new System.Drawing.Size(185, 21);
-            this.capteurDistanceSecuritaireCB.TabIndex = 55;
-            this.capteurDistanceSecuritaireCB.Tag = "20";
-            // 
-            // longueurZoneDangerCapteurDistanceTB
-            // 
-            this.longueurZoneDangerCapteurDistanceTB.Location = new System.Drawing.Point(441, 6);
-            this.longueurZoneDangerCapteurDistanceTB.Name = "longueurZoneDangerCapteurDistanceTB";
-            this.longueurZoneDangerCapteurDistanceTB.Size = new System.Drawing.Size(121, 20);
-            this.longueurZoneDangerCapteurDistanceTB.TabIndex = 30;
-            this.longueurZoneDangerCapteurDistanceTB.Tag = "19";
-            this.longueurZoneDangerCapteurDistanceTB.TextChanged += new System.EventHandler(this.longueurZoneDangerCapteurDistanceTB_TextChanged);
-            this.longueurZoneDangerCapteurDistanceTB.KeyDown += new System.Windows.Forms.KeyEventHandler(this.longueurZoneDangerCapteurDistanceTB_KeyDown);
-            // 
-            // longueurZoneSecuritaireCapteurDistanceLbl
-            // 
-            this.longueurZoneSecuritaireCapteurDistanceLbl.AutoSize = true;
-            this.longueurZoneSecuritaireCapteurDistanceLbl.Location = new System.Drawing.Point(306, 39);
-            this.longueurZoneSecuritaireCapteurDistanceLbl.Name = "longueurZoneSecuritaireCapteurDistanceLbl";
-            this.longueurZoneSecuritaireCapteurDistanceLbl.Size = new System.Drawing.Size(129, 13);
-            this.longueurZoneSecuritaireCapteurDistanceLbl.TabIndex = 33;
-            this.longueurZoneSecuritaireCapteurDistanceLbl.Text = "Longueur zone sécuritaire";
-            // 
-            // capteurDistanceProchComportementSecuritaireLbl
-            // 
-            this.capteurDistanceProchComportementSecuritaireLbl.AutoSize = true;
-            this.capteurDistanceProchComportementSecuritaireLbl.Location = new System.Drawing.Point(7, 9);
-            this.capteurDistanceProchComportementSecuritaireLbl.Name = "capteurDistanceProchComportementSecuritaireLbl";
-            this.capteurDistanceProchComportementSecuritaireLbl.Size = new System.Drawing.Size(0, 13);
-            this.capteurDistanceProchComportementSecuritaireLbl.TabIndex = 32;
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.optionsDebogagesCB);
@@ -1001,7 +1165,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(948, 484);
+            this.tabPage3.Size = new System.Drawing.Size(740, 493);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Options de débogage";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1018,7 +1182,7 @@
             this.optionsDebogagesCB.Name = "optionsDebogagesCB";
             this.optionsDebogagesCB.Size = new System.Drawing.Size(66, 21);
             this.optionsDebogagesCB.TabIndex = 9;
-            this.optionsDebogagesCB.Tag = "26";
+            this.optionsDebogagesCB.Tag = "34";
             this.optionsDebogagesCB.SelectionChangeCommitted += new System.EventHandler(this.optionsDebogagesCB_SelectionChangeCommitted);
             // 
             // label14
@@ -1042,7 +1206,7 @@
             this.comboBox_capteur.Name = "comboBox_capteur";
             this.comboBox_capteur.Size = new System.Drawing.Size(66, 21);
             this.comboBox_capteur.TabIndex = 6;
-            this.comboBox_capteur.Tag = "29";
+            this.comboBox_capteur.Tag = "37";
             // 
             // comboBox_eclairage
             // 
@@ -1056,7 +1220,7 @@
             this.comboBox_eclairage.Name = "comboBox_eclairage";
             this.comboBox_eclairage.Size = new System.Drawing.Size(66, 21);
             this.comboBox_eclairage.TabIndex = 5;
-            this.comboBox_eclairage.Tag = "28";
+            this.comboBox_eclairage.Tag = "36";
             // 
             // comboBox_comportement
             // 
@@ -1070,7 +1234,7 @@
             this.comboBox_comportement.Name = "comboBox_comportement";
             this.comboBox_comportement.Size = new System.Drawing.Size(66, 21);
             this.comboBox_comportement.TabIndex = 4;
-            this.comboBox_comportement.Tag = "27";
+            this.comboBox_comportement.Tag = "35";
             // 
             // ZoneCapteurs
             // 
@@ -1099,336 +1263,17 @@
             this.ChangeComportement.TabIndex = 1;
             this.ChangeComportement.Text = "Changement de comportement";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label15);
-            this.panel1.Controls.Add(this.label16);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Controls.Add(this.comboBox1);
-            this.panel1.Controls.Add(this.comboBox2);
-            this.panel1.Controls.Add(this.textBox2);
-            this.panel1.Controls.Add(this.label17);
-            this.panel1.Controls.Add(this.label18);
-            this.panel1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel1.Location = new System.Drawing.Point(85, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(570, 64);
-            this.panel1.TabIndex = 89;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(27, 36);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(83, 13);
-            this.label7.TabIndex = 58;
-            this.label7.Text = "Zone sécuritaire";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(321, 9);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(114, 13);
-            this.label15.TabIndex = 29;
-            this.label15.Text = "Longueur zone danger";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(27, 9);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(68, 13);
-            this.label16.TabIndex = 57;
-            this.label16.Text = "Zone danger";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(441, 36);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(121, 20);
-            this.textBox1.TabIndex = 34;
-            this.textBox1.Tag = "21";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(113, 6);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(185, 21);
-            this.comboBox1.TabIndex = 56;
-            this.comboBox1.Tag = "18";
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(113, 36);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(185, 21);
-            this.comboBox2.TabIndex = 55;
-            this.comboBox2.Tag = "20";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(441, 6);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(121, 20);
-            this.textBox2.TabIndex = 30;
-            this.textBox2.Tag = "19";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(306, 39);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(129, 13);
-            this.label17.TabIndex = 33;
-            this.label17.Text = "Longueur zone sécuritaire";
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(7, 9);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(0, 13);
-            this.label18.TabIndex = 32;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.label19);
-            this.panel2.Controls.Add(this.label20);
-            this.panel2.Controls.Add(this.label21);
-            this.panel2.Controls.Add(this.textBox3);
-            this.panel2.Controls.Add(this.comboBox3);
-            this.panel2.Controls.Add(this.comboBox4);
-            this.panel2.Controls.Add(this.textBox4);
-            this.panel2.Controls.Add(this.label22);
-            this.panel2.Controls.Add(this.label23);
-            this.panel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel2.Location = new System.Drawing.Point(84, 5);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(570, 64);
-            this.panel2.TabIndex = 91;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(27, 36);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(83, 13);
-            this.label19.TabIndex = 58;
-            this.label19.Text = "Zone sécuritaire";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(321, 9);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(114, 13);
-            this.label20.TabIndex = 29;
-            this.label20.Text = "Longueur zone danger";
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(27, 9);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(68, 13);
-            this.label21.TabIndex = 57;
-            this.label21.Text = "Zone danger";
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(441, 36);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(121, 20);
-            this.textBox3.TabIndex = 34;
-            this.textBox3.Tag = "21";
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(113, 6);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(185, 21);
-            this.comboBox3.TabIndex = 56;
-            this.comboBox3.Tag = "18";
-            // 
-            // comboBox4
-            // 
-            this.comboBox4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(113, 36);
-            this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(185, 21);
-            this.comboBox4.TabIndex = 55;
-            this.comboBox4.Tag = "20";
-            // 
-            // textBox4
-            // 
-            this.textBox4.Location = new System.Drawing.Point(441, 6);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(121, 20);
-            this.textBox4.TabIndex = 30;
-            this.textBox4.Tag = "19";
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(306, 39);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(129, 13);
-            this.label22.TabIndex = 33;
-            this.label22.Text = "Longueur zone sécuritaire";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(7, 9);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(0, 13);
-            this.label23.TabIndex = 32;
-            // 
-            // comboBox5
-            // 
-            this.comboBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox5.FormattingEnabled = true;
-            this.comboBox5.Items.AddRange(new object[] {
-            "Actif",
-            "Inactif"});
-            this.comboBox5.Location = new System.Drawing.Point(9, 22);
-            this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(56, 21);
-            this.comboBox5.TabIndex = 90;
-            this.comboBox5.Tag = "22";
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.label24);
-            this.panel3.Controls.Add(this.label25);
-            this.panel3.Controls.Add(this.label26);
-            this.panel3.Controls.Add(this.textBox5);
-            this.panel3.Controls.Add(this.comboBox6);
-            this.panel3.Controls.Add(this.comboBox7);
-            this.panel3.Controls.Add(this.textBox6);
-            this.panel3.Controls.Add(this.label27);
-            this.panel3.Controls.Add(this.label28);
-            this.panel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.panel3.Location = new System.Drawing.Point(84, 5);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(570, 64);
-            this.panel3.TabIndex = 91;
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(27, 36);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(83, 13);
-            this.label24.TabIndex = 58;
-            this.label24.Text = "Zone sécuritaire";
-            // 
-            // label25
-            // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(321, 9);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(114, 13);
-            this.label25.TabIndex = 29;
-            this.label25.Text = "Longueur zone danger";
-            // 
-            // label26
-            // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(27, 9);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(68, 13);
-            this.label26.TabIndex = 57;
-            this.label26.Text = "Zone danger";
-            // 
-            // textBox5
-            // 
-            this.textBox5.Location = new System.Drawing.Point(441, 36);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(121, 20);
-            this.textBox5.TabIndex = 34;
-            this.textBox5.Tag = "21";
-            // 
-            // comboBox6
-            // 
-            this.comboBox6.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox6.FormattingEnabled = true;
-            this.comboBox6.Location = new System.Drawing.Point(113, 6);
-            this.comboBox6.Name = "comboBox6";
-            this.comboBox6.Size = new System.Drawing.Size(185, 21);
-            this.comboBox6.TabIndex = 56;
-            this.comboBox6.Tag = "18";
-            // 
-            // comboBox7
-            // 
-            this.comboBox7.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox7.FormattingEnabled = true;
-            this.comboBox7.Location = new System.Drawing.Point(113, 36);
-            this.comboBox7.Name = "comboBox7";
-            this.comboBox7.Size = new System.Drawing.Size(185, 21);
-            this.comboBox7.TabIndex = 55;
-            this.comboBox7.Tag = "20";
-            // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(441, 6);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(121, 20);
-            this.textBox6.TabIndex = 30;
-            this.textBox6.Tag = "19";
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(306, 39);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(129, 13);
-            this.label27.TabIndex = 33;
-            this.label27.Text = "Longueur zone sécuritaire";
-            // 
-            // label28
-            // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(7, 9);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(0, 13);
-            this.label28.TabIndex = 32;
-            // 
-            // comboBox8
-            // 
-            this.comboBox8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox8.FormattingEnabled = true;
-            this.comboBox8.Items.AddRange(new object[] {
-            "Actif",
-            "Inactif"});
-            this.comboBox8.Location = new System.Drawing.Point(9, 22);
-            this.comboBox8.Name = "comboBox8";
-            this.comboBox8.Size = new System.Drawing.Size(56, 21);
-            this.comboBox8.TabIndex = 90;
-            this.comboBox8.Tag = "22";
-            // 
             // Configure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(956, 544);
+            this.ClientSize = new System.Drawing.Size(748, 553);
             this.ControlBox = false;
             this.Controls.Add(this.splitContainer1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Configure";
             this.Text = "Configure";
-            this.Load += new System.EventHandler(this.Configure_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -1440,22 +1285,20 @@
             this.tabPage2.ResumeLayout(false);
             this.comportementGroupBox.ResumeLayout(false);
             this.comportementGroupBox.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage5.ResumeLayout(false);
-            this.tabPage6.ResumeLayout(false);
             this.capteurGroupBox.ResumeLayout(false);
             this.capteurGroupBox.PerformLayout();
-            this.capteurDistanceOptionsPnl.ResumeLayout(false);
-            this.capteurDistanceOptionsPnl.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
+            this.capteursDistTabs.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.tabPage5.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1463,6 +1306,12 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Button buttonDeleteProfil;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button buttonCréerProfil;
+        private System.Windows.Forms.Button modifierProfilButt;
+        private System.Windows.Forms.ComboBox comboBoxProfil;
+        private System.Windows.Forms.Button retourMenuButt;
         private System.Windows.Forms.TabControl configureTabs;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label5;
@@ -1476,24 +1325,13 @@
         private System.Windows.Forms.TextBox textBoxHoraire;
         private System.Windows.Forms.TextBox textBoxReculer;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.Button buttonDeleteProfil;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button buttonCréerProfil;
-        private System.Windows.Forms.Button modifierProfilButt;
-        private System.Windows.Forms.ComboBox comboBoxProfil;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.Panel capteurDistanceOptionsPnl;
-        private System.Windows.Forms.Label longueurZoneDangerCapteurDistanceLbl;
-        private System.Windows.Forms.TextBox longueurZoneSecuritaireCapteurDistanceTB;
-        private System.Windows.Forms.TextBox longueurZoneDangerCapteurDistanceTB;
-        private System.Windows.Forms.Label longueurZoneSecuritaireCapteurDistanceLbl;
-        private System.Windows.Forms.Label capteurDistanceProchComportementSecuritaireLbl;
-        private System.Windows.Forms.Label zoneDangerLbl;
-        private System.Windows.Forms.ComboBox capteurDistanceDangerCB;
-        private System.Windows.Forms.ComboBox capteurDistanceSecuritaireCB;
-        private System.Windows.Forms.Label zoneSecuritaireLbl;
-        private System.Windows.Forms.GroupBox capteurGroupBox;
         private System.Windows.Forms.GroupBox comportementGroupBox;
+        private System.Windows.Forms.TextBox dureeEDTxtBox;
+        private System.Windows.Forms.TextBox angleEDTxtBox;
+        private System.Windows.Forms.TextBox dureeEGTxtBox;
+        private System.Windows.Forms.TextBox angleEGTxtBox;
+        private System.Windows.Forms.TextBox angleDDTxtBox;
+        private System.Windows.Forms.TextBox angleDGTxtBox;
         private System.Windows.Forms.Label suiviLigneProchComportementLbl;
         private System.Windows.Forms.Label parametresLbl;
         private System.Windows.Forms.Label dureeEvitementDLbl;
@@ -1514,65 +1352,57 @@
         private System.Windows.Forms.ComboBox suiviLigneCB;
         private System.Windows.Forms.Label deviationGLbl;
         private System.Windows.Forms.Label suiviLigneLbl;
+        private System.Windows.Forms.GroupBox capteurGroupBox;
+        private System.Windows.Forms.TabControl capteursDistTabs;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox longueurSecuritaireDroitTxtBox;
+        private System.Windows.Forms.ComboBox zoneDangerDroitCB;
+        private System.Windows.Forms.ComboBox zoneSecuritaireDroitCB;
+        private System.Windows.Forms.TextBox longueurDangerDroitTxtBox;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ComboBox capteurDistDroitCB;
+        private System.Windows.Forms.TabPage tabPage5;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.TextBox longueurSecuritaireCentreCB;
+        private System.Windows.Forms.ComboBox zoneDangerCentreCB;
+        private System.Windows.Forms.ComboBox zoneSecuritaireCentreCB;
+        private System.Windows.Forms.TextBox longueurDangerCentreTxtBox;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.ComboBox capteurDistCentreCB;
+        private System.Windows.Forms.TabPage tabPage6;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.TextBox longueurSecuritaireGaucheTxtBox;
+        private System.Windows.Forms.ComboBox zoneDangerGaucheCB;
+        private System.Windows.Forms.ComboBox zoneSecuritaireGaucheCB;
+        private System.Windows.Forms.TextBox lonuguerDangerGaucheTxtBox;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.ComboBox capteurDistGaucheCB;
+        private System.Windows.Forms.ComboBox suiveurLigneCB;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox dureeEDTxtBox;
-        private System.Windows.Forms.TextBox angleEDTxtBox;
-        private System.Windows.Forms.TextBox dureeEGTxtBox;
-        private System.Windows.Forms.TextBox angleEGTxtBox;
-        private System.Windows.Forms.TextBox angleDDTxtBox;
-        private System.Windows.Forms.TextBox angleDGTxtBox;
-        private System.Windows.Forms.Button retourMenuButt;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.ComboBox optionsDebogagesCB;
+        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.ComboBox comboBox_capteur;
         private System.Windows.Forms.ComboBox comboBox_eclairage;
         private System.Windows.Forms.ComboBox comboBox_comportement;
         private System.Windows.Forms.Label ZoneCapteurs;
         private System.Windows.Forms.Label EtatEclairage;
         private System.Windows.Forms.Label ChangeComportement;
-        private System.Windows.Forms.ComboBox capteurDist1CB;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.ComboBox capteurDist3CB;
-        private System.Windows.Forms.ComboBox suiveurLigneCB;
-        private System.Windows.Forms.ComboBox optionsDebogagesCB;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.TabPage tabPage6;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.ComboBox comboBox3;
-        private System.Windows.Forms.ComboBox comboBox4;
-        private System.Windows.Forms.TextBox textBox4;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.ComboBox comboBox5;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.ComboBox comboBox6;
-        private System.Windows.Forms.ComboBox comboBox7;
-        private System.Windows.Forms.TextBox textBox6;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.ComboBox comboBox8;
     }
 }

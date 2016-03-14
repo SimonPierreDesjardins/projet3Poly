@@ -25,6 +25,14 @@ namespace InterfaceGraphique
         private string nomProfilDefaut;
         private int indexProfilDefaut;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public Configure()
+        ///
+        /// Cette fonction initialize la fenetre et initialise la visibilité de
+        /// ses composantes
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public Configure()
         {
             InitializeComponent();
@@ -47,6 +55,13 @@ namespace InterfaceGraphique
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void assignerProfilsCB(StringBuilder str)
+        ///
+        /// Cette fonction permet d'assigner un profil à la fenetre configure
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void assignerProfilsCB(StringBuilder str){
             
             FonctionsNatives.obtenirCheminProfils(str, str.Capacity);
@@ -100,13 +115,20 @@ namespace InterfaceGraphique
             
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn void setUpAllControls(Control control)
+        ///
+        /// Cette fonction permet d'envoyer le handle de chaque composant au modele
+        ///
+        ////////////////////////////////////////////////////////////////////////
         void setUpAllControls(Control control)
         {
             foreach (Control item in control.Controls)
             {
                 if (item.Tag != null)
                 {
-                    if (item.GetType().Equals(typeof(ComboBox)) && Int32.Parse((String)item.Tag) <= 20)
+                    if (item.GetType().Equals(typeof(ComboBox)) && Int32.Parse((String)item.Tag) <= 23)
                     {
                         ComboBox combo = item as ComboBox;
                         combo.BindingContext = new BindingContext();
@@ -119,14 +141,45 @@ namespace InterfaceGraphique
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void buttonDefConfig_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction charge le profil par défault
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du click
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void buttonDefConfig_Click(object sender, EventArgs e)
         {
             FonctionsNatives.chargerProfilParDefaut();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private bool caractereInvalide(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool caractereInvalide(object sender, KeyPressEventArgs e)
         { return e.Handled = !(/*char.IsLetterOrDigit(e.KeyChar)*/true); }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement avancer
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -138,6 +191,17 @@ namespace InterfaceGraphique
             textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);    
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement reculer
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -149,6 +213,17 @@ namespace InterfaceGraphique
             textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner gauche
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -160,6 +235,17 @@ namespace InterfaceGraphique
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner droit
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -171,6 +257,39 @@ namespace InterfaceGraphique
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner droit
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!caractereInvalide(sender, e))
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
+            textBoxModeManuel.Text = afficherCaractere(caractere);
+            textBoxModeManuel.Select(textBoxReculer.Text.Length, 0);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn string afficherCaractere(char caractere)
+        ///
+        /// Cette fonction prend un char et retourne une string avec le nom complet de la touche
+        ///
+        /// @param[in] char caractere: char représentant la touche
+        ///
+        /// @return string: le nom complet représentant le char
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         string afficherCaractere(char caractere)
         {
             string mot = caractere.ToString();
@@ -189,21 +308,20 @@ namespace InterfaceGraphique
             return mot;
         }
 
-        private void Configure_Load(object sender, EventArgs e)
-        {
-        }
-
         private bool empecherTextChangedEvent = false;
 
-        private void modeManuelValidation(TextBox textBox, char key)
-        {
-            if (empecherTextChangedEvent)
-                return;
-            empecherTextChangedEvent = true;
-            textBox.Text = afficherCaractere(key);
-            empecherTextChangedEvent = false;
-        }
-        
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private bool degreeValidation(string aTester)
+        ///
+        /// Cette fonction permet de valider un degree ou il n'y a que deux chiffres apres
+        /// la virgule et que le nombre est entre 0 et 360
+        ///
+        /// @param[in] string aTester: la string représentant un degree
+        ///
+        /// @return bool: true si valide sinon false
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool degreeValidation(string aTester)
         {
             double nombre;
@@ -216,6 +334,18 @@ namespace InterfaceGraphique
             return reussi;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private bool tempsValidation(string aTester)
+        ///
+        /// Cette fonction permet de valider un temps ou il n'y a que deux chiffres apres
+        /// la virgule
+        ///
+        /// @param[in] string aTester: la string représentant un temps
+        ///
+        /// @return bool: true si valide sinon false
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool tempsValidation(string aTester)
         {
             double nombre;
@@ -228,6 +358,19 @@ namespace InterfaceGraphique
             return reussi;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEtDureeValidation(TextBox box, bool estDegree)
+        ///
+        /// Cette fonction permet de valider un temps et un angle. S'il n'est pas valide,
+        /// l'ancien text est affiché
+        ///
+        /// @param[in] TextBox box: la textbox a vérifier
+        /// @param[in] bool estDegree: la validité d'un angle
+        ///
+        /// @return: Aucun
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEtDureeValidation(TextBox box, bool estDegree)
         {
             if (empecherTextChangedEvent)
@@ -243,8 +386,19 @@ namespace InterfaceGraphique
 
             empecherTextChangedEvent = false;
         }
-        
-        
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn  private bool decimalCheck(TextBox box)
+        ///
+        /// Cette fonction permet de valider d'un nombre ou il ne peut qu'y avoir deux chiffre apres
+        /// une virgule
+        ///
+        /// @param[in] TextBox box: la textbox a vérifier
+        ///
+        /// @return: Aucun
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool decimalCheck(TextBox box)
         {
             if (box.Text.Count(f => f == '.' | f == ',') == 1 && (box.Text.IndexOf('.') > box.TextLength - 3 || box.Text.IndexOf(',') > box.TextLength - 3))
@@ -256,63 +410,190 @@ namespace InterfaceGraphique
             return false;
         }
 
+        //String représentant l'ancienne valeur du textbox
         private string oldText;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEGTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEGTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEGTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEGTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEGTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEGTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEDTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEDTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEDTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEDTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEDTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEDTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
@@ -338,23 +619,32 @@ namespace InterfaceGraphique
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void retourMenuButt_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction ferme la fenetre si le resultat du dialog vaut OK
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void retourMenuButt_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             Close();
         }
 
-        private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!caractereInvalide(sender, e))
-            {
-                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
-            }
-            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
-            textBoxModeManuel.Text = afficherCaractere(caractere);
-            textBoxModeManuel.Select(textBoxReculer.Text.Length, 0);
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction selectionne l'index 1 des textbox de la fenetre
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
         {
             string nomProfil = (string)(sender as ComboBox).SelectedItem;
@@ -373,6 +663,13 @@ namespace InterfaceGraphique
             Console.Write("allo");
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// private enum creationProfil
+        ///
+        /// Etat dans la creation d'un profil
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private enum creationProfil
         {
             ATTENTE_CREATION,
@@ -458,7 +755,7 @@ namespace InterfaceGraphique
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
                 FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
                 FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
-                FonctionsNatives.assignerCapteurDistance(capteurDist1CB.SelectedIndex == 0, capteurDist2CB.SelectedIndex == 0, capteurDist3CB.SelectedIndex == 0, (TypeComportement)capteurDistanceDangerCB.SelectedValue, Convert.ToDouble(longueurZoneDangerCapteurDistanceTB.Text.Replace('.', ',')), (TypeComportement)capteurDistanceSecuritaireCB.SelectedValue, Convert.ToDouble(longueurZoneSecuritaireCapteurDistanceTB.Text.Replace('.', ',')));
+                FonctionsNatives.assignerCapteurDistance(capteurDistDroitCB.SelectedIndex == 0, capteurDistCentreCB.SelectedIndex == 0, capteurDistGaucheCB.SelectedIndex == 0, (TypeComportement)zoneDangerDroitCB.SelectedValue, Convert.ToDouble(longueurDangerDroitTxtBox.Text.Replace('.', ',')), (TypeComportement)zoneDangerDroitCB.SelectedValue, Convert.ToDouble(longueurSecuritaireDroitTxtBox.Text.Replace('.', ',')));
                 FonctionsNatives.assignerSuiveurLigne(suiveurLigneCB.SelectedIndex == 0);
                 FonctionsNatives.assignerOptionsDebogages(optionsDebogagesCB.SelectedIndex == 0, comboBox_comportement.SelectedIndex == 0, comboBox_eclairage.SelectedIndex == 0, comboBox_capteur.SelectedIndex == 0);
                 FonctionsNatives.sauvegarderProfil(comboBoxProfil.Text + extensionProfils);
@@ -474,6 +771,12 @@ namespace InterfaceGraphique
             foreach (Control tab in configureTabs.TabPages)
             {
                 tab.Enabled = tabEnabled;
+
+            }
+
+            foreach (Control tab in capteursDistTabs.TabPages)
+            {
+                tab.Enabled = tabEnabled;
             }
         }
 
@@ -485,10 +788,18 @@ namespace InterfaceGraphique
             comboBox_capteur.Enabled = estActif;
         }
 
+
         
 
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    ///
+    /// @fn  static partial class FonctionsNatives
+    ///
+    /// Permet de faire le lien avec les méthodes implémentées dans le C++
+    ///
+    ////////////////////////////////////////////////////////////////////////
     static partial class FonctionsNatives{
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementSuivreLigne(TypeComportement comportementSuivant);
