@@ -38,7 +38,6 @@ public:
 private:
 	std::unique_ptr<VisiteurCreationMur> visiteurCreationMur_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
 
 	bool enCreation_{ false };
 	glm::dvec3 positionPremierClic_{ glm::dvec3() };

@@ -34,6 +34,12 @@ class PhysiqueTest : public CppUnit::TestFixture
 	// =================================================================
   CPPUNIT_TEST_SUITE( PhysiqueTest );
   CPPUNIT_TEST(testIntersectionQuad);
+
+  CPPUNIT_TEST(testIntersectionCercleCercle);
+  CPPUNIT_TEST(testIntersectionRectangleCercle);
+  CPPUNIT_TEST(testIntersectionRectangleRectangle);
+
+  CPPUNIT_TEST(testPointDansCercle);
   CPPUNIT_TEST(testPointDansRectangle);
   CPPUNIT_TEST_SUITE_END();
 
@@ -57,7 +63,12 @@ public:
 	/// Cas de test: verification de l'intersection de deux quads.
 	void testIntersectionQuad();
 
+    void testIntersectionRectangleCercle();
+    void testIntersectionRectangleRectangle();
+    void testIntersectionCercleCercle();
+
     void testPointDansRectangle();
+    void testPointDansCercle();
 
 private:
     utilitaire::QuadEnglobant quad1_;
@@ -70,4 +81,3 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
-

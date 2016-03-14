@@ -36,7 +36,6 @@ public:
 
 private:
 	std::unique_ptr<VisiteurCreationPoteau> visiteurCreationPoteau_{ nullptr };
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
 };
 

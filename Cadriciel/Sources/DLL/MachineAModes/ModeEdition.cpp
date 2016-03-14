@@ -177,18 +177,6 @@ void ModeEdition::sauvegarder()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeEdition::sauvegarder()
-///
-/// Cette fonction permet de gérer le chargement dans le modeEdition.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::charger()
-{
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chargerZone();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn void ModeEdition::gererToucheSupprimer()
 ///
 /// Cette fonction permet de gérer la touche supprimer dans le modeEdition.

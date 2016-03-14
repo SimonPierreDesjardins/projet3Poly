@@ -533,9 +533,8 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeEvitement), std::move(comportementPtr));
 	}
 
-	__declspec(dllexport) void __cdecl assignerCapteurDistance(bool estActif1, bool estActif2, bool estActif3, int comportementDanger, double distanceDanger, int comportementSecuritaire, double distanceSecuritaire){
-		bool estActif[] = { estActif1, estActif2, estActif3 };
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCapteurDistance(estActif, static_cast<TypeComportement>(comportementDanger), distanceDanger, static_cast<TypeComportement>(comportementSecuritaire), distanceSecuritaire);
+	__declspec(dllexport) void __cdecl assignerCapteurDistance(bool estActif, int comportementDanger, double distanceDanger, int comportementSecuritaire, double distanceSecuritaire, int indexCapteur){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCapteurDistance(estActif, static_cast<TypeComportement>(comportementDanger), distanceDanger, static_cast<TypeComportement>(comportementSecuritaire), distanceSecuritaire, indexCapteur);
 	}
 
 	__declspec(dllexport) void __cdecl assignerSuiveurLigne(bool estActif){

@@ -51,6 +51,11 @@ NoeudMur::~NoeudMur()
 
 }
 
+void NoeudMur::animer(float dt)
+{
+
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudMur::afficherConcret() const

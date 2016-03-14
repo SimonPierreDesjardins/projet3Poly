@@ -76,7 +76,7 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 	if (commande != nullptr)
 	{
 		TypeCommande typeCommande = commande->obtenirTypeCommande();
-
+        
 		// Execute la commande que si elle sert à inverser le mode de contrôle.
 		if ((typeCommande == INVERSER_MODE_CONTROLE) || (manuel == provientUtilisateur))
 		{
@@ -121,8 +121,8 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement)
 	comportement_ = vecteurComportements_ -> at(nouveauComportement).get();
 	
 	if (debug){
-		std::cout << "Passage au comportement: " << comportement_->obtenirNomComportement() << endl
-			<< "Comportement Suivant: " << vecteurComportements_->at(comportement_->obtenirComportementSuivant()).get()->obtenirNomComportement() << endl;
+		std::cout << "Passage au comportement: " << comportement_->obtenirNomComportement() << endl;
+			//<< "Comportement Suivant: " << vecteurComportements_->at(comportement_->obtenirComportementSuivant()).get()->obtenirNomComportement() << endl;
 	}
 
 	// Assignation du controleur au comportement et initialisation
@@ -228,11 +228,11 @@ void ControleRobot::terminerBoucleRobot(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::boucleInfinieLogiqueRobot(){
+void ControleRobot::boucleInfinieLogiqueRobot()
+{
 	while (!manuel) {
 		comportement_->mettreAJour();
 	}
-
 }
 
 
@@ -249,6 +249,15 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 {
 	robot_->assignerVitesseGauche(vit_G);
 	robot_->assignerVitesseDroite(vit_D);
+}
+
+
+void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
+{
+    vit_G += robot_->obtenirVitesseGauche();
+    vit_D += robot_->obtenirVitesseDroite();
+    robot_->assignerVitesseGauche(vit_G);
+    robot_->assignerVitesseDroite(vit_D);
 }
 
 ////////////////////////////////////////////////////////////////////////

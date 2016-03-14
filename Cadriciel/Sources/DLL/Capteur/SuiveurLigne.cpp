@@ -1,8 +1,18 @@
+////////////////////////////////////////////////////////////////////////////////
+/// @file   SuiveurLigne.cpp
+/// @author Olivier St-Amour
+/// @date   2016-03-13
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////////////////////////////////////
+
 #include "SuiveurLigne.h" 
 
 #include "CapteurOptique.h" 
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
+#include "rapidjson\filewritestream.h"
 
 const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_DROITE{ 4.8523, -0.853, 0.0 };
 const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_CENTRE{ 4.8523,  0.070, 0.0 };
@@ -19,25 +29,37 @@ const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_GAUCHE{ 4.8523,  0.995, 0.0 };
 ////////////////////////////////////////////////////////////////////////////////
 SuiveurLigne::SuiveurLigne()
 {
-	visiteurDetectionLigne_ = std::make_unique<VisiteurDetectionLigne>();
-	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_DROITE));
-	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_CENTRE));
-	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_GAUCHE));
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+    initialiser();
 }
 
-//Constructeur par paramètre
-SuiveurLigne::SuiveurLigne(bool estActif){
-	/*
-	this->estActif = estActif;
-	*/
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn SuiveurLigne::SuiveurLigne()
+///
+/// Constructeur par défaut.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////////////
+SuiveurLigne::SuiveurLigne(bool estActif)
+{
+    initialiser();
+	estActif_ = estActif;
 }
 
-//Constructeur par paramètre
-SuiveurLigne::SuiveurLigne(const rapidjson::Value& capteurJSON){
-	/*
-	this->estActif = capteurJSON.MemberBegin()->value.GetBool();
-	*/
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn SuiveurLigne::SuiveurLigne(const rapidjson::Value& capteurJSON)
+///
+/// Constructeur par défaut.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////////////
+SuiveurLigne::SuiveurLigne(const rapidjson::Value& capteurJSON)
+{
+    initialiser();
+	estActif_ = capteurJSON.MemberBegin()->value.GetBool();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -51,6 +73,14 @@ SuiveurLigne::SuiveurLigne(const rapidjson::Value& capteurJSON){
 ////////////////////////////////////////////////////////////////////////////////
 SuiveurLigne::~SuiveurLigne()
 {
+}
+
+void SuiveurLigne::initialiser()
+{
+	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_DROITE));
+	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_CENTRE));
+	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_GAUCHE));
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -95,10 +125,28 @@ void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const do
 	for (int i = 0; i < capteursOptique_.size(); i++)
 	{
 		capteursOptique_[i].mettreAJourPosition(positionRobot, angleRobot);
-        visiteurDetectionLigne_->assignerCapteurOptique(&capteursOptique_[i]);
-        arbre_->accepterVisiteur(visiteurDetectionLigne_.get());        
 	}
 }
+
+void SuiveurLigne::afficher() const
+{
+    for (int i = 0; i < capteursOptique_.size(); i++)
+    {
+        capteursOptique_[i].afficher();
+    }
+}
+
+
+void SuiveurLigne::verifierDetection(NoeudLigne* ligne)
+{
+    if (!estActif_) return;
+
+    for (int i = 0; i < capteursOptique_.size(); i++)
+    {
+        capteursOptique_[i].verifierDetection(ligne);
+    }
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -112,12 +160,15 @@ void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const do
 ///
 ////////////////////////////////////////////////////////////////////////
 void SuiveurLigne::toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
-	/*
 	writer.Key("estActif");
-	writer.Bool(estActif);
-	*/
+	writer.Bool(estActif_);
 }
 
+
 void SuiveurLigne::assignerActif(bool estActif){
-	this->estActif = estActif;
+	estActif_ = estActif;
 }
+
+/////////////////////////////////////////////////////////////////////////////////
+/// @}
+/////////////////////////////////////////////////////////////////////////////////

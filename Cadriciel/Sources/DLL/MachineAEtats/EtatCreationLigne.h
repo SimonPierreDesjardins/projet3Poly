@@ -40,7 +40,6 @@ public:
 private:
 	std::unique_ptr<VisiteurCreationLigne> visiteurCreationLigne_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
 		
 	NoeudAbstrait* ligne_{ nullptr };
 	NoeudAbstrait* segment_{ nullptr };

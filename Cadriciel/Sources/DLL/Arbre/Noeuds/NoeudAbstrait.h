@@ -175,6 +175,19 @@ public:
 	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
+	//Permet de modifier les paramètres du robot
+	virtual void assignerVitesseRotation(float vitesse);
+	virtual void assignerVitesseDroite(float vitesse);
+	virtual void assignerVitesseGauche(float vitesse);
+	virtual void assignerVitesseDroiteCourante(float vitesse);
+	virtual void assignerVitesseGaucheCourante(float vitesse);
+
+	//Permet de récupérer les paramètres du robot.
+	virtual float obtenirVitesseDroite() const;
+	virtual float obtenirVitesseGauche() const;
+	virtual float obtenirVitesseDroiteCourante() const;
+	virtual float obtenirVitesseGaucheCourante() const;
+
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };
@@ -186,7 +199,9 @@ protected:
 	GLenum					modePolygones_{ GL_FILL };
 
 	/// Position relative du noeud.
-	glm::dvec3				positionRelative_{ 0, 0, 0 };
+	glm::dvec3				positionRelative_{ 0.0, 0.0, 0.0 };
+
+    glm::dvec3              positionCourante_{ 0.0, 0.0, 0.0 };
 
 	/// Angle de rotation sur le plan xy
 	double					angleRotation_{ 0 };
@@ -230,6 +245,8 @@ protected:
 	float vitesseDroite_{ 0.f };
 	float vitesseGauche_{ 0.f };
 	float vitesseRotation_{ 0.f };
+	float vitesseCouranteDroite_{ 0.f };
+	float vitesseCouranteGauche_{ 0.f };
 };
 
 

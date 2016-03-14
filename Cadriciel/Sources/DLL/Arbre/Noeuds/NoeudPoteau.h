@@ -12,6 +12,7 @@
 #define __ARBRE_NOEUDS_NOEUDPOTEAU_H__
 
 #include "NoeudComposite.h"
+#include "CercleEnglobant.h"
 #include "GL/glew.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -25,16 +26,27 @@ class NoeudPoteau : public NoeudAbstrait
 {
 
 public:
-
 	/// Constructeur
 	NoeudPoteau(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudPoteau();
 
+    inline CercleEnglobant obtenirCercleEnglobant();
+
+     
+    virtual void animer(float dt);
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+private:
+    CercleEnglobant cercle_;
 };
+ 
+inline CercleEnglobant NoeudPoteau::obtenirCercleEnglobant()
+{
+    return cercle_;
+}
 
 #endif
 

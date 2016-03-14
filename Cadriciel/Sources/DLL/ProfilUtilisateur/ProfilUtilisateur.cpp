@@ -16,6 +16,8 @@
 #include <atlstr.h>
 #include <fstream>
 #include <sstream>
+#include "NoeudRobot.h"
+#include <cmath>
 
 
 ProfilUtilisateur::ProfilUtilisateur(){
@@ -27,6 +29,18 @@ ProfilUtilisateur::ProfilUtilisateur(){
 	std::getline(fichierDernierProfilR, nomProfil_);
 	fichierDernierProfilR.close();
 
+
+    positionsRelatives_ = {{
+            NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE,
+            NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE,
+            NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE
+        }};
+
+    anglesRelatifs_ = {{
+            NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE,
+            NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE,
+            NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE
+        }};
 }
 
 
@@ -90,11 +104,12 @@ void ProfilUtilisateur::sauvegarder(){
 
 		writer.Key("capteursDistance");
 		writer.StartArray();
-			for (std::vector<CapteurDistance>::iterator itr = capteursDistance_.begin(); itr != capteursDistance_.end(); itr++){
-				writer.StartObject();
-					itr->toJSON(writer);
-				writer.EndObject();
-			}
+            for each (CapteurDistance capteur in capteursDistance_)
+            {
+                writer.StartObject();
+                capteur.toJSON(writer);
+                writer.EndObject();
+            }
 		writer.EndArray();
 
 		writer.Key("suiveurLigne");
@@ -125,7 +140,6 @@ bool ProfilUtilisateur::changerProfil(std::string nomProfil){
 	comportements_.clear();
 	touches_.clear();
 	commandes_.clear();
-	capteursDistance_.clear();
 
 	return chargerProfil();
 }
@@ -175,10 +189,10 @@ bool ProfilUtilisateur::chargerProfil(){
 	SendMessage(configureHandles.at(ROTATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
-	commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER)));
-	commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER)));
-	commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE)));
-	commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE)));
+	commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));
+	commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER, true)));
+	commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE, true)));
+	commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE, true)));
 
 	itr++;
 
@@ -196,20 +210,20 @@ bool ProfilUtilisateur::chargerProfil(){
 
 	comportements_.push_back(std::make_unique<ComportementDeviation>(comportementsJSON[DEVIATIONVERSLAGAUCHE]));
 	ComboBox_SetCurSel(configureHandles.at(DEVIATION_GAUCHE_CB), comportements_.at(DEVIATIONVERSLAGAUCHE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(DEVIATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[DEVIATIONVERSLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(DEVIATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[DEVIATIONVERSLAGAUCHE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementDeviation>(comportementsJSON[DEVIATIONVERSLADROITE]));
 	ComboBox_SetCurSel(configureHandles.at(DEVIATION_DROITE_CB), comportements_.at(DEVIATIONVERSLADROITE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(DEVIATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[DEVIATIONVERSLADROITE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(DEVIATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[DEVIATIONVERSLADROITE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLAGAUCHE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_GAUCHE_CB), comportements_.at(EVITEMENTPARLAGAUCHE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLADROITE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_DROITE_CB), comportements_.at(EVITEMENTPARLADROITE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLADROITE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[EVITEMENTPARLADROITE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 	SendMessage(configureHandles.at(EVITEMENT_DROITE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLADROITE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
 
 	itr++;
@@ -219,30 +233,21 @@ bool ProfilUtilisateur::chargerProfil(){
 	assert(capteursDistanceJSON.IsArray());
 
 	//bonne version à utiliser quand merge avec oli
-	/*ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_DANGER_CB), capteursDistance[0]["comportementDanger"].GetInt());
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistance[0]["distanceDanger"].GetDouble()).substr(0, 5).c_str());
-	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_CB), capteursDistance[0]["comportementSecuritaire"].GetInt());
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistance[0]["distanceSecuritaire"].GetDouble()).substr(0, 5).c_str());*/
-
-	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_DANGER_CB), 0);
-	SendMessage(configureHandles.at(CAPTEUR_DISTANCE_DANGER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(5.0).substr(0, 5).c_str());
-	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_CB), 0);
-	SendMessage(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(5.0).substr(0, 5).c_str());
+	
 
 	for (unsigned i = 0; i < capteursDistanceJSON.Size(); i++){
-		//capteursDistance_.push_back(CapteurDistance(capteursDistance[i]));
-		//ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(CAPTEUR_DIST1_CB + i)), 1 - capteursDistance[i]["estActif"].GetBool());
-		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
-		ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(CAPTEUR_DIST1_CB + i)), 0);
+		capteursDistance_.at(i) = CapteurDistance(positionsRelatives_.at(i), anglesRelatifs_.at(i), capteursDistanceJSON[i]);
+		ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(CAPTEUR_DIST_DROIT_CB + i)), 1 - capteursDistanceJSON[i]["estActif"].GetBool());
+		ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(ZONE_DANGER_DROIT_CB + i)), capteursDistanceJSON[0]["comportementDanger"].GetInt());
+		SendMessage(configureHandles.at(static_cast<ConfigureControl>(LARGEUR_DANGER_DROIT_TXT_BOX + i)), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistanceJSON[i]["distanceDanger"].GetDouble()).substr(0, 5).c_str());
+		ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(ZONE_SECURITAIRE_DROIT_CB + i)), capteursDistanceJSON[i]["comportementSecuritaire"].GetInt());
+		SendMessage(configureHandles.at(static_cast<ConfigureControl>(LARGEUR_SECURITAIRE_DROIT_TXT_BOX + i)), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistanceJSON[i]["distanceSecuritaire"].GetDouble()).substr(0, 5).c_str());
 	}
 
 	itr++;
 
-	//suiveurLigne_.assignerActif(itr->value.MemberBegin()->value.GetBool());
-	//ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 1 - itr->value.MemberBegin()->value.GetBool());
-
-	suiveurLigne_.assignerActif(true);
-	ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 0);
+	suiveurLigne_.assignerActif(itr->value.MemberBegin()->value.GetBool());
+	ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 1 - itr->value.MemberBegin()->value.GetBool());
 
 	itr++;
 
@@ -268,16 +273,16 @@ void ProfilUtilisateur::chargerProfilParDefaut(){
 		}
 		touches_.resize(5);
 		touches_.at(INVERSER_MODE_CONTROLE) = ' ';
-		touches_.at(AVANCER) = 'w';
-		touches_.at(RECULER) = 's';
-		touches_.at(ROTATION_GAUCHE) = 'a';
-		touches_.at(ROTATION_DROITE) = 'd';
+		touches_.at(AVANCER) = 'W';
+		touches_.at(RECULER) = 'S';
+		touches_.at(ROTATION_GAUCHE) = 'A';
+		touches_.at(ROTATION_DROITE) = 'D';
 
 		commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
-		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER)));
-		commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER)));
-		commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE)));
-		commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE)));
+		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));
+		commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER, true)));
+		commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE, true)));
+		commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE, true)));
 
 		comportements_.push_back(std::make_unique<ComportementDefaut>());
 		comportements_.push_back(std::make_unique<ComportementSuiviLigne>(DEFAUT));
@@ -287,9 +292,12 @@ void ProfilUtilisateur::chargerProfilParDefaut(){
 		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10 , 3));
 		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10, 3));
 
-		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
-		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
-		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
+		capteursDistance_.at(CAPTEUR_DISTANCE_DROITE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE,
+            NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
+		capteursDistance_.at(CAPTEUR_DISTANCE_CENTRE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE,
+			NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
+		capteursDistance_.at(CAPTEUR_DISTANCE_GAUCHE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE,
+			NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
 
 		suiveurLigne_.assignerActif(true);
 
@@ -365,11 +373,10 @@ std::string ProfilUtilisateur::obtenirNomProfilDefaut(){
 	return PROFIL_DEFAUT;
 }
 
-void ProfilUtilisateur::assignerCapteurDistance(bool estActif[], TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire){
-	for (unsigned i = 0; i < capteursDistance_.size(); i++)
-	{
-		capteursDistance_.at(i) = CapteurDistance(estActif[i], comportementDanger, distanceDanger, comportementSecuritaire, distanceSecuritaire);
-	}
+void ProfilUtilisateur::assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur){
+	capteursDistance_.at(indexCapteur) = CapteurDistance(positionsRelatives_[indexCapteur], anglesRelatifs_[indexCapteur], estActif, 
+                                                  comportementDanger, distanceDanger, 
+                                                  comportementSecuritaire, distanceSecuritaire);
 }
 
 void ProfilUtilisateur::assignerSuiveurLigne(bool estActif){

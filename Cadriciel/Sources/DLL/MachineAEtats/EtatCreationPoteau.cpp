@@ -24,7 +24,6 @@
 EtatCreationPoteau::EtatCreationPoteau()
 {
 	visiteurCreationPoteau_ = std::make_unique<VisiteurCreationPoteau>();
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
@@ -79,7 +78,6 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		NoeudAbstrait* poteau = visiteurCreationPoteau_->obtenirReferenceNoeud();
 		
 		// Mettre à jour les quads et vérifier si le nouveau poteau se situe à l'extérieur de la table.
-		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 		if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 			arbre_->chercher("table")->effacer(poteau);

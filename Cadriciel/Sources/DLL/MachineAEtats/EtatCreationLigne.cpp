@@ -26,7 +26,6 @@
 EtatCreationLigne::EtatCreationLigne()
 {
 	visiteurCreationLigne_ = std::make_unique<VisiteurCreationLigne>();
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
@@ -265,7 +264,6 @@ void EtatCreationLigne::gererPositionCurseurConcret(const bool& positionEstSurTa
 ////////////////////////////////////////////////////////////////////////
 bool EtatCreationLigne::ligneEstSurTable()
 {
-	arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 	arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	return visiteurVerificationQuad_->objetsDansZoneSimulation();
 }

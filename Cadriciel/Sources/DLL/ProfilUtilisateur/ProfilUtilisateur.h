@@ -17,6 +17,7 @@
 #include <Windows.h>
 #include "CapteurDistance.h"
 #include "SuiveurLigne.h"
+#include "NoeudRobot.h"
 #include <array>
 
 
@@ -65,9 +66,12 @@ class ProfilUtilisateur
 
 		std::string obtenirNomProfilDefaut();
 
+        inline SuiveurLigne* obtenirSuiveurLigne();
+        inline NoeudRobot::ConteneurCapteursDistance* obtenirCapteursDistance();
+
 		void supprimerProfil(std::string nomProfil);
 
-		void assignerCapteurDistance(bool estActif[], TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
+		void assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur);
 
 		void assignerSuiveurLigne(bool estActif);
 
@@ -107,12 +111,16 @@ class ProfilUtilisateur
 		std::unordered_map<ConfigureControl, HWND> configureHandles;
 
 		std::vector<char> touches_;
+
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
 
-		std::vector<CapteurDistance> capteursDistance_;
+        std::array<CapteurDistance, NoeudRobot::N_CAPTEURS_DISTANCE> capteursDistance_;
 
 		SuiveurLigne suiveurLigne_;
+
+        std::array<glm::dvec3, NoeudRobot::N_CAPTEURS_DISTANCE> positionsRelatives_;
+        std::array<double, NoeudRobot::N_CAPTEURS_DISTANCE> anglesRelatifs_;
 
 		enum optionsDebogagesEnum
 		{
@@ -126,6 +134,16 @@ class ProfilUtilisateur
 };
 
 
+inline SuiveurLigne* ProfilUtilisateur::obtenirSuiveurLigne()
+{
+    return &suiveurLigne_;
+}
+
+
+inline NoeudRobot::ConteneurCapteursDistance* ProfilUtilisateur::obtenirCapteursDistance()
+{
+    return &capteursDistance_;
+}
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

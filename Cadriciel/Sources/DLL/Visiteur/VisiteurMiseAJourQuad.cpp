@@ -10,6 +10,8 @@
 #include "VisiteurMiseAJourQuad.h"
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
+#include "FacadeModele.h"
+#include <iostream>
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -25,6 +27,8 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurMiseAJourQuad::VisiteurMiseAJourQuad()
 {
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	table_ = arbre_->chercher(0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -55,7 +59,8 @@ VisiteurMiseAJourQuad::~VisiteurMiseAJourQuad()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(ArbreRendu* noeud)
 {
-	noeud->chercher("table")->accepterVisiteur(this);
+	robot_ = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	table_->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -161,6 +166,45 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 		quad.coins[i] += (positionVirtuelleParent + noeud->obtenirPositionRelative());
 	}
 	noeud->assignerQuadEnglobantCourant(quad);
+
+	if (robot_ != nullptr)
+	{
+		if (!estCollision_)
+		{
+			if (robot_->obtenirRectangleEnglobant().calculerIntersection(noeud->obtenirRectangleEnglobant()))
+			{
+				estCollision_ = true;
+
+				std::cout << robot_->obtenirVitesseDroite() << endl;
+			}
+		}
+		if (estCollision_)
+		{
+			float bob = -robot_->obtenirVitesseDroiteCourante();
+			float bobette = -robot_->obtenirVitesseGaucheCourante();
+			robot_->assignerVitesseDroiteCourante(bob);
+			robot_->assignerVitesseGaucheCourante(bobette);
+			robot_->assignerVitesseDroite(0);
+			robot_->assignerVitesseGauche(0);
+
+			if (robot_->obtenirVitesseDroiteCourante() > 0 && robot_->obtenirVitesseGaucheCourante() > 0)
+			{
+				while (robot_->obtenirVitesseDroiteCourante() < 0 && robot_->obtenirVitesseGaucheCourante() < 0)
+				{
+					robot_->animer(0.016f);
+				}
+			}
+			else if (robot_->obtenirVitesseDroiteCourante() < 0 && robot_->obtenirVitesseGaucheCourante() < 0)
+			{
+				while (robot_->obtenirVitesseDroiteCourante() > 0 && robot_->obtenirVitesseGaucheCourante() > 0)
+				{
+					robot_->animer(0.016f);
+				}
+			}
+			estCollision_ = false;
+
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -210,6 +254,44 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 		quad.coins[i] += (positionVirtuelleParent + noeud->obtenirPositionRelative());
 	}
 	noeud->assignerQuadEnglobantCourant(quad);
+	
+	if (robot_ != nullptr)
+	{
+		if (!estCollision_)
+		{
+			if (robot_->obtenirRectangleEnglobant().calculerIntersection(noeud->obtenirRectangleEnglobant()))
+			{
+				estCollision_ = true;
+			
+				std::cout << robot_->obtenirVitesseDroite() << endl;
+			}
+		}
+		if (estCollision_)
+		{
+			float bob = -robot_->obtenirVitesseDroiteCourante();
+			float bobette = -robot_->obtenirVitesseGaucheCourante();
+			robot_->assignerVitesseDroiteCourante(bob);
+			robot_->assignerVitesseGaucheCourante(bobette);
+
+            /*
+			if (robot_->obtenirVitesseDroiteCourante() > 0 && robot_->obtenirVitesseGaucheCourante() > 0)
+			{
+				while (robot_->obtenirVitesseDroiteCourante() < 0 && robot_->obtenirVitesseGaucheCourante() < 0)
+				{
+					robot_->animer(0.016);
+				}
+			}
+			else if (robot_->obtenirVitesseDroiteCourante() < 0 && robot_->obtenirVitesseGaucheCourante() < 0)
+			{
+				while (robot_->obtenirVitesseDroiteCourante() > 0 && robot_->obtenirVitesseGaucheCourante() > 0)
+				{
+					robot_->animer(0.016);
+				}
+			}
+            */
+			estCollision_ = false;
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -402,14 +484,16 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
     {
         positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
     }
+
     glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
+	position.x += 1.35;
     double angle = noeud->obtenirAngleRotation();
 
 	quad = noeud->obtenirQuadEnglobantModele();
     double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
     double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
 
-    noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
+    //noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
 
     // Mise à jour du quad englobant.
 	glm::dvec3 tmp = { 0.0, 0.0, 0.0 };
@@ -419,7 +503,7 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
 		quad.coins[i] += noeud->obtenirPositionRelative();
 	}
 	noeud->assignerQuadEnglobantCourant(quad);
-	noeud->mettreAJourCapteurs();
+	//noeud->mettreAJourCapteurs();
 }
 
 ///TODO: A mettre dans utilitaire.

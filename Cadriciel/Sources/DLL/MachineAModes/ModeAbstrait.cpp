@@ -67,6 +67,7 @@ void ModeAbstrait::sauvegarder()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::charger()
 {
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chargerZone();
 }
 
 void ModeAbstrait::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)

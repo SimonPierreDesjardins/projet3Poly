@@ -31,12 +31,24 @@ public:
 	/// Destructeur.
 	~NoeudMur();
 
+    inline RectangleEnglobant obtenirRectangleEngobant() const;
+
 	/// Affiche la table.
+    virtual void animer(float dt);
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+private:
+    RectangleEnglobant rectangle_;
+    
 };
 
-#endif
+inline RectangleEnglobant NoeudMur::obtenirRectangleEngobant() const
+{
+    return rectangle_;
+}
+
+#endif /// __ARBRE_NOEUDS_NOEUDMUR_H_
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
