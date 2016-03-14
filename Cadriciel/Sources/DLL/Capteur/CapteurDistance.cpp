@@ -16,6 +16,7 @@
 #include "RectangleEnglobant.h"
 #include "NoeudPoteau.h"
 #include "NoeudMur.h"
+#include "rapidjson\filewritestream.h"
 
 const double CapteurDistance::HAUTEUR = 0.75;
 const double CapteurDistance::MAX_LARGEUR_TOTALE = 30.0;
@@ -35,25 +36,67 @@ CapteurDistance::CapteurDistance()
 {
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 ///
-/// @fn CapteurDistance::CapteurDistance(const glm::dvec3& positionRelative, const double& angleRelatif)
+/// CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelatif, bool estActif, 
+///        TypeComportement comportementDanger, double largeurDanger, 
+///        TypeComportement comportementSecuritaire, double largeurSecuritaire)
 ///
-/// Constructeur par paramètres.
+/// Constructeur par paramètre
 ///
 /// @param[in] positionRelative : La position relative à la position du robot.
-///
 /// @param[in] angleRelatif : L'angle relatif à l'angle de rotation du robot.
+/// @param[in] estActif: représente si le capteur est actif ou non
+/// @param[in] comportementDanger : représente le comportement à adapter dans une zone de danger
+/// @param[in] distanceDanger : la distance minimal pour que le robot soit en danger
+/// @param[in] comportementSecuritaire : représente le comportement à adapter dans une zone sécuritaire
+/// @param[in] distanceSecuritaire : la distance minimal pour que le robot soit en sécurité
 ///
 /// @return Aucune (constructeur).
 ///
-////////////////////////////////////////////////////////////////////////////////
-CapteurDistance::CapteurDistance(const glm::dvec3& positionRelative, const double& angleRelatif)
-    : positionRelative_(positionRelative), angleRelatif_(angleRelatif)
-{ 
+////////////////////////////////////////////////////////////////////////
+CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelatif, bool estActif, 
+        TypeComportement comportementDanger, double largeurDanger, 
+        TypeComportement comportementSecuritaire, double largeurSecuritaire)
+{
+    positionRelative_ = positionRelative;
+    angleRelatif_ = angleRelatif;
+	estActif_ = estActif;
+	comportementDanger_ = comportementDanger;
+	largeurDanger_ = largeurDanger;
+	comportementSecuritaire_ = comportementSecuritaire;
+	largeurSecuritaire_ = largeurSecuritaire;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CapteurDistance::CapteurDistance(rapidjson::Value::ConstValueIterator capteurJSON)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] capteurJSON: le capteur en format JSON
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelatif, const rapidjson::Value& capteurJSON)
+{
+	rapidjson::Value::ConstMemberIterator itr = capteurJSON.MemberBegin();
+
+	estActif_ = itr->value.GetBool();
+
+	itr++;
+	comportementDanger_ = static_cast<TypeComportement>(itr->value.GetInt());
+
+	itr++;
+	largeurDanger_ = itr->value.GetDouble();
+
+	itr++;
+    comportementSecuritaire_ = static_cast<TypeComportement>(itr->value.GetInt());
+
+	itr++;
+	largeurSecuritaire_ = itr->value.GetDouble();
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
@@ -87,7 +130,7 @@ void CapteurDistance::verifierDetection(NoeudPoteau* poteau)
     RectangleEnglobant rectangle = poteau->obtenirRectangleEnglobant();
     // Si le capteur se trouve déjà en détection de zone de danger, 
     // on le laisse dans cet état.
-    if (etat_ != DETECTION_ZONE_DANGER)
+    if (etat_ != DETECTION_ZONE_DANGER && estActif_)
     {
         bool danger = zoneDanger_.calculerIntersection(rectangle);
         if (!danger)
@@ -254,6 +297,30 @@ void CapteurDistance::afficher() const
 	glEnd();
     glPopMatrix();
     glColor4f(0.0, 0.0, 0.0, 1.0);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void CapteurDistance::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer)
+///
+/// Cette fonction obtient les valeurs à sauvegarder pour le capteur en JSON
+///
+/// @param[in] writer : Le stream dans lequel le JSON est écrit
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void CapteurDistance::toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
+	writer.Key("estActif");
+	writer.Bool(estActif_);
+	writer.Key("comportementDanger");
+	writer.Int(comportementDanger_);
+	writer.Key("distanceDanger");
+	writer.Double(largeurDanger_);
+	writer.Key("comportementSecuritaire");
+	writer.Int(comportementSecuritaire_);
+	writer.Key("distanceSecuritaire");
+	writer.Double(largeurSecuritaire_);
 }
 
 /////////////////////////////////////////////////////////////////////////////////

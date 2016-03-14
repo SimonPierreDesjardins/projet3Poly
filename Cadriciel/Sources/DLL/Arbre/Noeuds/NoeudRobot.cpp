@@ -26,6 +26,10 @@ const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
 
+const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE{ -45.0 };
+const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE{ 0.0 };
+const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE{ 45.0 };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudRobot::NoeudRobot(const std::string& typeNoeud)
@@ -46,14 +50,15 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	NoeudAbstrait* depart = table->chercher(ArbreRenduINF2990::NOM_DEPART);
     
     // À modifier avec le merge du profile.
-    visiteur_ = make_unique<VisiteurDetectionRobot>(this, &suiveurLigne_, capteursDistance_);
+    visiteur_ = make_unique<VisiteurDetectionRobot>(this);
 
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
 
-    capteursDistance_[CAPTEUR_DISTANCE_DROITE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_DROITE, angleRotation_ - 45.0);
-    capteursDistance_[CAPTEUR_DISTANCE_CENTRE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_CENTRE, angleRotation_);
-    capteursDistance_[CAPTEUR_DISTANCE_GAUCHE] = CapteurDistance(POSITION_CAPTEUR_DISTANCE_GAUCHE, angleRotation_ + 45.0);
+    ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+    
+    suiveurLigne_ = profil->obtenirSuiveurLigne();
+    capteursDistance_ = profil->obtenirCapteursDistance();
 }
 
 
@@ -88,12 +93,12 @@ void NoeudRobot::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
     // Débugage des capteurs de distance.
-    suiveurLigne_.afficher();
+    suiveurLigne_->afficher();
 
     // Débugage des capteurs de distance.
     for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_[i].afficher();
+        capteursDistance_->at(i).afficher();
     }
 
     // Debugage de la boite englobante.
@@ -269,17 +274,6 @@ void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
 }
 
 
-CapteurDistance* NoeudRobot::obtenirCapteurDistance(PositionCapteurDistance position)
-{
-    CapteurDistance* capteur = nullptr;
-    if (position < N_CAPTEURS_DISTANCE)
-    {
-        capteur = &capteursDistance_[position];
-    }
-    return capteur;
-}
-
-
 void NoeudRobot::afficherFormeEnglobante() const
 {
     double hauteur = rectangleEnglobant_.obtenirHauteur();
@@ -297,10 +291,10 @@ void NoeudRobot::afficherFormeEnglobante() const
 
 void NoeudRobot::mettreAJourCapteurs()
 {
-	suiveurLigne_.mettreAJourCapteurs(positionRelative_, angleRotation_);
+	suiveurLigne_->mettreAJourCapteurs(positionRelative_, angleRotation_);
     for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_[i].mettreAJour(positionRelative_, angleRotation_);
+        capteursDistance_->at(i).mettreAJour(positionRelative_, angleRotation_);
     }
 }
 

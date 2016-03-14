@@ -50,7 +50,6 @@ public:
 	void mettreAJourPosition(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
     void afficher() const;
-
 	void assignerActif(bool estActif);
 
 private:

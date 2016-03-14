@@ -30,7 +30,13 @@ enum EtatCapteurDistance
     DETECTION_ZONE_DANGER
 };
 
-//#include "./../../Enum/TypeComportementEnum.cs"
+#include "ComportementAbstrait.h"
+#include "rapidjson\writer.h"
+#include "rapidjson\document.h"
+
+namespace rapidjson {
+	class FileWriteStream;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class CapteurDistance
@@ -46,8 +52,15 @@ class CapteurDistance
 public:
     // Constructeur par défaut.
     CapteurDistance();
-    // Constructeur par paramètres.
-    CapteurDistance(const glm::dvec3& positionCentre, const double& angle);
+
+	//Constructeur par paramètre
+	CapteurDistance(glm::dvec3 positionRelative, double angleRelatif, bool estActif, 
+        TypeComportement comportementDanger, double largeurDanger, 
+        TypeComportement comportementSecuritaire, double largeurSecuritaire);
+
+	//Constructeur par paramètre
+	CapteurDistance( glm::dvec3 positionRelative, double angleRelatif, const rapidjson::Value& capteurJSON);
+
     //Destructeur
     ~CapteurDistance();
 
@@ -62,12 +75,6 @@ public:
 
     // Méthode de modification des attributs.
     void assignerActif(bool estActif);
-    void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
-    void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
-
-    // Méthode permettant de manipuler la largeur des zones de détection.
-    inline void assignerLargeurZoneSecuritaire(const double& largeur);
-    inline void assignerLargeurZoneDanger(const double& largeur);
 
     // Afficher le capteur de distance.
     void afficher() const;
@@ -77,8 +84,16 @@ public:
     static const double MAX_LARGEUR_TOTALE;
     static const double LARGEUR_DEFAUT;
 
+	inline void assignerParametreZoneDanger(TypeComportement comportement, double largeur);
+	inline void assignerParametreZoneSecuritaire(TypeComportement comportement, double largeur);
+
+	void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
 private:
     bool estActif_{ true };
+
+    TypeComportement comportementDanger_;
+    TypeComportement comportementSecuritaire_;
     
     double largeurDanger_{ 5.0 };
     double largeurSecuritaire_{ 5.0 };
@@ -101,32 +116,36 @@ private:
 /// Cettre méthode permet d'assigner une largeur à la zone sécuritaire du
 /// capteur de distance.
 ///
-/// @param[in] hauteur : indique la hauteur.
+/// @param[in] largeur : indique la largeur.
+/// @param[in] comportement : indique le comportement après une détection d'obstacle. 
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////////////
-inline void CapteurDistance::assignerLargeurZoneSecuritaire(const double& largeur)
+inline void CapteurDistance::assignerParametreZoneDanger(TypeComportement comportement, double largeur)
 {
     zoneSecuritaire_.assignerLargeur(largeur);
+    comportementDanger_ = comportement;
 }
 
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
-/// inline void CapteurDistance::assignerHauteurZoneDanger(const double& largeur)
+/// @fn inline void CapteurDistance::assignerParametreZoneSecuritaire(TypeComportement comportement, double largeur)
 ///
 /// Cettre méthode permet d'assigner une largeur à la zone de danger du
-/// capteur de distance.
+/// capteur de distance ainsi que le prochain comportement.
 ///
-/// @param[in] hauteur : indique la hauteur.
+/// @param[in] largeur : indique la largeur.
+/// @param[in] comportement : indique le comportement après une détection d'obstacle. 
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////////////
-inline void CapteurDistance::assignerLargeurZoneDanger(const double& largeur)
+inline void CapteurDistance::assignerParametreZoneSecuritaire(TypeComportement comportement, double largeur)
 {
     zoneDanger_.assignerLargeur(largeur);
+    comportementSecuritaire_ = comportement;
 }
 
 

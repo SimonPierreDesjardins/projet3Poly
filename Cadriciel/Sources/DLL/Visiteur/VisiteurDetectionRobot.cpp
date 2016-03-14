@@ -12,10 +12,11 @@ VisiteurDetectionRobot::VisiteurDetectionRobot()
 }
 
 
-VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot, 
-    SuiveurLigne* suiveurLigne, CapteurDistance capteurDistance[3])
-        : robot_(robot), suiveurLigne_(suiveurLigne), capteursDistance_(capteurDistance)
+VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
+        : robot_(robot)
 {
+    suiveurLigne_ = robot_->obtenirSuiveurLigne();
+    capteursDistance_ = robot_->obtenirCapteursDistance();
 }
 
 
@@ -50,7 +51,7 @@ void VisiteurDetectionRobot::visiter(NoeudPoteau* noeud)
 {
     for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_[i].verifierDetection(noeud);
+        capteursDistance_->at(i).verifierDetection(noeud);
     }
 }
 
@@ -59,6 +60,6 @@ void VisiteurDetectionRobot::visiter(NoeudMur* noeud)
 {
     for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_[i].verifierDetection(noeud);
+        capteursDistance_->at(i).verifierDetection(noeud);
     }
 }

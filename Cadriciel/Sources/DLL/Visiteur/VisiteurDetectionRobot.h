@@ -12,6 +12,7 @@
 #define VISITEUR_DETECTION_ROBOT_H
 
 #include "VisiteurAbstrait.h"
+#include <array>
 
 class SuiveurLigne;
 class CapteurDistance;
@@ -31,7 +32,7 @@ public:
 	VisiteurDetectionRobot();
     
     /// Constructeur par paramètres.
-    VisiteurDetectionRobot(NoeudRobot* robot, SuiveurLigne* suiveurLigne, CapteurDistance* capteursDistance);
+    VisiteurDetectionRobot(NoeudRobot* robot);
 
 	/// Destructeur.
 	virtual ~VisiteurDetectionRobot();
@@ -49,8 +50,8 @@ public:
 
 private:
     NoeudRobot* robot_{ nullptr };
-    SuiveurLigne* suiveurLigne_{ nullptr };
-    CapteurDistance* capteursDistance_;
+    SuiveurLigne* suiveurLigne_;
+    std::array<CapteurDistance, 3>* capteursDistance_;
 };
 
 #endif // VISITEUR_DETECTION_LIGNE_H
