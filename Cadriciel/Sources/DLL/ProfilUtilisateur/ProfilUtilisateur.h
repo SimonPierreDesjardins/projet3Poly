@@ -71,7 +71,7 @@ class ProfilUtilisateur
 
 		void supprimerProfil(std::string nomProfil);
 
-		void assignerCapteurDistance(bool estActif[], TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
+		void assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur);
 
 		void assignerSuiveurLigne(bool estActif);
 
@@ -109,6 +109,7 @@ class ProfilUtilisateur
 		std::unordered_map<ConfigureControl, HWND> configureHandles;
 
 		std::vector<char> touches_;
+
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
 
