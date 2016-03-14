@@ -49,16 +49,15 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
     NoeudAbstrait* table = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 	NoeudAbstrait* depart = table->chercher(ArbreRenduINF2990::NOM_DEPART);
     
+    ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+    suiveurLigne_ = profil->obtenirSuiveurLigne();
+    capteursDistance_ = profil->obtenirCapteursDistance();
+
     // À modifier avec le merge du profile.
     visiteur_ = make_unique<VisiteurDetectionRobot>(this);
 
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
-
-    ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-    
-    suiveurLigne_ = profil->obtenirSuiveurLigne();
-    capteursDistance_ = profil->obtenirCapteursDistance();
 }
 
 

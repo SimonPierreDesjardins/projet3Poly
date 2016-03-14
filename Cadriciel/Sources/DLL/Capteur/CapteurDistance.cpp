@@ -81,6 +81,7 @@ CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelati
 ///
 ////////////////////////////////////////////////////////////////////////
 CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelatif, const rapidjson::Value& capteurJSON)
+    : positionRelative_(positionRelative), angleRelatif_(angleRelatif)
 {
 	rapidjson::Value::ConstMemberIterator itr = capteurJSON.MemberBegin();
 	std::cout << itr->value.GetBool() << std::endl;

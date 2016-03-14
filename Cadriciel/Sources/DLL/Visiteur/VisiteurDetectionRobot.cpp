@@ -3,6 +3,7 @@
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 
+#include "FacadeModele.h"
 #include "CapteurDistance.h"
 #include "SuiveurLigne.h"
 
@@ -15,8 +16,9 @@ VisiteurDetectionRobot::VisiteurDetectionRobot()
 VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
         : robot_(robot)
 {
-    suiveurLigne_ = robot_->obtenirSuiveurLigne();
-    capteursDistance_ = robot_->obtenirCapteursDistance();
+    ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+    suiveurLigne_ = profil->obtenirSuiveurLigne();
+    capteursDistance_ = profil->obtenirCapteursDistance();
 }
 
 
