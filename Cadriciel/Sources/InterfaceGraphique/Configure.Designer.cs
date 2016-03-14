@@ -94,7 +94,7 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
-            this.longueurSecuritaireCentreCB = new System.Windows.Forms.TextBox();
+            this.longueurSecuritaireCentreTxtBox = new System.Windows.Forms.TextBox();
             this.zoneDangerCentreCB = new System.Windows.Forms.ComboBox();
             this.zoneSecuritaireCentreCB = new System.Windows.Forms.ComboBox();
             this.longueurDangerCentreTxtBox = new System.Windows.Forms.TextBox();
@@ -109,7 +109,7 @@
             this.longueurSecuritaireGaucheTxtBox = new System.Windows.Forms.TextBox();
             this.zoneDangerGaucheCB = new System.Windows.Forms.ComboBox();
             this.zoneSecuritaireGaucheCB = new System.Windows.Forms.ComboBox();
-            this.lonuguerDangerGaucheTxtBox = new System.Windows.Forms.TextBox();
+            this.longueurDangerGaucheTxtBox = new System.Windows.Forms.TextBox();
             this.label25 = new System.Windows.Forms.Label();
             this.label26 = new System.Windows.Forms.Label();
             this.capteurDistGaucheCB = new System.Windows.Forms.ComboBox();
@@ -442,6 +442,7 @@
             // 
             // dureeEDTxtBox
             // 
+            this.dureeEDTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dureeEDTxtBox.Location = new System.Drawing.Point(610, 283);
             this.dureeEDTxtBox.Name = "dureeEDTxtBox";
             this.dureeEDTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -452,6 +453,7 @@
             // 
             // angleEDTxtBox
             // 
+            this.angleEDTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.angleEDTxtBox.Location = new System.Drawing.Point(610, 257);
             this.angleEDTxtBox.Name = "angleEDTxtBox";
             this.angleEDTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -462,6 +464,7 @@
             // 
             // dureeEGTxtBox
             // 
+            this.dureeEGTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dureeEGTxtBox.Location = new System.Drawing.Point(610, 220);
             this.dureeEGTxtBox.Name = "dureeEGTxtBox";
             this.dureeEGTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -472,6 +475,7 @@
             // 
             // angleEGTxtBox
             // 
+            this.angleEGTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.angleEGTxtBox.Location = new System.Drawing.Point(610, 194);
             this.angleEGTxtBox.Name = "angleEGTxtBox";
             this.angleEGTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -482,6 +486,7 @@
             // 
             // angleDDTxtBox
             // 
+            this.angleDDTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.angleDDTxtBox.Location = new System.Drawing.Point(610, 152);
             this.angleDDTxtBox.Name = "angleDDTxtBox";
             this.angleDDTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -492,6 +497,7 @@
             // 
             // angleDGTxtBox
             // 
+            this.angleDGTxtBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.angleDGTxtBox.Location = new System.Drawing.Point(610, 114);
             this.angleDGTxtBox.Name = "angleDGTxtBox";
             this.angleDGTxtBox.Size = new System.Drawing.Size(121, 20);
@@ -727,6 +733,7 @@
             this.capteursDistTabs.Controls.Add(this.tabPage4);
             this.capteursDistTabs.Controls.Add(this.tabPage5);
             this.capteursDistTabs.Controls.Add(this.tabPage6);
+            this.capteursDistTabs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capteursDistTabs.Location = new System.Drawing.Point(6, 32);
             this.capteursDistTabs.Multiline = true;
             this.capteursDistTabs.Name = "capteursDistTabs";
@@ -845,6 +852,7 @@
             // 
             // capteurDistDroitCB
             // 
+            this.capteurDistDroitCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.capteurDistDroitCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capteurDistDroitCB.FormattingEnabled = true;
             this.capteurDistDroitCB.Items.AddRange(new object[] {
@@ -873,7 +881,7 @@
             this.panel2.Controls.Add(this.label10);
             this.panel2.Controls.Add(this.label11);
             this.panel2.Controls.Add(this.label19);
-            this.panel2.Controls.Add(this.longueurSecuritaireCentreCB);
+            this.panel2.Controls.Add(this.longueurSecuritaireCentreTxtBox);
             this.panel2.Controls.Add(this.zoneDangerCentreCB);
             this.panel2.Controls.Add(this.zoneSecuritaireCentreCB);
             this.panel2.Controls.Add(this.longueurDangerCentreTxtBox);
@@ -912,13 +920,13 @@
             this.label19.TabIndex = 57;
             this.label19.Text = "Zone danger";
             // 
-            // longueurSecuritaireCentreCB
+            // longueurSecuritaireCentreTxtBox
             // 
-            this.longueurSecuritaireCentreCB.Location = new System.Drawing.Point(445, 36);
-            this.longueurSecuritaireCentreCB.Name = "longueurSecuritaireCentreCB";
-            this.longueurSecuritaireCentreCB.Size = new System.Drawing.Size(121, 20);
-            this.longueurSecuritaireCentreCB.TabIndex = 34;
-            this.longueurSecuritaireCentreCB.Tag = "28";
+            this.longueurSecuritaireCentreTxtBox.Location = new System.Drawing.Point(445, 36);
+            this.longueurSecuritaireCentreTxtBox.Name = "longueurSecuritaireCentreTxtBox";
+            this.longueurSecuritaireCentreTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.longueurSecuritaireCentreTxtBox.TabIndex = 34;
+            this.longueurSecuritaireCentreTxtBox.Tag = "28";
             // 
             // zoneDangerCentreCB
             // 
@@ -997,7 +1005,7 @@
             this.panel3.Controls.Add(this.longueurSecuritaireGaucheTxtBox);
             this.panel3.Controls.Add(this.zoneDangerGaucheCB);
             this.panel3.Controls.Add(this.zoneSecuritaireGaucheCB);
-            this.panel3.Controls.Add(this.lonuguerDangerGaucheTxtBox);
+            this.panel3.Controls.Add(this.longueurDangerGaucheTxtBox);
             this.panel3.Controls.Add(this.label25);
             this.panel3.Controls.Add(this.label26);
             this.panel3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -1061,13 +1069,13 @@
             this.zoneSecuritaireGaucheCB.TabIndex = 55;
             this.zoneSecuritaireGaucheCB.Tag = "23";
             // 
-            // lonuguerDangerGaucheTxtBox
+            // longueurDangerGaucheTxtBox
             // 
-            this.lonuguerDangerGaucheTxtBox.Location = new System.Drawing.Point(445, 6);
-            this.lonuguerDangerGaucheTxtBox.Name = "lonuguerDangerGaucheTxtBox";
-            this.lonuguerDangerGaucheTxtBox.Size = new System.Drawing.Size(121, 20);
-            this.lonuguerDangerGaucheTxtBox.TabIndex = 30;
-            this.lonuguerDangerGaucheTxtBox.Tag = "26";
+            this.longueurDangerGaucheTxtBox.Location = new System.Drawing.Point(445, 6);
+            this.longueurDangerGaucheTxtBox.Name = "longueurDangerGaucheTxtBox";
+            this.longueurDangerGaucheTxtBox.Size = new System.Drawing.Size(121, 20);
+            this.longueurDangerGaucheTxtBox.TabIndex = 30;
+            this.longueurDangerGaucheTxtBox.Tag = "26";
             // 
             // label25
             // 
@@ -1101,6 +1109,7 @@
             // 
             // suiveurLigneCB
             // 
+            this.suiveurLigneCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.suiveurLigneCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.suiveurLigneCB.FormattingEnabled = true;
             this.suiveurLigneCB.Items.AddRange(new object[] {
@@ -1270,6 +1279,7 @@
             this.ClientSize = new System.Drawing.Size(748, 553);
             this.ControlBox = false;
             this.Controls.Add(this.splitContainer1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Configure";
@@ -1371,7 +1381,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox longueurSecuritaireCentreCB;
+        private System.Windows.Forms.TextBox longueurSecuritaireCentreTxtBox;
         private System.Windows.Forms.ComboBox zoneDangerCentreCB;
         private System.Windows.Forms.ComboBox zoneSecuritaireCentreCB;
         private System.Windows.Forms.TextBox longueurDangerCentreTxtBox;
@@ -1386,7 +1396,7 @@
         private System.Windows.Forms.TextBox longueurSecuritaireGaucheTxtBox;
         private System.Windows.Forms.ComboBox zoneDangerGaucheCB;
         private System.Windows.Forms.ComboBox zoneSecuritaireGaucheCB;
-        private System.Windows.Forms.TextBox lonuguerDangerGaucheTxtBox;
+        private System.Windows.Forms.TextBox longueurDangerGaucheTxtBox;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label label26;
         private System.Windows.Forms.ComboBox capteurDistGaucheCB;

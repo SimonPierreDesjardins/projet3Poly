@@ -53,6 +53,7 @@ namespace InterfaceGraphique
             {
                 tab.Enabled = false;
             }
+           
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -750,15 +751,28 @@ namespace InterfaceGraphique
             else
             {
                 FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+                
                 FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
-                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
-                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
-                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
-                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
-                FonctionsNatives.assignerCapteurDistance(capteurDistDroitCB.SelectedIndex == 0, capteurDistCentreCB.SelectedIndex == 0, capteurDistGaucheCB.SelectedIndex == 0, (TypeComportement)zoneDangerDroitCB.SelectedValue, Convert.ToDouble(longueurDangerDroitTxtBox.Text.Replace('.', ',')), (TypeComportement)zoneDangerDroitCB.SelectedValue, Convert.ToDouble(longueurSecuritaireDroitTxtBox.Text.Replace('.', ',')));
+                
+                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en");
+                
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Double.Parse(angleDGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLAGAUCHE);
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Double.Parse(angleDDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLADROITE);
+                
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Double.Parse(angleEGTxtBox.Text.Replace(',', '.'), culture), Double.Parse(dureeEGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.EVITEMENTPARLAGAUCHE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Double.Parse(angleEDTxtBox.Text.Replace(',', '.'), culture), Double.Parse(dureeEDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.EVITEMENTPARLADROITE);
+                
+                FonctionsNatives.assignerCapteurDistance(capteurDistDroitCB.SelectedIndex == 0, (TypeComportement)zoneDangerDroitCB.SelectedValue, Double.Parse(longueurDangerDroitTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireDroitCB.SelectedValue, Double.Parse(longueurSecuritaireDroitTxtBox.Text.Replace(',', '.'), culture), 0);
+                FonctionsNatives.assignerCapteurDistance(capteurDistCentreCB.SelectedIndex == 0, (TypeComportement)zoneDangerCentreCB.SelectedValue, Double.Parse(longueurDangerCentreTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireCentreCB.SelectedValue, Double.Parse(longueurSecuritaireCentreTxtBox.Text.Replace(',', '.'), culture), 1);
+                
+                FonctionsNatives.assignerCapteurDistance(capteurDistGaucheCB.SelectedIndex == 0, (TypeComportement)zoneDangerGaucheCB.SelectedValue, Double.Parse(longueurDangerGaucheTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireGaucheCB.SelectedValue, Double.Parse(longueurSecuritaireGaucheTxtBox.Text.Replace(',', '.'), culture), 2);
+                
                 FonctionsNatives.assignerSuiveurLigne(suiveurLigneCB.SelectedIndex == 0);
+                
                 FonctionsNatives.assignerOptionsDebogages(optionsDebogagesCB.SelectedIndex == 0, comboBox_comportement.SelectedIndex == 0, comboBox_eclairage.SelectedIndex == 0, comboBox_capteur.SelectedIndex == 0);
+                
                 FonctionsNatives.sauvegarderProfil(comboBoxProfil.Text + extensionProfils);
+                
                 tabEnabled = false;
                 modifierProfilButt.Text = "Modifier";
                 etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
@@ -817,7 +831,7 @@ namespace InterfaceGraphique
         public static extern void sauvegarderProfil(string nomProfil);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerCapteurDistance(bool estActif1, bool estActif2, bool estActif3, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
+        public static extern void assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerSuiveurLigne(bool estActif);

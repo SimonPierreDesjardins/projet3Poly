@@ -71,7 +71,7 @@ class ProfilUtilisateur
 
 		void supprimerProfil(std::string nomProfil);
 
-		void assignerCapteurDistance(bool estActif[], TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
+		void assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur);
 
 		void assignerSuiveurLigne(bool estActif);
 

@@ -17,6 +17,7 @@
 #include <fstream>
 #include <sstream>
 #include "NoeudRobot.h"
+#include <cmath>
 
 
 ProfilUtilisateur::ProfilUtilisateur(){
@@ -209,20 +210,20 @@ bool ProfilUtilisateur::chargerProfil(){
 
 	comportements_.push_back(std::make_unique<ComportementDeviation>(comportementsJSON[DEVIATIONVERSLAGAUCHE]));
 	ComboBox_SetCurSel(configureHandles.at(DEVIATION_GAUCHE_CB), comportements_.at(DEVIATIONVERSLAGAUCHE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(DEVIATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[DEVIATIONVERSLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(DEVIATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[DEVIATIONVERSLAGAUCHE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementDeviation>(comportementsJSON[DEVIATIONVERSLADROITE]));
 	ComboBox_SetCurSel(configureHandles.at(DEVIATION_DROITE_CB), comportements_.at(DEVIATIONVERSLADROITE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(DEVIATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[DEVIATIONVERSLADROITE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(DEVIATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[DEVIATIONVERSLADROITE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLAGAUCHE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_GAUCHE_CB), comportements_.at(EVITEMENTPARLAGAUCHE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLADROITE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_DROITE_CB), comportements_.at(EVITEMENTPARLADROITE)->obtenirComportementSuivant());
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLADROITE]["maxAngle"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[EVITEMENTPARLADROITE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
 	SendMessage(configureHandles.at(EVITEMENT_DROITE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLADROITE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
 
 	itr++;
@@ -359,13 +360,10 @@ std::string ProfilUtilisateur::obtenirNomProfilDefaut(){
 	return PROFIL_DEFAUT;
 }
 
-void ProfilUtilisateur::assignerCapteurDistance(bool estActif[], TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire){
-	for (unsigned i = 0; i < capteursDistance_.size(); i++)
-	{
-		capteursDistance_.at(i) = CapteurDistance(positionsRelatives_[i], anglesRelatifs_[i], estActif[i], 
+void ProfilUtilisateur::assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur){
+	capteursDistance_.at(indexCapteur) = CapteurDistance(positionsRelatives_[indexCapteur], anglesRelatifs_[indexCapteur], estActif, 
                                                   comportementDanger, distanceDanger, 
                                                   comportementSecuritaire, distanceSecuritaire);
-	}
 }
 
 void ProfilUtilisateur::assignerSuiveurLigne(bool estActif){
