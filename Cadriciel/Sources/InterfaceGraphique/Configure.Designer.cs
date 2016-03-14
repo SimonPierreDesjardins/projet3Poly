@@ -1042,7 +1042,6 @@
             this.MinimizeBox = false;
             this.Name = "Configure";
             this.Text = "Configure";
-            this.Load += new System.EventHandler(this.Configure_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
