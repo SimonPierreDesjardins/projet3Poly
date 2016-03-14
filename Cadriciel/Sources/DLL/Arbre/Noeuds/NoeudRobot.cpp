@@ -39,8 +39,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	NoeudAbstrait* table = arbre->chercher(0);
-	NoeudAbstrait* depart = table->chercher(0);
+	table_ = arbre->chercher(0);
+	NoeudAbstrait* depart = table_->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
 
@@ -51,8 +51,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
 
 	positionnerRoues();
-	table->ajouter(roueGauche);
-	table->ajouter(roueDroite);
+	table_->ajouter(roueGauche);
+	table_->ajouter(roueDroite);
 }
 
 
@@ -67,9 +67,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot::~NoeudRobot()
 {
-	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-	table->effacer(roueGauche_);
-	table->effacer(roueDroite_);
+	table_->effacer(roueGauche_);
+	table_->effacer(roueDroite_);
 }
 
 
