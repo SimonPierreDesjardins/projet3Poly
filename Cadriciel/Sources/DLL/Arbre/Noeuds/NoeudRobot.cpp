@@ -47,12 +47,12 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 
+	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
+	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
+
 	positionnerRoues();
 	table->ajouter(roueGauche);
 	table->ajouter(roueDroite);
-
-	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
-	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
 }
 
 
