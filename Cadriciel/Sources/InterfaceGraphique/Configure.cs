@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using TypeCommandeEnum;
 using TypeComportementEnum;
-using ConfigureControlEnum;
 
 namespace InterfaceGraphique
 {
@@ -21,39 +20,67 @@ namespace InterfaceGraphique
         static extern bool HideCaret(IntPtr hWnd);
         private List<TypeComportement> comportementsList;
 
-        bool afficherDebugComportement = false;
-        bool afficherDebugEclairage = false;
-        bool afficherDebugCapteurs = false;
+        private string cheminProfils;
+        private string extensionProfils;
+        private string nomProfilDefaut;
+        private int indexProfilDefaut;
 
         public Configure()
         {
             InitializeComponent();
-            this.KeyPreview = true;
-            comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
-
-            FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
-
-            assignerProfilsCB();
-
-            FonctionsNatives.assignerProfils();
-
-            setUpAllControls(configureTabs);
-
-            FonctionsNatives.chargerProfilParDefaut();
-
         }
 
-        private void assignerProfilsCB(){
-            string line;
+        private void assignerProfilsCB(StringBuilder str){
+            
+            FonctionsNatives.obtenirCheminProfils(str, str.Capacity);
+            cheminProfils = str.ToString();
 
-            // Read the file and display it line by line.
-            System.IO.StreamReader file =
-               new System.IO.StreamReader("./../../Donnees/profilsListe");
+            str.Clear();
 
-            while ((line = file.ReadLine()) != null)
-                comboBoxProfil.Items.Add(line);
+            FonctionsNatives.obtenirExtensionProfils(str, str.Capacity);
+            extensionProfils = str.ToString();
 
-            file.Close();
+            str.Clear();
+
+            FonctionsNatives.obtenirNomProfilDefaut(str, str.Capacity);
+
+            nomProfilDefaut = str.ToString();
+
+            comboBoxProfil.Items.Clear();
+
+            string[] fichiersProfile = System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils);
+            if (fichiersProfile.Length == 0)
+            {
+                FonctionsNatives.chargerProfilParDefaut();
+                fichiersProfile = System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils);
+                string nomFichier;
+                for (int i = 0; i < fichiersProfile.Length; i++)
+                {
+                    nomFichier = System.IO.Path.GetFileName(fichiersProfile[i]);
+                    fichiersProfile[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
+                }
+                comboBoxProfil.Items.AddRange(fichiersProfile);
+                comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfilDefaut);
+            }
+            else
+            {
+                string nomFichier;
+                for (int i = 0; i < fichiersProfile.Length; i++)
+                {
+                    nomFichier = System.IO.Path.GetFileName(fichiersProfile[i]);
+                    fichiersProfile[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
+                }
+
+                comboBoxProfil.Items.AddRange(fichiersProfile);
+                FonctionsNatives.chargerProfilParDefaut();
+                textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
+                textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
+                textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
+                textBoxHoraire.Text = afficherCaractere(textBoxHoraire.Text[0]);
+                textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
+            }
+
+            
         }
 
         void setUpAllControls(Control control)
@@ -62,7 +89,7 @@ namespace InterfaceGraphique
             {
                 if (item.Tag != null)
                 {
-                    if (item.GetType().Equals(typeof(ComboBox)))
+                    if (item.GetType().Equals(typeof(ComboBox)) && Int32.Parse((String)item.Tag) <= 20)
                     {
                         ComboBox combo = item as ComboBox;
                         combo.BindingContext = new BindingContext();
@@ -145,26 +172,24 @@ namespace InterfaceGraphique
             return mot;
         }
 
-        private void buttonDefProfil_Click(object sender, EventArgs e)
-        {
-            capteurDistanceChkBox.Checked = false;
-            capteurLigneChkBox.Checked = false;
-        }
-
-        private void buttonSaveProfil_Click(object sender, EventArgs e)
-        {
-            comboBoxProfil.Items.Insert(comboBoxProfil.Items.Count, comboBoxProfil.Text);
-        }
-
         private void Configure_Load(object sender, EventArgs e)
         {
-            //comboBoxProfil.SelectedIndex = 0;
-            enableOptionAffichage();
-        }
+            comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
-        private void capteurDistanceChkBox_CheckedChanged(object sender, EventArgs e)
-        {
-            capteurDistanceOptionsPnl.Enabled = capteurDistanceChkBox.Checked;
+            FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
+
+            setUpAllControls(configureTabs);
+
+            StringBuilder str = new StringBuilder(100);
+
+            assignerProfilsCB(str);
+
+            indexProfilDefaut = comboBoxProfil.FindString(nomProfilDefaut);
+
+            foreach (Control tab in configureTabs.TabPages)
+            {
+                tab.Enabled = false;
+            }
         }
 
         private bool empecherTextChangedEvent = false;
@@ -318,7 +343,10 @@ namespace InterfaceGraphique
 
         private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FonctionsNatives.changerProfil();
+            string nomProfil = (string)(sender as ComboBox).SelectedItem;
+            if (!comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomProfil)))
+                return;
+            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
             textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
             textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
             textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
@@ -326,76 +354,121 @@ namespace InterfaceGraphique
             textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
         }
 
-        private void OptionAffichage_CheckedChanged(object sender, EventArgs e)
+        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
         {
-            enableOptionAffichage();
-            setBooleanAffichageComportement();
-            setBooleanAffichageEclairage();
-            setBooleanAffichageCapteurs();
+            Console.Write("allo");
         }
 
-        private void enableOptionAffichage()
+        private enum creationProfil
         {
-            if (OptionAffichage.Checked)
+            ATTENTE_CREATION,
+            ATTENTE_CONFIRMATION
+        }
+
+        private creationProfil etatCreationProfil = creationProfil.ATTENTE_CREATION;
+
+        private void buttonCréerProfil_Click(object sender, EventArgs e)
+        {
+            if (etatCreationProfil == creationProfil.ATTENTE_CREATION)
             {
-                comboBox_capteur.Enabled = true;
-                comboBox_comportement.Enabled = true;
-                comboBox_eclairage.Enabled = true;
+                comboBoxProfil.DropDownStyle = ComboBoxStyle.Simple;
+                comboBoxProfil.Focus();
+                buttonCréerProfil.Text = "Confirmer création";
+                etatCreationProfil = creationProfil.ATTENTE_CONFIRMATION;
+                modifierProfilButt.Enabled = false;
+                buttonDeleteProfil.Enabled = false;
+                retourMenuButt.Enabled = false;
             }
             else
             {
-                comboBox_capteur.Enabled = false;
-                comboBox_comportement.Enabled = false;
-                comboBox_eclairage.Enabled = false;
+                buttonCréerProfil.Text = "Nouveau profil";
+                string nouvelItem = comboBoxProfil.Text;
+
+                string nomSiDoublon = nouvelItem;
+                int nombre = 1;
+                while (comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomSiDoublon)))
+                    nomSiDoublon = nouvelItem + nombre++;
+
+                comboBoxProfil.Items.Add(nomSiDoublon);
+                comboBoxProfil.SelectedIndex = comboBoxProfil.Items.Count - 1;
+                comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
+                etatCreationProfil = creationProfil.ATTENTE_CREATION;
+                modifierProfilButt.Enabled = true;
+                buttonDeleteProfil.Enabled = true;
+                retourMenuButt.Enabled = true;
             }
+            
         }
 
-        private void comboBox_comportement_SelectedIndexChanged(object sender, EventArgs e)
+        private void buttonDeleteProfil_Click(object sender, EventArgs e)
         {
-            setBooleanAffichageComportement();
+            string profilASupprimer = comboBoxProfil.Text;
+            if (profilASupprimer == nomProfilDefaut)
+                return;
+            FonctionsNatives.supprimerProfil(profilASupprimer + extensionProfils);
+            comboBoxProfil.Items.Remove(profilASupprimer);
+            comboBoxProfil.SelectedIndex = indexProfilDefaut;
         }
 
-        private void setBooleanAffichageComportement()
+        private enum modificationProfil
         {
-            if (comboBox_comportement.Enabled)
+            ATTENTE_MODIFICATION,
+            ATTENTE_CONFIRMATION
+        }
+
+        private modificationProfil etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
+
+        private void modifierProfilButt_Click(object sender, EventArgs e)
+        {
+            if (comboBoxProfil.SelectedIndex == indexProfilDefaut)
+                return;
+
+            bool tabEnabled;
+            
+
+            if (etatModificationProfil == modificationProfil.ATTENTE_MODIFICATION)
             {
-                if (comboBox_comportement.SelectedIndex == 0)
-                    afficherDebugComportement = true;
+                tabEnabled = true;
+                modifierProfilButt.Text = "Enregistrer";
+                etatModificationProfil = modificationProfil.ATTENTE_CONFIRMATION;
+                buttonCréerProfil.Enabled = false;
+                buttonDeleteProfil.Enabled = false;
+                retourMenuButt.Enabled = false;
+                comboBoxProfil.Enabled = false;
             }
             else
-                afficherDebugComportement = false;
-        }
-
-        private void comboBox_eclairage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setBooleanAffichageEclairage();
-        }
-
-        private void setBooleanAffichageEclairage()
-        {
-            if (comboBox_eclairage.Enabled)
             {
-                if (comboBox_eclairage.SelectedIndex == 0)
-                    afficherDebugEclairage = true;
+                FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+                FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
+                FonctionsNatives.assignerCapteurDistance(capteurDist1CB.SelectedIndex == 0, capteurDist2CB.SelectedIndex == 0, capteurDist3CB.SelectedIndex == 0, (TypeComportement)capteurDistanceDangerCB.SelectedValue, Convert.ToDouble(longueurZoneDangerCapteurDistanceTB.Text.Replace('.', ',')), (TypeComportement)capteurDistanceSecuritaireCB.SelectedValue, Convert.ToDouble(longueurZoneSecuritaireCapteurDistanceTB.Text.Replace('.', ',')));
+                FonctionsNatives.assignerSuiveurLigne(suiveurLigneCB.SelectedIndex == 0);
+                FonctionsNatives.assignerOptionsDebogages(optionsDebogagesCB.SelectedIndex == 0, comboBox_comportement.SelectedIndex == 0, comboBox_eclairage.SelectedIndex == 0, comboBox_capteur.SelectedIndex == 0);
+                FonctionsNatives.sauvegarderProfil(comboBoxProfil.Text + extensionProfils);
+                tabEnabled = false;
+                modifierProfilButt.Text = "Modifier";
+                etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
+                buttonCréerProfil.Enabled = true;
+                buttonDeleteProfil.Enabled = true;
+                retourMenuButt.Enabled = true;
+                comboBoxProfil.Enabled = true;
             }
-            else
-                afficherDebugEclairage = false;
-        }
 
-        private void comboBox_capteur_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setBooleanAffichageCapteurs();
-        }
-
-        private void setBooleanAffichageCapteurs()
-        {
-            if (comboBox_capteur.Enabled)
+            foreach (Control tab in configureTabs.TabPages)
             {
-                if (comboBox_capteur.SelectedIndex == 0)
-                    afficherDebugCapteurs = true;
+                tab.Enabled = tabEnabled;
             }
-            else
-                afficherDebugCapteurs = false;
+        }
+
+        private void optionsDebogagesCB_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            bool estActif = optionsDebogagesCB.SelectedIndex == 0;
+            comboBox_comportement.Enabled = estActif;
+            comboBox_eclairage.Enabled = estActif;
+            comboBox_capteur.Enabled = estActif;
         }
 
     }
@@ -414,7 +487,22 @@ namespace InterfaceGraphique
         public static extern void assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void sauvegarderProfil(string nomProfil);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerCapteurDistance(bool estActif1, bool estActif2, bool estActif3, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerSuiveurLigne(bool estActif);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void modifierToucheCommande(char touche, TypeCommande commande);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void obtenirNomProfilDefaut(StringBuilder str, int longueur);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void chargerProfilParDefaut();
@@ -426,10 +514,7 @@ namespace InterfaceGraphique
         public static extern void setHandle(IntPtr handle, int ctrl);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void changerProfil();
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerProfils();
+        public static extern void changerProfil(string nomProfil);
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
@@ -442,6 +527,16 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAffichageCapteurs(bool afficherDebugCapteurs);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void obtenirCheminProfils(StringBuilder str, int longueur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void supprimerProfil(string nomProfil);
+
     }
 }
 

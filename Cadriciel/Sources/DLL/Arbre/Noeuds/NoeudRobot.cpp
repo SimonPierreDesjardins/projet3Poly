@@ -241,17 +241,7 @@ void NoeudRobot::assignerVitesseGauche(float vitesse)
 	vitesseGauche_ = vitesse;
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::assignerVitesseRotation() const
-///
-/// Cette modifie la vitesse de rotation angulaire.
-///
-/// @param[in] vitesse : vitesse que l'on souhaite assigner à l'attribut vitesseRotation_.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
+
 void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
 	vitesseRotation_ = vitesse;
@@ -330,8 +320,21 @@ void NoeudRobot::afficherCapteursDistance() const
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerVitesseRotation() const
+///
+/// Cette methode retourne le pointeur vers l'objet suiveur de ligne du noeud du robot.
+///
+/// @return Pointeur vers un objet de type SuiveurLigne.
+///
+////////////////////////////////////////////////////////////////////////
 SuiveurLigne* NoeudRobot::obtenirSuiveurLigne(){
 	return &suiveurLigne_;
+}
+
+std::vector<CapteurDistance>& NoeudRobot::obtenirCapteursDistance(){
+	return capteursDistance_;
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

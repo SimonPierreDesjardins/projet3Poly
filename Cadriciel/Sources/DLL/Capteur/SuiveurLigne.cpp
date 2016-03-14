@@ -26,6 +26,20 @@ SuiveurLigne::SuiveurLigne()
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 }
 
+//Constructeur par paramètre
+SuiveurLigne::SuiveurLigne(bool estActif){
+	/*
+	this->estActif = estActif;
+	*/
+}
+
+//Constructeur par paramètre
+SuiveurLigne::SuiveurLigne(const rapidjson::Value& capteurJSON){
+	/*
+	this->estActif = capteurJSON.MemberBegin()->value.GetBool();
+	*/
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// @fn SuiveurLigne::~SuiveurLigne()
@@ -84,4 +98,26 @@ void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const do
         visiteurDetectionLigne_->assignerCapteurOptique(&capteursOptique_[i]);
         arbre_->accepterVisiteur(visiteurDetectionLigne_.get());        
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void SuiveurLigne::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer)
+///
+/// Cette fonction obtient les valeurs à sauvegarder pour le capteur en JSON
+///
+/// @param[in] writer : Le stream dans lequel le JSON est écrit
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void SuiveurLigne::toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
+	/*
+	writer.Key("estActif");
+	writer.Bool(estActif);
+	*/
+}
+
+void SuiveurLigne::assignerActif(bool estActif){
+	this->estActif = estActif;
 }

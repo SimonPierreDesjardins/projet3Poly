@@ -502,12 +502,12 @@ extern "C"
 	///
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation){
+		// vérifions si une modification de l'angle es nécessaire.
 		if (static_cast<TypeComportement>(typeDeviation) == DEVIATIONVERSLADROITE){
 			angle *= -1;
 		}
 		std::unique_ptr<ComportementDeviation> comportementPtr = std::make_unique<ComportementDeviation>(static_cast<TypeComportement>(comportementSuivant), angle);
 		comportementPtr->assignerComportementSuivant(static_cast<TypeComportement>(comportementSuivant));
-		comportementPtr->setAngleMaxRotation(angle);
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeDeviation), std::move(comportementPtr));
 	}
 	
@@ -524,6 +524,7 @@ extern "C"
 	///
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement){
+		// vérifions si une modification de l'angle es nécessaire.
 		if (static_cast<TypeComportement>(typeEvitement) == EVITEMENTPARLADROITE){
 			angle *= -1;
 		}
@@ -532,13 +533,35 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeEvitement), std::move(comportementPtr));
 	}
 
+	__declspec(dllexport) void __cdecl assignerCapteurDistance(bool estActif1, bool estActif2, bool estActif3, int comportementDanger, double distanceDanger, int comportementSecuritaire, double distanceSecuritaire){
+		bool estActif[] = { estActif1, estActif2, estActif3 };
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCapteurDistance(estActif, static_cast<TypeComportement>(comportementDanger), distanceDanger, static_cast<TypeComportement>(comportementSecuritaire), distanceSecuritaire);
+	}
+
+	__declspec(dllexport) void __cdecl assignerSuiveurLigne(bool estActif){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerSuiveurLigne(estActif);
+	}
+
+	__declspec(dllexport) void __cdecl assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs){
+		bool optionsDebogages[] = { debogageActif, debogageComportements, debogageEclairage, debogageCapteurs };
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerOptionsDebogages(optionsDebogages);
+	}
+
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande((uint8_t)touche, static_cast<TypeCommande>(commande));
+	}
+
+	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomProfilDefaut().c_str());
 	}
 
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut()
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerProfilParDefaut();
+	}
+
+	__declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->sauvegarder(std::string(nomProfil));
 	}
 
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande)
@@ -550,12 +573,21 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setConfigureHandles(handle, static_cast<ConfigureControl>(ctrl));
 	}
 
-	__declspec(dllexport) void __cdecl assignerProfils(){
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerProfils();
+
+	__declspec(dllexport) void __cdecl changerProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
 	}
 
-	__declspec(dllexport) void __cdecl changerProfil(){
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil();
+	__declspec(dllexport) void __cdecl obtenirCheminProfils(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCheminProfils().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirExtensionProfils().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->supprimerProfil(std::string(nomProfil));
 	}
 }
 

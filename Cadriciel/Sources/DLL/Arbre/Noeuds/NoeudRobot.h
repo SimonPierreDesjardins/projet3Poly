@@ -54,6 +54,8 @@ public:
     void afficherCapteursOptique() const;
     void afficherCapteursDistance() const;
 
+	std::vector<CapteurDistance>& obtenirCapteursDistance();
+
 private:
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };

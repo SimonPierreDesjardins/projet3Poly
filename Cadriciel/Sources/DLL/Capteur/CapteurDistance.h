@@ -11,7 +11,13 @@
 #ifndef CAPTEUR_DISTANCE_H
 #define CAPTEUR_DISTANCE_H
 
-//#include "./../../Enum/TypeComportementEnum.cs"
+#include "ComportementAbstrait.h"
+#include "rapidjson\writer.h"
+#include "rapidjson\document.h"
+
+namespace rapidjson {
+	class FileWriteStream;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class CapteurDistance
@@ -27,14 +33,23 @@ class CapteurDistance
 public:
 	//Constructeur par défaut
 	CapteurDistance();
+
+	//Constructeur par paramètre
+	CapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire);
+
+	//Constructeur par paramètre
+	CapteurDistance(const rapidjson::Value& capteurJSON);
+
 	//Destructeur
 	~CapteurDistance();
 
 	void assignerActif(bool estActif);
 
-	void assignerParametreZoneDanger(/*TypeComportement comportement,*/ double distance);
+	void assignerParametreZoneDanger(TypeComportement comportement, double distance);
 
-	void assignerParametreZoneSecuritaire(/*TypeComportement comportement,*/ double distance);
+	void assignerParametreZoneSecuritaire(TypeComportement comportement, double distance);
+
+	void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
 private:
 	bool estActif_{ true };
