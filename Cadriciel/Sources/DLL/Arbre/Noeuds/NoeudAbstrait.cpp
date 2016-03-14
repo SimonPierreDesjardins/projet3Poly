@@ -547,47 +547,6 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele.coinMin.y;
 }
 
-//Permet de modifier les paramètres du robot(à commenter)
-void NoeudAbstrait::assignerVitesseRotation(float vitesse)
-{
-
-}
-void NoeudAbstrait::assignerVitesseDroite(float vitesse)
-{
-
-}
-void NoeudAbstrait::assignerVitesseGauche(float vitesse)
-{
-
-}
-void NoeudAbstrait::assignerVitesseDroiteCourante(float vitesse)
-{
-
-}
-void NoeudAbstrait::assignerVitesseGaucheCourante(float vitesse)
-{
-
-}
-
-
-//Permet de récupérer les paramètres du robot.
-float NoeudAbstrait::obtenirVitesseDroite() const
-{
-	return 0.0;
-}
-float NoeudAbstrait::obtenirVitesseGauche() const
-{
-	return 0.0;
-}
-float NoeudAbstrait::obtenirVitesseDroiteCourante() const
-{
-	return 0.0;
-}
-float NoeudAbstrait::obtenirVitesseGaucheCourante() const
-{
-	return 0.0;
-}
-
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

@@ -67,6 +67,10 @@ public:
 	inline const glm::dvec3& obtenirPositionRelative() const;
 	/// Assigne la position relative du noeud.
 	inline void assignerPositionRelative(const glm::dvec3& positionRelative);	
+    /// Obtient la position courante du noeud.
+    inline const glm::dvec3& obtenirPositionCourante() const;
+    /// Assigne la position courante du noeud.
+    inline void assignerPositionCourante(const glm::dvec3& positionRelative);
 	/// Obtient l'angle de rotation du noeud.
 	inline double obtenirAngleRotation() const;
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
@@ -175,19 +179,6 @@ public:
 	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
-	//Permet de modifier les paramètres du robot
-	virtual void assignerVitesseRotation(float vitesse);
-	virtual void assignerVitesseDroite(float vitesse);
-	virtual void assignerVitesseGauche(float vitesse);
-	virtual void assignerVitesseDroiteCourante(float vitesse);
-	virtual void assignerVitesseGaucheCourante(float vitesse);
-
-	//Permet de récupérer les paramètres du robot.
-	virtual float obtenirVitesseDroite() const;
-	virtual float obtenirVitesseGauche() const;
-	virtual float obtenirVitesseDroiteCourante() const;
-	virtual float obtenirVitesseGaucheCourante() const;
-
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };
@@ -198,9 +189,10 @@ protected:
 	/// Mode d'affichage des polygones.
 	GLenum					modePolygones_{ GL_FILL };
 
-	/// Position relative du noeud.
+	/// Position relative du noeud à son parent.
 	glm::dvec3				positionRelative_{ 0.0, 0.0, 0.0 };
 
+    /// Position courante du noeud dans l'espace virtuel.
     glm::dvec3              positionCourante_{ 0.0, 0.0, 0.0 };
 
 	/// Angle de rotation sur le plan xy
@@ -240,13 +232,6 @@ protected:
 
 	/// Storage pour le dessin du modèle
 	opengl::VBO const*		vbo_{ nullptr };
-
-	//Vitesse des moteurs du robot
-	float vitesseDroite_{ 0.f };
-	float vitesseGauche_{ 0.f };
-	float vitesseRotation_{ 0.f };
-	float vitesseCouranteDroite_{ 0.f };
-	float vitesseCouranteGauche_{ 0.f };
 };
 
 
@@ -333,6 +318,37 @@ inline void NoeudAbstrait::assignerPositionRelative(
 	)
 {
 	positionRelative_ = positionRelative;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
+///
+/// Cette fonction retourne la position courante du noeud dans l'espace virtuel.
+///
+/// @return La position relative.
+///
+////////////////////////////////////////////////////////////////////////
+inline const glm::dvec3& NoeudAbstrait::obtenirPositionCourante() const
+{
+    return positionCourante_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
+///
+/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
+///
+/// @param positionRelative : La position courante.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudAbstrait::assignerPositionCourante(
+    const glm::dvec3& positionCourante)
+{
+    positionCourante_ = positionCourante;
 }
 
 ////////////////////////////////////////////////////////////////////////

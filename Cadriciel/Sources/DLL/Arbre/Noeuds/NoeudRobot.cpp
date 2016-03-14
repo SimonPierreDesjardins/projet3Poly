@@ -22,6 +22,8 @@
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
+#include "NoeudTypes.h"
+
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
@@ -46,6 +48,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+
     NoeudAbstrait* table = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 	NoeudAbstrait* depart = table->chercher(ArbreRenduINF2990::NOM_DEPART);
     
@@ -149,6 +152,49 @@ void NoeudRobot::animer(float dt)
     arbre_->accepterVisiteur(visiteur_.get());
 }
 
+
+void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
+{
+    if (poteau == nullptr) return;
+
+    CercleEnglobant cercle = poteau->obtenirCercleEnglobant();
+    bool collision = rectangleEnglobant_.calculerIntersection(cercle);
+    //TODO:
+    /*
+    Calcul des paramètres pour simuler la collision ici. 
+    */
+    if (collision)
+    {
+        //TODO: Remplacer le cout par le calcul et 
+        //effectuerCollision();
+    }
+}
+
+
+void NoeudRobot::verifierCollision(NoeudMur* noeud)
+{
+    if (noeud == nullptr) return;
+
+    RectangleEnglobant rectangle = noeud->obtenirRectangleEngobant();
+    bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
+    //TODO: 
+    /*
+    Calcul des paramètres pour simuler la collision ici. 
+    */
+    if (collision)
+    {
+        std::cout << "Collision avec un mur." << std::endl;
+        //effectuerCollision();
+    }
+}
+
+
+void NoeudRobot::verifierCollision(NoeudTable* noeud)
+{
+
+}
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::obtenirVitesseDroite() const
@@ -165,6 +211,7 @@ float NoeudRobot::obtenirVitesseDroite() const
 	return vitesseDroite_;
 }
 
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::obtenirVitesseGauche() const
@@ -180,6 +227,8 @@ float NoeudRobot::obtenirVitesseGauche() const
 {
 	return vitesseGauche_;
 }
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::obtenirVitesseDroiteCourante() const
@@ -191,11 +240,12 @@ float NoeudRobot::obtenirVitesseGauche() const
 /// @return float : vitesse de rotation du moteur de droite.
 ///
 ////////////////////////////////////////////////////////////////////////
+/*
 float NoeudRobot::obtenirVitesseDroiteCourante() const
 {
 	return vitesseCouranteDroite_;
 }
-
+*/
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::obtenirVitesseGaucheCourante() const
@@ -207,10 +257,12 @@ float NoeudRobot::obtenirVitesseDroiteCourante() const
 /// @return float : vitesse de rotation du moteur de gauche.
 ///
 ////////////////////////////////////////////////////////////////////////
+/*
 float NoeudRobot::obtenirVitesseGaucheCourante() const
 {
 	return vitesseCouranteGauche_;
 }
+*/
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -260,7 +312,7 @@ void NoeudRobot::assignerVitesseRotation(float vitesse)
 	vitesseRotation_ = vitesse;
 }
 
-
+/*
 void NoeudRobot::assignerVitesseDroiteCourante(float vitesse)
 {
 	vitesseCouranteDroite_ = vitesse;
@@ -271,7 +323,7 @@ void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
 {
 	vitesseCouranteGauche_ = vitesse;
 }
-
+*/
 
 void NoeudRobot::afficherFormeEnglobante() const
 {
@@ -385,7 +437,32 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 
 void NoeudRobot::mettreAJourRectangleEnglobant()
 {
-    //TOOD: Implémenter la position courante dans tous les noeuds.
+    rectangleEnglobant_.assignerPositionCentre(positionCourante_);
+    rectangleEnglobant_.assignerAngle(angleRotation_);
+}
+
+void NoeudRobot::effectuerCollision()
+{
+    // TODO: Continuer l'implémentation de cette méthode.
+    vitesseCouranteDroite_ = -vitesseCouranteDroite_;
+    vitesseCouranteGauche_ = -vitesseCouranteGauche_;
+    vitesseDroite_ = 0.0;
+    vitesseGauche_ = 0.0;
+
+    if (vitesseCouranteDroite_ > 0 && vitesseCouranteGauche_ > 0)
+    {
+        while (vitesseCouranteDroite_ < 0 && vitesseCouranteGauche_< 0)
+        {
+            animer(0.016);
+        }
+    }
+    else if (vitesseCouranteDroite_ < 0 && vitesseCouranteGauche_ < 0)
+    {
+        while (vitesseCouranteDroite_ > 0 && vitesseCouranteGauche_ > 0)
+        {
+            animer(0.016);
+        }
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
