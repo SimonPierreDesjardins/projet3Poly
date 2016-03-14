@@ -284,6 +284,7 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 	robot_->assignerVitesseDroite(vit_D);
 }
 
+
 void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
 {
     vit_G += robot_->obtenirVitesseGauche();

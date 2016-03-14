@@ -279,10 +279,10 @@ void ProfilUtilisateur::chargerProfilParDefaut(){
 		}
 		touches_.resize(5);
 		touches_.at(INVERSER_MODE_CONTROLE) = ' ';
-		touches_.at(AVANCER) = 'w';
-		touches_.at(RECULER) = 's';
-		touches_.at(ROTATION_GAUCHE) = 'a';
-		touches_.at(ROTATION_DROITE) = 'd';
+		touches_.at(AVANCER) = 'W';
+		touches_.at(RECULER) = 'S';
+		touches_.at(ROTATION_GAUCHE) = 'A';
+		touches_.at(ROTATION_DROITE) = 'D';
 
 		commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
 		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));

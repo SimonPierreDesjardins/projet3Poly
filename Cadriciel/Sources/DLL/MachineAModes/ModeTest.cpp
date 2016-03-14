@@ -16,6 +16,8 @@
 #include "Vue.h"
 #include "Projection.h"
 
+#include <iostream>
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeTest::ModeTest()
@@ -56,7 +58,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_KEYDOWN)
 	{
-        const bool estRepetition = (HIWORD(lParam) == KF_REPEAT);
+        const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
         if (!estRepetition)
         {
 		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
