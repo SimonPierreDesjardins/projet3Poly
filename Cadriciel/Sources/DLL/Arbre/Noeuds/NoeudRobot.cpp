@@ -8,6 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 #include "NoeudRobot.h"
+#include "NoeudRoues.h"
 #include "Utilitaire.h"
 #include "VisiteurAbstrait.h"
 #include "FacadeModele.h"
@@ -19,6 +20,8 @@
 #include "OpenGL_VBO.h"
 
 #include <iostream>
+
+#define PI 3.14159265
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -35,10 +38,21 @@
 NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
-	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	NoeudAbstrait* table = arbre->chercher(0);
 	NoeudAbstrait* depart = table->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
+
+	std::shared_ptr<NoeudAbstrait> roueGauche = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
+	std::shared_ptr<NoeudAbstrait> roueDroite = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
+
+	positionnerRoues();
+	table->ajouter(roueGauche);
+	table->ajouter(roueDroite);
+
+	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
+	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
 }
 
 
@@ -53,6 +67,9 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot::~NoeudRobot()
 {
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	table->effacer(roueGauche_);
+	table->effacer(roueDroite_);
 }
 
 
@@ -175,6 +192,8 @@ void NoeudRobot::animer(float dt)
 	angleRotation_ += dt * vitesseRotation_;
 	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
 	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
+
+	positionnerRoues();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -332,6 +351,32 @@ void NoeudRobot::afficherCapteursDistance() const
 
 SuiveurLigne* NoeudRobot::obtenirSuiveurLigne(){
 	return &suiveurLigne_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::positionnerRoues()
+///
+/// Cette fonctione permet de positionner les roues du robot par rapport à
+/// son angle de rotation et sa position relative.
+///
+/// @param[in] Aucun
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::positionnerRoues()
+{
+	//Positionner la roue gauche en fonction du robot
+	roueGauche_->assignerAngleRotation(angleRotation_);
+	roueGauche_->assignerPositionRelative(positionRelative_);
+
+	//Positionner la roue droite en fonction du robot
+	roueDroite_->assignerAngleRotation(angleRotation_);
+	glm::dvec3 position = positionRelative_;
+	position[0] = position[0] + sin(angleRotation_*PI / 180)*4.65;
+	position[1] = position[1] - cos(angleRotation_*PI / 180)*4.65;
+	roueDroite_->assignerPositionRelative(position);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

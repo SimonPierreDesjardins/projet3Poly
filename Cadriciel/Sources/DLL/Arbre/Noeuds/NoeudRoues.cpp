@@ -39,6 +39,8 @@ NoeudRoues::NoeudRoues(const std::string& typeNoeud)
 	NoeudAbstrait* depart = table->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
+
+	parent_ = table->chercher(ArbreRenduINF2990::NOM_ROBOT);
 }
 
 
@@ -94,21 +96,4 @@ void NoeudRoues::afficherConcret() const
 void NoeudRoues::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRoues::animer(float dt)
-///
-/// Cette fonction calcule les changements effectuer aux attributs du robot selon les
-/// vitesses des moteurs de droite et de gauche
-///
-/// @param[in] dt: difference de temps entre deux animations (autour de 0,0166)
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudRoues::animer(float dt)
-{
-	
 }

@@ -40,6 +40,8 @@ public:
 	void assignerVitesseDroite(float vitesse);
 	void assignerVitesseGauche(float vitesse);
 
+	void positionnerRoues();
+
 	//Permet de récupérer les paramètres du robot.
 	float obtenirVitesseDroite() const;
 	float obtenirVitesseGauche() const;
@@ -54,11 +56,14 @@ public:
     void afficherCapteursOptique() const;
     void afficherCapteursDistance() const;
 
-private:
+protected:
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 	float acceleration_{ 200.0 };
-	
+
+	NoeudRoues* roueGauche_;
+	NoeudRoues* roueDroite_;
+
 	SuiveurLigne suiveurLigne_;
 	std::vector<CapteurDistance> capteursDistance_;
 };

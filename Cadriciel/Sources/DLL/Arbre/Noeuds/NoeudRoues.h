@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file NoeudRouest.h
+/// @file NoeudRoues.h
 /// @author Frédéric Grégoire
 /// @date 2016-03-13
 /// @version 1.0
@@ -15,6 +15,8 @@
 #include "SuiveurLigne.h"
 #include "CapteurDistance.h"
 
+
+class NoeudRobot;
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
 /// @brief Classe qui représente le robot du premier projet intégrateur.
@@ -30,12 +32,11 @@ public:
 	/// Destructeur.
 	~NoeudRoues();
 
-	void setPositionRelative(float x, float y, float z);
+	void setPositionRelative();
 
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
-	virtual void animer(float dt);
 };
 
 #endif // __ARBRE_NOEUD_ROUES_H__
