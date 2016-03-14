@@ -17,6 +17,7 @@
 #include "NoeudPoteau.h"
 #include "NoeudMur.h"
 #include "rapidjson\filewritestream.h"
+#include <iostream>
 
 const double CapteurDistance::HAUTEUR = 0.75;
 const double CapteurDistance::MAX_LARGEUR_TOTALE = 30.0;
@@ -82,19 +83,23 @@ CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelati
 CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelatif, const rapidjson::Value& capteurJSON)
 {
 	rapidjson::Value::ConstMemberIterator itr = capteurJSON.MemberBegin();
-
+	std::cout << itr->value.GetBool() << std::endl;
 	estActif_ = itr->value.GetBool();
 
 	itr++;
+	std::cout << itr->value.GetInt() << std::endl;
 	comportementDanger_ = static_cast<TypeComportement>(itr->value.GetInt());
 
 	itr++;
+	std::cout << itr->value.GetDouble() << std::endl;
 	largeurDanger_ = itr->value.GetDouble();
 
 	itr++;
+	std::cout << itr->value.GetInt() << std::endl;
     comportementSecuritaire_ = static_cast<TypeComportement>(itr->value.GetInt());
 
 	itr++;
+	std::cout << itr->value.GetDouble() << std::endl;
 	largeurSecuritaire_ = itr->value.GetDouble();
 }
 

@@ -232,28 +232,21 @@ bool ProfilUtilisateur::chargerProfil(){
 	assert(capteursDistanceJSON.IsArray());
 
 	//bonne version à utiliser quand merge avec oli
-	/*ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_DANGER_CB), capteursDistance[0]["comportementDanger"].GetInt());
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistance[0]["distanceDanger"].GetDouble()).substr(0, 5).c_str());
-	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_CB), capteursDistance[0]["comportementSecuritaire"].GetInt());
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistance[0]["distanceSecuritaire"].GetDouble()).substr(0, 5).c_str());*/
-
-	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_DANGER_CB), 0);
-	SendMessage(configureHandles.at(CAPTEUR_DISTANCE_DANGER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(5.0).substr(0, 5).c_str());
-	ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_CB), 0);
-	SendMessage(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(5.0).substr(0, 5).c_str());
+	
 
 	for (unsigned i = 0; i < capteursDistanceJSON.Size(); i++){
 		capteursDistance_.at(i) = CapteurDistance(positionsRelatives_.at(i), anglesRelatifs_.at(i), capteursDistanceJSON[i]);
 		ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(CAPTEUR_DIST1_CB + i)), 1 - capteursDistanceJSON[i]["estActif"].GetBool());
+		ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_DANGER_CB), capteursDistanceJSON[0]["comportementDanger"].GetInt());
+		SendMessage(configureHandles.at(CAPTEUR_DISTANCE_DANGER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistanceJSON[i]["distanceDanger"].GetDouble()).substr(0, 5).c_str());
+		ComboBox_SetCurSel(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_CB), capteursDistanceJSON[i]["comportementSecuritaire"].GetInt());
+		SendMessage(configureHandles.at(CAPTEUR_DISTANCE_SECURITAIRE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(capteursDistanceJSON[i]["distanceSecuritaire"].GetDouble()).substr(0, 5).c_str());
 	}
 
 	itr++;
 
-	//suiveurLigne_.assignerActif(itr->value.MemberBegin()->value.GetBool());
-	//ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 1 - itr->value.MemberBegin()->value.GetBool());
-
-	suiveurLigne_.assignerActif(true);
-	ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 0);
+	suiveurLigne_.assignerActif(itr->value.MemberBegin()->value.GetBool());
+	ComboBox_SetCurSel(configureHandles.at(SUIVEUR_LIGNE_CB), 1 - itr->value.MemberBegin()->value.GetBool());
 
 	itr++;
 
@@ -279,10 +272,10 @@ void ProfilUtilisateur::chargerProfilParDefaut(){
 		}
 		touches_.resize(5);
 		touches_.at(INVERSER_MODE_CONTROLE) = ' ';
-		touches_.at(AVANCER) = 'w';
-		touches_.at(RECULER) = 's';
-		touches_.at(ROTATION_GAUCHE) = 'a';
-		touches_.at(ROTATION_DROITE) = 'd';
+		touches_.at(AVANCER) = 'W';
+		touches_.at(RECULER) = 'S';
+		touches_.at(ROTATION_GAUCHE) = 'A';
+		touches_.at(ROTATION_DROITE) = 'D';
 
 		commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
 		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));
@@ -299,14 +292,11 @@ void ProfilUtilisateur::chargerProfilParDefaut(){
 		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10, 3));
 
 		capteursDistance_.at(CAPTEUR_DISTANCE_DROITE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE,
-            NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE, true, (TypeComportement)DEFAUT, 5.0, (TypeComportement)DEFAUT, 5.0);
-
-        /*
-        capteursDistance_.push_back(CapteurDistance({ 0, 0, 0 }, 0.0,
-            true, DEFAUT, 5.0, DEFAUT, 5.0));
-		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
-		capteursDistance_.push_back(CapteurDistance(true, DEFAUT, 5.0, DEFAUT, 5.0));
-        */
+            NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
+		capteursDistance_.at(CAPTEUR_DISTANCE_CENTRE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE,
+			NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
+		capteursDistance_.at(CAPTEUR_DISTANCE_GAUCHE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE,
+			NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
 
 		suiveurLigne_.assignerActif(true);
 
@@ -370,8 +360,6 @@ std::string ProfilUtilisateur::obtenirNomProfilDefaut(){
 }
 
 void ProfilUtilisateur::assignerCapteurDistance(bool estActif[], TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire){
-
-
 	for (unsigned i = 0; i < capteursDistance_.size(); i++)
 	{
 		capteursDistance_.at(i) = CapteurDistance(positionsRelatives_[i], anglesRelatifs_[i], estActif[i], 

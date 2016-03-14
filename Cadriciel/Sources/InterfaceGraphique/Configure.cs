@@ -318,6 +318,26 @@ namespace InterfaceGraphique
             oldText = (sender as TextBox).Text;
         }
 
+        private void longueurZoneDangerCapteurDistanceTB_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, false);
+        }
+
+        private void longueurZoneDangerCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        private void longueurZoneSecuritaireCapteurDistanceTB_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, false);
+        }
+
+        private void longueurZoneSecuritaireCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
         private void retourMenuButt_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
@@ -464,6 +484,8 @@ namespace InterfaceGraphique
             comboBox_eclairage.Enabled = estActif;
             comboBox_capteur.Enabled = estActif;
         }
+
+        
 
     }
 
