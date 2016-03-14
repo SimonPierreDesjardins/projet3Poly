@@ -18,11 +18,11 @@
 
 class NoeudRobot;
 ///////////////////////////////////////////////////////////////////////////
-/// @class NoeudRobot
-/// @brief Classe qui représente le robot du premier projet intégrateur.
+/// @class NoeudRoues
+/// @brief Classe qui représente les roues du robot.
 ///
-/// @author Martin Paradis
-/// @date 2015-08-30
+/// @author Frédéric Grégoire
+/// @date 2016-03-13
 ///////////////////////////////////////////////////////////////////////////
 class NoeudRoues : public NoeudComposite
 {
