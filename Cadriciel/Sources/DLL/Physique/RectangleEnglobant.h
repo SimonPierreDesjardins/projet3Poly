@@ -57,7 +57,7 @@ public:
     // Permet de calculer si le rectangle est en intersection avec un autre rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
     
-    virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
+
 
     // Permet de mettre à jour les attributs de la forme.
     void mettreAJour(const glm::dvec3& positionCentre, const double& angle,  
@@ -65,6 +65,9 @@ public:
 
     // Calcule des vecteurs d'orientation unitaire.
     void calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const;
+
+	//virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
+	//virtual bool calculerCollision(const CercleEnglobant& rectangle) const;
 
     // Calcule d'un cercle autour du rectangle.
     double calculerRayon() const;
