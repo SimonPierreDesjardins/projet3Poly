@@ -277,7 +277,7 @@ bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 	bool collision = false;
 	for (unsigned i = 0; i < 4; i++)
 	{
-		if (!rectangle.calculerPointEstDansForme(coins[i]))
+		if (rectangle.calculerPointEstDansForme(coins[i]))
 		{
 			collision = true;
 		}
@@ -445,7 +445,7 @@ void NoeudRobot::mettreAJourRectangleEnglobant()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::effectuerCollision()
+void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 {
     // TODO: Continuer l'implémentation de cette méthode.
 	estEnCollision_ = true;
