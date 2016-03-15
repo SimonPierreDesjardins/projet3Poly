@@ -51,7 +51,9 @@ ComportementDefaut::ComportementDefaut(TypeComportement prochainComportement) : 
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
+ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON){
+	comportementSuivant_ = DEFAUT;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

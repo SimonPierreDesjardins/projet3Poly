@@ -121,8 +121,8 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement)
 	comportement_ = vecteurComportements_ -> at(nouveauComportement).get();
 	
 	if (debug){
-		std::cout << "Passage au comportement: " << comportement_->obtenirNomComportement() << endl;
-			//<< "Comportement Suivant: " << vecteurComportements_->at(comportement_->obtenirComportementSuivant()).get()->obtenirNomComportement() << endl;
+		std::cout << "Passage au comportement: " << comportement_->obtenirNomComportement() << endl
+			<< "Comportement Suivant: " << vecteurComportements_->at(comportement_->obtenirComportementSuivant()).get()->obtenirNomComportement() << endl;
 	}
 
 	// Assignation du controleur au comportement et initialisation
