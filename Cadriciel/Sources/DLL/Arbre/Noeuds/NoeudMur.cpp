@@ -35,7 +35,9 @@ NoeudMur::NoeudMur(const std::string& typeNoeud)
 {
 	angleRotation_ = 0.0;
 	facteurMiseAEchelle_ = 1.0;
+    formeEnglobante_ = &rectangleEnglobant_;
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -51,9 +53,18 @@ NoeudMur::~NoeudMur()
 
 }
 
+
 void NoeudMur::animer(float dt)
 {
+    mettreAJourFormeEnglobante();
+}
 
+
+void NoeudMur::mettreAJourFormeEnglobante()
+{
+    rectangleEnglobant_.assignerPositionCentre(positionCourante_);
+    rectangleEnglobant_.assignerAngle(angleRotation_);
+    rectangleEnglobant_.assignerLargeur(facteurMiseAEchelle_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -85,9 +96,10 @@ void NoeudMur::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
-
 	// Restauration de la matrice.
 	glPopMatrix();
+
+    rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

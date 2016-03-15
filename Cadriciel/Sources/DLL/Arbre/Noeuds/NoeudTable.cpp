@@ -33,6 +33,7 @@
 NoeudTable::NoeudTable(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
+    formeEnglobante_ = &rectangleEnglobant_;
 }
 
 
@@ -67,12 +68,15 @@ void NoeudTable::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	// Affichage du modèle.
+	//glRotatef(90, 1, 0, 0);
+	//glRotatef(90, 0, 1, 0);
 	glColor4f(1, 1, 1, 1);
-	glRotatef(90, 1, 0, 0);
-	glRotatef(90, 0, 1, 0);
+    glTranslated(0.0, 0.0, -2.0);
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
+
+    rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

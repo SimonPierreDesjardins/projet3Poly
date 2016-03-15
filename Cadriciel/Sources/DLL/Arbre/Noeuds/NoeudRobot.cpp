@@ -32,8 +32,7 @@ const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE{ -45.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE{ 0.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE{ 45.0 };
 
-const glm::dvec3 NoeudRobot::POSITION_RELATIVE_CERCLE_ENGLOBANT = { 1.35, 0.0, 0.0 };
-const double NoeudRobot::RAYON_CERCLE_ENGLOBANT = 3.5;
+const glm::dvec3 NoeudRobot::POSITION_RELATIVE_CERCLE_ENGLOBANT = { 1.35, 0.1, 0.0 };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -64,8 +63,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
-    //cercleEnglobant_ = CercleEnglobant(positionCourante_, RAYON_CERCLE_ENGLOBANT);
-    formeEnglobante_ = &cercleEnglobant_;
+    formeEnglobante_ = &rectangleEnglobant_;
 }
 
 
@@ -97,10 +95,11 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
+
+	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
     // TODO: Figurer pourquoi plateforme est transparente sans cette ligne.
     glColor3f(0.0, 0.0, 0.0);
@@ -108,8 +107,6 @@ void NoeudRobot::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
-	// Restauration de la matrice.
-	glPopMatrix();
 
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
@@ -119,7 +116,10 @@ void NoeudRobot::afficherConcret() const
     {
         capteursDistance_->at(i).afficher();
     }
-    cercleEnglobant_.afficher(POSITION_RELATIVE_CERCLE_ENGLOBANT);
+	// Restauration de la matrice.
+	glPopMatrix();
+
+    rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -188,6 +188,8 @@ void NoeudRobot::verifierCollision(NoeudMur* noeud)
     //TODO: 
     /*
     Calcul des paramètres pour simuler la collision ici. 
+    1. obtenir la perpendiculaire à l'orientation du rectangle : rectangle.calculerVecteursOrientations
+    2. 
     */
     if (collision)
     {
@@ -199,24 +201,15 @@ void NoeudRobot::verifierCollision(NoeudMur* noeud)
 
 void NoeudRobot::verifierCollision(NoeudTable* noeud)
 {
+    RectangleEnglobant rectangle = noeud->obtenirRectangleEnglobant();
+    // TODO: à changer pour vérifier
+    bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
+    if (collision)
+    {
 
+    }
 }
 
-
-void NoeudRobot::afficherFormeEnglobante() const
-{
-    double hauteur = rectangleEnglobant_.obtenirHauteur();
-    double largeur = rectangleEnglobant_.obtenirLargeur();
-    glPushMatrix();
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glBegin(GL_QUADS);
-	glVertex3d(largeur / 2.0 + 1.35, hauteur / 2.0, 5.0);
-	glVertex3d(-largeur / 2.0 + 1.35, hauteur / 2.0, 5.0);
-	glVertex3d(-largeur / 2.0 + 1.35, -hauteur / 2.0, 5.0);
-	glVertex3d(largeur / 2.0 + 1.35, -hauteur / 2.0, 5.0);
-	glEnd();
-    glPopMatrix();
-}
 
 void NoeudRobot::mettreAJourCapteurs()
 {

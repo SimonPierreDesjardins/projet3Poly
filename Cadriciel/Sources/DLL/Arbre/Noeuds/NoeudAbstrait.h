@@ -215,7 +215,7 @@ protected:
 	utilitaire::QuadEnglobant quadEnglobantModele_;
 
     // TODO: à enlever
-    RectangleEnglobant rectangleEnglobant_;
+    RectangleEnglobant rectangleEnglobantObs_;
 
     // Une référence sur la forme englobante du noeud. 
     FormeEnglobanteAbstraite* formeEnglobante_{ nullptr };
@@ -469,7 +469,7 @@ inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() con
 //TODO à enlever.
 inline RectangleEnglobant NoeudAbstrait::obtenirRectangleEnglobant() const
 {
-    return rectangleEnglobant_;
+    return rectangleEnglobantObs_;
 }
 
 //TODO à enlever.
@@ -481,10 +481,10 @@ inline FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
 inline void NoeudAbstrait::mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
     const double& hauteur, const double& largeur)
 {
-    rectangleEnglobant_.assignerPositionCentre(centre);
-    rectangleEnglobant_.assignerAngle(angle);
-    rectangleEnglobant_.assignerHauteur(hauteur);
-    rectangleEnglobant_.assignerLargeur(largeur);
+    rectangleEnglobantObs_.assignerPositionCentre(centre);
+    rectangleEnglobantObs_.assignerAngle(angle);
+    rectangleEnglobantObs_.assignerHauteur(hauteur);
+    rectangleEnglobantObs_.assignerLargeur(largeur);
 }
 ////////////////////////////////////////////////////////////////////////
 ///

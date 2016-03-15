@@ -56,6 +56,9 @@ public:
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
     // Permet de calculer si le rectangle est en intersection avec un autre rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
+    
+    virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
+
     // Permet de mettre à jour les attributs de la forme.
     void mettreAJour(const glm::dvec3& positionCentre, const double& angle,  
         const double& hauteur, const double& largeur);
@@ -66,6 +69,9 @@ public:
     // Calcule d'un cercle autour du rectangle.
     double calculerRayon() const;
 
+    virtual void afficher(const glm::dvec3& origine) const;
+    virtual void afficher() const;
+
 private:
     void calculerDistancesPoint(glm::dvec3 distances[4], const glm::dvec3& point) const;
 
@@ -74,6 +80,8 @@ private:
 
     bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
         const double& min2, const double& max2) const;
+
+    void calculerPositionCoins(glm::dvec3 coins[4]);
 
     double angle_{ 0.0 };
     double hauteur_{ 0.0 };

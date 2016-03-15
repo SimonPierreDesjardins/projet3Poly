@@ -36,20 +36,17 @@ public:
     virtual void initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante);
 
     inline void assignerRayon(const double& rayon);
-
     inline double obtenirRayon() const;
 
     virtual bool calculerPointEstDansForme(const glm::dvec3& point) const;
-
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
-
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
+        
 
     void mettreAJour(const glm::dvec3& positionCentre, const double& rayon);
 
-    void afficher(const glm::dvec3& positionRelative) const;
-
-    void afficher() const;
+    virtual void afficher(const glm::dvec3& origine) const;
+    virtual void afficher() const;
 
 private:
     double rayon_;

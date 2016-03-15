@@ -64,10 +64,10 @@ void CercleEnglobant::afficher() const
 }
 
 
-void CercleEnglobant::afficher(const glm::dvec3& translation) const
+void CercleEnglobant::afficher(const glm::dvec3& origine) const
 {
 
-
+    glm::dvec3 positionRelative = positionCentre_ - origine;
     int nSegments = 360;
     float theta = 2 * (float)utilitaire::PI / (float)(nSegments);
     float facteurTangentiel = tanf(theta);
@@ -77,9 +77,9 @@ void CercleEnglobant::afficher(const glm::dvec3& translation) const
 
     glPushMatrix();
 
-    glTranslated(translation.x, translation.y, translation.z);
+    glTranslated(positionRelative.x, positionRelative.y, positionRelative.z);
 
-    glColor3f(0.0, 0.0, 0.0);
+    glColor3f(1.0, 0.0, 0.0);
 
     glBegin(GL_LINE_LOOP);
     for (int i = 0; i < 360; i++)

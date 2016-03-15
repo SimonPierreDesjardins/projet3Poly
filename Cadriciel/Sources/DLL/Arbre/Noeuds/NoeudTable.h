@@ -13,6 +13,7 @@
 
 #include "NoeudComposite.h"
 #include "VisiteurAbstrait.h"
+#include "RectangleEnglobant.h"
 #include "GL/glew.h"
 
 class VisiteurAbstrait;

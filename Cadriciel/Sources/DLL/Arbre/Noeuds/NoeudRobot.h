@@ -74,8 +74,6 @@ public:
     inline SuiveurLigne* obtenirSuiveurLigne();     
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
-    void afficherFormeEnglobante() const;
-
 private:
 	//Vitesse des moteurs du robot
 	float vitesseRotation_{ 0.f };
@@ -87,7 +85,7 @@ private:
 	float angle_{ 0.f };
 	float acceleration_{ 200.0 };
 
-    CercleEnglobant cercleEnglobant_;
+    RectangleEnglobant rectangleEnglobant_;
    
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };

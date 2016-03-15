@@ -302,6 +302,7 @@ void CapteurDistance::afficher() const
 	glVertex3d(largeurSecuritaire, - hauteurDanger / 2.0, 5.0);
 	glEnd();
     glPopMatrix();
+
     glColor4f(0.0, 0.0, 0.0, 1.0);
 }
 
