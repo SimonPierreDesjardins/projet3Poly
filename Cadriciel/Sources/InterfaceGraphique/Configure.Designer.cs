@@ -339,7 +339,6 @@
             this.textBoxModeManuel.TabIndex = 4;
             this.textBoxModeManuel.Tag = "5";
             this.textBoxModeManuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxModeManuel.TextChanged += new System.EventHandler(this.textBoxModeManuel_TextChanged);
             this.textBoxModeManuel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxModeManuel_KeyPress);
             // 
             // textBoxAvancer
@@ -975,6 +974,7 @@
             // 
             // capteurDistCentreCB
             // 
+            this.capteurDistCentreCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.capteurDistCentreCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capteurDistCentreCB.FormattingEnabled = true;
             this.capteurDistCentreCB.Items.AddRange(new object[] {
@@ -1096,6 +1096,7 @@
             // 
             // capteurDistGaucheCB
             // 
+            this.capteurDistGaucheCB.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.capteurDistGaucheCB.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.capteurDistGaucheCB.FormattingEnabled = true;
             this.capteurDistGaucheCB.Items.AddRange(new object[] {
