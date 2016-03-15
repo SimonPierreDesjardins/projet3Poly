@@ -85,6 +85,8 @@ private:
 	float angle_{ 0.f };
 	float acceleration_{ 200.0 };
 
+	bool optionDebug{ true };
+
     RectangleEnglobant rectangleEnglobant_;
    
     SuiveurLigne* suiveurLigne_{ nullptr };
