@@ -16,8 +16,8 @@ namespace InterfaceGraphique
     public partial class Configure : Form
     {
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
+        System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en");
+        
         private List<TypeComportement> comportementsList;
 
         private string cheminProfils;
@@ -327,7 +327,7 @@ namespace InterfaceGraphique
         {
             double nombre;
             bool reussi;
-            reussi = Double.TryParse(aTester.Replace('.', ','), out nombre);
+            reussi = Double.TryParse(aTester.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre);
             if (reussi)
                 if (nombre < 0.00 || nombre > 360.00 || BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
                     reussi = false;
@@ -754,7 +754,6 @@ namespace InterfaceGraphique
                 
                 FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
                 
-                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en");
                 
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Double.Parse(angleDGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLAGAUCHE);
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Double.Parse(angleDDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLADROITE);
