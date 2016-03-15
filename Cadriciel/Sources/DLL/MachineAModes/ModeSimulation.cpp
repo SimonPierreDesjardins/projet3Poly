@@ -22,6 +22,8 @@
 
 #include <iostream>
 
+std::array<char, 10> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B' } };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeSimulation::ModeSimulation()
@@ -34,6 +36,9 @@ ModeSimulation::ModeSimulation()
 	typeMode_ = SIMULATION;
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	// On fait démarrer le robot en mode automatique
+	controleRobot_->passerAModeAutomatique();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -51,6 +56,72 @@ ModeSimulation::~ModeSimulation()
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void ModeSimulation::inverserLumiereAmbiante()
+///
+/// Fonction qui permet d'alterner l'état de la lumière ambiante 
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::inverserLumiereAmbiante()
+{
+	lumiereAmbiante = !lumiereAmbiante;
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
+	{
+		utilitaire::time_in_HH_MM_SS_MMM();
+		if (lumiereAmbiante)
+			std::cout << " - Lumiere ambiante ouverte" << std::endl;
+		else
+			std::cout << " - Lumiere ambiante fermee" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeSimulation::inverserLumiereDirectionnelle()
+///
+/// Fonction qui permet d'alterner l'état de la lumière directionnelle 
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::inverserLumiereDirectionnelle()
+{
+	lumiereDirectionnelle = !lumiereDirectionnelle;
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
+	{
+		utilitaire::time_in_HH_MM_SS_MMM();
+		if (lumiereDirectionnelle)
+			std::cout << " - Lumiere directionnelle ouverte" << std::endl;
+		else
+			std::cout << " - Lumiere directionnelle fermee" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeSimulation::inverserLumiereSpot()
+///
+/// Fonction qui permet d'alterner l'état de la lumière spot
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::inverserLumiereSpot()
+{
+	lumiereSpot = !lumiereSpot;
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
+	{
+		utilitaire::time_in_HH_MM_SS_MMM();
+		if (lumiereSpot)
+			std::cout << " - Lumiere spot ouverte" << std::endl;
+		else
+			std::cout << " - Lumiere spot fermee" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
 /// Fonction qui permet de traiter les entrées utilisateur en mode simulation. 
@@ -62,11 +133,44 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_KEYDOWN )
 	{
+		switch (wParam)
+		{
+		case 'J':
+			inverserLumiereAmbiante();
+			break;
+
+		case 'K':
+			inverserLumiereDirectionnelle();
+			break;
+
+		case 'L':
+			inverserLumiereSpot();
+			break;
+
+		case '1':
+			break;
+
+		case '2':
+			break;
+
+		case '3':
+			break;
+
+		case 'B':
+			break;
+
+		case '\b':
+			break;
+
+		default:
+			break;
+		}
         const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
         if (!estRepetition)
         {
 		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
         }
+		
 	}
 	else if (msg == WM_KEYUP)
 	{
@@ -83,6 +187,10 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 }
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

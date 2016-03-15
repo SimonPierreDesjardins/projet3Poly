@@ -612,6 +612,17 @@ namespace InterfaceGraphique
         private void longueurZoneDangerCapteurDistanceTB_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, false);
+            // TODO: VERIFIER PERTINENCE DU CODE CI-DESSOUS
+            /*FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.',',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
+            */
+            // TODO: VALIDE?
+            this.DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void longueurZoneDangerCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
@@ -798,6 +809,20 @@ namespace InterfaceGraphique
             comboBox_comportement.Enabled = estActif;
             comboBox_eclairage.Enabled = estActif;
             comboBox_capteur.Enabled = estActif;
+        }
+
+        private void button_Default_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.modifierToucheCommande('W', TypeCommande.AVANCER);
+            textBoxAvancer.Text = "W";
+            FonctionsNatives.modifierToucheCommande('S', TypeCommande.RECULER);
+            textBoxReculer.Text = "S";
+            FonctionsNatives.modifierToucheCommande('A', TypeCommande.ROTATION_GAUCHE);
+            textBoxAntiHoraire.Text = "A";
+            FonctionsNatives.modifierToucheCommande('D', TypeCommande.ROTATION_DROITE);
+            textBoxHoraire.Text = "D";
+            FonctionsNatives.modifierToucheCommande(' ', TypeCommande.INVERSER_MODE_CONTROLE);
+            textBoxModeManuel.Text = "ESPACE";
         }
 
 

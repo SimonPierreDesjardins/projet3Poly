@@ -15,12 +15,13 @@
 #include <thread>
 #include "ComportementAbstrait.h"
 #include <mutex>
+#include <vector>
 
 class CommandeRobot;
 class NoeudAbstrait;
 class NoeudRobot;
 class ArbreRendu;
-
+class ProfilUtilisateur;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -42,7 +43,7 @@ public:
 	void traiterCommande(CommandeRobot* commande, bool provientUtilisateur);
 
 	// Assigne le comportement correspondant à l'enum à l'IA du robot.
-	void assignerComportement(TypeComportement nouveauComportement);
+	void assignerComportement(TypeComportement nouveauComportement, std::string declencheur);
 
 	// perme d'obtenir le noeud du robot. Souvent appelé par les comportements pour vérifier des conditions.
 	NoeudRobot* obtenirNoeud();
@@ -58,6 +59,8 @@ public:
 
 	// Permet aux comportements de savoir si une ligne est détectée
 	bool ligneDetectee();
+
+	void assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur);
 
 private:
 	// Fonctions pour gérer multithreading robot
@@ -76,6 +79,10 @@ private:
 
 	// pointeur vers le noeud du robot
 	NoeudRobot* robot_;
+	//Pointeur sur un profil
+	ProfilUtilisateur* profil_{ nullptr };
+
+	std::vector<std::unique_ptr<ComportementAbstrait>>* vecteurComportements_;
 
 	// Pointeur vers le comportement présentement adopté par le robot.
 	ComportementAbstrait* comportement_;

@@ -127,6 +127,7 @@
             this.ZoneCapteurs = new System.Windows.Forms.Label();
             this.EtatEclairage = new System.Windows.Forms.Label();
             this.ChangeComportement = new System.Windows.Forms.Label();
+            this.button_Default = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -247,6 +248,7 @@
             // tabPage1
             // 
             this.tabPage1.BackColor = System.Drawing.Color.Transparent;
+            this.tabPage1.Controls.Add(this.button_Default);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.label3);
@@ -267,7 +269,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(281, 283);
+            this.label5.Location = new System.Drawing.Point(252, 307);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(179, 13);
             this.label5.TabIndex = 10;
@@ -276,7 +278,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(344, 94);
+            this.label4.Location = new System.Drawing.Point(320, 74);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 9;
@@ -285,7 +287,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(180, 183);
+            this.label3.Location = new System.Drawing.Point(50, 163);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 13);
             this.label3.TabIndex = 8;
@@ -294,7 +296,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(347, 183);
+            this.label2.Location = new System.Drawing.Point(323, 163);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 7;
@@ -303,7 +305,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(433, 183);
+            this.label1.Location = new System.Drawing.Point(520, 163);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(139, 13);
             this.label1.TabIndex = 6;
@@ -315,11 +317,11 @@
             this.textBoxAntiHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAntiHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAntiHoraire.HideSelection = false;
-            this.textBoxAntiHoraire.Location = new System.Drawing.Point(447, 202);
+            this.textBoxAntiHoraire.Location = new System.Drawing.Point(506, 182);
             this.textBoxAntiHoraire.MaxLength = 1;
             this.textBoxAntiHoraire.Name = "textBoxAntiHoraire";
             this.textBoxAntiHoraire.ReadOnly = true;
-            this.textBoxAntiHoraire.Size = new System.Drawing.Size(100, 49);
+            this.textBoxAntiHoraire.Size = new System.Drawing.Size(167, 49);
             this.textBoxAntiHoraire.TabIndex = 5;
             this.textBoxAntiHoraire.Tag = "4";
             this.textBoxAntiHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -332,10 +334,10 @@
             this.textBoxModeManuel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxModeManuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxModeManuel.HideSelection = false;
-            this.textBoxModeManuel.Location = new System.Drawing.Point(284, 299);
+            this.textBoxModeManuel.Location = new System.Drawing.Point(222, 323);
             this.textBoxModeManuel.Name = "textBoxModeManuel";
             this.textBoxModeManuel.ReadOnly = true;
-            this.textBoxModeManuel.Size = new System.Drawing.Size(167, 49);
+            this.textBoxModeManuel.Size = new System.Drawing.Size(234, 49);
             this.textBoxModeManuel.TabIndex = 4;
             this.textBoxModeManuel.Tag = "5";
             this.textBoxModeManuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -348,12 +350,12 @@
             this.textBoxAvancer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAvancer.HideSelection = false;
-            this.textBoxAvancer.Location = new System.Drawing.Point(316, 110);
+            this.textBoxAvancer.Location = new System.Drawing.Point(260, 90);
             this.textBoxAvancer.MaxLength = 1;
             this.textBoxAvancer.Name = "textBoxAvancer";
             this.textBoxAvancer.ReadOnly = true;
             this.textBoxAvancer.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.textBoxAvancer.Size = new System.Drawing.Size(100, 49);
+            this.textBoxAvancer.Size = new System.Drawing.Size(167, 49);
             this.textBoxAvancer.TabIndex = 3;
             this.textBoxAvancer.Tag = "1";
             this.textBoxAvancer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -365,11 +367,11 @@
             this.textBoxHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxHoraire.HideSelection = false;
-            this.textBoxHoraire.Location = new System.Drawing.Point(183, 202);
+            this.textBoxHoraire.Location = new System.Drawing.Point(28, 182);
             this.textBoxHoraire.MaxLength = 1;
             this.textBoxHoraire.Name = "textBoxHoraire";
             this.textBoxHoraire.ReadOnly = true;
-            this.textBoxHoraire.Size = new System.Drawing.Size(100, 49);
+            this.textBoxHoraire.Size = new System.Drawing.Size(166, 49);
             this.textBoxHoraire.TabIndex = 2;
             this.textBoxHoraire.Tag = "3";
             this.textBoxHoraire.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -381,11 +383,11 @@
             this.textBoxReculer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxReculer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxReculer.HideSelection = false;
-            this.textBoxReculer.Location = new System.Drawing.Point(316, 202);
+            this.textBoxReculer.Location = new System.Drawing.Point(260, 182);
             this.textBoxReculer.MaxLength = 1;
             this.textBoxReculer.Name = "textBoxReculer";
             this.textBoxReculer.ReadOnly = true;
-            this.textBoxReculer.Size = new System.Drawing.Size(100, 49);
+            this.textBoxReculer.Size = new System.Drawing.Size(167, 49);
             this.textBoxReculer.TabIndex = 1;
             this.textBoxReculer.Tag = "2";
             this.textBoxReculer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -1273,6 +1275,16 @@
             this.ChangeComportement.TabIndex = 1;
             this.ChangeComportement.Text = "Changement de comportement";
             // 
+            // button_Default
+            // 
+            this.button_Default.Location = new System.Drawing.Point(613, 442);
+            this.button_Default.Name = "button_Default";
+            this.button_Default.Size = new System.Drawing.Size(119, 43);
+            this.button_Default.TabIndex = 11;
+            this.button_Default.Text = "Default";
+            this.button_Default.UseVisualStyleBackColor = true;
+            this.button_Default.Click += new System.EventHandler(this.button_Default_Click);
+            // 
             // Configure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1415,5 +1427,6 @@
         private System.Windows.Forms.Label ZoneCapteurs;
         private System.Windows.Forms.Label EtatEclairage;
         private System.Windows.Forms.Label ChangeComportement;
+        private System.Windows.Forms.Button button_Default;
     }
 }

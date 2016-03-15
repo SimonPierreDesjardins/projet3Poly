@@ -110,9 +110,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurOuverture.resx">
       <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurSauvegarde.resx">
       <DependentUpon>ExplorateurSauvegarde.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="NouveauProfil.resx">
       <DependentUpon>NouveauProfil.cs</DependentUpon>

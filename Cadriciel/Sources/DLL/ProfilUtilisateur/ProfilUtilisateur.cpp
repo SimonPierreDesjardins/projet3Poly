@@ -18,7 +18,7 @@
 #include <sstream>
 #include "NoeudRobot.h"
 #include <cmath>
-
+#include "ModeSimulation.h"
 
 ProfilUtilisateur::ProfilUtilisateur(){
 	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL))
@@ -326,14 +326,42 @@ void ProfilUtilisateur::assignerComportement(TypeComportement typeComportement, 
 	comportements_.at(typeComportement).swap(comportement);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::vector<std::unique_ptr<ComportementAbstrait>>* ProfilUtilisateur::obtenirVecteurComportements()
+///
+/// Retourne le pointeur au vecteur des comportements configurés par l'utilisateur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+std::vector<std::unique_ptr<ComportementAbstrait>>* ProfilUtilisateur::obtenirVecteurComportements(){
+	return &comportements_;
+}
+
 CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const{
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
 	return (it == commandes_.end()) ? nullptr : (*it).second.get();
 }
 
 bool ProfilUtilisateur::toucheEstUtilise(char touche){
+	bool toucheModifiable = true;
+	bool toucheNonModifiable = false;
+	bool trouve = false;
+
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
-	return it != commandes_.end();
+	toucheModifiable = it != commandes_.end();
+
+	const std::array<char, 10>* toucheNonChangeable = ModeSimulation::getTouchesNonConfigurable();
+	for (int i = 0; i < 10 && !trouve; i++)
+	{
+		if (toucheNonChangeable->at(i) == touche)
+		{ 
+			toucheNonModifiable = true;
+			trouve = true;
+		}
+	}
+	return (toucheModifiable || toucheNonModifiable);
 }
 
 char ProfilUtilisateur::obtenirToucheCommande(int commande){
@@ -374,4 +402,12 @@ void ProfilUtilisateur::assignerOptionsDebogages(bool optionsDebogages[]){
 	for (unsigned i = 0; i < optionsDebogages_.size(); i++){
 		optionsDebogages_.at(i) = optionsDebogages[i];
 	}
+}
+
+bool ProfilUtilisateur::obtenirOptionDebogage(optionsDebogagesEnum option)
+{
+	if (optionsDebogages_.at(ETAT_DEBOGAGE))
+		return optionsDebogages_.at(option);
+	else
+		return false;
 }

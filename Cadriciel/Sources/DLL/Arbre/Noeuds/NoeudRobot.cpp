@@ -54,9 +54,9 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
     NoeudAbstrait* table = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 	NoeudAbstrait* depart = table->chercher(ArbreRenduINF2990::NOM_DEPART);
     
-    ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-    suiveurLigne_ = profil->obtenirSuiveurLigne();
-    capteursDistance_ = profil->obtenirCapteursDistance();
+    profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+    suiveurLigne_ = profil_->obtenirSuiveurLigne();
+    capteursDistance_ = profil_->obtenirCapteursDistance();
 
     // À modifier avec le merge du profile.
     visiteur_ = make_unique<VisiteurDetectionRobot>(this);
@@ -110,12 +110,15 @@ void NoeudRobot::afficherConcret() const
 
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
-
-    // Débugage des capteurs de distance.
-    for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
-    {
-        capteursDistance_->at(i).afficher();
-    }
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
+	{
+		// Débugage des capteurs de distance.
+		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		{
+			capteursDistance_->at(i).afficher();
+		}
+	}
+    
 	// Restauration de la matrice.
 	glPopMatrix();
 
@@ -177,7 +180,6 @@ void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         //effectuerCollision();
     }
 }
-
 
 void NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
@@ -336,6 +338,12 @@ void NoeudRobot::effectuerCollision()
     }
 }
 
+
+/* TODO: VÉRIFIER LA PERTINENCE DE CE CODE, a 't'enlev'dans algo
+std::vector<CapteurDistance>& NoeudRobot::obtenirCapteursDistance(){
+	return capteursDistance_;
+}
+*/
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

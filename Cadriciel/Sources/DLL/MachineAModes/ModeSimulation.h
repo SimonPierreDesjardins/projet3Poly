@@ -16,6 +16,7 @@
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
 #include <unordered_map>
+#include <array>
 
 class ProfilUtilisateur;
 
@@ -30,8 +31,16 @@ class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
 class ModeSimulation : public ModeAbstrait
 {
-public:
+private:
+	std::unique_ptr<ControleRobot> controleRobot_;
+	ProfilUtilisateur* profil_{ nullptr };
+	static std::array<char, 10> touchesNonConfigurable_;
 
+	bool lumiereAmbiante { true };
+	bool lumiereDirectionnelle { true };
+	bool lumiereSpot { true };
+
+public:
 	//Constructeur par défaut
 	ModeSimulation();
 	//Destructeur
@@ -39,10 +48,17 @@ public:
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_;
+	void inverserLumiereAmbiante();
+	void inverserLumiereDirectionnelle();
+	void inverserLumiereSpot();
+
+	inline static std::array<char, 10>* getTouchesNonConfigurable();
 };
+
+std::array<char, 10>* ModeSimulation::getTouchesNonConfigurable()
+{
+	return &touchesNonConfigurable_;
+}
 
 #endif /// MODE_SIMULATION_H
 

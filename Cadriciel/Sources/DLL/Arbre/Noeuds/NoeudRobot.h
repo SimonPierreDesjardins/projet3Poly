@@ -13,13 +13,13 @@
 #include "NoeudComposite.h"
 #include "SuiveurLigne.h"
 #include "CapteurDistance.h"
-
 #include "RectangleEnglobant.h"
 #include "CercleEnglobant.h"
 #include "VisiteurDetectionRobot.h"
 
 #include <array>
 
+class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
 /// @brief Classe qui représente le robot du premier projet intégrateur.
@@ -84,6 +84,9 @@ private:
 
 	float angle_{ 0.f };
 	float acceleration_{ 200.0 };
+
+	//Pointeur sur le profil actif
+	ProfilUtilisateur* profil_{ nullptr };
 
     RectangleEnglobant rectangleEnglobant_;
    

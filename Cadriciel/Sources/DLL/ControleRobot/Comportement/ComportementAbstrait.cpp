@@ -82,7 +82,7 @@ ComportementAbstrait::~ComportementAbstrait()
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementAbstrait::assignerRobot(ControleRobot* controleRobot){
-	controleRobot_ = std::unique_ptr<ControleRobot>(controleRobot);
+	controleRobot_ = controleRobot;
 }
 
 ////////////////////////////////////////////////////////////////////////
