@@ -126,7 +126,8 @@ void ComportementSuiviLigne::mettreAJour(){
 		}
 		// trop tard, change de comportement
 		else if (difftime(time(nullptr), heurePerteLigne_) > 1.6){
-			controleRobot_->assignerComportement(comportementSuivant_);
+			std::string declencheur = "TODO me changer";
+			controleRobot_->assignerComportement(comportementSuivant_, declencheur);
 		}
 
 	}

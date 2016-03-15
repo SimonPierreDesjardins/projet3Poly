@@ -82,7 +82,7 @@ namespace utilitaire {
    /// Conversion d'une couleur Assimp vers glm
    glm::vec3 ai_To_glm(aiColor3D const& c);
 
-   std::string time_in_HH_MM_SS_MMM();
+   void time_in_HH_MM_SS_MMM();
 
    /// Structure contenant les données pour une sphère englobante
    struct SphereEnglobante{

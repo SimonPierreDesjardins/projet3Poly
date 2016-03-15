@@ -15,6 +15,8 @@
 #include <vector>
 #include <iostream>
 
+#include <stdio.h>
+
 #include <iomanip>
 #include <chrono>
 #include <ctime>
@@ -742,29 +744,23 @@ namespace utilitaire {
         return estIntersection;
     }
 
-	std::string time_in_HH_MM_SS_MMM()
+	void time_in_HH_MM_SS_MMM()
 	{
-		using namespace std::chrono;
+		/*time_t now;
+		struct tm *current;
+		now = time(0);
+		current = localtime(&now);
+		std::cout << "hour: " << current->tm_hour << std::endl;
+		std::cout << "mins: " << current->tm_min << std::endl;
+		std::cout << "sec: " << current->tm_sec << std::endl;
 
-		// get current time
-		auto now = system_clock::now();
+		struct timeval detail_time;
+		gettimeofday(&detail_time, NULL);
+		std::cout << "milli: " << detail_time.tv_usec / 1000 << std::endl;*/
+		SYSTEMTIME localTime;
 
-		// get number of milliseconds for the current second
-		// (remainder after division into seconds)
-		auto ms = duration_cast<milliseconds>(now.time_since_epoch()) % 1000;
-
-		// convert to std::time_t in order to convert to std::tm (broken time)
-		auto timer = system_clock::to_time_t(now);
-
-		// convert to broken time
-		std::tm bt = *std::localtime(&timer);
-
-		std::ostringstream oss;
-
-		oss << std::put_time(&bt, "%T"); // HH:MM:SS
-		oss << '.' << std::setfill('0') << std::setw(3) << ms.count();
-
-		return oss.str();
+		GetLocalTime(&localTime);
+		std::cout << std::setfill('0') << std::setw(2) << localTime.wHour << ":" << std::setfill('0') << std::setw(2) << localTime.wMinute << ":" << std::setfill('0') << std::setw(2) << localTime.wSecond << ":" << std::setfill('0') << std::setw(3) << localTime.wMilliseconds;
 	}
 }; // Fin de l'espace de nom utilitaire.
 

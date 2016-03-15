@@ -114,7 +114,7 @@ void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<Com
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::assignerComportement(TypeComportement nouveauComportement)
+void ControleRobot::assignerComportement(TypeComportement nouveauComportement, std::string declencheur)
 {
 	// Nous devons vérouiller l'accès au comportement temporairement pour sa modification
 	mutexComportement.lock();
@@ -123,7 +123,8 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement)
 	comportement_ = vecteurComportements_ -> at(nouveauComportement).get();
 	
 	if (debug){
-		std::cout << utilitaire::time_in_HH_MM_SS_MMM << " - " << "allo" << " - " << comportement_->obtenirNomComportement() << endl;
+		utilitaire::time_in_HH_MM_SS_MMM();
+		std::cout << " - " << declencheur << " - " << comportement_->obtenirNomComportement() << endl;
 
 	}
 
@@ -164,7 +165,8 @@ void ControleRobot::inverserModeControle(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
-	assignerComportement(DEFAUT);
+	std::string declencheur = "TODO me changer";
+	assignerComportement(DEFAUT, declencheur);
 	initialiserBoucleRobot();
 }
 
@@ -232,14 +234,15 @@ void ControleRobot::terminerBoucleRobot(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
+	std::string declencheur = "TODO me changer";
 	while (!manuel) {
 		NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
 		for (auto capteur : *capteurs){
 			if (capteur.obtenirEtat() == 1){
-				assignerComportement(capteur.obtenirComportementZoneSecuritaire());
+				assignerComportement(capteur.obtenirComportementZoneSecuritaire(), declencheur);
 			}
 			else if (capteur.obtenirEtat() == 2){
-				assignerComportement(capteur.obtenirComportementZoneDanger());
+				assignerComportement(capteur.obtenirComportementZoneDanger(), declencheur);
 			}
 		}
 		comportement_->mettreAJour();

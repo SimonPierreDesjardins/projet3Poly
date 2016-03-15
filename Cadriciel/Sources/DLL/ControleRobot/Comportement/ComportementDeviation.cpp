@@ -115,7 +115,8 @@ void ComportementDeviation::mettreAJour(){
 	//Implémentation de l'exception Rapport d'élicitation p.22
 	if (controleRobot_->ligneDetectee()){
 		if (!ignorerLigne_){
-			controleRobot_->assignerComportement(SUIVIDELIGNE);
+			std::string declencheur = "TODO me changer";
+			controleRobot_->assignerComportement(SUIVIDELIGNE, declencheur);
 		}
 	}
 	else{
@@ -137,7 +138,8 @@ void ComportementDeviation::mettreAJour(){
 	}
 
 	if (angleAtteinte){
-		controleRobot_->assignerComportement(comportementSuivant_);
+		std::string declencheur = "TODO me changer";
+		controleRobot_->assignerComportement(comportementSuivant_, declencheur);
 	}
 }
 
