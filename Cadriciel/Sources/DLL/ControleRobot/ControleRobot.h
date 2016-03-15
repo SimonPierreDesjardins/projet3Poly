@@ -35,6 +35,7 @@ class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
 class ControleRobot
 {
+	friend class ModeSimulation;
 public:
 	ControleRobot();
 	~ControleRobot();
@@ -62,6 +63,9 @@ public:
 
 	void assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur);
 
+	void setEnPause(bool pause);
+	bool getEnPause();
+
 private:
 	// Fonctions pour gérer multithreading robot
 	void initialiserBoucleRobot();
@@ -72,7 +76,7 @@ private:
 	bool manuel{ false };
 
 	// définit si en mode debug
-	bool debug{ true };
+	bool enPause{ false };
 
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;

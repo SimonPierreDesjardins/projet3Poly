@@ -22,7 +22,6 @@
 #include "ProfilUtilisateur.h"
 
 class NoeudAbstrait;
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class FacadeModele
 /// @brief Classe qui constitue une interface (une façade) sur l'ensemble

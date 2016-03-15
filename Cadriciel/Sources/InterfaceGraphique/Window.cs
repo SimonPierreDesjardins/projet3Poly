@@ -1221,12 +1221,14 @@ namespace InterfaceGraphique
                         afficherMenuPrincipal(true);
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         estEnPause = false;
+                        //FonctionsNatives.mettreEnPause(estEnPause);
                         picturePause.Visible = estEnPause;
                     }
                     break;
 
                 case Keys.Escape:
                     estEnPause = !estEnPause;
+                    //FonctionsNatives.mettreEnPause(estEnPause);
                     picturePause.Visible = estEnPause;
                     menuSimTest.Visible = estEnPause;
                     break;
@@ -1552,5 +1554,8 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern string obtenirCheminFichierZoneDefaut();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void mettreEnPause(bool estEnPause);
     }
 }
