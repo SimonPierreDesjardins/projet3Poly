@@ -186,6 +186,17 @@ void NoeudRobot::animer(float dt)
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et un poteau
+///
+/// @param[in] noeud: Prend le NoeudPoteau en paramètre ce qui correspond aux poteaux.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
 void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 {
@@ -204,6 +215,17 @@ void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::verifierCollision(NoeudMur* noeud)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et un mur.
+///
+/// @param[in] noeud: Prend le NoeudMur en paramètre ce qui correspond aux murs.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
 void NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
@@ -238,6 +260,17 @@ void NoeudRobot::verifierCollision(NoeudMur* noeud)
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::verifierCollision(NoeudTable* noeud)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et la table.
+///
+/// @param[in] noeud: Prend le noeudTable en paramètre ce qui correspond à la table.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
 void NoeudRobot::verifierCollision(NoeudTable* noeud)
 {
@@ -251,6 +284,16 @@ void NoeudRobot::verifierCollision(NoeudTable* noeud)
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::mettreAJourCapteurs()
+///
+/// Cette fonction met à jour les capteurs de distance selon leur position et leur angle.
+///
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
 void NoeudRobot::mettreAJourCapteurs()
 {
@@ -263,10 +306,9 @@ void NoeudRobot::mettreAJourCapteurs()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudRobot::animer(float dt)
+/// @fn void NoeudRobot::mettreAJourPosition(const float& dt)
 ///
-/// Cette fonction calcule les changements effectuer aux attributs du robot selon les
-/// vitesses des moteurs de droite et de gauche
+/// Cette fonction met à jour la position du robot selon sa vitesse et son accélération.
 ///
 /// @param[in] dt: difference de temps entre deux animations (autour de 0,0166)
 ///
@@ -297,9 +339,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteDroite_ -= acceleration_ * dt;
 			}
-			else// if (vitesseCouranteDroite_ < vitesseDroite_)
+			else
 			{
-				//vitesseCouranteDroite_ = 0;
 				vitesseCouranteDroite_ += acceleration_ * dt;
 			}
 		}
@@ -309,9 +350,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteDroite_ += acceleration_ * dt;
 			}
-			else// if (vitesseCouranteDroite_ > vitesseDroite_)
+			else
 			{
-				//vitesseCouranteDroite_ = 0;
 				vitesseCouranteDroite_ -= acceleration_ * dt;
 			}
 		}
@@ -328,9 +368,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteGauche_ -= acceleration_ * dt;
 			}
-			else// if (vitesseCouranteGauche_ < vitesseGauche_)
+			else
 			{
-				//vitesseCouranteGauche_ = 0;
 				vitesseCouranteGauche_ += acceleration_ * dt;
 			}
 		}
@@ -340,9 +379,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteGauche_ += acceleration_ * dt;
 			}
-			else// if (vitesseCouranteGauche_ > vitesseGauche_)
+			else
 			{
-				//vitesseCouranteGauche_ = 0;
 				vitesseCouranteGauche_ -= acceleration_ * dt;
 			}
 		}
