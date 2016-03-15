@@ -165,7 +165,11 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		case VK_ESCAPE:
 			controleRobot_->setEnPause(!(controleRobot_->getEnPause()));
 			if (!controleRobot_->getEnPause())
+			{
+				profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+				controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 				controleRobot_->initialiserBoucleRobot();
+			}
 			else
 				controleRobot_->terminerBoucleRobot();
 
