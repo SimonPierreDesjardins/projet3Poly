@@ -289,11 +289,11 @@ void FacadeModele::afficher() const
 	glLoadIdentity();
 	vue_->appliquerCamera();
 
-	// Afficher la scène
-	afficherBase();
-
 	// Mise à jour des quads englobants des formes.	
 	arbre_->mettreAJourQuad();
+
+	// Afficher la scène
+	afficherBase();
 
 	// Compte de l'affichage
 	utilitaire::CompteurAffichage::obtenirInstance()->signalerAffichage();

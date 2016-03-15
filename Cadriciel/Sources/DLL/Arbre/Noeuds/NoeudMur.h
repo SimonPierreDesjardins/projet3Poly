@@ -39,13 +39,14 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
-    RectangleEnglobant rectangle_;
+    RectangleEnglobant rectangleEnglobant_;
     
+    void mettreAJourFormeEnglobante();
 };
 
 inline RectangleEnglobant NoeudMur::obtenirRectangleEngobant() const
 {
-    return rectangle_;
+    return rectangleEnglobant_;
 }
 
 #endif /// __ARBRE_NOEUDS_NOEUDMUR_H_

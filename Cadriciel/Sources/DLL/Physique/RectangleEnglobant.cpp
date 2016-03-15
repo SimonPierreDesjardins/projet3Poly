@@ -1,5 +1,6 @@
 #include "RectangleEnglobant.h"
 
+#include "GL/glew.h"
 #include <glm/glm.hpp>
 #include <vector>
 #include "Utilitaire.h"
@@ -21,6 +22,11 @@ RectangleEnglobant::~RectangleEnglobant()
 {
 }
 
+void RectangleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante)
+{
+    hauteur_ = glm::abs(boiteEnglobante.coinMax.y - boiteEnglobante.coinMin.y);
+    largeur_ = glm::abs(boiteEnglobante.coinMax.x - boiteEnglobante.coinMin.x);
+}
 
 bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
 {
@@ -85,6 +91,7 @@ bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangl
     }
     return enIntersection;
 }
+
 
 
 void RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const
@@ -190,4 +197,48 @@ void RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
 bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
     return true;
+}
+
+
+void RectangleEnglobant::afficher(const glm::dvec3& origine) const
+{
+    glm::dvec3 positionRelative = positionCentre_ - origine;
+
+    glPushMatrix();
+
+    glColor3d(1.0, 0.0, 0.0);
+    glRotated(angle_, 0.0, 0.0, 1.0);
+
+    glTranslated(positionRelative.x, positionRelative.y, 0.0);
+
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glBegin(GL_QUADS);
+	glVertex3d(largeur_ / 2.0, hauteur_ / 2.0, 5.0);
+	glVertex3d(-largeur_ / 2.0, hauteur_ / 2.0, 5.0);
+	glVertex3d(-largeur_ / 2.0, -hauteur_ / 2.0, 5.0);
+	glVertex3d(largeur_ / 2.0, -hauteur_ / 2.0, 5.0);
+
+	glEnd();
+    glPopMatrix();
+}
+
+
+void RectangleEnglobant::afficher() const
+{
+    afficher({ 0.0, 0.0, 5.0 });
+}
+
+
+void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4])
+{
+    glm::dvec3 orientationHauteur, orientationLargeur;
+    calculerVecteursOrientation(orientationHauteur, orientationLargeur);
+
+    glm::dvec3 distanceCentreHauteur = orientationHauteur * hauteur_ / 2.0;
+    glm::dvec3 distanceCentreLargeur = orientationLargeur * largeur_ / 2.0;
+
+    coins[0] = positionCentre_ + distanceCentreLargeur + distanceCentreHauteur;
+    coins[1] = positionCentre_ - distanceCentreLargeur + distanceCentreHauteur;
+    coins[2] = positionCentre_ - distanceCentreLargeur - distanceCentreHauteur;
+    coins[3] = positionCentre_ + distanceCentreLargeur - distanceCentreHauteur;
 }

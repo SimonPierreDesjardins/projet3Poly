@@ -84,23 +84,18 @@ CapteurDistance::CapteurDistance(glm::dvec3 positionRelative, double angleRelati
     : positionRelative_(positionRelative), angleRelatif_(angleRelatif)
 {
 	rapidjson::Value::ConstMemberIterator itr = capteurJSON.MemberBegin();
-	std::cout << itr->value.GetBool() << std::endl;
 	estActif_ = itr->value.GetBool();
 
 	itr++;
-	std::cout << itr->value.GetInt() << std::endl;
 	comportementDanger_ = static_cast<TypeComportement>(itr->value.GetInt());
 
 	itr++;
-	std::cout << itr->value.GetDouble() << std::endl;
 	largeurDanger_ = itr->value.GetDouble();
 
 	itr++;
-	std::cout << itr->value.GetInt() << std::endl;
     comportementSecuritaire_ = static_cast<TypeComportement>(itr->value.GetInt());
 
 	itr++;
-	std::cout << itr->value.GetDouble() << std::endl;
 	largeurSecuritaire_ = itr->value.GetDouble();
 }
 
@@ -302,6 +297,7 @@ void CapteurDistance::afficher() const
 	glVertex3d(largeurSecuritaire, - hauteurDanger / 2.0, 5.0);
 	glEnd();
     glPopMatrix();
+
     glColor4f(0.0, 0.0, 0.0, 1.0);
 }
 

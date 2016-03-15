@@ -32,7 +32,6 @@ public:
 	~NoeudPoteau();
 
     inline CercleEnglobant obtenirCercleEnglobant();
-
      
     virtual void animer(float dt);
 	/// Affiche la table.
@@ -40,12 +39,14 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
-    CercleEnglobant cercle_;
+    CercleEnglobant cercleEnglobant_;
+
+    void mettreAJourFormeEnglobante();
 };
  
 inline CercleEnglobant NoeudPoteau::obtenirCercleEnglobant()
 {
-    return cercle_;
+    return cercleEnglobant_;
 }
 
 #endif

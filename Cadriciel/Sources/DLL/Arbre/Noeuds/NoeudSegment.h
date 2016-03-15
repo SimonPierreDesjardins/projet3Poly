@@ -13,6 +13,7 @@
 
 #include "NoeudComposite.h"
 #include "GL/glew.h"
+#include "CercleEnglobant.h"
 
 class VisiteurAbstrait;
 
@@ -32,11 +33,16 @@ public:
 	/// Destructeur.
 	~NoeudSegment();
 
+    virtual void animer(float dt);
+
 	/// Affiche le segment.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+private:
+    RectangleEnglobant rectangleEnglobant_;
 
+    void mettreAJourFormeEnglobante();
 };
 
 #endif

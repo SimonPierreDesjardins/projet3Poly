@@ -36,6 +36,8 @@ namespace rapidjson {
 
 class VisiteurAbstrait;
 
+class FormeEnglobanteAbstraite;
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudAbstrait
 /// @brief Classe de base du patron composite utilisée pour créer l'arbre
@@ -67,6 +69,10 @@ public:
 	inline const glm::dvec3& obtenirPositionRelative() const;
 	/// Assigne la position relative du noeud.
 	inline void assignerPositionRelative(const glm::dvec3& positionRelative);	
+    /// Obtient la position courante du noeud.
+    inline const glm::dvec3& obtenirPositionCourante() const;
+    /// Assigne la position courante du noeud.
+    inline void assignerPositionCourante(const glm::dvec3& positionRelative);
 	/// Obtient l'angle de rotation du noeud.
 	inline double obtenirAngleRotation() const;
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
@@ -81,6 +87,8 @@ public:
 	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
 	/// Obtenir la boite englobante du modèle.
 	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
+    /// Obtenir la forme englobante du noeud.
+    inline FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
     /// Obtenir le rectangle englobant du noeud.
     inline RectangleEnglobant obtenirRectangleEnglobant() const;
     /// Mettre à jour le rectangle englobant du noeud.
@@ -175,19 +183,6 @@ public:
 	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
-	//Permet de modifier les paramètres du robot
-	virtual void assignerVitesseRotation(float vitesse);
-	virtual void assignerVitesseDroite(float vitesse);
-	virtual void assignerVitesseGauche(float vitesse);
-	virtual void assignerVitesseDroiteCourante(float vitesse);
-	virtual void assignerVitesseGaucheCourante(float vitesse);
-
-	//Permet de récupérer les paramètres du robot.
-	virtual float obtenirVitesseDroite() const;
-	virtual float obtenirVitesseGauche() const;
-	virtual float obtenirVitesseDroiteCourante() const;
-	virtual float obtenirVitesseGaucheCourante() const;
-
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };
@@ -198,9 +193,10 @@ protected:
 	/// Mode d'affichage des polygones.
 	GLenum					modePolygones_{ GL_FILL };
 
-	/// Position relative du noeud.
+	/// Position relative du noeud à son parent.
 	glm::dvec3				positionRelative_{ 0.0, 0.0, 0.0 };
 
+    /// Position courante du noeud dans l'espace virtuel.
     glm::dvec3              positionCourante_{ 0.0, 0.0, 0.0 };
 
 	/// Angle de rotation sur le plan xy
@@ -209,14 +205,20 @@ protected:
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
 
-	/// Quadrilatère englobant le noeud.
+    /// La boite englobante du modèle.
+    utilitaire::BoiteEnglobante boiteEnglobanteModele_;
+
+    // TODO: à enlever
 	utilitaire::QuadEnglobant quadEnglobantCourant_;
 
-	/// Quadrilatère englobant le modèle.
+    // TODO: à enlever
 	utilitaire::QuadEnglobant quadEnglobantModele_;
 
-    // Rectangle englobant le modèle.
-    RectangleEnglobant rectangleEnglobant_;
+    // TODO: à enlever
+    RectangleEnglobant rectangleEnglobantObs_;
+
+    // Une référence sur la forme englobante du noeud. 
+    FormeEnglobanteAbstraite* formeEnglobante_{ nullptr };
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -240,13 +242,6 @@ protected:
 
 	/// Storage pour le dessin du modèle
 	opengl::VBO const*		vbo_{ nullptr };
-
-	//Vitesse des moteurs du robot
-	float vitesseDroite_{ 0.f };
-	float vitesseGauche_{ 0.f };
-	float vitesseRotation_{ 0.f };
-	float vitesseCouranteDroite_{ 0.f };
-	float vitesseCouranteGauche_{ 0.f };
 };
 
 
@@ -333,6 +328,37 @@ inline void NoeudAbstrait::assignerPositionRelative(
 	)
 {
 	positionRelative_ = positionRelative;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
+///
+/// Cette fonction retourne la position courante du noeud dans l'espace virtuel.
+///
+/// @return La position relative.
+///
+////////////////////////////////////////////////////////////////////////
+inline const glm::dvec3& NoeudAbstrait::obtenirPositionCourante() const
+{
+    return positionCourante_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
+///
+/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
+///
+/// @param positionRelative : La position courante.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudAbstrait::assignerPositionCourante(
+    const glm::dvec3& positionCourante)
+{
+    positionCourante_ = positionCourante;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -440,18 +466,25 @@ inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() con
 	return quadEnglobantModele_;
 }
 
+//TODO à enlever.
 inline RectangleEnglobant NoeudAbstrait::obtenirRectangleEnglobant() const
 {
-    return rectangleEnglobant_;
+    return rectangleEnglobantObs_;
+}
+
+//TODO à enlever.
+inline FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
+{
+    return formeEnglobante_;
 }
 
 inline void NoeudAbstrait::mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
     const double& hauteur, const double& largeur)
 {
-    rectangleEnglobant_.assignerPositionCentre(centre);
-    rectangleEnglobant_.assignerAngle(angle);
-    rectangleEnglobant_.assignerHauteur(hauteur);
-    rectangleEnglobant_.assignerLargeur(largeur);
+    rectangleEnglobantObs_.assignerPositionCentre(centre);
+    rectangleEnglobantObs_.assignerAngle(angle);
+    rectangleEnglobantObs_.assignerHauteur(hauteur);
+    rectangleEnglobantObs_.assignerLargeur(largeur);
 }
 ////////////////////////////////////////////////////////////////////////
 ///

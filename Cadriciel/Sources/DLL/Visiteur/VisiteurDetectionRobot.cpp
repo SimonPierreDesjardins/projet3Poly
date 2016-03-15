@@ -14,7 +14,7 @@ VisiteurDetectionRobot::VisiteurDetectionRobot()
 
 
 VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
-        : robot_(robot)
+    : robot_(robot)
 {
     ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
     suiveurLigne_ = profil->obtenirSuiveurLigne();
@@ -27,41 +27,44 @@ VisiteurDetectionRobot::~VisiteurDetectionRobot()
 }
 
 
-void VisiteurDetectionRobot::visiter(ArbreRendu* noeud)
+void VisiteurDetectionRobot::visiter(ArbreRendu* arbre)
 {
-    noeud->chercher(ArbreRenduINF2990::NOM_TABLE)->accepterVisiteur(this);
+    arbre->chercher(ArbreRenduINF2990::NOM_TABLE)->accepterVisiteur(this);
 }
 
 
-void VisiteurDetectionRobot::visiter(NoeudTable* noeud)
+void VisiteurDetectionRobot::visiter(NoeudTable* table)
 {
-    int nEnfants = noeud->obtenirNombreEnfants();
+    robot_->verifierCollision(table);
+    int nEnfants = table->obtenirNombreEnfants();
     for (int i = 0; i < nEnfants; i++)
     {
-        noeud->chercher(i)->accepterVisiteur(this);
+        table->chercher(i)->accepterVisiteur(this);
     }
 }
 
 
-void VisiteurDetectionRobot::visiter(NoeudLigne* noeud)
+void VisiteurDetectionRobot::visiter(NoeudLigne* ligne)
 {
-    suiveurLigne_->verifierDetection(noeud);
+    suiveurLigne_->verifierDetection(ligne);
 }
 
 
-void VisiteurDetectionRobot::visiter(NoeudPoteau* noeud)
+void VisiteurDetectionRobot::visiter(NoeudPoteau* poteau)
 {
+    robot_->verifierCollision(poteau);
     for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_->at(i).verifierDetection(noeud);
+        capteursDistance_->at(i).verifierDetection(poteau);
     }
 }
 
 
-void VisiteurDetectionRobot::visiter(NoeudMur* noeud)
+void VisiteurDetectionRobot::visiter(NoeudMur* mur)
 {
+    robot_->verifierCollision(mur);
     for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
     {
-        capteursDistance_->at(i).verifierDetection(noeud);
+        capteursDistance_->at(i).verifierDetection(mur);
     }
 }
