@@ -81,6 +81,15 @@ void NoeudDepart::afficherConcret() const
 	glPopMatrix();
 }
 
+void NoeudDepart::animer(float dt)
+{
+    mettreAJourFormeEnglobante();
+}
+
+void NoeudDepart::mettreAJourFormeEnglobante()
+{
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudDepart::accepterVisiteur(VisiteurAbstrait* visiteur)

@@ -66,8 +66,8 @@ public:
     // Calcule des vecteurs d'orientation unitaire.
     void calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const;
 
-	//virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
-	//virtual bool calculerCollision(const CercleEnglobant& rectangle) const;
+	virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
+	virtual bool calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const;
 
     // Calcule d'un cercle autour du rectangle.
     double calculerRayon() const;

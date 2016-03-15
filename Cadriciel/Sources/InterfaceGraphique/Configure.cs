@@ -16,8 +16,8 @@ namespace InterfaceGraphique
     public partial class Configure : Form
     {
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
+        System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en");
+        
         private List<TypeComportement> comportementsList;
 
         private string cheminProfils;
@@ -327,7 +327,7 @@ namespace InterfaceGraphique
         {
             double nombre;
             bool reussi;
-            reussi = Double.TryParse(aTester.Replace('.', ','), out nombre);
+            reussi = Double.TryParse(aTester.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre);
             if (reussi)
                 if (nombre < 0.00 || nombre > 360.00 || BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
                     reussi = false;
@@ -603,6 +603,17 @@ namespace InterfaceGraphique
         private void longueurZoneDangerCapteurDistanceTB_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, false);
+            // TODO: VERIFIER PERTINENCE DU CODE CI-DESSOUS
+            /*FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.',',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
+            */
+            // TODO: VALIDE?
+            this.DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void longueurZoneDangerCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
@@ -659,11 +670,6 @@ namespace InterfaceGraphique
             textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
         }
 
-        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
-        {
-            Console.Write("allo");
-        }
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// private enum creationProfil
@@ -671,22 +677,22 @@ namespace InterfaceGraphique
         /// Etat dans la creation d'un profil
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private enum creationProfil
+        private enum actionProfil
         {
-            ATTENTE_CREATION,
+            ATTENTE_ACTION,
             ATTENTE_CONFIRMATION
         }
 
-        private creationProfil etatCreationProfil = creationProfil.ATTENTE_CREATION;
+        private actionProfil etatCreationProfil = actionProfil.ATTENTE_ACTION;
 
         private void buttonCréerProfil_Click(object sender, EventArgs e)
         {
-            if (etatCreationProfil == creationProfil.ATTENTE_CREATION)
+            if (etatCreationProfil == actionProfil.ATTENTE_ACTION)
             {
                 comboBoxProfil.DropDownStyle = ComboBoxStyle.Simple;
                 comboBoxProfil.Focus();
                 buttonCréerProfil.Text = "Confirmer création";
-                etatCreationProfil = creationProfil.ATTENTE_CONFIRMATION;
+                etatCreationProfil = actionProfil.ATTENTE_CONFIRMATION;
                 modifierProfilButt.Enabled = false;
                 buttonDeleteProfil.Enabled = false;
                 retourMenuButt.Enabled = false;
@@ -704,7 +710,7 @@ namespace InterfaceGraphique
                 comboBoxProfil.Items.Add(nomSiDoublon);
                 comboBoxProfil.SelectedIndex = comboBoxProfil.Items.Count - 1;
                 comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
-                etatCreationProfil = creationProfil.ATTENTE_CREATION;
+                etatCreationProfil = actionProfil.ATTENTE_ACTION;
                 modifierProfilButt.Enabled = true;
                 buttonDeleteProfil.Enabled = true;
                 retourMenuButt.Enabled = true;
@@ -722,13 +728,7 @@ namespace InterfaceGraphique
             comboBoxProfil.SelectedIndex = indexProfilDefaut;
         }
 
-        private enum modificationProfil
-        {
-            ATTENTE_MODIFICATION,
-            ATTENTE_CONFIRMATION
-        }
-
-        private modificationProfil etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
+        private actionProfil etatModificationProfil = actionProfil.ATTENTE_ACTION;
 
         private void modifierProfilButt_Click(object sender, EventArgs e)
         {
@@ -736,13 +736,13 @@ namespace InterfaceGraphique
                 return;
 
             bool tabEnabled;
-            
 
-            if (etatModificationProfil == modificationProfil.ATTENTE_MODIFICATION)
+
+            if (etatModificationProfil == actionProfil.ATTENTE_ACTION)
             {
                 tabEnabled = true;
                 modifierProfilButt.Text = "Enregistrer";
-                etatModificationProfil = modificationProfil.ATTENTE_CONFIRMATION;
+                etatModificationProfil = actionProfil.ATTENTE_CONFIRMATION;
                 buttonCréerProfil.Enabled = false;
                 buttonDeleteProfil.Enabled = false;
                 retourMenuButt.Enabled = false;
@@ -754,7 +754,6 @@ namespace InterfaceGraphique
                 
                 FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
                 
-                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en");
                 
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Double.Parse(angleDGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLAGAUCHE);
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Double.Parse(angleDDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLADROITE);
@@ -775,7 +774,7 @@ namespace InterfaceGraphique
                 
                 tabEnabled = false;
                 modifierProfilButt.Text = "Modifier";
-                etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
+                etatModificationProfil = actionProfil.ATTENTE_ACTION;
                 buttonCréerProfil.Enabled = true;
                 buttonDeleteProfil.Enabled = true;
                 retourMenuButt.Enabled = true;

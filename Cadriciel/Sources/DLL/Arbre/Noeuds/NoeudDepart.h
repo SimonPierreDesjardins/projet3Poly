@@ -10,10 +10,9 @@
 #ifndef __NOEUD_NOEUD_NOEUDDEPART_H__
 #define __ARBRE_NOEUD_NOEUDDEPART_H__
 
-
 #include "NoeudComposite.h"
 #include "GL/glew.h"
-
+#include "RectangleEnglobant.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudDepart
@@ -30,14 +29,18 @@ public:
 	/// Destructeur.
 	~NoeudDepart();
 
+    virtual void animer(float dt);
+
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+private:
+    void mettreAJourFormeEnglobante();
+    RectangleEnglobant rectangleEnglobant_;
 };
 
-
 #endif // __ARBRE_NOEUD_NOEUDDEPART_H__
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

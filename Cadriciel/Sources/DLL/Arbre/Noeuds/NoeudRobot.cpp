@@ -63,6 +63,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
     suiveurLigne_ = profil->obtenirSuiveurLigne();
     capteursDistance_ = profil->obtenirCapteursDistance();
 
+	optionDebug = profil->obtenirOptionDebogage(DEBOGAGE_CAPTEURS);
+
     // À modifier avec le merge du profile.
     visiteur_ = make_unique<VisiteurDetectionRobot>(this);
 
@@ -115,7 +117,6 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
@@ -127,15 +128,17 @@ void NoeudRobot::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
-
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
-
-    // Débugage des capteurs de distance.
-    for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
-    {
-        capteursDistance_->at(i).afficher();
-    }
+	if (optionDebug)
+	{
+		// Débugage des capteurs de distance.
+		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		{
+			capteursDistance_->at(i).afficher();
+		}
+	}
+    
 	// Restauration de la matrice.
 	glPopMatrix();
 
@@ -226,11 +229,9 @@ void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-
 void NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
     if (noeud == nullptr) return;
-
     RectangleEnglobant rectangle = noeud->obtenirRectangleEngobant();
     bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
     //TODO: 
@@ -251,13 +252,7 @@ void NoeudRobot::verifierCollision(NoeudMur* noeud)
 	//vitesseRotation_ = atan(vitesseAngulaireRobot.y/vitesseAngulaireRobot.x);
 	// vitesseRotation ignoree dans animer
 
-
-
-    if (collision)
-    {
-        std::cout << "Collision avec un mur." << std::endl;
-        //effectuerCollision();
-    }
+    collision_ = collision;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -447,7 +442,6 @@ void NoeudRobot::effectuerCollision()
     }
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::positionnerRoues()
@@ -480,7 +474,6 @@ void NoeudRobot::positionnerRoues()
 	roueDroite_->assignerPositionRelative(position);
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
-
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

@@ -20,13 +20,6 @@
 // Inclusion pour l'Enum de comportements
 #include "ComportementAbstrait.h"
 
-// TODO: TEMPORAIRE!!! Inclusion pour création des comportements par tests
-#include "ComportementDefaut.h"
-#include "ComportementSuiviLigne.h"
-#include "ComportementBalayage.h"
-#include "ComportementDeviation.h"
-#include "ComportementEvitement.h"
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ControleRobot::ControleRobot()
@@ -49,7 +42,9 @@ ControleRobot::ControleRobot()
 
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 	comportement_ = nullptr;
-	passerAModeAutomatique();
+	vecteurComportements_ = nullptr;
+
+	debug = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirOptionDebogage(DEBOGAGE_COMPORTEMENTS);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -98,6 +93,22 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 ///
 /// @fn ControleRobot::assignerComportement(std::shared_ptr<ComportementAbstrait> nouveauComportement)
 ///
+/// Assigne un vecteur de comportements au controleur du robot auquel il se réfèrera lors de son éxécution.
+///
+/// @param[in] vecteur: Le pointeur au vecteur de comportements que le controlleur devra utiliser.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+
+void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur){
+	vecteurComportements_ = vecteur;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::assignerComportement(std::shared_ptr<ComportementAbstrait> nouveauComportement)
+///
 /// Assigne un nouveau comportement à suivre au robot de façon threadsafe et memory safe.
 ///
 /// @param nouveauComportement: Le pointeur au comportement assigné.
@@ -105,63 +116,23 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::assignerComportement(TypeComportement nouveauComportement)
+void ControleRobot::assignerComportement(TypeComportement nouveauComportement, std::string declencheur)
 {
 	// Nous devons vérouiller l'accès au comportement temporairement pour sa modification
 	mutexComportement.lock();
 
 	//ComportementAbstrait* ancienComportement = comportement_;
-
-	//TODO: ce switch est temporaire, remplacer par recherche de comportement dans profil
-	ComportementDeviation* compDev;
-	ComportementEvitement* compEvit;
-	switch (nouveauComportement){
-	case DEFAUT:
-		comportement_ = new ComportementDefaut();
-		break;
-	case BALAYAGE180:
-		comportement_ = new ComportementBalayage();
-		break;
-	case SUIVIDELIGNE:
-		comportement_ = new ComportementSuiviLigne();
-		break;
-	case DEVIATIONVERSLADROITE:
-		compDev = new ComportementDeviation();
-		compDev->setAngleMaxRotation(-30.0);
-		comportement_ = compDev;
-		break;
-	case DEVIATIONVERSLAGAUCHE:
-		compDev = new ComportementDeviation();
-		compDev->setAngleMaxRotation(30.0);
-		comportement_ = compDev;
-		break;
-	case EVITEMENTPARLADROITE:
-		compEvit = new ComportementEvitement();
-		compEvit->setAngleMaxRotation(30.0);
-		compEvit->setTempsMaxReculons(2.0);
-		comportement_ = compEvit;
-		break;
-	case EVITEMENTPARLAGAUCHE:
-		compEvit = new ComportementEvitement();
-		compEvit->setAngleMaxRotation(-30.0);
-		compEvit->setTempsMaxReculons(2.0);
-		comportement_ = compEvit;
-		break;
-	}
+	comportement_ = vecteurComportements_ -> at(nouveauComportement).get();
 	
 	if (debug){
-		std::cout << "Passage au comportement: " << comportement_ -> obtenirNomComportement() << endl;
-		//TODO: obtenir le nom du comportement suivant
+		utilitaire::time_in_HH_MM_SS_MMM();
+		std::cout << " - " << declencheur << " - " << comportement_->obtenirNomComportement() << endl;
+
 	}
 
 	// Assignation du controleur au comportement et initialisation
 	comportement_->assignerRobot(this);
 	comportement_->initialiser();
-
-	// CECI PLANTE POUR UNE RAISON QUELCONQUE, LE MUTEX N'AIDE EN RIEN
-	//	if (ancienComportement != nullptr){
-	//		delete ancienComportement;
-	//	}
 
 	// Libération du mutex, l'accès au comportement redevient valide
 	mutexComportement.unlock();
@@ -196,8 +167,7 @@ void ControleRobot::inverserModeControle(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
-	//TODO: Ceci doit ammener au comportement par defaut dans profil
-	assignerComportement(EVITEMENTPARLAGAUCHE);
+	assignerComportement(DEFAUT, "Passage au mode automatique");
 	initialiserBoucleRobot();
 }
 
@@ -265,7 +235,31 @@ void ControleRobot::terminerBoucleRobot(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
+	
 	while (!manuel) {
+		NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
+		std::string declencheur = "Capteur distance ";
+		for (int i = 0; i < capteurs->size();i++){
+			switch (i){
+			case 0:
+				declencheur += "droite: ";
+				break;
+			case 1:
+				declencheur += "centre: ";
+				break;
+			case 2:
+				declencheur += "gauche: ";
+				break;
+			}
+			if (capteurs->at(i).obtenirEtat() == 1){
+				declencheur += "Zone securitaire";
+				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
+			}
+			else if (capteurs->at(i).obtenirEtat() == 2){
+				declencheur += "Zone dangereuse";
+				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
+			}
+		}
 		comportement_->mettreAJour();
 	}
 }
@@ -319,7 +313,6 @@ NoeudRobot* ControleRobot::obtenirNoeud(){
 ///
 ////////////////////////////////////////////////////////////////////////
 bool ControleRobot::ligneDetectee(){
-	//TODO: Décommenter pour que le suiveur de ligne fournisse la réponse.
 	return 	obtenirNoeud()->obtenirSuiveurLigne() -> obtenirEtatCapteurs() != 0x00;
 }
 

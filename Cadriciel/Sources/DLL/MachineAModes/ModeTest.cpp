@@ -30,6 +30,9 @@ ModeTest::ModeTest()
 	typeMode_ = TEST;
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	// On fait démarrer le robot en mode automatique
+	controleRobot_->passerAModeAutomatique();
 }
 
 

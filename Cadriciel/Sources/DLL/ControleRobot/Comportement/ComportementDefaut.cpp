@@ -51,7 +51,9 @@ ComportementDefaut::ComportementDefaut(TypeComportement prochainComportement) : 
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON) : ComportementAbstrait(comportementJSON){}
+ComportementDefaut::ComportementDefaut(const rapidjson::Value& comportementJSON){
+	comportementSuivant_ = DEFAUT;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -91,7 +93,7 @@ void ComportementDefaut::initialiser(){
 void ComportementDefaut::mettreAJour(){
 	//Si une ligne est trouvée nous passons à la suivie de ligne
 	if (controleRobot_->ligneDetectee()){
-		controleRobot_->assignerComportement(SUIVIDELIGNE);
+		controleRobot_->assignerComportement(SUIVIDELIGNE, "Ligne détectée");
 	}
 
 	controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);

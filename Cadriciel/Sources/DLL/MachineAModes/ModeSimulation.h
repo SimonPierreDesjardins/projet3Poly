@@ -16,6 +16,7 @@
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
 #include <unordered_map>
+#include <array>
 
 class ProfilUtilisateur;
 
@@ -30,7 +31,13 @@ class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
 class ModeSimulation : public ModeAbstrait
 {
+private:
+	std::unique_ptr<ControleRobot> controleRobot_;
+	ProfilUtilisateur* profil_;
+	static std::array<char, 10> touchesNonConfigurable_;
+
 public:
+
 
 	//Constructeur par défaut
 	ModeSimulation();
@@ -39,10 +46,13 @@ public:
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_;
+	inline static std::array<char, 10>* getTouchesNonConfigurable();
 };
+
+std::array<char, 10>* ModeSimulation::getTouchesNonConfigurable()
+{
+	return &touchesNonConfigurable_;
+}
 
 #endif /// MODE_SIMULATION_H
 

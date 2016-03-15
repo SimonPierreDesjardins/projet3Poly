@@ -93,7 +93,11 @@ protected:
 	float acceleration_{ 200.0 };
 
 
+	bool optionDebug{ true };
+
     RectangleEnglobant rectangleEnglobant_;
+
+    bool collision_{ false };
    
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };

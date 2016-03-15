@@ -89,11 +89,12 @@ void ComportementSuiviLigne::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementSuiviLigne::mettreAJour(){
+	static uint8_t dernierEtat;
 	uint8_t etatSuiveurLigne = controleRobot_->obtenirNoeud()->obtenirSuiveurLigne()->obtenirEtatCapteurs();
 
 	// Tant que nous n'avons pas perdu la ligne, on la suit
 	if (!rechercheLigne){
-
+		dernierEtat = etatSuiveurLigne;
 		switch (etatSuiveurLigne){
 		case (0x07) :
 		case(0x04) :
@@ -120,14 +121,15 @@ void ComportementSuiviLigne::mettreAJour(){
 	}
 	// Si nous avons perdu la ligne, on se laisse une chance
 	else{
+		// On tente de retrouver une ligne là où nous l'avions vue.
+		//if (dernierEtat & 0x06 != 0)
 		// ligne retrouvée!
 		if (etatSuiveurLigne != 0x00){
 			rechercheLigne = false;
 		}
 		// trop tard, change de comportement
-		else if (difftime(time(nullptr), heurePerteLigne_) > 1.0){
-			// TODO: obtenir le comportement du profil
-			controleRobot_->assignerComportement(DEFAUT);
+		else if (difftime(time(nullptr), heurePerteLigne_) > 0.8){
+			controleRobot_->assignerComportement(comportementSuivant_, "Ligne perdue");
 		}
 
 	}
