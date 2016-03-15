@@ -58,6 +58,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
     suiveurLigne_ = profil->obtenirSuiveurLigne();
     capteursDistance_ = profil->obtenirCapteursDistance();
 
+	optionDebug = profil->obtenirOptionDebogage(DEBOGAGE_CAPTEURS);
+
     // À modifier avec le merge du profile.
     visiteur_ = make_unique<VisiteurDetectionRobot>(this);
 
@@ -110,12 +112,15 @@ void NoeudRobot::afficherConcret() const
 
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
-
-    // Débugage des capteurs de distance.
-    for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
-    {
-        capteursDistance_->at(i).afficher();
-    }
+	if (optionDebug)
+	{
+		// Débugage des capteurs de distance.
+		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		{
+			capteursDistance_->at(i).afficher();
+		}
+	}
+    
 	// Restauration de la matrice.
 	glPopMatrix();
 
