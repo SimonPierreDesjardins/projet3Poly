@@ -32,11 +32,14 @@ public:
 	/// Destructeur.
 	~NoeudRoues();
 
-	void setPositionRelative();
+	void setVitesseCourante(float vitesse);
 
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+private:
+	float vitesseCourante_{ 0.f };
 };
 
 #endif // __ARBRE_NOEUD_ROUES_H__

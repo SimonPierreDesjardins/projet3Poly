@@ -368,14 +368,21 @@ void NoeudRobot::positionnerRoues()
 {
 	//Positionner la roue gauche en fonction du robot
 	roueGauche_->assignerAngleRotation(angleRotation_);
-	roueGauche_->assignerPositionRelative(positionRelative_);
+	glm::dvec3 position = positionRelative_;
+	position[0] = position[0] - sin(angleRotation_*PI / 180)*0.15;
+	position[1] = position[1] + cos(angleRotation_*PI / 180)*0.15;
+	position[2] = 0.8;
+	roueGauche_->assignerPositionRelative(position);
+	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
 
 	//Positionner la roue droite en fonction du robot
 	roueDroite_->assignerAngleRotation(angleRotation_);
-	glm::dvec3 position = positionRelative_;
-	position[0] = position[0] + sin(angleRotation_*PI / 180)*4.65;
-	position[1] = position[1] - cos(angleRotation_*PI / 180)*4.65;
+	position = positionRelative_;
+	position[0] = position[0] + sin(angleRotation_*PI / 180)*4.3;
+	position[1] = position[1] - cos(angleRotation_*PI / 180)*4.3;
+	position[2] = 0.8;
 	roueDroite_->assignerPositionRelative(position);
+	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
