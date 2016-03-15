@@ -233,6 +233,15 @@ void ControleRobot::terminerBoucleRobot(){
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
 	while (!manuel) {
+		NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
+		for (auto capteur : *capteurs){
+			if (capteur.obtenirEtat() == 1){
+				assignerComportement(capteur.obtenirComportementZoneSecuritaire());
+			}
+			else if (capteur.obtenirEtat() == 2){
+				assignerComportement(capteur.obtenirComportementZoneDanger());
+			}
+		}
 		comportement_->mettreAJour();
 	}
 }
