@@ -97,8 +97,7 @@ void ComportementBalayage::mettreAJour(){
 
 	//Si une ligne est trouvée nous passons à la suivie de ligne
 	if (controleRobot_->ligneDetectee()){
-		std::string declencheur = "TODO me changer";
-		controleRobot_->assignerComportement(SUIVIDELIGNE, declencheur);
+		controleRobot_->assignerComportement(SUIVIDELIGNE, "Ligne détectée");
 	}
 
 	switch (etatRotation){
@@ -133,9 +132,7 @@ void ComportementBalayage::mettreAJour(){
 		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
 		// si tu atteins l'angle voulu
 		if (controleRobot_->obtenirNoeud()->obtenirAngleRotation() > angleCible){
-			//TODO: Changer ceci au comportement suivant
-			std::string declencheur = "TODO me changer";
-			controleRobot_->assignerComportement(comportementSuivant_, declencheur);
+			controleRobot_->assignerComportement(comportementSuivant_, "Balayage terminé");
 		}
 		break;
 

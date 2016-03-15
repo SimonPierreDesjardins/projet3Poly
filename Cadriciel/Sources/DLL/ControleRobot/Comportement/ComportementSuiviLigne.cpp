@@ -125,9 +125,8 @@ void ComportementSuiviLigne::mettreAJour(){
 			rechercheLigne = false;
 		}
 		// trop tard, change de comportement
-		else if (difftime(time(nullptr), heurePerteLigne_) > 1.6){
-			std::string declencheur = "TODO me changer";
-			controleRobot_->assignerComportement(comportementSuivant_, declencheur);
+		else if (difftime(time(nullptr), heurePerteLigne_) > 0.8){
+			controleRobot_->assignerComportement(comportementSuivant_, "Ligne perdue");
 		}
 
 	}

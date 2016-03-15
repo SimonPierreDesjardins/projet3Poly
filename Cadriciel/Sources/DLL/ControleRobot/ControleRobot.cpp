@@ -165,8 +165,7 @@ void ControleRobot::inverserModeControle(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
-	std::string declencheur = "TODO me changer";
-	assignerComportement(DEFAUT, declencheur);
+	assignerComportement(DEFAUT, "Passage au mode automatique");
 	initialiserBoucleRobot();
 }
 
@@ -234,15 +233,29 @@ void ControleRobot::terminerBoucleRobot(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
-	std::string declencheur = "TODO me changer";
+	
 	while (!manuel) {
 		NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
-		for (auto capteur : *capteurs){
-			if (capteur.obtenirEtat() == 1){
-				assignerComportement(capteur.obtenirComportementZoneSecuritaire(), declencheur);
+		std::string declencheur = "Capteur distance ";
+		for (int i = 0; i < capteurs->size();i++){
+			switch (i){
+			case 0:
+				declencheur += "droite: ";
+				break;
+			case 1:
+				declencheur += "centre: ";
+				break;
+			case 2:
+				declencheur += "gauche: ";
+				break;
 			}
-			else if (capteur.obtenirEtat() == 2){
-				assignerComportement(capteur.obtenirComportementZoneDanger(), declencheur);
+			if (capteurs->at(i).obtenirEtat() == 1){
+				declencheur += "Zone securitaire";
+				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
+			}
+			else if (capteurs->at(i).obtenirEtat() == 2){
+				declencheur += "Zone dangereuse";
+				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
 			}
 		}
 		comportement_->mettreAJour();
