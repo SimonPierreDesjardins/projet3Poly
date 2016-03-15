@@ -11,7 +11,6 @@
 #ifndef __ARBRE_NOEUDS_NOEUDTABLE_H__
 #define __ARBRE_NOEUDS_NOEUDTABLE_H__
 
-
 #include "NoeudComposite.h"
 #include "VisiteurAbstrait.h"
 #include "GL/glew.h"
@@ -37,6 +36,8 @@ public:
 	virtual void afficherConcret() const;
 	/// Accepter un visiteur.
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+private:
+    RectangleEnglobant rectangleEnglobant_;
 };
 
 #endif

@@ -14,12 +14,17 @@
 #include <glm/glm.hpp> 
 #include <vector>
 
+namespace utilitaire
+{
+    struct BoiteEnglobante;
+}
+
 class RectangleEnglobant;
 class CercleEnglobant;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class FormeEnglobante
-/// @brief Classe qui représente le rectangle orienté autour d'un objet.
+/// @brief Classe abstraite d'une forme servant à englober un noeud.
 ///
 ///        Cette classe permet de calculer la détection de collision 
 ///        ainsi que la physique.		   
@@ -36,6 +41,9 @@ public:
     FormeEnglobanteAbstraite(const glm::dvec3& position);
     // Destructeur.
     virtual ~FormeEnglobanteAbstraite() = 0;
+
+    // Initiliser certains attributs de la forme englobante en fonction d'une boite englobante.
+    virtual void initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante) = 0;
 
     // Assigner la position du centre de la forme.
     inline void assignerPositionCentre(const glm::dvec3& positionCentre);

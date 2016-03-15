@@ -32,6 +32,9 @@ const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE{ -45.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE{ 0.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE{ 45.0 };
 
+const glm::dvec3 NoeudRobot::POSITION_RELATIVE_CERCLE_ENGLOBANT = { 1.35, 0.0, 0.0 };
+const double NoeudRobot::RAYON_CERCLE_ENGLOBANT = 3.5;
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudRobot::NoeudRobot(const std::string& typeNoeud)
@@ -61,6 +64,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
+    //cercleEnglobant_ = CercleEnglobant(positionCourante_, RAYON_CERCLE_ENGLOBANT);
+    formeEnglobante_ = &cercleEnglobant_;
 }
 
 
@@ -94,6 +99,18 @@ void NoeudRobot::afficherConcret() const
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
+	// Sauvegarde de la matrice.
+	glPushMatrix();
+
+    // TODO: Figurer pourquoi plateforme est transparente sans cette ligne.
+    glColor3f(0.0, 0.0, 0.0);
+
+	// Affichage du modèle.
+	vbo_->dessiner();
+
+	// Restauration de la matrice.
+	glPopMatrix();
+
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
 
@@ -102,16 +119,7 @@ void NoeudRobot::afficherConcret() const
     {
         capteursDistance_->at(i).afficher();
     }
-
-    // Debugage de la boite englobante.
-    afficherFormeEnglobante();
-
-	// Sauvegarde de la matrice.
-	glPushMatrix();
-	// Affichage du modèle.
-	vbo_->dessiner();
-	// Restauration de la matrice.
-	glPopMatrix();
+    cercleEnglobant_.afficher(POSITION_RELATIVE_CERCLE_ENGLOBANT);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -194,136 +202,6 @@ void NoeudRobot::verifierCollision(NoeudTable* noeud)
 
 }
 
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::obtenirVitesseDroite() const
-///
-/// Cette fonction retourne la vitesse du moteur de droite
-///
-/// @param[in] Aucune.
-///
-/// @return float : vitesse de rotation du moteur de droite.
-///
-////////////////////////////////////////////////////////////////////////
-float NoeudRobot::obtenirVitesseDroite() const
-{
-	return vitesseDroite_;
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::obtenirVitesseGauche() const
-///
-/// Cette fonction retourne la vitesse du moteur de gauche
-///
-/// @param[in] Aucune.
-///
-/// @return float : vitesse de rotation du moteur de gauche.
-///
-////////////////////////////////////////////////////////////////////////
-float NoeudRobot::obtenirVitesseGauche() const
-{
-	return vitesseGauche_;
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::obtenirVitesseDroiteCourante() const
-///
-/// Cette fonction retourne la vitesse du moteur de droite
-///
-/// @param[in] Aucune.
-///
-/// @return float : vitesse de rotation du moteur de droite.
-///
-////////////////////////////////////////////////////////////////////////
-/*
-float NoeudRobot::obtenirVitesseDroiteCourante() const
-{
-	return vitesseCouranteDroite_;
-}
-*/
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::obtenirVitesseGaucheCourante() const
-///
-/// Cette fonction retourne la vitesse du moteur de gauche
-///
-/// @param[in] Aucune.
-///
-/// @return float : vitesse de rotation du moteur de gauche.
-///
-////////////////////////////////////////////////////////////////////////
-/*
-float NoeudRobot::obtenirVitesseGaucheCourante() const
-{
-	return vitesseCouranteGauche_;
-}
-*/
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::assignerVitesseDroite() const
-///
-/// Cette modifie la vitesse de rotation du moteur de droite.
-///
-/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de droite.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudRobot::assignerVitesseDroite(float vitesse)
-{
-	vitesseDroite_ = vitesse;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::assignerVitesseGauche() const
-///
-/// Cette modifie la vitesse de rotation du moteur de gauche.
-///
-/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de gauche.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudRobot::assignerVitesseGauche(float vitesse)
-{
-	vitesseGauche_ = vitesse;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::assignerVitesseRotation() const
-///
-/// Cette modifie la vitesse de rotation angulaire.
-///
-/// @param[in] vitesse : vitesse que l'on souhaite assigner à l'attribut vitesseRotation_.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudRobot::assignerVitesseRotation(float vitesse)
-{
-	vitesseRotation_ = vitesse;
-}
-
-/*
-void NoeudRobot::assignerVitesseDroiteCourante(float vitesse)
-{
-	vitesseCouranteDroite_ = vitesse;
-}
-
-
-void NoeudRobot::assignerVitesseGaucheCourante(float vitesse)
-{
-	vitesseCouranteGauche_ = vitesse;
-}
-*/
 
 void NoeudRobot::afficherFormeEnglobante() const
 {
@@ -437,7 +315,7 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 
 void NoeudRobot::mettreAJourRectangleEnglobant()
 {
-    rectangleEnglobant_.assignerPositionCentre(positionCourante_);
+    rectangleEnglobant_.assignerPositionCentre(positionCourante_ + POSITION_RELATIVE_CERCLE_ENGLOBANT);
     rectangleEnglobant_.assignerAngle(angleRotation_);
 }
 
@@ -453,14 +331,14 @@ void NoeudRobot::effectuerCollision()
     {
         while (vitesseCouranteDroite_ < 0 && vitesseCouranteGauche_< 0)
         {
-            animer(0.016);
+            animer(float(0.016));
         }
     }
     else if (vitesseCouranteDroite_ < 0 && vitesseCouranteGauche_ < 0)
     {
         while (vitesseCouranteDroite_ > 0 && vitesseCouranteGauche_ > 0)
         {
-            animer(0.016);
+            animer(float(0.016));
         }
     }
 }

@@ -36,6 +36,8 @@ namespace rapidjson {
 
 class VisiteurAbstrait;
 
+class FormeEnglobanteAbstraite;
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudAbstrait
 /// @brief Classe de base du patron composite utilisée pour créer l'arbre
@@ -85,6 +87,8 @@ public:
 	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
 	/// Obtenir la boite englobante du modèle.
 	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
+    /// Obtenir la forme englobante du noeud.
+    inline FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
     /// Obtenir le rectangle englobant du noeud.
     inline RectangleEnglobant obtenirRectangleEnglobant() const;
     /// Mettre à jour le rectangle englobant du noeud.
@@ -201,14 +205,20 @@ protected:
 	/// Facteur de dimension sur le plan xy
 	double					facteurMiseAEchelle_{ 1 };
 
-	/// Quadrilatère englobant le noeud.
+    /// La boite englobante du modèle.
+    utilitaire::BoiteEnglobante boiteEnglobanteModele_;
+
+    // TODO: à enlever
 	utilitaire::QuadEnglobant quadEnglobantCourant_;
 
-	/// Quadrilatère englobant le modèle.
+    // TODO: à enlever
 	utilitaire::QuadEnglobant quadEnglobantModele_;
 
-    // Rectangle englobant le modèle.
+    // TODO: à enlever
     RectangleEnglobant rectangleEnglobant_;
+
+    // Une référence sur la forme englobante du noeud. 
+    FormeEnglobanteAbstraite* formeEnglobante_{ nullptr };
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -456,9 +466,16 @@ inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() con
 	return quadEnglobantModele_;
 }
 
+//TODO à enlever.
 inline RectangleEnglobant NoeudAbstrait::obtenirRectangleEnglobant() const
 {
     return rectangleEnglobant_;
+}
+
+//TODO à enlever.
+inline FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
+{
+    return formeEnglobante_;
 }
 
 inline void NoeudAbstrait::mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,

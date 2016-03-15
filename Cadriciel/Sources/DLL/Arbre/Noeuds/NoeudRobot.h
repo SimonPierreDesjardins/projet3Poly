@@ -11,11 +11,13 @@
 #define __ARBRE_NOEUD_ROBOT_H__
 
 #include "NoeudComposite.h"
-#include "GL/glew.h"
 #include "SuiveurLigne.h"
 #include "CapteurDistance.h"
+
 #include "RectangleEnglobant.h"
+#include "CercleEnglobant.h"
 #include "VisiteurDetectionRobot.h"
+
 #include <array>
 
 ///////////////////////////////////////////////////////////////////////////
@@ -38,6 +40,9 @@ public:
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE;
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE;
 
+    static const glm::dvec3 POSITION_RELATIVE_CERCLE_ENGLOBANT;
+    static const double RAYON_CERCLE_ENGLOBANT;
+
     using ConteneurCapteursDistance = std::array<CapteurDistance, N_CAPTEURS_DISTANCE>;
 
 	/// Constructeur à partir du type du noeud.
@@ -58,19 +63,16 @@ public:
     
 	//Permet de modifier les paramètres du robot
 	inline void assignerVitesseRotation(float vitesse);
-	void assignerVitesseDroite(float vitesse);
-	void assignerVitesseGauche(float vitesse);
+	inline void assignerVitesseDroite(float vitesse);
+	inline void assignerVitesseGauche(float vitesse);
 
 	//Permet de récupérer les paramètres du robot.
-	float obtenirVitesseDroite() const;
-	float obtenirVitesseGauche() const;
+	inline float obtenirVitesseDroite() const;
+	inline float obtenirVitesseGauche() const;
     
 	// Retourne l'états des capeurs du robot.
     inline SuiveurLigne* obtenirSuiveurLigne();     
-    inline void assignerReferenceSuiveurLigne(SuiveurLigne* suiveurLigne);
-
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
-    inline void assignerReferenceCapteurDistance(ConteneurCapteursDistance* capteursDistance);
 
     void afficherFormeEnglobante() const;
 
@@ -84,6 +86,8 @@ private:
 
 	float angle_{ 0.f };
 	float acceleration_{ 200.0 };
+
+    CercleEnglobant cercleEnglobant_;
    
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };
@@ -100,16 +104,119 @@ private:
     void mettreAJourRectangleEnglobant();
 };
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
+///
+/// Cette fonction retourne une référence sur le suiveur de ligne.
+///
+/// @param[in] Aucune.
+///
+/// @return SuiveurLigne* : un pointeur sur le suiveur de ligne.
+///
+////////////////////////////////////////////////////////////////////////
 inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
 {
     return suiveurLigne_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
+///
+/// Cette fonction retourne une référence le conteneur de capteurs de distance.
+///
+/// @param[in] Aucune.
+///
+/// @return ConteneurCapteursDistance* : un pointeur sur le conteneur (un std::array).
+///
+////////////////////////////////////////////////////////////////////////
 inline NoeudRobot::ConteneurCapteursDistance* NoeudRobot::obtenirCapteursDistance()
 {
     return capteursDistance_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::obtenirVitesseDroite() const
+///
+/// Cette fonction retourne la vitesse du moteur de droite
+///
+/// @param[in] Aucune.
+///
+/// @return float : vitesse de rotation du moteur de droite.
+///
+////////////////////////////////////////////////////////////////////////
+inline float NoeudRobot::obtenirVitesseDroite() const
+{
+	return vitesseDroite_;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::obtenirVitesseGauche() const
+///
+/// Cette fonction retourne la vitesse du moteur de gauche
+///
+/// @param[in] Aucune.
+///
+/// @return float : vitesse de rotation du moteur de gauche.
+///
+////////////////////////////////////////////////////////////////////////
+inline float NoeudRobot::obtenirVitesseGauche() const
+{
+	return vitesseGauche_;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerVitesseDroite() const
+///
+/// Cette modifie la vitesse de rotation du moteur de droite.
+///
+/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de droite.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudRobot::assignerVitesseDroite(float vitesse)
+{
+	vitesseDroite_ = vitesse;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerVitesseGauche() const
+///
+/// Cette modifie la vitesse de rotation du moteur de gauche.
+///
+/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de gauche.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudRobot::assignerVitesseGauche(float vitesse)
+{
+	vitesseGauche_ = vitesse;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerVitesseRotation() const
+///
+/// Cette modifie la vitesse de rotation angulaire.
+///
+/// @param[in] vitesse : vitesse que l'on souhaite assigner à l'attribut vitesseRotation_.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudRobot::assignerVitesseRotation(float vitesse)
+{
+	vitesseRotation_ = vitesse;
+}
 #endif // __ARBRE_NOEUD_ROBOT_H__
 
 ///////////////////////////////////////////////////////////////////////////////

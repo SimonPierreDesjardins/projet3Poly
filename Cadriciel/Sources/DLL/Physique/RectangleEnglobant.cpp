@@ -21,6 +21,11 @@ RectangleEnglobant::~RectangleEnglobant()
 {
 }
 
+void RectangleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante)
+{
+    hauteur_ = glm::abs(boiteEnglobante.coinMax.y - boiteEnglobante.coinMin.y);
+    largeur_ = glm::abs(boiteEnglobante.coinMax.x - boiteEnglobante.coinMin.x);
+}
 
 bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
 {

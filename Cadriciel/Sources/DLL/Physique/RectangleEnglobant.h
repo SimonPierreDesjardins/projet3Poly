@@ -37,6 +37,9 @@ public:
     // Destructeur.
     ~RectangleEnglobant();
 
+    // Initialiser la forme à partir d'une boite englobante.
+    virtual void initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante);
+
     // Modifications des attributs.
     inline void assignerAngle(const double& angle);
     inline void assignerHauteur(const double& hauteur);

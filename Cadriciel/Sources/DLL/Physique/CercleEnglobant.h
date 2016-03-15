@@ -33,6 +33,8 @@ public:
     // Destructeur.
     virtual ~CercleEnglobant();
 
+    virtual void initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante);
+
     inline void assignerRayon(const double& rayon);
 
     inline double obtenirRayon() const;
@@ -44,6 +46,10 @@ public:
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
 
     void mettreAJour(const glm::dvec3& positionCentre, const double& rayon);
+
+    void afficher(const glm::dvec3& positionRelative) const;
+
+    void afficher() const;
 
 private:
     double rayon_;
