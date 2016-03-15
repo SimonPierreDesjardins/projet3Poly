@@ -42,8 +42,11 @@ ControleRobot::ControleRobot()
 {
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
+
 	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
+
 	table_->ajouter(robot);
+
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 	comportement_ = nullptr;
 	passerAModeAutomatique();
@@ -64,7 +67,6 @@ ControleRobot::~ControleRobot()
 	passerAModeManuel();
 	NoeudAbstrait* robot = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
 	table_->effacer(robot);
-	
 }
 
 ////////////////////////////////////////////////////////////////////////

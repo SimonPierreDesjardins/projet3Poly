@@ -66,6 +66,9 @@ public:
 
 	/// La chaîne représentant le type du point de départ. 
 	static const std::string NOM_JONCTION;
+
+	/// La chaîne représentant le type du robot.
+	static const std::string NOM_ROUES;
    
 	/// La chaîne représentant le type du point de départ. 
 	static const std::string NOM_DEPART;   

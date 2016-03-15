@@ -396,6 +396,18 @@ void VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
 	noeud->assignerQuadEnglobantCourant(quad);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
+///
+/// Fonction qui met à jour le quadrilatère du robot passée en paramètre.
+///
+/// @param[in] noeud : Le noeud Robot que l'on veut mettre à jour.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+
 void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
 {
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
@@ -430,6 +442,18 @@ void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
 }
 
 ///TODO: A mettre dans utilitaire.
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurMiseAJourQuad::calculerPositionVirtuelle(const utilitaire::QuadEnglobant& quad)
+///
+/// Fonction qui calcule la position virtuelle du quad englobant.
+///
+/// @param[in] quad : Le le quad englobant que l'on veut calculer la position virtuelle.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 VisiteurMiseAJourQuad::calculerPositionVirtuelle(const utilitaire::QuadEnglobant& quad)
 {
 	glm::dvec3 positionVirtuelle = { 0.0, 0.0, 0.0 };
