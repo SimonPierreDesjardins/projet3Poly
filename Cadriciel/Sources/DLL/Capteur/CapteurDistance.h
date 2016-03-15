@@ -87,6 +87,9 @@ public:
 	inline void assignerParametreZoneDanger(TypeComportement comportement, double largeur);
 	inline void assignerParametreZoneSecuritaire(TypeComportement comportement, double largeur);
 
+	inline TypeComportement obtenirComportementZoneDanger(){return comportementSecuritaire_;}
+	inline TypeComportement obtenirComportementZoneSecuritaire(){ return comportementDanger_; };
+
 	void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
 private:
