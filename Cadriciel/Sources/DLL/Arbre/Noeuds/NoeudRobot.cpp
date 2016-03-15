@@ -279,7 +279,7 @@ void NoeudRobot::verifierCollision(NoeudTable* noeud)
     bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
     if (collision)
     {
-		std::cout << "Collision avec une table" << std::endl;
+		//std::cout << "Collision avec une table" << std::endl;
 		//effectuerCollision();
     }
 }

@@ -137,12 +137,14 @@ void CapteurOptique::verifierDetection(NoeudLigne* ligne)
     ligneEstDetectee_ = false;
 	NoeudAbstrait* enfant = nullptr;
     unsigned int n = ligne->obtenirNombreEnfants();
+	RectangleEnglobant rectangle;
 	for (unsigned int i = 0; i < n && !ligneEstDetectee_; i++)
 	{
 		enfant = ligne->chercher(i);
-        utilitaire::QuadEnglobant quad = enfant->obtenirQuadEnglobantCourant();
-		ligneEstDetectee_ = utilitaire::calculerPointEstDansQuad(positionCourante_,
-            quad);
+		//utilitaire::QuadEnglobant quad = enfant->obtenirQuadEnglobantCourant();
+		//ligneEstDetectee_ = utilitaire::calculerPointEstDansQuad(positionCourante_,
+			//quad);
+		ligneEstDetectee_ = enfant->obtenirFormeEnglobante()->calculerPointEstDansForme(positionCourante_);
 	}
 }
 

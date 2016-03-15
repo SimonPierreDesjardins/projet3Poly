@@ -34,7 +34,8 @@ void CercleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglob
 
 bool CercleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
 {
-    return true;
+	double distance = glm::distance(point, positionCentre_);
+	return distance < rayon_;
 }
 
 
