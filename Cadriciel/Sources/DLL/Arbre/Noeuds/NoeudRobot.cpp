@@ -24,6 +24,8 @@
 
 #include "NoeudTypes.h"
 
+#include "RectangleEnglobant.h"
+
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
@@ -156,16 +158,15 @@ void NoeudRobot::animer(float dt)
 	/*std::cout << "d c : " << vitesseCouranteDroite_ << "\n g c : " << vitesseCouranteGauche_ << std::endl;
 	std::cout << "d : " << vitesseCouranteDroite_ << "\n g : " << vitesseCouranteGauche_ << std::endl;*/
     mettreAJourCapteurs();
-    mettreAJourPosition(dt);
     mettreAJourRectangleEnglobant();
-
     arbre_->accepterVisiteur(visiteur_.get());
+	mettreAJourPosition(dt);
 }
 
 
-void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
+bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 {
-    if (poteau == nullptr) return;
+	if (poteau == nullptr) return false;
 
     CercleEnglobant cercle = poteau->obtenirCercleEnglobant();
     bool collision = rectangleEnglobant_.calculerIntersection(cercle);
@@ -173,58 +174,69 @@ void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     /*
     Calcul des paramètres pour simuler la collision ici. 
     */
-    if (collision)
-    {
-        //TODO: Remplacer le cout par le calcul et 
-        //effectuerCollision();
-    }
+	if (collision)
+	{
+		std::cout << "Collision avec un mur." << std::endl;
+		glm::dvec3 normalePoteau, perpendiculairePoteau;
+		//cercle.calculerVecteursOrientation(normalePoteau, perpendiculairePoteau);
+
+
+		effectuerCollision(normalePoteau);
+	}
+	return collision;
 }
 
 
-void NoeudRobot::verifierCollision(NoeudMur* noeud)
+bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
-    if (noeud == nullptr) return;
+    if (noeud == nullptr) return false;
 
     RectangleEnglobant rectangle = noeud->obtenirRectangleEngobant();
     bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
-    //TODO: 
+    
+	//TODO: 
     /*
     Calcul des paramètres pour simuler la collision ici. 
     1. obtenir la perpendiculaire à l'orientation du rectangle : rectangle.calculerVecteursOrientations
     2. 
     */
-	glm::dvec3 normaleMur, perpendiculaireMur, robotReflechi;
-	rectangle.calculerVecteursOrientation(normaleMur, perpendiculaireMur);
-
-	glm::dvec3 vitesseRobot, vitesseAngulaireRobot;
-	rectangleEnglobant_.calculerVecteursOrientation(vitesseRobot, vitesseAngulaireRobot);
-
-	robotReflechi = glm::reflect(vitesseRobot, normaleMur);
-
-
-	//vitesseRotation_ = atan(vitesseAngulaireRobot.y/vitesseAngulaireRobot.x);
-	// vitesseRotation ignoree dans animer
-
-
 
     if (collision)
     {
-        std::cout << "Collision avec un mur." << std::endl;
-        //effectuerCollision();
+		std::cout << "Collision avec un mur." << std::endl;
+		glm::dvec3 normaleMur, perpendiculaireMur;
+		rectangle.calculerVecteursOrientation(normaleMur, perpendiculaireMur);
+
+		effectuerCollision(normaleMur);
     }
+	return collision;
 }
 
 
-void NoeudRobot::verifierCollision(NoeudTable* noeud)
+bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 {
     RectangleEnglobant rectangle = noeud->obtenirRectangleEnglobant();
     // TODO: à changer pour vérifier
-    bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
+	glm::dvec3 coins[4];
+	rectangleEnglobant_.calculerPositionCoins(coins);
+	bool collision = false;
+	for (unsigned i = 0; i < 4; i++)
+	{
+		if (!rectangle.calculerPointEstDansForme(coins[i]))
+		{
+			collision = true;
+		}
+	}
+	std::cout << "Collision : " << collision << std::endl;
     if (collision)
     {
 		std::cout << "Collision avec une table" << std::endl;
-		//effectuerCollision();
+		glm::dvec3 normaleTable, perpendiculaireTable;
+		rectangle.calculerVecteursOrientation(normaleTable, perpendiculaireTable);
+
+		effectuerCollision(normaleTable);
     }
+	return collision;
 }
 
 
@@ -239,6 +251,20 @@ void NoeudRobot::mettreAJourCapteurs()
 
 void NoeudRobot::mettreAJourPosition(const float& dt)
 {
+	std::cout << estEnCollision_ << std::endl;
+	float vitesseDroiteTemp = vitesseDroite_, vitesseGaucheTemp = vitesseGauche_;
+	std::cout << "d c : " << vitesseCouranteDroite_ << "d : " << vitesseDroite_ << std::endl;
+	if (!estEnCollision_)
+	{
+		//Calcul de la différence entre les vitesses de gauche et droite
+		vitesseRotation_ = vitesseCouranteDroite_ - vitesseCouranteGauche_;
+	}
+	else
+	{
+		vitesseDroite_ = vitesseDroiteCollision_;
+		vitesseGauche_ = vitesseGaucheCollision_;
+	}
+	//std::cout << "d c : " << vitesseCouranteDroite_ << "d : " << vitesseDroite_ << std::endl;
 	//Calcul de la résultante de la vitesse relative
 	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
 	if (diffD < 0)
@@ -314,13 +340,12 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 	
 	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
 
-	//Calcul de la différence entre les vitesses de gauche et droite
-	vitesseRotation_ = vitesseCouranteDroite_ - vitesseCouranteGauche_;
-
 	//Calculs des nouvelles positions et du nouvel angle
 	angleRotation_ += dt * vitesseRotation_;
 	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
 	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
+	vitesseDroite_ = vitesseDroiteTemp;
+	vitesseGauche_ = vitesseGaucheTemp;
 }
 
 void NoeudRobot::mettreAJourRectangleEnglobant()
@@ -329,28 +354,31 @@ void NoeudRobot::mettreAJourRectangleEnglobant()
     rectangleEnglobant_.assignerAngle(angleRotation_);
 }
 
-void NoeudRobot::effectuerCollision()
+void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 {
     // TODO: Continuer l'implémentation de cette méthode.
-    vitesseCouranteDroite_ = -vitesseCouranteDroite_;
-    vitesseCouranteGauche_ = -vitesseCouranteGauche_;
-    vitesseDroite_ = 0.0;
-    vitesseGauche_ = 0.0;
+	estEnCollision_ = true;
+	glm::dvec3 robotReflechi, vitesseAngulaireRobotReflechi;
 
-    if (vitesseCouranteDroite_ > 0 && vitesseCouranteGauche_ > 0)
-    {
-        while (vitesseCouranteDroite_ < 0 && vitesseCouranteGauche_< 0)
-        {
-            animer(float(0.016));
-        }
-    }
-    else if (vitesseCouranteDroite_ < 0 && vitesseCouranteGauche_ < 0)
-    {
-        while (vitesseCouranteDroite_ > 0 && vitesseCouranteGauche_ > 0)
-        {
-            animer(float(0.016));
-        }
-    }
+	glm::dvec3 vitesseRobot, vitesseAngulaireRobot;
+	rectangleEnglobant_.calculerVecteursOrientation(vitesseRobot, vitesseAngulaireRobot);
+
+	robotReflechi = glm::reflect(vitesseRobot, normale);
+	vitesseAngulaireRobotReflechi = glm::reflect(vitesseAngulaireRobot, normale);
+
+	vitesseRotation_ = atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x);
+
+	double vitesseRelative = vitesseCouranteDroite_ + vitesseCouranteGauche_;
+	double vitessseAngulaire = vitesseCouranteGauche_ - vitesseCouranteDroite_;
+
+	glm::dvec3 vecVitesseDroite = robotReflechi * vitesseAngulaireRobotReflechi;
+	vitesseCouranteDroite_ = -30 * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2));
+	vitesseCouranteGauche_ = -30 + vitesseDroite_;
+
+	vitesseDroiteCollision_ = 0;
+	vitesseGaucheCollision_ = 0;
+
+	std::cout << "Collision avec un mur." << std::endl;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

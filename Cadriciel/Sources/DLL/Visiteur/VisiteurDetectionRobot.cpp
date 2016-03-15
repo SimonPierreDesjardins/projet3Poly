@@ -29,18 +29,26 @@ VisiteurDetectionRobot::~VisiteurDetectionRobot()
 
 void VisiteurDetectionRobot::visiter(ArbreRendu* arbre)
 {
+	estEnCollision_ = false;
     arbre->chercher(ArbreRenduINF2990::NOM_TABLE)->accepterVisiteur(this);
 }
 
 
 void VisiteurDetectionRobot::visiter(NoeudTable* table)
 {
-    robot_->verifierCollision(table);
+	/*
+	bool estEnCollision = robot_->verifierCollision(table);
+	if (!estEnCollision_)
+	{
+		estEnCollision_ = estEnCollision;
+	}
+	*/
     int nEnfants = table->obtenirNombreEnfants();
     for (int i = 0; i < nEnfants; i++)
     {
         table->chercher(i)->accepterVisiteur(this);
     }
+	robot_->assignerEstEnCollision(estEnCollision_);
 }
 
 
@@ -52,7 +60,11 @@ void VisiteurDetectionRobot::visiter(NoeudLigne* ligne)
 
 void VisiteurDetectionRobot::visiter(NoeudPoteau* poteau)
 {
-    robot_->verifierCollision(poteau);
+	bool estEnCollision = robot_->verifierCollision(poteau);
+	if (!estEnCollision_)
+	{
+		estEnCollision_ = estEnCollision;
+	}
     for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
     {
         capteursDistance_->at(i).verifierDetection(poteau);
@@ -62,7 +74,11 @@ void VisiteurDetectionRobot::visiter(NoeudPoteau* poteau)
 
 void VisiteurDetectionRobot::visiter(NoeudMur* mur)
 {
-    robot_->verifierCollision(mur);
+	bool estEnCollision = robot_->verifierCollision(mur);
+	if (!estEnCollision_)
+	{
+		estEnCollision_ = estEnCollision;
+	}
     for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
     {
         capteursDistance_->at(i).verifierDetection(mur);

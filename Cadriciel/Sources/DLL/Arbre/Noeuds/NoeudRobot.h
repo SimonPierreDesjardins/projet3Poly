@@ -57,9 +57,9 @@ public:
 	virtual void animer(float dt);
 
     /// Méthode permettant au robot de vérifier la collision avec un noeud.
-    void verifierCollision(NoeudPoteau* poteau);
-    void verifierCollision(NoeudMur* noeud);
-    void verifierCollision(NoeudTable* noeud);
+    bool verifierCollision(NoeudPoteau* poteau);
+    bool verifierCollision(NoeudMur* noeud);
+    bool verifierCollision(NoeudTable* noeud);
     
 	//Permet de modifier les paramètres du robot
 	inline void assignerVitesseRotation(float vitesse);
@@ -69,9 +69,11 @@ public:
 	//Permet de récupérer les paramètres du robot.
 	inline float obtenirVitesseDroite() const;
 	inline float obtenirVitesseGauche() const;
+
+	inline void assignerEstEnCollision(bool collision);
     
 	// Retourne l'états des capeurs du robot.
-    inline SuiveurLigne* obtenirSuiveurLigne();     
+    inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
 private:
@@ -82,8 +84,11 @@ private:
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 
+	float vitesseDroiteCollision_{ 0.f };
+	float vitesseGaucheCollision_{ 0.f };
+
 	float angle_{ 0.f };
-	float acceleration_{ 200.0 };
+	float acceleration_{ 70.0 };
 
     RectangleEnglobant rectangleEnglobant_;
    
@@ -94,12 +99,14 @@ private:
     ArbreRendu* arbre_{ nullptr };
 
     /// Méthode permettant au robot d'effectuer la collision.
-    void effectuerCollision(/*Insérer les paramètres nécéssaires pour effectuer la collision ici.*/);
+    void effectuerCollision(glm::dvec3 normale);
 
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
     void mettreAJourPosition(const float& dt);
     void mettreAJourRectangleEnglobant();
+
+	bool estEnCollision_{ false };
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -214,6 +221,11 @@ inline void NoeudRobot::assignerVitesseGauche(float vitesse)
 inline void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
 	vitesseRotation_ = vitesse;
+}
+
+inline void NoeudRobot::assignerEstEnCollision(bool collision)
+{
+	estEnCollision_ = collision;
 }
 #endif // __ARBRE_NOEUD_ROBOT_H__
 
