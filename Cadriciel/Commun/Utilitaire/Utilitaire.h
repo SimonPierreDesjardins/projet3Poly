@@ -269,7 +269,7 @@ namespace utilitaire {
 
 	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux);
 
-	void calculerPositionApresRotation(const glm::dvec3& positionInitiale, 
+	void calculerPositionApresRotation(glm::dvec3 positionInitiale, 
                                        glm::dvec3&       positionFinale, 
                                        const double&     theta);
 

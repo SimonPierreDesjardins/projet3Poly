@@ -46,7 +46,6 @@ private:
 	bool dessineRectangle{ false };
 
 private : 
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_{ nullptr };
 	std::unique_ptr<VisiteurSelection> visiteurSelection_{ nullptr };
 	ArbreRendu* arbre_{ nullptr };
 	vue::Vue* vue_{ nullptr };

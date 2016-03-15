@@ -96,6 +96,7 @@ ArbreRenduINF2990::~ArbreRenduINF2990()
 void ArbreRenduINF2990::initialiser()
 {
 	chargerZoneDefaut();
+	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 }
 
 ////////////////////////////////////////////////////////////////////////

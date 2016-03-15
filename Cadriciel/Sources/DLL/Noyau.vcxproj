@@ -178,6 +178,8 @@
     <ClCompile Include="MachineAModes\ModeMenuPrincipal.cpp" />
     <ClCompile Include="MachineAModes\ModeSimulation.cpp" />
     <ClCompile Include="MachineAModes\ModeTest.cpp" />
+    <ClCompile Include="Physique\CercleEnglobant.cpp" />
+    <ClCompile Include="Physique\FormeEnglobanteAbstraite.cpp" />
     <ClCompile Include="Physique\RectangleEnglobant.cpp" />
     <ClCompile Include="ProfilUtilisateur\ProfilUtilisateur.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
@@ -190,6 +192,7 @@
     <ClCompile Include="Visiteur\VisiteurDeplacement.cpp" />
     <ClCompile Include="Visiteur\VisiteurDetectionLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurDetectionObstacle.cpp" />
+    <ClCompile Include="Visiteur\VisiteurDetectionRobot.cpp" />
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp" />
@@ -250,6 +253,8 @@
     <ClInclude Include="MachineAModes\ModeSimulation.h" />
     <ClInclude Include="MachineAModes\ModeTest.h" />
     <ClInclude Include="MachineAModes\ModeTypes.h" />
+    <ClInclude Include="Physique\CercleEnglobant.h" />
+    <ClInclude Include="Physique\FormeEnglobanteAbstraite.h" />
     <ClInclude Include="Physique\RectangleEnglobant.h" />
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
     <ClInclude Include="Tests\BancTests.h" />
@@ -263,6 +268,7 @@
     <ClInclude Include="Visiteur\VisiteurDeplacement.h" />
     <ClInclude Include="Visiteur\VisiteurDetectionLigne.h" />
     <ClInclude Include="Visiteur\VisiteurDetectionObstacle.h" />
+    <ClInclude Include="Visiteur\VisiteurDetectionRobot.h" />
     <ClInclude Include="Visiteur\VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h" />

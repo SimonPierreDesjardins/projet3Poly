@@ -612,7 +612,7 @@ namespace utilitaire {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void calculerPositionApresRotation(const glm::dvec3& positionInitiale, glm::dvec3& positionFinale, const double& theta)
+	/// @fn void calculerPositionApresRotation(glm::dvec3 positionInitiale, glm::dvec3& positionFinale, const double& theta)
 	///
 	/// Fonction qui permet de calculer la position d'un point après une rotation.
 	///
@@ -623,7 +623,7 @@ namespace utilitaire {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void calculerPositionApresRotation(const glm::dvec3& positionInitiale, glm::dvec3& positionFinale, const double& theta)
+	void calculerPositionApresRotation(glm::dvec3 positionInitiale, glm::dvec3& positionFinale, const double& theta)
 	{
 		positionFinale[0] = positionInitiale[0] * cos(DEG_TO_RAD(theta)) - positionInitiale[1] * sin(DEG_TO_RAD(theta));
 		positionFinale[1] = positionInitiale[0] * sin(DEG_TO_RAD(theta)) + positionInitiale[1] * cos(DEG_TO_RAD(theta));

@@ -70,6 +70,9 @@ public:
 	/// La chaîne représentant le type du robot.
 	static const std::string NOM_ROUES;
    
+	/// La chaîne représentant le type du point de départ. 
+	static const std::string NOM_DEPART;   
+
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre
 	void chargerZone(FILE* fp);
@@ -80,8 +83,6 @@ private:
 	/// Charge le fichier zone_par_defaut.json qui contient la structure de base de l'arbre de rendu
 	void chargerZoneDefaut();
 
-	/// La chaîne représentant le type du point de départ. 
-	static const std::string NOM_DEPART;   
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

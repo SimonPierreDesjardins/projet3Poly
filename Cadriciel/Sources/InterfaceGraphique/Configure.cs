@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using TypeCommandeEnum;
 using TypeComportementEnum;
-using ConfigureControlEnum;
 
 namespace InterfaceGraphique
 {
@@ -21,48 +20,116 @@ namespace InterfaceGraphique
         static extern bool HideCaret(IntPtr hWnd);
         private List<TypeComportement> comportementsList;
 
-        bool afficherDebugComportement = false;
-        bool afficherDebugEclairage = false;
-        bool afficherDebugCapteurs = false;
+        private string cheminProfils;
+        private string extensionProfils;
+        private string nomProfilDefaut;
+        private int indexProfilDefaut;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public Configure()
+        ///
+        /// Cette fonction initialize la fenetre et initialise la visibilité de
+        /// ses composantes
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public Configure()
         {
             InitializeComponent();
-            this.KeyPreview = true;
+
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
             FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
-            assignerProfilsCB();
-
-            FonctionsNatives.assignerProfils();
-
             setUpAllControls(configureTabs);
 
-            FonctionsNatives.chargerProfilParDefaut();
+            StringBuilder str = new StringBuilder(100);
 
+            assignerProfilsCB(str);
+
+            indexProfilDefaut = comboBoxProfil.FindString(nomProfilDefaut);
+
+            foreach (Control tab in configureTabs.TabPages)
+            {
+                tab.Enabled = false;
+            }
+           
         }
 
-        private void assignerProfilsCB(){
-            string line;
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void assignerProfilsCB(StringBuilder str)
+        ///
+        /// Cette fonction permet d'assigner un profil à la fenetre configure
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void assignerProfilsCB(StringBuilder str){
+            
+            FonctionsNatives.obtenirCheminProfils(str, str.Capacity);
+            cheminProfils = str.ToString();
 
-            // Read the file and display it line by line.
-            System.IO.StreamReader file =
-               new System.IO.StreamReader("./../../Donnees/profilsListe");
+            str.Clear();
 
-            while ((line = file.ReadLine()) != null)
-                comboBoxProfil.Items.Add(line);
+            FonctionsNatives.obtenirExtensionProfils(str, str.Capacity);
+            extensionProfils = str.ToString();
 
-            file.Close();
+            str.Clear();
+
+            FonctionsNatives.obtenirNomProfilDefaut(str, str.Capacity);
+
+            nomProfilDefaut = str.ToString();
+
+            comboBoxProfil.Items.Clear();
+
+            string[] fichiersProfile = System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils);
+            if (fichiersProfile.Length == 0)
+            {
+                FonctionsNatives.chargerProfilParDefaut();
+                fichiersProfile = System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils);
+                string nomFichier;
+                for (int i = 0; i < fichiersProfile.Length; i++)
+                {
+                    nomFichier = System.IO.Path.GetFileName(fichiersProfile[i]);
+                    fichiersProfile[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
+                }
+                comboBoxProfil.Items.AddRange(fichiersProfile);
+                comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfilDefaut);
+            }
+            else
+            {
+                string nomFichier;
+                for (int i = 0; i < fichiersProfile.Length; i++)
+                {
+                    nomFichier = System.IO.Path.GetFileName(fichiersProfile[i]);
+                    fichiersProfile[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
+                }
+
+                comboBoxProfil.Items.AddRange(fichiersProfile);
+                FonctionsNatives.chargerProfilParDefaut();
+                textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
+                textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
+                textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
+                textBoxHoraire.Text = afficherCaractere(textBoxHoraire.Text[0]);
+                textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
+            }
+
+            
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn void setUpAllControls(Control control)
+        ///
+        /// Cette fonction permet d'envoyer le handle de chaque composant au modele
+        ///
+        ////////////////////////////////////////////////////////////////////////
         void setUpAllControls(Control control)
         {
             foreach (Control item in control.Controls)
             {
                 if (item.Tag != null)
                 {
-                    if (item.GetType().Equals(typeof(ComboBox)))
+                    if (item.GetType().Equals(typeof(ComboBox)) && Int32.Parse((String)item.Tag) <= 23)
                     {
                         ComboBox combo = item as ComboBox;
                         combo.BindingContext = new BindingContext();
@@ -75,14 +142,45 @@ namespace InterfaceGraphique
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void buttonDefConfig_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction charge le profil par défault
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du click
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void buttonDefConfig_Click(object sender, EventArgs e)
         {
             FonctionsNatives.chargerProfilParDefaut();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private bool caractereInvalide(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool caractereInvalide(object sender, KeyPressEventArgs e)
         { return e.Handled = !(/*char.IsLetterOrDigit(e.KeyChar)*/true); }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement avancer
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -94,6 +192,17 @@ namespace InterfaceGraphique
             textBoxAvancer.Select(textBoxAvancer.Text.Length, 0);    
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement reculer
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -105,6 +214,17 @@ namespace InterfaceGraphique
             textBoxReculer.Select(textBoxReculer.Text.Length, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner gauche
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -116,6 +236,17 @@ namespace InterfaceGraphique
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner droit
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!caractereInvalide(sender, e))
@@ -127,6 +258,39 @@ namespace InterfaceGraphique
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner droit
+        /// a la touche en changement l'affichage dans configure
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!caractereInvalide(sender, e))
+            {
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
+            }
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
+            textBoxModeManuel.Text = afficherCaractere(caractere);
+            textBoxModeManuel.Select(textBoxReculer.Text.Length, 0);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn string afficherCaractere(char caractere)
+        ///
+        /// Cette fonction prend un char et retourne une string avec le nom complet de la touche
+        ///
+        /// @param[in] char caractere: char représentant la touche
+        ///
+        /// @return string: le nom complet représentant le char
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         string afficherCaractere(char caractere)
         {
             string mot = caractere.ToString();
@@ -145,39 +309,20 @@ namespace InterfaceGraphique
             return mot;
         }
 
-        private void buttonDefProfil_Click(object sender, EventArgs e)
-        {
-            capteurDistanceChkBox.Checked = false;
-            capteurLigneChkBox.Checked = false;
-        }
-
-        private void buttonSaveProfil_Click(object sender, EventArgs e)
-        {
-            comboBoxProfil.Items.Insert(comboBoxProfil.Items.Count, comboBoxProfil.Text);
-        }
-
-        private void Configure_Load(object sender, EventArgs e)
-        {
-            //comboBoxProfil.SelectedIndex = 0;
-            enableOptionAffichage();
-        }
-
-        private void capteurDistanceChkBox_CheckedChanged(object sender, EventArgs e)
-        {
-            capteurDistanceOptionsPnl.Enabled = capteurDistanceChkBox.Checked;
-        }
-
         private bool empecherTextChangedEvent = false;
 
-        private void modeManuelValidation(TextBox textBox, char key)
-        {
-            if (empecherTextChangedEvent)
-                return;
-            empecherTextChangedEvent = true;
-            textBox.Text = afficherCaractere(key);
-            empecherTextChangedEvent = false;
-        }
-        
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private bool degreeValidation(string aTester)
+        ///
+        /// Cette fonction permet de valider un degree ou il n'y a que deux chiffres apres
+        /// la virgule et que le nombre est entre 0 et 360
+        ///
+        /// @param[in] string aTester: la string représentant un degree
+        ///
+        /// @return bool: true si valide sinon false
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool degreeValidation(string aTester)
         {
             double nombre;
@@ -190,6 +335,18 @@ namespace InterfaceGraphique
             return reussi;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private bool tempsValidation(string aTester)
+        ///
+        /// Cette fonction permet de valider un temps ou il n'y a que deux chiffres apres
+        /// la virgule
+        ///
+        /// @param[in] string aTester: la string représentant un temps
+        ///
+        /// @return bool: true si valide sinon false
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool tempsValidation(string aTester)
         {
             double nombre;
@@ -202,6 +359,19 @@ namespace InterfaceGraphique
             return reussi;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEtDureeValidation(TextBox box, bool estDegree)
+        ///
+        /// Cette fonction permet de valider un temps et un angle. S'il n'est pas valide,
+        /// l'ancien text est affiché
+        ///
+        /// @param[in] TextBox box: la textbox a vérifier
+        /// @param[in] bool estDegree: la validité d'un angle
+        ///
+        /// @return: Aucun
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEtDureeValidation(TextBox box, bool estDegree)
         {
             if (empecherTextChangedEvent)
@@ -217,8 +387,19 @@ namespace InterfaceGraphique
 
             empecherTextChangedEvent = false;
         }
-        
-        
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn  private bool decimalCheck(TextBox box)
+        ///
+        /// Cette fonction permet de valider d'un nombre ou il ne peut qu'y avoir deux chiffre apres
+        /// une virgule
+        ///
+        /// @param[in] TextBox box: la textbox a vérifier
+        ///
+        /// @return: Aucun
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private bool decimalCheck(TextBox box)
         {
             if (box.Text.Count(f => f == '.' | f == ',') == 1 && (box.Text.IndexOf('.') > box.TextLength - 3 || box.Text.IndexOf(',') > box.TextLength - 3))
@@ -230,95 +411,247 @@ namespace InterfaceGraphique
             return false;
         }
 
+        //String représentant l'ancienne valeur du textbox
         private string oldText;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEGTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEGTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEGTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEGTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEGTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEGTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEDTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEDTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void angleEDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void angleEDTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEDTxtBox_TextChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEDTxtBox_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void dureeEDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyEventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void dureeEDTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
             oldText = (sender as TextBox).Text;
         }
 
+        private void longueurZoneDangerCapteurDistanceTB_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, false);
+        }
+
+        private void longueurZoneDangerCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        private void longueurZoneSecuritaireCapteurDistanceTB_TextChanged(object sender, EventArgs e)
+        {
+            angleEtDureeValidation(sender as TextBox, false);
+        }
+
+        private void longueurZoneSecuritaireCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
+        {
+            oldText = (sender as TextBox).Text;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void retourMenuButt_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction ferme la fenetre si le resultat du dialog vaut OK
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void retourMenuButt_Click(object sender, EventArgs e)
         {
-            /*FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
-            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.',',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
-            */
             this.DialogResult = DialogResult.OK;
             Close();
         }
 
-        private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!caractereInvalide(sender, e))
-            {
-                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.INVERSER_MODE_CONTROLE);
-            }
-            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.INVERSER_MODE_CONTROLE);
-            textBoxModeManuel.Text = afficherCaractere(caractere);
-            textBoxModeManuel.Select(textBoxReculer.Text.Length, 0);
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
+        ///
+        /// Cette fonction selectionne l'index 1 des textbox de la fenetre
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
         {
-            FonctionsNatives.changerProfil();
+            string nomProfil = (string)(sender as ComboBox).SelectedItem;
+            if (!comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomProfil)))
+                return;
+            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
             textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
             textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
             textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
@@ -326,80 +659,161 @@ namespace InterfaceGraphique
             textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
         }
 
-        private void OptionAffichage_CheckedChanged(object sender, EventArgs e)
+        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
         {
-            enableOptionAffichage();
-            setBooleanAffichageComportement();
-            setBooleanAffichageEclairage();
-            setBooleanAffichageCapteurs();
+            Console.Write("allo");
         }
 
-        private void enableOptionAffichage()
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// private enum creationProfil
+        ///
+        /// Etat dans la creation d'un profil
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private enum creationProfil
         {
-            if (OptionAffichage.Checked)
+            ATTENTE_CREATION,
+            ATTENTE_CONFIRMATION
+        }
+
+        private creationProfil etatCreationProfil = creationProfil.ATTENTE_CREATION;
+
+        private void buttonCréerProfil_Click(object sender, EventArgs e)
+        {
+            if (etatCreationProfil == creationProfil.ATTENTE_CREATION)
             {
-                comboBox_capteur.Enabled = true;
-                comboBox_comportement.Enabled = true;
-                comboBox_eclairage.Enabled = true;
+                comboBoxProfil.DropDownStyle = ComboBoxStyle.Simple;
+                comboBoxProfil.Focus();
+                buttonCréerProfil.Text = "Confirmer création";
+                etatCreationProfil = creationProfil.ATTENTE_CONFIRMATION;
+                modifierProfilButt.Enabled = false;
+                buttonDeleteProfil.Enabled = false;
+                retourMenuButt.Enabled = false;
             }
             else
             {
-                comboBox_capteur.Enabled = false;
-                comboBox_comportement.Enabled = false;
-                comboBox_eclairage.Enabled = false;
+                buttonCréerProfil.Text = "Nouveau profil";
+                string nouvelItem = comboBoxProfil.Text;
+
+                string nomSiDoublon = nouvelItem;
+                int nombre = 1;
+                while (comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomSiDoublon)))
+                    nomSiDoublon = nouvelItem + nombre++;
+
+                comboBoxProfil.Items.Add(nomSiDoublon);
+                comboBoxProfil.SelectedIndex = comboBoxProfil.Items.Count - 1;
+                comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
+                etatCreationProfil = creationProfil.ATTENTE_CREATION;
+                modifierProfilButt.Enabled = true;
+                buttonDeleteProfil.Enabled = true;
+                retourMenuButt.Enabled = true;
             }
+            
         }
 
-        private void comboBox_comportement_SelectedIndexChanged(object sender, EventArgs e)
+        private void buttonDeleteProfil_Click(object sender, EventArgs e)
         {
-            setBooleanAffichageComportement();
+            string profilASupprimer = comboBoxProfil.Text;
+            if (profilASupprimer == nomProfilDefaut)
+                return;
+            FonctionsNatives.supprimerProfil(profilASupprimer + extensionProfils);
+            comboBoxProfil.Items.Remove(profilASupprimer);
+            comboBoxProfil.SelectedIndex = indexProfilDefaut;
         }
 
-        private void setBooleanAffichageComportement()
+        private enum modificationProfil
         {
-            if (comboBox_comportement.Enabled)
+            ATTENTE_MODIFICATION,
+            ATTENTE_CONFIRMATION
+        }
+
+        private modificationProfil etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
+
+        private void modifierProfilButt_Click(object sender, EventArgs e)
+        {
+            if (comboBoxProfil.SelectedIndex == indexProfilDefaut)
+                return;
+
+            bool tabEnabled;
+            
+
+            if (etatModificationProfil == modificationProfil.ATTENTE_MODIFICATION)
             {
-                if (comboBox_comportement.SelectedIndex == 0)
-                    afficherDebugComportement = true;
+                tabEnabled = true;
+                modifierProfilButt.Text = "Enregistrer";
+                etatModificationProfil = modificationProfil.ATTENTE_CONFIRMATION;
+                buttonCréerProfil.Enabled = false;
+                buttonDeleteProfil.Enabled = false;
+                retourMenuButt.Enabled = false;
+                comboBoxProfil.Enabled = false;
             }
             else
-                afficherDebugComportement = false;
-        }
-
-        private void comboBox_eclairage_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setBooleanAffichageEclairage();
-        }
-
-        private void setBooleanAffichageEclairage()
-        {
-            if (comboBox_eclairage.Enabled)
             {
-                if (comboBox_eclairage.SelectedIndex == 0)
-                    afficherDebugEclairage = true;
+                FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+                
+                FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+                
+                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en");
+                
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Double.Parse(angleDGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLAGAUCHE);
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Double.Parse(angleDDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLADROITE);
+                
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Double.Parse(angleEGTxtBox.Text.Replace(',', '.'), culture), Double.Parse(dureeEGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.EVITEMENTPARLAGAUCHE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Double.Parse(angleEDTxtBox.Text.Replace(',', '.'), culture), Double.Parse(dureeEDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.EVITEMENTPARLADROITE);
+                
+                FonctionsNatives.assignerCapteurDistance(capteurDistDroitCB.SelectedIndex == 0, (TypeComportement)zoneDangerDroitCB.SelectedValue, Double.Parse(longueurDangerDroitTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireDroitCB.SelectedValue, Double.Parse(longueurSecuritaireDroitTxtBox.Text.Replace(',', '.'), culture), 0);
+                FonctionsNatives.assignerCapteurDistance(capteurDistCentreCB.SelectedIndex == 0, (TypeComportement)zoneDangerCentreCB.SelectedValue, Double.Parse(longueurDangerCentreTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireCentreCB.SelectedValue, Double.Parse(longueurSecuritaireCentreTxtBox.Text.Replace(',', '.'), culture), 1);
+                
+                FonctionsNatives.assignerCapteurDistance(capteurDistGaucheCB.SelectedIndex == 0, (TypeComportement)zoneDangerGaucheCB.SelectedValue, Double.Parse(longueurDangerGaucheTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireGaucheCB.SelectedValue, Double.Parse(longueurSecuritaireGaucheTxtBox.Text.Replace(',', '.'), culture), 2);
+                
+                FonctionsNatives.assignerSuiveurLigne(suiveurLigneCB.SelectedIndex == 0);
+                
+                FonctionsNatives.assignerOptionsDebogages(optionsDebogagesCB.SelectedIndex == 0, comboBox_comportement.SelectedIndex == 0, comboBox_eclairage.SelectedIndex == 0, comboBox_capteur.SelectedIndex == 0);
+                
+                FonctionsNatives.sauvegarderProfil(comboBoxProfil.Text + extensionProfils);
+                
+                tabEnabled = false;
+                modifierProfilButt.Text = "Modifier";
+                etatModificationProfil = modificationProfil.ATTENTE_MODIFICATION;
+                buttonCréerProfil.Enabled = true;
+                buttonDeleteProfil.Enabled = true;
+                retourMenuButt.Enabled = true;
+                comboBoxProfil.Enabled = true;
             }
-            else
-                afficherDebugEclairage = false;
-        }
 
-        private void comboBox_capteur_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            setBooleanAffichageCapteurs();
-        }
-
-        private void setBooleanAffichageCapteurs()
-        {
-            if (comboBox_capteur.Enabled)
+            foreach (Control tab in configureTabs.TabPages)
             {
-                if (comboBox_capteur.SelectedIndex == 0)
-                    afficherDebugCapteurs = true;
+                tab.Enabled = tabEnabled;
+
             }
-            else
-                afficherDebugCapteurs = false;
+
+            foreach (Control tab in capteursDistTabs.TabPages)
+            {
+                tab.Enabled = tabEnabled;
+            }
         }
+
+        private void optionsDebogagesCB_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            bool estActif = optionsDebogagesCB.SelectedIndex == 0;
+            comboBox_comportement.Enabled = estActif;
+            comboBox_eclairage.Enabled = estActif;
+            comboBox_capteur.Enabled = estActif;
+        }
+
+
+        
 
     }
 
+    ////////////////////////////////////////////////////////////////////////
+    ///
+    /// @fn  static partial class FonctionsNatives
+    ///
+    /// Permet de faire le lien avec les méthodes implémentées dans le C++
+    ///
+    ////////////////////////////////////////////////////////////////////////
     static partial class FonctionsNatives{
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementSuivreLigne(TypeComportement comportementSuivant);
@@ -414,7 +828,22 @@ namespace InterfaceGraphique
         public static extern void assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void sauvegarderProfil(string nomProfil);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerSuiveurLigne(bool estActif);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void modifierToucheCommande(char touche, TypeCommande commande);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void obtenirNomProfilDefaut(StringBuilder str, int longueur);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void chargerProfilParDefaut();
@@ -426,10 +855,7 @@ namespace InterfaceGraphique
         public static extern void setHandle(IntPtr handle, int ctrl);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void changerProfil();
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerProfils();
+        public static extern void changerProfil(string nomProfil);
 
         [DllImport("user32.dll")]
         public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
@@ -442,6 +868,16 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAffichageCapteurs(bool afficherDebugCapteurs);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void obtenirCheminProfils(StringBuilder str, int longueur);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void supprimerProfil(string nomProfil);
+
     }
 }
 

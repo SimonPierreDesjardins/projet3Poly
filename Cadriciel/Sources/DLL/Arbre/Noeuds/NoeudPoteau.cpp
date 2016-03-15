@@ -37,6 +37,21 @@ NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
 }
 
 
+void NoeudPoteau::animer(float dt)
+{
+    mettreAJourFormeEnglobante();
+}
+
+void NoeudPoteau::mettreAJourFormeEnglobante()
+{
+    double hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
+    double largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
+    double rayon = hauteur > largeur ? hauteur : largeur;
+
+    cercleEnglobant_.assignerPositionCentre(positionCourante_);
+    cercleEnglobant_.assignerRayon(facteurMiseAEchelle_);
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudPoteau::~NoeudPoteau()
@@ -62,6 +77,7 @@ NoeudPoteau::~NoeudPoteau()
 ////////////////////////////////////////////////////////////////////////
 void NoeudPoteau::afficherConcret() const
 {
+
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
@@ -79,6 +95,8 @@ void NoeudPoteau::afficherConcret() const
 
 	// Restauration de la matrice.
 	glPopMatrix();
+
+    cercleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

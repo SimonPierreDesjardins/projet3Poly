@@ -22,16 +22,6 @@ namespace InterfaceGraphique
     public partial class NouveauProfil : Form
     {
         /// <summary>
-        /// Chemin vers le fichier contenant la zone par defaut
-        /// </summary>
-        private String cheminFichierZoneDefaut;
-
-        /// <summary>
-        /// Chemin vers le dossier contenant les fichiers de zones
-        /// </summary>
-        private String cheminDossierZone;
-
-        /// <summary>
         /// Nom du fichier à créer
         /// </summary>
         public string nomFichier;
@@ -69,13 +59,13 @@ namespace InterfaceGraphique
             nomFichier = nomFichierTextBox.Text;
             if (nomFichier != "")
             {
-                if (System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + nomFichier + ".json")))
+                /*if (System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + nomFichier + ".json")))
                 {
                     MessageBox.Show("Vous ne pouvez pas nommer votre fichier ainsi car le fichier existe déjà.", "Nom déjà utilisé", MessageBoxButtons.OK);
                     return;
                 }
                 creerFichierButt.DialogResult = DialogResult.OK;
-                System.IO.File.Create(cheminDossierZone + nomFichier + ".json").Dispose();
+                System.IO.File.Create(cheminDossierZone + nomFichier + ".json").Dispose();*/
             }
             Close();
         }

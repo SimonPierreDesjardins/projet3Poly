@@ -9,11 +9,10 @@
 
 #include "NoeudAbstrait.h"
 #include "Utilitaire.h"
-#include <iterator>
 #include "rapidjson\filewritestream.h"
+#include <iterator>
 #include <iostream>
-
-
+#include "FormeEnglobanteAbstraite.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -529,22 +528,28 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 	modele_ = modele;
 	vbo_ = liste;
 	utilitaire::BoiteEnglobante boiteEnglobanteModele = utilitaire::calculerBoiteEnglobante(*modele_);
+    boiteEnglobanteModele_ = utilitaire::calculerBoiteEnglobante(*modele_);
 
 	// Le coin du quad en haut à droite.
-	quadEnglobantModele_.coins[0].x = boiteEnglobanteModele.coinMax.x;
-	quadEnglobantModele_.coins[0].y = boiteEnglobanteModele.coinMax.y;
+	quadEnglobantModele_.coins[0].x = boiteEnglobanteModele_.coinMax.x;
+	quadEnglobantModele_.coins[0].y = boiteEnglobanteModele_.coinMax.y;
 
 	// Le coin du quad en haut à gauche.
-	quadEnglobantModele_.coins[1].x = boiteEnglobanteModele.coinMin.x;
-	quadEnglobantModele_.coins[1].y = boiteEnglobanteModele.coinMax.y;
+	quadEnglobantModele_.coins[1].x = boiteEnglobanteModele_.coinMin.x;
+	quadEnglobantModele_.coins[1].y = boiteEnglobanteModele_.coinMax.y;
 
 	// Le coin du quad en bas à gauche.
-	quadEnglobantModele_.coins[2].x = boiteEnglobanteModele.coinMin.x;
-	quadEnglobantModele_.coins[2].y = boiteEnglobanteModele.coinMin.y;
+	quadEnglobantModele_.coins[2].x = boiteEnglobanteModele_.coinMin.x;
+	quadEnglobantModele_.coins[2].y = boiteEnglobanteModele_.coinMin.y;
 	
 	// Le coin du quad en bas à droite.
-	quadEnglobantModele_.coins[3].x = boiteEnglobanteModele.coinMax.x;
-	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele.coinMin.y;
+	quadEnglobantModele_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
+	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
+
+    if (formeEnglobante_ != nullptr)
+    {
+        formeEnglobante_->initialiser(boiteEnglobanteModele_);
+    }
 }
 
 ////////////////////////////////////////////////

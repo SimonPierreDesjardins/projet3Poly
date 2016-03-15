@@ -23,7 +23,6 @@
 EtatMiseAEchelle::EtatMiseAEchelle()
 {
 	visiteurMiseAEchelle_ = std::make_unique<VisiteurMiseAEchelle>();
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
@@ -80,7 +79,6 @@ void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 	dernierePositionY_ = positionVirtuelle.y;
 
 	if (arbre_ != nullptr) {
-		arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	}
 	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {

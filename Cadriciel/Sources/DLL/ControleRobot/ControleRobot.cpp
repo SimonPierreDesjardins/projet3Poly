@@ -85,7 +85,7 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 	if (commande != nullptr)
 	{
 		TypeCommande typeCommande = commande->obtenirTypeCommande();
-
+        
 		// Execute la commande que si elle sert à inverser le mode de contrôle.
 		if ((typeCommande == INVERSER_MODE_CONTROLE) || (manuel == provientUtilisateur))
 		{
@@ -263,11 +263,11 @@ void ControleRobot::terminerBoucleRobot(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::boucleInfinieLogiqueRobot(){
+void ControleRobot::boucleInfinieLogiqueRobot()
+{
 	while (!manuel) {
 		comportement_->mettreAJour();
 	}
-
 }
 
 
@@ -284,6 +284,15 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 {
 	robot_->assignerVitesseGauche(vit_G);
 	robot_->assignerVitesseDroite(vit_D);
+}
+
+
+void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
+{
+    vit_G += robot_->obtenirVitesseGauche();
+    vit_D += robot_->obtenirVitesseDroite();
+    robot_->assignerVitesseGauche(vit_G);
+    robot_->assignerVitesseDroite(vit_D);
 }
 
 ////////////////////////////////////////////////////////////////////////

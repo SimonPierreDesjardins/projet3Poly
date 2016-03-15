@@ -25,7 +25,6 @@
 EtatCreationMur::EtatCreationMur()
 {
 	visiteurCreationMur_ = std::make_unique<VisiteurCreationMur>();
-	visiteurMiseAJourQuad_ = std::make_unique<VisiteurMiseAJourQuad>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
@@ -85,7 +84,6 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 		//Deuxieme clic
 		else
 		{
-			arbre_->accepterVisiteur(visiteurMiseAJourQuad_.get());
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 			if (visiteurVerificationQuad_->objetsDansZoneSimulation())
 			{

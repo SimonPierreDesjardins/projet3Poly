@@ -34,6 +34,7 @@
 NoeudJonction::NoeudJonction(const std::string& typeNoeud)
 	: NoeudAbstrait{ typeNoeud }
 {
+    formeEnglobante_ = &cercleEnglobant_;
 }
 
 
@@ -50,6 +51,15 @@ NoeudJonction::~NoeudJonction()
 {
 }
 
+void NoeudJonction::animer(float dt)
+{
+    mettreAJourFormeEnglobante();
+}
+
+void NoeudJonction::mettreAJourFormeEnglobante()
+{
+    cercleEnglobant_.assignerPositionCentre(positionCourante_);
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -77,6 +87,8 @@ void NoeudJonction::afficherConcret() const
 
 	// Restauration de la matrice.
 	glPopMatrix();
+
+    cercleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

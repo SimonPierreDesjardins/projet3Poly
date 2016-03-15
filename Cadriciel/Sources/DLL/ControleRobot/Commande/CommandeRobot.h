@@ -26,16 +26,26 @@
 ///////////////////////////////////////////////////////////////////////////
 class CommandeRobot{
 	public:
+        /// Constructeur par défaut.
+        CommandeRobot();
+        
 		/// Constructeur par paramètre permettant de changer la puissance des moteurs du robot ou de changer le mode d'utilisation de celui-ci
 		CommandeRobot(TypeCommande commande);
+
+        /// Constructeur par paramètre sans type de commande.
+        CommandeRobot(const bool& ajout);
+
+        /// Constructeur par paramètre avec le type de commande et un bool indiquant si la commande effectue un ajout ou une assignation.
+        CommandeRobot(TypeCommande commande, const bool& ajout);
 
 		/// Execute les changements associés à la commande sur le robot
 		void executer(ControleRobot* ia);
 
-		void assignerVitessesMoteurs(double vit_g, double vit_d);
+        /// Inverser la vitesse des moteurs.
+        void inverserVitesseMoteurs();
 
+        /// Méthodes d'accès.
 		inline TypeCommande obtenirTypeCommande();
-
 		inline bool provientUtilisateur();
 
 	private:
@@ -44,6 +54,9 @@ class CommandeRobot{
 
 		/// Représente la nouvelle vitesse du moteur de droite
 		double vitesseMoteurD_{ 0 };
+
+        /// Indique si la commande est une assignation ou un ajout de vitesse.
+        bool ajout_{ false };
 
 		/// Représente si l'on change le mode d'utilisation du robot ou non. Si oui, celle-ci correspondra à un des deux modes d'utilisation (MODE_MANUEL ou MODE_AUTO)
 		TypeCommande typeCommande_;

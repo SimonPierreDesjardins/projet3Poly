@@ -104,31 +104,101 @@ void PhysiqueTest::testIntersectionQuad()
 }
 
 
+void PhysiqueTest::testIntersectionRectangleRectangle()
+{
+    glm::dvec3 position = { 0.0, 0.0, 0.0 };
+    RectangleEnglobant rectangle1 = RectangleEnglobant(position, 0.0 ,4.0, 3.0);
+
+    // Test sur un cas de rectangle éloigné avec un angle identique.
+    position = { 30.0, 30.0, 0.0};
+    RectangleEnglobant rectangle2 = RectangleEnglobant(position, 0.0, 4.0, 3.0);
+    bool intersection = rectangle1.calculerIntersection(rectangle2);
+    CPPUNIT_ASSERT(!intersection);
+    
+    rectangle2.assignerAngle(45.0);
+    rectangle2.assignerPositionCentre({5.0, 5.0, 5.0});
+    intersection = rectangle1.calculerIntersection(rectangle2);
+    CPPUNIT_ASSERT(!intersection);
+
+    position = { 0.0, 2.5, 0.0 };
+    rectangle2.assignerPositionCentre(position);
+    intersection = rectangle1.calculerIntersection(rectangle2);
+    CPPUNIT_ASSERT(intersection);
+
+    position = { -2.5, 0.0, 0.0 };
+    rectangle2.assignerPositionCentre(position);
+    intersection = rectangle1.calculerIntersection(rectangle2);
+    CPPUNIT_ASSERT(intersection);
+
+    position = { 0.0, -2.5, 0.0 };
+    rectangle2.assignerPositionCentre(position);
+    intersection = rectangle1.calculerIntersection(rectangle2);
+    CPPUNIT_ASSERT(intersection);
+
+    rectangle1.assignerHauteur(1.0);
+    rectangle1.assignerLargeur(10.0);
+
+    rectangle2.assignerHauteur(1.0);
+    rectangle2.assignerLargeur(10.0);
+    rectangle2.assignerAngle(135.0);
+    position = { 0.0, 0.0, 0.0 };
+    rectangle2.assignerPositionCentre(position);
+
+    intersection = rectangle1.calculerIntersection(rectangle2);
+    CPPUNIT_ASSERT(intersection);
+}
+
+
+void PhysiqueTest::testIntersectionRectangleCercle()
+{
+    CPPUNIT_ASSERT(true);
+}
+
+
+void PhysiqueTest::testIntersectionCercleCercle()
+{
+    CPPUNIT_ASSERT(true);
+}
+
+
 void PhysiqueTest::testPointDansRectangle()
 {
     glm::dvec3 positionRectangle = { 20.0, 20.0, 0.0 };
     RectangleEnglobant rectangle(positionRectangle, 0.0, 2.0, 10.0);
     glm::dvec3 point{ 0.0, 0.0, 0.0 };
     double angle = 0.0;
+    bool pointDansForme = false;
     for (int i = 0; i < 361; i++)
     {
         rectangle.assignerAngle((double)(i));
         point = { 19.5, 19.5, 0.0 };
-        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+        pointDansForme = rectangle.calculerPointEstDansForme(point);
+        CPPUNIT_ASSERT(pointDansForme);
 
         point = { 20.5, 19.5, 0.0 };
-        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+        pointDansForme = rectangle.calculerPointEstDansForme(point);
+        CPPUNIT_ASSERT(pointDansForme);
 
         point = { 19.5, 20.5, 0.0 };
-        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+        pointDansForme = rectangle.calculerPointEstDansForme(point);
+        CPPUNIT_ASSERT(pointDansForme);
 
         point = { 20.5, 20.5, 0.0 };
-        CPPUNIT_ASSERT(rectangle.calculerPointEstDansRectangle(point));
+        pointDansForme = rectangle.calculerPointEstDansForme(point);
+        CPPUNIT_ASSERT(pointDansForme);
         
         point = { 0.0, 0.0, 0.0 };
-        CPPUNIT_ASSERT(!rectangle.calculerPointEstDansRectangle(point));
+        pointDansForme = rectangle.calculerPointEstDansForme(point);
+        CPPUNIT_ASSERT(!pointDansForme);
     }
+
 }
+
+void PhysiqueTest::testPointDansCercle()
+{
+    CPPUNIT_ASSERT(true);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

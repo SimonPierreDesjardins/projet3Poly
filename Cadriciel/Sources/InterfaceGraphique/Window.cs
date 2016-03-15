@@ -734,11 +734,9 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerMode(Mode.CONFIGURE);
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
-            DialogResult dialogresult = configuration.ShowDialog();
-            if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
-            {
-                viewPort_.Focus();
-            }
+            configuration.ShowDialog();
+            viewPort_.Focus();
+            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
