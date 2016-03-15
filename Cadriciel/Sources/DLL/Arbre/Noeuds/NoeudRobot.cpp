@@ -95,7 +95,6 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
@@ -106,7 +105,6 @@ void NoeudRobot::afficherConcret() const
 
 	// Affichage du modèle.
 	vbo_->dessiner();
-
 
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
@@ -182,7 +180,6 @@ void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 void NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
     if (noeud == nullptr) return;
-
     RectangleEnglobant rectangle = noeud->obtenirRectangleEngobant();
     bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
     //TODO: 
@@ -191,11 +188,15 @@ void NoeudRobot::verifierCollision(NoeudMur* noeud)
     1. obtenir la perpendiculaire à l'orientation du rectangle : rectangle.calculerVecteursOrientations
     2. 
     */
-    if (collision)
+    if (collision && !collision_)
     {
         std::cout << "Collision avec un mur." << std::endl;
-        //effectuerCollision();
     }
+    if (collision_ && !collision)
+    {
+        std::cout << "Pas de collision avec un mur." << std::endl;
+    }
+    collision_ = collision;
 }
 
 

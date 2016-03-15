@@ -126,6 +126,7 @@ void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const do
 	{
 		capteursOptique_[i].mettreAJourPosition(positionRobot, angleRobot);
 	}
+    
 }
 
 void SuiveurLigne::afficher() const

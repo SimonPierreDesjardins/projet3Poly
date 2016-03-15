@@ -242,3 +242,13 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4])
     coins[2] = positionCentre_ - distanceCentreLargeur - distanceCentreHauteur;
     coins[3] = positionCentre_ + distanceCentreLargeur - distanceCentreHauteur;
 }
+
+bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
+{
+
+    return true;
+}
+bool RectangleEnglobant::calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const
+{
+    return true;
+}

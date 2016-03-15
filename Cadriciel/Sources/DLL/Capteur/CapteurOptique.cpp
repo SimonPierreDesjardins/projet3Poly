@@ -81,7 +81,8 @@ void CapteurOptique::mettreAJourPosition(const glm::dvec3& positionRobot,
 	utilitaire::calculerPositionApresRotation(positionRelative_, 
                                               positionApresRotation, 
                                               angleRotationRobot);
-    positionCourante_ = positionApresRotation + positionRobot;	
+    positionCourante_ = positionApresRotation + positionRobot;
+    ligneEstDetectee_ = false;
 }
 
 
@@ -134,7 +135,6 @@ void CapteurOptique::afficher() const
 ////////////////////////////////////////////////////////////////////////////////
 void CapteurOptique::verifierDetection(NoeudLigne* ligne)
 {
-    ligneEstDetectee_ = false;
 	NoeudAbstrait* enfant = nullptr;
     unsigned int n = ligne->obtenirNombreEnfants();
 	for (unsigned int i = 0; i < n && !ligneEstDetectee_; i++)

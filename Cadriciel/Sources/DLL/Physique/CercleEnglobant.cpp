@@ -98,3 +98,14 @@ void CercleEnglobant::afficher(const glm::dvec3& origine) const
     glEnd();
     glPopMatrix();
 }
+
+bool CercleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
+{
+
+    return true;
+}
+
+bool CercleEnglobant::calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const
+{
+    return true;
+}
