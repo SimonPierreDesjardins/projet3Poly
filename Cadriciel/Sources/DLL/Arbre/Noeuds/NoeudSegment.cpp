@@ -33,6 +33,7 @@
 NoeudSegment::NoeudSegment(const std::string& typeNoeud)
 	: NoeudAbstrait(typeNoeud)
 {
+    formeEnglobante_ = &rectangleEnglobant_;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -48,6 +49,17 @@ NoeudSegment::~NoeudSegment()
 {
 }
 
+void NoeudSegment::animer(float dt)
+{
+    mettreAJourFormeEnglobante();
+}
+
+void NoeudSegment::mettreAJourFormeEnglobante()
+{
+    rectangleEnglobant_.assignerPositionCentre(positionCourante_);
+    rectangleEnglobant_.assignerAngle(angleRotation_);
+    rectangleEnglobant_.assignerLargeur(facteurMiseAEchelle_);
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudSegment::accepterVisiteur(VisiteurAbstrait* visiteur)
@@ -87,6 +99,7 @@ void NoeudSegment::afficherConcret() const
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
+    rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

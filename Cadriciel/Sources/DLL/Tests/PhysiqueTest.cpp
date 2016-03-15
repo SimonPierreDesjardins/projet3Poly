@@ -103,35 +103,36 @@ void PhysiqueTest::testIntersectionQuad()
     CPPUNIT_ASSERT(intersection);
 }
 
+
 void PhysiqueTest::testIntersectionRectangleRectangle()
 {
     glm::dvec3 position = { 0.0, 0.0, 0.0 };
-    RectangleEnglobant rectangle1 = RectangleEnglobant(position, 0.0, 4.0, 3.0);
+    RectangleEnglobant rectangle1 = RectangleEnglobant(position, 0.0 ,4.0, 3.0);
 
     // Test sur un cas de rectangle éloigné avec un angle identique.
     position = { 30.0, 30.0, 0.0};
     RectangleEnglobant rectangle2 = RectangleEnglobant(position, 0.0, 4.0, 3.0);
-    bool intersection = rectangle1.calculerIntersectionRectangle(rectangle2);
+    bool intersection = rectangle1.calculerIntersection(rectangle2);
     CPPUNIT_ASSERT(!intersection);
     
     rectangle2.assignerAngle(45.0);
     rectangle2.assignerPositionCentre({5.0, 5.0, 5.0});
-    intersection = rectangle1.calculerIntersectionRectangle(rectangle2);
+    intersection = rectangle1.calculerIntersection(rectangle2);
     CPPUNIT_ASSERT(!intersection);
 
     position = { 0.0, 2.5, 0.0 };
     rectangle2.assignerPositionCentre(position);
-    intersection = rectangle1.calculerIntersectionRectangle(rectangle2);
+    intersection = rectangle1.calculerIntersection(rectangle2);
     CPPUNIT_ASSERT(intersection);
 
     position = { -2.5, 0.0, 0.0 };
     rectangle2.assignerPositionCentre(position);
-    intersection = rectangle1.calculerIntersectionRectangle(rectangle2);
+    intersection = rectangle1.calculerIntersection(rectangle2);
     CPPUNIT_ASSERT(intersection);
 
     position = { 0.0, -2.5, 0.0 };
     rectangle2.assignerPositionCentre(position);
-    intersection = rectangle1.calculerIntersectionRectangle(rectangle2);
+    intersection = rectangle1.calculerIntersection(rectangle2);
     CPPUNIT_ASSERT(intersection);
 
     rectangle1.assignerHauteur(1.0);
@@ -143,14 +144,16 @@ void PhysiqueTest::testIntersectionRectangleRectangle()
     position = { 0.0, 0.0, 0.0 };
     rectangle2.assignerPositionCentre(position);
 
-    intersection = rectangle1.calculerIntersectionRectangle(rectangle2);
+    intersection = rectangle1.calculerIntersection(rectangle2);
     CPPUNIT_ASSERT(intersection);
 }
+
 
 void PhysiqueTest::testIntersectionRectangleCercle()
 {
     CPPUNIT_ASSERT(true);
 }
+
 
 void PhysiqueTest::testIntersectionCercleCercle()
 {

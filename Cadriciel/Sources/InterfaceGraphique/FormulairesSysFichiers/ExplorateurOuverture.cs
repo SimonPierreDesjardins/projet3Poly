@@ -34,6 +34,8 @@ namespace InterfaceGraphique
         /// </summary>
         private String nomFichierZoneDefaut;
 
+        bool afficherZoneDefaut = false;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public ExplorateurOuverture()
@@ -44,7 +46,7 @@ namespace InterfaceGraphique
         /// @return Aucune
         ///
         ////////////////////////////////////////////////////////////////////////
-        public ExplorateurOuverture()
+        public ExplorateurOuverture(bool afficher)
         {
             StringBuilder str = new StringBuilder(100);
             FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
@@ -52,6 +54,7 @@ namespace InterfaceGraphique
             cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             InitializeComponent();
+            afficherZoneDefaut = afficher;
             PopulateTreeView();
         }
 
@@ -157,17 +160,17 @@ namespace InterfaceGraphique
             foreach (FileInfo file in nodeDirInfo.GetFiles("*.json"))
             {
 
-                if (file.Length > 0 && file.Name != nomFichierZoneDefaut)
+                if (file.Length > 0 && (file.Name != nomFichierZoneDefaut || afficherZoneDefaut))
                 {
                     item = new ListViewItem(file.Name, 1);
-                    subItems = new ListViewItem.ListViewSubItem[]
-                  { new ListViewItem.ListViewSubItem(item, "Fichier zone"), 
-                   new ListViewItem.ListViewSubItem(item, 
-				file.LastAccessTime.ToShortDateString())};
-                    item.Tag = file;
-                    item.SubItems.AddRange(subItems);
-                    listView1.Items.Add(item);
-                }
+                    subItems = new ListViewItem.ListViewSubItem[] { 
+                        new ListViewItem.ListViewSubItem(item, "Fichier zone"), 
+                        new ListViewItem.ListViewSubItem(item, 
+				        file.LastAccessTime.ToShortDateString())};
+                        item.Tag = file;
+                        item.SubItems.AddRange(subItems);
+                        listView1.Items.Add(item);
+                    }
             }
 
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -188,7 +191,14 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirButt_Click(object sender, EventArgs e)
         {
-            cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+            if (listView1.SelectedItems.Count > 0)
+            {
+                DialogResult = DialogResult.OK;
+                cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+            }
+            else
+                DialogResult = DialogResult.Cancel;
+
             Close();
         }
 
@@ -207,6 +217,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void annulerButt_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
 

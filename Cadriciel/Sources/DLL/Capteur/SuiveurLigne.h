@@ -14,13 +14,19 @@
 #include <vector>
 #include <memory>
 #include <glm/glm.hpp>
-#include "VisiteurDetectionLigne.h"
+#include "rapidjson\writer.h"
+#include "rapidjson\document.h"
+
+namespace rapidjson {
+	class FileWriteStream;
+}
 
 class CapteurOptique;
 class ArbreRendu;
+class NoeudLigne;
 
 // Énumération permettant d'associer une position à un index dans le vecteur.
-enum PositionCapteur
+enum PositionCapteurOptique
 {
 	CAPTEUR_OPTIQUE_DROIT,
 	CAPTEUR_OPTIQUE_CENTRE,
@@ -54,21 +60,40 @@ class SuiveurLigne
 public:
 	//Constructeur par défaut
 	SuiveurLigne();
+
+	//Constructeur par paramètre
+	SuiveurLigne(bool estActif);
+
+	//Constructeur par paramètre
+	SuiveurLigne(const rapidjson::Value& capteurJSON);
+
 	//Destructeur
 	~SuiveurLigne();
+
+
 	// Retourne l'état des capteurs optiques sur les 3 premiers bits.
 	uint8_t obtenirEtatCapteurs() const;
     // Mettre à jour l'état des capteurs et leur position.
 	void mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot);
+
+    void verifierDetection(NoeudLigne* ligne);
+
+    void afficher() const;
+	void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
+
+	void assignerActif(bool estActif);
 		
 private:
+	bool estActif_;
+
 	static const glm::dvec3 POSITION_RELATIVE_GAUCHE;
 	static const glm::dvec3 POSITION_RELATIVE_CENTRE;
 	static const glm::dvec3 POSITION_RELATIVE_DROITE;
 
 	std::vector<CapteurOptique> capteursOptique_;
-	std::unique_ptr<VisiteurDetectionLigne> visiteurDetectionLigne_{ nullptr };
 	ArbreRendu* arbre_{ nullptr };
+
+    void initialiser();
 };
 
 #endif // SUIVEUR_LIGNE_H

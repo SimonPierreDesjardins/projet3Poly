@@ -9,6 +9,11 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "ComportementDeviation.h"
+#include "ControleRobot.h"
+#include "CommandeRobot.h"
+#include "NoeudRobot.h"
+#include "rapidjson\filewritestream.h"
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -16,7 +21,7 @@
 ///
 /// Constructeur
 ///
-/// @param[in] Aucun
+/// @param[in] controleRobot: Pointeur vers le controleur du robot auquel le comportement est assigné
 ///
 /// @return Aucune (constructeur).
 ///
@@ -25,6 +30,49 @@ ComportementDeviation::ComportementDeviation()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] prochainComportement : le comportement que le robot adopte une fois le comportement actuel terminé
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement) : ComportementAbstrait(prochainComportement){}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::ComportementDeviation(const rapidjson::Value& comportementJSON)
+///
+/// Constructeur par paramètre
+///
+/// @param[in] comportementJSON : le comportement en format JSON
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDeviation::ComportementDeviation(const rapidjson::Value& comportementJSON){
+	fromJson(comportementJSON);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement, double angleMax)
+///
+/// Constructeur par paramètres
+///
+/// @param[in] prochaincomportement : le comportement que le robot adopte une fois le comportement actuel terminé
+/// @param[in] angleMax : l'angle maximal de déviation
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+ComportementDeviation::ComportementDeviation(TypeComportement prochainComportement, double angleMax) : ComportementAbstrait(prochainComportement){
+	this->maxAngle_ = angleMax;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -49,23 +97,100 @@ ComportementDeviation::~ComportementDeviation()
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDeviation::initialiser(){
-
+	angleCible_ = controleRobot_->obtenirNoeud()->obtenirAngleRotation() + maxAngle_;
+	gauche = maxAngle_ >= 0;
+	ignorerLigne_ = true;
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ComportementDeviation::mettreAJour()
 ///
-/// Implementation qui ramene le comportement a son etat initial
+/// Vérifie si le comportement doit changer ou procéder à une prochaine action sur sa liste.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDeviation::mettreAJour(){
+	//TODO: Implémenter l'exception
+	//Implémentation de l'exception Rapport d'élicitation p.22
+	if (controleRobot_->ligneDetectee()){
+		if (!ignorerLigne_){
+			controleRobot_->assignerComportement(SUIVIDELIGNE);
+		}
+	}
+	else{
+		ignorerLigne_ = false;
+	}
 
+	bool angleAtteinte = false;
+
+	// Rotation du robot
+	if (gauche){
+		// Dévier à gauche et vérifier angle
+		controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
+		angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() > angleCible_;
+	}
+	else{
+		// Dévier à droite et vérifier angle
+		controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
+		angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() < angleCible_;
+	}
+
+	if (angleAtteinte){
+		// TODO: Assigner le comportement suivant
+		controleRobot_->assignerComportement(DEFAUT);
+	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer)
+///
+/// Cette fonction obtient les valeurs à sauvegarder pour le comportement en JSON
+///
+/// @param[in] writer : Le stream dans lequel le JSON est écrit
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ComportementDeviation::toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer){
+	ComportementAbstrait::toJSON(writer);
+	writer.Key("maxAngle");
+	writer.Double(maxAngle_);
+}
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON)
+///
+/// Cette fonction assigne les valeurs nécessaires au chargement d'un comportement à partir d'un fichier JSON.
+///
+/// @param[in] comportementJSON : Le comportement du fichier JSON contenant les informations à charger.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ComportementDeviation::fromJson(const rapidjson::Value& comportementJSON){
+	ComportementAbstrait::fromJson(comportementJSON);
+	rapidjson::Value::ConstMemberIterator itr = comportementJSON.MemberBegin() + 1;
+	maxAngle_ = itr->value.GetDouble();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ComportementDeviation::setAngleMaxRotation(double angle)
+///
+/// Ajuste l'angle pour la déviation
+///
+/// @param[in] angle: l'angle à partir duquel on change de comportement. negatif implique une deviation vers la droite.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ComportementDeviation::setAngleMaxRotation(double angle){
+	maxAngle_ = angle;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 //////////////////////////////////////////////////////////////////////////////

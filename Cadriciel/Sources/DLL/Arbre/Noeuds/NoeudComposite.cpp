@@ -454,7 +454,11 @@ void NoeudComposite::afficherConcret() const
 ////////////////////////////////////////////////////////////////////////
 void NoeudComposite::animer(float dt)
 {
-	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) {
+    glm::dvec3 positionCouranteEnfant = { 0.0, 0.0, 0.0 };
+	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) 
+    {
+        positionCouranteEnfant = enfant->obtenirPositionRelative() + positionCourante_;
+        enfant->assignerPositionCourante(positionCouranteEnfant);
 		enfant->animer(dt);
 	}
 }

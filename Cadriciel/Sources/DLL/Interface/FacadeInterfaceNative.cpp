@@ -18,6 +18,10 @@
 #include "CompteurAffichage.h"
 #include "EtatTypes.h"
 #include "BancTests.h"
+#include "ComportementTypes.h"
+#include "CommandeRobot.h"
+#include "ComportementAbstrait.h"
+#include "CommandeRobot.h"
 
 extern "C"
 {
@@ -456,13 +460,97 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirMode()->gererMessage(msg, wParam, lParam);
 	}
 
-	__declspec(dllexport) void __cdecl assignerOptionsProfil(bool options[11]){
-		
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementSuivreLigne(TypeComportement comportementSuivant)
+	///
+	/// Cette fonction permet d'assigner le comportement suivi de ligne du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne. 
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementSuivreLigne(int comportementSuivant){
+		std::unique_ptr<ComportementSuiviLigne> comportementPtr = std::make_unique<ComportementSuiviLigne>();
+		comportementPtr->assignerComportementSuivant((TypeComportement)comportementSuivant);
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(SUIVIDELIGNE, std::move(comportementPtr));
+	}
+	
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementBalayage(TypeComportement comportementSuivant)
+	///
+	/// Cette fonction permet d'assigner le comportement balayage du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne.
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementBalayage(int comportementSuivant){
+		std::unique_ptr<ComportementBalayage> comportementPtr = std::make_unique<ComportementBalayage>();
+		comportementPtr->assignerComportementSuivant((TypeComportement)comportementSuivant);
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(BALAYAGE180, std::move(comportementPtr));
+	}
+	
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation)
+	///
+	/// Cette fonction permet d'assigner le comportement deviation gauche ou droite du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne.
+	/// @param angle : l'angle de la déviation
+	///@param typeDeviation : représente si c'est une déviation à gauche ou à droite
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation){
+		if (static_cast<TypeComportement>(typeDeviation) == DEVIATIONVERSLADROITE){
+			angle *= -1;
+		}
+		std::unique_ptr<ComportementDeviation> comportementPtr = std::make_unique<ComportementDeviation>(static_cast<TypeComportement>(comportementSuivant), angle);
+		comportementPtr->assignerComportementSuivant(static_cast<TypeComportement>(comportementSuivant));
+		comportementPtr->setAngleMaxRotation(angle);
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeDeviation), std::move(comportementPtr));
+	}
+	
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement)
+	///
+	/// Cette fonction permet d'assigner le comportement deviation gauche ou droite du robot au profil de l'utilisateur.
+	///
+	/// @param comportementSuivant : le comportement a adopté après le comportement suivi de ligne.
+	/// @param angle : l'angle de la déviation.
+	/// @param duree : la durée de l'évitement.
+	/// @param typeEvitement : représente si c'est un évitement vers la gauche ou la droite
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement){
+		if (static_cast<TypeComportement>(typeEvitement) == EVITEMENTPARLADROITE){
+			angle *= -1;
+		}
+		std::unique_ptr<ComportementEvitement> comportementPtr = std::make_unique<ComportementEvitement>(static_cast<TypeComportement>(comportementSuivant), duree, angle);
+		comportementPtr->assignerComportementSuivant(static_cast<TypeComportement>(comportementSuivant));
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeEvitement), std::move(comportementPtr));
 	}
 
-	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande)
-	{
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande(touche, (TypeCommande)commande);
+	__declspec(dllexport) void __cdecl assignerCapteurDistance(bool estActif, int comportementDanger, double distanceDanger, int comportementSecuritaire, double distanceSecuritaire, int indexCapteur){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCapteurDistance(estActif, static_cast<TypeComportement>(comportementDanger), distanceDanger, static_cast<TypeComportement>(comportementSecuritaire), distanceSecuritaire, indexCapteur);
+	}
+
+	__declspec(dllexport) void __cdecl assignerSuiveurLigne(bool estActif){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerSuiveurLigne(estActif);
+	}
+
+	__declspec(dllexport) void __cdecl assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs){
+		bool optionsDebogages[] = { debogageActif, debogageComportements, debogageEclairage, debogageCapteurs };
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerOptionsDebogages(optionsDebogages);
+	}
+
+	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande((uint8_t)touche, static_cast<TypeCommande>(commande));
+	}
+
+	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomProfilDefaut().c_str());
 	}
 
 	__declspec(dllexport) void __cdecl chargerProfilParDefaut()
@@ -470,9 +558,34 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerProfilParDefaut();
 	}
 
+	__declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->sauvegarder(std::string(nomProfil));
+	}
+
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande)
 	{
 		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirToucheCommande(commande);
+	}
+
+	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setConfigureHandles(handle, static_cast<ConfigureControl>(ctrl));
+	}
+
+
+	__declspec(dllexport) void __cdecl changerProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
+	}
+
+	__declspec(dllexport) void __cdecl obtenirCheminProfils(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCheminProfils().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirExtensionProfils().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->supprimerProfil(std::string(nomProfil));
 	}
 }
 

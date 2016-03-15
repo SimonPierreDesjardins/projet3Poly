@@ -13,6 +13,7 @@
 
 #include "NoeudComposite.h"
 #include "GL/glew.h"
+#include "CercleEnglobant.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudJonction
@@ -30,9 +31,16 @@ public:
 	/// Destructeur.
 	~NoeudJonction();
 
+    virtual void animer(float dt);
+
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+private:
+    CercleEnglobant cercleEnglobant_;
+
+    void mettreAJourFormeEnglobante();
 };
 
 #endif

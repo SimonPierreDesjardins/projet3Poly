@@ -9,10 +9,27 @@
 ///////////////////////////////////////////////////////////////////////////
 #include "CommandeRobot.h"
 
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn CommandeRobot::CommandeRobot()
+///
+/// Constructeur par défaut.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////////////
+CommandeRobot::CommandeRobot()
+{
+}
+
+
 ///////////////////////////////////////////////////////////////////////////
 /// @fn Commande::CommandeRobot(Commande commande)
 /// @brief Constructeur par paramètre d'une CommandeRobot.
 ///		   Elle définie la puissance des moteurs selon le type de commande.
+///
+/// @return Aucune (constructeur).
 ///
 /// @author Philippe Marcotte
 /// @date 2016-02-20
@@ -22,23 +39,33 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 	switch (commande)
 	{
 	case AVANCER:
-		vitesseMoteurD_ = 100.0;
-		vitesseMoteurG_ = 100.0;
+		vitesseMoteurD_ = 30.0;
+		vitesseMoteurG_ = 30.0;
 		break;
 	
 	case RECULER:
-		vitesseMoteurD_ = -100.0;
-		vitesseMoteurG_ = -100.0;
+		vitesseMoteurD_ = -30.0;
+		vitesseMoteurG_ = -30.0;
 		break;
 	
 	case ROTATION_GAUCHE:
-		vitesseMoteurD_ = 100.0;
-		vitesseMoteurG_ = -100.0;
+		vitesseMoteurD_ = 30.0;
+		vitesseMoteurG_ = -30.0;
 		break;
 	
 	case ROTATION_DROITE:
-		vitesseMoteurD_ = -100.0;
-		vitesseMoteurG_ = 100.0;
+		vitesseMoteurD_ = -30.0;
+		vitesseMoteurG_ = 30.0;
+		break;
+
+	case DEVIATION_GAUCHE:
+		vitesseMoteurD_ = 30.0;
+		vitesseMoteurG_ = 10.0;
+		break;
+
+	case DEVIATION_DROITE:
+		vitesseMoteurD_ = 10.0;
+		vitesseMoteurG_ = 30.0;
 		break;
 	
 	case ARRETER:
@@ -48,6 +75,44 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 		break;
 	}
 }
+
+
+///////////////////////////////////////////////////////////////////////////
+/// @fn Commande::CommandeRobot(Commande type, const bool& ajout)
+/// @brief Constructeur par paramètre d'une CommandeRobot.
+///
+///		   Elle définie la puissance des moteurs selon le type de commande et 
+///        indique si la commande remplace ou s'ajoute à la vitesse  du robot. 
+///
+/// @param[in] type : Le type de commande.
+/// @param[in] ajout : Indique si la commande est un ajout.
+///
+/// @return Aucune (constructeur).
+///
+///////////////////////////////////////////////////////////////////////////
+CommandeRobot::CommandeRobot(TypeCommande type, const bool& ajout)
+    : CommandeRobot(type)
+{
+    ajout_ = ajout;
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+/// @fn void CommandeRobot::inverserVitesseMoteurs()
+/// @brief Méthode permettant d'inverser la vitesse des moteurs.
+///
+///        Cette méthode sert à inverser l'état d'une commande dans le but 
+///        de rétablir l'état antérieur du robot.
+///
+/// @return Aucune (constructeur).
+///
+///////////////////////////////////////////////////////////////////////////
+void CommandeRobot::inverserVitesseMoteurs()
+{
+    vitesseMoteurD_ = -vitesseMoteurD_;
+    vitesseMoteurG_ = -vitesseMoteurG_;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// @fn void CommandeRobot::executer(NoeudRobot* noeud)
@@ -60,7 +125,10 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 void CommandeRobot::executer(ControleRobot* ia){
 	if (typeCommande_ == INVERSER_MODE_CONTROLE)
 		ia->inverserModeControle();
-	ia->assignerVitessesMoteurs( vitesseMoteurG_, vitesseMoteurD_);
+    if (ajout_) 
+        ia->ajouterVitessesMoteurs(vitesseMoteurG_, vitesseMoteurD_);
+    else 
+	    ia->assignerVitessesMoteurs(vitesseMoteurG_, vitesseMoteurD_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
