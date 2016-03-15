@@ -388,3 +388,11 @@ void ProfilUtilisateur::assignerOptionsDebogages(bool optionsDebogages[]){
 		optionsDebogages_.at(i) = optionsDebogages[i];
 	}
 }
+
+bool ProfilUtilisateur::obtenirOptionDebogage(optionsDebogagesEnum option)
+{
+	if (optionsDebogages_.at(ETAT_DEBOGAGE))
+		return optionsDebogages_.at(option);
+	else
+		return false;
+}

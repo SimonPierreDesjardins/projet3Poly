@@ -20,7 +20,13 @@
 #include "NoeudRobot.h"
 #include <array>
 
-
+enum optionsDebogagesEnum
+{
+	ETAT_DEBOGAGE,
+	DEBOGAGE_COMPORTEMENTS,
+	DEBOGAGE_ECLAIRAGE,
+	DEBOGAGE_CAPTEURS
+};
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ProfilUtilisateur
@@ -79,6 +85,8 @@ class ProfilUtilisateur
 
 		std::vector<std::unique_ptr<ComportementAbstrait>>* obtenirVecteurComportements();
 
+		bool obtenirOptionDebogage(optionsDebogagesEnum option);
+
 	private:
 		void changerDernierProfil(std::string nomProfil);
 
@@ -121,14 +129,6 @@ class ProfilUtilisateur
 
         std::array<glm::dvec3, NoeudRobot::N_CAPTEURS_DISTANCE> positionsRelatives_;
         std::array<double, NoeudRobot::N_CAPTEURS_DISTANCE> anglesRelatifs_;
-
-		enum optionsDebogagesEnum
-		{
-			ETAT_DEBOGAGE,
-			DEBOGAGE_COMPORTEMENTS,
-			DEBOGAGE_ECLAIRAGE,
-			DEBOGAGE_CAPTEURS
-		};
 
 		std::array<bool, 4> optionsDebogages_;
 };

@@ -40,6 +40,8 @@ ControleRobot::ControleRobot()
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
+
+	debug = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirOptionDebogage(DEBOGAGE_COMPORTEMENTS);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -121,8 +123,8 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement)
 	comportement_ = vecteurComportements_ -> at(nouveauComportement).get();
 	
 	if (debug){
-		std::cout << "Passage au comportement: " << comportement_->obtenirNomComportement() << endl
-			<< "Comportement Suivant: " << vecteurComportements_->at(comportement_->obtenirComportementSuivant()).get()->obtenirNomComportement() << endl;
+		std::cout << utilitaire::time_in_HH_MM_SS_MMM << " - " << "allo" << " - " << comportement_->obtenirNomComportement() << endl;
+
 	}
 
 	// Assignation du controleur au comportement et initialisation
