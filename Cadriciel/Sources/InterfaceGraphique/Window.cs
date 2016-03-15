@@ -80,7 +80,8 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
-            configuration = new Configure();
+            configuration = new Configure(ajouterProfilAMenu);
+            populerProfils();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -178,6 +179,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void buttonQuitter_Click(object sender, EventArgs e)
         {
+                configuration.Dispose();
                 Application.Exit();
         }
 
@@ -234,6 +236,25 @@ namespace InterfaceGraphique
             modeEditionMenuSimTest.Visible = !afficherMenu;
             premierePersonneMenuSimTest.Visible = afficherMenu;
             viewPort_.Visible = afficherMenu;
+        }
+
+        private void populerProfils()
+        {
+            foreach (string nomProfil in configuration.FichiersProfil)
+            {
+                ajouterProfilAMenu(nomProfil);   
+            }
+        }
+
+        public void ajouterProfilAMenu(string nomProfil)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem(nomProfil);
+            item.Click += new EventHandler(profilItem_Click);
+            profilsMenuSimTest.DropDownItems.Add(item);
+        }
+
+        private void profilItem_Click(object sender, EventArgs e){
+            configuration.changerProfil((sender as ToolStripMenuItem).Text);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -709,6 +730,7 @@ namespace InterfaceGraphique
         private void bouttonSimulation__Click(object sender, EventArgs e)
         {
             ouvrirZone(true);
+
             if (PasserEnSimulation)
             {
                 afficherMenuPrincipal(false);

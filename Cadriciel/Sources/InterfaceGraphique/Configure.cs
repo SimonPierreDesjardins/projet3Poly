@@ -20,10 +20,33 @@ namespace InterfaceGraphique
         System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.InvariantCulture;
         private List<TypeComportement> comportementsList;
 
+        private List<string> fichiersProfil;
+
+        public List<string> FichiersProfil
+        {
+            get
+            {
+                return fichiersProfil;
+            }
+        }
+
         private string cheminProfils;
+
         private string extensionProfils;
+        public string ExtensionProfils
+        {
+            get
+            {
+                return extensionProfils;
+            }
+        }
+
         private string nomProfilDefaut;
         private int indexProfilDefaut;
+
+        public delegate void ajouterProfilAMenuDelegue(string nomProfil);
+
+        private ajouterProfilAMenuDelegue ajouterProfilAMenu;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -33,9 +56,11 @@ namespace InterfaceGraphique
         /// ses composantes
         ///
         ////////////////////////////////////////////////////////////////////////
-        public Configure()
+        public Configure(ajouterProfilAMenuDelegue fonction)
         {
             InitializeComponent();
+
+            ajouterProfilAMenu = fonction;
 
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
@@ -43,9 +68,7 @@ namespace InterfaceGraphique
 
             setUpAllControls(configureTabs);
 
-            StringBuilder str = new StringBuilder(100);
-
-            assignerProfilsCB(str);
+            assignerProfilsCB();
 
             indexProfilDefaut = comboBoxProfil.FindString(nomProfilDefaut);
 
@@ -63,7 +86,8 @@ namespace InterfaceGraphique
         /// Cette fonction permet d'assigner un profil à la fenetre configure
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void assignerProfilsCB(StringBuilder str){
+        private void assignerProfilsCB(){
+            StringBuilder str = new StringBuilder(100);
             
             FonctionsNatives.obtenirCheminProfils(str, str.Capacity);
             cheminProfils = str.ToString();
@@ -80,31 +104,30 @@ namespace InterfaceGraphique
             nomProfilDefaut = str.ToString();
 
             comboBoxProfil.Items.Clear();
-
-            string[] fichiersProfile = System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils);
-            if (fichiersProfile.Length == 0)
+            fichiersProfil = new List<string>(System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils));
+            if (fichiersProfil.Count == 0)
             {
                 FonctionsNatives.chargerProfilParDefaut();
-                fichiersProfile = System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils);
+                fichiersProfil.AddRange(System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils));
                 string nomFichier;
-                for (int i = 0; i < fichiersProfile.Length; i++)
+                for (int i = 0; i < fichiersProfil.Count; i++)
                 {
-                    nomFichier = System.IO.Path.GetFileName(fichiersProfile[i]);
-                    fichiersProfile[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
+                    nomFichier = System.IO.Path.GetFileName(fichiersProfil[i]);
+                    fichiersProfil[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
                 }
-                comboBoxProfil.Items.AddRange(fichiersProfile);
+                comboBoxProfil.Items.AddRange(fichiersProfil.ToArray());
                 comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfilDefaut);
             }
             else
             {
                 string nomFichier;
-                for (int i = 0; i < fichiersProfile.Length; i++)
+                for (int i = 0; i < fichiersProfil.Count; i++)
                 {
-                    nomFichier = System.IO.Path.GetFileName(fichiersProfile[i]);
-                    fichiersProfile[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
+                    nomFichier = System.IO.Path.GetFileName(fichiersProfil[i]);
+                    fichiersProfil[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
                 }
 
-                comboBoxProfil.Items.AddRange(fichiersProfile);
+                comboBoxProfil.Items.AddRange(fichiersProfil.ToArray());
                 FonctionsNatives.chargerProfilParDefaut();
                 textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
                 textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
@@ -660,12 +683,16 @@ namespace InterfaceGraphique
             string nomProfil = (string)(sender as ComboBox).SelectedItem;
             if (!comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomProfil)))
                 return;
-            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
+            changerProfil(nomProfil);
             textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
             textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
             textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
             textBoxHoraire.Text = afficherCaractere(textBoxHoraire.Text[0]);
             textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
+        }
+
+        public void changerProfil(string nomProfil){
+            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -706,6 +733,7 @@ namespace InterfaceGraphique
                     nomSiDoublon = nouvelItem + nombre++;
 
                 comboBoxProfil.Items.Add(nomSiDoublon);
+                ajouterProfilAMenu(nomSiDoublon);
                 comboBoxProfil.SelectedIndex = comboBoxProfil.Items.Count - 1;
                 comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
                 etatCreationProfil = actionProfil.ATTENTE_ACTION;
@@ -856,9 +884,6 @@ namespace InterfaceGraphique
         public static extern void setHandle(IntPtr handle, int ctrl);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void changerProfil(string nomProfil);
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -866,6 +891,9 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void supprimerProfil(string nomProfil);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void changerProfil(string nomProfil);
 
     }
 }
