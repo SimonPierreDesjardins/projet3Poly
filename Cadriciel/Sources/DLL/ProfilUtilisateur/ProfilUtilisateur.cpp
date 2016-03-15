@@ -18,7 +18,7 @@
 #include <sstream>
 #include "NoeudRobot.h"
 #include <cmath>
-
+#include "ModeSimulation.h"
 
 ProfilUtilisateur::ProfilUtilisateur(){
 	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL))
@@ -345,8 +345,23 @@ CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) con
 }
 
 bool ProfilUtilisateur::toucheEstUtilise(char touche){
+	bool toucheModifiable = true;
+	bool toucheNonModifiable = false;
+	bool trouve = false;
+
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
-	return it != commandes_.end();
+	toucheModifiable = it != commandes_.end();
+
+	const std::array<char, 10>* toucheNonChangeable = ModeSimulation::getTouchesNonConfigurable();
+	for (int i = 0; i < 10 && !trouve; i++)
+	{
+		if (toucheNonChangeable->at(i) == touche)
+		{ 
+			toucheNonModifiable = true;
+			trouve = true;
+		}
+	}
+	return (toucheModifiable || toucheNonModifiable);
 }
 
 char ProfilUtilisateur::obtenirToucheCommande(int commande){
