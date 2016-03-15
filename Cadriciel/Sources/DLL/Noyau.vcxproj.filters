@@ -308,6 +308,7 @@
     <ClCompile Include="Physique\RectangleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Physique\CercleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
@@ -316,6 +317,10 @@
     </ClCompile>
     <ClCompile Include="Physique\FormeEnglobanteAbstraite.cpp">
       <Filter>Source Files\Physique</Filter>
+=======
+    <ClCompile Include="Arbre\Noeuds\NoeudRoues.cpp">
+      <Filter>Source Files\Arbre\Noeuds</Filter>
+>>>>>>> develop
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -538,6 +543,7 @@
     <ClInclude Include="Physique\RectangleEnglobant.h">
       <Filter>Header Files\Physique</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Physique\CercleEnglobant.h">
       <Filter>Header Files\Physique</Filter>
     </ClInclude>
@@ -546,6 +552,10 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurDetectionRobot.h">
       <Filter>Header Files\Visiteur</Filter>
+=======
+    <ClInclude Include="Arbre\Noeuds\NoeudRoues.h">
+      <Filter>Header Files\Arbre\Noeuds</Filter>
+>>>>>>> develop
     </ClInclude>
   </ItemGroup>
 </Project>
