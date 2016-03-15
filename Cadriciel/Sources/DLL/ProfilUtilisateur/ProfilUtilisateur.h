@@ -6,6 +6,9 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ////////////////////////////////////////////////
+#ifndef __PROFILUTILISATEUR_H__
+#define __PROFILUTILISATEUR_H__
+
 #include <memory>
 #include <string>
 #include <vector>
@@ -19,6 +22,7 @@
 #include "SuiveurLigne.h"
 #include "NoeudRobot.h"
 #include <array>
+
 
 enum optionsDebogagesEnum
 {
@@ -132,7 +136,7 @@ class ProfilUtilisateur
 
 		std::array<bool, 4> optionsDebogages_;
 };
-
+#endif // __PROFILUTILISATEUR_H__
 
 inline SuiveurLigne* ProfilUtilisateur::obtenirSuiveurLigne()
 {
