@@ -36,7 +36,8 @@ const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE{ -45.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE{ 0.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE{ 45.0 };
 
-const glm::dvec3 NoeudRobot::POSITION_RELATIVE_CERCLE_ENGLOBANT = { 1.35, 0.1, 0.0 };
+const glm::dvec3 NoeudRobot::POSITION_RELATIVE_CERCLE_ENGLOBANT = { 0.0, 0.0, 0.0 };/*{ 1.35, 0.1, 0.0 };*/
+const double FACTEUR_ATTENUATION = 0.6;
 
 #define PI 3.14159265
 
@@ -275,14 +276,14 @@ bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 	glm::dvec3 coins[4];
 	rectangleEnglobant_.calculerPositionCoins(coins);
 	bool collision = false;
-	for (unsigned i = 0; i < 4; i++)
+	for (unsigned i = 0; i < 4 && !collision; i++)
 	{
-		if (rectangle.calculerPointEstDansForme(coins[i]))
+		if (!rectangle.calculerPointEstDansForme(coins[i]))
 		{
 			collision = true;
 		}
 	}
-	std::cout << "Collision : " << collision << std::endl;
+	//std::cout << "Collision : " << collision << std::endl;
     if (collision)
     {
 		std::cout << "Collision avec une table" << std::endl;
@@ -327,9 +328,10 @@ void NoeudRobot::mettreAJourCapteurs()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourPosition(const float& dt)
 {
-	std::cout << estEnCollision_ << std::endl;
+	//std::cout << estEnCollision_ << std::endl;
 	float vitesseDroiteTemp = vitesseDroite_, vitesseGaucheTemp = vitesseGauche_;
-	std::cout << "d c : " << vitesseCouranteDroite_ << "d : " << vitesseDroite_ << std::endl;
+	//std::cout << "d c : " << vitesseCouranteDroite_ << "d : " << vitesseDroite_ << std::endl;
+	//std::cout << "g c : " << vitesseCouranteDroite_ << "g : " << vitesseGauche_ << std::endl;
 	if (!estEnCollision_)
 	{
 		//Calcul de la différence entre les vitesses de gauche et droite
@@ -463,13 +465,22 @@ void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 	double vitessseAngulaire = vitesseCouranteGauche_ - vitesseCouranteDroite_;
 
 	glm::dvec3 vecVitesseDroite = robotReflechi * vitesseAngulaireRobotReflechi;
-	vitesseCouranteDroite_ = -30 * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2));
-	vitesseCouranteGauche_ = -30 + vitesseDroite_;
+	
+	/*if (vecVitesseDroite.x < 0)
+	{*/
+	vitesseCouranteDroite_ = FACTEUR_ATTENUATION*(-vitesseRelative * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2)));
+	vitesseCouranteGauche_ = FACTEUR_ATTENUATION*(-vitesseRelative + vitesseCouranteDroite_);
+	/*}
+	else
+	{
+		vitesseCouranteDroite_ = FACTEUR_ATTENUATION*(-30 * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2)));
+		vitesseCouranteGauche_ = FACTEUR_ATTENUATION*(-30 + vitesseCouranteDroite_);
+	}*/
 
 	vitesseDroiteCollision_ = 0;
 	vitesseGaucheCollision_ = 0;
 
-	std::cout << "Collision avec un mur." << std::endl;
+	//std::cout << "Collision avec un mur." << std::endl;
 }
 
 
