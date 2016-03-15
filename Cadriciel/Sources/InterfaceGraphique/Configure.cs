@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
 using System.Runtime.InteropServices;
 using TypeCommandeEnum;
 using TypeComportementEnum;
@@ -16,8 +17,7 @@ namespace InterfaceGraphique
     public partial class Configure : Form
     {
 
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        static extern bool HideCaret(IntPtr hWnd);
+        System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.InvariantCulture;
         private List<TypeComportement> comportementsList;
 
         private string cheminProfils;
@@ -327,7 +327,7 @@ namespace InterfaceGraphique
         {
             double nombre;
             bool reussi;
-            reussi = Double.TryParse(aTester.Replace('.', ','), out nombre);
+            reussi = Double.TryParse(aTester.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre);
             if (reussi)
                 if (nombre < 0.00 || nombre > 360.00 || BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
                     reussi = false;
@@ -351,7 +351,7 @@ namespace InterfaceGraphique
         {
             double nombre;
             bool reussi;
-            reussi = Double.TryParse(aTester.Replace('.', ','), out nombre);
+            reussi = Double.TryParse(aTester.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre);
             if (reussi)
                 if (BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
                     reussi = false;
@@ -383,7 +383,10 @@ namespace InterfaceGraphique
                 box.Text = "0";
             else if(!decimalCheck(box))
                 if (estDegree ? !degreeValidation(box.Text) : !tempsValidation(box.Text))
+                {
                     box.Text = oldText;
+                    box.SelectionStart = oldCaretIndex;
+                }
 
             empecherTextChangedEvent = false;
         }
@@ -413,6 +416,8 @@ namespace InterfaceGraphique
 
         //String représentant l'ancienne valeur du textbox
         private string oldText;
+        //Integer représentant l'ancienne position du caret
+        private int oldCaretIndex;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -427,6 +432,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
         {
+            
             angleEtDureeValidation(sender as TextBox, true);
         }
 
@@ -442,6 +448,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
+            
             oldText = (sender as TextBox).Text;
         }
 
@@ -473,7 +480,9 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
-            oldText = (sender as TextBox).Text;
+            TextBox box = (sender as TextBox);
+            oldCaretIndex = box.SelectionStart;
+            oldText = box.Text;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -743,7 +752,7 @@ namespace InterfaceGraphique
                 
                 FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
                 
-                System.Globalization.CultureInfo culture = new System.Globalization.CultureInfo("en");
+                
                 
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Double.Parse(angleDGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLAGAUCHE);
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Double.Parse(angleDDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLADROITE);
@@ -810,6 +819,9 @@ namespace InterfaceGraphique
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementBalayage(TypeComportement comportementSuivant);
 
+        //[DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        //public static extern void [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VT_I4)]
+
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation);
 
@@ -845,18 +857,6 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void changerProfil(string nomProfil);
-
-        [DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int wMsg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerAffichageComportement(bool afficherDebugComportement);
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerAffichageEclairage(bool afficherDebugEclairage);
-
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerAffichageCapteurs(bool afficherDebugCapteurs);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
