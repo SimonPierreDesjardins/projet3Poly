@@ -28,7 +28,8 @@ void RectangleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEng
     largeur_ = glm::abs(boiteEnglobante.coinMax.x - boiteEnglobante.coinMin.x);
 }
 
-bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
+
+bool RectangleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
 {
     // Obtenir les vecteurs unitaires qui représentent l'orientation du rectangle.
     glm::dvec3 orientationHauteur, orientationLargeur;
@@ -46,6 +47,17 @@ bool RectangleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) cons
                                       projectionLargeur, -largeur_ / 2.0, largeur_ / 2.0);
 }
 
+// Permet de calculer si un rectangle est dans la forme englobante. 
+bool RectangleEnglobant::calculerEstDansForme(const RectangleEnglobant& rectangle) const
+{
+    return false;
+}
+
+// Permet de calculer si un cerlce est dans la forme englobante.
+bool RectangleEnglobant::calculerEstDansForme(const CercleEnglobant& cercle) const
+{
+    return false;
+}
 
 bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {     
@@ -191,6 +203,7 @@ void RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
     angle_ = angle;
     hauteur_ = hauteur;
     largeur_ = largeur;
+
 }
 
 
@@ -245,9 +258,9 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4])
 
 bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
 {
-
     return true;
 }
+
 bool RectangleEnglobant::calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const
 {
     return true;

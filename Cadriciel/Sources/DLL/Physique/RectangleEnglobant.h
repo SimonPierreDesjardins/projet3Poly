@@ -50,22 +50,23 @@ public:
     inline double obtenirHauteur() const;
     inline double obtenirLargeur() const;
 
+    void mettreAJour(const glm::dvec3& positionCentre_, const double& angle, const double& hauteur, const double& largeur);
+
     // Permet de calculer si un point se trouve dans une forme englobante.
-    virtual bool calculerPointEstDansForme(const glm::dvec3& point) const;
+    virtual bool calculerEstDansForme(const glm::dvec3& point) const;
+    // Permet de calculer si un rectangle est dans la forme englobante. 
+    virtual bool calculerEstDansForme(const RectangleEnglobant& rectangle) const;
+    // Permet de calculer si un cerlce est dans la forme englobante.
+    virtual bool calculerEstDansForme(const CercleEnglobant& cercle) const;
+
     // Permet de calculer si le rectangle est en intersection avec un cercle.
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
     // Permet de calculer si le rectangle est en intersection avec un autre rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
     
-
-
-    // Permet de mettre à jour les attributs de la forme.
-    void mettreAJour(const glm::dvec3& positionCentre, const double& angle,  
-        const double& hauteur, const double& largeur);
-
     // Calcule des vecteurs d'orientation unitaire.
     void calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const;
-
+    
 	virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
 	virtual bool calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const;
 

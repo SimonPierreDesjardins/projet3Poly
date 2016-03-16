@@ -163,36 +163,46 @@ void PhysiqueTest::testIntersectionCercleCercle()
 
 void PhysiqueTest::testPointDansRectangle()
 {
-    glm::dvec3 positionRectangle = { 20.0, 20.0, 0.0 };
-    RectangleEnglobant rectangle(positionRectangle, 0.0, 2.0, 10.0);
+    glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
+    RectangleEnglobant rectangle(positionRectangle, 0.0, 48.0, 96.0);
+
     glm::dvec3 point{ 0.0, 0.0, 0.0 };
-    double angle = 0.0;
-    bool pointDansForme = false;
-    for (int i = 0; i < 361; i++)
-    {
-        rectangle.assignerAngle((double)(i));
-        point = { 19.5, 19.5, 0.0 };
-        pointDansForme = rectangle.calculerPointEstDansForme(point);
-        CPPUNIT_ASSERT(pointDansForme);
+    bool pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
 
-        point = { 20.5, 19.5, 0.0 };
-        pointDansForme = rectangle.calculerPointEstDansForme(point);
-        CPPUNIT_ASSERT(pointDansForme);
+    point = { 47.5, 23.5, 0.0  };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
 
-        point = { 19.5, 20.5, 0.0 };
-        pointDansForme = rectangle.calculerPointEstDansForme(point);
-        CPPUNIT_ASSERT(pointDansForme);
+    point = { 47.5, -23.5, 0.0  };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
 
-        point = { 20.5, 20.5, 0.0 };
-        pointDansForme = rectangle.calculerPointEstDansForme(point);
-        CPPUNIT_ASSERT(pointDansForme);
-        
-        point = { 0.0, 0.0, 0.0 };
-        pointDansForme = rectangle.calculerPointEstDansForme(point);
-        CPPUNIT_ASSERT(!pointDansForme);
-    }
+    point = { -47.5, -23.5, 0.0  };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
 
+    point = { -47.5, 23.5, 0.0  };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
+    
+    point = { 0.0, 23.5, 0.0 };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
+
+    point = { 47.5, 0.0, 0.0 };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
+    
+    point = { 0.0, -23.5, 0.0 };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
+
+    point = { -47.5, 0.0, 0.0 };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
 }
+
 
 void PhysiqueTest::testPointDansCercle()
 {

@@ -32,11 +32,22 @@ void CercleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglob
 }
 
 
-bool CercleEnglobant::calculerPointEstDansForme(const glm::dvec3& point) const
+bool CercleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
 {
-    return true;
+    return false;
 }
 
+// Permet de calculer si un rectangle est dans la forme englobante. 
+bool CercleEnglobant::calculerEstDansForme(const RectangleEnglobant& rectangle) const
+{
+    return false;
+}
+
+// Permet de calculer si un cerlce est dans la forme englobante.
+bool CercleEnglobant::calculerEstDansForme(const CercleEnglobant& point) const
+{
+    return false;
+}
 
 bool CercleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
@@ -50,11 +61,9 @@ bool CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) 
 }
 
 
-void CercleEnglobant::mettreAJour(const glm::dvec3& positionCentre, 
-    const double& rayon)
+void mettreAJour(const utilitaire::BoiteEnglobante& boiteEnglobante, const glm::dvec3& positionCentre, const double& orientation)
 {
-    rayon_ = rayon;
-    positionCentre_ = positionCentre;
+
 }
 
 
