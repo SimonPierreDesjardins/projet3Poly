@@ -63,12 +63,6 @@ void NoeudLigne::afficherConcret() const
 {
 	glPushMatrix();
 
-	if (estSelectionne()) {
-		glColor4d(1.0, 0.2, 0.0, 1.0);
-	}
-	else {
-		glColor4d(0.0, 0.0, 0.0, 1.0);
-	}
 
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();

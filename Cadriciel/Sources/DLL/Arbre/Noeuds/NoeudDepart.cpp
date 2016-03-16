@@ -51,6 +51,18 @@ NoeudDepart::~NoeudDepart()
 }
 
 
+RectangleEnglobant* NoeudDepart::obtenirFormeEnglobante()
+{
+    return &rectangleEnglobant_;
+}
+
+
+const RectangleEnglobant* NoeudDepart::obtenirFormeEnglobante() const
+{
+    return &rectangleEnglobant_;
+}
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudDepart::afficherConcret() const
@@ -79,6 +91,8 @@ void NoeudDepart::afficherConcret() const
 
 	// Restauration de la matrice.
 	glPopMatrix();
+
+    rectangleEnglobant_.afficher(positionCourante_);
 }
 
 void NoeudDepart::animer(float dt)
@@ -88,6 +102,14 @@ void NoeudDepart::animer(float dt)
 
 void NoeudDepart::mettreAJourFormeEnglobante()
 {
+    double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+    double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+
+    double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
+    double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
+
+    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
+    rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
 }
 
 ////////////////////////////////////////////////////////////////////////

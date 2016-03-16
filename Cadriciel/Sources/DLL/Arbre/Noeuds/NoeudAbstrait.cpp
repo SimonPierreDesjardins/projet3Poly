@@ -48,6 +48,18 @@ NoeudAbstrait::~NoeudAbstrait()
 {
 }
 
+// TODO: Doc.
+FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante()
+{
+    return nullptr;
+}
+
+// TODO: doc.
+const FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
+{
+    return nullptr;
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -545,11 +557,6 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 	// Le coin du quad en bas à droite.
 	quadEnglobantModele_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
 	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
-
-    if (formeEnglobante_ != nullptr)
-    {
-        formeEnglobante_->initialiser(boiteEnglobanteModele_);
-    }
 }
 
 ////////////////////////////////////////////////

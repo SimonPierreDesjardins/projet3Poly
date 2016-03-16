@@ -22,6 +22,8 @@
 
 #include <iostream>
 
+std::array<char, 10> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B' } };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeSimulation::ModeSimulation()
@@ -34,6 +36,9 @@ ModeSimulation::ModeSimulation()
 	typeMode_ = SIMULATION;
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	// On fait démarrer le robot en mode automatique
+	controleRobot_->passerAModeAutomatique();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -83,6 +88,10 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 }
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

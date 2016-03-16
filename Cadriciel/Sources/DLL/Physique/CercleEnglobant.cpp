@@ -31,39 +31,47 @@ void CercleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglob
     rayon_ /= 2;
 }
 
+bool CercleEnglobant::calculerEstDansLimites(const double& xMin, const double& xMax,
+                                             const double& yMin, const double& yMax) const
+{
+    const int N_COINS = 4;
+    glm::dvec3 coins[N_COINS];
+    coins[0] = { positionCentre_.x + rayon_, positionCentre_.y + rayon_, 0.0};
+    coins[1] = { positionCentre_.x - rayon_, positionCentre_.y + rayon_, 0.0};
+    coins[2] = { positionCentre_.x - rayon_, positionCentre_.y - rayon_, 0.0};
+    coins[3] = { positionCentre_.x + rayon_, positionCentre_.y - rayon_, 0.0};
+
+    bool coinsDansLimite = true;
+    for (int i = 0; i < N_COINS && coinsDansLimite; i++)
+    {
+        coinsDansLimite = utilitaire::DANS_LIMITESXY(coins[i].x, xMin, xMax,
+                                                     coins[i].y, yMin, yMax);
+    }
+    return coinsDansLimite;
+}
+
+void CercleEnglobant::mettreAJour(const glm::dvec3& positionCentre, const double& rayon)
+{
+    positionCentre_ = positionCentre;
+    rayon_ = rayon;
+}
+
 
 bool CercleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
 {
-    return false;
-}
-
-// Permet de calculer si un rectangle est dans la forme englobante. 
-bool CercleEnglobant::calculerEstDansForme(const RectangleEnglobant& rectangle) const
-{
-    return false;
-}
-
-// Permet de calculer si un cerlce est dans la forme englobante.
-bool CercleEnglobant::calculerEstDansForme(const CercleEnglobant& point) const
-{
-    return false;
+	double distance = glm::distance(point, positionCentre_);
+	return distance <= rayon_;
 }
 
 bool CercleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
-    return true;
+    return false;
 }
 
 
 bool CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {
-    return true;
-}
-
-
-void mettreAJour(const utilitaire::BoiteEnglobante& boiteEnglobante, const glm::dvec3& positionCentre, const double& orientation)
-{
-
+    return false;
 }
 
 

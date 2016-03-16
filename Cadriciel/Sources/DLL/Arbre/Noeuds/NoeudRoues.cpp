@@ -1,16 +1,16 @@
-///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudTable.cpp
-/// @author Philippe Marcotte et Camille Gendreau
-/// @date 2011-05-19
+///////////////////////////////////////////////////////////////////////////
+/// @file NoeudRoues.h
+/// @author Frédéric Grégoire
+/// @date 2016-03-13
 /// @version 1.0
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
-///////////////////////////////////////////////////////////////////////////////
-#include "NoeudTable.h"
-#include "VisiteurAbstrait.h"
-
+///////////////////////////////////////////////////////////////////////////
+#include "NoeudRoues.h"
 #include "Utilitaire.h"
+#include "VisiteurAbstrait.h"
+#include "FacadeModele.h"
 
 #include "GL/glew.h"
 #include <cmath>
@@ -18,9 +18,11 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
+#include <iostream>
+
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudTable::NoeudTable(const std::string& typeNoeud)
+/// @fn NoeudRoues::NoeudRoues(const std::string& typeNoeud)
 ///
 /// Ce constructeur ne fait qu'appeler la version de la classe et base
 /// et donner des valeurs par défaut aux variables membres.
@@ -30,67 +32,71 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudTable::NoeudTable(const std::string& typeNoeud)
-	: NoeudComposite{ typeNoeud }
+NoeudRoues::NoeudRoues(const std::string& typeNoeud)
+: NoeudComposite{ typeNoeud }
 {
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	NoeudAbstrait* depart = table->chercher(0);
+	positionRelative_ = depart->obtenirPositionRelative();
+	angleRotation_ = depart->obtenirAngleRotation();
+
+	parent_ = table->chercher(ArbreRenduINF2990::NOM_ROBOT);
 }
 
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudTable::~NoeudTable()
+/// @fn NoeudRoues::~NoeudRoues()
 ///
-/// Ce destructeur désallouee la liste d'affichage du cube.
+/// Ce destructeur ne fait rien.
 ///
 /// @return Aucune (destructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudTable::~NoeudTable()
+NoeudRoues::~NoeudRoues()
 {
 }
 
-
-RectangleEnglobant* NoeudTable::obtenirFormeEnglobante()
+void NoeudRoues::setVitesseCourante(float vitesse)
 {
-    return &rectangleEnglobant_;
-}
-
-const RectangleEnglobant* NoeudTable::obtenirFormeEnglobante() const
-{
-    return &rectangleEnglobant_;
+	vitesseCourante_ += vitesse;//(float)(int(0.016 * 360) % 360);
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudTable::afficherConcret() const
+/// @fn void NoeudRoues::afficherConcret() const
 ///
 /// Cette fonction effectue le véritable rendu de l'objet.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudTable::afficherConcret() const
+void NoeudRoues::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
+	
+	//Placer la roue à la bonne emplacement
+	//glTranslatef(0.0, 0.0, 0.8);
+	//glTranslatef(0.0, 0.2, 0.0);
+
+	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+
+	glRotatef(vitesseCourante_, 0.0, 1.0, 0.0);
+
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	// Affichage du modèle.
-	//glRotatef(90, 1, 0, 0);
-	//glRotatef(90, 0, 1, 0);
-	glColor4f(1, 1, 1, 1);
-    glTranslated(0.0, 0.0, -2.0);
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
-
-    rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudTable::accepterVisiteur(VisiteurAbstrait* visiteur)
+/// @fn void NoeudRoues::accepterVisiteur(VisiteurAbstrait* visiteur)
 ///
 /// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
 /// sa tâche à la méthode qui se charge de ce type de noeud.
@@ -100,12 +106,7 @@ void NoeudTable::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudTable::accepterVisiteur(VisiteurAbstrait* visiteur)
+void NoeudRoues::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
-
-
-///////////////////////////////////////////////////////////////////////////////
-/// @}
-///////////////////////////////////////////////////////////////////////////////

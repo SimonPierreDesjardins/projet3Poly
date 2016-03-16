@@ -87,13 +87,9 @@ public:
 	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
 	/// Obtenir la boite englobante du modèle.
 	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
-    /// Obtenir la forme englobante du noeud.
-    inline FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
-    /// Obtenir le rectangle englobant du noeud.
-    inline RectangleEnglobant obtenirRectangleEnglobant() const;
-    /// Mettre à jour le rectangle englobant du noeud.
-    inline void mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
-        const double& hauteur, const double& largeur);
+
+    virtual FormeEnglobanteAbstraite* obtenirFormeEnglobante();
+    virtual const FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -213,12 +209,6 @@ protected:
 
     // TODO: à enlever
 	utilitaire::QuadEnglobant quadEnglobantModele_;
-
-    // TODO: à enlever
-    RectangleEnglobant rectangleEnglobantObs_;
-
-    // Une référence sur la forme englobante du noeud. 
-    FormeEnglobanteAbstraite* formeEnglobante_{ nullptr };
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -463,29 +453,9 @@ inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEn
 ////////////////////////////////////////////////////////////////////////
 inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
 {
-	return quadEnglobantModele_;
+    return quadEnglobantModele_;
 }
 
-//TODO à enlever.
-inline RectangleEnglobant NoeudAbstrait::obtenirRectangleEnglobant() const
-{
-    return rectangleEnglobantObs_;
-}
-
-//TODO à enlever.
-inline FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
-{
-    return formeEnglobante_;
-}
-
-inline void NoeudAbstrait::mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
-    const double& hauteur, const double& largeur)
-{
-    rectangleEnglobantObs_.assignerPositionCentre(centre);
-    rectangleEnglobantObs_.assignerAngle(angle);
-    rectangleEnglobantObs_.assignerHauteur(hauteur);
-    rectangleEnglobantObs_.assignerLargeur(largeur);
-}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline const std::string& NoeudAbstrait::obtenirType() const

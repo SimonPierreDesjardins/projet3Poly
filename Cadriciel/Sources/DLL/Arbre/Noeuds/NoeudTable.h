@@ -33,6 +33,10 @@ public:
 	NoeudTable(const std::string& typeNoeud);
 	/// Destructeur.
 	~NoeudTable();
+
+    virtual RectangleEnglobant* obtenirFormeEnglobante();
+    virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
+
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	/// Accepter un visiteur.
@@ -40,6 +44,7 @@ public:
 private:
     RectangleEnglobant rectangleEnglobant_;
 };
+
 
 #endif
 

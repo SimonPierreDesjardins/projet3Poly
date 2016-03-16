@@ -603,6 +603,17 @@ namespace InterfaceGraphique
         private void longueurZoneDangerCapteurDistanceTB_TextChanged(object sender, EventArgs e)
         {
             angleEtDureeValidation(sender as TextBox, false);
+            // TODO: VERIFIER PERTINENCE DU CODE CI-DESSOUS
+            /*FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
+            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.',',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
+            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
+            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
+            */
+            // TODO: VALIDE?
+            this.DialogResult = DialogResult.OK;
+            Close();
         }
 
         private void longueurZoneDangerCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)

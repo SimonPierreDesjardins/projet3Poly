@@ -34,7 +34,6 @@
 NoeudJonction::NoeudJonction(const std::string& typeNoeud)
 	: NoeudAbstrait{ typeNoeud }
 {
-    formeEnglobante_ = &cercleEnglobant_;
 }
 
 
@@ -51,6 +50,18 @@ NoeudJonction::~NoeudJonction()
 {
 }
 
+CercleEnglobant* NoeudJonction::obtenirFormeEnglobante()
+{
+    return &cercleEnglobant_;
+}
+
+
+const CercleEnglobant* NoeudJonction::obtenirFormeEnglobante() const
+{
+    return &cercleEnglobant_;
+}
+
+
 void NoeudJonction::animer(float dt)
 {
     mettreAJourFormeEnglobante();
@@ -58,7 +69,11 @@ void NoeudJonction::animer(float dt)
 
 void NoeudJonction::mettreAJourFormeEnglobante()
 {
-    cercleEnglobant_.assignerPositionCentre(positionCourante_);
+    double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+    double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+    double rayon = hauteur > largeur ? largeur : hauteur;
+    rayon /= 2;
+    cercleEnglobant_.mettreAJour(positionCourante_, rayon);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -75,10 +90,12 @@ void NoeudJonction::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	if (estSelectionne()) {
+	if (selectionne_) 
+    {
 		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
-	else {
+	else 
+    {
 		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
@@ -88,7 +105,7 @@ void NoeudJonction::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    cercleEnglobant_.afficher(positionCourante_);
+    //cercleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

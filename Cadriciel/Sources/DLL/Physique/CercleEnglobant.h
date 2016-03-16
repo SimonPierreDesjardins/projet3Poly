@@ -38,11 +38,12 @@ public:
     inline void assignerRayon(const double& rayon);
     inline double obtenirRayon() const;
 
+    void mettreAJour(const glm::dvec3& positionCentre, const double& rayon);
+
+    virtual bool calculerEstDansLimites(const double& xMin, const double& xMax,
+                                        const double& yMin, const double& yMax) const;
+
     virtual bool calculerEstDansForme(const glm::dvec3& point) const;
-    // Permet de calculer si un rectangle est dans la forme englobante. 
-    virtual bool calculerEstDansForme(const RectangleEnglobant& rectangle) const;
-    // Permet de calculer si un cercle est dans la forme englobante.
-    virtual bool calculerEstDansForme(const CercleEnglobant& cercle) const;
 
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
