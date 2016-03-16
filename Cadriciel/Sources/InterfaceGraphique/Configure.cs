@@ -42,6 +42,13 @@ namespace InterfaceGraphique
         }
 
         private string nomProfilDefaut;
+        public string NomProfilInitiale
+        {
+            get
+            {
+                return nomProfilDefaut;
+            }
+        }
         private int indexProfilDefaut;
 
         public delegate void ajouterProfilAMenuDelegue(string nomProfil);
