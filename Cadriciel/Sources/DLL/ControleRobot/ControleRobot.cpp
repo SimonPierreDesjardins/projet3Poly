@@ -206,7 +206,7 @@ void ControleRobot::initialiserBoucleRobot(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::terminerBoucleRobot(){
-
+	
 	// On garde temporairemtn la valeur de manuel
 	bool man = manuel;
 
@@ -220,6 +220,8 @@ void ControleRobot::terminerBoucleRobot(){
 
 	// Nous redonnons à manuel sa valeur de départ
 	manuel = man;
+	
+	traiterCommande(&CommandeRobot(ARRETER), false);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -234,26 +236,31 @@ void ControleRobot::terminerBoucleRobot(){
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
 	
-	while (!manuel) {
+	while (!manuel) 
+	{
 		NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
 		std::string declencheur = "Capteur distance ";
-		for (int i = 0; i < capteurs->size();i++){
-			switch (i){
-			case 0:
-				declencheur += "droite: ";
-				break;
-			case 1:
-				declencheur += "centre: ";
-				break;
-			case 2:
-				declencheur += "gauche: ";
-				break;
+		for (int i = 0; i < capteurs->size(); i++)
+		{
+			switch (i)
+			{
+				case 0:
+					declencheur += "droite: ";
+					break;
+				case 1:
+					declencheur += "centre: ";
+					break;
+				case 2:
+					declencheur += "gauche: ";
+					break;
 			}
-			if (capteurs->at(i).obtenirEtat() == 1){
+			if (capteurs->at(i).obtenirEtat() == 1)
+			{
 				declencheur += "Zone securitaire";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
 			}
-			else if (capteurs->at(i).obtenirEtat() == 2){
+			else if (capteurs->at(i).obtenirEtat() == 2)
+			{
 				declencheur += "Zone dangereuse";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
 			}
@@ -314,6 +321,25 @@ bool ControleRobot::ligneDetectee(){
 	return 	obtenirNoeud()->obtenirSuiveurLigne() -> obtenirEtatCapteurs() != 0x00;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::ligneDetectee()
+///
+/// Fonction indiquant si le robot détecte une ligne. Utilisée par les comportements pour ne pas qu'ils aient
+/// à passer par le noeud du robot.
+///
+/// @return Si oui ou non une ligne est detectee.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::setEnPause(bool pause)
+{
+	enPause = pause;
+}
+
+bool ControleRobot::getEnPause()
+{
+	return enPause;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 //////////////////////////////////////////////////////////////////////////////

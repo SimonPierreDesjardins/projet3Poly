@@ -290,7 +290,7 @@ void FacadeModele::afficher() const
 	vue_->appliquerCamera();
 
 	// Mise à jour des quads englobants des formes.	
-	arbre_->mettreAJourQuad();
+	//arbre_->mettreAJourQuad();
 
 	// Afficher la scène
 	afficherBase();

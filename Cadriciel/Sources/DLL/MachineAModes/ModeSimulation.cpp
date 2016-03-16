@@ -162,28 +162,46 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		case '\b':
 			break;
 
+		case VK_ESCAPE:
+			controleRobot_->setEnPause(!(controleRobot_->getEnPause()));
+			if (!controleRobot_->getEnPause())
+			{
+				profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+				controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+				controleRobot_->initialiserBoucleRobot();
+			}
+			else
+				controleRobot_->terminerBoucleRobot();
+
 		default:
 			break;
 		}
-        const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
-        if (!estRepetition)
-        {
-		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
-        }
-		
+
+		if (!controleRobot_->getEnPause())
+		{
+			const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
+			if (!estRepetition)
+			{
+				controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
+			}
+		}
+        
 	}
 	else if (msg == WM_KEYUP)
 	{
-		CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-		if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
+		if (!controleRobot_->getEnPause())
 		{
-            // Obtenir la commande associée et inverser la vitesse des moteurs.
-            CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-            commande->inverserVitesseMoteurs();
-			controleRobot_->traiterCommande(commande, true);
+			CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+			if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
+			{
+				// Obtenir la commande associée et inverser la vitesse des moteurs.
+				CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+				commande->inverserVitesseMoteurs();
+				controleRobot_->traiterCommande(commande, true);
 
-            // Rétablir l'état initial de la commande.
-            commande->inverserVitesseMoteurs();
+				// Rétablir l'état initial de la commande.
+				commande->inverserVitesseMoteurs();
+			}
 		}
 	}
 }

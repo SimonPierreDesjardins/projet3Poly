@@ -588,6 +588,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->supprimerProfil(std::string(nomProfil));
 	}
+
+	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause){
+		//FacadeModele::obtenirInstance()->obtenirMode()->
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -29,7 +29,7 @@ class ProfilUtilisateur;
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeSimulation : public ModeAbstrait
+class ModeSimulation : public ModeAbstrait 
 {
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
