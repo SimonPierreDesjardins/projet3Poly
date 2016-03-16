@@ -112,11 +112,10 @@ void ComportementDeviation::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDeviation::mettreAJour(){
-	//TODO: Implémenter l'exception
 	//Implémentation de l'exception Rapport d'élicitation p.22
 	if (controleRobot_->ligneDetectee()){
 		if (!ignorerLigne_){
-			controleRobot_->assignerComportement(SUIVIDELIGNE);
+			controleRobot_->assignerComportement(SUIVIDELIGNE, "Ligne détectée");
 		}
 	}
 	else{
@@ -138,8 +137,7 @@ void ComportementDeviation::mettreAJour(){
 	}
 
 	if (angleAtteinte){
-		// TODO: Assigner le comportement suivant
-		controleRobot_->assignerComportement(DEFAUT);
+		controleRobot_->assignerComportement(comportementSuivant_, "Deviation terminée");
 	}
 }
 

@@ -14,7 +14,6 @@ RectangleEnglobant::RectangleEnglobant(const glm::dvec3& centre, const double& a
     const double& hauteur, const double& largeur)
         : FormeEnglobanteAbstraite(centre), angle_(angle), hauteur_(hauteur), largeur_(largeur)
 {
-        
 }
 
 
@@ -28,6 +27,22 @@ void RectangleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEng
     largeur_ = glm::abs(boiteEnglobante.coinMax.x - boiteEnglobante.coinMin.x);
 }
 
+bool RectangleEnglobant::calculerEstDansLimites(const double& xMin, const double& xMax,
+                                                const double& yMin, const double& yMax) const
+{
+    const int N_COINS = 4;
+    glm::dvec3 coins[N_COINS];
+    calculerPositionCoins(coins);
+    
+    bool coinsDansLimite = true;
+
+    for (int i = 0; i < N_COINS && coinsDansLimite; i++)
+    {
+        coinsDansLimite = utilitaire::DANS_LIMITESXY(coins[i].x, xMin, xMax,
+                                                     coins[i].y, yMin, yMax);
+    }
+    return coinsDansLimite;
+}
 
 bool RectangleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
 {
@@ -47,17 +62,6 @@ bool RectangleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
                                       projectionLargeur, -largeur_ / 2.0, largeur_ / 2.0);
 }
 
-// Permet de calculer si un rectangle est dans la forme englobante. 
-bool RectangleEnglobant::calculerEstDansForme(const RectangleEnglobant& rectangle) const
-{
-    return false;
-}
-
-// Permet de calculer si un cerlce est dans la forme englobante.
-bool RectangleEnglobant::calculerEstDansForme(const CercleEnglobant& cercle) const
-{
-    return false;
-}
 
 bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {     
@@ -203,7 +207,6 @@ void RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
     angle_ = angle;
     hauteur_ = hauteur;
     largeur_ = largeur;
-
 }
 
 
@@ -242,7 +245,7 @@ void RectangleEnglobant::afficher() const
 }
 
 
-void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4])
+void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
 {
     glm::dvec3 orientationHauteur, orientationLargeur;
     calculerVecteursOrientation(orientationHauteur, orientationLargeur);

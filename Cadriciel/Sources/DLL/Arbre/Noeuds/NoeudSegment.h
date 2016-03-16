@@ -35,6 +35,9 @@ public:
 
     virtual void animer(float dt);
 
+    virtual RectangleEnglobant* obtenirFormeEnglobante();
+    virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
+
 	/// Affiche le segment.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);

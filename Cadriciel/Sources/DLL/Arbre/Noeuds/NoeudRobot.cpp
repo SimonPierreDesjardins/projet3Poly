@@ -9,6 +9,8 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "NoeudRobot.h"
 
+#include "NoeudRoues.h"
+
 #include "Utilitaire.h"
 
 #include "GL/glew.h"
@@ -34,6 +36,8 @@ const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE{ 45.0 };
 
 const glm::dvec3 NoeudRobot::POSITION_RELATIVE_CERCLE_ENGLOBANT = { 1.35, 0.1, 0.0 };
 
+#define PI 3.14159265
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudRobot::NoeudRobot(const std::string& typeNoeud)
@@ -49,21 +53,34 @@ const glm::dvec3 NoeudRobot::POSITION_RELATIVE_CERCLE_ENGLOBANT = { 1.35, 0.1, 0
 NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 
-    NoeudAbstrait* table = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
-	NoeudAbstrait* depart = table->chercher(ArbreRenduINF2990::NOM_DEPART);
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
+
+	NoeudAbstrait* depart_ = table_->chercher(ArbreRenduINF2990::NOM_DEPART);
     
     ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
     suiveurLigne_ = profil->obtenirSuiveurLigne();
     capteursDistance_ = profil->obtenirCapteursDistance();
 
+	optionDebug = profil->obtenirOptionDebogage(DEBOGAGE_CAPTEURS);
+
     // À modifier avec le merge du profile.
     visiteur_ = make_unique<VisiteurDetectionRobot>(this);
 
-	positionRelative_ = depart->obtenirPositionRelative();
-	angleRotation_ = depart->obtenirAngleRotation();
-    formeEnglobante_ = &rectangleEnglobant_;
+	positionRelative_ = depart_->obtenirPositionRelative();
+	angleRotation_ = depart_->obtenirAngleRotation();
+	
+	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
+	std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
+
+	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
+	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
+
+	positionnerRoues();
+	table_->ajouter(roueGauche);
+	table_->ajouter(roueDroite);
+
 }
 
 
@@ -78,6 +95,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot::~NoeudRobot()
 {
+	table_->effacer(roueGauche_);
+	table_->effacer(roueDroite_);
 }
 
 
@@ -108,12 +127,15 @@ void NoeudRobot::afficherConcret() const
 
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
-
-    // Débugage des capteurs de distance.
-    for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
-    {
-        capteursDistance_->at(i).afficher();
-    }
+	if (optionDebug)
+	{
+		// Débugage des capteurs de distance.
+		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		{
+			capteursDistance_->at(i).afficher();
+		}
+	}
+    
 	// Restauration de la matrice.
 	glPopMatrix();
 
@@ -151,20 +173,36 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(float dt)
 {
+	/*std::cout << "d c : " << vitesseCouranteDroite_ << "\n g c : " << vitesseCouranteGauche_ << std::endl;
+	std::cout << "d : " << vitesseCouranteDroite_ << "\n g : " << vitesseCouranteGauche_ << std::endl;*/
     mettreAJourCapteurs();
     mettreAJourPosition(dt);
     mettreAJourRectangleEnglobant();
 
     arbre_->accepterVisiteur(visiteur_.get());
+
+	positionnerRoues();
+
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et un poteau
+///
+/// @param[in] noeud: Prend le NoeudPoteau en paramètre ce qui correspond aux poteaux.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
 void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 {
     if (poteau == nullptr) return;
 
-    CercleEnglobant cercle = poteau->obtenirCercleEnglobant();
-    bool collision = rectangleEnglobant_.calculerIntersection(cercle);
+    CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
+    bool collision = rectangleEnglobant_.calculerIntersection(*cercle);
     //TODO:
     /*
     Calcul des paramètres pour simuler la collision ici. 
@@ -176,41 +214,77 @@ void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     }
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::verifierCollision(NoeudMur* noeud)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et un mur.
+///
+/// @param[in] noeud: Prend le NoeudMur en paramètre ce qui correspond aux murs.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
     if (noeud == nullptr) return;
-    RectangleEnglobant rectangle = noeud->obtenirRectangleEngobant();
-    bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
+    RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
+    bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
     //TODO: 
     /*
     Calcul des paramètres pour simuler la collision ici. 
     1. obtenir la perpendiculaire à l'orientation du rectangle : rectangle.calculerVecteursOrientations
     2. 
     */
-    if (collision && !collision_)
-    {
-        std::cout << "Collision avec un mur." << std::endl;
-    }
-    if (collision_ && !collision)
-    {
-        std::cout << "Pas de collision avec un mur." << std::endl;
-    }
+	glm::dvec3 normaleMur, perpendiculaireMur, robotReflechi;
+	rectangle->calculerVecteursOrientation(normaleMur, perpendiculaireMur);
+
+	glm::dvec3 vitesseRobot, vitesseAngulaireRobot;
+	rectangleEnglobant_.calculerVecteursOrientation(vitesseRobot, vitesseAngulaireRobot);
+
+	robotReflechi = glm::reflect(vitesseRobot, normaleMur);
+
+
+	//vitesseRotation_ = atan(vitesseAngulaireRobot.y/vitesseAngulaireRobot.x);
+	// vitesseRotation ignoree dans animer
+
     collision_ = collision;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::verifierCollision(NoeudTable* noeud)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et la table.
+///
+/// @param[in] noeud: Prend le noeudTable en paramètre ce qui correspond à la table.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
-void NoeudRobot::verifierCollision(NoeudTable* noeud)
+void NoeudRobot::verifierCollision(NoeudTable* table)
 {
-    RectangleEnglobant rectangle = noeud->obtenirRectangleEnglobant();
+    RectangleEnglobant* rectangle = table->obtenirFormeEnglobante();
     // TODO: à changer pour vérifier
-    bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
+    bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
     if (collision)
     {
-
+		//std::cout << "Collision avec une table" << std::endl;
+		//effectuerCollision();
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::mettreAJourCapteurs()
+///
+/// Cette fonction met à jour les capteurs de distance selon leur position et leur angle.
+///
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
 void NoeudRobot::mettreAJourCapteurs()
 {
@@ -221,6 +295,17 @@ void NoeudRobot::mettreAJourCapteurs()
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::mettreAJourPosition(const float& dt)
+///
+/// Cette fonction met à jour la position du robot selon sa vitesse et son accélération.
+///
+/// @param[in] dt: difference de temps entre deux animations (autour de 0,0166)
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourPosition(const float& dt)
 {
 	//Calcul de la résultante de la vitesse relative
@@ -245,9 +330,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteDroite_ -= acceleration_ * dt;
 			}
-			else// if (vitesseCouranteDroite_ < vitesseDroite_)
+			else
 			{
-				//vitesseCouranteDroite_ = 0;
 				vitesseCouranteDroite_ += acceleration_ * dt;
 			}
 		}
@@ -257,9 +341,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteDroite_ += acceleration_ * dt;
 			}
-			else// if (vitesseCouranteDroite_ > vitesseDroite_)
+			else
 			{
-				//vitesseCouranteDroite_ = 0;
 				vitesseCouranteDroite_ -= acceleration_ * dt;
 			}
 		}
@@ -276,9 +359,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteGauche_ -= acceleration_ * dt;
 			}
-			else// if (vitesseCouranteGauche_ < vitesseGauche_)
+			else
 			{
-				//vitesseCouranteGauche_ = 0;
 				vitesseCouranteGauche_ += acceleration_ * dt;
 			}
 		}
@@ -288,9 +370,8 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			{
 				vitesseCouranteGauche_ += acceleration_ * dt;
 			}
-			else// if (vitesseCouranteGauche_ > vitesseGauche_)
+			else
 			{
-				//vitesseCouranteGauche_ = 0;
 				vitesseCouranteGauche_ -= acceleration_ * dt;
 			}
 		}
@@ -307,12 +388,32 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::mettreAJourRectangleEnglobant()
+///
+/// Cette fonction permet de mettre à jour le rectangle englobant du robot avec un cercle.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourRectangleEnglobant()
 {
     rectangleEnglobant_.assignerPositionCentre(positionCourante_ + POSITION_RELATIVE_CERCLE_ENGLOBANT);
     rectangleEnglobant_.assignerAngle(angleRotation_);
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::effectuerCollision()
+///
+/// Cette fonction permet d'effectuer la collision lorsque celle-ci est détectée.
+/// Les vitesses sont changées selon les vecteurs résultants de la collision.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudRobot::effectuerCollision()
 {
     // TODO: Continuer l'implémentation de cette méthode.
@@ -337,6 +438,38 @@ void NoeudRobot::effectuerCollision()
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::positionnerRoues()
+///
+/// Cette fonctione permet de positionner les roues du robot par rapport à
+/// son angle de rotation et sa position relative.
+///
+/// @param[in] Aucun
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::positionnerRoues()
+{
+	//Positionner la roue gauche en fonction du robot
+	roueGauche_->assignerAngleRotation(angleRotation_);
+	glm::dvec3 position = positionRelative_;
+	position[0] = position[0] - sin(angleRotation_*PI / 180)*0.15;
+	position[1] = position[1] + cos(angleRotation_*PI / 180)*0.15;
+	position[2] = 0.8;
+	roueGauche_->assignerPositionRelative(position);
+	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
+
+	//Positionner la roue droite en fonction du robot
+	roueDroite_->assignerAngleRotation(angleRotation_);
+	position = positionRelative_;
+	position[0] = position[0] + sin(angleRotation_*PI / 180)*4.3;
+	position[1] = position[1] - cos(angleRotation_*PI / 180)*4.3;
+	position[2] = 0.8;
+	roueDroite_->assignerPositionRelative(position);
+	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

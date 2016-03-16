@@ -502,12 +502,12 @@ extern "C"
 	///
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerComportementDeviation(int comportementSuivant, double angle, int typeDeviation){
+		// vérifions si une modification de l'angle es nécessaire.
 		if (static_cast<TypeComportement>(typeDeviation) == DEVIATIONVERSLADROITE){
 			angle *= -1;
 		}
 		std::unique_ptr<ComportementDeviation> comportementPtr = std::make_unique<ComportementDeviation>(static_cast<TypeComportement>(comportementSuivant), angle);
 		comportementPtr->assignerComportementSuivant(static_cast<TypeComportement>(comportementSuivant));
-		comportementPtr->setAngleMaxRotation(angle);
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeDeviation), std::move(comportementPtr));
 	}
 	
@@ -524,6 +524,7 @@ extern "C"
 	///
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerComportementEvitement(int comportementSuivant, double angle, double duree, int typeEvitement){
+		// vérifions si une modification de l'angle es nécessaire.
 		if (static_cast<TypeComportement>(typeEvitement) == EVITEMENTPARLADROITE){
 			angle *= -1;
 		}

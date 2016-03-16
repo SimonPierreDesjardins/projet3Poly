@@ -20,6 +20,7 @@
 #include "NoeudDuplication.h"
 #include "NoeudDepart.h"
 #include "NoeudJonction.h"
+#include "NoeudRoues.h"
 
 #endif /// __NOEUD_TYPES_H__
 

@@ -66,6 +66,9 @@ public:
 	inline void assignerVitesseDroite(float vitesse);
 	inline void assignerVitesseGauche(float vitesse);
 
+	//Permet de positionner les roues
+	void positionnerRoues();
+
 	//Permet de récupérer les paramètres du robot.
 	inline float obtenirVitesseDroite() const;
 	inline float obtenirVitesseGauche() const;
@@ -74,16 +77,23 @@ public:
     inline SuiveurLigne* obtenirSuiveurLigne();     
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
+
 private:
 	//Vitesse des moteurs du robot
 	float vitesseRotation_{ 0.f };
 	float vitesseDroite_{ 0.f };
 	float vitesseGauche_{ 0.f };
+
+protected:
+
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 
 	float angle_{ 0.f };
 	float acceleration_{ 200.0 };
+
+
+	bool optionDebug{ true };
 
     RectangleEnglobant rectangleEnglobant_;
 
@@ -102,6 +112,13 @@ private:
 	void mettreAJourCapteurs();
     void mettreAJourPosition(const float& dt);
     void mettreAJourRectangleEnglobant();
+
+	NoeudAbstrait* table_;
+
+	NoeudRoues* roueGauche_;
+	NoeudRoues* roueDroite_;
+
+
 };
 
 ////////////////////////////////////////////////////////////////////////

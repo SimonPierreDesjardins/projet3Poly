@@ -35,7 +35,6 @@ NoeudMur::NoeudMur(const std::string& typeNoeud)
 {
 	angleRotation_ = 0.0;
 	facteurMiseAEchelle_ = 1.0;
-    formeEnglobante_ = &rectangleEnglobant_;
 }
 
 
@@ -54,6 +53,18 @@ NoeudMur::~NoeudMur()
 }
 
 
+RectangleEnglobant* NoeudMur::obtenirFormeEnglobante()
+{
+    return &rectangleEnglobant_;
+}
+
+
+const RectangleEnglobant* NoeudMur::obtenirFormeEnglobante() const
+{
+    return &rectangleEnglobant_;
+}
+
+
 void NoeudMur::animer(float dt)
 {
     mettreAJourFormeEnglobante();
@@ -62,9 +73,10 @@ void NoeudMur::animer(float dt)
 
 void NoeudMur::mettreAJourFormeEnglobante()
 {
-    rectangleEnglobant_.assignerPositionCentre(positionCourante_);
-    rectangleEnglobant_.assignerAngle(angleRotation_);
-    rectangleEnglobant_.assignerLargeur(facteurMiseAEchelle_);
+    double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+    double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+    largeur *= facteurMiseAEchelle_;
+    rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
 }
 
 ////////////////////////////////////////////////////////////////////////

@@ -31,6 +31,9 @@ public:
 	/// Destructeur.
 	~NoeudJonction();
 
+    virtual CercleEnglobant* obtenirFormeEnglobante();
+    virtual const CercleEnglobant* obtenirFormeEnglobante() const;
+
     virtual void animer(float dt);
 
 	/// Affiche la table.

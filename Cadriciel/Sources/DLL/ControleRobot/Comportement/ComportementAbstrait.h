@@ -69,7 +69,7 @@ protected:
 
 	TypeComportement comportementSuivant_;
 
-	std::shared_ptr<ControleRobot> controleRobot_;
+	ControleRobot* controleRobot_;
 };
 
 #endif // COMPORTEMENT_ABSTRAIT
