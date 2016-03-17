@@ -70,6 +70,12 @@ public:
     void testPointDansRectangle();
     void testPointDansCercle();
 
+	void testCalculerIntersectionRectangle();
+	void testCalculerIntersectionCercle();
+
+	void testColisionRectangle();
+	void testColisionCercle();
+
 private:
     utilitaire::QuadEnglobant quad1_;
     utilitaire::QuadEnglobant quad2_;

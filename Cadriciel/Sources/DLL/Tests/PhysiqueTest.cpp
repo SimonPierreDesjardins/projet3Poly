@@ -12,6 +12,7 @@
 #include "PhysiqueTest.h"
 #include "Utilitaire.h"
 #include "RectangleEnglobant.h"
+#include "CercleEnglobant.h"
 
 
 // Enregistrement de la suite de tests au sein du registre
@@ -103,7 +104,15 @@ void PhysiqueTest::testIntersectionQuad()
     CPPUNIT_ASSERT(intersection);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testIntersectionRectangleRectangle()
+///
+/// 
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testIntersectionRectangleRectangle()
 {
     glm::dvec3 position = { 0.0, 0.0, 0.0 };
@@ -160,53 +169,328 @@ void PhysiqueTest::testIntersectionCercleCercle()
     CPPUNIT_ASSERT(true);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testPointDansRectangle()
+///
+/// Cas de test: permet de savoir si un point est a l'intérieur ou non de la
+/// boîte englobante du rectangle
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testPointDansRectangle()
 {
     glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
     RectangleEnglobant rectangle(positionRectangle, 0.0, 48.0, 96.0);
 
+	//Vérifier les quatre coins limite de la boite et le centre
     glm::dvec3 point{ 0.0, 0.0, 0.0 };
     bool pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { 47.5, 23.5, 0.0  };
+    point = { 48, 24, 0.0  };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { 47.5, -23.5, 0.0  };
+    point = { 48, -24, 0.0  };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { -47.5, -23.5, 0.0  };
+    point = { -48, -24, 0.0  };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { -47.5, 23.5, 0.0  };
+    point = { -48, 24, 0.0  };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
+
+    //Quelques points aléatoires
+	point = { 15, 15, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { -38, -19, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { -100, 30, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	//Vérifier les quatres centre extreme de la boite
+    point = { 0.0, 24, 0.0 };
+    pointEstDansForme = rectangle.calculerEstDansForme(point);
+    CPPUNIT_ASSERT(pointEstDansForme);
+
+    point = { 48, 0.0, 0.0 };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
     
-    point = { 0.0, 23.5, 0.0 };
+    point = { 0.0, -24, 0.0 };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { 47.5, 0.0, 0.0 };
-    pointEstDansForme = rectangle.calculerEstDansForme(point);
-    CPPUNIT_ASSERT(pointEstDansForme);
-    
-    point = { 0.0, -23.5, 0.0 };
+    point = { -48, 0.0, 0.0 };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { -47.5, 0.0, 0.0 };
-    pointEstDansForme = rectangle.calculerEstDansForme(point);
-    CPPUNIT_ASSERT(pointEstDansForme);
+	//Vérifier que le point n'est pas dans la boite au centre extreme
+	point = { -48.1, 0.0, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 48.1, 0.0, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 0.0, -24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 0.0, 24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	//Vérifier que le point n'est pas dans la boite au coin supérieur gauche
+	point = { 48, 24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 48.1, 24, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 48.1, 24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	//Vérifier que le point n'est pas dans la boite au coin inférieur gauche
+	point = { 48, -24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 48.1, -24, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 48.1, -24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	//Vérifier que le point n'est pas dans la boite au coin inférieur droit
+	point = { -48, -24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { -48.1, -24, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { -48.1, -24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	//Vérifier que le point n'est pas dans la boite au coin supérieur droit
+	point = { -48, 24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { -48.1, 24, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { -48.1, 24.1, 0.0 };
+	pointEstDansForme = rectangle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testPointDansCercle()
+///
+/// Cas de test: permet de savoir si un point est a l'intérieur ou non de la
+/// boîte englobante du cercle
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testPointDansCercle()
 {
-    CPPUNIT_ASSERT(true);
+	glm::dvec3 positionCercle = { 0.0, 0.0, 0.0 };
+	CercleEnglobant cercle(positionCercle, 45);
+
+	//Vérifier les quatre bornes limites du cercle (croix + )
+	glm::dvec3 point{ 45, 0.0, 0.0 };
+	bool pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { 45, 0.0, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { 0.0, 45.0, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { 0.0, -45.0, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	//Vérifier les quatre bornes limites du cercle (diagonale x )
+	point = { 31.819, 31.819, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { 31.819, -31.819, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { -31.819, -31.819, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { -31.819, 31.819, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	//Quelque points aléatoires
+	point = { -29, 34, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+
+	point = { -45.1, 0, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(!pointEstDansForme);
+
+	point = { 3, -9, 0.0 };
+	pointEstDansForme = cercle.calculerEstDansForme(point);
+	CPPUNIT_ASSERT(pointEstDansForme);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testCalculerIntersectionRectangle()
+///
+/// Cas de test: permet de savoir si un rectangle est a l'intérieur ou non de la
+/// boîte englobante d'un autre rectangle
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void PhysiqueTest::testCalculerIntersectionRectangle()
+{
+	glm::dvec3 positionRectangleUn = { 0.0, 0.0, 0.0 };
+	RectangleEnglobant rectangleUn(positionRectangleUn, 0.0, 10.0, 10.0);
+
+	glm::dvec3 positionRectangleDeux = { -40.0, 40.0, 0.0 };
+	RectangleEnglobant rectangleDeux(positionRectangleDeux, 0.0, 10.0, 10.0);
+
+	//Condition initiale ne se touche pas
+	bool RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(RectangleNeSeTouchePas);
+
+	//Coin de l'un avec coin de l'autre
+	positionRectangleDeux = { -20, 20, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 20, 20, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { -20, -20, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 20, -20, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	//Coter un par dessous l'autre
+	positionRectangleDeux = { -20, 0, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 20, 0, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 0, -20, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 0, -20, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	//Si le rectangleDeux est en angle
+	positionRectangleDeux = { 0, 24.15, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 0, 24.14, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 10, 24.14, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
+
+	positionRectangleDeux = { 10, 24.15, 0 };
+	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
+	CPPUNIT_ASSERT(RectangleNeSeTouchePas);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void testCalculerIntersectionCercle()
+///
+/// Cas de test: permet de savoir si un cercle est a l'intérieur ou non de la
+/// boîte englobante d'un rectangle
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void testCalculerIntersectionCercle()
+{
+	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
+	RectangleEnglobant rectangle(positionRectangle, 0.0, 10.0, 10.0);
+
+	glm::dvec3 positionCercle = { -40.0, 40.0, 0.0 };
+	CercleEnglobant cercle(positionCercle, 45); 
+
+	//Condition initiale
+	bool RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
+	CPPUNIT_ASSERT(true);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void testColisionRectangle()
+///
+/// 
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void testColisionRectangle()
+{
+	CPPUNIT_ASSERT(true);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void testColisionCercle()
+///
+/// 
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void testColisionCercle()
+{
+	CPPUNIT_ASSERT(true);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

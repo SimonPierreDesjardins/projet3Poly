@@ -48,6 +48,7 @@ bool CercleEnglobant::calculerEstDansLimites(const double& xMin, const double& x
                                                      coins[i].y, yMin, yMax);
     }
     return coinsDansLimite;
+
 }
 
 void CercleEnglobant::mettreAJour(const glm::dvec3& positionCentre, const double& rayon)
