@@ -51,6 +51,8 @@ public:
 	/// Destructeur.
 	~NoeudRobot();
 
+	void positionDepart();
+
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
