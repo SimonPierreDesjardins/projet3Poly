@@ -41,6 +41,7 @@ class PhysiqueTest : public CppUnit::TestFixture
   CPPUNIT_TEST(testIntersectionRectangleRectangle);
   CPPUNIT_TEST(testCalculerIntersectionRectangleRectangle);
   CPPUNIT_TEST(testCalculerIntersectionCercleRectangle);
+  CPPUNIT_TEST(testCalculerIntersectionCercleCercle);
 
   CPPUNIT_TEST(testColisionRectangle);
   CPPUNIT_TEST(testColisionCercle);
