@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "Utilitaire.h"
+#include "CercleEnglobant.h"
 
 RectangleEnglobant::RectangleEnglobant()
 {
@@ -121,8 +122,8 @@ void RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationHaut
     orientationHauteur = { -orientationLargeur.y, orientationLargeur.x, 0.0 };
 
     // On normalise les vecteurs pour faciliter d'autres calcules.
-    glm::normalize(orientationLargeur);
-    glm::normalize(orientationHauteur);
+    orientationLargeur = glm::normalize(orientationLargeur);
+    orientationHauteur = glm::normalize(orientationHauteur);
 }
 
 
@@ -212,7 +213,34 @@ void RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
 
 bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
-    return true;
+    glm::dvec3 positionCercle = cercle.obtenirPositionCentre();
+    const int HAUTEUR = 0;
+    const int LARGEUR = 1;
+    const int N_ORIENTATIONS = 2;
+    glm::dvec3 orientations[N_ORIENTATIONS];
+    calculerVecteursOrientation(orientations[HAUTEUR], orientations[LARGEUR]);
+
+    glm::dvec3 distances[4];
+    calculerDistancesPoint(distances, positionCercle);
+    
+    double rayon = cercle.obtenirRayon();
+
+    glm::dvec3 distanceCentres = positionCercle - positionCentre_;
+    glm::dvec3 orientationDistanceCentre = glm::normalize(distanceCentres);
+    
+    double min = 0.0;
+    double max = 0.0;
+    calculerIntervalleProjection(distances, orientationDistanceCentre, min, max);
+    bool intersection = !calculerDisjonctionSurIntervalle(-rayon, rayon, min, max);
+
+    for (int i = 0; i < N_ORIENTATIONS && intersection; i++)
+    {
+        min = 0.0;
+        max = 0,0;
+        calculerIntervalleProjection(distances, orientations[i], min, max);
+        intersection = !calculerDisjonctionSurIntervalle(-rayon, rayon, min, max);
+    }
+    return intersection;
 }
 
 
@@ -261,10 +289,30 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
 
 bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
 {
-    return true;
+    return false;
 }
 
-bool RectangleEnglobant::calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const
+bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::dvec3& normale) const
 {
-    return true;
+    glm::dvec3 coins[4];
+    calculerPositionCoins(coins);
+    glm::dvec3 coinMin = coins[0];
+    glm::dvec3 positionCercle = cercle.obtenirPositionCentre();
+    double distanceMin = glm::distance(coins[0], positionCercle);
+    for (int i = 0; i < 3; i++)
+    {
+        double distance = glm::distance(coins[i], positionCercle);
+        if (distance < distanceMin)
+        {
+            distanceMin = distance;
+        }
+    }
+    double rayon = cercle.obtenirRayon();
+    bool collision = (distanceMin <= rayon);
+    if (collision)
+    {
+        normale = positionCentre_ - positionCercle;
+        normale = glm::normalize(normale);
+    }
+    return collision;
 }
