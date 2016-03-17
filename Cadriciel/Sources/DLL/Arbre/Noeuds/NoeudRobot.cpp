@@ -470,20 +470,20 @@ void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 	vitesseCouranteDroite_ = FACTEUR_ATTENUATION*(-vitesseRelative * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2)));
 	vitesseCouranteGauche_ = FACTEUR_ATTENUATION*(-vitesseRelative + vitesseCouranteDroite_);
 
-//S'il fait deux collisions de suite, ça ne semble pas fonctionner, sinon pour le reste ça semble bon.
-	if ( 0.0 < vitesseRelative < 10.0)
-	{
-		vitesseCouranteDroite_ -= 3.0;
-		vitesseCouranteGauche_ -= 3.0;
-	}
-	if ( -10.0 < vitesseRelative < 0.0)
-	{
-		vitesseCouranteDroite_ += 3.0;
-		vitesseCouranteGauche_ += 3.0;
-	}
-	std::cout << "Vitesse Courante Droite" << vitesseCouranteDroite_ << std::endl;
-	std::cout << "Vitesse Courante Gauche" << vitesseCouranteGauche_ << std::endl;
-	std::cout << "Vitesse relative" << vitesseRelative << std::endl;
+////Hein
+//	if (0.0 < vitesseRelative && vitesseRelative < 3.0)
+//	{
+//		vitesseCouranteDroite_ -= 10.0;
+//		vitesseCouranteGauche_ -= 6.0;
+//	}
+//	else if (-3.0 < vitesseRelative && vitesseRelative < 0.0)
+//	{
+//		vitesseCouranteDroite_ += 10.0;
+//		vitesseCouranteGauche_ += 6.0;
+//	}
+//	std::cout << "Vitesse Courante Droite" << vitesseCouranteDroite_ << std::endl;
+//	std::cout << "Vitesse Courante Gauche" << vitesseCouranteGauche_ << std::endl;
+//	std::cout << "Vitesse relative" << vitesseRelative << std::endl;
 	
 
 	vitesseDroiteCollision_ = 0;
