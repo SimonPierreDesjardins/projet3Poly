@@ -43,8 +43,8 @@ class PhysiqueTest : public CppUnit::TestFixture
   CPPUNIT_TEST(testCalculerIntersectionCercleRectangle);
   CPPUNIT_TEST(testCalculerIntersectionCercleCercle);
 
-  CPPUNIT_TEST(testColisionRectangle);
-  CPPUNIT_TEST(testColisionCercle);
+  CPPUNIT_TEST(testColisionRectangleRectangle);
+  CPPUNIT_TEST(testColisionCercleRectangle);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -73,9 +73,10 @@ public:
 	void testIntersectionRectangleRectangle();
 	void testCalculerIntersectionRectangleRectangle();
 	void testCalculerIntersectionCercleRectangle();
+	void testCalculerIntersectionCercleCercle();
 
-	void testColisionRectangle();
-	void testColisionCercle();
+	void testColisionRectangleRectangle();
+	void testColisionCercleRectangle();
 
 private:
     utilitaire::QuadEnglobant quad1_;

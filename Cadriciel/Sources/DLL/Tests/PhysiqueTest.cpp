@@ -518,6 +518,15 @@ void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 
 void PhysiqueTest::testCalculerIntersectionCercleCercle()
 {
+	glm::dvec3 positionCercleUn = { 0.0, 0.0, 0.0 };
+	CercleEnglobant cercleUn(positionCercleUn, 10);
+
+	glm::dvec3 positionCercleDeux = { -40.0, 40.0, 0.0 };
+	CercleEnglobant cercleDeux(positionCercleDeux, 10);
+
+	//Condition initiale
+	bool CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+
 	CPPUNIT_ASSERT(true);
 }
 
@@ -530,19 +539,19 @@ void PhysiqueTest::testCalculerIntersectionCercleCercle()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void PhysiqueTest::testColisionRectangle()
+void PhysiqueTest::testColisionRectangleRectangle()
 {
-	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
-	RectangleEnglobant rectangle(positionRectangle, 0.0, 20.0, 20.0);
+	glm::dvec3 positionRectangleUn = { 0.0, 0.0, 0.0 };
+	RectangleEnglobant rectangleUn(positionRectangleUn, 0.0, 20.0, 20.0);
 
-	glm::dvec3 positionCercle = { -40.0, 40.0, 0.0 };
-	CercleEnglobant cercle(positionCercle, 10);
+	glm::dvec3 positionRectangleDeux = { -40.0, 40.0, 0.0 };
+	RectangleEnglobant rectangleDeux(positionRectangleDeux, 0.0, 20.0, 20.0);
 
 	glm::dvec3& normale = { 0, 0, 0 };
 
 	//Condition initiale
-	bool RectanglePasEnCollision = rectangle.calculerCollision(cercle, normale);
-	CPPUNIT_ASSERT(RectanglePasEnCollision);
+	bool RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
+	CPPUNIT_ASSERT(true);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -554,8 +563,18 @@ void PhysiqueTest::testColisionRectangle()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void PhysiqueTest::testColisionCercle()
+void PhysiqueTest::testColisionCercleRectangle()
 {
+	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
+	RectangleEnglobant rectangle(positionRectangle, 0.0, 20.0, 20.0);
+
+	glm::dvec3 positionCercle = { -40.0, 40.0, 0.0 };
+	CercleEnglobant cercle(positionCercle, 10);
+
+	glm::dvec3& normale = { 0, 0, 0 };
+
+	//Condition initiale
+	bool RectanglePasEnCollision = rectangle.calculerCollision(cercle, normale);
 	CPPUNIT_ASSERT(true);
 }
 
