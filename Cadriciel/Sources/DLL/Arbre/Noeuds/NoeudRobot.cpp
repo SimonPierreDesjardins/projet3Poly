@@ -466,16 +466,25 @@ void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 
 	glm::dvec3 vecVitesseDroite = robotReflechi * vitesseAngulaireRobotReflechi;
 	
-	/*if (vecVitesseDroite.x < 0)
-	{*/
+	
 	vitesseCouranteDroite_ = FACTEUR_ATTENUATION*(-vitesseRelative * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2)));
 	vitesseCouranteGauche_ = FACTEUR_ATTENUATION*(-vitesseRelative + vitesseCouranteDroite_);
-	/*}
-	else
+
+//S'il fait deux collisions de suite, ça ne semble pas fonctionner, sinon pour le reste ça semble bon.
+	if ( 0.0 < vitesseRelative < 10.0)
 	{
-		vitesseCouranteDroite_ = FACTEUR_ATTENUATION*(-30 * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2)));
-		vitesseCouranteGauche_ = FACTEUR_ATTENUATION*(-30 + vitesseCouranteDroite_);
-	}*/
+		vitesseCouranteDroite_ -= 3.0;
+		vitesseCouranteGauche_ -= 3.0;
+	}
+	if ( -10.0 < vitesseRelative < 0.0)
+	{
+		vitesseCouranteDroite_ += 3.0;
+		vitesseCouranteGauche_ += 3.0;
+	}
+	std::cout << "Vitesse Courante Droite" << vitesseCouranteDroite_ << std::endl;
+	std::cout << "Vitesse Courante Gauche" << vitesseCouranteGauche_ << std::endl;
+	std::cout << "Vitesse relative" << vitesseRelative << std::endl;
+	
 
 	vitesseDroiteCollision_ = 0;
 	vitesseGaucheCollision_ = 0;
