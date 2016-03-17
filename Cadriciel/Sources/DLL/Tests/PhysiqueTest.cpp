@@ -177,19 +177,19 @@ void PhysiqueTest::testPointDansRectangle()
     bool pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { 48, 24, 0.0  };
+    point = { 48, 24, 0.0 };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { 48, -24, 0.0  };
+    point = { 48, -24, 0.0 };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { -48, -24, 0.0  };
+    point = { -48, -24, 0.0 };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
-    point = { -48, 24, 0.0  };
+    point = { -48, 24, 0.0 };
     pointEstDansForme = rectangle.calculerEstDansForme(point);
     CPPUNIT_ASSERT(pointEstDansForme);
 
@@ -379,55 +379,69 @@ void PhysiqueTest::testCalculerIntersectionRectangleRectangle()
 	CPPUNIT_ASSERT(RectangleNeSeTouchePas);
 
 	//Coin de l'un avec coin de l'autre
-	positionRectangleDeux = { -0, 0, 0 };
+	positionRectangleDeux = { -20, 20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 20, 20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { -20, -20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 20, -20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	//Coter un par dessous l'autre
-	/*positionRectangleDeux = { -20, 0, 0 };
+	positionRectangleDeux = { -20, 0, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 20, 0, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 0, -20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 0, -20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	//Si le rectangleDeux est en angle
+	rectangleDeux.assignerAngle(45);
+
 	positionRectangleDeux = { 0, 24.15, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 0, 24.14, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 10, 24.14, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
 	CPPUNIT_ASSERT(!RectangleNeSeTouchePas);
 
 	positionRectangleDeux = { 10, 24.15, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	RectangleNeSeTouchePas = !rectangleUn.calculerIntersection(rectangleDeux);
-	CPPUNIT_ASSERT(RectangleNeSeTouchePas);*/
+	CPPUNIT_ASSERT(RectangleNeSeTouchePas);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -442,7 +456,7 @@ void PhysiqueTest::testCalculerIntersectionRectangleRectangle()
 ////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 {
-	/*glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
+	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
 	RectangleEnglobant rectangle(positionRectangle, 0.0, 20.0, 20.0);
 
 	glm::dvec3 positionCercle = { -40.0, 40.0, 0.0 };
@@ -454,42 +468,51 @@ void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 
 	//Vérifier les quatres mileux du rectangle avec un cercle
 	positionCercle = { -20, 0, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
 	positionCercle = { 20, 0, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
 	positionCercle = { 0, 20, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
 	positionCercle = { 0, -20, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
 	//Vérifier les quatres coins du rectangle avec un cercle
 	positionCercle = { -17.07, 17.07, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
 	positionCercle = { 17.07, 17.07, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
 	positionCercle = { -17.07, -17.07, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
 	positionCercle = { 17.07, -17.07, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
 	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);
 
-	positionCercle = { 0, -0, 0 };
+	//Etre certain que le cercle ne touche pas le rectangle
+	positionCercle = { -17.08, 17.08, 0 };
+	cercle.assignerPositionCentre(positionCercle);
 	RectangleNeTouchePasCercle = !rectangle.calculerIntersection(cercle);
-	CPPUNIT_ASSERT(!RectangleNeTouchePasCercle);*/
-	CPPUNIT_ASSERT(true);
+	CPPUNIT_ASSERT(RectangleNeTouchePasCercle);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -503,7 +526,15 @@ void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 ////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testColisionRectangle()
 {
-	CPPUNIT_ASSERT(true);
+	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
+	RectangleEnglobant rectangle(positionRectangle, 0.0, 20.0, 20.0);
+
+	glm::dvec3 positionCercle = { -40.0, 40.0, 0.0 };
+	CercleEnglobant cercle(positionCercle, 10);
+
+	//Condition initiale
+	bool RectanglePasEnCollision = rectangle.calculerCollision(cercle, )
+	CPPUNIT_ASSERT(RectanglePasEnCollision);
 }
 
 ////////////////////////////////////////////////////////////////////////
