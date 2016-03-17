@@ -120,10 +120,10 @@ void CercleEnglobant::afficher(const glm::dvec3& origine) const
 bool CercleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
 {
 
-    return true;
+    return false;
 }
 
 bool CercleEnglobant::calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const
 {
-    return true;
+    return false;
 }
