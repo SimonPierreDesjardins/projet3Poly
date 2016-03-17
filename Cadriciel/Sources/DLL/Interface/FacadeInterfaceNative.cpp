@@ -574,7 +574,15 @@ extern "C"
 
 
 	__declspec(dllexport) void __cdecl changerProfil(char* nomProfil){
+		auto mode = FacadeModele::obtenirInstance()->obtenirMode();
+
+		if (mode != nullptr){
+			mode->preChangementDeProfil();
+		}
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
+		if (mode != nullptr){
+			mode->postChangementDeProfil();
+		}
 	}
 
 	__declspec(dllexport) void __cdecl obtenirCheminProfils(char* chemin, int longueur){
@@ -587,6 +595,10 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->supprimerProfil(std::string(nomProfil));
+	}
+
+	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause){
+		//FacadeModele::obtenirInstance()->obtenirMode()->
 	}
 }
 

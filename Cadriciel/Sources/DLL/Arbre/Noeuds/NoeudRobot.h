@@ -13,13 +13,13 @@
 #include "NoeudComposite.h"
 #include "SuiveurLigne.h"
 #include "CapteurDistance.h"
-
 #include "RectangleEnglobant.h"
 #include "CercleEnglobant.h"
 #include "VisiteurDetectionRobot.h"
 
 #include <array>
 
+class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
 /// @brief Classe qui représente le robot du premier projet intégrateur.
@@ -50,6 +50,8 @@ public:
 
 	/// Destructeur.
 	~NoeudRobot();
+
+	void positionDepart();
 
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
@@ -92,8 +94,10 @@ protected:
 	float angle_{ 0.f };
 	float acceleration_{ 200.0 };
 
-
 	bool optionDebug{ true };
+
+	//Pointeur sur le profil actif
+	ProfilUtilisateur* profil_{ nullptr };
 
     RectangleEnglobant rectangleEnglobant_;
 

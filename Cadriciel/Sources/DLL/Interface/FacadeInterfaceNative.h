@@ -84,6 +84,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* chemin, int longueur);
 
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil);
+	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause);
 
 }
 

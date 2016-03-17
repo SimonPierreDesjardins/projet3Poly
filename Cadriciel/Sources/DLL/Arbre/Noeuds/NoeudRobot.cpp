@@ -63,13 +63,16 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
     suiveurLigne_ = profil->obtenirSuiveurLigne();
     capteursDistance_ = profil->obtenirCapteursDistance();
 
-	optionDebug = profil->obtenirOptionDebogage(DEBOGAGE_CAPTEURS);
+    profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+    suiveurLigne_ = profil_->obtenirSuiveurLigne();
+    capteursDistance_ = profil_->obtenirCapteursDistance();
 
     // À modifier avec le merge du profile.
     visiteur_ = make_unique<VisiteurDetectionRobot>(this);
 
 	positionRelative_ = depart_->obtenirPositionRelative();
 	angleRotation_ = depart_->obtenirAngleRotation();
+	positionDepart();
     formeEnglobante_ = &rectangleEnglobant_;
 
 	
@@ -102,6 +105,12 @@ NoeudRobot::~NoeudRobot()
 	table_->effacer(roueDroite_);
 }
 
+void NoeudRobot::positionDepart()
+{
+	NoeudAbstrait* depart = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_DEPART);
+	positionRelative_ = depart->obtenirPositionRelative();
+	angleRotation_ = depart->obtenirAngleRotation();
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -130,7 +139,7 @@ void NoeudRobot::afficherConcret() const
 
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
-	if (optionDebug)
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 	{
 		// Débugage des capteurs de distance.
 		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)

@@ -21,7 +21,7 @@ class CommandeRobot;
 class NoeudAbstrait;
 class NoeudRobot;
 class ArbreRendu;
-
+class ProfilUtilisateur;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -35,6 +35,7 @@ class ArbreRendu;
 ///////////////////////////////////////////////////////////////////////////
 class ControleRobot
 {
+	friend class ModeSimulation;
 public:
 	ControleRobot();
 	~ControleRobot();
@@ -62,23 +63,31 @@ public:
 
 	void assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur);
 
+	void setEnPause(bool pause);
+	bool getEnPause();
+
 private:
 	// Fonctions pour gérer multithreading robot
 	void initialiserBoucleRobot();
 	void terminerBoucleRobot();
 	void boucleInfinieLogiqueRobot();
 
+	// Fonction qui verifie et effectue les changements en fonction des capteurs à obstacles
+	void verifierCapteurs();
+
 	// définit si oui ou non le robot est en mode manuel
 	bool manuel{ false };
 
 	// définit si en mode debug
-	bool debug{ true };
+	bool enPause{ false };
 
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;
 
 	// pointeur vers le noeud du robot
 	NoeudRobot* robot_;
+	//Pointeur sur un profil
+	ProfilUtilisateur* profil_{ nullptr };
 
 	std::vector<std::unique_ptr<ComportementAbstrait>>* vecteurComportements_;
 
@@ -90,6 +99,13 @@ private:
 
 	// Pointeur vers le thread d'exécution du robot
 	std::unique_ptr<std::thread> logiqueRobot;
+
+	/*
+	* Représente les flags des capteurs, évite de capter plusieurs fois dans le debugger
+	* flagCapteur[X][Y]
+	* X: 0 = droite, 1 = centre, 2 = gauche
+	* Y: 0 = zone securitaire, 1 = zone danger */
+	bool flagCapteur[3][2];
 };
 
 #endif // CONTROLE_ROBOT_H
