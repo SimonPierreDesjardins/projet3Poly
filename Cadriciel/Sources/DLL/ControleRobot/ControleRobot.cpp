@@ -238,38 +238,55 @@ void ControleRobot::boucleInfinieLogiqueRobot()
 	
 	while (!manuel) 
 	{
-		NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
-		std::string declencheur = "Capteur distance ";
-		for (int i = 0; i < capteurs->size(); i++)
-		{
-			switch (i)
-			{
-				case 0:
-					declencheur += "droite: ";
-					break;
-				case 1:
-					declencheur += "centre: ";
-					break;
-				case 2:
-					declencheur += "gauche: ";
-					break;
-			}
-			if (capteurs->at(i).obtenirEtat() == 1)
-			{
-				declencheur += "Zone securitaire";
-				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
-			}
-			else if (capteurs->at(i).obtenirEtat() == 2)
-			{
-				declencheur += "Zone dangereuse";
-				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
-			}
+		if (!enPause){
+			verifierCapteurs();
+			comportement_->mettreAJour();
 		}
-		comportement_->mettreAJour();
+		else{
+			traiterCommande(&CommandeRobot(ARRETER), false);
+		}
 	}
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::boucleInfinieLogiqueRobot()
+///
+/// Vérifie l'état des capteurs à obstacles et change de comportement au besoin.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::verifierCapteurs(){
+	NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
+	std::string declencheur;
+	for (int i = 0; i < capteurs->size(); i++)
+	{
+		declencheur = "Capteur distance ";
+		switch (i)
+		{
+		case 0:
+			declencheur += "droite: ";
+			break;
+		case 1:
+			declencheur += "centre: ";
+			break;
+		case 2:
+			declencheur += "gauche: ";
+			break;
+		}
+		if (capteurs->at(i).obtenirEtat() == 1)
+		{
+			declencheur += "Zone securitaire";
+			assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
+		}
+		else if (capteurs->at(i).obtenirEtat() == 2)
+		{
+			declencheur += "Zone dangereuse";
+			assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
+		}
+	}
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)

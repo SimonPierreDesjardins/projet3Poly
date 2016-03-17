@@ -72,6 +72,9 @@ private:
 	void terminerBoucleRobot();
 	void boucleInfinieLogiqueRobot();
 
+	// Fonction qui verifie et effectue les changements en fonction des capteurs à obstacles
+	void verifierCapteurs();
+
 	// définit si oui ou non le robot est en mode manuel
 	bool manuel{ false };
 

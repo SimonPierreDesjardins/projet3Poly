@@ -122,6 +122,34 @@ void ModeSimulation::inverserLumiereSpot()
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void ModeSimulation::preChangementDeProfil()
+///
+/// Fonction appelée avant qu'il y ait changement de profil pour arrêter les accès. Arrête aussi le thread du robot.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::preChangementDeProfil(){
+	//Terminer le thread du robot et préparer à un changement au mode automatique
+	controleRobot_->passerAModeManuel();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeSimulation::postChangementDeProfil()
+///
+/// Fonction appelée après qu'il y ait changement de profil pour repartir la simulation. Passe le robot en mode automatique.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::postChangementDeProfil(){
+	//Repartir le thread en mode automatique, comportement defaut
+	controleRobot_->passerAModeAutomatique();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
 /// Fonction qui permet de traiter les entrées utilisateur en mode simulation. 
@@ -168,10 +196,10 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			{
 				profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 				controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-				controleRobot_->initialiserBoucleRobot();
+//				controleRobot_->initialiserBoucleRobot();
 			}
 			else
-				controleRobot_->terminerBoucleRobot();
+//				controleRobot_->terminerBoucleRobot();
 
 		default:
 			break;

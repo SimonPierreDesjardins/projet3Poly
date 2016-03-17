@@ -43,6 +43,29 @@ public:
 
 	inline int obtenirTypeMode();
 
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn void ModeSimulation::preChangementDeProfil()
+	///
+	/// Fonction appelée avant qu'il y ait changement de profil pour arrêter les accès.
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	virtual void preChangementDeProfil(){}; 	// Dans le but d'éviter un downcast, la gestion de changement de profil se trouve ici.
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn void ModeSimulation::preChangementDeProfil()
+	///
+	/// Fonction appelée après qu'il y ait changement de profil pour reprendre la simulation sans problème.
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	virtual void postChangementDeProfil(){};
+
 protected:
 	int typeMode_;
 

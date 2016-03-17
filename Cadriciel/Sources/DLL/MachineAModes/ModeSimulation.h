@@ -52,6 +52,9 @@ public:
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();
 
+	void preChangementDeProfil();
+	void postChangementDeProfil();
+
 	inline static std::array<char, 10>* getTouchesNonConfigurable();
 };
 
