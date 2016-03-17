@@ -71,6 +71,7 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 	case ARRETER:
 		vitesseMoteurD_ = 0.0;
 		vitesseMoteurG_ = 0.0;
+
 	default:
 		break;
 	}

@@ -14,9 +14,13 @@
 #include "ArbreRenduINF2990.h"
 #include "rapidjson\filewritestream.h"
 
-const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_DROITE{ 4.8523, -0.853, 0.0 };
-const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_CENTRE{ 4.8523,  0.070, 0.0 };
-const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_GAUCHE{ 4.8523,  0.995, 0.0 };
+//const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_DROITE{ 4.8523, -0.853, 0.0 };
+//const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_CENTRE{ 4.8523,  0.070, 0.0 };
+//const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_GAUCHE{ 4.8523,  0.995, 0.0 };
+
+const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_DROITE{ 4.7, -0.853, 0.0 };
+const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_CENTRE{ 4.7,  0.070, 0.0 };
+const glm::dvec3 SuiveurLigne::POSITION_RELATIVE_GAUCHE{ 4.7,  0.995, 0.0 };
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
@@ -124,7 +128,7 @@ void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const do
 {
 	for (int i = 0; i < capteursOptique_.size(); i++)
 	{
-		capteursOptique_[i].mettreAJourPosition(positionRobot, angleRobot);
+		capteursOptique_[i].mettreAJour(positionRobot, angleRobot);
 	}
     
 }
@@ -136,7 +140,6 @@ void SuiveurLigne::afficher() const
         capteursOptique_[i].afficher();
     }
 }
-
 
 void SuiveurLigne::verifierDetection(NoeudLigne* ligne)
 {

@@ -399,8 +399,14 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourRectangleEnglobant()
 {
-    rectangleEnglobant_.assignerPositionCentre(positionCourante_ + POSITION_RELATIVE_CERCLE_ENGLOBANT);
-    rectangleEnglobant_.assignerAngle(angleRotation_);
+    double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+    double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+
+    double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
+    double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
+
+    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
+    rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
 }
 
 

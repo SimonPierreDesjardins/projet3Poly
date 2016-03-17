@@ -207,57 +207,76 @@ void VisiteurSelection::visiter(NoeudMur* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSelection::visiter(NoeudLigne* noeud)
+void VisiteurSelection::visiter(NoeudLigne* ligne)
 {
-
     FormeEnglobanteAbstraite* forme = nullptr;
 
     bool formeEstDansRectangle = true;
     bool pointEstDansForme = false;
     bool continuer = true;
-
+    bool selectionLigne = false;
     NoeudAbstrait* enfant = nullptr;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && continuer; i++) 
+    unsigned int nEnfants = ligne->obtenirNombreEnfants();
+
+	for (unsigned int i = 0; i < nEnfants && continuer; i++) 
     {
-        enfant = noeud->chercher(i);
-        forme = enfant->obtenirFormeEnglobante();
-        
-        if (estDrag_)
+        enfant = ligne->chercher(i);
+        enfant->accepterVisiteur(this);
+        bool selectionEnfant = enfant->estSelectionne();
+        // Si c'est un clique.
+        if (!estDrag_)
         {
-            formeEstDansRectangle = forme->calculerEstDansLimites(xMinRectangleElastique_, xMaxRectangleElastique_, 
-                                                                  yMinRectangleElastique_, yMaxRectangleElastique_);
-            if (!formeEstDansRectangle)
-            {
-                continuer = false;
-            }
+            // On sort dès qu'un enfant est sélectionné,
+            // et la ligne est sélectionnée.
+            continuer = !selectionEnfant;
+            selectionLigne = selectionEnfant;
         }
+        // Si c'est un drag.
         else 
         {
-            pointEstDansForme = forme->calculerEstDansForme(positionRelative_);
-            if (pointEstDansForme)
-            {
-                continuer = false;
-            }
+            // On continue tant que les enfants sont sélectionnés.
+            // Si tous les enfants sont sélectionnés, la ligne est sélectionnée.
+            selectionLigne = selectionEnfant;
+            continuer = selectionEnfant;
         }
 	}
-	if ((estDrag_ && formeEstDansRectangle) ||
-	   (!estDrag_ && pointEstDansForme)) {
-		if (ctrlAppuye_) 
+
+    // Inverser la selection de la ligne si la touche est appuyée.
+    if (selectionLigne && ctrlAppuye_)
+    {
+        bool ligneEstSelectionne = ligne->estSelectionne();
+        if (ligneEstSelectionne)
         {
-            if (noeud->estSelectionne())
-            {
-                noeud->deselectionnerTout();
-            }
-            else
-            {
-                noeud->selectionnerTout();
-            }
-		}
-		else 
+            ligne->deselectionnerTout();
+        }
+        else
         {
-            noeud->selectionnerTout();
-		}
-	}
+            ligne->selectionnerTout();
+        }
+    }
+    // Sélectionner toute la ligne.
+    else if (selectionLigne && !ctrlAppuye_)
+    {
+        ligne->selectionnerTout();
+    }
+    // Garder la sélection actuelle de la ligne.
+    else if (!selectionLigne && ctrlAppuye_)
+    {
+        bool ligneEstSelectionne = ligne->estSelectionne();
+        if (ligneEstSelectionne)
+        {
+            ligne->selectionnerTout();
+        }
+        else
+        {
+            ligne->deselectionnerTout();
+        }
+    }
+    // Désecltionner la ligne. 
+    else if (!selectionLigne && !ctrlAppuye_)
+    {
+        ligne->deselectionnerTout();
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -276,7 +295,7 @@ void VisiteurSelection::visiter(NoeudDepart* noeud)
     RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
     bool pointEstDansRectangle = rectangle->calculerEstDansForme(positionRelative_);
     bool formeEstDansRectangle = rectangle->calculerEstDansLimites(xMinRectangleElastique_, xMaxRectangleElastique_,
-        yMinRectangleElastique_, yMaxRectangleElastique_);
+                                                                   yMinRectangleElastique_, yMaxRectangleElastique_);
 
 	if ((estDrag_ && formeEstDansRectangle) ||
 	   (!estDrag_ && pointEstDansRectangle)) {
@@ -301,25 +320,20 @@ void VisiteurSelection::visiter(NoeudDepart* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSelection::visiter(NoeudSegment* noeud)
+void VisiteurSelection::visiter(NoeudSegment* segment)
 {
-    /*
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
-	NoeudAbstrait* pere = noeud->obtenirParent();
-
-	bool quadEstDansRectangle = quadEstDansRectangleElastique(quad);
-	//bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
-    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerEstDansForme(positionRelative_);
-	if ((estDrag_ && quadEstDansRectangle) ||
-	   (!estDrag_ && pointEstDansQuad)) {
-		if (ctrlAppuye_) {
-			pere->inverserSelection();
-		}
-		else {
-			pere->assignerSelection(true);
-		}
-	}
-    */
+    RectangleEnglobant* rectangle = segment->obtenirFormeEnglobante();
+    bool selection = false;
+    if (!estDrag_)
+    {
+        selection = rectangle->calculerEstDansForme(positionRelative_);
+    }
+    else // estDrag_ 
+    {
+        selection = rectangle->calculerEstDansLimites(xMinRectangleElastique_, xMaxRectangleElastique_,
+                                                      yMinRectangleElastique_, yMaxRectangleElastique_);
+    }
+    segment->assignerSelection(selection);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -333,22 +347,21 @@ void VisiteurSelection::visiter(NoeudSegment* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSelection::visiter(NoeudJonction* noeud)
+void VisiteurSelection::visiter(NoeudJonction* jonction)
 {
-    /*
-	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantCourant();
-	NoeudAbstrait* pere = noeud->obtenirParent();
-//	bool pointEstDansQuad = utilitaire::calculerPointEstDansQuad(positionRelative_, quad);
-    bool pointEstDansQuad = noeud->obtenirRectangleEnglobant().calculerEstDansForme(positionRelative_);
-	if (!estDrag_ && pointEstDansQuad) {
-		if (ctrlAppuye_) {
-			pere->inverserSelection();
-		}
-		else {
-			pere->assignerSelection(true);
-		}
-	}
-    */
+
+    CercleEnglobant* cercle = jonction->obtenirFormeEnglobante();
+    bool selection = false;
+    if (!estDrag_)
+    {
+        selection = cercle->calculerEstDansForme(positionRelative_);
+    }
+    else // estDrag_ 
+    {
+        selection = cercle->calculerEstDansLimites(xMinRectangleElastique_, xMaxRectangleElastique_,
+                                                      yMinRectangleElastique_, yMaxRectangleElastique_);
+    }
+    jonction->assignerSelection(selection);
 }
 
 ////////////////////////////////////////////////////////////////////////

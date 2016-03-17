@@ -295,9 +295,6 @@
     <ClCompile Include="Physique\RectangleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
-    <ClCompile Include="Physique\CercleEnglobant.cpp">
-      <Filter>Source Files\Physique</Filter>
-    </ClCompile>
     <ClCompile Include="Visiteur\VisiteurDetectionRobot.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
@@ -309,6 +306,9 @@
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurVerificationQuad.cpp">
       <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Physique\CercleEnglobant.cpp">
+      <Filter>Source Files\Physique</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

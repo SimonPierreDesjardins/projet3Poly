@@ -200,12 +200,6 @@ protected:
     /// La boite englobante du modèle.
     utilitaire::BoiteEnglobante boiteEnglobanteModele_;
 
-    // TODO: à enlever
-	utilitaire::QuadEnglobant quadEnglobantCourant_;
-
-    // TODO: à enlever
-	utilitaire::QuadEnglobant quadEnglobantModele_;
-
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
 
