@@ -547,7 +547,7 @@ void PhysiqueTest::testColisionRectangleRectangle()
 	glm::dvec3 positionRectangleDeux = { -40.0, 40.0, 0.0 };
 	RectangleEnglobant rectangleDeux(positionRectangleDeux, 0.0, 20.0, 20.0);
 
-	glm::dvec3& normale = { 0, 0, 0 };
+	glm::dvec3 normale = { 0, 0, 0 };
 
 	//Condition initiale
 	bool RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
@@ -571,7 +571,7 @@ void PhysiqueTest::testColisionCercleRectangle()
 	glm::dvec3 positionCercle = { -40.0, 40.0, 0.0 };
 	CercleEnglobant cercle(positionCercle, 10);
 
-	glm::dvec3& normale = { 0, 0, 0 };
+	glm::dvec3 normale = { 0, 0, 0 };
 
 	//Condition initiale
 	bool RectanglePasEnCollision = rectangle.calculerCollision(cercle, normale);
