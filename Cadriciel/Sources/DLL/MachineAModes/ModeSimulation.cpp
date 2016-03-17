@@ -144,6 +144,10 @@ void ModeSimulation::preChangementDeProfil(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModeSimulation::postChangementDeProfil(){
+	// On met à jour le profil
+	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	// Le robot charge la référence aux nouveaux comportements
+	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	//Repartir le thread en mode automatique, comportement defaut
 	controleRobot_->passerAModeAutomatique();
 }
@@ -192,14 +196,6 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case VK_ESCAPE:
 			controleRobot_->setEnPause(!(controleRobot_->getEnPause()));
-			if (!controleRobot_->getEnPause())
-			{
-				profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-				controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-//				controleRobot_->initialiserBoucleRobot();
-			}
-			else
-//				controleRobot_->terminerBoucleRobot();
 
 		default:
 			break;

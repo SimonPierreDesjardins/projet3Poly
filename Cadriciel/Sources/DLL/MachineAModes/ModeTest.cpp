@@ -50,6 +50,34 @@ ModeTest::~ModeTest()
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void ModeTest::preChangementDeProfil()
+///
+/// Fonction appelée avant qu'il y ait changement de profil pour arrêter les accès. Arrête aussi le thread du robot.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTest::preChangementDeProfil(){
+	//Terminer le thread du robot et préparer à un changement au mode automatique
+	controleRobot_->passerAModeManuel();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeTest::postChangementDeProfil()
+///
+/// Fonction appelée après qu'il y ait changement de profil pour repartir la simulation. Passe le robot en mode automatique.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTest::postChangementDeProfil(){
+	//Repartir le thread en mode automatique, comportement defaut
+	controleRobot_->passerAModeAutomatique();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
 /// Fonction qui permet de traiter les entrées utilisateur en mode test. 

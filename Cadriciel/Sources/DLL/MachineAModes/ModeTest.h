@@ -37,6 +37,10 @@ public:
 	ModeTest();
 	//Destructeur
 	virtual ~ModeTest();
+	
+	void preChangementDeProfil();
+	void postChangementDeProfil();
+
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	
