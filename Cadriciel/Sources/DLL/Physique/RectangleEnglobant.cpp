@@ -237,6 +237,7 @@ bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) con
     {
         min = 0.0;
         max = 0.0;
+
         calculerIntervalleProjection(distances, orientations[i], min, max);
         intersection = !calculerDisjonctionSurIntervalle(-rayon, rayon, min, max);
     }
