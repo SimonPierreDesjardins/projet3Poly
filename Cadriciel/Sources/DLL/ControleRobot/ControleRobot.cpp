@@ -41,6 +41,11 @@ ControleRobot::ControleRobot()
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
+	// init des flags du capteur
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; i < 2; i++)
+			flagCapteur[i][j] = false;
+
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 }
 
@@ -275,15 +280,35 @@ void ControleRobot::verifierCapteurs(){
 			declencheur += "gauche: ";
 			break;
 		}
-		if (capteurs->at(i).obtenirEtat() == 1)
+
+		// Vérifions la zone securitaire
+		if (capteurs->at(i).obtenirEtat() == 1 )
 		{
-			declencheur += "Zone securitaire";
-			assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
+			if (!flagCapteur[i][0]){
+				// On empêche plusieurs detections à la fois
+				flagCapteur[i][0] = true;
+				declencheur += "Zone securitaire";
+				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
+			}
 		}
-		else if (capteurs->at(i).obtenirEtat() == 2)
+		else{
+			//On permet la detection
+			flagCapteur[i][0] = false;
+		}
+
+		// vérifions la zone dangereuse
+		if (capteurs->at(i).obtenirEtat() == 2)
 		{
-			declencheur += "Zone dangereuse";
-			assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
+			if (!flagCapteur[i][1]){
+				// On empêche plusieurs detections à la fois
+				flagCapteur[i][1] = true;
+				declencheur += "Zone dangereuse";
+				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
+			}
+		}
+		else{
+			// On permet la detection
+			flagCapteur[i][1] = false;
 		}
 	}
 }

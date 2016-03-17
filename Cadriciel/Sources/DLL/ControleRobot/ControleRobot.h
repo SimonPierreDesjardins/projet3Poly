@@ -99,6 +99,13 @@ private:
 
 	// Pointeur vers le thread d'exécution du robot
 	std::unique_ptr<std::thread> logiqueRobot;
+
+	/*
+	* Représente les flags des capteurs, évite de capter plusieurs fois dans le debugger
+	* flagCapteur[X][Y]
+	* X: 0 = droite, 1 = centre, 2 = gauche
+	* Y: 0 = zone securitaire, 1 = zone danger */
+	bool flagCapteur[3][2];
 };
 
 #endif // CONTROLE_ROBOT_H
