@@ -512,11 +512,6 @@ void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
 	}
 }
 
-void ArbreRendu::mettreAJourQuad()
-{
-	accepterVisiteur(visiteurMiseAJourQuad_.get());
-}
-
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

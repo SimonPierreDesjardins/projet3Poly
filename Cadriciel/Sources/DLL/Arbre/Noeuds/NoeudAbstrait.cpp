@@ -557,6 +557,9 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 	// Le coin du quad en bas à droite.
 	quadEnglobantModele_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
 	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
+
+    // Effectuer une mise à jour.
+    animer(0.0);
 }
 
 ////////////////////////////////////////////////

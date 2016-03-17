@@ -12,8 +12,8 @@
 #define VISITEUR_VERIFICATION_QUAD_H
 
 #include "VisiteurAbstrait.h"
-#include "VisiteurMiseAJourQuad.h"
 #include <memory>
+#include "Utilitaire.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurSelection
@@ -47,6 +47,7 @@ public:
 private:
 	bool verifierPointEstSurTable(glm::dvec3 point);
 	bool objetsDansZoneSimulation_;
+    utilitaire::BoiteEnglobante boiteTable_;
 };
 
 ////////////////////////////////////////////////////////////////////////

@@ -11,7 +11,6 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "VisiteurSelection.h"
-#include "VisiteurMiseAJourQuad.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"

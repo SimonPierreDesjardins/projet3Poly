@@ -82,11 +82,7 @@ public:
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
 	/// Obtient le quadrilatère englobant du noeud.
-	inline utilitaire::QuadEnglobant obtenirQuadEnglobantCourant() const;
-	/// Assigne le quadrilatère englobant du noeud.
-	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
-	/// Obtenir la boite englobante du modèle.
-	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
+    inline const utilitaire::BoiteEnglobante& obtenirBoiteEnglobanteModele() const;
 
     virtual FormeEnglobanteAbstraite* obtenirFormeEnglobante();
     virtual const FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
@@ -414,46 +410,16 @@ inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDime
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantCourant() const
+/// @fn inline const utilitaire::BoiteEnglobante& NoeudAbstrait::obtenirBoiteEnglobanteModele() const
 ///
-/// Cette fonction permet d'obtenir le quad définisant la zone de sélection de l'objet.
+/// Cette fonction permet d'obtenir la boite englobante du modele.
 ///
-/// @return Un plan orthogonal à Z  représentant les bornes de l'objet dans l'espace 3d.
+/// @return La boite englobante du modele.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantCourant() const
+inline const utilitaire::BoiteEnglobante& NoeudAbstrait::obtenirBoiteEnglobanteModele() const
 {
-	return quadEnglobantCourant_;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quadEnglobant)
-///
-/// Cette fonction permet d'assigner le nouveau quad englobant au noeud.
-///
-/// @param[in] quadEnglobant : Le nouveau plan des bornes pour la sélection
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quadEnglobant)
-{
-	quadEnglobantCourant_ = quadEnglobant;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
-///
-/// Cette fonction permet d'obtenir le quad définit en fonction du modele.
-///
-/// @return Un plan orthogonal à Z  représentant les bornes de l'objet dans l'espace 3d.
-///
-////////////////////////////////////////////////////////////////////////
-inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
-{
-    return quadEnglobantModele_;
+    return boiteEnglobanteModele_;
 }
 
 ////////////////////////////////////////////////////////////////////////
