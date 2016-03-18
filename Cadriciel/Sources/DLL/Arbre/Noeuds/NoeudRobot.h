@@ -87,6 +87,7 @@ private:
 	float vitesseGauche_{ 0.f };
 
 protected:
+	float vitesseRotationCourante_{ 0.f };
 
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };

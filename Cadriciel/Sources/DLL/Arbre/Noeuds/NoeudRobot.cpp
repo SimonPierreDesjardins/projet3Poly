@@ -416,7 +416,26 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
 
 	//Calculs des nouvelles positions et du nouvel angle
-	angleRotation_ -= dt * vitesseRotation_;
+	float diffAngle = vitesseRotationCourante_ - vitesseRotation_;
+	if (diffAngle < 0)
+	{
+		diffAngle = -diffAngle;
+	}
+	if (diffAngle < dt*vitesseRotationCourante_)
+	{
+		
+	}
+	else if (vitesseRotationCourante_ < vitesseRotation_)
+	{
+		vitesseRotationCourante_ += dt * acceleration_;
+	}
+	else
+	{
+		vitesseRotationCourante_ -= dt * acceleration_;
+	}
+
+	angleRotation_ -= dt * vitesseRotationCourante_;
+	//vitesseRotationCourante_ -= acceleration_*dt;
 	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
 	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
 	vitesseDroite_ = vitesseDroiteTemp;
@@ -460,16 +479,25 @@ void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 	robotReflechi = glm::reflect(vitesseRobot, normale);
 	vitesseAngulaireRobotReflechi = glm::reflect(vitesseAngulaireRobot, normale);
 
+	vitesseRotationCourante_ = -vitesseRotationCourante_;
+
+	/*vitesseCouranteDroite_ = (sqrt(pow(robotReflechi.x, 2) + pow(robotReflechi.y, 2)) - atan(robotReflechi.y / robotReflechi.x)) / 2;
+	vitesseCouranteGauche_ = (sqrt(pow(robotReflechi.x, 2) + pow(robotReflechi.y, 2)) + atan(robotReflechi.y / robotReflechi.x)) / 2;*/
+
+	/////////////////////////////////////
 	double vitesseAngulaire = vitesseCouranteGauche_ - vitesseCouranteDroite_;
-
-	vitesseRotation_ = -500/*atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x)*//*+ MINIMUM_REBOND*vitesseAngulaire*/;
-
 	double vitesseRelative = vitesseCouranteDroite_ + vitesseCouranteGauche_;
+	double rapport = vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x;//////////////////////////////
+
+	//vitesseRotation_ = atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x)+ MINIMUM_REBOND * glm::sign(vitesseAngulaire); // Mur de gauche et droite marchent
+	//vitesseRotation_ = atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x)/*+ (-MINIMUM_REBOND * glm::sign(vitesseAngulaire))*/;
+	//////////////////////////
+	vitesseRotation_ = glm::sign(vitesseAngulaire)*glm::sign(rapport)*(atan(rapport) - MINIMUM_REBOND);
 
 	glm::dvec3 vecVitesseDroite = robotReflechi * vitesseAngulaireRobotReflechi;
 
-	vitesseCouranteDroite_ = glm::sign(vitesseRelative)*-MINIMUM_REBOND + FACTEUR_ATTENUATION*(-vitesseRelative * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2)));
-	vitesseCouranteGauche_ = glm::sign(vitesseRelative)*-MINIMUM_REBOND + FACTEUR_ATTENUATION*(-vitesseRelative + vitesseCouranteDroite_);
+	vitesseCouranteDroite_ = glm::clamp(glm::sign(vitesseRelative)*-MINIMUM_REBOND + FACTEUR_ATTENUATION*(-vitesseRelative * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2))), -50.0, 50.0);
+	vitesseCouranteGauche_ = glm::clamp(glm::sign(vitesseRelative)*-MINIMUM_REBOND + FACTEUR_ATTENUATION*(-vitesseRelative + vitesseCouranteDroite_), -50.0, 50.0);////////////////////////////////
 	/*if (vitesseRelative == 0)
 	{
 		vitesseRotation_ = glm::sign(vitesseAngulaire) * MINIMUM_REBOND*3;
@@ -493,6 +521,7 @@ void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 
 	vitesseDroiteCollision_ = 0;
 	vitesseGaucheCollision_ = 0;
+	vitesseRotation_ = 0;
 
 	//std::cout << "Collision avec un mur." << std::endl;
 }
