@@ -86,6 +86,7 @@ public:
 
     virtual FormeEnglobanteAbstraite* obtenirFormeEnglobante();
     virtual const FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
+    virtual void mettreAJourFormeEnglobante();
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;

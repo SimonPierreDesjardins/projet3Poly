@@ -42,7 +42,7 @@ public:
 private:
     RectangleEnglobant rectangleEnglobant_;
     
-    void mettreAJourFormeEnglobante();
+    virtual void mettreAJourFormeEnglobante();
 };
 
 #endif /// __ARBRE_NOEUDS_NOEUDMUR_H_

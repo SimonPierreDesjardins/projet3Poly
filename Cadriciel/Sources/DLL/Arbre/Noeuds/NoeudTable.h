@@ -27,7 +27,6 @@ class VisiteurAbstrait;
 ///////////////////////////////////////////////////////////////////////////
 class NoeudTable : public NoeudComposite
 {
-
 public:
 	/// Constructeur
 	NoeudTable(const std::string& typeNoeud);
@@ -37,10 +36,13 @@ public:
     virtual RectangleEnglobant* obtenirFormeEnglobante();
     virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
 
+    virtual void mettreAJourFormeEnglobante();
+
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	/// Accepter un visiteur.
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
 private:
     RectangleEnglobant rectangleEnglobant_;
 };

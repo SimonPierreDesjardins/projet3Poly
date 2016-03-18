@@ -186,7 +186,7 @@ void NoeudRobot::animer(float dt)
 	std::cout << "d : " << vitesseCouranteDroite_ << "\n g : " << vitesseCouranteGauche_ << std::endl;*/
     mettreAJourCapteurs();
     mettreAJourPosition(dt);
-    mettreAJourRectangleEnglobant();
+    mettreAJourFormeEnglobante();
 
     arbre_->accepterVisiteur(visiteur_.get());
 
@@ -406,7 +406,7 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::mettreAJourRectangleEnglobant()
+void NoeudRobot::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;

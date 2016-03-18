@@ -42,7 +42,7 @@ public:
 private:
     CercleEnglobant cercleEnglobant_;
 
-    void mettreAJourFormeEnglobante();
+    virtual void mettreAJourFormeEnglobante();
 };
  
 

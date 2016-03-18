@@ -60,6 +60,17 @@ const RectangleEnglobant* NoeudTable::obtenirFormeEnglobante() const
     return &rectangleEnglobant_;
 }
 
+void NoeudTable::mettreAJourFormeEnglobante()
+{
+    double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+    double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+
+    double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
+    double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
+
+    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
+    rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
+}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudTable::afficherConcret() const
@@ -77,8 +88,6 @@ void NoeudTable::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	// Affichage du modèle.
-	//glRotatef(90, 1, 0, 0);
-	//glRotatef(90, 0, 1, 0);
 	glColor4f(1, 1, 1, 1);
     glTranslated(0.0, 0.0, -2.0);
 	vbo_->dessiner();

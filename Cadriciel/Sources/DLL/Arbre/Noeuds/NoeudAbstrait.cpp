@@ -60,6 +60,10 @@ const FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
     return nullptr;
 }
 
+void NoeudAbstrait::mettreAJourFormeEnglobante()
+{
+    
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -543,7 +547,7 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
     boiteEnglobanteModele_ = utilitaire::calculerBoiteEnglobante(*modele_);
 
     // Effectuer une mise à jour.
-    animer(0.0);
+    mettreAJourFormeEnglobante();
 }
 
 ////////////////////////////////////////////////
