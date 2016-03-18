@@ -53,6 +53,7 @@ private:
     NoeudRobot* robot_{ nullptr };
     SuiveurLigne* suiveurLigne_;
     std::array<CapteurDistance, 3>* capteursDistance_;
+	bool estEnCollision_{ false };
 };
 
 #endif // VISITEUR_DETECTION_LIGNE_H

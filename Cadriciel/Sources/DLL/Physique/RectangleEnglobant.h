@@ -87,7 +87,6 @@ private:
     bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
         const double& min2, const double& max2) const;
 
-
     double angle_{ 0.0 };
     double hauteur_{ 0.0 };
     double largeur_{ 0.0 };
