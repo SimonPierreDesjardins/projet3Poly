@@ -59,7 +59,6 @@ VisiteurMiseAJourQuad::~VisiteurMiseAJourQuad()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAJourQuad::visiter(ArbreRendu* noeud)
 {
-	robot_ = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
 	table_->accepterVisiteur(this);
 }
 

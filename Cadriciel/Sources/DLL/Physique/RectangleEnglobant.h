@@ -75,6 +75,8 @@ public:
     virtual void afficher(const glm::dvec3& origine) const;
     virtual void afficher() const;
 
+	void calculerPositionCoins(glm::dvec3 coins[4]);
+
 private:
     void calculerDistancesPoint(glm::dvec3 distances[4], const glm::dvec3& point) const;
 
@@ -83,8 +85,6 @@ private:
 
     bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
         const double& min2, const double& max2) const;
-
-    void calculerPositionCoins(glm::dvec3 coins[4]);
 
     double angle_{ 0.0 };
     double hauteur_{ 0.0 };
