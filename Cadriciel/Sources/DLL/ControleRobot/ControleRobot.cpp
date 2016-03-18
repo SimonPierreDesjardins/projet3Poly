@@ -44,7 +44,12 @@ ControleRobot::ControleRobot()
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
-	debug = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirOptionDebogage(DEBOGAGE_COMPORTEMENTS);
+	// init des flags du capteur
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; i < 2; i++)
+			flagCapteur[i][j] = false;
+
+	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -124,7 +129,7 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 	//ComportementAbstrait* ancienComportement = comportement_;
 	comportement_ = vecteurComportements_ -> at(nouveauComportement).get();
 	
-	if (debug){
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_COMPORTEMENTS)){
 		utilitaire::time_in_HH_MM_SS_MMM();
 		std::cout << " - " << declencheur << " - " << comportement_->obtenirNomComportement() << endl;
 
@@ -208,7 +213,7 @@ void ControleRobot::initialiserBoucleRobot(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::terminerBoucleRobot(){
-
+	
 	// On garde temporairemtn la valeur de manuel
 	bool man = manuel;
 
@@ -222,6 +227,8 @@ void ControleRobot::terminerBoucleRobot(){
 
 	// Nous redonnons à manuel sa valeur de départ
 	manuel = man;
+	
+	traiterCommande(&CommandeRobot(ARRETER), false);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -236,35 +243,77 @@ void ControleRobot::terminerBoucleRobot(){
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
 	
-	while (!manuel) {
-		NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
-		std::string declencheur = "Capteur distance ";
-		for (int i = 0; i < capteurs->size();i++){
-			switch (i){
-			case 0:
-				declencheur += "droite: ";
-				break;
-			case 1:
-				declencheur += "centre: ";
-				break;
-			case 2:
-				declencheur += "gauche: ";
-				break;
-			}
-			if (capteurs->at(i).obtenirEtat() == 1){
+	while (!manuel) 
+	{
+		if (!enPause){
+			verifierCapteurs();
+			comportement_->mettreAJour();
+		}
+		else{
+			traiterCommande(&CommandeRobot(ARRETER), false);
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::boucleInfinieLogiqueRobot()
+///
+/// Vérifie l'état des capteurs à obstacles et change de comportement au besoin.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::verifierCapteurs(){
+	NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
+	std::string declencheur;
+	for (int i = 0; i < capteurs->size(); i++)
+	{
+		declencheur = "Capteur distance ";
+		switch (i)
+		{
+		case 0:
+			declencheur += "droite: ";
+			break;
+		case 1:
+			declencheur += "centre: ";
+			break;
+		case 2:
+			declencheur += "gauche: ";
+			break;
+		}
+
+		// Vérifions la zone securitaire
+		if (capteurs->at(i).obtenirEtat() == 1 )
+		{
+			if (!flagCapteur[i][0]){
+				// On empêche plusieurs detections à la fois
+				flagCapteur[i][0] = true;
 				declencheur += "Zone securitaire";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
 			}
-			else if (capteurs->at(i).obtenirEtat() == 2){
+		}
+		else{
+			//On permet la detection
+			flagCapteur[i][0] = false;
+		}
+
+		// vérifions la zone dangereuse
+		if (capteurs->at(i).obtenirEtat() == 2)
+		{
+			if (!flagCapteur[i][1]){
+				// On empêche plusieurs detections à la fois
+				flagCapteur[i][1] = true;
 				declencheur += "Zone dangereuse";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
 			}
 		}
-		comportement_->mettreAJour();
+		else{
+			// On permet la detection
+			flagCapteur[i][1] = false;
+		}
 	}
 }
-
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
@@ -316,6 +365,25 @@ bool ControleRobot::ligneDetectee(){
 	return 	obtenirNoeud()->obtenirSuiveurLigne() -> obtenirEtatCapteurs() != 0x00;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::ligneDetectee()
+///
+/// Fonction indiquant si le robot détecte une ligne. Utilisée par les comportements pour ne pas qu'ils aient
+/// à passer par le noeud du robot.
+///
+/// @return Si oui ou non une ligne est detectee.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::setEnPause(bool pause)
+{
+	enPause = pause;
+}
+
+bool ControleRobot::getEnPause()
+{
+	return enPause;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 //////////////////////////////////////////////////////////////////////////////

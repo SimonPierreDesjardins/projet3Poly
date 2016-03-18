@@ -80,7 +80,8 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
-            configuration = new Configure();
+            configuration = new Configure(ajouterProfilAMenu);
+            populerProfils();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -178,6 +179,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void buttonQuitter_Click(object sender, EventArgs e)
         {
+                configuration.Dispose();
                 Application.Exit();
         }
 
@@ -234,6 +236,32 @@ namespace InterfaceGraphique
             modeEditionMenuSimTest.Visible = !afficherMenu;
             premierePersonneMenuSimTest.Visible = afficherMenu;
             viewPort_.Visible = afficherMenu;
+        }
+
+        private void populerProfils()
+        {
+            foreach (string nomProfil in configuration.FichiersProfil)
+            {
+                ajouterProfilAMenu(nomProfil);
+            }
+            nomDernierProfil = configuration.NomProfilInitiale;
+            (profilsMenuSimTest.DropDownItems.Find(configuration.NomProfilInitiale, false)[0] as ToolStripMenuItem).Checked = true;
+        }
+
+        public void ajouterProfilAMenu(string nomProfil)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem(nomProfil);
+            item.Name = nomProfil;
+            item.Click += new EventHandler(profilItem_Click);
+            profilsMenuSimTest.DropDownItems.Add(item);
+        }
+        private string nomDernierProfil;
+        private void profilItem_Click(object sender, EventArgs e){
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            configuration.changerProfil(item.Text);
+            (profilsMenuSimTest.DropDownItems.Find(nomDernierProfil, false)[0] as ToolStripMenuItem).Checked = false;
+            nomDernierProfil = item.Text;
+            item.Checked = true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -709,6 +737,7 @@ namespace InterfaceGraphique
         private void bouttonSimulation__Click(object sender, EventArgs e)
         {
             ouvrirZone(true);
+
             if (PasserEnSimulation)
             {
                 afficherMenuPrincipal(false);
@@ -1199,12 +1228,14 @@ namespace InterfaceGraphique
                         afficherMenuPrincipal(true);
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         estEnPause = false;
+                        //FonctionsNatives.mettreEnPause(estEnPause);
                         picturePause.Visible = estEnPause;
                     }
                     break;
 
                 case Keys.Escape:
                     estEnPause = !estEnPause;
+                    //FonctionsNatives.mettreEnPause(estEnPause);
                     picturePause.Visible = estEnPause;
                     menuSimTest.Visible = estEnPause;
                     break;
@@ -1530,5 +1561,8 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern string obtenirCheminFichierZoneDefaut();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void mettreEnPause(bool estEnPause);
     }
 }

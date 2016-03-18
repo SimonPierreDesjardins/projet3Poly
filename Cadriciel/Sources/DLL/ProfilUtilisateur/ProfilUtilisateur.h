@@ -87,6 +87,11 @@ class ProfilUtilisateur
 
 		void assignerOptionsDebogages(bool optionsDebogages[]);
 
+		inline int obtenirDureeMaxComportement();
+		inline int obtenirDureeMinComportement();
+
+		inline int obtenirLargeurTotalDetectionDistance();
+
 		std::vector<std::unique_ptr<ComportementAbstrait>>* obtenirVecteurComportements();
 
 		bool obtenirOptionDebogage(optionsDebogagesEnum option);
@@ -118,6 +123,12 @@ class ProfilUtilisateur
 
 		const std::string DERNIER_PROFIL = "dernier_profil";
 
+		const int DUREE_MAX_COMPORTEMENT_MS = 2000;
+
+		const int DUREE_MIN_COMPORTEMENT_MS = 0;
+
+		const int LARGEUR_TOTAL_DETECTION_DISTANCE = 30;
+
 		std::string dernierProfil;
 
 		std::unordered_map<ConfigureControl, HWND> configureHandles;
@@ -127,7 +138,7 @@ class ProfilUtilisateur
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
 
-        std::array<CapteurDistance, NoeudRobot::N_CAPTEURS_DISTANCE> capteursDistance_;
+        NoeudRobot::ConteneurCapteursDistance capteursDistance_;
 
 		SuiveurLigne suiveurLigne_;
 
@@ -147,6 +158,18 @@ inline SuiveurLigne* ProfilUtilisateur::obtenirSuiveurLigne()
 inline NoeudRobot::ConteneurCapteursDistance* ProfilUtilisateur::obtenirCapteursDistance()
 {
     return &capteursDistance_;
+}
+
+inline int ProfilUtilisateur::obtenirDureeMaxComportement(){
+	return DUREE_MAX_COMPORTEMENT_MS;
+}
+
+inline int ProfilUtilisateur::obtenirDureeMinComportement(){
+	return DUREE_MIN_COMPORTEMENT_MS;
+}
+
+inline int ProfilUtilisateur::obtenirLargeurTotalDetectionDistance(){
+	return LARGEUR_TOTAL_DETECTION_DISTANCE;
 }
 ////////////////////////////////////////////////
 /// @}

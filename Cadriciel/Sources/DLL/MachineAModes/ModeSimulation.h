@@ -29,22 +29,31 @@ class ProfilUtilisateur;
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeSimulation : public ModeAbstrait
+class ModeSimulation : public ModeAbstrait 
 {
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_;
+	ProfilUtilisateur* profil_{ nullptr };
 	static std::array<char, 10> touchesNonConfigurable_;
 
+	bool lumiereAmbiante { true };
+	bool lumiereDirectionnelle { true };
+	bool lumiereSpot { true };
+
 public:
-
-
 	//Constructeur par défaut
 	ModeSimulation();
 	//Destructeur
 	virtual ~ModeSimulation();
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
+	void inverserLumiereAmbiante();
+	void inverserLumiereDirectionnelle();
+	void inverserLumiereSpot();
+
+	void preChangementDeProfil();
+	void postChangementDeProfil();
 
 	inline static std::array<char, 10>* getTouchesNonConfigurable();
 };

@@ -385,7 +385,10 @@ void ProfilUtilisateur::supprimerProfil(std::string nomProfil){
 }
 
 std::string ProfilUtilisateur::obtenirNomProfilDefaut(){
-	return PROFIL_DEFAUT;
+	std::ifstream ifs(CHEMIN_PROFIL + DERNIER_PROFIL);
+	std::string dernierProfil;
+	std::getline(ifs, dernierProfil);
+	return dernierProfil.substr(0,dernierProfil.find_first_of('.'));
 }
 
 void ProfilUtilisateur::assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur){
