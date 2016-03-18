@@ -128,19 +128,19 @@ CapteurDistance::~CapteurDistance()
 ////////////////////////////////////////////////////////////////////////////////
 void CapteurDistance::verifierDetection(NoeudPoteau* poteau)
 {
-    RectangleEnglobant rectangle = poteau->obtenirRectangleEnglobant();
+    CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
     // Si le capteur se trouve déjà en détection de zone de danger, 
     // on le laisse dans cet état.
     if (etat_ != DETECTION_ZONE_DANGER && estActif_)
     {
-        bool danger = zoneDanger_.calculerIntersection(rectangle);
+        bool danger = zoneDanger_.calculerIntersection(*cercle);
         if (!danger)
         {
             // Si le poteau n'est pas en zone de danger et on se trouve 
             // déjà en détection de zone sécuritaire, on le laisse dans cet état.
             if (etat_ != DETECTION_ZONE_SECURITAIRE) 
             {
-                bool securitaire = zoneSecuritaire_.calculerIntersection(rectangle);
+                bool securitaire = zoneSecuritaire_.calculerIntersection(*cercle);
                 if (!securitaire) 
                 {
                     etat_ = AUCUNE_DETECTION;
@@ -174,19 +174,19 @@ void CapteurDistance::verifierDetection(NoeudPoteau* poteau)
 ////////////////////////////////////////////////////////////////////////////////
 void CapteurDistance::verifierDetection(NoeudMur* mur)
 {
-    RectangleEnglobant rectangle = mur->obtenirRectangleEnglobant();
+    RectangleEnglobant* rectangle = mur->obtenirFormeEnglobante();
     // Si le capteur se trouve déjà en détection de  zone de danger,
     // on le laisse dans cet état.
     if (etat_ != DETECTION_ZONE_DANGER)
     {
-        bool danger = zoneDanger_.calculerIntersection(rectangle);
+        bool danger = zoneDanger_.calculerIntersection(*rectangle);
         if (!danger)
         {
             // Si le poteau n'est pas en zone de danger et on se trouve 
             // déjà en détection de zone sécuritaire, on le laisse dans cet état.
             if (etat_ != DETECTION_ZONE_SECURITAIRE) 
             {
-                bool securitaire = zoneSecuritaire_.calculerIntersection(rectangle);
+                bool securitaire = zoneSecuritaire_.calculerIntersection(*rectangle);
                 if (!securitaire) 
                 {
                     etat_ = AUCUNE_DETECTION;

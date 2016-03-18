@@ -15,7 +15,6 @@
 #include <map>
 #include <memory>
 #include "UsineNoeud.h"
-#include "VisiteurMiseAJourQuad.h"
 
 class NoeudAbstrait;
 
@@ -62,9 +61,6 @@ public:
    /// Calcule la profondeur maximale possible pour l'arbre de rendu.
    static unsigned int calculerProfondeurMaximale();
 
-	/// 
-	void mettreAJourQuad();
-
 	/// Accepter un visiteur.
 	void accepterVisiteur(VisiteurAbstrait* visiteur);
 
@@ -106,9 +102,6 @@ protected:
 
 	/// Chemin vers le fichier de zone sélectionné par l'utilisateur
 	std::string cheminFichierZone;
-
-	/// Visiteur permettant de mettre à jour les boites englobantes des enfants.
-	std::unique_ptr<VisiteurMiseAJourQuad> visiteurMiseAJourQuad_;
 
 private:
     /// Définition du type pour l'association du nom d'un type vers l'usine

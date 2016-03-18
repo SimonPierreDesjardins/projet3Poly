@@ -120,7 +120,7 @@ protected:
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
     void mettreAJourPosition(const float& dt);
-    void mettreAJourRectangleEnglobant();
+    virtual void mettreAJourFormeEnglobante();
 
 	bool estEnCollision_{ false };
 

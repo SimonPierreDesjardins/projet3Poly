@@ -14,6 +14,7 @@
 
 #include <memory>
 #include "glm\glm.hpp"
+#include "CercleEnglobant.h"
 
 class NoeudLigne;
 
@@ -29,6 +30,8 @@ class NoeudLigne;
 class CapteurOptique
 {
 public:
+    static const double RAYON_CERCLE_ENGLOBANT;
+
 	// Constructeur par défaut.
 	CapteurOptique();
 	// Constructeur par paramètres.
@@ -47,7 +50,7 @@ public:
     void verifierDetection(NoeudLigne* ligne);
 
 	// Mise à jour de l'état du capteur.
-	void mettreAJourPosition(const glm::dvec3& positionRobot, const double& angleRotationRobot);
+	void mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
     void afficher() const;
 	void assignerActif(bool estActif);
@@ -56,6 +59,7 @@ private:
 	bool ligneEstDetectee_{ false };
 	glm::dvec3 positionRelative_{ 0.0, 0.0, 0.0 };
     glm::dvec3 positionCourante_{ 0.0, 0.0, 0.0 };
+    CercleEnglobant cercleEnglobant_;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -49,14 +49,17 @@ public:
     inline void assignerPositionCentre(const glm::dvec3& positionCentre);
     // Obtenir la position du centre de la forme.
     inline glm::dvec3 obtenirPositionCentre() const;
+
+    virtual bool calculerEstDansLimites(const double& xMin, const double& xMax,
+                                        const double& yMin, const double& yMax) const = 0;
+
     // Permet de calculer si un point se trouve dans une forme englobante.
-    virtual bool calculerPointEstDansForme(const glm::dvec3& point) const = 0;
+    virtual bool calculerEstDansForme(const glm::dvec3& point) const = 0;
+
     // Permet de calculer si une forme est en intersection avec un cercle.
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const = 0;
     // Permet de calculer si une forme est en intersection avec un rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const = 0;
-
-    //virtual void mettreAJourFormeEnglobante(const utilitaire::BoiteEnglobante& boiteEnglobante, const glm::dvec3& positionCenter, const double& orientation);
 
     virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const = 0;
     virtual bool calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const = 0;

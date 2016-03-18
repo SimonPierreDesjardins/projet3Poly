@@ -190,12 +190,9 @@
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
     <ClCompile Include="Visiteur\VisiteurDeplacement.cpp" />
-    <ClCompile Include="Visiteur\VisiteurDetectionLigne.cpp" />
-    <ClCompile Include="Visiteur\VisiteurDetectionObstacle.cpp" />
     <ClCompile Include="Visiteur\VisiteurDetectionRobot.cpp" />
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp" />
     <ClCompile Include="Visiteur\VisiteurMiseAEchelle.cpp" />
-    <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp" />
     <ClCompile Include="Visiteur\VisiteurRotation.cpp" />
     <ClCompile Include="Visiteur\VisiteurSauvegarde.cpp" />
     <ClCompile Include="Visiteur\VisiteurSelection.cpp" />
@@ -266,12 +263,9 @@
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
     <ClInclude Include="Visiteur\VisiteurCreationPoteau.h" />
     <ClInclude Include="Visiteur\VisiteurDeplacement.h" />
-    <ClInclude Include="Visiteur\VisiteurDetectionLigne.h" />
-    <ClInclude Include="Visiteur\VisiteurDetectionObstacle.h" />
     <ClInclude Include="Visiteur\VisiteurDetectionRobot.h" />
     <ClInclude Include="Visiteur\VisiteurDuplication.h" />
     <ClInclude Include="Visiteur\VisiteurMiseAEchelle.h" />
-    <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h" />
     <ClInclude Include="Visiteur\VisiteurRotation.h" />
     <ClInclude Include="Visiteur\VisiteurSauvegarde.h" />
     <ClInclude Include="Visiteur\VisiteurSelection.h" />

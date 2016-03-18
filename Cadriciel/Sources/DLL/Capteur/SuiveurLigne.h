@@ -76,7 +76,7 @@ public:
     // Mettre à jour l'état des capteurs et leur position.
 	void mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot);
 
-    void verifierDetection(NoeudLigne* ligne);
+    void verifierDetection(NoeudLigne* jonction);
 
     void afficher() const;
 	void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);

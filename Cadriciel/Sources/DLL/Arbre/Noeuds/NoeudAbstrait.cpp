@@ -48,6 +48,22 @@ NoeudAbstrait::~NoeudAbstrait()
 {
 }
 
+// TODO: Doc.
+FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante()
+{
+    return nullptr;
+}
+
+// TODO: doc.
+const FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
+{
+    return nullptr;
+}
+
+void NoeudAbstrait::mettreAJourFormeEnglobante()
+{
+    
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -530,26 +546,8 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 	utilitaire::BoiteEnglobante boiteEnglobanteModele = utilitaire::calculerBoiteEnglobante(*modele_);
     boiteEnglobanteModele_ = utilitaire::calculerBoiteEnglobante(*modele_);
 
-	// Le coin du quad en haut à droite.
-	quadEnglobantModele_.coins[0].x = boiteEnglobanteModele_.coinMax.x;
-	quadEnglobantModele_.coins[0].y = boiteEnglobanteModele_.coinMax.y;
-
-	// Le coin du quad en haut à gauche.
-	quadEnglobantModele_.coins[1].x = boiteEnglobanteModele_.coinMin.x;
-	quadEnglobantModele_.coins[1].y = boiteEnglobanteModele_.coinMax.y;
-
-	// Le coin du quad en bas à gauche.
-	quadEnglobantModele_.coins[2].x = boiteEnglobanteModele_.coinMin.x;
-	quadEnglobantModele_.coins[2].y = boiteEnglobanteModele_.coinMin.y;
-	
-	// Le coin du quad en bas à droite.
-	quadEnglobantModele_.coins[3].x = boiteEnglobanteModele_.coinMax.x;
-	quadEnglobantModele_.coins[3].y = boiteEnglobanteModele_.coinMin.y;
-
-    if (formeEnglobante_ != nullptr)
-    {
-        formeEnglobante_->initialiser(boiteEnglobanteModele_);
-    }
+    // Effectuer une mise à jour.
+    mettreAJourFormeEnglobante();
 }
 
 ////////////////////////////////////////////////

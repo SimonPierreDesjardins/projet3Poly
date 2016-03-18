@@ -232,9 +232,6 @@
     <ClCompile Include="Visiteur\VisiteurSauvegarde.cpp">
       <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurVerificationQuad.cpp">
-      <Filter>Source Files\Visiteur</Filter>
-    </ClCompile>
     <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp">
       <Filter>Source Files\MachineAEtats</Filter>
     </ClCompile>
@@ -243,10 +240,6 @@
     </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudLigne.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
-    </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurMiseAJourQuad.cpp">
-      <Filter>Source Files\Visiteur</Filter>
-      <Filter>Source Files\Visiteur</Filter>
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurDuplication.cpp">
       <Filter>Source Files\Visiteur</Filter>
@@ -296,20 +289,10 @@
     <ClCompile Include="Capteur\CapteurOptique.cpp">
       <Filter>Source Files\Capteur</Filter>
     </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurDetectionLigne.cpp">
-      <Filter>Source Files\Visiteur</Filter>
-    </ClCompile>
-    <ClCompile Include="Visiteur\VisiteurDetectionObstacle.cpp">
-      <Filter>Source Files\Visiteur</Filter>
-    </ClCompile>
     <ClCompile Include="Tests\PhysiqueTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
     <ClCompile Include="Physique\RectangleEnglobant.cpp">
-      <Filter>Source Files\Physique</Filter>
-    </ClCompile>
-
-    <ClCompile Include="Physique\CercleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
     <ClCompile Include="Visiteur\VisiteurDetectionRobot.cpp">
@@ -317,10 +300,15 @@
     </ClCompile>
     <ClCompile Include="Physique\FormeEnglobanteAbstraite.cpp">
       <Filter>Source Files\Physique</Filter>
-	 </ClCompile>
+    </ClCompile>
     <ClCompile Include="Arbre\Noeuds\NoeudRoues.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
-
+    </ClCompile>
+    <ClCompile Include="Visiteur\VisiteurVerificationQuad.cpp">
+      <Filter>Source Files\Visiteur</Filter>
+    </ClCompile>
+    <ClCompile Include="Physique\CercleEnglobant.cpp">
+      <Filter>Source Files\Physique</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,9 +453,6 @@
     <ClInclude Include="Visiteur\VisiteurVerificationQuad.h">
       <Filter>Header Files\Visiteur</Filter>
     </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurMiseAJourQuad.h">
-      <Filter>Header Files\Visiteur</Filter>
-    </ClInclude>
     <ClInclude Include="MachineAEtats\EtatTypes.h">
       <Filter>Header Files\MachineAEtats</Filter>
     </ClInclude>
@@ -531,19 +516,12 @@
     <ClInclude Include="Capteur\CapteurOptique.h">
       <Filter>Header Files\Capteur</Filter>
     </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurDetectionLigne.h">
-      <Filter>Header Files\Visiteur</Filter>
-    </ClInclude>
-    <ClInclude Include="Visiteur\VisiteurDetectionObstacle.h">
-      <Filter>Header Files\Visiteur</Filter>
-    </ClInclude>
     <ClInclude Include="Tests\PhysiqueTest.h">
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="Physique\RectangleEnglobant.h">
       <Filter>Header Files\Physique</Filter>
     </ClInclude>
-
     <ClInclude Include="Physique\CercleEnglobant.h">
       <Filter>Header Files\Physique</Filter>
     </ClInclude>
@@ -552,10 +530,9 @@
     </ClInclude>
     <ClInclude Include="Visiteur\VisiteurDetectionRobot.h">
       <Filter>Header Files\Visiteur</Filter>
-	 </ClInclude>
+    </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudRoues.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
-
     </ClInclude>
   </ItemGroup>
 </Project>

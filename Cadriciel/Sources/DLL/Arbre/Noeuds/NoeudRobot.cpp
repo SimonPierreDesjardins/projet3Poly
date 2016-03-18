@@ -73,24 +73,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 
 	positionRelative_ = depart_->obtenirPositionRelative();
 	angleRotation_ = depart_->obtenirAngleRotation();
-	positionDepart();
-    formeEnglobante_ = &rectangleEnglobant_;
 
-	/*ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	suiveurLigne_ = profil->obtenirSuiveurLigne();
-	capteursDistance_ = profil->obtenirCapteursDistance();
-
-	CE QUI ÉTAIT DANS ANIMATION AVANT LE MERGE
-
-	// À modifier avec le merge du profile.
-	visiteur_ = make_unique<VisiteurDetectionRobot>(this);
-
-	positionRelative_ = depart_->obtenirPositionRelative();
-	angleRotation_ = depart_->obtenirAngleRotation();
-	formeEnglobante_ = &rectangleEnglobant_;*/
-
-
-
+	positionDepart();	
 
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -214,10 +198,13 @@ void NoeudRobot::animer(float dt)
 {
 	/*std::cout << "d c : " << vitesseCouranteDroite_ << "\n g c : " << vitesseCouranteGauche_ << std::endl;
 	std::cout << "d : " << vitesseCouranteDroite_ << "\n g : " << vitesseCouranteGauche_ << std::endl;*/
-	mettreAJourCapteurs();
-	mettreAJourRectangleEnglobant();
-	arbre_->accepterVisiteur(visiteur_.get());
-	mettreAJourPosition(dt);
+
+    mettreAJourCapteurs();
+    mettreAJourPosition(dt);
+    mettreAJourFormeEnglobante();
+
+    arbre_->accepterVisiteur(visiteur_.get());
+
 
 	positionnerRoues();
 }
@@ -236,10 +223,11 @@ void NoeudRobot::animer(float dt)
 
 bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 {
+
 	if (poteau == nullptr) return false;
 
-	CercleEnglobant cercle = poteau->obtenirCercleEnglobant();
-	bool collision = rectangleEnglobant_.calculerIntersection(cercle);
+	CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
+	bool collision = rectangleEnglobant_.calculerIntersection(*cercle);
 	//TODO:
 	/*
 	Calcul des paramètres pour simuler la collision ici.
@@ -254,6 +242,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 		effectuerCollision(normalePoteau);
 	}
 	return collision;
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -272,13 +261,10 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 
 bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
-	if (noeud == nullptr) return false;
 
-
-	RectangleEnglobant rectangle = noeud->obtenirRectangleEngobant();
-	bool collision = rectangleEnglobant_.calculerIntersection(rectangle);
-
-
+    RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
+    bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
+ 
 
 	//TODO: 
 	/*
@@ -291,7 +277,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 	{
 		std::cout << "Collision avec un mur." << std::endl;
 		glm::dvec3 normaleMur, perpendiculaireMur;
-		rectangle.calculerVecteursOrientation(normaleMur, perpendiculaireMur);
+		rectangle->calculerVecteursOrientation(normaleMur, perpendiculaireMur);
 
 		effectuerCollision(normaleMur);
 	}
@@ -311,19 +297,20 @@ bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 ///
 ////////////////////////////////////////////////////////////////////////
 
+
 bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 {
 
 
-	RectangleEnglobant rectangle = noeud->obtenirRectangleEnglobant();
+	RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
 	// TODO: à changer pour vérifier
 	glm::dvec3 coins[4];
-	rectangleEnglobant_.calculerPositionCoins(coins);
-	
+   //rectangleEnglobant_.calculerPositionCoins(coins);
+
 	bool collision = false;
 	for (unsigned i = 0; i < 4 && !collision; i++)
 	{
-		if (!rectangle.calculerPointEstDansForme(coins[i]))
+		if (!rectangle->calculerEstDansForme(coins[i]))
 		{
 			collision = true;
 		}
@@ -333,13 +320,15 @@ bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 	{
 		std::cout << "Collision avec une table" << std::endl;
 		glm::dvec3 normaleTable, perpendiculaireTable;
-		rectangle.calculerVecteursOrientation(normaleTable, perpendiculaireTable);
+		rectangle->calculerVecteursOrientation(normaleTable, perpendiculaireTable);
 
 		effectuerCollision(normaleTable);
 	}
 	return collision;
 
+
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -477,10 +466,18 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::mettreAJourRectangleEnglobant()
+void NoeudRobot::mettreAJourFormeEnglobante()
 {
-	rectangleEnglobant_.assignerPositionCentre(positionCourante_ + POSITION_RELATIVE_CERCLE_ENGLOBANT);
-	rectangleEnglobant_.assignerAngle(angleRotation_);
+
+    double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+    double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+
+    double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
+    double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
+
+    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
+    rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
+
 }
 
 ////////////////////////////////////////////////////////////////////////

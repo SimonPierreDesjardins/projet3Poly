@@ -99,15 +99,6 @@ void VisiteurMiseAJourQuad::visiter(NoeudDuplication* noeud)
 		positionVirtuelleParent = calculerPositionVirtuelle(parent->obtenirQuadEnglobantCourant());
 	}
 
-    /// Mettre à jour le rectangle englobant de la duplication.
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-    noeud->mettreAJourRectangleEnglobant(position, 0.0, 0.0, 0.0);
-
 	/// Mettre à jour le quad de la duplication.
 	utilitaire::QuadEnglobant quad;
 	for (int i = 0; i < quad.N_COINS; i++) {
@@ -143,23 +134,6 @@ void VisiteurMiseAJourQuad::visiter(NoeudPoteau* noeud)
 	// Calculer la position des coins du quad.
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
 
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-
-    double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
-    double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
-
-    double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle();
-    largeur *= facteurMiseAEchelle;
-    hauteur *= facteurMiseAEchelle;
-
-    noeud->mettreAJourRectangleEnglobant(position, 0.0, hauteur, largeur);
-
 	for (int i = 0; i < quad.N_COINS; i++) {
 		quad.coins[i] *= noeud->obtenirFacteurMiseAEchelle();
 		quad.coins[i] += (positionVirtuelleParent + noeud->obtenirPositionRelative());
@@ -187,23 +161,12 @@ void VisiteurMiseAJourQuad::visiter(NoeudMur* noeud)
 		positionVirtuelleParent = calculerPositionVirtuelle(parent->obtenirQuadEnglobantCourant());
 	}
 
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-    double angle = noeud->obtenirAngleRotation();
-
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
     double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
     double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
 
     double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle();
     largeur *= facteurMiseAEchelle;
-
-    noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
 
 	// Calculer la position des coins du quad.
 	glm::dvec3 tmp = { 0.0, 0.0, 0.0 };
@@ -234,15 +197,6 @@ void VisiteurMiseAJourQuad::visiter(NoeudLigne* noeud)
 	if (parent != nullptr) {
 		positionVirtuelleParent = calculerPositionVirtuelle(parent->obtenirQuadEnglobantCourant());
 	}
-
-    // Mettre à jour le rectangle de la ligne.
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-    noeud->mettreAJourRectangleEnglobant(position, 0.0, 0.0, 0.0);
 
 	/// Mettre à jour le quad de la duplication.
 	utilitaire::QuadEnglobant quad;
@@ -277,24 +231,8 @@ void VisiteurMiseAJourQuad::visiter(NoeudSegment* noeud)
 		positionVirtuelleParent = calculerPositionVirtuelle(parent->obtenirQuadEnglobantCourant());
 	}
 
-    // Mise à jour du rectangle.
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-    double angle = noeud->obtenirAngleRotation();
-
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
-    double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
-    double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
 
-    double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle();
-    largeur *= facteurMiseAEchelle;
-
-    noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
     // Mise à jour du quad.
 	glm::dvec3 tmp = { 0.0, 0.0, 0.0 };
 	for (int i = 0; i < quad.N_COINS; i++) {
@@ -326,23 +264,8 @@ void VisiteurMiseAJourQuad::visiter(NoeudJonction* noeud)
 	if (parent != nullptr) {
 		positionVirtuelleParent = calculerPositionVirtuelle(parent->obtenirQuadEnglobantCourant());
 	}
-    
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
 
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
-    double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
-    double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
-
-    double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle();
-    largeur *= facteurMiseAEchelle;
-    hauteur *= facteurMiseAEchelle;
-
-    noeud->mettreAJourRectangleEnglobant(position, 0.0, hauteur, largeur);
 
 	// Calculer la position des coins du quad.
 	glm::dvec3 tmp;
@@ -372,19 +295,8 @@ void VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
 		positionVirtuelleParent = calculerPositionVirtuelle(parent->obtenirQuadEnglobantCourant());
 	}
 
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-    double angle = noeud->obtenirAngleRotation();
 
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
-    double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
-    double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
-
-    noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
 
 	glm::dvec3 tmp = { 0.0, 0.0, 0.0 };
 	for (int i = 0; i < quad.N_COINS; i++) {
@@ -410,24 +322,6 @@ void VisiteurMiseAJourQuad::visiter(NoeudDepart* noeud)
 void VisiteurMiseAJourQuad::visiter(NoeudRobot* noeud)
 {
 	utilitaire::QuadEnglobant quad = noeud->obtenirQuadEnglobantModele();
-
-    // Mise à jour du rectangle englobant.
-	NoeudAbstrait* parent = noeud->obtenirParent();
-    glm::dvec3 positionParent = { 0.0, 0.0, 0.0 };	
-    if (parent != nullptr)
-    {
-        positionParent = parent->obtenirRectangleEnglobant().obtenirPositionCentre();
-    }
-
-    glm::dvec3 position = positionParent + noeud->obtenirPositionRelative();
-	position.x += 1.35;
-    double angle = noeud->obtenirAngleRotation();
-
-	quad = noeud->obtenirQuadEnglobantModele();
-    double largeur = glm::abs(quad.coins[0].x - quad.coins[1].x);
-    double hauteur = glm::abs(quad.coins[0].y - quad.coins[3].y);
-
-    //noeud->mettreAJourRectangleEnglobant(position, angle, hauteur, largeur);
 
     // Mise à jour du quad englobant.
 	glm::dvec3 tmp = { 0.0, 0.0, 0.0 };

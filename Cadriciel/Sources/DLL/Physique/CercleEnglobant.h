@@ -38,15 +38,18 @@ public:
     inline void assignerRayon(const double& rayon);
     inline double obtenirRayon() const;
 
-    virtual bool calculerPointEstDansForme(const glm::dvec3& point) const;
+    void mettreAJour(const glm::dvec3& positionCentre, const double& rayon);
+
+    virtual bool calculerEstDansLimites(const double& xMin, const double& xMax,
+                                        const double& yMin, const double& yMax) const;
+
+    virtual bool calculerEstDansForme(const glm::dvec3& point) const;
 
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
         
 	virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
 	virtual bool calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const;
-
-    void mettreAJour(const glm::dvec3& positionCentre, const double& rayon);
 
     virtual void afficher(const glm::dvec3& origine) const;
     virtual void afficher() const;
