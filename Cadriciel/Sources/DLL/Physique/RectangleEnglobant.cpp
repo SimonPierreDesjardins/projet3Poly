@@ -297,5 +297,5 @@ bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::d
 {
     glm::dvec3 normaleCollision = cercle.obtenirPositionCentre() - positionCentre_;
     normale = glm::normalize(normaleCollision);
-    return true;
+    return enCollision_;
 }

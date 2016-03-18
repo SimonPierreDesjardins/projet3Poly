@@ -42,12 +42,12 @@ public:
 
     // Modifications des attributs.
     inline void assignerAngle(const double& angle);
-    inline void assignerHauteur(const double& hauteur);
-    inline void assignerLargeur(const double& largeur);
-    
-    // Accès aux attributs.
     inline double obtenirAngle() const;
+
+    inline void assignerHauteur(const double& hauteur);
     inline double obtenirHauteur() const;
+
+    inline void assignerLargeur(const double& largeur);
     inline double obtenirLargeur() const;
 
     void mettreAJour(const glm::dvec3& positionCentre_, const double& angle, const double& hauteur, const double& largeur);

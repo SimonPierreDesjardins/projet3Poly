@@ -209,14 +209,33 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 {
     if (poteau == nullptr) return false;
 	CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
-    bool collision = rectangleEnglobant_.calculerIntersection(*cercle);
-	if (collision)
+    bool enIntersection = rectangleEnglobant_.calculerIntersection(*cercle);
+    bool enCollision = cercle->obtenirEnCollision();
+	if (enIntersection)
 	{
-        glm::dvec3 normaleCollision;
-        rectangleEnglobant_.calculerCollision(*cercle, normaleCollision);
-		effectuerCollision(normaleCollision);
+        // Si on se trouve en intersection et que le cercle n'est pas déjà en collision.
+        if (!enCollision)
+        {
+            // Le cercle est maintenant en collision.
+            enCollision = true;
+            cercle->assignerEnCollision(enCollision);
+
+            // On effectue une collision.
+            glm::dvec3 normaleCollision;
+            cercle->calculerCollision(rectangleEnglobant_, normaleCollision);
+            effectuerCollision(normaleCollision);
+        }
 	}
-	return collision;
+    else
+    {
+        // Si le poteau était en collision mais n'est plus en intersection, il n'est plus en collision.
+        if (enCollision)
+        {
+            enCollision = false;
+            cercle->assignerEnCollision(enCollision);
+        }
+    }
+	return enCollision;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -234,13 +253,11 @@ bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
     RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
     bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
- 
 	if (collision)
 	{
 		glm::dvec3 normaleMur, perpendiculaireMur;
 		rectangle->calculerVecteursOrientation(normaleMur, perpendiculaireMur);
-
-		effectuerCollision(normaleMur);
+		//effectuerCollision(normaleMur);
 	}
 	return collision;
 }
@@ -314,10 +331,7 @@ void NoeudRobot::mettreAJourCapteurs()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourPosition(const float& dt)
 {
-	//std::cout << estEnCollision_ << std::endl;
 	float vitesseDroiteTemp = vitesseDroite_, vitesseGaucheTemp = vitesseGauche_;
-	//std::cout << "d c : " << vitesseCouranteDroite_ << "d : " << vitesseDroite_ << std::endl;
-	//std::cout << "g c : " << vitesseCouranteDroite_ << "g : " << vitesseGauche_ << std::endl;
 	if (!estEnCollision_)
 	{
 		//Calcul de la différence entre les vitesses de gauche et droite
@@ -328,7 +342,6 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 		vitesseDroite_ = vitesseDroiteCollision_;
 		vitesseGauche_ = vitesseGaucheCollision_;
 	}
-	//std::cout << "d c : " << vitesseCouranteDroite_ << "d : " << vitesseDroite_ << std::endl;
 	//Calcul de la résultante de la vitesse relative
 	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
 	if (diffD < 0)
@@ -444,6 +457,7 @@ void NoeudRobot::mettreAJourFormeEnglobante()
     glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
     utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, angleRotation_);
+
     glm::dvec3 positionRectangle = { positionCourante_.x + positionBoite.x, positionCourante_.y + positionBoite.y, 0.0 };
 
     rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
@@ -461,61 +475,29 @@ void NoeudRobot::mettreAJourFormeEnglobante()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 {
-	// TODO: Continuer l'implémentation de cette méthode.
 	estEnCollision_ = true;
 	glm::dvec3 robotReflechi, vitesseAngulaireRobotReflechi;
 
-	glm::dvec3 vitesseRobot, vitesseAngulaireRobot;
-	rectangleEnglobant_.calculerVecteursOrientation(vitesseRobot, vitesseAngulaireRobot);
-
-	robotReflechi = glm::reflect(vitesseRobot, normale);
-	vitesseAngulaireRobotReflechi = glm::reflect(vitesseAngulaireRobot, normale);
-
+	glm::dvec3 vitesseTranslation, vitesseRotation;
+	rectangleEnglobant_.calculerVecteursOrientation(vitesseTranslation, vitesseRotation);
+	robotReflechi = glm::reflect(vitesseTranslation, normale);
+	vitesseAngulaireRobotReflechi = glm::reflect(vitesseTranslation, normale);
 	vitesseRotationCourante_ = -vitesseRotationCourante_;
 
-	/*vitesseCouranteDroite_ = (sqrt(pow(robotReflechi.x, 2) + pow(robotReflechi.y, 2)) - atan(robotReflechi.y / robotReflechi.x)) / 2;
-	vitesseCouranteGauche_ = (sqrt(pow(robotReflechi.x, 2) + pow(robotReflechi.y, 2)) + atan(robotReflechi.y / robotReflechi.x)) / 2;*/
-
-	/////////////////////////////////////
 	double vitesseAngulaire = vitesseCouranteGauche_ - vitesseCouranteDroite_;
 	double vitesseRelative = vitesseCouranteDroite_ + vitesseCouranteGauche_;
-	double rapport = vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x;//////////////////////////////
+	double rapport = vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x;
 
-	//vitesseRotation_ = atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x)+ MINIMUM_REBOND * glm::sign(vitesseAngulaire); // Mur de gauche et droite marchent
-	//vitesseRotation_ = atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x)/*+ (-MINIMUM_REBOND * glm::sign(vitesseAngulaire))*/;
-	//////////////////////////
 	vitesseRotation_ = glm::sign(vitesseAngulaire)*glm::sign(rapport)*(atan(rapport) - MINIMUM_REBOND);
 
 	glm::dvec3 vecVitesseDroite = robotReflechi * vitesseAngulaireRobotReflechi;
 
 	vitesseCouranteDroite_ = glm::clamp(glm::sign(vitesseRelative)*-MINIMUM_REBOND + FACTEUR_ATTENUATION*(-vitesseRelative * sqrt(pow(vecVitesseDroite.x, 2) + pow(vecVitesseDroite.y, 2))), -50.0, 50.0);
-	vitesseCouranteGauche_ = glm::clamp(glm::sign(vitesseRelative)*-MINIMUM_REBOND + FACTEUR_ATTENUATION*(-vitesseRelative + vitesseCouranteDroite_), -50.0, 50.0);////////////////////////////////
-	/*if (vitesseRelative == 0)
-	{
-		vitesseRotation_ = glm::sign(vitesseAngulaire) * MINIMUM_REBOND*3;
-	}*/
-
-	////Hein
-	//	if (0.0 < vitesseRelative && vitesseRelative < 3.0)
-	//	{
-	//		vitesseCouranteDroite_ -= 10.0;
-	//		vitesseCouranteGauche_ -= 6.0;
-	//	}
-	//	else if (-3.0 < vitesseRelative && vitesseRelative < 0.0)
-	//	{
-	//		vitesseCouranteDroite_ += 10.0;
-	//		vitesseCouranteGauche_ += 6.0;
-	//	}
-	//	std::cout << "Vitesse Courante Droite" << vitesseCouranteDroite_ << std::endl;
-	//	std::cout << "Vitesse Courante Gauche" << vitesseCouranteGauche_ << std::endl;
-	//	std::cout << "Vitesse relative" << vitesseRelative << std::endl;
-
+	vitesseCouranteGauche_ = glm::clamp(glm::sign(vitesseRelative)*-MINIMUM_REBOND + FACTEUR_ATTENUATION*(-vitesseRelative + vitesseCouranteDroite_), -50.0, 50.0);
 
 	vitesseDroiteCollision_ = 0;
 	vitesseGaucheCollision_ = 0;
 	vitesseRotation_ = 0;
-
-	//std::cout << "Collision avec un mur." << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////

@@ -45,10 +45,13 @@ public:
     // Initiliser certains attributs de la forme englobante en fonction d'une boite englobante.
     virtual void initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante) = 0;
 
-    // Assigner la position du centre de la forme.
+    // Accès à la position du centre de la forme englobante.
     inline void assignerPositionCentre(const glm::dvec3& positionCentre);
-    // Obtenir la position du centre de la forme.
-    inline glm::dvec3 obtenirPositionCentre() const;
+    inline const glm::dvec3& obtenirPositionCentre() const;
+
+    // Accès à l'attribut qui indique si la forme est en collision.
+    inline void assignerEnCollision(const bool& enCollision); 
+    inline bool obtenirEnCollision() const;
 
     virtual bool calculerEstDansLimites(const double& xMin, const double& xMax,
                                         const double& yMin, const double& yMax) const = 0;
@@ -70,6 +73,7 @@ public:
     
 protected:
     glm::dvec3 positionCentre_{ 0.0, 0.0, 0.0 };
+    bool enCollision_{ false };
 };
 
 inline void FormeEnglobanteAbstraite::assignerPositionCentre(const glm::dvec3& positionCentre)
@@ -77,9 +81,19 @@ inline void FormeEnglobanteAbstraite::assignerPositionCentre(const glm::dvec3& p
     positionCentre_ = positionCentre;
 }
 
-inline glm::dvec3 FormeEnglobanteAbstraite::obtenirPositionCentre() const
+inline const glm::dvec3& FormeEnglobanteAbstraite::obtenirPositionCentre() const
 {
     return positionCentre_;
+}
+
+inline void FormeEnglobanteAbstraite::assignerEnCollision(const bool& enCollision)
+{
+    enCollision_ = enCollision;
+}
+
+inline bool FormeEnglobanteAbstraite::obtenirEnCollision() const
+{
+    return enCollision_;
 }
 
 #endif // FORME_ENGLOBANTE_ABSTRAITE_H
