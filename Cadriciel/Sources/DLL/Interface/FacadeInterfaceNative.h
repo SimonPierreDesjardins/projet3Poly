@@ -86,6 +86,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil);
 	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause);
 
+	__declspec(dllexport) int* __cdecl obtenirLimitesParametres();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

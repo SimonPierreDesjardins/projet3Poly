@@ -600,6 +600,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause){
 		//FacadeModele::obtenirInstance()->obtenirMode()->
 	}
+
+	__declspec(dllexport) int* __cdecl obtenirLimitesParametres(){
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirLimiteParametres();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
