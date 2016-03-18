@@ -710,7 +710,7 @@ namespace InterfaceGraphique
         }
 
         public void changerProfil(string nomProfil){
-            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
+            comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfil);
         }
 
         ////////////////////////////////////////////////////////////////////////
