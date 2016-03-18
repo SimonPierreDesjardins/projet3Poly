@@ -107,8 +107,11 @@ void NoeudDepart::mettreAJourFormeEnglobante()
 
     double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
+    glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
-    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
+    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, angleRotation_);
+    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoite.x, positionCourante_.y + positionBoite.y, 0.0 };
+
     rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
 }
 

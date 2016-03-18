@@ -59,9 +59,8 @@ const double MINIMUM_REBOND = 5;
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot::NoeudRobot(const std::string& typeNoeud)
-: NoeudComposite{ typeNoeud }
+    : NoeudComposite{ typeNoeud }
 {
-
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 
@@ -76,6 +75,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 
 	positionRelative_ = depart_->obtenirPositionRelative();
 	angleRotation_ = depart_->obtenirAngleRotation();
+
 	positionDepart();	
 	
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -148,6 +148,7 @@ void NoeudRobot::afficherConcret() const
 			capteursDistance_->at(i).afficher();
 		}
 	}    
+    
 	// Restauration de la matrice.
 	glPopMatrix();
 
@@ -207,14 +208,15 @@ void NoeudRobot::animer(float dt)
 bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 {
     if (poteau == nullptr) return false;
-    CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
+	CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
     bool collision = rectangleEnglobant_.calculerIntersection(*cercle);
-    if (collision)
-    {
-        //TODO: Remplacer le cout par le calcul et 
-        //effectuerCollision();
-    }
-    return collision;
+	if (collision)
+	{
+        glm::dvec3 normaleCollision;
+        rectangleEnglobant_.calculerCollision(*cercle, normaleCollision);
+		effectuerCollision(normaleCollision);
+	}
+	return collision;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -230,11 +232,9 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 ////////////////////////////////////////////////////////////////////////
 bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
-	if (noeud == nullptr) return false;
-
-	RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
-	bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
-
+    RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
+    bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
+ 
 	if (collision)
 	{
 		glm::dvec3 normaleMur, perpendiculaireMur;
@@ -261,8 +261,9 @@ bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 	RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
 	// TODO: à changer pour vérifier
 	glm::dvec3 coins[4];
-	rectangleEnglobant_.calculerPositionCoins(coins);
+    rectangleEnglobant_.calculerPositionCoins(coins);
 	bool collision = false;
+
 	for (unsigned i = 0; i < 4 && !collision; i++)
 	{
 		if (!rectangle->calculerEstDansForme(coins[i]))
@@ -270,17 +271,15 @@ bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 			collision = true;
 		}
 	}
-	//std::cout << "Collision : " << collision << std::endl;
 	if (collision)
 	{
-		std::cout << "Collision avec une table" << std::endl;
 		glm::dvec3 normaleTable, perpendiculaireTable;
 		rectangle->calculerVecteursOrientation(normaleTable, perpendiculaireTable);
-
 		effectuerCollision(normaleTable);
 	}
 	return collision;
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -398,9 +397,7 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			}
 		}
 	}
-
 	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
-
 	//Calculs des nouvelles positions et du nouvel angle
 	float diffAngle = vitesseRotationCourante_ - vitesseRotation_;
 	if (diffAngle < 0)
@@ -444,8 +441,11 @@ void NoeudRobot::mettreAJourFormeEnglobante()
 
     double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
+    glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
-    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
+    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, angleRotation_);
+    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoite.x, positionCourante_.y + positionBoite.y, 0.0 };
+
     rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
 }
 
