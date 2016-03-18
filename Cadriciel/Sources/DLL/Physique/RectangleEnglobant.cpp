@@ -252,9 +252,9 @@ void RectangleEnglobant::afficher(const glm::dvec3& origine) const
     glPushMatrix();
 
     glColor3d(1.0, 0.0, 0.0);
-    glRotated(angle_, 0.0, 0.0, 1.0);
 
     glTranslated(positionRelative.x, positionRelative.y, 0.0);
+    glRotated(angle_, 0.0, 0.0, 1.0);
 
     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glBegin(GL_QUADS);
@@ -295,25 +295,7 @@ bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, 
 
 bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::dvec3& normale) const
 {
-    glm::dvec3 coins[4];
-    calculerPositionCoins(coins);
-    glm::dvec3 coinMin = coins[0];
-    glm::dvec3 positionCercle = cercle.obtenirPositionCentre();
-    double distanceMin = glm::distance(coins[0], positionCercle);
-    for (int i = 0; i < 3; i++)
-    {
-        double distance = glm::distance(coins[i], positionCercle);
-        if (distance < distanceMin)
-        {
-            distanceMin = distance;
-        }
-    }
-    double rayon = cercle.obtenirRayon();
-    bool collision = (distanceMin <= rayon);
-    if (collision)
-    {
-        normale = positionCentre_ - positionCercle;
-        normale = glm::normalize(normale);
-    }
-    return collision;
+    glm::dvec3 normaleCollision = cercle.obtenirPositionCentre() - positionCentre_;
+    normale = glm::normalize(normaleCollision);
+    return true;
 }

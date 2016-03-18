@@ -196,15 +196,11 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(float dt)
 {
-	/*std::cout << "d c : " << vitesseCouranteDroite_ << "\n g c : " << vitesseCouranteGauche_ << std::endl;
-	std::cout << "d : " << vitesseCouranteDroite_ << "\n g : " << vitesseCouranteGauche_ << std::endl;*/
-
-    mettreAJourCapteurs();
     mettreAJourPosition(dt);
+    mettreAJourCapteurs();
     mettreAJourFormeEnglobante();
 
     arbre_->accepterVisiteur(visiteur_.get());
-
 
 	positionnerRoues();
 }
@@ -223,26 +219,18 @@ void NoeudRobot::animer(float dt)
 
 bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 {
-
-	if (poteau == nullptr) return false;
-
 	CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
-	bool collision = rectangleEnglobant_.calculerIntersection(*cercle);
-	//TODO:
-	/*
-	Calcul des paramètres pour simuler la collision ici.
-	*/
+    bool collision = false; // rectangleEnglobant_.calculerIntersection(*cercle);
+
+    /*
 	if (collision)
 	{
-		std::cout << "Collision avec un mur." << std::endl;
-		glm::dvec3 normalePoteau, perpendiculairePoteau;
-		//cercle.calculerVecteursOrientation(normalePoteau, perpendiculairePoteau);
-
-
-		effectuerCollision(normalePoteau);
+        glm::dvec3 normaleCollision;
+        rectangleEnglobant_.calculerCollision(*cercle, normaleCollision);
+		effectuerCollision(normaleCollision);
 	}
-	return collision;
-
+    */
+	return false;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -261,26 +249,18 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 
 bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 {
-
     RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
-    bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
+    bool collision = false; //rectangleEnglobant_.calculerIntersection(*rectangle);
  
-
-	//TODO: 
-	/*
-	Calcul des paramètres pour simuler la collision ici.
-	1. obtenir la perpendiculaire à l'orientation du rectangle : rectangle.calculerVecteursOrientations
-	2.
-	*/
-
+    /*
 	if (collision)
 	{
-		std::cout << "Collision avec un mur." << std::endl;
 		glm::dvec3 normaleMur, perpendiculaireMur;
 		rectangle->calculerVecteursOrientation(normaleMur, perpendiculaireMur);
 
 		effectuerCollision(normaleMur);
 	}
+    */
 	return collision;
 
 }
@@ -300,33 +280,29 @@ bool NoeudRobot::verifierCollision(NoeudMur* noeud)
 
 bool NoeudRobot::verifierCollision(NoeudTable* noeud)
 {
-
-
 	RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
 	// TODO: à changer pour vérifier
 	glm::dvec3 coins[4];
-   //rectangleEnglobant_.calculerPositionCoins(coins);
-
+    rectangleEnglobant_.calculerPositionCoins(coins);
 	bool collision = false;
+
 	for (unsigned i = 0; i < 4 && !collision; i++)
 	{
 		if (!rectangle->calculerEstDansForme(coins[i]))
 		{
-			collision = true;
+			//collision = true;
 		}
 	}
-	//std::cout << "Collision : " << collision << std::endl;
+    /*
 	if (collision)
 	{
-		std::cout << "Collision avec une table" << std::endl;
 		glm::dvec3 normaleTable, perpendiculaireTable;
 		rectangle->calculerVecteursOrientation(normaleTable, perpendiculaireTable);
 
 		effectuerCollision(normaleTable);
 	}
+    */
 	return collision;
-
-
 }
 
 
@@ -446,9 +422,7 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 			}
 		}
 	}
-
 	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
-
 	//Calculs des nouvelles positions et du nouvel angle
 	angleRotation_ -= dt * vitesseRotation_;
 	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
@@ -468,16 +442,17 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourFormeEnglobante()
 {
-
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
 
     double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
+    glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
-    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
+    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, angleRotation_);
+    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoite.x, positionCourante_.y + positionBoite.y, 0.0 };
+
     rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
-
 }
 
 ////////////////////////////////////////////////////////////////////////
