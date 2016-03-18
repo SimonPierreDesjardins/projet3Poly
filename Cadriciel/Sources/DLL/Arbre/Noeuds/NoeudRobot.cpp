@@ -462,7 +462,7 @@ void NoeudRobot::effectuerCollision(glm::dvec3 normale)
 
 	double vitesseAngulaire = vitesseCouranteGauche_ - vitesseCouranteDroite_;
 
-	vitesseRotation_ = -500/*atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x)*//*+ MINIMUM_REBOND*vitesseAngulaire*/;
+	vitesseRotation_ = atan(vitesseAngulaireRobotReflechi.y / vitesseAngulaireRobotReflechi.x)/*+ MINIMUM_REBOND*vitesseAngulaire*/;
 
 	double vitesseRelative = vitesseCouranteDroite_ + vitesseCouranteGauche_;
 
