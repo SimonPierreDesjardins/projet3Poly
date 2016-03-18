@@ -579,7 +579,9 @@ extern "C"
 		if (mode != nullptr){
 			mode->preChangementDeProfil();
 		}
+
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
+
 		if (mode != nullptr){
 			mode->postChangementDeProfil();
 		}

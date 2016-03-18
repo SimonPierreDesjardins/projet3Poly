@@ -375,8 +375,6 @@ namespace InterfaceGraphique
             return mot;
         }
 
-        private bool empecherTextChangedEvent = false;
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void angleEtDureeValidation(TextBox box, typeParametre parametre)
@@ -456,7 +454,6 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void parametresValidation(TextBox box, typeParametre parametre)
         {
-
             if (box.Text == "")
                 box.Text = "0";
             else if(oldText == "0" && box.Text[1] != '0')
@@ -475,8 +472,7 @@ namespace InterfaceGraphique
                 }
             }
 
-            box.SelectionStart = oldCaretIndex + 2;
-                
+            box.SelectionStart = oldCaretIndex + 1;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -569,9 +565,9 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
+        /// @fn private void parametreTxtBox_KeyDown(object sender, KeyEventArgs e)
         ///
-        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText ainsi que la position du caret.
         ///
         /// @param objet sender: control qui gère l'action
         /// @param KeyEventArgs e: evenement d'un touche du clavier
@@ -579,11 +575,12 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void parametreTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
-
-            oldText = (sender as TextBox).Text;
+            TextBox box = sender as TextBox;
+            oldText = box.Text;
+            oldCaretIndex = box.SelectionStart;
         }
 
-                ////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void retourMenuButt_Click(object sender, EventArgs e)
         ///
@@ -614,7 +611,8 @@ namespace InterfaceGraphique
             string nomProfil = (string)(sender as ComboBox).SelectedItem;
             if (!comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomProfil)))
                 return;
-            changerProfil(nomProfil);
+
+            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
             textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
             textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
             textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
@@ -780,6 +778,11 @@ namespace InterfaceGraphique
                 return 0.0;
 
             return Double.Parse(aConvertir.Replace(',','.'), culture);
+        }
+
+        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine("hello");
         }
 
     }
