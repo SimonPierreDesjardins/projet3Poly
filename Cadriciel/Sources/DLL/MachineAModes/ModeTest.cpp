@@ -18,6 +18,8 @@
 
 #include <iostream>
 
+std::array<char, 9> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', 'J', 'K', 'L', 'B' } };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeTest::ModeTest()
@@ -174,6 +176,72 @@ void ModeTest::gererFlecheDroit()
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void ModeSimulation::inverserLumiereAmbiante()
+///
+/// Fonction qui permet d'alterner l'état de la lumière ambiante 
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTest::inverserLumiereAmbiante()
+{
+	lumiereAmbiante = !lumiereAmbiante;
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
+	{
+		utilitaire::time_in_HH_MM_SS_MMM();
+		if (lumiereAmbiante)
+			std::cout << " - Lumiere ambiante ouverte" << std::endl;
+		else
+			std::cout << " - Lumiere ambiante fermee" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeSimulation::inverserLumiereDirectionnelle()
+///
+/// Fonction qui permet d'alterner l'état de la lumière directionnelle 
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTest::inverserLumiereDirectionnelle()
+{
+	lumiereDirectionnelle = !lumiereDirectionnelle;
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
+	{
+		utilitaire::time_in_HH_MM_SS_MMM();
+		if (lumiereDirectionnelle)
+			std::cout << " - Lumiere directionnelle ouverte" << std::endl;
+		else
+			std::cout << " - Lumiere directionnelle fermee" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeSimulation::inverserLumiereSpot()
+///
+/// Fonction qui permet d'alterner l'état de la lumière spot
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTest::inverserLumiereSpot()
+{
+	lumiereSpot = !lumiereSpot;
+	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
+	{
+		utilitaire::time_in_HH_MM_SS_MMM();
+		if (lumiereSpot)
+			std::cout << " - Lumiere spot ouverte" << std::endl;
+		else
+			std::cout << " - Lumiere spot fermee" << std::endl;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
 /// Fonction qui permet de traiter les entrées utilisateur en mode test. 
@@ -185,24 +253,92 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (msg == WM_KEYDOWN)
 	{
-        const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
-        if (!estRepetition)
-        {
-		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
-        }
+		switch (wParam)
+		{
+		case VK_LEFT:
+			gererFlecheGauche();
+			break;
+
+		case VK_RIGHT:
+			gererFlecheDroit();
+			break;
+
+		case VK_UP:
+			gererFlecheHaut();
+			break;
+
+		case VK_DOWN:
+			gererFlecheBas();
+			break;
+
+		case VK_OEM_PLUS:
+			gererTouchePlus();
+			break;
+
+		case VK_OEM_MINUS:
+			gererToucheMoins();
+			break;
+
+		case 'J':
+			inverserLumiereAmbiante();
+			break;
+
+		case 'K':
+			inverserLumiereDirectionnelle();
+			break;
+
+		case 'L':
+			inverserLumiereSpot();
+			break;
+
+		case '1':
+			break;
+
+		case '2':
+			break;
+
+		case 'B':
+			break;
+
+		case '\b':
+			controleRobot_->terminerBoucleRobot();
+			controleRobot_->robot_->positionDepart();
+			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+			controleRobot_->passerAModeAutomatique();
+			break;
+
+		case VK_ESCAPE:
+			controleRobot_->setEnPause(!(controleRobot_->getEnPause()));
+			break;
+
+		default:
+			break;
+		}
+
+		if (!controleRobot_->getEnPause())
+		{
+			const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
+			if (!estRepetition)
+			{
+				controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
+			}
+		}
 	}
 	else if (msg == WM_KEYUP)
 	{
-		CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-		if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
+		if (!controleRobot_->getEnPause())
 		{
-            // Obtenir la commande associée et inverser la vitesse des moteurs.
-            CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-            commande->inverserVitesseMoteurs();
-			controleRobot_->traiterCommande(commande, true);
+			CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+			if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
+			{
+				// Obtenir la commande associée et inverser la vitesse des moteurs.
+				CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+				commande->inverserVitesseMoteurs();
+				controleRobot_->traiterCommande(commande, true);
 
-            // Rétablir l'état initial de la commande.
-            commande->inverserVitesseMoteurs();
+				// Rétablir l'état initial de la commande.
+				commande->inverserVitesseMoteurs();
+			}
 		}
 	}
 }

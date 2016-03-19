@@ -96,6 +96,8 @@ class ProfilUtilisateur
 
 		bool obtenirOptionDebogage(optionsDebogagesEnum option);
 
+		int* obtenirLimiteParametres();
+
 	private:
 		void changerDernierProfil(std::string nomProfil);
 
@@ -123,11 +125,17 @@ class ProfilUtilisateur
 
 		const std::string DERNIER_PROFIL = "dernier_profil";
 
-		const int DUREE_MAX_COMPORTEMENT_MS = 2000;
+		const int DUREE_MAX_COMPORTEMENT = 2000;
 
-		const int DUREE_MIN_COMPORTEMENT_MS = 0;
+		const int DUREE_MIN_COMPORTEMENT = 0;
 
 		const int LARGEUR_TOTAL_DETECTION_DISTANCE = 30;
+
+		const int LARGEUR_MIN_DETECTION_DISTANCE = 0;
+
+		const int ANGLE_MAX_COMPORTEMENT = 360;
+
+		const int ANGLE_MIN_COMPORTEMENT = 0;
 
 		std::string dernierProfil;
 
@@ -158,18 +166,6 @@ inline SuiveurLigne* ProfilUtilisateur::obtenirSuiveurLigne()
 inline NoeudRobot::ConteneurCapteursDistance* ProfilUtilisateur::obtenirCapteursDistance()
 {
     return &capteursDistance_;
-}
-
-inline int ProfilUtilisateur::obtenirDureeMaxComportement(){
-	return DUREE_MAX_COMPORTEMENT_MS;
-}
-
-inline int ProfilUtilisateur::obtenirDureeMinComportement(){
-	return DUREE_MIN_COMPORTEMENT_MS;
-}
-
-inline int ProfilUtilisateur::obtenirLargeurTotalDetectionDistance(){
-	return LARGEUR_TOTAL_DETECTION_DISTANCE;
 }
 ////////////////////////////////////////////////
 /// @}

@@ -579,7 +579,9 @@ extern "C"
 		if (mode != nullptr){
 			mode->preChangementDeProfil();
 		}
+
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
+
 		if (mode != nullptr){
 			mode->postChangementDeProfil();
 		}
@@ -599,6 +601,10 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause){
 		//FacadeModele::obtenirInstance()->obtenirMode()->
+	}
+
+	__declspec(dllexport) int* __cdecl obtenirLimitesParametres(){
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirLimiteParametres();
 	}
 }
 

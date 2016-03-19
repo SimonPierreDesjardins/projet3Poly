@@ -36,6 +36,7 @@ class ProfilUtilisateur;
 class ControleRobot
 {
 	friend class ModeSimulation;
+	friend class ModeTest;
 public:
 	ControleRobot();
 	~ControleRobot();
