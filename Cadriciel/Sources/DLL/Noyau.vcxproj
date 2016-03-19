@@ -148,6 +148,7 @@
     <ClCompile Include="Capteur\CapteurDistance.cpp" />
     <ClCompile Include="Capteur\CapteurOptique.cpp" />
     <ClCompile Include="Capteur\SuiveurLigne.cpp" />
+    <ClCompile Include="ComportementsTest.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
     <ClCompile Include="Arbre\ArbreRendu.cpp" />
     <ClCompile Include="Arbre\ArbreRenduINF2990.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="Physique\FormeEnglobanteAbstraite.h" />
     <ClInclude Include="Physique\RectangleEnglobant.h" />
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
+    <ClInclude Include="ComportementsTest.h" />
     <ClInclude Include="Tests\BancTests.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />

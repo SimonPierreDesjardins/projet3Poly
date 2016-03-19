@@ -16,7 +16,7 @@
 #include "ArbreRenduINF2990.h"
 #include "NoeudLigne.h"
 
-const double CapteurOptique::RAYON_CERCLE_ENGLOBANT = 0.2;
+const double CapteurOptique::RAYON_CERCLE_ENGLOBANT = 0.4;
 
 
 ////////////////////////////////////////////////////////////////////////////////

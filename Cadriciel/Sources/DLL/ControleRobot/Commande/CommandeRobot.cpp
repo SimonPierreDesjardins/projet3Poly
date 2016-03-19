@@ -39,33 +39,33 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 	switch (commande)
 	{
 	case AVANCER:
-		vitesseMoteurD_ = 30.0;
-		vitesseMoteurG_ = 30.0;
+		vitesseMoteurD_ = 20.0;
+		vitesseMoteurG_ = 20.0;
 		break;
 	
 	case RECULER:
-		vitesseMoteurD_ = -30.0;
-		vitesseMoteurG_ = -30.0;
+		vitesseMoteurD_ = -20.0;
+		vitesseMoteurG_ = -20.0;
 		break;
 	
 	case ROTATION_GAUCHE:
-		vitesseMoteurD_ = 30.0;
-		vitesseMoteurG_ = -30.0;
+		vitesseMoteurD_ = 20.0;
+		vitesseMoteurG_ = -20.0;
 		break;
 	
 	case ROTATION_DROITE:
-		vitesseMoteurD_ = -30.0;
-		vitesseMoteurG_ = 30.0;
+		vitesseMoteurD_ = -20.0;
+		vitesseMoteurG_ = 20.0;
 		break;
 
 	case DEVIATION_GAUCHE:
-		vitesseMoteurD_ = 30.0;
-		vitesseMoteurG_ = 10.0;
+		vitesseMoteurD_ = 20.0;
+		vitesseMoteurG_ = 5.0;
 		break;
 
 	case DEVIATION_DROITE:
-		vitesseMoteurD_ = 10.0;
-		vitesseMoteurG_ = 30.0;
+		vitesseMoteurD_ = 5.0;
+		vitesseMoteurG_ = 20.0;
 		break;
 	
 	case ARRETER:

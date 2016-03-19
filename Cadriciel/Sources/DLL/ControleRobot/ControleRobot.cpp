@@ -33,10 +33,10 @@
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::ControleRobot()
 {
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
+	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	table_ = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
 
-	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
+	std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
 
 	table_->ajouter(robot);
 
@@ -46,7 +46,7 @@ ControleRobot::ControleRobot()
 
 	// init des flags du capteur
 	for (int i = 0; i < 3; i++)
-		for (int j = 0; i < 2; i++)
+		for (int j = 0; j < 2; j++)
 			flagCapteur[i][j] = false;
 
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
@@ -269,7 +269,7 @@ void ControleRobot::verifierCapteurs(){
 	std::string declencheur;
 	for (int i = 0; i < capteurs->size(); i++)
 	{
-		declencheur = "Capteur distance ";
+		declencheur = "Obstacle capté à ";
 		switch (i)
 		{
 		case 0:
@@ -292,9 +292,13 @@ void ControleRobot::verifierCapteurs(){
 				declencheur += "Zone securitaire";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
 			}
+			else{
+				//cout << "Input ignored" << endl;
+			}
 		}
 		else{
 			//On permet la detection
+			//std::cout << "Flag " << i << " securitaire disabled" << endl;
 			flagCapteur[i][0] = false;
 		}
 
@@ -307,9 +311,13 @@ void ControleRobot::verifierCapteurs(){
 				declencheur += "Zone dangereuse";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
 			}
+			else{
+				//cout << "Input ignored" << endl;
+			}
 		}
 		else{
 			// On permet la detection
+			//std::cout << "Flag " << i << " dangereuse disabled" << endl;
 			flagCapteur[i][1] = false;
 		}
 	}
