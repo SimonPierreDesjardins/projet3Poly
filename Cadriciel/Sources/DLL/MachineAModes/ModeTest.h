@@ -41,6 +41,14 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
+	virtual void gererTouchePlus();
+	virtual void gererToucheMoins();
+
+	virtual void gererFlecheGauche();
+	virtual void gererFlecheBas();
+	virtual void gererFlecheHaut();
+	virtual void gererFlecheDroit();
+
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	
