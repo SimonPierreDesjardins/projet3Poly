@@ -154,6 +154,102 @@ void ModeSimulation::postChangementDeProfil(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void ModeEdition::gererTouchePlus()
+///
+/// Cette fonction permet de gérer la touche + dans le modeEdition.
+///
+/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom in.
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::gererTouchePlus()
+{
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+
+	}
+	else {
+		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
+	}
+
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeEdition::gererToucheMoins()
+///
+/// Cette fonction permet de gérer la touche - dans le modeEdition.
+///
+/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom out.
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::gererToucheMoins()
+{
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+
+	}
+	else {
+		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
+	}
+
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeEdition::gererFlecheGauche()
+///
+/// Cette fonction permet de gérer la touche flèche gauche dans le modeEdition.
+///
+/// Fait un déplacement de 10 pixels selon l'axe des x.
+///
+////////////////////////////////////////////////////////////////////////
+
+void ModeSimulation::gererFlecheGauche()
+{
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeEdition::gererFlecheBas()
+///
+/// Cette fonction permet de gérer la touche flèche bas dans le modeEdition.
+///
+/// Fait un déplacement de 10 pixels selon l'axe des y.
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::gererFlecheBas()
+{
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+}
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeEdition::gererFlecheHaut()
+///
+/// Cette fonction permet de gérer la touche flèche haut dans le modeEdition.
+///
+/// Fait un déplacement de -10 pixels selon l'axe des y.
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::gererFlecheHaut()
+{
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeEdition::gererFlecheDroit()
+///
+/// Cette fonction permet de gérer la touche flèche droit dans le modeEdition.
+///
+/// Fait un déplacement de -10 pixels selon l'axe des x.
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::gererFlecheDroit()
+{
+	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
 /// Fonction qui permet de traiter les entrées utilisateur en mode simulation. 
@@ -167,6 +263,30 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (wParam)
 		{
+		case VK_LEFT:
+			gererFlecheGauche();
+			break;
+
+		case VK_RIGHT:
+			gererFlecheDroit();
+			break;
+
+		case VK_UP:
+			gererFlecheHaut();
+			break;
+
+		case VK_DOWN:
+			gererFlecheBas();
+			break;
+
+		case VK_OEM_PLUS:
+			gererTouchePlus();
+			break;
+
+		case VK_OEM_MINUS:
+			gererToucheMoins();
+			break;
+
 		case 'J':
 			inverserLumiereAmbiante();
 			break;

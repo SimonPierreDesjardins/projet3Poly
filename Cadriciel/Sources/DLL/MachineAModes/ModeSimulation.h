@@ -52,6 +52,14 @@ public:
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();
 
+	void gererTouchePlus();
+	void gererToucheMoins();
+
+	void gererFlecheGauche();
+	void gererFlecheBas();
+	void gererFlecheHaut();
+	void gererFlecheDroit();
+
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 

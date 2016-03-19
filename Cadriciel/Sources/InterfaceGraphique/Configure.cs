@@ -54,6 +54,25 @@ namespace InterfaceGraphique
 
         private ajouterProfilAMenuDelegue ajouterProfilAMenu;
 
+        private enum typeParametre
+        {
+            ANGLE,
+            DUREE,
+            LARGEUR_ZONE
+        }
+
+        private struct Parametre
+        {
+            public int limiteMin;
+            public int limiteMax;
+        }
+
+        private Parametre[] limitesParametres;
+
+        private TextBox[] largeurZoneTextBoxes;
+
+        private bool initialisation;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public Configure()
@@ -70,11 +89,27 @@ namespace InterfaceGraphique
 
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
+            int[] minEtMaxParametres = FonctionsNatives.obtenirLimitesParametres(Enum.GetNames(typeof(typeParametre)).Length * 2);
+
+            limitesParametres = new Parametre[Enum.GetNames(typeof(typeParametre)).Length];
+
+            for (int i = 0; i < minEtMaxParametres.Length; i+= 2)
+            {
+                limitesParametres[i / 2].limiteMin = minEtMaxParametres[i];
+                limitesParametres[i / 2].limiteMax = minEtMaxParametres[i + 1];
+            }
+
+            largeurZoneTextBoxes = new TextBox[] { longueurDangerGaucheTxtBox, longueurSecuritaireGaucheTxtBox, longueurDangerCentreTxtBox, longueurSecuritaireCentreTxtBox, longueurDangerDroitTxtBox, longueurSecuritaireDroitTxtBox };
+
             FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
             setUpAllControls(configureTabs);
 
+            initialisation = true;
+
             assignerProfilsCB();
+
+            initialisation = false;
 
             indexProfilDefaut = comboBoxProfil.FindString(nomProfilDefaut);
 
@@ -158,13 +193,14 @@ namespace InterfaceGraphique
             {
                 if (item.Tag != null)
                 {
-                    if (item.GetType().Equals(typeof(ComboBox)) && Int32.Parse((String)item.Tag) <= 23)
+                    int indexControl = Int32.Parse(item.Tag.ToString().Split(';')[0]);
+                    if (item.GetType().Equals(typeof(ComboBox)) && indexControl <= 23)
                     {
                         ComboBox combo = item as ComboBox;
                         combo.BindingContext = new BindingContext();
                         combo.DataSource = comportementsList;
                     }
-                    FonctionsNatives.setHandle((IntPtr)item.Handle, Int32.Parse((String)item.Tag));
+                    FonctionsNatives.setHandle((IntPtr)item.Handle, indexControl);
                 }
 
                 setUpAllControls(item);
@@ -338,86 +374,104 @@ namespace InterfaceGraphique
             return mot;
         }
 
-        private bool empecherTextChangedEvent = false;
-
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private bool degreeValidation(string aTester)
+        /// @fn private void angleEtDureeValidation(TextBox box, typeParametre parametre)
         ///
-        /// Cette fonction permet de valider un degree ou il n'y a que deux chiffres apres
-        /// la virgule et que le nombre est entre 0 et 360
+        /// Cette fonction permet de vérifier l'intégrité d'un angle ou d'une duree entré par un utilisateur
         ///
-        /// @param[in] string aTester: la string représentant un degree
+        /// @param[in] box: la text box modifiée par l'utilisateur
+        /// @param[in] parametre: représente si c'est un angle ou une durée
         ///
-        /// @return bool: true si valide sinon false
-        /// 
+        ///  
         ////////////////////////////////////////////////////////////////////////
-        private bool degreeValidation(string aTester)
+        private void angleEtDureeValidation(TextBox box, typeParametre parametre)
         {
             double nombre;
-            bool reussi;
-            reussi = Double.TryParse(aTester.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre);
-            if (reussi)
-                if (nombre < 0.00 || nombre > 360.00 || BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
-                    reussi = false;
+            string nouvelleValeur = null;
+            int indexParametre = (int)parametre;
+            if (Double.TryParse(box.Text.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre) && BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] < 2)
+            {
+                if (nombre > limitesParametres[indexParametre].limiteMax)
+                    nouvelleValeur = limitesParametres[indexParametre].limiteMax.ToString();
+                else if (nombre < limitesParametres[indexParametre].limiteMin)
+                    nouvelleValeur = limitesParametres[indexParametre].limiteMin.ToString();
+            }
+            else
+                nouvelleValeur = oldText;
 
-            return reussi;
+            if(nouvelleValeur != null)
+                box.Text = nouvelleValeur;
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private bool tempsValidation(string aTester)
+        /// @fn private void largeurZoneValidation(TextBox box)
         ///
-        /// Cette fonction permet de valider un temps ou il n'y a que deux chiffres apres
-        /// la virgule
+        /// Cette fonction permet de vérifier l'intégrité d'une largeur de zone de capteur de distance entrée par un utilisateur
         ///
-        /// @param[in] string aTester: la string représentant un temps
+        /// @param[in] box: la text box modifiée par l'utilisateur
         ///
-        /// @return bool: true si valide sinon false
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private bool tempsValidation(string aTester)
+        private void largeurZoneValidation(TextBox box)
         {
-            double nombre;
-            bool reussi;
-            reussi = Double.TryParse(aTester.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre);
-            if (reussi)
-                if (BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] > 2)
-                    reussi = false;
+            int indexTextBox = int.Parse(box.Tag.ToString().Split(';')[1]);
+            int indexTextBoxComplementaire = indexTextBox % 2 == 0 ? indexTextBox + 1 : indexTextBox - 1;
+            largeurZoneTextBoxes[indexTextBoxComplementaire].TextChanged -= largeurZoneTxtBox_TextChanged;
+            TextBox boxComplementaire = largeurZoneTextBoxes[indexTextBoxComplementaire];
+            double largeur1;
+            double largeur2 = stringToDouble(boxComplementaire.Text);
+            int indexParametre = (int)typeParametre.LARGEUR_ZONE;
+            if (Double.TryParse(box.Text.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out largeur1) && BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(largeur1))[3])[2] < 2)
+            {
+                if (largeur1 > limitesParametres[indexParametre].limiteMax)
+                    box.Text = limitesParametres[indexParametre].limiteMax.ToString();
+                else if (largeur1 + largeur2 > limitesParametres[indexParametre].limiteMax)
+                    boxComplementaire.Text = (limitesParametres[indexParametre].limiteMax - largeur1).ToString();
+                else if (largeur1 < limitesParametres[indexParametre].limiteMin)
+                    box.Text = limitesParametres[indexParametre].limiteMin.ToString();
+            }
+            else
+                box.Text = oldText;
 
-            return reussi;
+            boxComplementaire.TextChanged += largeurZoneTxtBox_TextChanged;
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void angleEtDureeValidation(TextBox box, bool estDegree)
+        /// @fn private void parametresValidation(TextBox box, typeParametre parametre)
         ///
-        /// Cette fonction permet de valider un temps et un angle. S'il n'est pas valide,
-        /// l'ancien text est affiché
+        /// Cette fonction permet de vérifier si la valeur entré par un utilisateur n'est pas nulle.
+        /// Dans le cas échéant, on vérifie l'intégrité de la valeur.
         ///
-        /// @param[in] TextBox box: la textbox a vérifier
-        /// @param[in] bool estDegree: la validité d'un angle
+        /// @param[in] box: la text box modifiée par l'utilisateur
+        /// @param[in] parametre: représente si c'est un angle, une durée ou une largeur de zone
         ///
         /// @return: Aucun
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void angleEtDureeValidation(TextBox box, bool estDegree)
+        private void parametresValidation(TextBox box, typeParametre parametre)
         {
-            if (empecherTextChangedEvent)
-                return;
-
-            empecherTextChangedEvent = true;
-
             if (box.Text == "")
                 box.Text = "0";
-            else if(!decimalCheck(box))
-                if (estDegree ? !degreeValidation(box.Text) : !tempsValidation(box.Text))
+            else if(oldText == "0" && box.Text[1] != '0')
+                box.Text = box.Text.Replace("0", "");
+            else if (!decimalCheck(box))
+            {
+                switch (parametre)
                 {
-                    box.Text = oldText;
-                    box.SelectionStart = oldCaretIndex;
+                    case typeParametre.ANGLE:
+                    case typeParametre.DUREE:
+                        angleEtDureeValidation(box, parametre);
+                        break;
+                    case typeParametre.LARGEUR_ZONE:
+                        largeurZoneValidation(box);
+                        break;
                 }
+            }
 
-            empecherTextChangedEvent = false;
+            box.SelectionStart = oldCaretIndex + 1;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -459,26 +513,12 @@ namespace InterfaceGraphique
         /// @param EventArgs e: evenement d'un touche du clavier
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
+        private void angleTxtBox_TextChanged(object sender, EventArgs e)
         {
-            
-            angleEtDureeValidation(sender as TextBox, true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
-        ///
-        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void angleDGTxtBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            
-            oldText = (sender as TextBox).Text;
+            TextBox box = sender as TextBox;
+            box.TextChanged -= angleTxtBox_TextChanged;
+            parametresValidation(box, typeParametre.ANGLE);
+            box.TextChanged += angleTxtBox_TextChanged;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -492,181 +532,51 @@ namespace InterfaceGraphique
         /// @param EventArgs e: evenement d'un touche du clavier
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
+        private void dureeTxtBox_TextChanged(object sender, EventArgs e)
         {
-            angleEtDureeValidation(sender as TextBox, true);
+            TextBox box = sender as TextBox;
+            box.TextChanged -= dureeTxtBox_TextChanged;
+            parametresValidation(box, typeParametre.DUREE);
+            box.TextChanged += dureeTxtBox_TextChanged;
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        /// @fn private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
         ///
-        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
+        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
+        /// remet l'ancient text
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un touche du clavier
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void largeurZoneTxtBox_TextChanged(object sender, EventArgs e)
+        {
+            if (initialisation)
+                return;
+
+            TextBox box = sender as TextBox;
+            box.TextChanged -= largeurZoneTxtBox_TextChanged;
+            parametresValidation(box, typeParametre.LARGEUR_ZONE);
+            box.TextChanged += largeurZoneTxtBox_TextChanged;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void parametreTxtBox_KeyDown(object sender, KeyEventArgs e)
+        ///
+        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText ainsi que la position du caret.
         ///
         /// @param objet sender: control qui gère l'action
         /// @param KeyEventArgs e: evenement d'un touche du clavier
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void angleDDTxtBox_KeyDown(object sender, KeyEventArgs e)
+        private void parametreTxtBox_KeyDown(object sender, KeyEventArgs e)
         {
-            TextBox box = (sender as TextBox);
-            oldCaretIndex = box.SelectionStart;
+            TextBox box = sender as TextBox;
             oldText = box.Text;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void angleEGTxtBox_TextChanged(object sender, EventArgs e)
-        ///
-        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
-        /// remet l'ancient text
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void angleEGTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            angleEtDureeValidation(sender as TextBox, true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void angleEGTxtBox_KeyDown(object sender, KeyEventArgs e)
-        ///
-        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void angleEGTxtBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            oldText = (sender as TextBox).Text;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void dureeEGTxtBox_TextChanged(object sender, EventArgs e)
-        ///
-        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
-        /// remet l'ancient text
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void dureeEGTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            angleEtDureeValidation(sender as TextBox, false);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void dureeEGTxtBox_KeyDown(object sender, KeyEventArgs e)
-        ///
-        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void dureeEGTxtBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            oldText = (sender as TextBox).Text;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void angleEDTxtBox_TextChanged(object sender, EventArgs e)
-        ///
-        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
-        /// remet l'ancient text
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void angleEDTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            angleEtDureeValidation(sender as TextBox, true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void angleEDTxtBox_KeyDown(object sender, KeyEventArgs e)
-        ///
-        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void angleEDTxtBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            oldText = (sender as TextBox).Text;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void dureeEDTxtBox_TextChanged(object sender, EventArgs e)
-        ///
-        /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
-        /// remet l'ancient text
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void dureeEDTxtBox_TextChanged(object sender, EventArgs e)
-        {
-            angleEtDureeValidation(sender as TextBox, false);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void dureeEDTxtBox_KeyDown(object sender, KeyEventArgs e)
-        ///
-        /// Cette fonction prend la valeur du text avant un key down et l'assigne au oldText
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventArgs e: evenement d'un touche du clavier
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void dureeEDTxtBox_KeyDown(object sender, KeyEventArgs e)
-        {
-            oldText = (sender as TextBox).Text;
-        }
-
-        private void longueurZoneDangerCapteurDistanceTB_TextChanged(object sender, EventArgs e)
-        {
-            angleEtDureeValidation(sender as TextBox, false);
-            // TODO: VERIFIER PERTINENCE DU CODE CI-DESSOUS
-            /*FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
-            FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Convert.ToDouble(angleDGTxtBox.Text.Replace('.',',')), TypeComportement.DEVIATIONVERSLAGAUCHE);
-            FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Convert.ToDouble(angleDDTxtBox.Text.Replace('.', ',')), TypeComportement.DEVIATIONVERSLADROITE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Convert.ToDouble(angleEGTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEGTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLAGAUCHE);
-            FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Convert.ToDouble(angleEDTxtBox.Text.Replace('.', ',')), Convert.ToDouble(dureeEDTxtBox.Text.Replace('.', ',')), TypeComportement.EVITEMENTPARLADROITE);
-            */
-            // TODO: VALIDE?
-            this.DialogResult = DialogResult.OK;
-            Close();
-        }
-
-        private void longueurZoneDangerCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
-        {
-            oldText = (sender as TextBox).Text;
-        }
-
-        private void longueurZoneSecuritaireCapteurDistanceTB_TextChanged(object sender, EventArgs e)
-        {
-            angleEtDureeValidation(sender as TextBox, false);
-        }
-
-        private void longueurZoneSecuritaireCapteurDistanceTB_KeyDown(object sender, KeyEventArgs e)
-        {
-            oldText = (sender as TextBox).Text;
+            oldCaretIndex = box.SelectionStart;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -700,7 +610,8 @@ namespace InterfaceGraphique
             string nomProfil = (string)(sender as ComboBox).SelectedItem;
             if (!comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomProfil)))
                 return;
-            changerProfil(nomProfil);
+
+            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
             textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
             textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
             textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
@@ -709,7 +620,7 @@ namespace InterfaceGraphique
         }
 
         public void changerProfil(string nomProfil){
-            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
+            comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfil);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -795,18 +706,18 @@ namespace InterfaceGraphique
             {
                 FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
                 
-                FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
+                FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);      
                 
-                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, Double.Parse(angleDGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLAGAUCHE);
-                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, Double.Parse(angleDDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.DEVIATIONVERSLADROITE);
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, stringToDouble(angleDGTxtBox.Text), TypeComportement.DEVIATIONVERSLAGAUCHE);
+                FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, stringToDouble(angleDDTxtBox.Text), TypeComportement.DEVIATIONVERSLADROITE);
                 
-                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, Double.Parse(angleEGTxtBox.Text.Replace(',', '.'), culture), Double.Parse(dureeEGTxtBox.Text.Replace(',', '.'), culture), TypeComportement.EVITEMENTPARLAGAUCHE);
-                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, Double.Parse(angleEDTxtBox.Text.Replace(',', '.'), culture), Double.Parse(dureeEDTxtBox.Text.Replace(',', '.'), culture), TypeComportement.EVITEMENTPARLADROITE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, stringToDouble(angleEGTxtBox.Text), stringToDouble(dureeEGTxtBox.Text), TypeComportement.EVITEMENTPARLAGAUCHE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, stringToDouble(angleEDTxtBox.Text), stringToDouble(dureeEDTxtBox.Text), TypeComportement.EVITEMENTPARLADROITE);
                 
-                FonctionsNatives.assignerCapteurDistance(capteurDistDroitCB.SelectedIndex == 0, (TypeComportement)zoneDangerDroitCB.SelectedValue, Double.Parse(longueurDangerDroitTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireDroitCB.SelectedValue, Double.Parse(longueurSecuritaireDroitTxtBox.Text.Replace(',', '.'), culture), 0);
-                FonctionsNatives.assignerCapteurDistance(capteurDistCentreCB.SelectedIndex == 0, (TypeComportement)zoneDangerCentreCB.SelectedValue, Double.Parse(longueurDangerCentreTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireCentreCB.SelectedValue, Double.Parse(longueurSecuritaireCentreTxtBox.Text.Replace(',', '.'), culture), 1);
+                FonctionsNatives.assignerCapteurDistance(capteurDistDroitCB.SelectedIndex == 0, (TypeComportement)zoneDangerDroitCB.SelectedValue, stringToDouble(longueurDangerDroitTxtBox.Text), (TypeComportement)zoneSecuritaireDroitCB.SelectedValue, stringToDouble(longueurSecuritaireDroitTxtBox.Text), 0);
+                FonctionsNatives.assignerCapteurDistance(capteurDistCentreCB.SelectedIndex == 0, (TypeComportement)zoneDangerCentreCB.SelectedValue, stringToDouble(longueurDangerCentreTxtBox.Text), (TypeComportement)zoneSecuritaireCentreCB.SelectedValue, stringToDouble(longueurSecuritaireCentreTxtBox.Text), 1);
                 
-                FonctionsNatives.assignerCapteurDistance(capteurDistGaucheCB.SelectedIndex == 0, (TypeComportement)zoneDangerGaucheCB.SelectedValue, Double.Parse(longueurDangerGaucheTxtBox.Text.Replace(',', '.'), culture), (TypeComportement)zoneSecuritaireGaucheCB.SelectedValue, Double.Parse(longueurSecuritaireGaucheTxtBox.Text.Replace(',', '.'), culture), 2);
+                FonctionsNatives.assignerCapteurDistance(capteurDistGaucheCB.SelectedIndex == 0, (TypeComportement)zoneDangerGaucheCB.SelectedValue, stringToDouble(longueurDangerGaucheTxtBox.Text), (TypeComportement)zoneSecuritaireGaucheCB.SelectedValue, stringToDouble(longueurSecuritaireGaucheTxtBox.Text), 2);
                 
                 FonctionsNatives.assignerSuiveurLigne(suiveurLigneCB.SelectedIndex == 0);
                 
@@ -858,7 +769,18 @@ namespace InterfaceGraphique
         }
 
 
-        
+        private double stringToDouble(string aConvertir)
+        {
+            if (aConvertir == "")
+                return 0.0;
+
+            return Double.Parse(aConvertir.Replace(',','.'), culture);
+        }
+
+        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
+        {
+            //Console.WriteLine("hello");
+        }
 
     }
 
@@ -923,6 +845,15 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void changerProfil(string nomProfil);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern IntPtr obtenirLimitesParametres();
+        public static int[] obtenirLimitesParametres(int taille)
+        {
+            int[] limitesParametres = new int[taille];
+            Marshal.Copy(obtenirLimitesParametres(), limitesParametres, 0, taille);
+            return limitesParametres;
+        }
 
     }
 }

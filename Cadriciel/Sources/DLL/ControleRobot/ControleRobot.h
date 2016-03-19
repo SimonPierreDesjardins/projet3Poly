@@ -36,8 +36,10 @@ class ProfilUtilisateur;
 class ControleRobot
 {
 	friend class ModeSimulation;
+	friend class ModeTest;
 	// Ceci nous permet de tester convenablement
 	friend class ComportementsTest;
+	
 public:
 	ControleRobot();
 	~ControleRobot();
