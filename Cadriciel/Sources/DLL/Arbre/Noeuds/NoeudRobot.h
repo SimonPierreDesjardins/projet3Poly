@@ -100,6 +100,8 @@ private:
     bool collision_{ false };
     glm::dvec3 vitesseTranslationCollision_{0.0, 0.0, 0.0};
     double vitesseAngulaireCollision_{ 0.0 };
+    glm::dvec3 dernierePositionRelative_;
+    double dernierAngleRotation_;
 
 	float vitesseDroiteCollision_{ 0.f };
 	float vitesseGaucheCollision_{ 0.f };

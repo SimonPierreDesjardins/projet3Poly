@@ -5,6 +5,9 @@
 #include <vector>
 #include "Utilitaire.h"
 #include "CercleEnglobant.h"
+#include "AideCollision.h"
+
+#include <iostream>
 
 RectangleEnglobant::RectangleEnglobant()
 {
@@ -302,7 +305,41 @@ bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, 
 
 bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::dvec3& normale) const
 {
-    glm::dvec3 normaleCollision = cercle.obtenirPositionCentre() - positionCentre_;
-    normale = glm::normalize(normaleCollision);
-    return true;
+    //glm::dvec3 normaleCollision = cercle.obtenirPositionCentre() - positionCentre_;
+    //normale = glm::normalize(normaleCollision);
+    glm::dvec3 coins[4];
+    calculerPositionCoins(coins);
+    int j = 0;
+    bool collision = false;
+    for (int i = 0; i < 4; i++)
+    {
+        j = (i + 1) % 4;
+        // Vérifier une intersection avec un segment.
+        aidecollision::DetailsCollision details = aidecollision::calculerCollisionSegment(coins[i], coins[j],
+            cercle.obtenirPositionCentre(),
+            cercle.obtenirRayon(),
+            false);
+        if (details.type != aidecollision::COLLISION_AUCUNE)
+        {
+            normale += details.direction;
+            collision = true;
+        }
+        // Vérifier une intersection avec un coin.
+        bool coinDansCercle = false;
+        coinDansCercle = cercle.calculerEstDansForme(coins[i]);
+
+        if (coinDansCercle)
+        {
+            normale += cercle.obtenirPositionCentre() - coins[i];
+            collision = true;
+            std::cout << "Collision avec coin." << std::endl;
+        }
+    }
+    // Si on ne trouve pas de collision on calcule tout de même une normale à l'aide des centres des formes.
+    if (!collision)
+    {
+        normale += cercle.obtenirPositionCentre() - positionCentre_;
+    }
+    normale = glm::normalize(normale);
+    return collision;
 }

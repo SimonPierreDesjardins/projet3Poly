@@ -128,10 +128,9 @@ void CercleEnglobant::afficher(const glm::dvec3& origine) const
 
 bool CercleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
 {
-    
-    glm::dvec3 normaleCollision = rectangle.obtenirPositionCentre() - positionCentre_;
-    normale = glm::normalize(normaleCollision);
-    return true;
+    bool collision = rectangle.calculerCollision(*this, normale);
+    normale = -normale;
+    return collision;
 }
 
 bool CercleEnglobant::calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const
