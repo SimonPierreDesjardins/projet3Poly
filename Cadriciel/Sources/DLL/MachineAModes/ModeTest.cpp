@@ -33,6 +33,7 @@ ModeTest::ModeTest()
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode automatique
 	controleRobot_->passerAModeAutomatique();
+    actionsAppuyees_ = { { false, false, false, false, false } };
 }
 
 
@@ -92,7 +93,10 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
         if (!estRepetition)
         {
-		    controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
+            CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+            TypeCommande type = commande->obtenirTypeCommande();
+            actionsAppuyees_.at(type) = true;
+            controleRobot_->traiterCommande(commande, true);
         }
 	}
 	else if (msg == WM_KEYUP)
@@ -100,13 +104,24 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
 		if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
 		{
-            // Obtenir la commande associée et inverser la vitesse des moteurs.
-            CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-            commande->inverserVitesseMoteurs();
-			controleRobot_->traiterCommande(commande, true);
+            // Arreter les moteurs.
+            std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
+            controleRobot_->traiterCommande(commandeArreter.get(), true);
 
-            // Rétablir l'état initial de la commande.
-            commande->inverserVitesseMoteurs();
+            // Indiquer que la commande n'est plus appuyée dans les flags d'actions appuyées
+            CommandeRobot* commandeCourante = profil_->obtenirCommandeRobot(wParam);
+            TypeCommande type = commandeCourante->obtenirTypeCommande();
+            actionsAppuyees_.at(type) = false;
+
+            // Relancer les commandes qui sont toujours appuyées.
+            for (int i = 1; i < actionsAppuyees_.size(); i++)
+            {
+                if (actionsAppuyees_.at((TypeCommande)i))
+                {
+                    std::unique_ptr<CommandeRobot> commandeMiseAJour  = std::make_unique<CommandeRobot>((TypeCommande)i, true);
+                    controleRobot_->traiterCommande(commandeMiseAJour.get(), true);
+                }
+            }
 		}
 	}
 }

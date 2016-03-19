@@ -12,6 +12,7 @@
 #define MODE_TEST_H
 
 #include <memory>
+#include <array>
 #include "glm\glm.hpp"
 
 #include "ModeAbstrait.h"
@@ -47,6 +48,8 @@ public:
 protected:
 	std::unique_ptr<ControleRobot> controleRobot_;
 	ProfilUtilisateur* profil_;
+    bool toucheEstRelachee_{ false };
+    std::array<bool, 5> actionsAppuyees_;
 };
 
 

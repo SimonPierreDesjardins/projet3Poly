@@ -251,7 +251,14 @@ void RectangleEnglobant::afficher(const glm::dvec3& origine) const
 
     glPushMatrix();
 
-    glColor3d(1.0, 0.0, 0.0);
+    if (enCollision_)
+    {
+        glColor3d(0.0, 1.0, 0.0);
+    }
+    else
+    {
+        glColor3d(1.0, 0.0, 0.0);
+    }
 
     glTranslated(positionRelative.x, positionRelative.y, 0.0);
     glRotated(angle_, 0.0, 0.0, 1.0);
@@ -297,5 +304,5 @@ bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::d
 {
     glm::dvec3 normaleCollision = cercle.obtenirPositionCentre() - positionCentre_;
     normale = glm::normalize(normaleCollision);
-    return enCollision_;
+    return true;
 }
