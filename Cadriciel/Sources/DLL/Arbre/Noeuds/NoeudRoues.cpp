@@ -59,7 +59,7 @@ NoeudRoues::~NoeudRoues()
 
 void NoeudRoues::setVitesseCourante(float vitesse)
 {
-	vitesseCourante_ += vitesse;//(float)(int(0.016 * 360) % 360);
+	vitesseCourante_ += (float)((int)((int)vitesse * 0.15) % 360);//(float)(int(0.016 * 360) % 360);
 	
 }
 
