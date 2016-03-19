@@ -35,8 +35,7 @@ void VisiteurDetectionRobot::visiter(ArbreRendu* arbre)
 
 
 void VisiteurDetectionRobot::visiter(NoeudTable* table)
-{
-	
+{	
 	bool estEnCollision = robot_->verifierCollision(table);
 	if (!estEnCollision_)
 	{
@@ -48,7 +47,11 @@ void VisiteurDetectionRobot::visiter(NoeudTable* table)
     {
         table->chercher(i)->accepterVisiteur(this);
     }
-	robot_->assignerEstEnCollision(estEnCollision_);
+
+    if (estEnCollision_)
+    {
+        robot_->assignerEstEnCollision(estEnCollision_);
+    }
 }
 
 

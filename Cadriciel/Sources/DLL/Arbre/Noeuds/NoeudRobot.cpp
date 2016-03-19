@@ -189,33 +189,20 @@ void NoeudRobot::animer(float dt)
     glm::dvec3 dernierePositionRelative = positionRelative_;
     double dernierAngleRotation = angleRotation_;
 
-    bool etaitEnCollision = estEnCollision_;
-
     if (!estEnCollision_)
     {
         mettreAJourPosition(dt);
     }
-
+    else 
+    {
+        positionRelative_ = dernierePositionRelative;
+        angleRotation_ = dernierAngleRotation;
+        effectuerCollision(dt);
+    }
+    positionCourante_ = positionRelative_;
     mettreAJourFormeEnglobante();
-
-    //effectuerCollision(dt);
     mettreAJourCapteurs();
     arbre_->accepterVisiteur(visiteur_.get());
-
-    if (estEnCollision_)
-    {
-        mettreAJourPosition(-dt);
-        vitesseDroite_ = 0.0;
-        vitesseGauche_ = 0.0;
-        vitesseRotation_ = 0.0;
-        vitesseCouranteGauche_ = 0.0;
-        vitesseCouranteDroite_ = 0.0;
-        vitesseRotationCourante_ = 0.0;
-        estEnCollision_ = false;
-    }
-
-    mettreAJourFormeEnglobante();
-
 	positionnerRoues();
 }
 
@@ -229,19 +216,23 @@ void NoeudRobot::calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslati
     vitesseTangentielle *= normeTangetielle;
     vitesseCentripete *= normeCentripete;
 
-    vitesseTranslation = vitesseTangentielle + vitesseCentripete;
-    vitesseAngulaire = (glm::cross(vitesseCentripete, vitesseTangentielle)).z;
+    vitesseTranslation = vitesseTangentielle;
+    vitesseAngulaire = normeCentripete;
 }
 
 void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& vitesseTranslationCollision,
     double& vitesseAngulaireCollision) const
 {
+    glm::dvec3 orientationTangentielle, orientationCentripete;
+    rectangleEnglobant_.calculerVecteursOrientation(orientationCentripete, orientationTangentielle);
+
     glm::dvec3 vitesseTranslationCourante;
     double vitesseAngulaireCourante;
     calculerComposantesVitesseCourante(vitesseTranslationCourante, vitesseAngulaireCourante);
 
-    vitesseTranslationCollision = glm::reflect(vitesseTranslationCourante, normale);
-    vitesseAngulaireCollision = -vitesseAngulaireCourante;
+    vitesseTranslationCollision = glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
+    vitesseAngulaireCollision = vitesseAngulaireCourante + glm::dot(vitesseTranslationCollision_, orientationCentripete);
+    vitesseAngulaireCollision *= FACTEUR_ATTENUATION;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -270,7 +261,12 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         glm::dvec3 normaleCollision;
         cercle->calculerCollision(rectangleEnglobant_, normaleCollision);
         calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
-        //effectuerCollision(normaleCollision);
+        vitesseDroite_ = 0.0;
+        vitesseGauche_ = 0.0;
+        vitesseRotation_ = 0.0;
+        vitesseCouranteDroite_ = 0.0;
+        vitesseCouranteGauche_ = 0.0;
+        vitesseRotationCourante_ = 0.0;
     }
     // Le poteau est en intersection et qu'il se trouve déjà en collision.
     else if (enIntersection && enCollision)
@@ -482,6 +478,17 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 	vitesseGauche_ = vitesseGaucheTemp;
 }
 
+void NoeudRobot::reinitialiserPosition(const float& dt)
+{
+    vitesseDroite_ = 0.0;
+    vitesseGauche_ = 0.0;
+    vitesseRotation_ = 0.0;
+    vitesseCouranteGauche_ = 0.0;
+    vitesseCouranteDroite_ = 0.0;
+    vitesseRotationCourante_ = 0.0;
+}
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::mettreAJourRectangleEnglobant()
@@ -552,26 +559,37 @@ void NoeudRobot::effectuerCollision(const double& dt)
 {
     // Appliquer la vitesse de collision en fonction du temps
     positionRelative_ += vitesseTranslationCollision_ * dt / 10.0;
-    angleRotation_ += vitesseAngulaireCollision_ * dt / 10.0;
+    angleRotation_ += vitesseAngulaireCollision_ * dt;
 
     // La force frottement est toujours dans le sens inverse du déplacement.
-    glm::dvec3 frottementTranslation = FACTEUR_ATTENUATION * -vitesseTranslationCollision_;
-    double frottementRotation = FACTEUR_ATTENUATION * -vitesseAngulaireCollision_;
-
+    glm::dvec3 frottementTranslation = glm::normalize(-vitesseTranslationCollision_);
+    frottementTranslation *= acceleration_;
+    double frottementRotation = acceleration_ * -glm::sign(vitesseAngulaireCollision_);
+    
     // Appliquer la force de frottement sur la vitesse en translation tant qu'on se trouve en translation.
     glm::dvec3 origine = { 0.0, 0.0, 0.0 };
-    double normeVitesseTranslation = glm::distance(origine, vitesseTranslationCollision_);
-    bool enTranslation = glm::abs(normeVitesseTranslation) > 0.0;
+    glm::dvec3 dV = frottementTranslation * dt;
+    bool enTranslation = glm::abs(dV.x) < glm::abs(vitesseTranslationCollision_.x) &&
+                         glm::abs(dV.y) < glm::abs(vitesseTranslationCollision_.y);
     if (enTranslation)
     {
-        vitesseTranslationCollision_ += frottementTranslation * dt;
+        vitesseTranslationCollision_ += dV;
+    }
+    else 
+    {
+        vitesseTranslationCollision_ = { 0.0, 0.0, 0.0 };
     }
 
     // Appliquer la force de frottement sur la vitesse de rotation tant qu'on se trouve en rotation. 
-    bool enRotation = glm::abs(vitesseAngulaireCollision_) > 0.0;
+    double dVR = frottementRotation * dt;
+    bool enRotation = glm::abs(dVR) < glm::abs(vitesseAngulaireCollision_);
     if (enRotation)
     {
-        vitesseRotation_ += FACTEUR_ATTENUATION * dt;
+        vitesseAngulaireCollision_ += dVR;
+    }
+    else 
+    {
+        vitesseAngulaireCollision_ = 0.0;
     }
 
     // On se trouve toujours en collision si on se trouve en translation ou en rotation.

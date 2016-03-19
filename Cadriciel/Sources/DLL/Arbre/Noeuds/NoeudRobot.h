@@ -128,6 +128,7 @@ private:
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
     void mettreAJourPosition(const float& dt);
+    void reinitialiserPosition(const float& dt);
     virtual void mettreAJourFormeEnglobante();
 
 	bool estEnCollision_{ false };
@@ -258,6 +259,7 @@ inline void NoeudRobot::assignerEstEnCollision(bool collision)
 	estEnCollision_ = collision;
     rectangleEnglobant_.assignerEnCollision(collision);
 }
+
 #endif // __ARBRE_NOEUD_ROBOT_H__
 
 ///////////////////////////////////////////////////////////////////////////////
