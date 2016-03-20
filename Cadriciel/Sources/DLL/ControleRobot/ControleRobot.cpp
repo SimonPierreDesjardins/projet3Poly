@@ -71,11 +71,14 @@ ControleRobot::~ControleRobot()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ControleRobot::traiterCommande()
+/// @fn ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilisateur)
 ///
 /// Demande au controlleur du robot de traiter la commande donnee.
-/// Le traitement de la commande dépend du mode du robot. Si le robot est en manuel, les commandes utilisateurs sont traitées.
-/// Sinon, les commandes de l'IA sont traitées. La commande d'inversion de mode est toujours traitée.
+/// Le traitement de la commande dépend du mode du robot. Si le robot est en manuel, les commandes utilisateurs sont traitées et ceux de l'IA ignorées.
+/// Sinon, les commandes de l'IA sont traitées et ceux de l'utilisateur ignorées. La commande d'inversion de mode est une exception car elle est toujours traitée.
+///
+/// @param[in] commande: La commande que doit traiter le robot, soit un changement des vitesses ou une alternance du mode manuel
+/// @param[in] provientUtilisateur: Booléen indiquant que la commande provient d'un uitilisateur.
 ///
 /// @return Aucune.
 ///
@@ -96,7 +99,7 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ControleRobot::assignerComportement(std::shared_ptr<ComportementAbstrait> nouveauComportement)
+/// @fn ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur)
 ///
 /// Assigne un vecteur de comportements au controleur du robot auquel il se réfèrera lors de son éxécution.
 ///
@@ -112,11 +115,12 @@ void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<Com
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ControleRobot::assignerComportement(std::shared_ptr<ComportementAbstrait> nouveauComportement)
+/// @fn ControleRobot::assignerComportement(TypeComportement nouveauComportement, std::string declencheur)
 ///
 /// Assigne un nouveau comportement à suivre au robot de façon threadsafe et memory safe.
 ///
 /// @param nouveauComportement: Le pointeur au comportement assigné.
+/// @param declencheur: Indique la raison du changement de comportement. Utilisé pour le deboguage.
 ///
 /// @return Aucune.
 ///
@@ -147,7 +151,7 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 ///
 /// @fn ControleRobot::inverserModeControle()
 ///
-/// Dit au controleur de robot de gerer la passation au mode automatique.
+/// Dit au controleur de robot d'inverser le type de commande
 ///
 /// @return Aucune.
 ///
@@ -257,7 +261,7 @@ void ControleRobot::boucleInfinieLogiqueRobot()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ControleRobot::boucleInfinieLogiqueRobot()
+/// @fn ControleRobot::verifierCapteurs()
 ///
 /// Vérifie l'état des capteurs à obstacles et change de comportement au besoin.
 ///
@@ -322,11 +326,15 @@ void ControleRobot::verifierCapteurs(){
 		}
 	}
 }
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 ///
 /// Assigne une nouvelle vitesse aux roues du noeud du robot
+///
+/// @param vit_G: La vitesse à la roue gauche
+/// @param vit_D: La vitesse à la roue droite
 ///
 /// @return Aucune.
 ///
@@ -337,7 +345,18 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 	robot_->assignerVitesseDroite(vit_D);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
+///
+/// Assigne une nouvelle vitesse aux roues du noeud du robot
+///
+/// @param vit_G: La vitesse à la roue gauche
+/// @param vit_D: La vitesse à la roue droite
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
 {
     vit_G += robot_->obtenirVitesseGauche();
