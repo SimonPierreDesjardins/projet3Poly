@@ -6,6 +6,7 @@
 #include "Utilitaire.h"
 #include "CercleEnglobant.h"
 #include "AideCollision.h"
+#include "Droite3D.h"
 
 #include <iostream>
 
@@ -298,14 +299,19 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
     coins[3] = positionCentre_ + distanceCentreLargeur - distanceCentreHauteur;
 }
 
-bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
+const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
 {
+    const int N_COINS = 4;
+
+    // Calculer les coins de ce rectangle.
     glm::dvec3 coins_[4];
     calculerPositionCoins(coins_);
 
+    glm::dvec3 normale = { 0.0, 0.0, 0.0 };
+
     // On commence par vérifier si ou ou plusieurs coins est dans l'autre rectangle.
     bool coinDansAutreRectangle = false;
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < N_COINS; i++)
     {
         coinDansAutreRectangle = rectangle.calculerEstDansForme(coins_[i]);
         if (coinDansAutreRectangle)
@@ -314,55 +320,62 @@ bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, 
         }
     }
 
-    bool coinDansCeRectangle = false;
     if (!coinDansAutreRectangle)
     {
-        // Calculer la normale la plus proche du coin en intersection.
+        // Calculer les coins de l'autre rectangle.
         glm::dvec3 coins[4];
         rectangle.calculerPositionCoins(coins);
 
-        const int HAUTEUR = 0;
-        const int LARGEUR = 1;
-        glm::dvec3 orientations[2];
-        calculerVecteursOrientation(orientations[HAUTEUR], orientations[LARGEUR]);
+        // Initialiser la recherche du coin en collision.
+        glm::dvec3 coinEnCollision = coins[0];
+        double minDistanceCoinCentre = glm::distance(coinEnCollision, positionCentre_);
 
-        double maxDistance = 0.0;
-        glm::dvec3 maxOrientation;
-        // Trouver l'orientation la plus proche du coin.
-        for (int i = 0; i < 4; i++)
+        // Le coin en collision est le coin le plus proche du centre de ce rectangle.
+        for (int i = 1; i < N_COINS; i++)
         {
-            // On vérifie que le coin est dans le rectangle.
-            coinDansCeRectangle = calculerEstDansForme(coins_[i]);
-            if (coinDansCeRectangle)
+            double distanceCoinCentre = glm::distance(coins[i], positionCentre_);
+            if (distanceCoinCentre < minDistanceCoinCentre)
             {
-                for (int j = 0; j < 2; j++)
-                {
-                    // Calcule de la projection sur les orientations.
-                    double projection = glm::dot(coins[i], orientations[j]);
-                    if (glm::abs(projection) > glm::abs(maxDistance))
-                    {
-                        maxDistance = projection;
-                        maxOrientation = projection * orientations[j];
-                    }
-                }
+                minDistanceCoinCentre = distanceCoinCentre;
+                coinEnCollision = coins[i];
             }
         }
-        normale += glm::normalize(maxOrientation);
-        std::cout << "normale: " << maxOrientation.x << ", " << maxOrientation.y << std::endl;
-    }
 
-    normale = glm::normalize(normale);
-    return coinDansCeRectangle || coinDansAutreRectangle;
+        // Initialier la recherche de la droite en collision
+        math::Droite3D droiteEnCollision(coins_[0], coins_[1]);
+        double minDistanceDroite = droiteEnCollision.distancePoint(coinEnCollision);
+        
+        // Trouver la droite la plus proche du coin en collision.
+        for (int i = 1; i < N_COINS; i++)
+        {
+            // Indexe circulaire pour créer une droite avec deux coins adjacents.
+            int j = (i + 1) % N_COINS;
+            math::Droite3D droite(coins_[i], coins_[j]);
+
+            // La droite la plus proche du coin en collision est la droite en collision.
+            double distanceDroite = droite.distancePoint(coinEnCollision);
+            if (distanceDroite < minDistanceDroite)
+            {
+                minDistanceDroite = distanceDroite;
+                droiteEnCollision = droite;
+            }
+        }
+        // la normale est la perpendiculaire de l'orientation de la droite.
+        glm::dvec3 orientationDroite = droiteEnCollision.lireVecteur();
+        normale = { -orientationDroite.y, orientationDroite.x, 0.0 };
+    }
+    return glm::normalize(normale);
 }
 
-bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::dvec3& normale) const
+const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
 {
-    //glm::dvec3 normaleCollision = cercle.obtenirPositionCentre() - positionCentre_;
-    //normale = glm::normalize(normaleCollision);
     glm::dvec3 coins[4];
     calculerPositionCoins(coins);
     int j = 0;
-    bool collision = false;
+    bool collisionSegment = false;
+    double minDistance = glm::distance(cercle.obtenirPositionCentre(), coins[0]);
+    glm::dvec3 coinEnCollision = coins[0];
+    glm::dvec3 normale = { 0.0, 0.0, 0.0 };
     for (int i = 0; i < 4; i++)
     {
         j = (i + 1) % 4;
@@ -371,27 +384,24 @@ bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::d
             cercle.obtenirPositionCentre(),
             cercle.obtenirRayon(),
             false);
-        if (details.type != aidecollision::COLLISION_AUCUNE)
+        // Si la collision est de type segment
+        if (details.type == aidecollision::COLLISION_SEGMENT)
         {
             normale += details.direction;
-            collision = true;
+            collisionSegment = true;
         }
-        // Vérifier une intersection avec un coin.
-        bool coinDansCercle = false;
-        coinDansCercle = cercle.calculerEstDansForme(coins[i]);
-
-        if (coinDansCercle)
+        // Le coin le plus proche du centre du cercle est le coin en collision.
+        double distanceCoinCentre = glm::distance(cercle.obtenirPositionCentre(), coins[i]);
+        if (distanceCoinCentre < minDistance)
         {
-            normale += cercle.obtenirPositionCentre() - coins[i];
-            collision = true;
-            std::cout << "Collision avec coin." << std::endl;
+            minDistance = distanceCoinCentre;
+            coinEnCollision = coins[i];
         }
     }
-    // Si on ne trouve pas de collision on calcule tout de même une normale à l'aide des centres des formes.
-    if (!collision)
+    // Si on ne trouve pas de collision de type segment, la normale de collision est la distance entre le centre du cercle et le coin.
+    if (!collisionSegment)
     {
-        normale += cercle.obtenirPositionCentre() - positionCentre_;
+        normale += cercle.obtenirPositionCentre() - coinEnCollision;
     }
-    normale = glm::normalize(normale);
-    return collision;
+    return glm::normalize(normale);
 }

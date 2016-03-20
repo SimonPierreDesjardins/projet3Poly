@@ -126,14 +126,14 @@ void CercleEnglobant::afficher(const glm::dvec3& origine) const
     glPopMatrix();
 }
 
-bool CercleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
+const glm::dvec3& CercleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
 {
-    bool collision = rectangle.calculerCollision(*this, normale);
+    glm::dvec3 normale = rectangle.calculerNormaleCollision(*this);
     normale = -normale;
-    return collision;
+    return normale;
 }
 
-bool CercleEnglobant::calculerCollision(const CercleEnglobant& rectangle, glm::dvec3& normale) const
+const glm::dvec3& CercleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
 {
-    return false;
+    return{ 0.0, 0.0, 0.0 };
 }

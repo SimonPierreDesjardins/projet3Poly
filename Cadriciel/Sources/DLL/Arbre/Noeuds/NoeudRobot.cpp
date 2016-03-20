@@ -249,13 +249,14 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     if (enIntersection && !enCollision)
     {
         // On calcule les composantes de la collision.
-        glm::dvec3 normaleCollision;
 
         enCollision = true;
         cercle->assignerEnCollision(enCollision);
 
-        cercle->calculerCollision(rectangleEnglobant_, normaleCollision);
+        glm::dvec3 normaleCollision = cercle->calculerNormaleCollision(rectangleEnglobant_);
         calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+
+
         positionRelative_ = dernierePositionRelative_;
         positionCourante_ = positionRelative_;
         angleRotation_ = dernierAngleRotation_;
@@ -314,8 +315,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
         rectangle->assignerEnCollision(enCollision);
 
         // On calcule les composantes de la collision.
-        glm::dvec3 normaleCollision;
-        rectangle->calculerCollision(rectangleEnglobant_, normaleCollision);
+        glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
 
         calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
