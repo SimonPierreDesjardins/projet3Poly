@@ -69,6 +69,7 @@ public:
     
     virtual const glm::dvec3& calculerNormaleCollision(const RectangleEnglobant& rectangle) const;
     virtual const glm::dvec3& calculerNormaleCollision(const CercleEnglobant& cercle) const;
+    const glm::dvec3& calculerNormaleCollision(const glm::dvec3 point) const;
 
     void calculerPositionCoins(glm::dvec3 coins[4]) const;
 

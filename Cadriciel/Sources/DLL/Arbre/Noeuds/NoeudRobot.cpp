@@ -220,13 +220,40 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, glm::dv
     double vitesseAngulaireCourante;
     calculerComposantesVitesseCourante(vitesseTranslationCourante, vitesseAngulaireCourante);
 
-    vitesseTranslationCollision += glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
-    vitesseAngulaireCollision += -vitesseAngulaireCourante + glm::dot(vitesseTranslationCollision_, orientationCentripete);
-    vitesseAngulaireCollision *= FACTEUR_ATTENUATION;
+   
+    glm::dvec3 vitesseTranslation = vitesseTranslationCollision + glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
 
-    std::cout << "position: " << positionCourante_.x << ", " << positionCourante_.y << std::endl;
-    std::cout << "VTx: " << vitesseTranslationCollision_.x << ", VTy: " << vitesseTranslationCollision_.y;
-    std::cout << ", VR: " << vitesseAngulaireCourante << std::endl;
+    vitesseTranslationCollision.x = glm::clamp(vitesseTranslation.x, -50.0, 50.0);
+    vitesseTranslationCollision.y = glm::clamp(vitesseTranslation.y, -50.0, 50.0);
+
+    double vitesseAngulaire = vitesseAngulaireCollision + (-vitesseAngulaireCourante + glm::dot(vitesseTranslationCollision, orientationCentripete)) * FACTEUR_ATTENUATION;
+
+    vitesseAngulaireCollision = glm::clamp(vitesseAngulaire, -50.0, 50.0);
+    
+
+    std::cout << "Sans clamp" << std::endl;
+    std::cout << vitesseTranslation.x << std::endl;
+    std::cout << vitesseTranslation.y << std::endl;
+    std::cout << vitesseAngulaire << std::endl;
+    
+
+    //vitesseTranslationCollision += glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
+    //vitesseAngulaireCollision += (-vitesseAngulaireCourante + glm::dot(vitesseTranslationCollision_, orientationCentripete)) * FACTEUR_ATTENUATION;
+
+    std::cout << "Avec clamp" << std::endl;
+    std::cout << vitesseTranslationCollision.x << std::endl;
+    std::cout << vitesseTranslationCollision.y << std::endl;
+    std::cout << vitesseAngulaireCollision << std::endl;
+
+    std::cout << "Normale" << std::endl;
+    std::cout << normale.x << std::endl;
+    std::cout << normale.y << std::endl;
+
+    std::cout << "Position" << std::endl;
+    std::cout << positionRelative_.x << std::endl;
+    std::cout << positionRelative_.y << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -256,7 +283,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         glm::dvec3 normaleCollision = cercle->calculerNormaleCollision(rectangleEnglobant_);
         calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
-
+        // Le robot est replacé à une position sans collision.
         positionRelative_ = dernierePositionRelative_;
         positionCourante_ = positionRelative_;
         angleRotation_ = dernierAngleRotation_;
@@ -264,7 +291,6 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         vitesseCouranteDroite_ = 0.0;
         vitesseCouranteGauche_ = 0.0;
         vitesseRotationCourante_ = 0.0;
-        // Le robot est replacé à une position sans collision.
     }
     // Le poteau est en intersection et qu'il se trouve déjà en collision.
     else if (enIntersection && enCollision)
@@ -274,9 +300,6 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         positionCourante_ = positionRelative_;
         angleRotation_ = dernierAngleRotation_;
         mettreAJourFormeEnglobante();
-        //vitesseCouranteDroite_ = 0.0;
-        //vitesseCouranteGauche_ = 0.0;
-        //vitesseRotationCourante_ = 0.0;
         enCollision = true;
     }
     // Le poteau n'est pas en intersection et il se trouvait en collision.
@@ -337,9 +360,6 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
         positionCourante_ = positionRelative_;
         angleRotation_ = dernierAngleRotation_;
         mettreAJourFormeEnglobante();
-        //vitesseCouranteDroite_ = 0.0;
-        //vitesseCouranteGauche_ = 0.0;
-        //vitesseRotationCourante_ = 0.0;
         enCollision = true;
     }
     // Le poteau n'est pas en intersection et il se trouvait en collision.
@@ -363,28 +383,70 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-bool NoeudRobot::verifierCollision(NoeudTable* noeud)
+bool NoeudRobot::verifierCollision(NoeudTable* table)
 {
-	RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
-	// TODO: à changer pour vérifier
+    if (table == nullptr) return false;
+	RectangleEnglobant* rectangle = table->obtenirFormeEnglobante();
+
+    // Trouver si le robot est en intersection avec la table.
 	glm::dvec3 coins[4];
     rectangleEnglobant_.calculerPositionCoins(coins);
-	bool collision = false;
-
-	for (unsigned i = 0; i < 4 && !collision; i++)
+	bool enIntersection = false;
+    glm::dvec3 normaleCollision = { 0.0, 0.0, 0.0 };
+	for (unsigned i = 0; i < 4; i++)
 	{
 		if (!rectangle->calculerEstDansForme(coins[i]))
 		{
-			collision = true;
+			enIntersection = true;
+            normaleCollision += rectangle->calculerNormaleCollision(coins[i]);
 		}
-	}
-	if (collision)
-	{
-		glm::dvec3 normaleTable, perpendiculaireTable;
-		rectangle->calculerVecteursOrientation(normaleTable, perpendiculaireTable);
-		effectuerCollision(normaleTable);
-	}
-	return collision;
+	}   
+    normaleCollision = glm::normalize(normaleCollision);
+    bool enCollision = rectangle->obtenirEnCollision();
+    // La table est en intersection et elle ne se trouve pas déjà en collision.
+    if (enIntersection)
+    {
+        enCollision = true;
+        rectangle->assignerEnCollision(enCollision);
+
+        // On calcule les composantes de la collision.
+        calculerComposantesCollision(-normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+
+        // Réinitialiser la position du robot.
+        positionRelative_ = dernierePositionRelative_;
+        positionCourante_ = positionRelative_;
+        angleRotation_ = dernierAngleRotation_;
+        std::cout << std::endl;
+
+        mettreAJourFormeEnglobante();
+
+        // Réinitialiser la vitesse du robot.
+        vitesseCouranteDroite_ = 0.0;
+        vitesseCouranteGauche_ = 0.0;
+        vitesseRotationCourante_ = 0.0;
+    }
+    // La table est en intersection et elle se trouve déjà en collision.
+    /*
+    else if (enIntersection && enCollision)
+    {
+        // Réinitialiser la position du robot.
+        //positionRelative_ = dernierePositionRelative_;
+        //positionCourante_ = positionRelative_;
+        //angleRotation_ = dernierAngleRotation_;
+        //mettreAJourFormeEnglobante();
+        enCollision = true;
+    }
+    */
+    // Le poteau n'est pas en intersection et il se trouvait en collision.
+    else if (!enIntersection)
+    {
+        // Le poteau 
+        enCollision = false;
+        rectangle->assignerEnCollision(false);
+    }
+    return enIntersection;
+
+
 }
 
 
