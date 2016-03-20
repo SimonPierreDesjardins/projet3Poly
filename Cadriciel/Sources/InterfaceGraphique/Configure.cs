@@ -269,9 +269,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_DROITE);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_GAUCHE);
             }
-            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE);
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE);
             textBoxAntiHoraire.Text = afficherCaractere(caractere);
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
@@ -291,9 +291,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_GAUCHE);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_DROITE);
             }
-            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE);
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE);
             textBoxHoraire.Text = afficherCaractere(caractere);
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
