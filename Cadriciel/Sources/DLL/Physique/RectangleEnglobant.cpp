@@ -300,7 +300,59 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
 
 bool RectangleEnglobant::calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const
 {
-    return false;
+    glm::dvec3 coins_[4];
+    calculerPositionCoins(coins_);
+
+    // On commence par vérifier si ou ou plusieurs coins est dans l'autre rectangle.
+    bool coinDansAutreRectangle = false;
+    for (int i = 0; i < 4; i++)
+    {
+        coinDansAutreRectangle = rectangle.calculerEstDansForme(coins_[i]);
+        if (coinDansAutreRectangle)
+        {
+            normale += rectangle.obtenirPositionCentre() - coins_[i];
+        }
+    }
+
+    bool coinDansCeRectangle = false;
+    if (!coinDansAutreRectangle)
+    {
+        // Calculer la normale la plus proche du coin en intersection.
+        glm::dvec3 coins[4];
+        rectangle.calculerPositionCoins(coins);
+
+        const int HAUTEUR = 0;
+        const int LARGEUR = 1;
+        glm::dvec3 orientations[2];
+        calculerVecteursOrientation(orientations[HAUTEUR], orientations[LARGEUR]);
+
+        double maxDistance = 0.0;
+        glm::dvec3 maxOrientation;
+        // Trouver l'orientation la plus proche du coin.
+        for (int i = 0; i < 4; i++)
+        {
+            // On vérifie que le coin est dans le rectangle.
+            coinDansCeRectangle = calculerEstDansForme(coins_[i]);
+            if (coinDansCeRectangle)
+            {
+                for (int j = 0; j < 2; j++)
+                {
+                    // Calcule de la projection sur les orientations.
+                    double projection = glm::dot(coins[i], orientations[j]);
+                    if (glm::abs(projection) > glm::abs(maxDistance))
+                    {
+                        maxDistance = projection;
+                        maxOrientation = projection * orientations[j];
+                    }
+                }
+            }
+        }
+        normale += glm::normalize(maxOrientation);
+        std::cout << "normale: " << maxOrientation.x << ", " << maxOrientation.y << std::endl;
+    }
+
+    normale = glm::normalize(normale);
+    return coinDansCeRectangle || coinDansAutreRectangle;
 }
 
 bool RectangleEnglobant::calculerCollision(const CercleEnglobant& cercle, glm::dvec3& normale) const

@@ -273,10 +273,10 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         positionCourante_ = positionRelative_;
         angleRotation_ = dernierAngleRotation_;
         mettreAJourFormeEnglobante();
-        vitesseCouranteDroite_ = 0.0;
-        vitesseCouranteGauche_ = 0.0;
-        vitesseRotationCourante_ = 0.0;
-        //enCollision = false;
+        //vitesseCouranteDroite_ = 0.0;
+        //vitesseCouranteGauche_ = 0.0;
+        //vitesseRotationCourante_ = 0.0;
+        enCollision = true;
     }
     // Le poteau n'est pas en intersection et il se trouvait en collision.
     else if (!enIntersection && enCollision)
@@ -300,17 +300,56 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-bool NoeudRobot::verifierCollision(NoeudMur* noeud)
+bool NoeudRobot::verifierCollision(NoeudMur* mur)
 {
-    RectangleEnglobant* rectangle = noeud->obtenirFormeEnglobante();
-    bool collision = rectangleEnglobant_.calculerIntersection(*rectangle);
-	if (collision)
-	{
-		glm::dvec3 normaleMur, perpendiculaireMur;
-		rectangle->calculerVecteursOrientation(normaleMur, perpendiculaireMur);
-		//effectuerCollision(normaleMur);
-	}
-	return collision;
+    if (mur == nullptr) return false;
+    RectangleEnglobant* rectangle = mur->obtenirFormeEnglobante();
+    bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
+    bool enCollision = rectangle->obtenirEnCollision();
+
+    // Le poteau est en intersection et il ne se trouve pas déjà en collision.
+    if (enIntersection && !enCollision)
+    {
+        enCollision = true;
+        rectangle->assignerEnCollision(enCollision);
+
+        // On calcule les composantes de la collision.
+        glm::dvec3 normaleCollision;
+        rectangle->calculerCollision(rectangleEnglobant_, normaleCollision);
+
+        calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+
+        positionRelative_ = dernierePositionRelative_;
+        positionCourante_ = positionRelative_;
+        angleRotation_ = dernierAngleRotation_;
+        mettreAJourFormeEnglobante();
+
+        vitesseCouranteDroite_ = 0.0;
+        vitesseCouranteGauche_ = 0.0;
+        vitesseRotationCourante_ = 0.0;
+        // Le robot est replacé à une position sans collision.
+    }
+    // Le poteau est en intersection et qu'il se trouve déjà en collision.
+    else if (enIntersection && enCollision)
+    {
+        // On ne traite pas la collision.
+        positionRelative_ = dernierePositionRelative_;
+        positionCourante_ = positionRelative_;
+        angleRotation_ = dernierAngleRotation_;
+        mettreAJourFormeEnglobante();
+        //vitesseCouranteDroite_ = 0.0;
+        //vitesseCouranteGauche_ = 0.0;
+        //vitesseRotationCourante_ = 0.0;
+        enCollision = true;
+    }
+    // Le poteau n'est pas en intersection et il se trouvait en collision.
+    else if (!enIntersection && enCollision)
+    {
+        // Le poteau 
+        enCollision = false;
+        rectangle->assignerEnCollision(enCollision);
+    }
+    return enCollision;
 }
 
 ////////////////////////////////////////////////////////////////////////
