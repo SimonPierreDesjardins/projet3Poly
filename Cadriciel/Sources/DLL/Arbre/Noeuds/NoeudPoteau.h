@@ -31,7 +31,8 @@ public:
 	/// Destructeur.
 	~NoeudPoteau();
 
-    inline CercleEnglobant obtenirCercleEnglobant();
+    virtual CercleEnglobant* obtenirFormeEnglobante();
+    virtual const CercleEnglobant* obtenirFormeEnglobante() const;
      
     virtual void animer(float dt);
 	/// Affiche la table.
@@ -41,13 +42,9 @@ public:
 private:
     CercleEnglobant cercleEnglobant_;
 
-    void mettreAJourFormeEnglobante();
+    virtual void mettreAJourFormeEnglobante();
 };
  
-inline CercleEnglobant NoeudPoteau::obtenirCercleEnglobant()
-{
-    return cercleEnglobant_;
-}
 
 #endif
 

@@ -16,6 +16,9 @@
 #include "ArbreRenduINF2990.h"
 #include "NoeudLigne.h"
 
+const double CapteurOptique::RAYON_CERCLE_ENGLOBANT = 0.4;
+
+
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// @fn CapteurOptique::CapteurOptique()
@@ -43,6 +46,7 @@ CapteurOptique::CapteurOptique()
 CapteurOptique::CapteurOptique(const glm::dvec3& positionRelative)
     : positionRelative_(positionRelative) 
 {
+    cercleEnglobant_ = CercleEnglobant({ 0.0, 0.0, 0.0 }, RAYON_CERCLE_ENGLOBANT);
 }
  
 ////////////////////////////////////////////////////////////////////////////////
@@ -74,14 +78,16 @@ CapteurOptique::~CapteurOptique()
 /// @return Aucune. 
 ///
 ////////////////////////////////////////////////////////////////////////////////
-void CapteurOptique::mettreAJourPosition(const glm::dvec3& positionRobot, 
-                                         const double&     angleRotationRobot)
+void CapteurOptique::mettreAJour(const glm::dvec3& positionRobot, 
+                                 const double&     angleRotationRobot)
 {
 	glm::dvec3 positionApresRotation = { 0.0, 0.0, 0.0 };
 	utilitaire::calculerPositionApresRotation(positionRelative_, 
                                               positionApresRotation, 
                                               angleRotationRobot);
-    positionCourante_ = positionApresRotation + positionRobot;	
+    positionCourante_ = positionApresRotation + positionRobot;
+    ligneEstDetectee_ = false;
+    cercleEnglobant_.assignerPositionCentre(positionCourante_);
 }
 
 
@@ -116,6 +122,9 @@ void CapteurOptique::afficher() const
 	glVertex3d(0.1, 0.1, 5.0);
 	glVertex3d(-0.1, 0.1, 5.0);
 	glEnd();
+
+    cercleEnglobant_.afficher(positionCourante_);
+
 	glPopMatrix();
 
 }
@@ -134,15 +143,13 @@ void CapteurOptique::afficher() const
 ////////////////////////////////////////////////////////////////////////////////
 void CapteurOptique::verifierDetection(NoeudLigne* ligne)
 {
-    ligneEstDetectee_ = false;
 	NoeudAbstrait* enfant = nullptr;
     unsigned int n = ligne->obtenirNombreEnfants();
+	RectangleEnglobant rectangle;
 	for (unsigned int i = 0; i < n && !ligneEstDetectee_; i++)
 	{
 		enfant = ligne->chercher(i);
-        utilitaire::QuadEnglobant quad = enfant->obtenirQuadEnglobantCourant();
-		ligneEstDetectee_ = utilitaire::calculerPointEstDansQuad(positionCourante_,
-            quad);
+		ligneEstDetectee_ = enfant->obtenirFormeEnglobante()->calculerIntersection(cercleEnglobant_);
 	}
 }
 

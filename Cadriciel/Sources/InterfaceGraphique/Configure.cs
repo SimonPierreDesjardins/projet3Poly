@@ -16,7 +16,6 @@ namespace InterfaceGraphique
 {
     public partial class Configure : Form
     {
-
         System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.InvariantCulture;
         private List<TypeComportement> comportementsList;
 
@@ -695,9 +694,7 @@ namespace InterfaceGraphique
             {
                 FonctionsNatives.assignerComportementSuivreLigne((TypeComportement)suiviLigneCB.SelectedValue);
                 
-                FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);
-                
-                
+                FonctionsNatives.assignerComportementBalayage((TypeComportement)balayageCB.SelectedValue);      
                 
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, stringToDouble(angleDGTxtBox.Text), TypeComportement.DEVIATIONVERSLAGAUCHE);
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, stringToDouble(angleDDTxtBox.Text), TypeComportement.DEVIATIONVERSLADROITE);

@@ -8,9 +8,10 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 #include "VisiteurVerificationQuad.h"
-#include "VisiteurMiseAJourQuad.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
+#include "RectangleEnglobant.h"
+#include "CercleEnglobant.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -73,6 +74,7 @@ void VisiteurVerificationQuad::visiter(NoeudTable* noeud)
 {
 	objetsDansZoneSimulation_ = true;
 	NoeudAbstrait* enfant = nullptr;
+    boiteTable_ = noeud->obtenirBoiteEnglobanteModele();
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++) {
 		enfant = noeud->chercher(i);
 		enfant->accepterVisiteur(this);
@@ -92,7 +94,8 @@ void VisiteurVerificationQuad::visiter(NoeudTable* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 {
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++) {
+    unsigned int n = noeud->obtenirNombreEnfants();
+	for (unsigned int i = 0; i < n && objetsDansZoneSimulation_; i++) {
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
@@ -110,9 +113,8 @@ void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
-	}
+    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
+                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -128,9 +130,8 @@ void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
-	}
+    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
+                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -146,9 +147,8 @@ void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudDepart* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
-	}
+    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
+                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -182,9 +182,8 @@ void VisiteurVerificationQuad::visiter(NoeudLigne* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 {
-	for (int i = 0; i < 4 && objetsDansZoneSimulation_; i++) {
-		objetsDansZoneSimulation_ = verifierPointEstSurTable(noeud->obtenirQuadEnglobantCourant().coins[i]);
-	}
+    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
+                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
 }
 
 ////////////////////////////////////////////////////////////////////////

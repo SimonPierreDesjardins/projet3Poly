@@ -31,7 +31,8 @@ public:
 	/// Destructeur.
 	~NoeudMur();
 
-    inline RectangleEnglobant obtenirRectangleEngobant() const;
+    virtual RectangleEnglobant* obtenirFormeEnglobante();
+    virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
 
 	/// Affiche la table.
     virtual void animer(float dt);
@@ -41,13 +42,8 @@ public:
 private:
     RectangleEnglobant rectangleEnglobant_;
     
-    void mettreAJourFormeEnglobante();
+    virtual void mettreAJourFormeEnglobante();
 };
-
-inline RectangleEnglobant NoeudMur::obtenirRectangleEngobant() const
-{
-    return rectangleEnglobant_;
-}
 
 #endif /// __ARBRE_NOEUDS_NOEUDMUR_H_
 

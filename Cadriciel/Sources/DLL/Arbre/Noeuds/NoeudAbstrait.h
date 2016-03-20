@@ -82,18 +82,11 @@ public:
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
 	/// Obtient le quadrilatère englobant du noeud.
-	inline utilitaire::QuadEnglobant obtenirQuadEnglobantCourant() const;
-	/// Assigne le quadrilatère englobant du noeud.
-	inline void assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quad);
-	/// Obtenir la boite englobante du modèle.
-	inline utilitaire::QuadEnglobant obtenirQuadEnglobantModele() const;
-    /// Obtenir la forme englobante du noeud.
-    inline FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
-    /// Obtenir le rectangle englobant du noeud.
-    inline RectangleEnglobant obtenirRectangleEnglobant() const;
-    /// Mettre à jour le rectangle englobant du noeud.
-    inline void mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
-        const double& hauteur, const double& largeur);
+    inline const utilitaire::BoiteEnglobante& obtenirBoiteEnglobanteModele() const;
+
+    virtual FormeEnglobanteAbstraite* obtenirFormeEnglobante();
+    virtual const FormeEnglobanteAbstraite* obtenirFormeEnglobante() const;
+    virtual void mettreAJourFormeEnglobante();
 
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirType() const;
@@ -207,18 +200,6 @@ protected:
 
     /// La boite englobante du modèle.
     utilitaire::BoiteEnglobante boiteEnglobanteModele_;
-
-    // TODO: à enlever
-	utilitaire::QuadEnglobant quadEnglobantCourant_;
-
-    // TODO: à enlever
-	utilitaire::QuadEnglobant quadEnglobantModele_;
-
-    // TODO: à enlever
-    RectangleEnglobant rectangleEnglobantObs_;
-
-    // Une référence sur la forme englobante du noeud. 
-    FormeEnglobanteAbstraite* formeEnglobante_{ nullptr };
 
 	/// Vrai si on doit afficher le noeud.
 	bool					affiche_{ true };
@@ -424,68 +405,18 @@ inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDime
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantCourant() const
+/// @fn inline const utilitaire::BoiteEnglobante& NoeudAbstrait::obtenirBoiteEnglobanteModele() const
 ///
-/// Cette fonction permet d'obtenir le quad définisant la zone de sélection de l'objet.
+/// Cette fonction permet d'obtenir la boite englobante du modele.
 ///
-/// @return Un plan orthogonal à Z  représentant les bornes de l'objet dans l'espace 3d.
-///
-////////////////////////////////////////////////////////////////////////
-inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantCourant() const
-{
-	return quadEnglobantCourant_;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quadEnglobant)
-///
-/// Cette fonction permet d'assigner le nouveau quad englobant au noeud.
-///
-/// @param[in] quadEnglobant : Le nouveau plan des bornes pour la sélection
-///
-/// @return Aucune.
+/// @return La boite englobante du modele.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerQuadEnglobantCourant(const utilitaire::QuadEnglobant& quadEnglobant)
+inline const utilitaire::BoiteEnglobante& NoeudAbstrait::obtenirBoiteEnglobanteModele() const
 {
-	quadEnglobantCourant_ = quadEnglobant;
+    return boiteEnglobanteModele_;
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
-///
-/// Cette fonction permet d'obtenir le quad définit en fonction du modele.
-///
-/// @return Un plan orthogonal à Z  représentant les bornes de l'objet dans l'espace 3d.
-///
-////////////////////////////////////////////////////////////////////////
-inline utilitaire::QuadEnglobant NoeudAbstrait::obtenirQuadEnglobantModele() const
-{
-	return quadEnglobantModele_;
-}
-
-//TODO à enlever.
-inline RectangleEnglobant NoeudAbstrait::obtenirRectangleEnglobant() const
-{
-    return rectangleEnglobantObs_;
-}
-
-//TODO à enlever.
-inline FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
-{
-    return formeEnglobante_;
-}
-
-inline void NoeudAbstrait::mettreAJourRectangleEnglobant(const glm::dvec3& centre, const double& angle,
-    const double& hauteur, const double& largeur)
-{
-    rectangleEnglobantObs_.assignerPositionCentre(centre);
-    rectangleEnglobantObs_.assignerAngle(angle);
-    rectangleEnglobantObs_.assignerHauteur(hauteur);
-    rectangleEnglobantObs_.assignerLargeur(largeur);
-}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline const std::string& NoeudAbstrait::obtenirType() const

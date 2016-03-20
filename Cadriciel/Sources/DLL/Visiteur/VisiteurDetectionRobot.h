@@ -38,11 +38,12 @@ public:
 	virtual ~VisiteurDetectionRobot();
 
     /// Visiter l'arbre de rendu.
-	virtual void visiter(ArbreRendu* noeud);
+	virtual void visiter(ArbreRendu* arbre);
     /// Visiter la table.
-	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudTable* table);
     /// Visiter une ligne.
-	virtual void visiter(NoeudLigne* noeud);
+	virtual void visiter(NoeudLigne* ligne);
+
     /// Visiter un poteau.
     virtual void visiter(NoeudPoteau* noeud);
     /// Visiter un mur.
@@ -52,6 +53,7 @@ private:
     NoeudRobot* robot_{ nullptr };
     SuiveurLigne* suiveurLigne_;
     std::array<CapteurDistance, 3>* capteursDistance_;
+	bool estEnCollision_{ false };
 };
 
 #endif // VISITEUR_DETECTION_LIGNE_H

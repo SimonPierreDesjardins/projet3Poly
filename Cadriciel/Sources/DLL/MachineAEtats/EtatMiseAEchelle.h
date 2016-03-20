@@ -12,7 +12,6 @@
 #define ETAT_MISE_A_ECHELLE_H
 
 #include "EtatAbstrait.h"
-#include "VIsiteurMiseAjourQuad.h"
 #include "VisiteurVerificationQuad.h"
 #include "VisiteurMiseAEchelle.h"
 

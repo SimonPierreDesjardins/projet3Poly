@@ -33,7 +33,6 @@
 NoeudSegment::NoeudSegment(const std::string& typeNoeud)
 	: NoeudAbstrait(typeNoeud)
 {
-    formeEnglobante_ = &rectangleEnglobant_;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -49,6 +48,18 @@ NoeudSegment::~NoeudSegment()
 {
 }
 
+RectangleEnglobant* NoeudSegment::obtenirFormeEnglobante()
+{
+    return &rectangleEnglobant_;
+}
+
+
+const RectangleEnglobant* NoeudSegment::obtenirFormeEnglobante() const
+{
+    return &rectangleEnglobant_;
+}
+
+
 void NoeudSegment::animer(float dt)
 {
     mettreAJourFormeEnglobante();
@@ -56,9 +67,10 @@ void NoeudSegment::animer(float dt)
 
 void NoeudSegment::mettreAJourFormeEnglobante()
 {
-    rectangleEnglobant_.assignerPositionCentre(positionCourante_);
-    rectangleEnglobant_.assignerAngle(angleRotation_);
-    rectangleEnglobant_.assignerLargeur(facteurMiseAEchelle_);
+    double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+    double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+    largeur *= facteurMiseAEchelle_;
+    rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -90,6 +102,15 @@ void NoeudSegment::afficherConcret() const
 {
 	// Sauvegarde de la matrice.
 	glPushMatrix();
+
+	if (selectionne_)
+    {
+		glColor4d(1.0, 0.2, 0.0, 1.0);
+	}
+	else 
+    {
+		glColor4d(0.0, 0.0, 0.0, 1.0);
+	}
 
 	//Ajustement du mur avant la création
 	glRotated(angleRotation_, 0, 0, 1);
