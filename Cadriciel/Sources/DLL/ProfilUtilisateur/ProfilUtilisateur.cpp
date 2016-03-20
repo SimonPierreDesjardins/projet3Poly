@@ -29,6 +29,7 @@ ProfilUtilisateur::ProfilUtilisateur(){
 	std::getline(fichierDernierProfilR, nomProfil_);
 	fichierDernierProfilR.close();
 
+	toucheNonChangeable = ModeSimulation::getTouchesNonConfigurable();
 
     positionsRelatives_ = {{
             NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE,
@@ -138,7 +139,6 @@ bool ProfilUtilisateur::changerProfil(std::string nomProfil){
 	
 
 	comportements_.clear();
-	touches_.clear();
 	commandes_.clear();
 
 	return chargerProfil();
@@ -156,37 +156,20 @@ bool ProfilUtilisateur::chargerProfil(){
 	rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin();
 
 	this->nomProfil_ = itr->value.GetString();
-	std::wstring ws;
-	ws.assign(nomProfil_.begin(), nomProfil_.end());
-	ComboBox_SelectString(configureHandles.at(PROFIL_CB), 0, ws.c_str());
 
 	itr++;
 
 	const rapidjson::Value& touches = itr->value;
 
-	touches_.resize(touches.Size());
-
 	touches_.at(INVERSER_MODE_CONTROLE) = char(touches[INVERSER_MODE_CONTROLE].GetInt());
-	TCHAR* wtouches = new TCHAR[2];
-	wtouches[1] = '\0';
-	wtouches[0] = touches_.at(INVERSER_MODE_CONTROLE);
-	SendMessage(configureHandles.at(MODE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(AVANCER) = char(touches[AVANCER].GetInt());
-	wtouches[0] = touches_.at(AVANCER);
-	SendMessage(configureHandles.at(AVANCER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(RECULER) = char(touches[RECULER].GetInt());
-	wtouches[0] = touches_.at(RECULER);
-	SendMessage(configureHandles.at(RECULER_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(ROTATION_GAUCHE) = char(touches[ROTATION_GAUCHE].GetInt());
-	wtouches[0] = touches_.at(ROTATION_GAUCHE);
-	SendMessage(configureHandles.at(ROTATION_GAUCHE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	touches_.at(ROTATION_DROITE) = char(touches[ROTATION_DROITE].GetInt());
-	wtouches[0] = touches_.at(ROTATION_DROITE);
-	SendMessage(configureHandles.at(ROTATION_DROITE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)wtouches);
 
 	commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
 	commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));
@@ -232,9 +215,6 @@ bool ProfilUtilisateur::chargerProfil(){
 
 	assert(capteursDistanceJSON.IsArray());
 
-	//bonne version à utiliser quand merge avec oli
-	
-
 	for (unsigned i = 0; i < capteursDistanceJSON.Size(); i++){
 		capteursDistance_.at(i) = CapteurDistance(positionsRelatives_.at(i), anglesRelatifs_.at(i), capteursDistanceJSON[i]);
 		ComboBox_SetCurSel(configureHandles.at(static_cast<ConfigureControl>(CAPTEUR_DIST_DROIT_CB + i)), 1 - capteursDistanceJSON[i]["estActif"].GetBool());
@@ -264,52 +244,60 @@ bool ProfilUtilisateur::chargerProfil(){
 	return true;
 }
 
-void ProfilUtilisateur::chargerProfilParDefaut(){
+void ProfilUtilisateur::chargerDernierProfil(){
 	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_)){
-		if (!utilitaire::fichierExiste(CHEMIN_PROFIL)){
-			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
-			CreateDirectory(wideString.c_str(), NULL);
-		}
-		touches_.resize(5);
-		touches_.at(INVERSER_MODE_CONTROLE) = ' ';
-		touches_.at(AVANCER) = 'W';
-		touches_.at(RECULER) = 'S';
-		touches_.at(ROTATION_GAUCHE) = 'A';
-		touches_.at(ROTATION_DROITE) = 'D';
-
-		commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
-		commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));
-		commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER, true)));
-		commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE, true)));
-		commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE, true)));
-
-		comportements_.push_back(std::make_unique<ComportementDefaut>());
-		comportements_.push_back(std::make_unique<ComportementSuiviLigne>(DEFAUT));
-		comportements_.push_back(std::make_unique<ComportementBalayage>(DEFAUT));
-		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 10));
-		comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 10));
-		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10 , 3));
-		comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10, 3));
-
-		capteursDistance_.at(CAPTEUR_DISTANCE_DROITE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE,
-            NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
-		capteursDistance_.at(CAPTEUR_DISTANCE_CENTRE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE,
-			NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
-		capteursDistance_.at(CAPTEUR_DISTANCE_GAUCHE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE,
-			NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
-
-		suiveurLigne_.assignerActif(true);
-
-		for each (bool option in optionsDebogages_)
-		{
-			option = true;
-		}
-
-		sauvegarder();
+		nomProfil_ = PROFIL_DEFAUT + EXTENSION_PROFIL;
+		changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
+		if(!utilitaire::fichierExiste(CHEMIN_PROFIL + PROFIL_DEFAUT + EXTENSION_PROFIL))
+			creerProfilDefaut();
 	}
-	
+
 	chargerProfil();
+}
+
+void ProfilUtilisateur::creerProfilDefaut(){
+	struct stat buffer;
+	if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+		std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
+		CreateDirectory(wideString.c_str(), NULL);
+	}
+
+	touches_.at(INVERSER_MODE_CONTROLE) = ' ';
+	touches_.at(AVANCER) = 'W';
+	touches_.at(RECULER) = 'S';
+	touches_.at(ROTATION_GAUCHE) = 'A';
+	touches_.at(ROTATION_DROITE) = 'D';
+
+	commandes_.insert(std::make_pair(touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
+	commandes_.insert(std::make_pair(touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));
+	commandes_.insert(std::make_pair(touches_[RECULER], std::make_unique<CommandeRobot>(RECULER, true)));
+	commandes_.insert(std::make_pair(touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE, true)));
+	commandes_.insert(std::make_pair(touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE, true)));
+
+	comportements_.push_back(std::make_unique<ComportementDefaut>());
+	comportements_.push_back(std::make_unique<ComportementSuiviLigne>(DEFAUT));
+	comportements_.push_back(std::make_unique<ComportementBalayage>(DEFAUT));
+	comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 10));
+	comportements_.push_back(std::make_unique<ComportementDeviation>(DEFAUT, 10));
+	comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10, 3));
+	comportements_.push_back(std::make_unique<ComportementEvitement>(DEFAUT, 10, 3));
+
+	capteursDistance_.at(CAPTEUR_DISTANCE_DROITE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE,
+		NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
+	capteursDistance_.at(CAPTEUR_DISTANCE_CENTRE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE,
+		NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
+	capteursDistance_.at(CAPTEUR_DISTANCE_GAUCHE) = CapteurDistance(NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE,
+		NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE, true, (TypeComportement)DEFAUT, 25.0, (TypeComportement)DEFAUT, 5.0);
+
+	suiveurLigne_.assignerActif(true);
+
+	for each (bool option in optionsDebogages_)
+	{
+		option = true;
+	}
+
+	sauvegarder();
 }
 
 void ProfilUtilisateur::modifierToucheCommande(const uint8_t& touche,const TypeCommande& commande){
@@ -352,7 +340,7 @@ bool ProfilUtilisateur::toucheEstUtilise(char touche){
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
 	toucheModifiable = it != commandes_.end();
 
-	const std::array<char, 10>* toucheNonChangeable = ModeSimulation::getTouchesNonConfigurable();
+	
 	for (int i = 0; i < 10 && !trouve; i++)
 	{
 		if (toucheNonChangeable->at(i) == touche)
@@ -382,9 +370,14 @@ std::string ProfilUtilisateur::obtenirCheminProfils(){
 
 void ProfilUtilisateur::supprimerProfil(std::string nomProfil){
 	remove((CHEMIN_PROFIL + nomProfil).c_str());
+	changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
 }
 
 std::string ProfilUtilisateur::obtenirNomProfilDefaut(){
+	return PROFIL_DEFAUT;
+}
+
+std::string ProfilUtilisateur::obtenirNomDernierProfil(){
 	std::ifstream ifs(CHEMIN_PROFIL + DERNIER_PROFIL);
 	std::string dernierProfil;
 	std::getline(ifs, dernierProfil);

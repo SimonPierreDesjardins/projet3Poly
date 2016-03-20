@@ -80,7 +80,7 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
-            configuration = new Configure(ajouterProfilAMenu);
+            configuration = new Configure(profilsMenuSimTest, ajouterProfilSimulation);
             populerProfils();
         }
 
@@ -242,26 +242,22 @@ namespace InterfaceGraphique
         {
             foreach (string nomProfil in configuration.FichiersProfil)
             {
-                ajouterProfilAMenu(nomProfil);
+                ajouterProfilSimulation(nomProfil);
             }
-            nomDernierProfil = configuration.NomProfilInitiale;
-            (profilsMenuSimTest.DropDownItems.Find(configuration.NomProfilInitiale, false)[0] as ToolStripMenuItem).Checked = true;
+            (profilsMenuSimTest.DropDownItems.Find(configuration.NomDernierProfil, false)[0] as ToolStripMenuItem).Checked = true;
         }
 
-        public void ajouterProfilAMenu(string nomProfil)
+        public void ajouterProfilSimulation(string nomProfil)
         {
             ToolStripMenuItem item = new ToolStripMenuItem(nomProfil);
             item.Name = nomProfil;
             item.Click += new EventHandler(profilItem_Click);
             profilsMenuSimTest.DropDownItems.Add(item);
         }
-        private string nomDernierProfil;
+
         private void profilItem_Click(object sender, EventArgs e){
             ToolStripMenuItem item = sender as ToolStripMenuItem;
-            configuration.changerProfil(item.Text);
-            (profilsMenuSimTest.DropDownItems.Find(nomDernierProfil, false)[0] as ToolStripMenuItem).Checked = false;
-            nomDernierProfil = item.Text;
-            item.Checked = true;
+            configuration.changerProfilSelectionne(item.Text);
         }
 
         ////////////////////////////////////////////////////////////////////////
