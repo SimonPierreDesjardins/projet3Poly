@@ -311,12 +311,13 @@ const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleE
 
     // On commence par vérifier si ou ou plusieurs coins est dans l'autre rectangle.
     bool coinDansAutreRectangle = false;
-    for (int i = 0; i < N_COINS; i++)
+    for (int i = 0; i < N_COINS && !coinDansAutreRectangle; i++)
     {
         coinDansAutreRectangle = rectangle.calculerEstDansForme(coins_[i]);
         if (coinDansAutreRectangle)
         {
             normale += rectangle.obtenirPositionCentre() - coins_[i];
+            std::cout << "Coins dans robot." << std::endl;
         }
     }
 
@@ -350,7 +351,7 @@ const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleE
         }
         // la normale est la perpendiculaire de l'orientation de la droite.
         glm::dvec3 orientationDroite = droiteEnCollision.lireVecteur();
-        normale = { orientationDroite.y, -orientationDroite.x, 0.0 };
+        normale = { -orientationDroite.y, orientationDroite.x, 0.0 };
     }
     return glm::normalize(normale);
 }

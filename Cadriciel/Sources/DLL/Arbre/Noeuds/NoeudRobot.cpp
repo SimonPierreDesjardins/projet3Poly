@@ -220,40 +220,49 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, glm::dv
     double vitesseAngulaireCourante;
     calculerComposantesVitesseCourante(vitesseTranslationCourante, vitesseAngulaireCourante);
 
-   
-    glm::dvec3 vitesseTranslation = vitesseTranslationCollision + glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
-
-    vitesseTranslationCollision.x = glm::clamp(vitesseTranslation.x, -50.0, 50.0);
-    vitesseTranslationCollision.y = glm::clamp(vitesseTranslation.y, -50.0, 50.0);
-
-    double vitesseAngulaire = vitesseAngulaireCollision + (-vitesseAngulaireCourante + glm::dot(vitesseTranslationCollision, orientationCentripete)) * FACTEUR_ATTENUATION;
-
-    vitesseAngulaireCollision = glm::clamp(vitesseAngulaire, -50.0, 50.0);
+    /*
+    std::cout << "Vitesse Courante" << std::endl;
+    std::cout << vitesseTranslationCourante.x << std::endl;
+    std::cout << vitesseTranslationCourante.y << std::endl;
+    std::cout << vitesseAngulaireCourante << std::endl;
+    */
     
+    //glm::dvec3 reflexion = glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
+    //reflexion.x *= glm::step(reflexion.x, 0.0000001);
+    //reflexion.y *= glm::step(glm::abs(reflexion.y), 0.0000001);
 
+    vitesseTranslationCollision += glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
+    vitesseAngulaireCollision += (-vitesseAngulaireCourante + glm::dot(vitesseTranslationCollision, orientationCentripete)) * FACTEUR_ATTENUATION;
+
+    /*
     std::cout << "Sans clamp" << std::endl;
-    std::cout << vitesseTranslation.x << std::endl;
-    std::cout << vitesseTranslation.y << std::endl;
-    std::cout << vitesseAngulaire << std::endl;
+    std::cout << vitesseTranslationCollision.x << std::endl;
+    std::cout << vitesseTranslationCollision.y << std::endl;
+    std::cout << vitesseAngulaireCollision << std::endl;
+    */
     
+    vitesseTranslationCollision.x = glm::clamp(vitesseTranslationCollision.x, -50.0, 50.0);
+    vitesseTranslationCollision.y = glm::clamp(vitesseTranslationCollision.y, -50.0, 50.0);
+    vitesseAngulaireCollision = glm::clamp(vitesseAngulaireCollision, -50.0, 50.0);
 
     //vitesseTranslationCollision += glm::reflect(vitesseTranslationCourante, normale) * FACTEUR_ATTENUATION;
     //vitesseAngulaireCollision += (-vitesseAngulaireCourante + glm::dot(vitesseTranslationCollision_, orientationCentripete)) * FACTEUR_ATTENUATION;
-
+    /*
     std::cout << "Avec clamp" << std::endl;
     std::cout << vitesseTranslationCollision.x << std::endl;
     std::cout << vitesseTranslationCollision.y << std::endl;
     std::cout << vitesseAngulaireCollision << std::endl;
-
+    */
     std::cout << "Normale" << std::endl;
     std::cout << normale.x << std::endl;
     std::cout << normale.y << std::endl;
-
+    /*
     std::cout << "Position" << std::endl;
     std::cout << positionRelative_.x << std::endl;
     std::cout << positionRelative_.y << std::endl;
     std::cout << std::endl;
     std::cout << std::endl;
+    */
 }
 
 ////////////////////////////////////////////////////////////////////////
