@@ -137,7 +137,7 @@ namespace opengl{
 			bool possedeSommets{ mesh.possedeSommets() };
 			bool possedeFaces{ mesh.possedeFaces() };
 
-			possedeCouleurs = false;
+			//possedeCouleurs = false;
 			
 
 			possedeNormales ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);

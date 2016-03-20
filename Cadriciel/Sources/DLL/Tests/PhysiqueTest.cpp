@@ -587,8 +587,6 @@ void PhysiqueTest::testCalculerIntersectionCercleCercle()
 ///
 /// @fn void testColisionRectangle()
 ///
-/// 
-///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
@@ -605,13 +603,32 @@ void PhysiqueTest::testColisionRectangleRectangle()
 	//Condition initiale
 	bool RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
 	CPPUNIT_ASSERT(true);
+
+	//Coin de l'un avec coin de l'autre
+	/*positionRectangleDeux = { 0, 20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
+	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
+	CPPUNIT_ASSERT(!RectanglePasEnCollision);
+
+	positionRectangleDeux = { 0, -20, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
+	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
+	CPPUNIT_ASSERT(!RectanglePasEnCollision);
+
+	positionRectangleDeux = { -20, 0, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
+	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
+	CPPUNIT_ASSERT(!RectanglePasEnCollision);
+
+	positionRectangleDeux = { 20, 0, 0 };
+	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
+	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
+	CPPUNIT_ASSERT(!RectanglePasEnCollision);*/
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void testColisionCercle()
-///
-/// 
 ///
 /// @return Aucune.
 ///

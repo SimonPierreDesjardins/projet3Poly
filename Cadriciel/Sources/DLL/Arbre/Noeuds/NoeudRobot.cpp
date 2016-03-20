@@ -136,7 +136,6 @@ void NoeudRobot::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
-
     // Débugage des capteurs de distance.
     suiveurLigne_->afficher();
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
@@ -148,8 +147,6 @@ void NoeudRobot::afficherConcret() const
 		}
 	}
     
-
-
 	// Débugage des capteurs de distance.
 	suiveurLigne_->afficher();
 

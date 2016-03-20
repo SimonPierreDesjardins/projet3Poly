@@ -749,9 +749,9 @@ namespace InterfaceGraphique
             FonctionsNatives.modifierToucheCommande('S', TypeCommande.RECULER);
             textBoxReculer.Text = "S";
             FonctionsNatives.modifierToucheCommande('A', TypeCommande.ROTATION_GAUCHE);
-            textBoxAntiHoraire.Text = "D";
+            textBoxAntiHoraire.Text = "A";
             FonctionsNatives.modifierToucheCommande('D', TypeCommande.ROTATION_DROITE);
-            textBoxHoraire.Text = "A";
+            textBoxHoraire.Text = "D";
             FonctionsNatives.modifierToucheCommande(' ', TypeCommande.INVERSER_MODE_CONTROLE);
             textBoxModeManuel.Text = "ESPACE";
         }
