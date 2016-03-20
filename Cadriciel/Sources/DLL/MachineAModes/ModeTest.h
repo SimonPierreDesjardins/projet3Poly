@@ -52,14 +52,6 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
-	void gererTouchePlus();
-	void gererToucheMoins();
-
-	void gererFlecheGauche();
-	void gererFlecheBas();
-	void gererFlecheHaut();
-	void gererFlecheDroit();
-
 	void inverserLumiereAmbiante();
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();

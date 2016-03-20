@@ -1262,9 +1262,36 @@ namespace InterfaceGraphique
                 case Keys.Q:
                     if (e.Control)
                     {
+                        estEnPause = false;
+                        picturePause.Visible = estEnPause;
+
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         afficherMenuTest(false);
                         afficherMenuPrincipal(true);
+                    }
+                    break;
+
+                case Keys.Escape:
+                    estEnPause = !estEnPause;
+                    //FonctionsNatives.mettreEnPause(estEnPause);
+                    picturePause.Visible = estEnPause;
+                    menuSimTest.Visible = estEnPause;
+                    break;
+
+                case Keys.E:
+                    if (e.Control)
+                    {
+                        estEnPause = false;
+                        picturePause.Visible = estEnPause;
+
+                        afficherMenuSimulation(false);
+                        afficherMenuTest(false);
+                        afficherMenuPrincipal(false);
+                        afficherMenuEdition(true);
+                        changeIconColor();
+                        outilsSelection_.BackColor = Color.CadetBlue;
+                        FonctionsNatives.assignerMode(Mode.EDITION);
+                        viewPort_.Focus();
                     }
                     break;
             }
@@ -1460,6 +1487,9 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void modeEditionMenuSimTest_Click(object sender, EventArgs e)
         {
+            estEnPause = false;
+            picturePause.Visible = estEnPause;
+
             afficherMenuSimulation(false);
             afficherMenuTest(false);
             afficherMenuPrincipal(false);

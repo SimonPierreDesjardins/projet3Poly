@@ -654,12 +654,14 @@
             // 
             // orbiteMenuSimTest
             // 
+            this.orbiteMenuSimTest.Enabled = false;
             this.orbiteMenuSimTest.Name = "orbiteMenuSimTest";
             this.orbiteMenuSimTest.Size = new System.Drawing.Size(173, 22);
             this.orbiteMenuSimTest.Text = "Orbite";
             // 
             // premierePersonneMenuSimTest
             // 
+            this.premierePersonneMenuSimTest.Enabled = false;
             this.premierePersonneMenuSimTest.Name = "premierePersonneMenuSimTest";
             this.premierePersonneMenuSimTest.Size = new System.Drawing.Size(173, 22);
             this.premierePersonneMenuSimTest.Text = "Première personne";

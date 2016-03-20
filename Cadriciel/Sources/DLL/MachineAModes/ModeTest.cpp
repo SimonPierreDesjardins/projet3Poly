@@ -80,102 +80,6 @@ void ModeTest::postChangementDeProfil(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeEdition::gererTouchePlus()
-///
-/// Cette fonction permet de gérer la touche + dans le modeEdition.
-///
-/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom in.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeTest::gererTouchePlus()
-{
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-	}
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheMoins()
-///
-/// Cette fonction permet de gérer la touche - dans le modeEdition.
-///
-/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom out.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeTest::gererToucheMoins()
-{
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-	}
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheGauche()
-///
-/// Cette fonction permet de gérer la touche flèche gauche dans le modeEdition.
-///
-/// Fait un déplacement de 10 pixels selon l'axe des x.
-///
-////////////////////////////////////////////////////////////////////////
-
-void ModeTest::gererFlecheGauche()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheBas()
-///
-/// Cette fonction permet de gérer la touche flèche bas dans le modeEdition.
-///
-/// Fait un déplacement de 10 pixels selon l'axe des y.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeTest::gererFlecheBas()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
-}
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheHaut()
-///
-/// Cette fonction permet de gérer la touche flèche haut dans le modeEdition.
-///
-/// Fait un déplacement de -10 pixels selon l'axe des y.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeTest::gererFlecheHaut()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheDroit()
-///
-/// Cette fonction permet de gérer la touche flèche droit dans le modeEdition.
-///
-/// Fait un déplacement de -10 pixels selon l'axe des x.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeTest::gererFlecheDroit()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn void ModeSimulation::inverserLumiereAmbiante()
 ///
 /// Fonction qui permet d'alterner l'état de la lumière ambiante 
@@ -339,6 +243,26 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				// Rétablir l'état initial de la commande.
 				commande->inverserVitesseMoteurs();
 			}
+		}
+	}
+	// Répartition du traitement des messages provenant de la souris.
+	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris())
+	{
+		switch (msg)
+		{
+		case WM_RBUTTONDBLCLK:
+		case WM_RBUTTONDOWN:
+			gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_RBUTTONUP:
+			gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEMOVE:
+			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
 		}
 	}
 }

@@ -213,6 +213,15 @@ void ModeEdition::gererMoletteSouris(const int& delta)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+///
+///	Fonction qui permet de traiter les entrées utilisateur en mode test.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier();
@@ -381,7 +390,8 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 	// Répartition du traitement des messages provenant de la souris.
-	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris()) {
+	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris()) 
+	{
 		switch (msg)
 		{
 		case WM_LBUTTONDBLCLK:
