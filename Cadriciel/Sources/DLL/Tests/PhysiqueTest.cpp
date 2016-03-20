@@ -526,8 +526,61 @@ void PhysiqueTest::testCalculerIntersectionCercleCercle()
 
 	//Condition initiale
 	bool CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(CercleNeTouchePasCercle);
 
-	CPPUNIT_ASSERT(true);
+	//Les quatre extrimités ( + )
+	positionCercleDeux = { 0.0, 20.0, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	positionCercleDeux = { 0.0, -20.0, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	positionCercleDeux = { 20.0, 0.0, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	positionCercleDeux = { -20.0, 20.0, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	//les quatre coins ( x )
+	positionCercleDeux = { 14.14, 14.14, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	positionCercleDeux = { -14.14, 14.14, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	positionCercleDeux = { 14.14, -14.14, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	positionCercleDeux = { -14.14, -14.14, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
+
+	//Etre certains que les cercles ne se touchent pas
+	positionCercleDeux = { 0.0, 20.5, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(CercleNeTouchePasCercle);
+
+	positionCercleDeux = { 14.15, 14.14, 0.0 };
+	cercleDeux.assignerPositionCentre(positionCercleDeux);
+	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
+	CPPUNIT_ASSERT(CercleNeTouchePasCercle);
+
 }
 
 ////////////////////////////////////////////////////////////////////////

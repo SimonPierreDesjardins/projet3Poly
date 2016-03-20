@@ -115,7 +115,6 @@ void ModeEdition::gererToucheT()
 /// Fait un déplacement de 10 pixels selon l'axe des x.
 ///
 ////////////////////////////////////////////////////////////////////////
-
 void ModeEdition::gererFlecheGauche()
 {
 	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
