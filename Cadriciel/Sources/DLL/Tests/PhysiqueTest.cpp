@@ -655,7 +655,7 @@ void PhysiqueTest::testColisionCercleRectangle()
 	positionCercle = { 20, 0, 0 };
 	cercle.assignerPositionCentre(positionCercle);
 	normale = rectangle.calculerNormaleCollision(cercle);
-	glm::dvec3 expected = { -1, 0, 0 };
+	glm::dvec3 expected = { 1, 0, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
@@ -663,7 +663,7 @@ void PhysiqueTest::testColisionCercleRectangle()
 	positionCercle = { -20, 0, 0 };
 	cercle.assignerPositionCentre(positionCercle);
 	normale = rectangle.calculerNormaleCollision(cercle);
-	expected = { 1, 0, 0 };
+	expected = { -1, 0, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
@@ -671,7 +671,7 @@ void PhysiqueTest::testColisionCercleRectangle()
 	positionCercle = { 0, 20, 0 };
 	cercle.assignerPositionCentre(positionCercle);
 	normale = rectangle.calculerNormaleCollision(cercle);
-	expected = { 0, -1, 0 };
+	expected = { 0, 1, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
@@ -679,7 +679,7 @@ void PhysiqueTest::testColisionCercleRectangle()
 	positionCercle = { 0, -20, 0 };
 	cercle.assignerPositionCentre(positionCercle);
 	normale = rectangle.calculerNormaleCollision(cercle);
-	expected = { 0, 1, 0 };
+	expected = { 0, -1, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
