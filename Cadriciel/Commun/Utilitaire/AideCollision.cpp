@@ -114,7 +114,7 @@ namespace aidecollision {
 				// On est du côté du premier point.
 				const glm::dvec3 directionCollision{ position - point1 };
 				const double distance = glm::length(directionCollision);
-				if (distance < rayon) {
+				if (distance <= rayon) {
 					detailsCollision.type = COLLISION_SEGMENT_PREMIERPOINT;
 					detailsCollision.direction = directionCollision / distance;
 					detailsCollision.enfoncement = rayon - distance;
@@ -124,7 +124,7 @@ namespace aidecollision {
 				// On est du côté du second point.
 				const glm::dvec3 directionCollision{ position - point2 };
 				const double distance = glm::length(directionCollision);
-				if (distance < rayon) {
+				if (distance <= rayon) {
 					detailsCollision.type = COLLISION_SEGMENT_DEUXIEMEPOINT;
 					detailsCollision.direction = directionCollision / distance;
 					detailsCollision.enfoncement = rayon - distance;
@@ -137,7 +137,7 @@ namespace aidecollision {
 			glm::dvec3 pointPerpendiculaire{ (1 - ratio) * point1 + ratio * point2 };
 			const glm::dvec3 directionCollision{ position - pointPerpendiculaire };
 			const double distance{ glm::length(directionCollision) };
-			if (distance < rayon) {
+			if (distance <= rayon) {
 				detailsCollision.type = COLLISION_SEGMENT;
 				detailsCollision.direction = directionCollision / distance;
 				detailsCollision.enfoncement = rayon - distance;

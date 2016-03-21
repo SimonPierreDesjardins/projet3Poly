@@ -42,12 +42,12 @@ public:
 
     // Modifications des attributs.
     inline void assignerAngle(const double& angle);
-    inline void assignerHauteur(const double& hauteur);
-    inline void assignerLargeur(const double& largeur);
-    
-    // Accès aux attributs.
     inline double obtenirAngle() const;
+
+    inline void assignerHauteur(const double& hauteur);
     inline double obtenirHauteur() const;
+
+    inline void assignerLargeur(const double& largeur);
     inline double obtenirLargeur() const;
 
     void mettreAJour(const glm::dvec3& positionCentre_, const double& angle, const double& hauteur, const double& largeur);
@@ -67,8 +67,9 @@ public:
     // Calcule des vecteurs d'orientation unitaire.
     void calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const;
     
-	virtual bool calculerCollision(const RectangleEnglobant& rectangle, glm::dvec3& normale) const;
-	virtual bool calculerCollision(const CercleEnglobant& cercle, glm::dvec3& normale) const;
+    virtual const glm::dvec3& calculerNormaleCollision(const RectangleEnglobant& rectangle) const;
+    virtual const glm::dvec3& calculerNormaleCollision(const CercleEnglobant& cercle) const;
+    const glm::dvec3& calculerNormaleCollision(const glm::dvec3 point) const;
 
     void calculerPositionCoins(glm::dvec3 coins[4]) const;
 
@@ -77,7 +78,6 @@ public:
 
     virtual void afficher(const glm::dvec3& origine) const;
     virtual void afficher() const;
-
 
 private:
     void calculerDistancesPoint(glm::dvec3 distances[4], const glm::dvec3& point) const;
