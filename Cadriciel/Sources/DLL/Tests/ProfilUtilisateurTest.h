@@ -58,6 +58,7 @@ public:
 private:
 	ProfilUtilisateur* profilCorrect;
 	const std::string nomProfilTest = "profilTest.profil";
+	bool chargerProfil(ProfilUtilisateur* profil);
 };
 
 #endif

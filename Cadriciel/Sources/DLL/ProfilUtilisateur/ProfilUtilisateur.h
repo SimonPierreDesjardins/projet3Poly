@@ -16,6 +16,7 @@
 #include "CommandeRobot.h"
 #include "ComportementAbstrait.h"
 #include "./../../Enum/ConfigureControlEnum.cs"
+#include "rapidjson\filereadstream.h"
 #include <deque>
 #include <Windows.h>
 #include "CapteurDistance.h"
@@ -47,6 +48,8 @@ class ProfilUtilisateur
 
 	public:
 		ProfilUtilisateur();
+
+		ProfilUtilisateur(std::string cheminProfil);
 
 		~ProfilUtilisateur();
 
@@ -99,6 +102,8 @@ class ProfilUtilisateur
 		int* obtenirLimiteParametres();
 
 	private:
+		bool creationDossierDonnees();
+
 		void changerDernierProfil(std::string nomProfil);
 
 		void sauvegarder();

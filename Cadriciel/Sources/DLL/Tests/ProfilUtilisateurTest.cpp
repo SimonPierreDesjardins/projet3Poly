@@ -9,6 +9,9 @@
 ////////////////////////////////////////////////////////////////////////////////////
 #include "ProfilUtilisateurTest.h"
 #include "ComportementTypes.h"
+#include <sys\stat.h>
+#include <locale>
+#include <codecvt>
 
 // Enregistrement de la suite de tests au sein du registre
 CPPUNIT_TEST_SUITE_REGISTRATION(ProfilUtilisateurTest);
@@ -55,12 +58,15 @@ void ProfilUtilisateurTest::setUp(){
 }
 
 void ProfilUtilisateurTest::tearDown(){
+	remove((profilCorrect->CHEMIN_PROFIL + nomProfilTest).c_str());
+
 	delete profilCorrect;
 }
 
 void ProfilUtilisateurTest::testChargerProfil(){
 	ProfilUtilisateur* profilTest = new ProfilUtilisateur();
-	profilTest->changerProfil(nomProfilTest);
+	profilTest->nomProfil_ = nomProfilTest;
+	chargerProfil(profilTest);
 
 	for (size_t i = 0; i < profilCorrect->touches_.size(); i++)
 	{
@@ -85,7 +91,7 @@ void ProfilUtilisateurTest::testChargerProfil(){
 	ComportementDeviation* comportementDeviationDroiteCorrect = static_cast<ComportementDeviation*>(profilCorrect->comportements_.at(DEVIATIONVERSLADROITE).release());
 	ComportementDeviation* comportementDeviationDroiteTest = static_cast<ComportementDeviation*>(profilTest->comportements_.at(DEVIATIONVERSLADROITE).release());
 
-	CPPUNIT_ASSERT(comportementDeviationGaucheCorrect->obtenirMaxAngle() == comportementDeviationGaucheTest->obtenirMaxAngle());
+	CPPUNIT_ASSERT(comportementDeviationDroiteCorrect->obtenirMaxAngle() == comportementDeviationDroiteTest->obtenirMaxAngle());
 
 	delete comportementDeviationDroiteCorrect;
 	delete comportementDeviationDroiteTest;
@@ -118,6 +124,8 @@ void ProfilUtilisateurTest::testChargerProfil(){
 	}
 
 	CPPUNIT_ASSERT(profilCorrect->suiveurLigne_.obtenirEstActif() == profilTest->suiveurLigne_.obtenirEstActif());
+
+	delete profilTest;
 }
 
 void ProfilUtilisateurTest::testAssignerTouche(){
@@ -130,6 +138,90 @@ void ProfilUtilisateurTest::testAssignerTouche(){
 	CPPUNIT_ASSERT(profilCorrect->commandes_.at(touche)->obtenirTypeCommande() == AVANCER);
 }
 
+
+bool ProfilUtilisateurTest::chargerProfil(ProfilUtilisateur* profil){
+	if (!profil->ouvrirProfil("rb"))
+		return false;
+	rapidjson::Document doc;
+	char readBuffer[65536];
+	rapidjson::FileReadStream is(profil->profil_, readBuffer, sizeof(readBuffer));
+	doc.ParseStream(is);
+	fclose(profil->profil_);
+
+	rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin();
+
+	profil->nomProfil_ = itr->value.GetString();
+
+	itr++;
+
+	const rapidjson::Value& touches = itr->value;
+
+	profil->touches_.at(INVERSER_MODE_CONTROLE) = char(touches[INVERSER_MODE_CONTROLE].GetInt());
+
+	profil->touches_.at(AVANCER) = char(touches[AVANCER].GetInt());
+
+	profil->touches_.at(RECULER) = char(touches[RECULER].GetInt());
+
+	profil->touches_.at(ROTATION_GAUCHE) = char(touches[ROTATION_GAUCHE].GetInt());
+
+	profil->touches_.at(ROTATION_DROITE) = char(touches[ROTATION_DROITE].GetInt());
+
+	profil->commandes_.insert(std::make_pair(profil->touches_[INVERSER_MODE_CONTROLE], std::make_unique<CommandeRobot>(INVERSER_MODE_CONTROLE)));
+	profil->commandes_.insert(std::make_pair(profil->touches_[AVANCER], std::make_unique<CommandeRobot>(AVANCER, true)));
+	profil->commandes_.insert(std::make_pair(profil->touches_[RECULER], std::make_unique<CommandeRobot>(RECULER, true)));
+	profil->commandes_.insert(std::make_pair(profil->touches_[ROTATION_GAUCHE], std::make_unique<CommandeRobot>(ROTATION_GAUCHE, true)));
+	profil->commandes_.insert(std::make_pair(profil->touches_[ROTATION_DROITE], std::make_unique<CommandeRobot>(ROTATION_DROITE, true)));
+
+	itr++;
+
+	const rapidjson::Value& comportementsJSON = itr->value;
+
+	if (!comportementsJSON.IsArray())
+		return false;
+
+	profil->comportements_.push_back(std::make_unique<ComportementDefaut>(comportementsJSON[DEFAUT]));
+
+	profil->comportements_.push_back(std::make_unique<ComportementSuiviLigne>(comportementsJSON[SUIVIDELIGNE]));
+
+	profil->comportements_.push_back(std::make_unique<ComportementBalayage>(comportementsJSON[BALAYAGE180]));
+
+	profil->comportements_.push_back(std::make_unique<ComportementDeviation>(comportementsJSON[DEVIATIONVERSLAGAUCHE]));
+
+	profil->comportements_.push_back(std::make_unique<ComportementDeviation>(comportementsJSON[DEVIATIONVERSLADROITE]));
+	
+	profil->comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLAGAUCHE]));
+
+	profil->comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLADROITE]));
+
+	itr++;
+
+	const rapidjson::Value& capteursDistanceJSON = itr->value;
+
+	if (!capteursDistanceJSON.IsArray())
+		return false;
+
+	for (unsigned i = 0; i < capteursDistanceJSON.Size(); i++){
+		profil->capteursDistance_.at(i) = CapteurDistance(profil->positionsRelatives_.at(i), profil->anglesRelatifs_.at(i), capteursDistanceJSON[i]);
+	}
+
+	itr++;
+
+	profil->suiveurLigne_.assignerActif(itr->value.MemberBegin()->value.GetBool());
+
+	itr++;
+
+	const rapidjson::Value& optionsDebogagesJSON = itr->value;
+
+	if (!optionsDebogagesJSON.IsArray())
+		return false;
+
+	for (unsigned optionIndex = 0; optionIndex < optionsDebogagesJSON.Size(); optionIndex++)
+	{
+		profil->optionsDebogages_[optionIndex] = optionsDebogagesJSON[optionIndex].GetBool();
+	}
+
+	return true;
+}
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////
