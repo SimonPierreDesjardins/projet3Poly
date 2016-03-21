@@ -59,11 +59,33 @@ private:
     double rayon_;
 };
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void CercleEnglobant::assignerRayon(const double& rayon)
+///
+/// Cette fonction assigne un rayon au cercle
+///
+/// @param[in] rayon: le rayon du cercle en double.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void CercleEnglobant::assignerRayon(const double& rayon)
 {
     rayon_ = rayon;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double CercleEnglobant::obtenirRayon() const
+///
+/// Cette fonction retourne le rayon du cercle.
+///
+/// @param[in] Aucun.
+///
+/// @return rayon du cercle.
+///
+////////////////////////////////////////////////////////////////////////
 inline double CercleEnglobant::obtenirRayon() const
 {
     return rayon_;

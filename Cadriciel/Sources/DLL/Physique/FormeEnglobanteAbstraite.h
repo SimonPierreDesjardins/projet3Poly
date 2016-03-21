@@ -77,21 +77,65 @@ protected:
     bool enCollision_{ false };
 };
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void FormeEnglobanteAbstraite::assignerPositionCentre(const glm::dvec3& positionCentre)
+///
+/// Cette fonction assigne la position du centre de la forme englobante.
+///
+/// @param[in] positionCentre : Position du centre de la forme en dvec3.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void FormeEnglobanteAbstraite::assignerPositionCentre(const glm::dvec3& positionCentre)
 {
     positionCentre_ = positionCentre;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline const glm::dvec3& FormeEnglobanteAbstraite::obtenirPositionCentre() const
+///
+/// Cette fonction retourne la position du centre de la forme englobante
+///
+/// @param[in] Aucun.
+///
+/// @return positionCentre : Position du centre de la forme en dvec3.
+///
+////////////////////////////////////////////////////////////////////////
 inline const glm::dvec3& FormeEnglobanteAbstraite::obtenirPositionCentre() const
 {
     return positionCentre_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void FormeEnglobanteAbstraite::assignerEnCollision(const bool& enCollision)
+///
+/// Cette fonction assigne si la forme est en collision ou non.
+///
+/// @param[in] enCollision : Booléen qui indique si la forme est en collision.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void FormeEnglobanteAbstraite::assignerEnCollision(const bool& enCollision)
 {
     enCollision_ = enCollision;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline bool FormeEnglobanteAbstraite::obtenirEnCollision() const
+///
+/// Cette fonction retourne si la forme est en collision ou non.
+///
+/// @param[in] Aucun.
+///
+/// @returnenCollision : Booléen qui indique si la forme est en collision.
+///
+////////////////////////////////////////////////////////////////////////
 inline bool FormeEnglobanteAbstraite::obtenirEnCollision() const
 {
     return enCollision_;
