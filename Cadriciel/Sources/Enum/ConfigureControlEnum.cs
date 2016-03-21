@@ -1,10 +1,20 @@
-﻿#if !__LINE__
+﻿////////////////////////////////////////////////
+/// @file   ConfigureControlEnum.cs
+/// @author Philippe Marcotte
+/// @date   2016-03-01
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////
+#if !__LINE__
+
+/// Permet de partager cet enum entre le C# et le C++
 namespace ConfigureControlEnum
 {
     public
 #endif
 
-        // shared enum for both C, C++ and C#
+///Enum représentant chaque composante de la fenêtre Configure que l'on veut pouvoir modifier à partir du modèle
 enum ConfigureControl
     {
         PROFIL_CB,
@@ -50,3 +60,6 @@ enum ConfigureControl
 #if !__LINE__
 }
 #endif
+////////////////////////////////////////////////
+/// @}
+////////////////////////////////////////////////

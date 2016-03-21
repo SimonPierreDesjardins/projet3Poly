@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file ProfilUtilisateur.cpp
+/// @author Philippe Marcotte
+/// @date 2016-02-23
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
+
 #include "ProfilUtilisateur.h"
 #include "rapidjson\writer.h"
 #include "rapidjson\reader.h"
@@ -20,9 +30,24 @@
 #include <cmath>
 #include "ModeSimulation.h"
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ProfilUtilisateur::ProfilUtilisateur()
+///
+/// Constructeur par défaut
+///
+////////////////////////////////////////////////////////////////////////
 ProfilUtilisateur::ProfilUtilisateur(){
-	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL))
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL)){
+		struct stat buffer;
+		if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
+			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
+			CreateDirectory(wideString.c_str(), NULL);
+		}
 		changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
+	}
+	
 	
 	
 	std::ifstream fichierDernierProfilR(CHEMIN_PROFIL + DERNIER_PROFIL);
@@ -44,38 +69,87 @@ ProfilUtilisateur::ProfilUtilisateur(){
         }};
 }
 
-
-ProfilUtilisateur::ProfilUtilisateur(std::string nomProfil){
-	nomProfil_ = nomProfil;
-	chargerProfil();
-}
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ProfilUtilisateur::~ProfilUtilisateur()
+///
+/// Destructeur
+///
+////////////////////////////////////////////////////////////////////////
 ProfilUtilisateur::~ProfilUtilisateur(){
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::changerDernierProfil(std::string nomProfil)
+///
+///	Fonction servant à sauvegarder, dans le fichier dernier_profil, le nom du dernier profil chargé.
+///
+/// @param[in] nomProfil : le nom du dernier profil chargé
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::changerDernierProfil(std::string nomProfil){
 	std::ofstream fichierDernierProfilW(CHEMIN_PROFIL + DERNIER_PROFIL);
 	fichierDernierProfilW << nomProfil;
 	fichierDernierProfilW.close();
 }
 
-bool ProfilUtilisateur::ouvrirProfil(std::string readOrWrite){
-	return ouvrir(CHEMIN_PROFIL + nomProfil_, readOrWrite, profil_);
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::ouvrirProfil(std::string modeOuverture)
+///
+///	Fonction permettant d'ouvrir le fichier du profil courant soit en lecture, soit en écriture
+///
+/// @param[in] modeOuverture : mode lecture ou écriture
+///
+/// @return Bool Représente si l'ouverture à réussi ou non
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::ouvrirProfil(std::string modeOuverture){
+	return ouvrir(CHEMIN_PROFIL + nomProfil_, modeOuverture, profil_);
 }
 
-bool ProfilUtilisateur::ouvrir(std::string nomFichier, std::string readOrWrite, FILE*& fichier){
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::ouvrir(std::string nomFichier, std::string modeOuverture, FILE*& fichier)
+///
+///	Fonction permettant d'ouvrir un fichier soit en lecture, soit en écriture
+///
+/// @param[in] nomFichier : le nom du fichier à ouvrir avec le chemin vers celui-ci
+/// @param[in] modeOuverture : mode lecture ou écriture
+/// @param[in] fichier : descripteur de fichier
+///
+/// @return Bool Représente si l'ouverture à réussi ou non
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::ouvrir(std::string nomFichier, std::string modeOuverture, FILE*& fichier){
 	errno_t err;
-	err = fopen_s(&fichier, (nomFichier).c_str(), readOrWrite.c_str());
+	err = fopen_s(&fichier, (nomFichier).c_str(), modeOuverture.c_str());
 	return err == 0;
 }
 
-bool ProfilUtilisateur::sauvegarder(std::string nomProfil){
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::sauvegarder(std::string nomProfil)
+///
+///	Fonction servant à sauvegarder ou créer le fichier d'un profil d'un certain nom.
+///
+/// @param[in] nomProfil : le nom du profil à sauvegarder
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::sauvegarder(std::string nomProfil){
 	nomProfil_ = nomProfil;
 	sauvegarder();
-	return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::sauvegarder()
+///
+///	Fonction servant à sauvegarder, en format JSON, les paramètres du profil courant.
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::sauvegarder(){
 	ouvrirProfil("wb");
 	char writeBuffer[65536];
@@ -129,6 +203,17 @@ void ProfilUtilisateur::sauvegarder(){
 	fclose(profil_);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::changerProfil(std::string nomProfil)
+///
+///	Fonction servant à charger un nouveau profil. Si le profil n'existe pas, un contenant les paramètres par défaut est créé avec le nom passé en argument.
+///
+/// @param[in] nomProfil : le nom du profil que l'on veut charger.
+///
+/// @return Bool Représente si le profil s'est chargé correctement.
+///
+////////////////////////////////////////////////////////////////////////
 bool ProfilUtilisateur::changerProfil(std::string nomProfil){
 	nomProfil_ = nomProfil;
 
@@ -144,6 +229,15 @@ bool ProfilUtilisateur::changerProfil(std::string nomProfil){
 	return chargerProfil();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::chargerProfil()
+///
+///	Fonction servant à charger les paramètres d'un profil à partir de son fichier en format JSON.
+///
+/// @return Bool Représente si le profil s'est chargé correctement.
+///
+////////////////////////////////////////////////////////////////////////
 bool ProfilUtilisateur::chargerProfil(){
 	if (!ouvrirProfil("rb"))
 		return false;
@@ -181,7 +275,8 @@ bool ProfilUtilisateur::chargerProfil(){
 
 	const rapidjson::Value& comportementsJSON = itr->value;
 
-	assert(comportementsJSON.IsArray());
+	if (!comportementsJSON.IsArray())
+		return false;
 
 	comportements_.push_back(std::make_unique<ComportementDefaut>(comportementsJSON[DEFAUT]));
 
@@ -213,7 +308,8 @@ bool ProfilUtilisateur::chargerProfil(){
 
 	const rapidjson::Value& capteursDistanceJSON = itr->value;
 
-	assert(capteursDistanceJSON.IsArray());
+	if(!capteursDistanceJSON.IsArray())
+		return false;
 
 	for (unsigned i = 0; i < capteursDistanceJSON.Size(); i++){
 		capteursDistance_.at(i) = CapteurDistance(positionsRelatives_.at(i), anglesRelatifs_.at(i), capteursDistanceJSON[i]);
@@ -233,7 +329,8 @@ bool ProfilUtilisateur::chargerProfil(){
 
 	const rapidjson::Value& optionsDebogagesJSON = itr->value;
 
-	assert(optionsDebogagesJSON.IsArray());
+	if(!optionsDebogagesJSON.IsArray())
+		return false;
 
 	for (unsigned optionIndex = 0; optionIndex < optionsDebogagesJSON.Size(); optionIndex++)
 	{
@@ -244,6 +341,14 @@ bool ProfilUtilisateur::chargerProfil(){
 	return true;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::chargerDernierProfil()
+///
+///	Fonction servant à charger le dernier profil chargé lors de la dernière utilisation.
+/// Si ce profil n'existe pas on charge le profil par défaut.
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::chargerDernierProfil(){
 	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + nomProfil_)){
 		nomProfil_ = PROFIL_DEFAUT + EXTENSION_PROFIL;
@@ -255,14 +360,14 @@ void ProfilUtilisateur::chargerDernierProfil(){
 	chargerProfil();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::creerProfilDefaut()
+///
+///	Fonction servant à charger le profil par défaut sans son fichier JSON.
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::creerProfilDefaut(){
-	struct stat buffer;
-	if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
-		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-		std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
-		CreateDirectory(wideString.c_str(), NULL);
-	}
-
 	touches_.at(INVERSER_MODE_CONTROLE) = ' ';
 	touches_.at(AVANCER) = 'W';
 	touches_.at(RECULER) = 'S';
@@ -300,6 +405,16 @@ void ProfilUtilisateur::creerProfilDefaut(){
 	sauvegarder();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::modifierToucheCommande(const uint8_t& touche,const TypeCommande& commande)
+///
+///	Fonction servant à modifier une des touches associé à une commande pour contrôler le robot.
+///
+/// @param[in] touche : la nouvelle touche
+/// @param[in] commande : la commande dont la touche doit être modifiée
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::modifierToucheCommande(const uint8_t& touche,const TypeCommande& commande){
 	if (!toucheEstUtilise(touche))
 	{
@@ -310,6 +425,16 @@ void ProfilUtilisateur::modifierToucheCommande(const uint8_t& touche,const TypeC
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerComportement(TypeComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement)
+///
+///	Fonction servant à modifier l'un des comportements du robot.
+///
+/// @param[in] typeComportement : le type du comportement à changer
+/// @param[in] comportement : le nouveau comportement
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::assignerComportement(TypeComportement typeComportement, std::unique_ptr<ComportementAbstrait> comportement){
 	comportements_.at(typeComportement).swap(comportement);
 }
@@ -320,18 +445,41 @@ void ProfilUtilisateur::assignerComportement(TypeComportement typeComportement, 
 ///
 /// Retourne le pointeur au vecteur des comportements configurés par l'utilisateur.
 ///
-/// @return Aucune.
+/// @return std::vector<std::unique_ptr<ComportementAbstrait>>* Pointeur vers le vecteur de comportement.
 ///
 ////////////////////////////////////////////////////////////////////////
 std::vector<std::unique_ptr<ComportementAbstrait>>* ProfilUtilisateur::obtenirVecteurComportements(){
 	return &comportements_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const
+///
+///	Retourne la commande associée à une touche de clavier si elle est bel et bien associée à une commande.
+///
+/// @param[in] touche : la touche entrée par l'utilisateuré
+///
+/// @return CommandeRobot* La commande asssociée à la touche. nullptr dans le cas où aucune commande n'est associée à la touche entrée.
+///
+////////////////////////////////////////////////////////////////////////
 CommandeRobot* ProfilUtilisateur::obtenirCommandeRobot(unsigned char touche) const{
 	std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>>::const_iterator it = commandes_.find(touche);
 	return (it == commandes_.end()) ? nullptr : (*it).second.get();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::toucheEstUtilise(char touche)
+///
+///	Fonction servant à savoir si l'on peut associée une certaine touche à une commande controlant le robot.
+/// Il n'est pas possible d'associer des touches déjà utilisées pour d'autres fonctions lors d'une simulation ou d'un test.
+///
+/// @param[in] touche : la touche à vérifier
+///
+/// @return Bool si l'on peut associer cette touche ou non.
+///
+////////////////////////////////////////////////////////////////////////
 bool ProfilUtilisateur::toucheEstUtilise(char touche){
 	bool toucheModifiable = true;
 	bool toucheNonModifiable = false;
@@ -352,31 +500,97 @@ bool ProfilUtilisateur::toucheEstUtilise(char touche){
 	return (toucheModifiable || toucheNonModifiable);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn char ProfilUtilisateur::obtenirToucheCommande(int commande)
+///
+///	Fonction servant à obtenir la touche associée à une commande.
+///
+/// @param[in] commande : la commande dont l'on veut la touche.
+///
+/// @return char La touche associée à la commande.
+///
+////////////////////////////////////////////////////////////////////////
 char ProfilUtilisateur::obtenirToucheCommande(int commande){
 	return touches_[commande];
 }
 
-void ProfilUtilisateur::setConfigureHandles(HWND handle, ConfigureControl ctrl){
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerConfigureHandles(HWND handle, ConfigureControl ctrl)
+///
+///	Fonction servant à assigner les handles des contrôles d'interface de la fenêtre Configuration pour ainsi les modifier à partir du modèle.
+///
+/// @param[in] handle : la handle d'un des contrôles d'interface
+/// @param[in] ctrl : enum représentant le contrôle dont on assigne la handle
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::assignerConfigureHandles(HWND handle, ConfigureControl ctrl){
 	configureHandles.insert(std::make_pair(ctrl, handle));
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::string ProfilUtilisateur::obtenirExtensionProfils()
+///
+///	Fonction retournant l'extension d'un fichier de type profil
+///
+/// @return string Extension d'un fichier profil
+///
+////////////////////////////////////////////////////////////////////////
 std::string ProfilUtilisateur::obtenirExtensionProfils(){
 	return EXTENSION_PROFIL;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::string ProfilUtilisateur::obtenirCheminProfils()
+///
+///	Fonction retournant le chemin vers le dossier Donnees
+///
+/// @return string Chemin vers le dossier Donnees
+///
+////////////////////////////////////////////////////////////////////////
 std::string ProfilUtilisateur::obtenirCheminProfils(){
 	return CHEMIN_PROFIL;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::supprimerProfil(std::string nomProfil)
+///
+///	Fonction servant à supprimer le fichier d'un certain profil.
+///
+/// @param[in] nomProfil : le nom du profil à supprimer
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::supprimerProfil(std::string nomProfil){
 	remove((CHEMIN_PROFIL + nomProfil).c_str());
 	changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::string ProfilUtilisateur::obtenirNomProfilDefaut()
+///
+///	Fonction retournant le nom du profil par défaut
+///
+/// @return string Nom du profil par défaut
+///
+////////////////////////////////////////////////////////////////////////
 std::string ProfilUtilisateur::obtenirNomProfilDefaut(){
 	return PROFIL_DEFAUT;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::string ProfilUtilisateur::obtenirNomDernierProfil()
+///
+/// Fonction retournant le nom du dernier profil chargé
+///
+/// @return string Nom du dernier profil chargé
+///
+////////////////////////////////////////////////////////////////////////
 std::string ProfilUtilisateur::obtenirNomDernierProfil(){
 	std::ifstream ifs(CHEMIN_PROFIL + DERNIER_PROFIL);
 	std::string dernierProfil;
@@ -384,22 +598,65 @@ std::string ProfilUtilisateur::obtenirNomDernierProfil(){
 	return dernierProfil.substr(0,dernierProfil.find_first_of('.'));
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur)
+///
+///	Fonction servant à modifier les capteurs de distance du robot.
+///
+/// @param[in] estActif : représente si le capteur est actif ou non
+/// @param[in] comportementDanger : enum représentant le comportement à adpoter dans une zone de danger
+/// @param[in] distanceDanger : la grandeur de la zone de danger
+/// @param[in] comportementSecuritaire : enum représentant le comportement à adpoter dans une zone sécuritaire
+/// @param[in] distanceSecuritaire : la grandeur de la zone sécuritaire
+/// @param[in] indexCapteur : le capteur à modifier (0 à 2)
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur){
 	capteursDistance_.at(indexCapteur) = CapteurDistance(positionsRelatives_[indexCapteur], anglesRelatifs_[indexCapteur], estActif, 
                                                   comportementDanger, distanceDanger, 
                                                   comportementSecuritaire, distanceSecuritaire);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerSuiveurLigne(bool estActif)
+///
+///	Fonction servant à modifier le suiveur de ligne du robot.
+///
+/// @param[in] estActif : représente si le suiveur de ligne est actif ou non
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::assignerSuiveurLigne(bool estActif){
 	suiveurLigne_.assignerActif(estActif);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerOptionsDebogages(bool optionsDebogages[])
+/// 
+///	Fonction servant à activer ou désactiver les options de débogages.
+///
+/// @param[in] optionsDebogages[] : tableau contenant l'état des options de débogages
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::assignerOptionsDebogages(bool optionsDebogages[]){
 	for (unsigned i = 0; i < optionsDebogages_.size(); i++){
 		optionsDebogages_.at(i) = optionsDebogages[i];
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::obtenirOptionDebogage(optionsDebogagesEnum option)
+///
+///	Fonction retournant l'état d'une certaine option de débogage
+///
+/// @param[in] option : enum représentant l'option de débogage à retourner
+///
+/// @return Bool L'état de l'option de débogage
+///
+////////////////////////////////////////////////////////////////////////
 bool ProfilUtilisateur::obtenirOptionDebogage(optionsDebogagesEnum option)
 {
 	if (optionsDebogages_.at(ETAT_DEBOGAGE))
@@ -408,6 +665,18 @@ bool ProfilUtilisateur::obtenirOptionDebogage(optionsDebogagesEnum option)
 		return false;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn int* ProfilUtilisateur::obtenirLimiteParametres()
+///
+///	Fonction retournant les limites sur les paramètres de comportement du robot
+///
+/// @return int* Pointeur sur le tableau de limites
+///
+////////////////////////////////////////////////////////////////////////
 int* ProfilUtilisateur::obtenirLimiteParametres(){
 	return new int[6] {ANGLE_MIN_COMPORTEMENT, ANGLE_MAX_COMPORTEMENT, DUREE_MIN_COMPORTEMENT, DUREE_MAX_COMPORTEMENT, LARGEUR_MIN_DETECTION_DISTANCE, LARGEUR_TOTAL_DETECTION_DISTANCE};
 }
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////
