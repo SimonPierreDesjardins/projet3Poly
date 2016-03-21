@@ -56,8 +56,16 @@ public:
 	void testAssignerTouche();
 
 private:
+	/// Pointeur vers le profil ayant les attributs correctement chargés
 	ProfilUtilisateur* profilCorrect;
+
+	/// Pointeur vers le profil dans lequel on test la fonction charger
+	ProfilUtilisateur* profilTest;
+
+	/// Nom du fichier test
 	const std::string nomProfilTest = "profilTest.profil";
+
+	/// Fonction adaptée pour les tests du ProfilUtilisateur
 	bool chargerProfil(ProfilUtilisateur* profil);
 };
 
