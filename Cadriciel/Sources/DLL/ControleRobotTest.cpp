@@ -36,11 +36,8 @@ CPPUNIT_TEST_SUITE_REGISTRATION(ControleRobotTest);
 ////////////////////////////////////////////////////////////////////////
 void ControleRobotTest::setUp()
 {
-
-
 	// On construit le controleur du robot
 	controleRobot_ = new ControleRobot();
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -79,7 +76,6 @@ void ControleRobotTest::testAssignationVectComportements(){
 	CPPUNIT_ASSERT(controleRobot_->vecteurComportements_ == &testVector);
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void ControleRobotTest::testAssignationDeComportement()
@@ -114,7 +110,6 @@ void ControleRobotTest::testAssignationDeComportement(){
 
 	std::wstring declencheur = L"Test de chagement de comportement";
 
-    
 	controleRobot_->assignerComportement(DEFAUT, declencheur);
 	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDefaut") != std::wstring::npos);
 	
@@ -137,14 +132,13 @@ void ControleRobotTest::testAssignationDeComportement(){
 	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementEvitement") != std::wstring::npos);
 }
 
-
 void ControleRobotTest::testPassageModeAutomatique(){
 	/*
 	controleRobot_->passerAModeManuel();
 	controleRobot_->assignerComportement(BALAYAGE180, L"Test de passage au mode automatique");
 	controleRobot_->passerAModeAutomatique();
 	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDefaut") != std::wstring::npos);
-	*/
+    */
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -172,3 +166,4 @@ void ControleRobotTest::testAlternanceModeManuelAuto(){
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+

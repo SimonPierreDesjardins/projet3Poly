@@ -20,8 +20,8 @@
 /// @brief Classe de test cppunit pour tester le bon fonctionnement des
 ///        méthodes de la classe physique
 ///
-/// @author Julien Gascon-Samson
-/// @date 2011-07-16
+/// @author Olivier St-Amour
+/// @date 2016-02-29
 ///////////////////////////////////////////////////////////////////////////
 class PhysiqueTest : public CppUnit::TestFixture
 {

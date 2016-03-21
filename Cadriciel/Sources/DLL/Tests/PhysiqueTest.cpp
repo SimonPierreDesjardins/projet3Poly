@@ -108,7 +108,7 @@ void PhysiqueTest::testIntersectionQuad()
 ///
 /// @fn void PhysiqueTest::testIntersectionRectangleRectangle()
 ///
-/// 
+/// Cas de test: permet de savoir s'il y a une collision avec un rectangle
 ///
 /// @return Aucune.
 ///
@@ -446,7 +446,7 @@ void PhysiqueTest::testCalculerIntersectionRectangleRectangle()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void testCalculerIntersectionCercle()
+/// @fn void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 ///
 /// Cas de test: permet de savoir si un cercle est a l'intérieur ou non de la
 /// boîte englobante d'un rectangle
@@ -515,7 +515,16 @@ void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 	CPPUNIT_ASSERT(RectangleNeTouchePasCercle);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testCalculerIntersectionCercleCercle()
+///
+/// Cas de test: permet de savoir si un cercle est a l'intérieur ou non de la
+/// boîte englobante d'un cercle
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testCalculerIntersectionCercleCercle()
 {
 	glm::dvec3 positionCercleUn = { 0.0, 0.0, 0.0 };
@@ -587,6 +596,9 @@ void PhysiqueTest::testCalculerIntersectionCercleCercle()
 ///
 /// @fn void testColisionRectangle()
 ///
+/// Cas de test: permet de savoir la normale lorsqu'un rectangle est en collision
+/// avec un rectangle
+///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
@@ -638,6 +650,9 @@ void PhysiqueTest::testColisionRectangleRectangle()
 ///
 /// @fn void testColisionCercle()
 ///
+/// Cas de test: permet de savoir la normale lorsqu'un rectangle est en collision
+/// avec un cercle
+///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
@@ -685,6 +700,16 @@ void PhysiqueTest::testColisionCercleRectangle()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testColisionRectanglePoint()
+///
+/// Cas de test: permet de savoir la normale lorsqu'un rectangle est en collision
+/// avec un point
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testColisionRectanglePoint()
 {
 	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
