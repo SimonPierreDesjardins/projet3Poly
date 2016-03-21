@@ -311,12 +311,13 @@ glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant
 
     // On commence par vérifier si ou ou plusieurs coins est dans l'autre rectangle.
     bool coinDansAutreRectangle = false;
-    for (int i = 0; i < N_COINS && !coinDansAutreRectangle; i++)
+    for (int i = 0; i < N_COINS; i++)
     {
-        coinDansAutreRectangle = rectangle.calculerEstDansForme(coins_[i]);
-        if (coinDansAutreRectangle)
+        bool coinDansRectangle = rectangle.calculerEstDansForme(coins_[i]);
+        if (coinDansRectangle)
         {
             normale += rectangle.obtenirPositionCentre() - coins_[i];
+            coinDansAutreRectangle = true;
         }
     }
 

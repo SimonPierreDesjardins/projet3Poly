@@ -604,7 +604,7 @@ void PhysiqueTest::testColisionRectangleRectangle()
 	positionRectangleDeux = { 0, 20, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
-	glm::dvec3 expected = { 0, 1, 0 };
+	glm::dvec3 expected = { 0, 1.0, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
