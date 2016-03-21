@@ -15,6 +15,7 @@
 
 class NoeudPoteau;
 class NoeudMur;
+class NoeudTable;
 
 enum PositionCapteurDistance
 {
@@ -65,8 +66,9 @@ public:
     ~CapteurDistance();
 
     // Méthodes permettant de mettre à jour l'état du capteur.
-    void verifierDetection(NoeudPoteau* noeud);
-    void verifierDetection(NoeudMur* noeud);
+    void verifierDetection(NoeudPoteau* poteau);
+    void verifierDetection(NoeudMur* mur);
+    void verifierDetection(NoeudTable* table);
     void mettreAJour(const glm::dvec3& positionRobot, const double& angleRotationRobot);
 
     // Méthode permettant de manipuler l'état du capteur.
