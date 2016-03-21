@@ -35,6 +35,7 @@ private:
 	std::unique_ptr<ControleRobot> controleRobot_;
 	ProfilUtilisateur* profil_{ nullptr };
 	static std::array<char, 10> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
 
 	bool lumiereAmbiante { true };
 	bool lumiereDirectionnelle { true };
@@ -51,14 +52,6 @@ public:
 	void inverserLumiereAmbiante();
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();
-
-	void gererTouchePlus();
-	void gererToucheMoins();
-
-	void gererFlecheGauche();
-	void gererFlecheBas();
-	void gererFlecheHaut();
-	void gererFlecheDroit();
 
 	void preChangementDeProfil();
 	void postChangementDeProfil();

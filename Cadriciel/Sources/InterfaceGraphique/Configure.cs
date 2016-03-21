@@ -32,27 +32,29 @@ namespace InterfaceGraphique
         private string cheminProfils;
 
         private string extensionProfils;
-        public string ExtensionProfils
-        {
-            get
-            {
-                return extensionProfils;
-            }
-        }
 
         private string nomProfilDefaut;
-        public string NomProfilInitiale
+
+        private string nomDernierProfil;
+        public string NomDernierProfil
         {
             get
             {
-                return nomProfilDefaut;
+                return FonctionsNatives.obtenirNomDernierProfil();
             }
         }
+
         private int indexProfilDefaut;
 
-        public delegate void ajouterProfilAMenuDelegue(string nomProfil);
+        public delegate void ajouterProfilSimulationDelegue(string nomProfil);
 
-        private ajouterProfilAMenuDelegue ajouterProfilAMenu;
+        private ajouterProfilSimulationDelegue ajouterProfilSimulation;
+
+        public delegate void supprimerProfilSimulationDelegue(string nomProfil);
+
+        private supprimerProfilSimulationDelegue supprimerProfilSimulation;
+
+        private ToolStripMenuItem profilsSimulationItem;
 
         private enum typeParametre
         {
@@ -71,6 +73,8 @@ namespace InterfaceGraphique
 
         private TextBox[] largeurZoneTextBoxes;
 
+        private TextBox[] touchesCommande;
+
         private bool initialisation;
 
         ////////////////////////////////////////////////////////////////////////
@@ -81,11 +85,13 @@ namespace InterfaceGraphique
         /// ses composantes
         ///
         ////////////////////////////////////////////////////////////////////////
-        public Configure(ajouterProfilAMenuDelegue fonction)
+        public Configure(ToolStripMenuItem menuItem, ajouterProfilSimulationDelegue fonction)
         {
             InitializeComponent();
 
-            ajouterProfilAMenu = fonction;
+            profilsSimulationItem = menuItem;
+
+            ajouterProfilSimulation = fonction;
 
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
@@ -101,6 +107,12 @@ namespace InterfaceGraphique
 
             largeurZoneTextBoxes = new TextBox[] { longueurDangerGaucheTxtBox, longueurSecuritaireGaucheTxtBox, longueurDangerCentreTxtBox, longueurSecuritaireCentreTxtBox, longueurDangerDroitTxtBox, longueurSecuritaireDroitTxtBox };
 
+            touchesCommande = new TextBox[] { textBoxModeManuel, textBoxAvancer, textBoxReculer, textBoxAntiHoraire, textBoxHoraire };
+
+            cheminProfils = FonctionsNatives.obtenirCheminProfils();
+
+            extensionProfils = FonctionsNatives.obtenirExtensionProfils();
+
             FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
             setUpAllControls(configureTabs);
@@ -111,7 +123,7 @@ namespace InterfaceGraphique
 
             initialisation = false;
 
-            indexProfilDefaut = comboBoxProfil.FindString(nomProfilDefaut);
+            
 
             foreach (Control tab in configureTabs.TabPages)
             {
@@ -128,56 +140,34 @@ namespace InterfaceGraphique
         ///
         ////////////////////////////////////////////////////////////////////////
         private void assignerProfilsCB(){
-            StringBuilder str = new StringBuilder(100);
-            
-            FonctionsNatives.obtenirCheminProfils(str, str.Capacity);
-            cheminProfils = str.ToString();
-
-            str.Clear();
-
-            FonctionsNatives.obtenirExtensionProfils(str, str.Capacity);
-            extensionProfils = str.ToString();
-
-            str.Clear();
-
-            FonctionsNatives.obtenirNomProfilDefaut(str, str.Capacity);
-
-            nomProfilDefaut = str.ToString();
-
             comboBoxProfil.Items.Clear();
+            FonctionsNatives.chargerDernierProfil();
+
+            nomDernierProfil = FonctionsNatives.obtenirNomDernierProfil();
+
+            nomProfilDefaut = FonctionsNatives.obtenirNomProfilDefaut();
+
             fichiersProfil = new List<string>(System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils));
-            if (fichiersProfil.Count == 0)
+            string nomFichier;
+            for (int i = 0; i < fichiersProfil.Count; i++)
             {
-                FonctionsNatives.chargerProfilParDefaut();
-                fichiersProfil.AddRange(System.IO.Directory.GetFiles(cheminProfils, "*" + extensionProfils));
-                string nomFichier;
-                for (int i = 0; i < fichiersProfil.Count; i++)
-                {
-                    nomFichier = System.IO.Path.GetFileName(fichiersProfil[i]);
-                    fichiersProfil[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
-                }
-                comboBoxProfil.Items.AddRange(fichiersProfil.ToArray());
-                comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfilDefaut);
-            }
-            else
-            {
-                string nomFichier;
-                for (int i = 0; i < fichiersProfil.Count; i++)
-                {
-                    nomFichier = System.IO.Path.GetFileName(fichiersProfil[i]);
-                    fichiersProfil[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
-                }
-
-                comboBoxProfil.Items.AddRange(fichiersProfil.ToArray());
-                FonctionsNatives.chargerProfilParDefaut();
-                textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
-                textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
-                textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
-                textBoxHoraire.Text = afficherCaractere(textBoxHoraire.Text[0]);
-                textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
+                nomFichier = System.IO.Path.GetFileName(fichiersProfil[i]);
+                fichiersProfil[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
             }
 
-            
+            comboBoxProfil.Items.AddRange(fichiersProfil.ToArray());
+
+            comboBoxProfil.SelectedIndexChanged -= comboBoxProfil_SelectedIndexChanged;
+            comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomDernierProfil);
+            comboBoxProfil.SelectedIndexChanged += comboBoxProfil_SelectedIndexChanged;
+
+            indexProfilDefaut = comboBoxProfil.FindString(nomProfilDefaut);
+
+            int indexCommande = 0;
+            foreach (TextBox box in touchesCommande)
+            {
+                box.Text = afficherCaractere(FonctionsNatives.obtenirToucheCommande((TypeCommande)indexCommande++));
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -209,21 +199,6 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void buttonDefConfig_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction charge le profil par défault
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du click
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void buttonDefConfig_Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.chargerProfilParDefaut();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private bool caractereInvalide(object sender, KeyPressEventArgs e)
         ///
         /// Cette fonction vérifie si la touche est valide
@@ -239,7 +214,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void textBoxAvancer_KeyPress(object sender, KeyPressEventArgs e)
         ///
-        /// Cette fonction vérifie si la touche est valide et assigner le comportement avancer
+        /// Cette fonction vérifie si la touche est valide et assigne le comportement avancer
         /// a la touche en changement l'affichage dans configure
         ///
         /// @param objet sender: control qui gère l'action
@@ -261,7 +236,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void textBoxReculer_KeyPress(object sender, KeyPressEventArgs e)
         ///
-        /// Cette fonction vérifie si la touche est valide et assigner le comportement reculer
+        /// Cette fonction vérifie si la touche est valide et assigne le comportement reculer
         /// a la touche en changement l'affichage dans configure
         ///
         /// @param objet sender: control qui gère l'action
@@ -283,7 +258,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void textBoxAntiHoraire_KeyPress(object sender, KeyPressEventArgs e)
         ///
-        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner gauche
+        /// Cette fonction vérifie si la touche est valide et assigne le comportement tourner gauche
         /// a la touche en changement l'affichage dans configure
         ///
         /// @param objet sender: control qui gère l'action
@@ -294,9 +269,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_DROITE);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_GAUCHE);
             }
-            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE);
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE);
             textBoxAntiHoraire.Text = afficherCaractere(caractere);
             textBoxAntiHoraire.Select(textBoxAntiHoraire.Text.Length, 0);
         }
@@ -305,7 +280,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void textBoxHoraire_KeyPress(object sender, KeyPressEventArgs e)
         ///
-        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner droit
+        /// Cette fonction vérifie si la touche est valide et assigne le comportement tourner droit
         /// a la touche en changement l'affichage dans configure
         ///
         /// @param objet sender: control qui gère l'action
@@ -316,9 +291,9 @@ namespace InterfaceGraphique
         {
             if (!caractereInvalide(sender, e))
             {
-                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_GAUCHE);
+                FonctionsNatives.modifierToucheCommande(Char.ToUpper(e.KeyChar), TypeCommande.ROTATION_DROITE);
             }
-            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_GAUCHE);
+            char caractere = FonctionsNatives.obtenirToucheCommande(TypeCommande.ROTATION_DROITE);
             textBoxHoraire.Text = afficherCaractere(caractere);
             textBoxHoraire.Select(textBoxHoraire.Text.Length, 0);
         }
@@ -327,7 +302,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void textBoxModeManuel_KeyPress(object sender, KeyPressEventArgs e)
         ///
-        /// Cette fonction vérifie si la touche est valide et assigner le comportement tourner droit
+        /// Cette fonction vérifie si la touche est valide et assigne le comportement tourner droit
         /// a la touche en changement l'affichage dans configure
         ///
         /// @param objet sender: control qui gère l'action
@@ -611,15 +586,23 @@ namespace InterfaceGraphique
             if (!comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomProfil)))
                 return;
 
-            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
-            textBoxModeManuel.Text = afficherCaractere(textBoxModeManuel.Text[0]);
-            textBoxAvancer.Text = afficherCaractere(textBoxAvancer.Text[0]);
-            textBoxReculer.Text = afficherCaractere(textBoxReculer.Text[0]);
-            textBoxHoraire.Text = afficherCaractere(textBoxHoraire.Text[0]);
-            textBoxAntiHoraire.Text = afficherCaractere(textBoxAntiHoraire.Text[0]);
+            (profilsSimulationItem.DropDownItems.Find(FonctionsNatives.obtenirNomDernierProfil(), false)[0] as ToolStripMenuItem).Checked = false;
+            (profilsSimulationItem.DropDownItems.Find(nomProfil, false)[0] as ToolStripMenuItem).Checked = true;
+
+            changerProfil(nomProfil);
         }
 
-        public void changerProfil(string nomProfil){
+        private void changerProfil(string nomProfil)
+        {
+            FonctionsNatives.changerProfil(nomProfil + extensionProfils);
+            int i = 0;
+            foreach (TextBox box in touchesCommande)
+            {
+                box.Text = afficherCaractere(FonctionsNatives.obtenirToucheCommande((TypeCommande)i++));
+            }
+        }
+
+        public void changerProfilSelectionne(string nomProfil){
             comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfil);
         }
 
@@ -661,7 +644,8 @@ namespace InterfaceGraphique
                     nomSiDoublon = nouvelItem + nombre++;
 
                 comboBoxProfil.Items.Add(nomSiDoublon);
-                ajouterProfilAMenu(nomSiDoublon);
+                ajouterProfilSimulation(nomSiDoublon);
+                (profilsSimulationItem.DropDownItems.Find(nomSiDoublon, false)[0] as ToolStripMenuItem).Checked = true;
                 comboBoxProfil.SelectedIndex = comboBoxProfil.Items.Count - 1;
                 comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
                 etatCreationProfil = actionProfil.ATTENTE_ACTION;
@@ -679,7 +663,11 @@ namespace InterfaceGraphique
                 return;
             FonctionsNatives.supprimerProfil(profilASupprimer + extensionProfils);
             comboBoxProfil.Items.Remove(profilASupprimer);
+            profilsSimulationItem.DropDownItems.Remove(profilsSimulationItem.DropDownItems.Find(profilASupprimer, false)[0]);
+            (profilsSimulationItem.DropDownItems.Find(nomProfilDefaut, false)[0] as ToolStripMenuItem).Checked = true;
+            comboBoxProfil.SelectedIndexChanged -= comboBoxProfil_SelectedIndexChanged;
             comboBoxProfil.SelectedIndex = indexProfilDefaut;
+            comboBoxProfil.SelectedIndexChanged += comboBoxProfil_SelectedIndexChanged;
         }
 
         private actionProfil etatModificationProfil = actionProfil.ATTENTE_ACTION;
@@ -761,9 +749,9 @@ namespace InterfaceGraphique
             FonctionsNatives.modifierToucheCommande('S', TypeCommande.RECULER);
             textBoxReculer.Text = "S";
             FonctionsNatives.modifierToucheCommande('A', TypeCommande.ROTATION_GAUCHE);
-            textBoxAntiHoraire.Text = "D";
+            textBoxAntiHoraire.Text = "A";
             FonctionsNatives.modifierToucheCommande('D', TypeCommande.ROTATION_DROITE);
-            textBoxHoraire.Text = "A";
+            textBoxHoraire.Text = "D";
             FonctionsNatives.modifierToucheCommande(' ', TypeCommande.INVERSER_MODE_CONTROLE);
             textBoxModeManuel.Text = "ESPACE";
         }
@@ -776,12 +764,6 @@ namespace InterfaceGraphique
 
             return Double.Parse(aConvertir.Replace(',','.'), culture);
         }
-
-        private void textBoxModeManuel_TextChanged(object sender, EventArgs e)
-        {
-            //Console.WriteLine("hello");
-        }
-
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -797,9 +779,6 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementBalayage(TypeComportement comportementSuivant);
-
-        //[DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        //public static extern void [MarshalAs(UnmanagedType.SafeArray, SafeArraySubType = VT_I4)]
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation);
@@ -823,10 +802,25 @@ namespace InterfaceGraphique
         public static extern void modifierToucheCommande(char touche, TypeCommande commande);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void obtenirNomProfilDefaut(StringBuilder str, int longueur);
+        private static extern void obtenirNomProfilDefaut(StringBuilder str, int longueur);
+        public static string obtenirNomProfilDefaut()
+        {
+            StringBuilder str = new StringBuilder(100);
+            obtenirNomProfilDefaut(str, str.Capacity);
+            return str.ToString();
+        }
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void chargerProfilParDefaut();
+        private static extern void obtenirNomDernierProfil(StringBuilder str, int longueur);
+        public static string obtenirNomDernierProfil()
+        {
+            StringBuilder str = new StringBuilder(100);
+            obtenirNomDernierProfil(str, str.Capacity);
+            return str.ToString();
+        }
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void chargerDernierProfil();
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern char obtenirToucheCommande(TypeCommande commande);
@@ -835,10 +829,22 @@ namespace InterfaceGraphique
         public static extern void setHandle(IntPtr handle, int ctrl);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
+        private static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
+        public static string obtenirExtensionProfils()
+        {
+            StringBuilder str = new StringBuilder(100);
+            obtenirExtensionProfils(str, str.Capacity);
+            return str.ToString();
+        }
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void obtenirCheminProfils(StringBuilder str, int longueur);
+        private static extern void obtenirCheminProfils(StringBuilder str, int longueur);
+        public static string obtenirCheminProfils()
+        {
+            StringBuilder str = new StringBuilder(100);
+            obtenirCheminProfils(str, str.Capacity);
+            return str.ToString();
+        }
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void supprimerProfil(string nomProfil);

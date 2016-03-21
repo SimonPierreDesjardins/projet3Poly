@@ -71,9 +71,9 @@ namespace math {
 
    private:
       /// @f$ (x_0, y_0, z_0) @f$
-      const glm::dvec3 pointDroite_;
+      glm::dvec3 pointDroite_;
       /// @f$ (a, b, c) @f$
-      const glm::dvec3 direction_;
+      glm::dvec3 direction_;
 
    };
 

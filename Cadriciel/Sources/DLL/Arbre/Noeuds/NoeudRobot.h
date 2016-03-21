@@ -47,7 +47,6 @@ public:
 
 	/// Constructeur à partir du type du noeud.
 	NoeudRobot(const std::string& typeNoeud);
-
 	/// Destructeur.
 	~NoeudRobot();
 
@@ -68,6 +67,12 @@ public:
 	inline void assignerVitesseDroite(float vitesse);
 	inline void assignerVitesseGauche(float vitesse);
 
+    // Calculer les composantes courantes de vitesse du robot.
+    void calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslationCourante, double& vitesseAngulaireCourante) const;
+    // Calculer les composantes de d'une collision en fonction d'une normale de collision.
+    void calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& viteseTranslationCollision,
+                                      double& vitesseAngulaireCollision) const;
+
 	//Permet de positionner les roues
 	void positionnerRoues();
 
@@ -81,17 +86,22 @@ public:
     inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
-
 private:
 	//Vitesse des moteurs du robot
 	float vitesseRotation_{ 0.f };
 	float vitesseDroite_{ 0.f };
 	float vitesseGauche_{ 0.f };
 
-protected:
+	float vitesseRotationCourante_{ 0.f };
 
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
+
+    bool collision_{ false };
+    glm::dvec3 vitesseTranslationCollision_{0.0, 0.0, 0.0};
+    double vitesseAngulaireCollision_{ 0.0 };
+    glm::dvec3 dernierePositionRelative_;
+    double dernierAngleRotation_;
 
 	float vitesseDroiteCollision_{ 0.f };
 	float vitesseGaucheCollision_{ 0.f };
@@ -105,8 +115,6 @@ protected:
 	ProfilUtilisateur* profil_{ nullptr };
 
     RectangleEnglobant rectangleEnglobant_;
-
-    bool collision_{ false };
    
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };
@@ -115,14 +123,18 @@ protected:
     ArbreRendu* arbre_{ nullptr };
 
     /// Méthode permettant au robot d'effectuer la collision.
-    void effectuerCollision(glm::dvec3 normale);
+    void effectuerCollision(const glm::dvec3& normale);
+    void effectuerCollision(const double& dt);
+
 
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
     void mettreAJourPosition(const float& dt);
+    void reinitialiserPosition(const float& dt);
     virtual void mettreAJourFormeEnglobante();
 
 	bool estEnCollision_{ false };
+    bool enCollision_{ false };
 
 	NoeudAbstrait* table_;
 
@@ -247,7 +259,9 @@ inline void NoeudRobot::assignerVitesseRotation(float vitesse)
 inline void NoeudRobot::assignerEstEnCollision(bool collision)
 {
 	estEnCollision_ = collision;
+    rectangleEnglobant_.assignerEnCollision(collision);
 }
+
 #endif // __ARBRE_NOEUD_ROBOT_H__
 
 ///////////////////////////////////////////////////////////////////////////////

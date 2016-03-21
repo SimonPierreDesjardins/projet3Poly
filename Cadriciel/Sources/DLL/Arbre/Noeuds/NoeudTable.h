@@ -43,19 +43,9 @@ public:
 	/// Accepter un visiteur.
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
-
-	inline RectangleEnglobant obtenirRectangleEnglobant() const;
-
-
 private:
     RectangleEnglobant rectangleEnglobant_;
 };
-
-
-inline RectangleEnglobant NoeudTable::obtenirRectangleEnglobant() const
-{
-	return rectangleEnglobant_;
-}
 
 #endif
 

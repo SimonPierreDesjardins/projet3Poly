@@ -58,7 +58,7 @@ class ProfilUtilisateur
 
 		void modifierToucheCommande(const uint8_t& touche, const TypeCommande& controle);
 
-		void chargerProfilParDefaut();
+		void chargerDernierProfil();
 
 		CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
 
@@ -75,6 +75,8 @@ class ProfilUtilisateur
 		std::string obtenirCheminProfils();
 
 		std::string obtenirNomProfilDefaut();
+
+		std::string obtenirNomDernierProfil();
 
         inline SuiveurLigne* obtenirSuiveurLigne();
         inline NoeudRobot::ConteneurCapteursDistance* obtenirCapteursDistance();
@@ -106,6 +108,8 @@ class ProfilUtilisateur
 		bool ouvrirProfil(std::string readOrWrite);
 
 		bool ouvrir(std::string nomFichier, std::string readOrWrite, FILE*& fichier);
+
+		void creerProfilDefaut();
 
 		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
 		
@@ -141,7 +145,9 @@ class ProfilUtilisateur
 
 		std::unordered_map<ConfigureControl, HWND> configureHandles;
 
-		std::vector<char> touches_;
+		std::array<char, 5> touches_;
+
+		const std::array<char, 10>* toucheNonChangeable;
 
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;

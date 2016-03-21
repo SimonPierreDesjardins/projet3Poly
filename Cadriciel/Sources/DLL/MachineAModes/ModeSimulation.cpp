@@ -23,7 +23,7 @@
 #include <iostream>
 
 std::array<char, 10> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B' } };
-
+  
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeSimulation::ModeSimulation()
@@ -39,6 +39,7 @@ ModeSimulation::ModeSimulation()
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode automatique
 	controleRobot_->passerAModeAutomatique();
+    actionsAppuyees_ = { { false, false, false, false, false } };
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -154,102 +155,6 @@ void ModeSimulation::postChangementDeProfil(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeEdition::gererTouchePlus()
-///
-/// Cette fonction permet de gérer la touche + dans le modeEdition.
-///
-/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom in.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeSimulation::gererTouchePlus()
-{
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-	}
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheMoins()
-///
-/// Cette fonction permet de gérer la touche - dans le modeEdition.
-///
-/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom out.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeSimulation::gererToucheMoins()
-{
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-	}
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheGauche()
-///
-/// Cette fonction permet de gérer la touche flèche gauche dans le modeEdition.
-///
-/// Fait un déplacement de 10 pixels selon l'axe des x.
-///
-////////////////////////////////////////////////////////////////////////
-
-void ModeSimulation::gererFlecheGauche()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheBas()
-///
-/// Cette fonction permet de gérer la touche flèche bas dans le modeEdition.
-///
-/// Fait un déplacement de 10 pixels selon l'axe des y.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeSimulation::gererFlecheBas()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
-}
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheHaut()
-///
-/// Cette fonction permet de gérer la touche flèche haut dans le modeEdition.
-///
-/// Fait un déplacement de -10 pixels selon l'axe des y.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeSimulation::gererFlecheHaut()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheDroit()
-///
-/// Cette fonction permet de gérer la touche flèche droit dans le modeEdition.
-///
-/// Fait un déplacement de -10 pixels selon l'axe des x.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeSimulation::gererFlecheDroit()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
 /// Fonction qui permet de traiter les entrées utilisateur en mode simulation. 
@@ -330,26 +235,60 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
 			if (!estRepetition)
 			{
-				controleRobot_->traiterCommande(profil_->obtenirCommandeRobot(wParam), true);
+                CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
+                if (commande != nullptr)
+                {
+                    TypeCommande type = commande->obtenirTypeCommande();
+                    actionsAppuyees_.at(type) = true;
+                }
+				controleRobot_->traiterCommande(commande, true);
 			}
 		}
-        
 	}
 	else if (msg == WM_KEYUP)
 	{
 		if (!controleRobot_->getEnPause())
 		{
-			CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-			if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
+			CommandeRobot* commandeCourante = profil_->obtenirCommandeRobot(wParam);
+			if (commandeCourante != nullptr && commandeCourante->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
 			{
-				// Obtenir la commande associée et inverser la vitesse des moteurs.
-				CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-				commande->inverserVitesseMoteurs();
-				controleRobot_->traiterCommande(commande, true);
+                // Arreter les moteurs.
+                std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
+                controleRobot_->traiterCommande(commandeArreter.get(), true);
 
-				// Rétablir l'état initial de la commande.
-				commande->inverserVitesseMoteurs();
+                // Indiquer que la commande n'est plus appuyée dans les flags d'actions appuyées
+                TypeCommande type = commandeCourante->obtenirTypeCommande();
+                actionsAppuyees_.at(type) = false;
+
+                // Relancer les commandes qui sont toujours appuyées.
+                for (int i = 1; i < actionsAppuyees_.size(); i++)
+                {
+                    if (actionsAppuyees_.at((TypeCommande)i))
+                    {
+                        std::unique_ptr<CommandeRobot> commandeMiseAJour  = std::make_unique<CommandeRobot>((TypeCommande)i, true);
+                        controleRobot_->traiterCommande(commandeMiseAJour.get(), true);
+                    }
+                }
 			}
+		}
+	}
+	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris())
+	{
+		switch (msg)
+		{
+		case WM_RBUTTONDBLCLK:
+		case WM_RBUTTONDOWN:
+			gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_RBUTTONUP:
+			gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEMOVE:
+			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
 		}
 	}
 }

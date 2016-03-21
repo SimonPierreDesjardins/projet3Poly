@@ -268,7 +268,7 @@
             // 
             // button_Default
             // 
-            this.button_Default.Location = new System.Drawing.Point(613, 442);
+            this.button_Default.Location = new System.Drawing.Point(621, 444);
             this.button_Default.Name = "button_Default";
             this.button_Default.Size = new System.Drawing.Size(119, 43);
             this.button_Default.TabIndex = 11;
@@ -279,7 +279,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(252, 307);
+            this.label5.Location = new System.Drawing.Point(256, 307);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(179, 13);
             this.label5.TabIndex = 10;
@@ -297,7 +297,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(50, 163);
+            this.label3.Location = new System.Drawing.Point(529, 163);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 13);
             this.label3.TabIndex = 8;
@@ -315,7 +315,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(520, 163);
+            this.label1.Location = new System.Drawing.Point(43, 163);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(139, 13);
             this.label1.TabIndex = 6;
@@ -327,7 +327,7 @@
             this.textBoxAntiHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAntiHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAntiHoraire.HideSelection = false;
-            this.textBoxAntiHoraire.Location = new System.Drawing.Point(506, 182);
+            this.textBoxAntiHoraire.Location = new System.Drawing.Point(26, 182);
             this.textBoxAntiHoraire.MaxLength = 1;
             this.textBoxAntiHoraire.Name = "textBoxAntiHoraire";
             this.textBoxAntiHoraire.ReadOnly = true;
@@ -344,14 +344,13 @@
             this.textBoxModeManuel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxModeManuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxModeManuel.HideSelection = false;
-            this.textBoxModeManuel.Location = new System.Drawing.Point(222, 323);
+            this.textBoxModeManuel.Location = new System.Drawing.Point(226, 323);
             this.textBoxModeManuel.Name = "textBoxModeManuel";
             this.textBoxModeManuel.ReadOnly = true;
             this.textBoxModeManuel.Size = new System.Drawing.Size(234, 49);
             this.textBoxModeManuel.TabIndex = 4;
             this.textBoxModeManuel.Tag = "5";
             this.textBoxModeManuel.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.textBoxModeManuel.TextChanged += new System.EventHandler(this.textBoxModeManuel_TextChanged);
             this.textBoxModeManuel.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxModeManuel_KeyPress);
             // 
             // textBoxAvancer
@@ -378,7 +377,7 @@
             this.textBoxHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxHoraire.HideSelection = false;
-            this.textBoxHoraire.Location = new System.Drawing.Point(28, 182);
+            this.textBoxHoraire.Location = new System.Drawing.Point(507, 182);
             this.textBoxHoraire.MaxLength = 1;
             this.textBoxHoraire.Name = "textBoxHoraire";
             this.textBoxHoraire.ReadOnly = true;

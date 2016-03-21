@@ -554,9 +554,13 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomProfilDefaut().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl chargerProfilParDefaut()
+	__declspec(dllexport) void __cdecl obtenirNomDernierProfil(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomDernierProfil().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl chargerDernierProfil()
 	{
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerProfilParDefaut();
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerDernierProfil();
 	}
 
 	__declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil){

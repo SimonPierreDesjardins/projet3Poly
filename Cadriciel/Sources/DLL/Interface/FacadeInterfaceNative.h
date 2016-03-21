@@ -66,7 +66,8 @@ extern "C"
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
 
 	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* chemin, int longueur);
-	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
+	__declspec(dllexport) void __cdecl obtenirNomDernierProfil(char* chemin, int longueur);
+	__declspec(dllexport) void __cdecl chargerDernierProfil();
 
 	__declspec(dllexport) void __cdecl assignerProfils();
 

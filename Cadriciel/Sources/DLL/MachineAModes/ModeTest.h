@@ -12,6 +12,7 @@
 #define MODE_TEST_H
 
 #include <memory>
+#include <array>
 #include "glm\glm.hpp"
 
 #include "ModeAbstrait.h"
@@ -37,6 +38,7 @@ private:
 	std::unique_ptr<ControleRobot> controleRobot_;
 	ProfilUtilisateur* profil_{ nullptr };
 	static std::array<char, 9> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
 
 	bool lumiereAmbiante{ true };
 	bool lumiereDirectionnelle{ true };
@@ -52,21 +54,14 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
-	void gererTouchePlus();
-	void gererToucheMoins();
-
-	void gererFlecheGauche();
-	void gererFlecheBas();
-	void gererFlecheHaut();
-	void gererFlecheDroit();
-
 	void inverserLumiereAmbiante();
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();
 
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
-
+	
+protected:
 	inline static std::array<char, 9>* getTouchesNonConfigurable();
 };
 
