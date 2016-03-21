@@ -651,18 +651,11 @@ void PhysiqueTest::testColisionCercleRectangle()
 
 	glm::dvec3 normale = { 0, 0, 0 };
 
-	//Condition initiale
-	normale = rectangle.calculerNormaleCollision(cercle);
-	glm::dvec3 expected = { 1, 0, 0 };
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
-
 	//Vérifier les quatre face du robot ( + )
 	positionCercle = { 20, 0, 0 };
 	cercle.assignerPositionCentre(positionCercle);
 	normale = rectangle.calculerNormaleCollision(cercle);
-	expected = { -1, 0, 0 };
+	glm::dvec3 expected = { -1, 0, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
