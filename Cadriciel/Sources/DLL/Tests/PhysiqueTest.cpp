@@ -544,7 +544,7 @@ void PhysiqueTest::testCalculerIntersectionCercleCercle()
 	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
 	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
 
-	positionCercleDeux = { -20.0, 20.0, 0.0 };
+	positionCercleDeux = { -20.0, 0.0, 0.0 };
 	cercleDeux.assignerPositionCentre(positionCercleDeux);
 	CercleNeTouchePasCercle = !cercleUn.calculerIntersection(cercleDeux);
 	CPPUNIT_ASSERT(!CercleNeTouchePasCercle);
