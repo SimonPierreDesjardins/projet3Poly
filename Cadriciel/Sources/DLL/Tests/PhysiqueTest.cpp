@@ -685,6 +685,45 @@ void PhysiqueTest::testColisionCercleRectangle()
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
 }
 
+void PhysiqueTest::testColisionRectanglePoint()
+{
+	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
+	RectangleEnglobant rectangle(positionRectangle, 0.0, 20.0, 20.0);
+
+	glm::dvec3 point{ 0.0, 0.0, 0.0 };
+
+	glm::dvec3 normale = { 0, 0, 0 };
+
+	//Vérifier les quatre face du robot ( + )
+	point = { 10, 0, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
+	glm::dvec3 expected = { 1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	point = { -10, 0, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
+	expected = { -1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	point = { 0, 10, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
+	expected = { 0, 1, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	point = { 0, -10, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
+	expected = { 0, -1, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

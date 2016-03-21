@@ -145,6 +145,7 @@
     <ClCompile Include="Arbre\Noeuds\NoeudRoues.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudSegment.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp" />
+    <ClCompile Include="CapteurTest.cpp" />
     <ClCompile Include="Capteur\CapteurDistance.cpp" />
     <ClCompile Include="Capteur\CapteurOptique.cpp" />
     <ClCompile Include="Capteur\SuiveurLigne.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Arbre\Noeuds\NoeudSegment.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
+    <ClInclude Include="CapteurTest.h" />
     <ClInclude Include="Capteur\CapteurDistance.h" />
     <ClInclude Include="Capteur\CapteurOptique.h" />
     <ClInclude Include="Capteur\SuiveurLigne.h" />
