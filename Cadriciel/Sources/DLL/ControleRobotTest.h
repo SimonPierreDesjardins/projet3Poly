@@ -7,14 +7,14 @@
 #include "ComportementAbstrait.h"
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ComportementsTest
+/// @class ControleRobotTest
 /// @brief Classe de test cppunit pour tester le bon fonctionnement du changement de comportements
 /// dans le controleur de Robot.
 ///
 /// @author Julien Gascon-Samson
 /// @date 2011-07-16
 ///////////////////////////////////////////////////////////////////////////
-class ComportementsTest : public CppUnit::TestFixture
+class ControleRobotTest : public CppUnit::TestFixture
 {
 
 	// =================================================================
@@ -23,7 +23,7 @@ class ComportementsTest : public CppUnit::TestFixture
 	// Important, vous devez définir chacun de vos cas de tests à l'aide
 	// de la macro CPPUNIT_TEST sinon ce dernier ne sera pas exécuté !
 	// =================================================================
-	CPPUNIT_TEST_SUITE(ComportementsTest);
+	CPPUNIT_TEST_SUITE(ControleRobotTest);
 	CPPUNIT_TEST(testAssignationDeComportement);
 
 	CPPUNIT_TEST(testComportementPassageModeAutomatique);

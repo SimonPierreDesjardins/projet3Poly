@@ -1,5 +1,5 @@
 ////////////////////////////////////////////////////////////////////////////////////
-/// @file ComportementsTest.cpp
+/// @file ControleRobotTest.cpp
 /// @author Camille Gendreau
 /// @date 2016-03-18
 /// @version 2.2
@@ -8,7 +8,7 @@
 /// @{
 ////////////////////////////////////////////////////////////////////////////////////
 
-#include "ComportementsTest.h"
+#include "ControleRobotTest.h"
 #include "ControleRobot.h"
 #include "ComportementAbstrait.h"
 #include "ComportementDefaut.h"
@@ -19,11 +19,11 @@
 
 
 // Enregistrement de la suite de tests au sein du registre
-CPPUNIT_TEST_SUITE_REGISTRATION(ComportementsTest);
+CPPUNIT_TEST_SUITE_REGISTRATION(ControleRobotTest);
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ComportementsTest::setUp()
+/// @fn void ControleRobotTest::setUp()
 ///
 /// Effectue l'initialisation préalable à l'exécution de l'ensemble des
 /// cas de tests de cette suite de tests (si nécessaire).
@@ -34,7 +34,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(ComportementsTest);
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ComportementsTest::setUp()
+void ControleRobotTest::setUp()
 {
 
 
@@ -45,7 +45,7 @@ void ComportementsTest::setUp()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ComportementsTest::tearDown()
+/// @fn void ControleRobotTest::tearDown()
 ///
 /// Effectue les opérations de finalisation nécessaires suite à l'exécution
 /// de l'ensemble des cas de tests de cette suite de tests (si nécessaire).
@@ -56,12 +56,12 @@ void ComportementsTest::setUp()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ComportementsTest::tearDown()
+void ControleRobotTest::tearDown()
 {
 	delete controleRobot_;
 }
 
-void ComportementsTest::testAssignationVectComportements(){
+void ControleRobotTest::testAssignationVectComportements(){
 
 	std::vector<std::unique_ptr<ComportementAbstrait>> testVector;
 
@@ -72,7 +72,7 @@ void ComportementsTest::testAssignationVectComportements(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ComportementsTest::testAssignationDeComportement()
+/// @fn void ControleRobotTest::testAssignationDeComportement()
 ///
 /// Cette fonction test l'assignation de comportements au controleur du Robot
 /// Il assure que  lorsqu'on appelle l'assignation d'un comportement, c'est bel et bien ce comportement qui et assigné au robot.
@@ -80,7 +80,7 @@ void ComportementsTest::testAssignationVectComportements(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ComportementsTest::testAssignationDeComportement(){
+void ControleRobotTest::testAssignationDeComportement(){
 
 	// On popule le vecteur de comportements à tester
 	/*TypeComportement
@@ -129,7 +129,7 @@ void ComportementsTest::testAssignationDeComportement(){
 }
 
 
-void ComportementsTest::testComportementPassageModeAutomatique(){
+void ControleRobotTest::testComportementPassageModeAutomatique(){
     /*
 	controleRobot_->passerAModeManuel();
 	controleRobot_->assignerComportement(BALAYAGE180, L"Test de passage au mode automatique");
