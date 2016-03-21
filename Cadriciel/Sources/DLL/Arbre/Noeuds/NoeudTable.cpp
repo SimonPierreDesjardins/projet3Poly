@@ -48,18 +48,44 @@ NoeudTable::NoeudTable(const std::string& typeNoeud)
 NoeudTable::~NoeudTable()
 {
 }
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant* NoeudTable::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour la table.
+///
+/// @return Pointeur  sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 
 RectangleEnglobant* NoeudTable::obtenirFormeEnglobante()
 {
     return &rectangleEnglobant_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const RectangleEnglobant* NoeudTable::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour la table.
+///
+/// @return Pointeur const sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 const RectangleEnglobant* NoeudTable::obtenirFormeEnglobante() const
 {
     return &rectangleEnglobant_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudTable::mettreAJourFormeEnglobante()
+///
+/// Cette fonction permet de mettre a jour la forme englobante de la table.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudTable::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;

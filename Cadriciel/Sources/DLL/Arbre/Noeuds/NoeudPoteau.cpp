@@ -36,12 +36,31 @@ NoeudPoteau::NoeudPoteau(const std::string& typeNoeud)
 {
 }
 
+///////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudPoteau::animer(float dt)
+///
+/// Cette fonction permet d'appeler la mise a jour lors de l'animation.
+///
+/// param[in] dt : intervalle de temps en float
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 
 void NoeudPoteau::animer(float dt)
 {
     mettreAJourFormeEnglobante();
 }
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudPoteau::mettreAJourFormeEnglobante()
+///
+/// Cette fonction permet de faire la mise à jour de la forme englobante pour le poteau.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudPoteau::mettreAJourFormeEnglobante()
 {
     double hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
@@ -64,13 +83,29 @@ NoeudPoteau::~NoeudPoteau()
 {
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant* NoeudPoteau::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le poteau.
+///
+/// @return Pointeur sur un cercle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 CercleEnglobant* NoeudPoteau::obtenirFormeEnglobante()
 {
     return &cercleEnglobant_;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const CercleEnglobant* NoeudPoteau::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le poteau.
+///
+/// @return Pointeur const  sur un cercle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 const CercleEnglobant* NoeudPoteau::obtenirFormeEnglobante() const
 {
     return &cercleEnglobant_;

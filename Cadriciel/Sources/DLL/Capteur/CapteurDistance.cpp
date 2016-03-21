@@ -205,6 +205,19 @@ void CapteurDistance::verifierDetection(NoeudMur* mur)
     }
 }
 
+////////////////////////////////////////////////////////////////////////////////
+///
+/// void CapteurDistance::verifierDetection(NoeudTable* table)
+///
+/// Cette méthode permet de faire la vérification de la détection sur une table
+/// à l'aide de sa forme englobante. La détection en zone de danger est priorisée
+/// sur la détection en zone sécuritaire.
+///
+/// @param[in] table : Un pointeur sur une table.
+///
+/// @return Aucune. 
+///
+////////////////////////////////////////////////////////////////////////////////
 void CapteurDistance::verifierDetection(NoeudTable* table)
 {
     RectangleEnglobant* rectangle = table->obtenirFormeEnglobante();

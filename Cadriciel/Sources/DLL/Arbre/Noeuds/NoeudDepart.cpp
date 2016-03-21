@@ -50,13 +50,29 @@ NoeudDepart::~NoeudDepart()
 {
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant* NoeudDepart::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le noeud de depart.
+///
+/// @return Pointeur sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 RectangleEnglobant* NoeudDepart::obtenirFormeEnglobante()
 {
     return &rectangleEnglobant_;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const RectangleEnglobant* NoeudDepart::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le noeud de depart.
+///
+/// @return Pointeur const sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 const RectangleEnglobant* NoeudDepart::obtenirFormeEnglobante() const
 {
     return &rectangleEnglobant_;
@@ -95,11 +111,31 @@ void NoeudDepart::afficherConcret() const
     rectangleEnglobant_.afficher(positionCourante_);
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudDepart::animer(float dt)
+///
+/// Cette fonction permet d'appeler la mise a jour lors de l'animation.
+///
+/// param[in] dt : intervalle de temps en float
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudDepart::animer(float dt)
 {
     mettreAJourFormeEnglobante();
 }
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudDepart::mettreAJourFormeEnglobante()
+///
+/// Cette fonction permet de mettre a jour la forme englobante du noeud de depart.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudDepart::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;

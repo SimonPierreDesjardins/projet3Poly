@@ -50,23 +50,59 @@ NoeudJonction::~NoeudJonction()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant* NoeudJonction::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le poteau.
+///
+/// @return Pointeur sur un cercle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 CercleEnglobant* NoeudJonction::obtenirFormeEnglobante()
 {
     return &cercleEnglobant_;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const CercleEnglobant* NoeudJonction::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour la jonction.
+///
+/// @return Pointeur const  sur un cercle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 const CercleEnglobant* NoeudJonction::obtenirFormeEnglobante() const
 {
     return &cercleEnglobant_;
 }
 
-
+///////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudJonction::animer(float dt)
+///
+/// Cette fonction permet d'appeler la mise a jour lors de l'animation.
+///
+/// param[in] dt : intervalle de temps en float
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudJonction::animer(float dt)
 {
     mettreAJourFormeEnglobante();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudJonction::mettreAJourFormeEnglobante()
+///
+/// Cette fonction permet de faire la mise à jour de la forme englobante pour le jonction.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudJonction::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;

@@ -48,18 +48,43 @@ NoeudAbstrait::~NoeudAbstrait()
 {
 }
 
-// TODO: Doc.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le noeud.
+///
+/// @return Pointeur sur une forme englobante abstraite(nullptr ici).
+///
+////////////////////////////////////////////////////////////////////////
 FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante()
 {
     return nullptr;
 }
 
-// TODO: doc.
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le noeud.
+///
+/// @return Pointeur const sur une forme englobante abstraite(nullptr ici).
+///
+////////////////////////////////////////////////////////////////////////
 const FormeEnglobanteAbstraite* NoeudAbstrait::obtenirFormeEnglobante() const
 {
     return nullptr;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudAbstrait::mettreAJourFormeEnglobante()
+///
+/// Cette fonction permet de mettre a jour la forme englobante du noeud
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudAbstrait::mettreAJourFormeEnglobante()
 {
     
