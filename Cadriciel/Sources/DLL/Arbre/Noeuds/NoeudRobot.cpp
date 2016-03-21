@@ -100,8 +100,10 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot::~NoeudRobot()
 {
-	table_->effacer(roueGauche_);
-	table_->effacer(roueDroite_);
+	if ((table_ != nullptr) && (roueGauche_ != nullptr))
+		table_->effacer(roueGauche_);
+	if ((table_ != nullptr) && (roueDroite_ != nullptr))
+		table_->effacer(roueDroite_);
 }
 
 void NoeudRobot::positionDepart()

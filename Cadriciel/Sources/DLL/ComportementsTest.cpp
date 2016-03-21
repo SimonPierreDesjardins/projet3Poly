@@ -45,17 +45,17 @@ void ComportementsTest::setUp()
 		EVITEMENTPARLAGAUCHE,
 		EVITEMENTPARLADROITE*/
 	//On construit le vecteur des comportements
-	//comportements_.push_back(std::make_unique <ComportementDefaut>());
-	//comportements_.push_back(std::make_unique <ComportementSuiviLigne>());
-	//comportements_.push_back(std::make_unique <ComportementBalayage>());
-	//comportements_.push_back(std::make_unique <ComportementDeviation>());
-	//comportements_.push_back(std::make_unique <ComportementDeviation>());
-	//comportements_.push_back(std::make_unique <ComportementEvitement>());
-	//comportements_.push_back(std::make_unique <ComportementEvitement>());
+	comportements_.push_back(std::make_unique <ComportementDefaut>());
+	comportements_.push_back(std::make_unique <ComportementSuiviLigne>());
+	comportements_.push_back(std::make_unique <ComportementBalayage>());
+	comportements_.push_back(std::make_unique <ComportementDeviation>());
+	comportements_.push_back(std::make_unique <ComportementDeviation>());
+	comportements_.push_back(std::make_unique <ComportementEvitement>());
+	comportements_.push_back(std::make_unique <ComportementEvitement>());
 
 	// On construit le controleur du robot
-	//controleRobot_ = new ControleRobot();
-	//controleRobot_ -> assignerVecteurComportements(&comportements_);
+	controleRobot_ = new ControleRobot();
+	controleRobot_ -> assignerVecteurComportements(&comportements_);
 
 }
 
@@ -74,7 +74,7 @@ void ComportementsTest::setUp()
 ////////////////////////////////////////////////////////////////////////
 void ComportementsTest::tearDown()
 {
-	//delete controleRobot_;
+	delete controleRobot_;
 }
 
 ////////////////////////////////////////////////////////////////////////

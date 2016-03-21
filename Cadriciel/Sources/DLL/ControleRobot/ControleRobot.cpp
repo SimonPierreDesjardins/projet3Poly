@@ -33,14 +33,23 @@
 ////////////////////////////////////////////////////////////////////////
 ControleRobot::ControleRobot()
 {
+	table_ = nullptr;
+	robot_ = nullptr;
 	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	table_ = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
+	if (arbre != nullptr){
+		table_ = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
 
-	std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
+		if (table_ != nullptr){
+			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
 
-	table_->ajouter(robot);
+			table_->ajouter(robot);
 
-	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+			robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+		}
+	}
+
+
+	
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -65,8 +74,9 @@ ControleRobot::~ControleRobot()
 {
 	//Nous utilisons ceci pour terminer le thread d'IA du robot
 	passerAModeManuel();
-	NoeudAbstrait* robot = table_->chercher(ArbreRenduINF2990::NOM_ROBOT);
-	table_->effacer(robot);
+	if (table_ != nullptr && robot_ != nullptr){
+		table_->effacer(robot_);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -250,7 +260,9 @@ void ControleRobot::boucleInfinieLogiqueRobot()
 	while (!manuel) 
 	{
 		if (!enPause){
-			verifierCapteurs();
+			if (robot_ != nullptr){
+				verifierCapteurs();
+			}
 			comportement_->mettreAJour();
 		}
 		else{
@@ -341,8 +353,10 @@ void ControleRobot::verifierCapteurs(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 {
-	robot_->assignerVitesseGauche(vit_G);
-	robot_->assignerVitesseDroite(vit_D);
+	if (robot_ != nullptr){
+		robot_->assignerVitesseGauche(vit_G);
+		robot_->assignerVitesseDroite(vit_D);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -359,10 +373,12 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
 {
-    vit_G += robot_->obtenirVitesseGauche();
-    vit_D += robot_->obtenirVitesseDroite();
-    robot_->assignerVitesseGauche(vit_G);
-    robot_->assignerVitesseDroite(vit_D);
+	if (robot_ != nullptr){
+		vit_G += robot_->obtenirVitesseGauche();
+		vit_D += robot_->obtenirVitesseDroite();
+		robot_->assignerVitesseGauche(vit_G);
+		robot_->assignerVitesseDroite(vit_D);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -389,7 +405,11 @@ NoeudRobot* ControleRobot::obtenirNoeud(){
 ///
 ////////////////////////////////////////////////////////////////////////
 bool ControleRobot::ligneDetectee(){
-	return 	obtenirNoeud()->obtenirSuiveurLigne() -> obtenirEtatCapteurs() != 0x00;
+	bool ret = false;
+	if (robot_ != nullptr){
+		ret = robot_->obtenirSuiveurLigne()->obtenirEtatCapteurs() != 0x00;
+	}
+	return 	ret;
 }
 
 ////////////////////////////////////////////////////////////////////////
