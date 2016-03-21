@@ -68,7 +68,9 @@ bool CercleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
 
 bool CercleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
-    return false;
+    glm::dvec3 distance = cercle.positionCentre_ - positionCentre_;
+    double normeDistance = glm::length(distance);
+    return cercle.rayon_ + rayon_ >= normeDistance;
 }
 
 
@@ -126,14 +128,21 @@ void CercleEnglobant::afficher(const glm::dvec3& origine) const
     glPopMatrix();
 }
 
-const glm::dvec3& CercleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
+glm::dvec3 CercleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
 {
     glm::dvec3 normale = rectangle.calculerNormaleCollision(*this);
     normale = -normale;
     return normale;
 }
 
-const glm::dvec3& CercleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
+
+glm::dvec3 CercleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
+{
+    return{ 0.0, 0.0, 0.0 };
+}
+
+
+glm::dvec3 CercleEnglobant::calculerNormaleCollision(const glm::dvec3& point) const
 {
     return{ 0.0, 0.0, 0.0 };
 }

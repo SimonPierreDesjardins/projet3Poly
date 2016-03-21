@@ -64,8 +64,9 @@ public:
     // Permet de calculer si une forme est en intersection avec un rectangle.
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const = 0;
 
-    virtual const glm::dvec3& calculerNormaleCollision(const RectangleEnglobant& rectangle) const = 0;
-    virtual const glm::dvec3& calculerNormaleCollision(const CercleEnglobant& cercle) const = 0;
+    virtual glm::dvec3 calculerNormaleCollision(const RectangleEnglobant& rectangle) const = 0;
+    virtual glm::dvec3 calculerNormaleCollision(const CercleEnglobant& cercle) const = 0;
+    virtual glm::dvec3 calculerNormaleCollision(const glm::dvec3& point) const = 0;
 
     // Permt d'afficher la forme englobante.
     virtual void afficher(const glm::dvec3& origine) const = 0;

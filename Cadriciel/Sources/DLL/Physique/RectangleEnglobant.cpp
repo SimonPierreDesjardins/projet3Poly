@@ -299,7 +299,7 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
     coins[3] = positionCentre_ + distanceCentreLargeur - distanceCentreHauteur;
 }
 
-const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
+glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
 {
     const int N_COINS = 4;
 
@@ -355,7 +355,7 @@ const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleE
     return glm::normalize(normale);
 }
 
-const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
+glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
 {
     glm::dvec3 coins[4];
     calculerPositionCoins(coins);
@@ -395,7 +395,7 @@ const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const CercleEnglo
     }
     return glm::normalize(normale);
 }
-const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const glm::dvec3 point) const
+glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const glm::dvec3& point) const
 {
     const int N_COINS = 4;
     glm::dvec3 coins[N_COINS];
