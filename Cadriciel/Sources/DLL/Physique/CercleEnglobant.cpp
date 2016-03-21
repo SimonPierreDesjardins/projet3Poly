@@ -13,9 +13,6 @@
 #include "Utilitaire.h"
 #include "RectangleEnglobant.h"
 
-
-#include <iostream>
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn CercleEnglobant::CercleEnglobant()

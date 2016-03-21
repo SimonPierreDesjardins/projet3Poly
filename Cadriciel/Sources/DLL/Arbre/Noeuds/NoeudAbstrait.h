@@ -81,6 +81,7 @@ public:
 	inline double obtenirFacteurMiseAEchelle() const;
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
+
 	/// Obtient le quadrilatère englobant du noeud.
     inline const utilitaire::BoiteEnglobante& obtenirBoiteEnglobanteModele() const;
 
