@@ -6,8 +6,6 @@
 #include "ControleRobot.h"
 #include "ComportementAbstrait.h"
 
-class ControleRobot;
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class ComportementsTest
 /// @brief Classe de test cppunit pour tester le bon fonctionnement du changement de comportements

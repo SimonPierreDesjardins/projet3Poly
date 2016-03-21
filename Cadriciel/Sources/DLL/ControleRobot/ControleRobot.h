@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////////
 /// @file Comportement.h
-/// @author Olivier St-Amour
+/// @author Olivier St-Amour, Camille Gendreau
 /// @date 20016-02-22
 /// @version 2.0
 ///
@@ -30,7 +30,7 @@ class ProfilUtilisateur;
 ///        Cette classe permet de contrôler le robot de façon automatique ou 
 ///		   de façon manuelle em recevant des commandes.
 ///		   
-/// @author Olivier St-Amour
+/// @author Olivier St-Amour, Camille Gendreau
 /// @date 2016-02-22
 ///////////////////////////////////////////////////////////////////////////
 class ControleRobot
