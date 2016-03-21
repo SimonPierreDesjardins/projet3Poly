@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudRobot.cpp
+/// @file CercleEnglobant.cpp
 /// @author Olivier St-Amour
 /// @date 2015-02-14
 /// @version 1.0
@@ -188,7 +188,17 @@ bool CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) 
     return false;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::afficher()
+///
+/// Appelle la fonction afficher avec la table comme origine. 
+///
+/// @param[in]	Aucun.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void CercleEnglobant::afficher() const
 {
     afficher({ 0.0, 0.0, 0.0 });
@@ -200,9 +210,9 @@ void CercleEnglobant::afficher() const
 ///
 /// Affiche le cercle englobant autour de l'objet.
 ///
-/// @param[in]	origine : rectangle avec lequel on veut vérifier l'intersection.
+/// @param[in]	origine : point de repère selon lequel le cercle englobant est afficher.
 ///
-/// @return bool : indique si oui ou non il y a intersection entre le cercle englobant et le rectangle englobant.
+/// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
 void CercleEnglobant::afficher(const glm::dvec3& origine) const
@@ -247,6 +257,17 @@ void CercleEnglobant::afficher(const glm::dvec3& origine) const
     glPopMatrix();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
+///
+/// Calcule la normale de la collision.
+///
+/// @param[in]	rectangle : rectangle avec lequel la colision a eu lieu.
+///
+/// @return glm::dvec3 : vecteur qui représente la normale de la collision.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 CercleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
 {
     glm::dvec3 normale = rectangle.calculerNormaleCollision(*this);
@@ -254,13 +275,33 @@ glm::dvec3 CercleEnglobant::calculerNormaleCollision(const RectangleEnglobant& r
     return normale;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
+///
+/// Calcule la normale de la collision.
+///
+/// @param[in]	cercle : cercle avec lequel la colision a eu lieu.
+///
+/// @return glm::dvec3 : vecteur qui représente la normale de la collision.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 CercleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
 {
     return{ 0.0, 0.0, 0.0 };
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::calculerNormaleCollision(const glm::dvec3& point) const
+///
+/// Calcule la normale de la collision.
+///
+/// @param[in]	point : point avec lequel la colision a eu lieu.
+///
+/// @return glm::dvec3 : vecteur qui représente la normale de la collision.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 CercleEnglobant::calculerNormaleCollision(const glm::dvec3& point) const
 {
     return{ 0.0, 0.0, 0.0 };
