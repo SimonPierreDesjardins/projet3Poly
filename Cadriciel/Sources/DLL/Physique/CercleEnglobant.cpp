@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+/// @file NoeudRobot.cpp
+/// @author Olivier St-Amour
+/// @date 2015-02-14
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
+
 #include "CercleEnglobant.h"
 #include "GL/glew.h"
 #include "Utilitaire.h"
@@ -6,23 +16,64 @@
 
 #include <iostream>
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::CercleEnglobant()
+///
+/// Constructeur par défaut de la classe
+///
+/// @param[in] Aucun.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 CercleEnglobant::CercleEnglobant()
 {
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::CercleEnglobant(const glm::dvec3& positionCentre, const double& rayon)
+///
+/// Constructeur qui initialise les attributs de la classe.
+///
+/// @param[in]	positionCentre : position centrale du cercle englobant,
+///				rayon : rayon du cercle englobant.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 CercleEnglobant::CercleEnglobant(const glm::dvec3& positionCentre, const double& rayon)
     : FormeEnglobanteAbstraite(positionCentre), rayon_(rayon)
 {
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::~CercleEnglobant()
+///
+/// Destructeur de la classe.
+///
+/// @param[in]	Aucun.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 CercleEnglobant::~CercleEnglobant()
 {
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante)
+///
+/// Initialise les attributs de la classe selon la boiteEnglobante passée en paramètre.
+///
+/// @param[in]	boiteEnglobante : la boîte englobante à partir de laquelle on veut créer un cercleEnglobant.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void CercleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante)
 {
     // Calcul des dimensions de la boite englobante.
@@ -33,6 +84,21 @@ void CercleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglob
     rayon_ /= 2;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::calculerEstDansLimites(const double& xMin, const double& xMax,
+///												const double& yMin, const double& yMax)
+///
+/// Détermine si le cercle englobant est à l'intérieur de la zone passée en paramètre.
+///
+/// @param[in]	xMin : la valeur en x du coin minimum de la zone.
+///				xMax : la valeur en x du coin maximum de la zone.
+///				yMin : la valeur en y du coin minimum de la zone.
+///				yMax : la valeur en y du coin maximum de la zone.
+///
+/// @return bool : indique si le cercle est dans la zone ou non.
+///
+////////////////////////////////////////////////////////////////////////
 bool CercleEnglobant::calculerEstDansLimites(const double& xMin, const double& xMax,
                                              const double& yMin, const double& yMax) const
 {
@@ -53,19 +119,52 @@ bool CercleEnglobant::calculerEstDansLimites(const double& xMin, const double& x
 
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::mettreAJour(const glm::dvec3& positionCentre, const double& rayon)
+///
+/// Met à jour les attributs de la classe selon les données passées en paramètres.
+///
+/// @param[in]	positionCentre : position du centre du cercle englobant.
+///				rayon : rayon du cercle englobant.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void CercleEnglobant::mettreAJour(const glm::dvec3& positionCentre, const double& rayon)
 {
     positionCentre_ = positionCentre;
     rayon_ = rayon;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::calculerEstDansForme(const glm::dvec3& point)
+///
+/// Détermine si le point passé en paramètre est dans le cercle englobant.
+///
+/// @param[in]	point : point dont on veut vérifier la position.
+///
+/// @return bool : indique si oui ou non le point se trouve dans le cercle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 bool CercleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
 {
 	double distance = glm::distance(point, positionCentre_);
 	return distance <= rayon_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::calculerIntersection(const CercleEnglobant& cercle)
+///
+/// Détermine s'il y a intersection entre le cercle englobant actuel et celui passé en paramètre.
+///
+/// @param[in]	cercle : cercle avec lequel on veut vérifier l'intersection.
+///
+/// @return bool : indique si oui ou non il y a intersection entre les cercles englobants.
+///
+////////////////////////////////////////////////////////////////////////
 bool CercleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
     glm::dvec3 distance = cercle.positionCentre_ - positionCentre_;
@@ -73,7 +172,17 @@ bool CercleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
     return cercle.rayon_ + rayon_ >= normeDistance;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle)
+///
+/// Détermine s'il y a intersection entre le cercle englobant actuel et le rectangle englobant passé en paramètre.
+///
+/// @param[in]	rectangle : rectangle avec lequel on veut vérifier l'intersection.
+///
+/// @return bool : indique si oui ou non il y a intersection entre le cercle englobant et le rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 bool CercleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {
     return false;
@@ -85,7 +194,17 @@ void CercleEnglobant::afficher() const
     afficher({ 0.0, 0.0, 0.0 });
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn CercleEnglobant::afficher(const glm::dvec3& origine)
+///
+/// Affiche le cercle englobant autour de l'objet.
+///
+/// @param[in]	origine : rectangle avec lequel on veut vérifier l'intersection.
+///
+/// @return bool : indique si oui ou non il y a intersection entre le cercle englobant et le rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 void CercleEnglobant::afficher(const glm::dvec3& origine) const
 {
 
