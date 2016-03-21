@@ -148,7 +148,6 @@
     <ClCompile Include="Capteur\CapteurDistance.cpp" />
     <ClCompile Include="Capteur\CapteurOptique.cpp" />
     <ClCompile Include="Capteur\SuiveurLigne.cpp" />
-    <ClCompile Include="ControleRobotTest.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
     <ClCompile Include="Arbre\ArbreRendu.cpp" />
     <ClCompile Include="Arbre\ArbreRenduINF2990.cpp" />
@@ -186,6 +185,7 @@
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\CapteurTest.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
+    <ClCompile Include="Tests\ControleRobotTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
     <ClCompile Include="Tests\PhysiqueTest.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
@@ -215,7 +215,6 @@
     <ClInclude Include="Arbre\Noeuds\NoeudSegment.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
-    <ClInclude Include="CapteurTest.h" />
     <ClInclude Include="Capteur\CapteurDistance.h" />
     <ClInclude Include="Capteur\CapteurOptique.h" />
     <ClInclude Include="Capteur\SuiveurLigne.h" />
@@ -257,9 +256,10 @@
     <ClInclude Include="Physique\FormeEnglobanteAbstraite.h" />
     <ClInclude Include="Physique\RectangleEnglobant.h" />
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
-    <ClInclude Include="ControleRobotTest.h" />
     <ClInclude Include="Tests\BancTests.h" />
+    <ClInclude Include="Tests\CapteurTest.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
+    <ClInclude Include="Tests\ControleRobotTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
     <ClInclude Include="Tests\PhysiqueTest.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />

@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////
-/// @file PhysiqueTest.h
+/// @file ControleRobotTest.h
 /// @author Camille Gendreau
 /// @date 2016-03-21
 /// @version 2.2
