@@ -81,7 +81,10 @@ ComportementBalayage::~ComportementBalayage()
 void ComportementBalayage::initialiser(){
 	// Nous assignons une cible initiale pour la rotation antihoraire de 90 deg
 	etatRotation = 0;
-	angleCible = controleRobot_->obtenirNoeud()->obtenirAngleRotation() + 90;
+	NoeudRobot* noeud = controleRobot_->obtenirNoeud();
+	if (noeud != nullptr){
+		angleCible = noeud->obtenirAngleRotation() + 90;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -100,6 +103,8 @@ void ComportementBalayage::mettreAJour(){
 		controleRobot_->assignerComportement(SUIVIDELIGNE, L"Ligne détectée");
 	}
 
+	NoeudRobot* noeud = controleRobot_->obtenirNoeud();
+
 	switch (etatRotation){
 
 	// Nous sommes dans la premiere rotation 90 deg antihoraire
@@ -107,9 +112,9 @@ void ComportementBalayage::mettreAJour(){
 		// Envoie la commande de rotation anti-horaire
 		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
 		// si tu atteins l'angle voulu
-		if (controleRobot_->obtenirNoeud()->obtenirAngleRotation() > angleCible){
+		if ((noeud != nullptr) && (noeud->obtenirAngleRotation() > angleCible)){
 			//change l'angle cible et l'état
-			angleCible = controleRobot_->obtenirNoeud()->obtenirAngleRotation() - 180;
+			angleCible = noeud->obtenirAngleRotation() - 180;
 			etatRotation++;
 		}
 		break;
@@ -120,9 +125,9 @@ void ComportementBalayage::mettreAJour(){
 		// Envoie la commande de rotation anti-horaire
 		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
 		// si tu atteins l'angle voulu
-		if (controleRobot_->obtenirNoeud()->obtenirAngleRotation() < angleCible){
+		if ((noeud != nullptr) && (noeud->obtenirAngleRotation() < angleCible)){
 			//change l'angle cible et l'état
-			angleCible = controleRobot_->obtenirNoeud()->obtenirAngleRotation() + 90;
+			angleCible = noeud->obtenirAngleRotation() + 90;
 			etatRotation++;
 		}
 		break;
@@ -131,7 +136,7 @@ void ComportementBalayage::mettreAJour(){
 		// Envoie la commande de rotation anti-horaire
 		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
 		// si tu atteins l'angle voulu
-		if (controleRobot_->obtenirNoeud()->obtenirAngleRotation() > angleCible){
+		if ((noeud != nullptr) && (noeud->obtenirAngleRotation() > angleCible)){
 			controleRobot_->assignerComportement(comportementSuivant_, L"Balayage terminé");
 		}
 		break;

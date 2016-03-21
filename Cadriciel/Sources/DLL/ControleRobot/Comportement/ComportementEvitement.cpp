@@ -98,7 +98,10 @@ ComportementEvitement::~ComportementEvitement()
 ////////////////////////////////////////////////////////////////////////
 void ComportementEvitement::initialiser(){
 	startTime_ = time(nullptr);
-	angleCible_ = controleRobot_->obtenirNoeud()->obtenirAngleRotation() + maxAngle_;
+	NoeudRobot* noeud = controleRobot_->obtenirNoeud();
+	if (noeud != nullptr){
+		angleCible_ = noeud->obtenirAngleRotation() + maxAngle_;
+	}
 	gauche = maxAngle_ >= 0;
 	ignorerLigne_ = true;
 
@@ -132,19 +135,21 @@ void ComportementEvitement::mettreAJour(){
 	else {
 
 		bool angleAtteinte = false;
-
-		// Rotation du robot
-		if (gauche){
-			// Dévier à gauche et vérifier angle
-			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
-			angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() > angleCible_;
+		NoeudRobot* noeud = controleRobot_->obtenirNoeud();
+		if (noeud != nullptr){
+			// Rotation du robot
+			if (gauche){
+				// Dévier à gauche et vérifier angle
+				controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
+				angleAtteinte = noeud->obtenirAngleRotation() > angleCible_;
+			}
+			else{
+				// Dévier à droite et vérifier angle
+				controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
+				angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() < angleCible_;
+			}
 		}
-		else{
-			// Dévier à droite et vérifier angle
-			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
-			angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() < angleCible_;
-		}
-
+		
 		if (angleAtteinte){
 			controleRobot_->assignerComportement(comportementSuivant_, L"Évitement terminé");
 		}

@@ -24,9 +24,11 @@ class ControleRobotTest : public CppUnit::TestFixture
 	// de la macro CPPUNIT_TEST sinon ce dernier ne sera pas exécuté !
 	// =================================================================
 	CPPUNIT_TEST_SUITE(ControleRobotTest);
+	CPPUNIT_TEST(testAssignationVectComportements);
 	CPPUNIT_TEST(testAssignationDeComportement);
-
-	CPPUNIT_TEST(testComportementPassageModeAutomatique);
+	CPPUNIT_TEST(testPassageModeAutomatique);
+	CPPUNIT_TEST(testPassageModeManuel);
+	CPPUNIT_TEST(testAlternanceModeManuelAuto);
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -49,7 +51,11 @@ public:
 	/// Cas de test: assignationDeComportements
 	void testAssignationVectComportements();
 	void testAssignationDeComportement();
-	void testComportementPassageModeAutomatique();
+
+	//Cas de test: changement de mode de fonctionnement
+	void testPassageModeAutomatique();
+	void testPassageModeManuel();
+	void testAlternanceModeManuelAuto();
 
 private:
 	ControleRobot* controleRobot_;
