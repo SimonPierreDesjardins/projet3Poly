@@ -600,18 +600,11 @@ void PhysiqueTest::testColisionRectangleRectangle()
 
 	glm::dvec3 normale = { 0, 0, 0 };
 
-	//Condition initiale
-	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
-	glm::dvec3 expected = { 1, 0, 0 };
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0);
-	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0);
-
 	//Coin de l'un avec coin de l'autre
 	positionRectangleDeux = { 0, 20, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
-	expected = { -0.7, 0.7, 0 };
+	glm::dvec3 expected = { 0, 1, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
@@ -619,7 +612,7 @@ void PhysiqueTest::testColisionRectangleRectangle()
 	positionRectangleDeux = { 0, -20, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
-	expected = { 0.7, -0.7, 0 };
+	expected = { 0, -1, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
@@ -627,7 +620,7 @@ void PhysiqueTest::testColisionRectangleRectangle()
 	positionRectangleDeux = { -20, 0, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
-	expected = { -0.7, -0.7, 0 };
+	expected = { -1, 0, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
@@ -635,7 +628,7 @@ void PhysiqueTest::testColisionRectangleRectangle()
 	positionRectangleDeux = { 20, 0, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
 	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
-	expected = { 0.7, -0.7, 0 };
+	expected = { 1, 0, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
