@@ -1,20 +1,31 @@
-#ifndef TESTS_COMPORTEMENTS_H
-#define TESTS_COMPORTEMENTS_H
+//////////////////////////////////////////////////////////////////////////////
+/// @file CapteurTest.h
+/// @author Frédéric Grégoire
+/// @date 2016-03-21
+/// @version 2.2
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+//////////////////////////////////////////////////////////////////////////////
+
+#ifndef CAPTEUR_TEST_H
+#define CAPTEUR_TEST_H
 
 #include <cppunit/extensions/HelperMacros.h>
 #include <memory>
-#include "ControleRobot.h"
-#include "ComportementAbstrait.h"
+#include "Utilitaire.h"
+#include "ArbreRendu.h"
+#include "ArbreRenduINF2990.h"
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ControleRobotTest
-/// @brief Classe de test cppunit pour tester le bon fonctionnement du changement de comportements
-/// dans le controleur de Robot.
+/// @class CapteurTest
+/// @brief Classe de test cppunit pour tester le bon fonctionnement des
+///        méthodes de la classe Capteur
 ///
-/// @author Julien Gascon-Samson
+/// @author Frédéric Grégoire
 /// @date 2011-07-16
 ///////////////////////////////////////////////////////////////////////////
-class ControleRobotTest : public CppUnit::TestFixture
+class CapteurTest : public CppUnit::TestFixture
 {
 
 	// =================================================================
@@ -23,10 +34,10 @@ class ControleRobotTest : public CppUnit::TestFixture
 	// Important, vous devez définir chacun de vos cas de tests à l'aide
 	// de la macro CPPUNIT_TEST sinon ce dernier ne sera pas exécuté !
 	// =================================================================
-	CPPUNIT_TEST_SUITE(ControleRobotTest);
-	CPPUNIT_TEST(testAssignationDeComportement);
+	CPPUNIT_TEST_SUITE(CapteurTest);
+	
+	CPPUNIT_TEST(testSuiverLigne);
 
-	CPPUNIT_TEST(testComportementPassageModeAutomatique);
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -45,16 +56,18 @@ public:
 	// =================================================================
 	// Définissez ici les différents cas de tests...
 	// =================================================================
-
-	/// Cas de test: assignationDeComportements
-	void testAssignationVectComportements();
-	void testAssignationDeComportement();
-	void testComportementPassageModeAutomatique();
+	void testSuiverLigne();
 
 private:
-	ControleRobot* controleRobot_;
-	std::vector < std::unique_ptr<ComportementAbstrait> > comportements_;
+	/// Instance d'un noeud abstrait
+	std::shared_ptr<NoeudLigne> noeud;
+	std::shared_ptr<NoeudSegment> segment;
 
 };
 
-#endif
+#endif // CAPTEUR_TEST_H
+
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

@@ -80,7 +80,7 @@ void NoeudRoues::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	glColor3f(0.3, 0.3, 0.3);
+	glColor3d(0.3, 0.3, 0.3);
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 

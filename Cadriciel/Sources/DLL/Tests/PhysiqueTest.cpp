@@ -108,7 +108,7 @@ void PhysiqueTest::testIntersectionQuad()
 ///
 /// @fn void PhysiqueTest::testIntersectionRectangleRectangle()
 ///
-/// 
+/// Cas de test: permet de savoir s'il y a une collision avec un rectangle
 ///
 /// @return Aucune.
 ///
@@ -446,7 +446,7 @@ void PhysiqueTest::testCalculerIntersectionRectangleRectangle()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void testCalculerIntersectionCercle()
+/// @fn void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 ///
 /// Cas de test: permet de savoir si un cercle est a l'intérieur ou non de la
 /// boîte englobante d'un rectangle
@@ -515,7 +515,16 @@ void PhysiqueTest::testCalculerIntersectionCercleRectangle()
 	CPPUNIT_ASSERT(RectangleNeTouchePasCercle);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testCalculerIntersectionCercleCercle()
+///
+/// Cas de test: permet de savoir si un cercle est a l'intérieur ou non de la
+/// boîte englobante d'un cercle
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void PhysiqueTest::testCalculerIntersectionCercleCercle()
 {
 	glm::dvec3 positionCercleUn = { 0.0, 0.0, 0.0 };
@@ -587,6 +596,9 @@ void PhysiqueTest::testCalculerIntersectionCercleCercle()
 ///
 /// @fn void testColisionRectangle()
 ///
+/// Cas de test: permet de savoir la normale lorsqu'un rectangle est en collision
+/// avec un rectangle
+///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
@@ -638,6 +650,9 @@ void PhysiqueTest::testColisionRectangleRectangle()
 ///
 /// @fn void testColisionCercle()
 ///
+/// Cas de test: permet de savoir la normale lorsqu'un rectangle est en collision
+/// avec un cercle
+///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
@@ -679,6 +694,55 @@ void PhysiqueTest::testColisionCercleRectangle()
 	positionCercle = { 0, -20, 0 };
 	cercle.assignerPositionCentre(positionCercle);
 	normale = rectangle.calculerNormaleCollision(cercle);
+	expected = { 0, -1, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void PhysiqueTest::testColisionRectanglePoint()
+///
+/// Cas de test: permet de savoir la normale lorsqu'un rectangle est en collision
+/// avec un point
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void PhysiqueTest::testColisionRectanglePoint()
+{
+	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
+	RectangleEnglobant rectangle(positionRectangle, 0.0, 20.0, 20.0);
+
+	glm::dvec3 point{ 0.0, 0.0, 0.0 };
+
+	glm::dvec3 normale = { 0, 0, 0 };
+
+	//Vérifier les quatre face du robot ( + )
+	point = { 10, 0, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
+	glm::dvec3 expected = { 1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	point = { -10, 0, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
+	expected = { -1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	point = { 0, 10, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
+	expected = { 0, 1, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	point = { 0, -10, 0 };
+	normale = rectangle.calculerNormaleCollision(point);
 	expected = { 0, -1, 0 };
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
 	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
