@@ -533,50 +533,169 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerComportement(static_cast<TypeComportement>(typeEvitement), std::move(comportementPtr));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerCapteurDistance(bool estActif, int comportementDanger, double distanceDanger, int comportementSecuritaire, double distanceSecuritaire, int indexCapteur)
+	///
+	/// Fonction servant à modifier les capteurs de distance du robot.
+	/// Fait le pont entre l'interface et le modèle
+	///
+	/// @param[in] estActif : représente si le capteur est actif ou non
+	/// @param[in] comportementDanger : enum représentant le comportement à adpoter dans une zone de danger
+	/// @param[in] distanceDanger : la grandeur de la zone de danger
+	/// @param[in] comportementSecuritaire : enum représentant le comportement à adpoter dans une zone sécuritaire
+	/// @param[in] distanceSecuritaire : la grandeur de la zone sécuritaire
+	/// @param[in] indexCapteur : le capteur à modifier (0 à 2)
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerCapteurDistance(bool estActif, int comportementDanger, double distanceDanger, int comportementSecuritaire, double distanceSecuritaire, int indexCapteur){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCapteurDistance(estActif, static_cast<TypeComportement>(comportementDanger), distanceDanger, static_cast<TypeComportement>(comportementSecuritaire), distanceSecuritaire, indexCapteur);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerSuiveurLigne(bool estActif)
+	///
+	///	Fonction servant à modifier le suiveur de ligne du robot.
+	/// Fait le pont entre l'interface et le modèle
+	///
+	/// @param[in] estActif : représente si le suiveur de ligne est actif ou non
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerSuiveurLigne(bool estActif){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerSuiveurLigne(estActif);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs)
+	/// 
+	///	Fonction servant à activer ou désactiver les options de débogages.
+	/// Fait le pont entre l'interface et le modèle
+	///
+	/// @param[in] optionsDebogages[] : tableau contenant l'état des options de débogages
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs){
 		bool optionsDebogages[] = { debogageActif, debogageComportements, debogageEclairage, debogageCapteurs };
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerOptionsDebogages(optionsDebogages);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande)
+	///
+	///	Fonction servant à modifier une des touches associé à une commande pour contrôler le robot.
+	/// Fait le pont entre l'interface et le modèle
+	///
+	/// @param[in] touche : la nouvelle touche
+	/// @param[in] commande : la commande dont la touche doit être modifiée
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->modifierToucheCommande((uint8_t)touche, static_cast<TypeCommande>(commande));
 	}
 
-	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* chemin, int longueur){
-		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomProfilDefaut().c_str());
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* nom, int longueur)
+	///
+	///	Fonction servant à obtenir le nom du profil par défaut
+	/// Fait le pont entre l'interface et le modèle
+	///
+	/// @param[in] nom : contient le nom du profil par défaut
+	/// @param[in] longueur : la longueur du nom
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* nom, int longueur){
+		strcpy_s(nom, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomProfilDefaut().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl obtenirNomDernierProfil(char* chemin, int longueur){
-		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomDernierProfil().c_str());
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirNomDernierProfil(char* nom, int longueur)
+	///
+	/// Fonction servant à obtenir le nom du dernier profil chargé
+	/// Fait le pont entre l'interface et le modèle
+	///
+	/// @param[in] nom : contient le nom du dernier profil
+	/// @param[in] longueur : la longueur du nom
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl obtenirNomDernierProfil(char* nom, int longueur){
+		strcpy_s(nom, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomDernierProfil().c_str());
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl chargerDernierProfil()
+	///
+	///	Fonction servant à charger le dernier profil chargé lors de la dernière utilisation.
+	/// Si ce profil n'existe pas on charge le profil par défaut.
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl chargerDernierProfil()
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerDernierProfil();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil)
+	///
+	///	Fonction servant à sauvegarder ou créer le fichier d'un profil d'un certain nom.
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @param[in] nomProfil : le nom du profil à sauvegarder
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->sauvegarder(std::string(nomProfil));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) char __cdecl obtenirToucheCommande(int commande)
+	///
+	///	Fonction servant à obtenir la touche associée à une commande.
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @param[in] commande : la commande dont l'on veut la touche.
+	///
+	/// @return char La touche associée à la commande.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) char __cdecl obtenirToucheCommande(int commande)
 	{
 		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirToucheCommande(commande);
 	}
 
-	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl){
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setConfigureHandles(handle, static_cast<ConfigureControl>(ctrl));
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerConfigureHandles(HWND handle, int ctrl)
+	///
+	///	Fonction servant à assigner les handles des contrôles d'interface de la fenêtre Configuration pour ainsi les modifier à partir du modèle.
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @param[in] handle : la handle d'un des contrôles d'interface
+	/// @param[in] ctrl : enum représentant le contrôle dont on assigne la handle
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerConfigureHandles(HWND handle, int ctrl){
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerConfigureHandles(handle, static_cast<ConfigureControl>(ctrl));
 	}
 
-
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl changerProfil(char* nomProfil)
+	///
+	///	Fonction servant à charger un nouveau profil. Si le profil n'existe pas, un contenant les paramètres par défaut est créé avec le nom passé en argument.
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @param[in] nomProfil : le nom du profil que l'on veut charger.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl changerProfil(char* nomProfil){
 		auto mode = FacadeModele::obtenirInstance()->obtenirMode();
 
@@ -591,22 +710,60 @@ extern "C"
 		}
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirCheminProfils(char* chemin, int longueur)
+	///
+	///	Fonction servant à obtenir le chemin vers le dossier Donnees
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @param[in] chemin : chemin vers le dossier Donnees
+	/// @param[in] longueur : nombre de caractères dans le chemin
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl obtenirCheminProfils(char* chemin, int longueur){
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCheminProfils().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* chemin, int longueur){
-		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirExtensionProfils().c_str());
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl obtenirExtensionProfils(char* extension, int longueur)
+	///
+	///	Fonction retournant l'extension d'un fichier de type profil
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @param[in] extension : extension d'un fichier de type profil
+	/// @param[in] longueur : nombre de caractères dans l'extension
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* extension, int longueur){
+		strcpy_s(extension, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirExtensionProfils().c_str());
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil)
+	///
+	///	Fonction servant à supprimer le fichier d'un certain profil.
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @param[in] nomProfil : le nom du profil à supprimer
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil){
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->supprimerProfil(std::string(nomProfil));
 	}
 
-	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause){
-		//FacadeModele::obtenirInstance()->obtenirMode()->
-	}
-
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) int* __cdecl obtenirLimitesParametres()
+	///
+	///	Fonction retournant les limites sur les paramètres de comportement du robot
+	/// Fait le pont entre l'interface et le modèle.
+	///
+	/// @return int* Pointeur sur le tableau de limites
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) int* __cdecl obtenirLimitesParametres(){
 		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirLimiteParametres();
 	}

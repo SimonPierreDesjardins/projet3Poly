@@ -61,7 +61,7 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs);
 
-	__declspec(dllexport) void __cdecl setHandle(HWND handle, int ctrl);
+	__declspec(dllexport) void __cdecl assignerConfigureHandles(HWND handle, int ctrl);
 
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
 
@@ -85,7 +85,6 @@ extern "C"
 	__declspec(dllexport) void __cdecl obtenirExtensionProfils(char* chemin, int longueur);
 
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil);
-	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause);
 
 	__declspec(dllexport) int* __cdecl obtenirLimitesParametres();
 }

@@ -23,7 +23,7 @@
 #include "NoeudRobot.h"
 #include <array>
 
-
+/// Représente chaque option de débogage et permet des obtenirs plus intuitivement
 enum optionsDebogagesEnum
 {
 	ETAT_DEBOGAGE,
@@ -35,7 +35,7 @@ enum optionsDebogagesEnum
 ///////////////////////////////////////////////////////////////////////////
 /// @class ProfilUtilisateur
 /// @brief Classe qui représente le profil d'un utilisateur.
-///		   Celle-ci contient toutes options qu'un utilisateur peut changer et sauvegarder.
+///		   Celle-ci contient tous les paramètres contrôlant le robot et servant au débogage qu'un utilisateur peut changer et sauvegarder.
 ///
 ///
 /// @author Philippe Marcotte
@@ -46,11 +46,9 @@ class ProfilUtilisateur
 	public:
 		ProfilUtilisateur();
 
-		ProfilUtilisateur(std::string nomProfil);
-
 		~ProfilUtilisateur();
 
-		bool sauvegarder(std::string nomProfil);
+		void sauvegarder(std::string nomProfil);
 
 		bool changerProfil(std::string nomProfil);
 
@@ -68,7 +66,7 @@ class ProfilUtilisateur
 
 		char obtenirToucheCommande(int commande);
 
-		void setConfigureHandles(HWND handle, ConfigureControl ctrl);
+		void assignerConfigureHandles(HWND handle, ConfigureControl ctrl);
 
 		std::string obtenirExtensionProfils();
 
@@ -110,65 +108,99 @@ class ProfilUtilisateur
 		bool ouvrir(std::string nomFichier, std::string readOrWrite, FILE*& fichier);
 
 		void creerProfilDefaut();
-
-		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
 		
 		bool chargerProfil();
 
+		/// Nom du profil courant
 		std::string nomProfil_;
 
-		const int NOMBRE_OPTIONS{ 11 };
-
+		/// Destripteur du fichier profil à sauvegarder ou charger
 		FILE* profil_;
 
+		/// Chemin vers le dossier Donnees
 		const std::string CHEMIN_PROFIL = "./../../Donnees/";
 
+		/// Extension d'un fichier de type profil
 		const std::string EXTENSION_PROFIL = ".profil";
 
+		/// Nom du profil par défaut
 		const std::string PROFIL_DEFAUT = "defaut";
 
+		/// Nom du fichier contenant le dernier profil chargé
 		const std::string DERNIER_PROFIL = "dernier_profil";
 
+		/// Limite maximale pour la durée d'un comportement d'évitement
 		const int DUREE_MAX_COMPORTEMENT = 2000;
 
+		/// Limite minimale pour la durée d'un comportement d'évitement
 		const int DUREE_MIN_COMPORTEMENT = 0;
 
+		/// Limite totale pour la largeur des zones de danger et sécuritaire
 		const int LARGEUR_TOTAL_DETECTION_DISTANCE = 30;
 
+		/// Limite minimale pour la largeur des zones de danger et sécuritaire
 		const int LARGEUR_MIN_DETECTION_DISTANCE = 0;
 
+		/// Limite maximale pour un angle de déviation ou d'évitement
 		const int ANGLE_MAX_COMPORTEMENT = 360;
 
+		/// Limite minimale pour un angle de déviation ou d'évitement
 		const int ANGLE_MIN_COMPORTEMENT = 0;
 
-		std::string dernierProfil;
-
+		/// Map contenant contenant les handles des contrôles d'interface de la fenêtre Configure
 		std::unordered_map<ConfigureControl, HWND> configureHandles;
 
+		/// Tableau contenant les touches utilisées pour contrôler le robot.
 		std::array<char, 5> touches_;
 
+		/// Pointeur vers un tableau contenant les touches qu'on ne peut pas utiliser pour contrôler le robot
 		const std::array<char, 10>* toucheNonChangeable;
 
-		// Utilisation d'une unordered map pour un temps d'acces constant.
+		/// Map associant chaque touche contrôlant le robot à la commande correspondante
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
 
+		/// Vecteur contenant les comportements du robot
+		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
+
+		/// Conteneur pour les 3 capteurs de distance du robot
         NoeudRobot::ConteneurCapteursDistance capteursDistance_;
 
+		/// Suiveur de ligne du robot
 		SuiveurLigne suiveurLigne_;
 
+		/// Tableau contenant la position physique de chaque capteur de distance sur le robot
         std::array<glm::dvec3, NoeudRobot::N_CAPTEURS_DISTANCE> positionsRelatives_;
+		/// Tableau contenant l'angle de chaque capteur de distance
         std::array<double, NoeudRobot::N_CAPTEURS_DISTANCE> anglesRelatifs_;
 
+		/// Tableau contenant si les options de débogages sont actives ou non et l'état de chacune des options
 		std::array<bool, 4> optionsDebogages_;
 };
 #endif // __PROFILUTILISATEUR_H__
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline SuiveurLigne* ProfilUtilisateur::obtenirSuiveurLigne()
+///
+/// Fonction retournant le suiveur de ligne du robot.
+///
+/// @return SuiveurLigne* Pointeur vers le suiveur de ligne
+///
+////////////////////////////////////////////////////////////////////////
 inline SuiveurLigne* ProfilUtilisateur::obtenirSuiveurLigne()
 {
     return &suiveurLigne_;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline NoeudRobot::ConteneurCapteursDistance* ProfilUtilisateur::obtenirCapteursDistance()
+///
+/// Fonction retournant le conteneur des capteurs de distance du robot
+///
+/// @return NoeudRobot::ConteneurCapteursDistance* Pointeur vers le conteneur
+///
+////////////////////////////////////////////////////////////////////////
 inline NoeudRobot::ConteneurCapteursDistance* ProfilUtilisateur::obtenirCapteursDistance()
 {
     return &capteursDistance_;
