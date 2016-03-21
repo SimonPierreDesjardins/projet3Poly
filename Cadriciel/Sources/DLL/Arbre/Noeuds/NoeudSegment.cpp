@@ -47,24 +47,58 @@ NoeudSegment::NoeudSegment(const std::string& typeNoeud)
 NoeudSegment::~NoeudSegment()
 {
 }
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant* NoeudSegment::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le segment.
+///
+/// @return Pointeur sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 RectangleEnglobant* NoeudSegment::obtenirFormeEnglobante()
 {
     return &rectangleEnglobant_;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const RectangleEnglobant* NoeudSegment::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le segment.
+///
+/// @return Pointeur const  sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 const RectangleEnglobant* NoeudSegment::obtenirFormeEnglobante() const
 {
     return &rectangleEnglobant_;
 }
 
-
+///////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudSegment::animer(float dt)
+///
+/// Cette fonction permet d'appeler la mise a jour lors de l'animation.
+///
+/// param[in] dt : intervalle de temps en float
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudSegment::animer(float dt)
 {
     mettreAJourFormeEnglobante();
 }
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudSegment::mettreAJourFormeEnglobante()
+///
+/// Cette fonction permet de faire la mise à jour de la forme englobante pour le segment.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudSegment::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;

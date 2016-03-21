@@ -117,7 +117,7 @@ uint8_t SuiveurLigne::obtenirEtatCapteurs() const
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
-/// @fn SuiveurLigne::obtenirEtatCapteurs() const
+/// @fn void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const double& angleRobot)
 ///
 /// Méthode qui met à jour la position et l'état des 3 capteurs optiques.
 ///
@@ -133,6 +133,15 @@ void SuiveurLigne::mettreAJourCapteurs(const glm::dvec3& positionRobot, const do
     
 }
 
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn void SuiveurLigne::afficher() const
+///
+/// Méthode qui permet d'appeler la fonction afficher des capteurs optiques
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////////////
 void SuiveurLigne::afficher() const
 {
     for (int i = 0; i < capteursOptique_.size(); i++)
@@ -140,6 +149,18 @@ void SuiveurLigne::afficher() const
         capteursOptique_[i].afficher();
     }
 }
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn void SuiveurLigne::verifierDetection(NoeudLigne* ligne)
+///
+/// Méthode qui permet de détecter les lignes
+///
+/// param[in] ligne : Pointeur sur un noeud ligne.
+/// 
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////////////
 
 void SuiveurLigne::verifierDetection(NoeudLigne* ligne)
 {
@@ -168,7 +189,17 @@ void SuiveurLigne::toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer)
 	writer.Bool(estActif_);
 }
 
-
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn void SuiveurLigne::assignerActif(bool estActif)
+///
+/// Méthode qui permet de mettre le suiveur de ligne comme étant actif ou non.
+///
+/// param[in] estActif : Booléen qui définie le mode comme étant actif ou non.
+/// 
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////////////
 void SuiveurLigne::assignerActif(bool estActif){
 	estActif_ = estActif;
 }

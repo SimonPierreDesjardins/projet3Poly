@@ -216,7 +216,6 @@
     <ClInclude Include="Arbre\Noeuds\NoeudSegment.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
-    <ClInclude Include="CapteurTest.h" />
     <ClInclude Include="Capteur\CapteurDistance.h" />
     <ClInclude Include="Capteur\CapteurOptique.h" />
     <ClInclude Include="Capteur\SuiveurLigne.h" />
@@ -258,9 +257,10 @@
     <ClInclude Include="Physique\FormeEnglobanteAbstraite.h" />
     <ClInclude Include="Physique\RectangleEnglobant.h" />
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
-    <ClInclude Include="ControleRobotTest.h" />
     <ClInclude Include="Tests\BancTests.h" />
+    <ClInclude Include="Tests\CapteurTest.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
+    <ClInclude Include="Tests\ControleRobotTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
     <ClInclude Include="Tests\PhysiqueTest.h" />
     <ClInclude Include="Tests\ProfilUtilisateurTest.h" />
