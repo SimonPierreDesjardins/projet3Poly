@@ -16,7 +16,7 @@
 #include "RectangleEnglobant.h"
 #include "CercleEnglobant.h"
 #include "VisiteurDetectionRobot.h"
-
+#include <mutex>
 #include <array>
 
 class ProfilUtilisateur;
@@ -38,10 +38,7 @@ public:
 
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE;
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE;
-    static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE;
-
-    static const glm::dvec3 POSITION_RELATIVE_CERCLE_ENGLOBANT;
-    static const double RAYON_CERCLE_ENGLOBANT;
+    static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE;    
 
     using ConteneurCapteursDistance = std::array<CapteurDistance, N_CAPTEURS_DISTANCE>;
 
@@ -66,13 +63,13 @@ public:
 	inline void assignerVitesseRotation(float vitesse);
 	inline void assignerVitesseDroite(float vitesse);
 	inline void assignerVitesseGauche(float vitesse);
+    inline void assignerMutex(std::mutex* mutex);
 
     // Calculer les composantes courantes de vitesse du robot.
     void calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslationCourante, double& vitesseAngulaireCourante) const;
     // Calculer les composantes de d'une collision en fonction d'une normale de collision.
     void calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& viteseTranslationCollision,
                                       double& vitesseAngulaireCollision) const;
-
 	//Permet de positionner les roues
 	void positionnerRoues();
 
@@ -93,51 +90,41 @@ private:
 	float vitesseGauche_{ 0.f };
 
 	float vitesseRotationCourante_{ 0.f };
-
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 
-    bool collision_{ false };
     glm::dvec3 vitesseTranslationCollision_{0.0, 0.0, 0.0};
     double vitesseAngulaireCollision_{ 0.0 };
+
     glm::dvec3 dernierePositionRelative_;
     double dernierAngleRotation_;
-
-	float vitesseDroiteCollision_{ 0.f };
-	float vitesseGaucheCollision_{ 0.f };
 
 	float angle_{ 0.f };
 	float acceleration_{ 70.0 };
 
 	bool optionDebug{ true };
 
-	//Pointeur sur le profil actif
+	// Les attributs du robot.
 	ProfilUtilisateur* profil_{ nullptr };
-
     RectangleEnglobant rectangleEnglobant_;
-   
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };
 
     std::unique_ptr<VisiteurDetectionRobot> visiteur_{ nullptr };
     ArbreRendu* arbre_{ nullptr };
 
-    /// Méthode permettant au robot d'effectuer la collision.
-    void effectuerCollision(const glm::dvec3& normale);
-    void effectuerCollision(const double& dt);
-
-
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
     void mettreAJourPosition(const float& dt);
-    void reinitialiserPosition(const float& dt);
+    void effectuerCollision(const double& dt);
+    void reinitialiserPosition();
     virtual void mettreAJourFormeEnglobante();
+    std::mutex* mutexControleRobot_{ nullptr };
 
 	bool estEnCollision_{ false };
     bool enCollision_{ false };
 
 	NoeudAbstrait* table_;
-
 	NoeudRoues* roueGauche_;
 	NoeudRoues* roueDroite_;
 };
@@ -261,6 +248,12 @@ inline void NoeudRobot::assignerEstEnCollision(bool collision)
 	estEnCollision_ = collision;
     rectangleEnglobant_.assignerEnCollision(collision);
 }
+
+inline void NoeudRobot::assignerMutex(std::mutex* mutex)
+{
+    mutexControleRobot_ = mutex;
+}
+
 
 #endif // __ARBRE_NOEUD_ROBOT_H__
 

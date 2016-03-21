@@ -96,35 +96,35 @@ void ComportementsTest::testAssignationDeComportement(){
 	DEVIATIONVERSLADROITE,
 	EVITEMENTPARLAGAUCHE,
 	EVITEMENTPARLADROITE*/
-	std::string declencheur = "Test de chagement de comportement";
+	std::wstring declencheur = L"Test de chagement de comportement";
 
 	controleRobot_->assignerComportement(DEFAUT, declencheur);
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementDefaut") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDefaut") != std::wstring::npos);
 
 	controleRobot_->assignerComportement(SUIVIDELIGNE, declencheur);
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementSuiviLigne") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementSuiviLigne") != std::wstring::npos);
 
 	controleRobot_->assignerComportement(BALAYAGE180, declencheur);
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementBalayage") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementBalayage") != std::wstring::npos);
 
 	controleRobot_->assignerComportement(DEVIATIONVERSLAGAUCHE, declencheur);
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementDeviation") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDeviation") != std::wstring::npos);
 
 	controleRobot_->assignerComportement(DEVIATIONVERSLADROITE, declencheur);
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementDeviation") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDeviation") != std::wstring::npos);
 	
 	controleRobot_->assignerComportement(EVITEMENTPARLAGAUCHE, declencheur);
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementEvitement") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementEvitement") != std::wstring::npos);
 
 	controleRobot_->assignerComportement(EVITEMENTPARLAGAUCHE, declencheur);
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementEvitement") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementEvitement") != std::wstring::npos);
 
 }
 
 
 void ComportementsTest::testComportementPassageModeAutomatique(){
 	controleRobot_->passerAModeManuel();
-	controleRobot_->assignerComportement(BALAYAGE180, "Test de passage au mode automatique");
+	controleRobot_->assignerComportement(BALAYAGE180, L"Test de passage au mode automatique");
 	controleRobot_->passerAModeAutomatique();
-	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find("ComportementDefaut") != std::string::npos);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDefaut") != std::wstring::npos);
 }

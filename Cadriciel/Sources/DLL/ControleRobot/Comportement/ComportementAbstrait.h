@@ -53,7 +53,7 @@ public:
 	// Assigne le robot au shared_ptr
 	void assignerRobot(ControleRobot* controleRobot);
 
-	virtual std::string obtenirNomComportement();
+	virtual std::wstring obtenirNomComportement();
 
 	TypeComportement obtenirComportementSuivant();
 

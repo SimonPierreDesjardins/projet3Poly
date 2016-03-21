@@ -375,9 +375,11 @@ const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const CercleEnglo
         // Si la collision est de type segment
         if (details.type == aidecollision::COLLISION_SEGMENT)
         {
-            normale += details.direction;
+            //normale += details.direction;
+            normale += cercle.obtenirPositionCentre() - positionCentre_;
             collisionSegment = true;
         }
+        
         // Le coin le plus proche du centre du cercle est le coin en collision.
         double distanceCoinCentre = glm::distance(cercle.obtenirPositionCentre(), coins[i]);
         if (distanceCoinCentre < minDistance)

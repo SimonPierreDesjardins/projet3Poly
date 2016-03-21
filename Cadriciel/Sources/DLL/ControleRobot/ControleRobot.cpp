@@ -41,6 +41,7 @@ ControleRobot::ControleRobot()
 	table_->ajouter(robot);
 
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+    robot_->assignerMutex(&mutexComportement);
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -105,7 +106,6 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-
 void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur){
 	vecteurComportements_ = vecteur;
 }
@@ -121,7 +121,7 @@ void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<Com
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::assignerComportement(TypeComportement nouveauComportement, std::string declencheur)
+void ControleRobot::assignerComportement(TypeComportement nouveauComportement, std::wstring declencheur)
 {
 	// Nous devons vérouiller l'accès au comportement temporairement pour sa modification
 	mutexComportement.lock();
@@ -131,8 +131,7 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 	
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_COMPORTEMENTS)){
 		utilitaire::time_in_HH_MM_SS_MMM();
-		std::cout << " - " << declencheur << " - " << comportement_->obtenirNomComportement() << endl;
-
+		std::wcout << L" - " << declencheur << L" - " << comportement_->obtenirNomComportement() << endl;
 	}
 
 	// Assignation du controleur au comportement et initialisation
@@ -172,7 +171,7 @@ void ControleRobot::inverserModeControle(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
-	assignerComportement(DEFAUT, "Passage au mode automatique");
+	assignerComportement(DEFAUT, L"Passage au mode automatique");
 	initialiserBoucleRobot();
 }
 
@@ -242,7 +241,6 @@ void ControleRobot::terminerBoucleRobot(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
-	
 	while (!manuel) 
 	{
 		if (!enPause){
@@ -266,30 +264,33 @@ void ControleRobot::boucleInfinieLogiqueRobot()
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::verifierCapteurs(){
 	NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
-	std::string declencheur;
+	std::wstring declencheur;
 	for (int i = 0; i < capteurs->size(); i++)
 	{
-		declencheur = "Obstacle capté à ";
+		declencheur = L"Obstacle capté à ";
 		switch (i)
 		{
 		case 0:
-			declencheur += "droite: ";
+			declencheur += L"droite: ";
 			break;
 		case 1:
-			declencheur += "centre: ";
+			declencheur += L"centre: ";
 			break;
 		case 2:
-			declencheur += "gauche: ";
+			declencheur += L"gauche: ";
 			break;
 		}
+		// Si le robot est en plein mise à jour, attendre qu'il ait terminé sa mise à jour.
+        mutexComportement.lock();
+        EtatCapteurDistance etat = capteurs->at(i).obtenirEtat();
+        mutexComportement.unlock();
 
-		// Vérifions la zone securitaire
-		if (capteurs->at(i).obtenirEtat() == 1 )
+		if (etat == DETECTION_ZONE_SECURITAIRE )
 		{
 			if (!flagCapteur[i][0]){
 				// On empêche plusieurs detections à la fois
 				flagCapteur[i][0] = true;
-				declencheur += "Zone securitaire";
+				declencheur += L"Zone securitaire";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
 			}
 			else{
@@ -303,12 +304,12 @@ void ControleRobot::verifierCapteurs(){
 		}
 
 		// vérifions la zone dangereuse
-		if (capteurs->at(i).obtenirEtat() == 2)
+		if (etat == DETECTION_ZONE_DANGER)
 		{
 			if (!flagCapteur[i][1]){
 				// On empêche plusieurs detections à la fois
 				flagCapteur[i][1] = true;
-				declencheur += "Zone dangereuse";
+				declencheur += L"Zone dangereuse";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
 			}
 			else{
@@ -317,7 +318,7 @@ void ControleRobot::verifierCapteurs(){
 		}
 		else{
 			// On permet la detection
-			//std::cout << "Flag " << i << " dangereuse disabled" << endl;
+            //std::cout << "Flag " << i << " dangereuse disabled" << endl;
 			flagCapteur[i][1] = false;
 		}
 	}
@@ -388,10 +389,13 @@ void ControleRobot::setEnPause(bool pause)
 	enPause = pause;
 }
 
+
 bool ControleRobot::getEnPause()
 {
 	return enPause;
 }
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 //////////////////////////////////////////////////////////////////////////////

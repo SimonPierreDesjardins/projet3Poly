@@ -11,6 +11,7 @@
 #include "ComportementAbstrait.h"
 #include "ControleRobot.h"
 #include "rapidjson\filewritestream.h"
+#include <typeinfo>
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -122,8 +123,11 @@ TypeComportement ComportementAbstrait::obtenirComportementSuivant(){
 /// @return Le string correspondant au nom de classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-std::string ComportementAbstrait::obtenirNomComportement(){
-	return typeid(*this).name();
+std::wstring ComportementAbstrait::obtenirNomComportement(){
+
+    std::string type = typeid(*this).name();
+    std::wstring wType(type.begin(), type.end());
+    return wType;
 }
 ////////////////////////////////////////////////////////////////////////
 ///

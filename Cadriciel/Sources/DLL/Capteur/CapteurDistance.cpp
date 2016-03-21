@@ -301,6 +301,7 @@ void CapteurDistance::afficher() const
     glColor4f(0.0, 0.0, 0.0, 1.0);
 }
 
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void CapteurDistance::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer)
@@ -324,6 +325,7 @@ void CapteurDistance::toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writ
 	writer.Key("distanceSecuritaire");
 	writer.Double(largeurSecuritaire_);
 }
+
 
 /////////////////////////////////////////////////////////////////////////////////
 /// @}

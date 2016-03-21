@@ -27,6 +27,7 @@ namespace InterfaceGraphique
         [STAThread]
         static void Main(string[] args)
         {
+            Console.OutputEncoding = System.Text.Encoding.GetEncoding(1252);
             if (args.Length != 0)
                 if (args[0] == "testsC++")
                 {

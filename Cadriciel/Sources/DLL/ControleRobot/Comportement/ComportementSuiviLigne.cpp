@@ -90,6 +90,7 @@ void ComportementSuiviLigne::initialiser(){
 ////////////////////////////////////////////////////////////////////////
 void ComportementSuiviLigne::mettreAJour(){
 	static uint8_t dernierEtat;
+    // TODO: On veut probablement verouiller le mutex ici afin d'éviter d'avoir des résultats incohérents.
 	uint8_t etatSuiveurLigne = controleRobot_->obtenirNoeud()->obtenirSuiveurLigne()->obtenirEtatCapteurs();
 
 	// Tant que nous n'avons pas perdu la ligne, on la suit
@@ -129,7 +130,7 @@ void ComportementSuiviLigne::mettreAJour(){
 		}
 		// trop tard, change de comportement
 		else if (difftime(time(nullptr), heurePerteLigne_) > 0.8){
-			controleRobot_->assignerComportement(comportementSuivant_, "Ligne perdue");
+			controleRobot_->assignerComportement(comportementSuivant_, L"Ligne perdue");
 		}
 
 	}

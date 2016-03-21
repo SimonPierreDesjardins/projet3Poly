@@ -118,7 +118,7 @@ void ComportementEvitement::mettreAJour(){
 	//Implémentation de l'exception Rapport d'élicitation p.22
 	if (controleRobot_->ligneDetectee()){
 		if (!ignorerLigne_){
-			controleRobot_->assignerComportement(SUIVIDELIGNE, "Ligne détectée");
+			controleRobot_->assignerComportement(SUIVIDELIGNE, L"Ligne détectée");
 		}
 	}
 	else{
@@ -146,7 +146,7 @@ void ComportementEvitement::mettreAJour(){
 		}
 
 		if (angleAtteinte){
-			controleRobot_->assignerComportement(comportementSuivant_, "Évitement terminé");
+			controleRobot_->assignerComportement(comportementSuivant_, L"Évitement terminé");
 		}
 	}
 
