@@ -40,6 +40,7 @@ void ControleRobotTest::setUp()
 
 	// On construit le controleur du robot
 	controleRobot_ = new ControleRobot();
+	//controleRobot_->
 
 }
 
