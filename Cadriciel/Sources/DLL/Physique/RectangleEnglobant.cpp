@@ -18,8 +18,6 @@
 #include "AideCollision.h"
 #include "Droite3D.h"
 
-#include <iostream>
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn RectangleEnglobant::RectangleEnglobant()

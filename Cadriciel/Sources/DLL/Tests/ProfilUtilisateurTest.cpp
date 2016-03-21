@@ -16,6 +16,19 @@
 // Enregistrement de la suite de tests au sein du registre
 CPPUNIT_TEST_SUITE_REGISTRATION(ProfilUtilisateurTest);
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateurTest::setUp()
+///
+/// Effectue l'initialisation préalable à l'exécution de l'ensemble des
+/// cas de tests de cette suite de tests (si nécessaire).
+/// 
+/// Si certains objets doivent être construits, il est conseillé de le
+/// faire ici.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateurTest::setUp(){
 	profilCorrect = new ProfilUtilisateur();
 	profilCorrect->nomProfil_ = nomProfilTest;
@@ -55,19 +68,43 @@ void ProfilUtilisateurTest::setUp(){
 	}
 
 	profilCorrect->sauvegarder();
+
+	profilTest = new ProfilUtilisateur();
+	profilTest->nomProfil_ = nomProfilTest;
+	chargerProfil(profilTest);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void CapteurTest::tearDown()
+///
+/// Effectue les opérations de finalisation nécessaires suite à l'exécution
+/// de l'ensemble des cas de tests de cette suite de tests (si nécessaire).
+/// 
+/// Si certains objets ont été alloués à l'initialisation, ils doivent être
+/// désalloués, et il est conseillé de le faire ici.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateurTest::tearDown(){
 	remove((profilCorrect->CHEMIN_PROFIL + nomProfilTest).c_str());
 
 	delete profilCorrect;
+	delete profilTest;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateurTest::testChargerProfil()
+///
+///	Vérifie que chaques attributs chargés à partir du fichier JSON dans profilTest 
+/// correspondent aux attributs de profilCorrect.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateurTest::testChargerProfil(){
-	ProfilUtilisateur* profilTest = new ProfilUtilisateur();
-	profilTest->nomProfil_ = nomProfilTest;
-	chargerProfil(profilTest);
-
 	for (size_t i = 0; i < profilCorrect->touches_.size(); i++)
 	{
 		CPPUNIT_ASSERT(profilCorrect->touches_.at(i) == profilTest->touches_.at(i));
@@ -124,10 +161,17 @@ void ProfilUtilisateurTest::testChargerProfil(){
 	}
 
 	CPPUNIT_ASSERT(profilCorrect->suiveurLigne_.obtenirEstActif() == profilTest->suiveurLigne_.obtenirEstActif());
-
-	delete profilTest;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateurTest::testAssignerTouche()
+///
+///	Vérifie que la modification d'une touche associée à une commande robot s'effectue correctement.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateurTest::testAssignerTouche(){
 	uint8_t touche = 'Y';
 
@@ -138,7 +182,16 @@ void ProfilUtilisateurTest::testAssignerTouche(){
 	CPPUNIT_ASSERT(profilCorrect->commandes_.at(touche)->obtenirTypeCommande() == AVANCER);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateurTest::chargerProfil(ProfilUtilisateur* profil)
+///
+///	Version modifiée de la fonction chargerProfil() de ProfilUtilisateur. 
+/// Celle-ci ne fait pas appel à de fonctions de la librairie Win32, car c'est inutile dans le contexte des tests.
+///
+/// @param[in] profil : Pointeur vers le profil dans lequel charger le fichier test.
+///
+////////////////////////////////////////////////////////////////////////
 bool ProfilUtilisateurTest::chargerProfil(ProfilUtilisateur* profil){
 	if (!profil->ouvrirProfil("rb"))
 		return false;

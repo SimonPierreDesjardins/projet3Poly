@@ -142,7 +142,7 @@ void NoeudPoteau::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    cercleEnglobant_.afficher(positionCourante_);
+    //cercleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

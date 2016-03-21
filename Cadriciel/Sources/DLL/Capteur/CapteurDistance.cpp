@@ -18,7 +18,6 @@
 #include "NoeudMur.h"
 #include "NoeudTable.h"
 #include "rapidjson\filewritestream.h"
-#include <iostream>
 
 const double CapteurDistance::HAUTEUR = 0.75;
 const double CapteurDistance::MAX_LARGEUR_TOTALE = 30.0;
@@ -334,10 +333,7 @@ void CapteurDistance::afficher() const
 
     //Dessiner la zone de danger.
     glPushMatrix();
-    if (etat_ == DETECTION_ZONE_DANGER)
-        glColor3f(1.0, 0.0, 0.0);
-    else
-        glColor3f(1.0, 1.0, 0.0);
+    glColor3f(1.0, 1.0, 0.0);
 
 	glTranslated(positionRelative_.x, positionRelative_.y, 0.0);        
     glRotated(angleRelatif_, 0.0, 0.0, 1.0);
@@ -353,10 +349,7 @@ void CapteurDistance::afficher() const
     double hauteurSecuritaire = zoneSecuritaire_.obtenirHauteur();
 
     //Dessiner la zone sécuritaire.
-    if (etat_ == DETECTION_ZONE_SECURITAIRE)
-        glColor3f(1.0, 0.0, 0.0);
-    else
-        glColor3f(0.0, 1.0, 0.0);
+    glColor3f(0.0, 1.0, 0.0);
 
 	glTranslated(largeurDanger, 0.0, 0.0);
 
