@@ -595,35 +595,50 @@ void PhysiqueTest::testColisionRectangleRectangle()
 	glm::dvec3 positionRectangleUn = { 0.0, 0.0, 0.0 };
 	RectangleEnglobant rectangleUn(positionRectangleUn, 0.0, 20.0, 20.0);
 
-	glm::dvec3 positionRectangleDeux = { -40.0, 40.0, 0.0 };
+	glm::dvec3 positionRectangleDeux = { 0.0, 40.0, 0.0 };
 	RectangleEnglobant rectangleDeux(positionRectangleDeux, 0.0, 20.0, 20.0);
 
 	glm::dvec3 normale = { 0, 0, 0 };
 
 	//Condition initiale
-	//bool RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
-	CPPUNIT_ASSERT(true);
+	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
+	glm::dvec3 expected = { 1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0);
 
 	//Coin de l'un avec coin de l'autre
-	/*positionRectangleDeux = { 0, 20, 0 };
+	positionRectangleDeux = { 0, 20, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
-	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
-	CPPUNIT_ASSERT(!RectanglePasEnCollision);
+	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
+	expected = { -0.7, 0.7, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
 
 	positionRectangleDeux = { 0, -20, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
-	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
-	CPPUNIT_ASSERT(!RectanglePasEnCollision);
+	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
+	expected = { 0.7, -0.7, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
 
 	positionRectangleDeux = { -20, 0, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
-	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
-	CPPUNIT_ASSERT(!RectanglePasEnCollision);
+	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
+	expected = { -0.7, -0.7, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
 
 	positionRectangleDeux = { 20, 0, 0 };
 	rectangleDeux.assignerPositionCentre(positionRectangleDeux);
-	RectanglePasEnCollision = rectangleUn.calculerCollision(rectangleDeux, normale);
-	CPPUNIT_ASSERT(!RectanglePasEnCollision);*/
+	normale = rectangleUn.calculerNormaleCollision(rectangleDeux);
+	expected = { 0.7, -0.7, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -638,14 +653,50 @@ void PhysiqueTest::testColisionCercleRectangle()
 	glm::dvec3 positionRectangle = { 0.0, 0.0, 0.0 };
 	RectangleEnglobant rectangle(positionRectangle, 0.0, 20.0, 20.0);
 
-	glm::dvec3 positionCercle = { -40.0, 40.0, 0.0 };
+	glm::dvec3 positionCercle = { 40.0, 0.0, 0.0 };
 	CercleEnglobant cercle(positionCercle, 10);
 
 	glm::dvec3 normale = { 0, 0, 0 };
 
 	//Condition initiale
-	//bool RectanglePasEnCollision = rectangle.calculerCollision(cercle, normale);
-	CPPUNIT_ASSERT(true);
+	normale = rectangle.calculerNormaleCollision(cercle);
+	glm::dvec3 expected = { 1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	//Vérifier les quatre face du robot ( + )
+	positionCercle = { 20, 0, 0 };
+	cercle.assignerPositionCentre(positionCercle);
+	normale = rectangle.calculerNormaleCollision(cercle);
+	expected = { -1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	positionCercle = { -20, 0, 0 };
+	cercle.assignerPositionCentre(positionCercle);
+	normale = rectangle.calculerNormaleCollision(cercle);
+	expected = { 1, 0, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	positionCercle = { 0, 20, 0 };
+	cercle.assignerPositionCentre(positionCercle);
+	normale = rectangle.calculerNormaleCollision(cercle);
+	expected = { 0, -1, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
+
+	positionCercle = { 0, -20, 0 };
+	cercle.assignerPositionCentre(positionCercle);
+	normale = rectangle.calculerNormaleCollision(cercle);
+	expected = { 0, 1, 0 };
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[0], normale[0], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[1], normale[1], 0.1);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(expected[2], normale[2], 0.1);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
