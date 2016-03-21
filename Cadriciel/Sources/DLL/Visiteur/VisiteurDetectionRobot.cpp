@@ -37,10 +37,16 @@ void VisiteurDetectionRobot::visiter(ArbreRendu* arbre)
 void VisiteurDetectionRobot::visiter(NoeudTable* table)
 {	
 	bool estEnCollision = robot_->verifierCollision(table);
+    
 	if (!estEnCollision_)
 	{
 		estEnCollision_ = estEnCollision;
 	}
+
+    for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
+    {
+        capteursDistance_->at(i).verifierDetection(table);
+    }
 	
     int nEnfants = table->obtenirNombreEnfants();
     for (int i = 0; i < nEnfants; i++)

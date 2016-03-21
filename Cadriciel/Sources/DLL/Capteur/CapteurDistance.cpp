@@ -16,6 +16,7 @@
 #include "RectangleEnglobant.h"
 #include "NoeudPoteau.h"
 #include "NoeudMur.h"
+#include "NoeudTable.h"
 #include "rapidjson\filewritestream.h"
 #include <iostream>
 
@@ -204,6 +205,62 @@ void CapteurDistance::verifierDetection(NoeudMur* mur)
     }
 }
 
+void CapteurDistance::verifierDetection(NoeudTable* table)
+{
+    RectangleEnglobant* rectangle = table->obtenirFormeEnglobante();
+
+    const int N_COINS = 4;
+    glm::dvec3 coinsDanger[N_COINS];
+    zoneDanger_.calculerPositionCoins(coinsDanger);
+
+    glm::dvec3 coinsSecuritaire[N_COINS];
+    zoneSecuritaire_.calculerPositionCoins(coinsSecuritaire);
+    
+    bool danger = false;
+    bool securitaire = false;
+    for (int i = 0; i < N_COINS; i++)
+    {
+        bool coinDangerDansTable = rectangle->calculerEstDansForme(coinsDanger[i]);
+        bool coinSecuritaireDansTable = rectangle->calculerEstDansForme(coinsSecuritaire[i]);
+        // Si un coin de la zone de danger est à l'extérieur de la table, 
+        // la zone de danger est détectée.
+        if (!coinDangerDansTable)
+        {
+            danger = true;
+        }
+        // Si un coin de la zone de sécuritaire est à l'extérieur de la table,
+        // la zone sécuritaire est détectée.
+        if (!coinSecuritaireDansTable)
+        {
+            securitaire = true;
+        }
+    }
+    // Si le capteur se trouve déjà en détection de zone de danger,
+    // on le laisse dans cet état.
+    if (etat_ != DETECTION_ZONE_DANGER)
+    {
+        if (!danger)
+        {
+            // Si le poteau n'est pas en zone de danger et on se trouve 
+            // déjà en détection de zone sécuritaire, on le laisse dans cet état.
+            if (etat_ != DETECTION_ZONE_SECURITAIRE) 
+            {
+                if (!securitaire) 
+                {
+                    etat_ = AUCUNE_DETECTION;
+                } 
+                else 
+                {
+                    etat_ = DETECTION_ZONE_SECURITAIRE;
+                }
+            }
+        }
+        else 
+        {
+            etat_ = DETECTION_ZONE_DANGER;
+        }
+    }
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
