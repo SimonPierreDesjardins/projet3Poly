@@ -67,9 +67,9 @@ public:
     // Calcule des vecteurs d'orientation unitaire.
     void calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const;
     
-    virtual const glm::dvec3& calculerNormaleCollision(const RectangleEnglobant& rectangle) const;
-    virtual const glm::dvec3& calculerNormaleCollision(const CercleEnglobant& cercle) const;
-    const glm::dvec3& calculerNormaleCollision(const glm::dvec3 point) const;
+    virtual glm::dvec3 calculerNormaleCollision(const RectangleEnglobant& rectangle) const;
+    virtual glm::dvec3 calculerNormaleCollision(const CercleEnglobant& cercle) const;
+    virtual glm::dvec3 calculerNormaleCollision(const glm::dvec3& point) const;
 
     void calculerPositionCoins(glm::dvec3 coins[4]) const;
 

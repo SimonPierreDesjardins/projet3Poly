@@ -48,8 +48,9 @@ public:
     virtual bool calculerIntersection(const CercleEnglobant& cercle) const;
     virtual bool calculerIntersection(const RectangleEnglobant& rectangle) const;
         
-    virtual const glm::dvec3& calculerNormaleCollision(const RectangleEnglobant& rectangle) const;
-    virtual const glm::dvec3& calculerNormaleCollision(const CercleEnglobant& cercle) const;
+    virtual glm::dvec3 calculerNormaleCollision(const RectangleEnglobant& rectangle) const;
+    virtual glm::dvec3 calculerNormaleCollision(const CercleEnglobant& cercle) const;
+    virtual glm::dvec3 calculerNormaleCollision(const glm::dvec3& point) const;
 
     virtual void afficher(const glm::dvec3& origine) const;
     virtual void afficher() const;

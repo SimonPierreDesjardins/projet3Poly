@@ -16,9 +16,9 @@
 #include "Utilitaire.h"
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class NoeudAbstraitTest
+/// @class PhysiqueTest
 /// @brief Classe de test cppunit pour tester le bon fonctionnement des
-///        méthodes de la classe NoeudAbstrait
+///        méthodes de la classe physique
 ///
 /// @author Julien Gascon-Samson
 /// @date 2011-07-16
@@ -45,6 +45,7 @@ class PhysiqueTest : public CppUnit::TestFixture
 
   CPPUNIT_TEST(testColisionRectangleRectangle);
   CPPUNIT_TEST(testColisionCercleRectangle);
+  CPPUNIT_TEST(testColisionRectanglePoint);
   CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -77,6 +78,7 @@ public:
 
 	void testColisionRectangleRectangle();
 	void testColisionCercleRectangle();
+	void testColisionRectanglePoint();
 
 private:
     utilitaire::QuadEnglobant quad1_;

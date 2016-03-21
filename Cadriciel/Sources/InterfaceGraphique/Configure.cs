@@ -1,4 +1,12 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   Configure.cs
+/// @author Philippe Marcotte et Frédéric Grégoire
+/// @date   2016-02-22
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -16,46 +24,64 @@ namespace InterfaceGraphique
 {
     public partial class Configure : Form
     {
+        /// <summary>
+        /// Culture pour convertir les string, ayant un point pour délimiter les décimales, en double
+        /// </summary>
         System.Globalization.CultureInfo culture = System.Globalization.CultureInfo.InvariantCulture;
+        
+        /// <summary>
+        /// Liste contenant tous les types de comportements d'un robot
+        /// </summary>
         private List<TypeComportement> comportementsList;
 
+        /// <summary>
+        /// Liste contenant tous les noms de profils que l'on peut charger
+        /// </summary>
         private List<string> fichiersProfil;
 
-        public List<string> FichiersProfil
-        {
-            get
-            {
-                return fichiersProfil;
-            }
-        }
-
+        /// <summary>
+        /// Chemin vers le dossier Donnees
+        /// </summary>
         private string cheminProfils;
 
+        /// <summary>
+        /// Extension d'un fichier de type profil
+        /// </summary>
         private string extensionProfils;
 
+        /// <summary>
+        /// Nom du profil par défaut
+        /// </summary>
         private string nomProfilDefaut;
 
+        /// <summary>
+        /// Nom du dernier profil chargé
+        /// </summary>
         private string nomDernierProfil;
-        public string NomDernierProfil
-        {
-            get
-            {
-                return FonctionsNatives.obtenirNomDernierProfil();
-            }
-        }
 
+        /// <summary>
+        /// Index du profil par défaut dans la combobox permettant de choisir les profils
+        /// </summary>
         private int indexProfilDefaut;
 
+        /// <summary>
+        /// Fonction déléguée représentant la fonction servant à ajouter un profil dans le ToolStripMenuItem contenant les profils lors d'une simulation ou test
+        /// </summary>
         public delegate void ajouterProfilSimulationDelegue(string nomProfil);
 
+        /// <summary>
+        /// Référence vers la fonction servant à ajouter un profil dans le ToolStripMenuItem contenant les profils lors d'une simulation ou test
+        /// </summary>
         private ajouterProfilSimulationDelegue ajouterProfilSimulation;
 
-        public delegate void supprimerProfilSimulationDelegue(string nomProfil);
-
-        private supprimerProfilSimulationDelegue supprimerProfilSimulation;
-
+        /// <summary>
+        /// Référence vers le ToolStripMenuItem contenant les profils lors d'une simulation ou test
+        /// </summary>
         private ToolStripMenuItem profilsSimulationItem;
 
+        /// <summary>
+        /// Enum représentant les types de paramètres associés aux comportements
+        /// </summary>
         private enum typeParametre
         {
             ANGLE,
@@ -63,26 +89,43 @@ namespace InterfaceGraphique
             LARGEUR_ZONE
         }
 
+        /// <summary>
+        /// Structure contenant les limites pour chacun des types de paramètres associés aux comportements
+        /// </summary>
         private struct Parametre
         {
             public int limiteMin;
             public int limiteMax;
         }
 
+        /// <summary>
+        /// Tableau contenant les 3 struct Parametre
+        /// </summary>
         private Parametre[] limitesParametres;
 
-        private TextBox[] largeurZoneTextBoxes;
+        /// <summary>
+        /// Tableau contenant les TextBox servant à modifier la largeur des zones sécuritaires et de dangers
+        /// </summary>
+        private TextBox[] largeurZoneTextBox;
 
+        /// <summary>
+        /// Tableau contenant les TextBox servant à modifier les touches contrôlant le robot
+        /// </summary>
         private TextBox[] touchesCommande;
 
-        private bool initialisation;
+        /// <summary>
+        /// Représente si le programme initialise les TextBox des paramètres associés aux comportements
+        /// </summary>
+        private bool initialisationParametres;
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public Configure()
+        /// @fn public Configure(ToolStripMenuItem menuItem, ajouterProfilSimulationDelegue fonction)
         ///
-        /// Cette fonction initialize la fenetre et initialise la visibilité de
-        /// ses composantes
+        /// Constructeur par paramètre
+        /// 
+        /// @param[in] menuItem : Référence vers le ToolStripMenuItem contenant les profils lors d'une simulation ou test
+        /// @param[in] fonction : Référence servant à ajouter un profil dans le ToolStripMenuItem contenant les profils lors d'une simulation ou test
         ///
         ////////////////////////////////////////////////////////////////////////
         public Configure(ToolStripMenuItem menuItem, ajouterProfilSimulationDelegue fonction)
@@ -105,7 +148,7 @@ namespace InterfaceGraphique
                 limitesParametres[i / 2].limiteMax = minEtMaxParametres[i + 1];
             }
 
-            largeurZoneTextBoxes = new TextBox[] { longueurDangerGaucheTxtBox, longueurSecuritaireGaucheTxtBox, longueurDangerCentreTxtBox, longueurSecuritaireCentreTxtBox, longueurDangerDroitTxtBox, longueurSecuritaireDroitTxtBox };
+            largeurZoneTextBox = new TextBox[] { longueurDangerGaucheTxtBox, longueurSecuritaireGaucheTxtBox, longueurDangerCentreTxtBox, longueurSecuritaireCentreTxtBox, longueurDangerDroitTxtBox, longueurSecuritaireDroitTxtBox };
 
             touchesCommande = new TextBox[] { textBoxModeManuel, textBoxAvancer, textBoxReculer, textBoxAntiHoraire, textBoxHoraire };
 
@@ -113,30 +156,62 @@ namespace InterfaceGraphique
 
             extensionProfils = FonctionsNatives.obtenirExtensionProfils();
 
-            FonctionsNatives.setHandle((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
+            FonctionsNatives.assignerConfigureHandles((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
-            setUpAllControls(configureTabs);
+            assignerHandles(configureTabs);
 
-            initialisation = true;
+            initialisationParametres = true;
 
             assignerProfilsCB();
 
-            initialisation = false;
+            initialisationParametres = false;
 
-            
-
-            foreach (Control tab in configureTabs.TabPages)
+            /*foreach (Control tab in configureTabs.TabPages)
             {
                 tab.Enabled = false;
-            }
+            }*/
            
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void assignerProfilsCB(StringBuilder str)
+        /// @fn public List<string> FichiersProfil
         ///
-        /// Cette fonction permet d'assigner un profil à la fenetre configure
+        /// Fonction retournant la liste des noms de profils
+        ///
+        /// @return List<string>
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public List<string> FichiersProfil
+        {
+            get
+            {
+                return fichiersProfil;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public string NomDernierProfil
+        ///
+        /// Fonction retournant le nom du dernier profil chargé
+        ///
+        /// @return string
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public string NomDernierProfil
+        {
+            get
+            {
+                return FonctionsNatives.obtenirNomDernierProfil();
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void assignerProfilsCB()
+        ///
+        /// Cette fonction permet de populer la ComboBox contenant les profils que l'on peut charger
         ///
         ////////////////////////////////////////////////////////////////////////
         private void assignerProfilsCB(){
@@ -172,17 +247,33 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn void setUpAllControls(Control control)
+        /// @fn private void assignerHandles()
         ///
-        /// Cette fonction permet d'envoyer le handle de chaque composant au modele
+        /// Fonction appelant la fonction récursive du même nom à partir de la composante représetant les onglets principaux.
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void assignerHandles()
+        {
+            button_Default.Enabled = false;
+            assignerHandles(configureTabs);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void assignerHandles(Control control)
+        ///
+        /// Fonction récursive permettant d'envoyer le handle de chaque composant au modele et de desactiver les composantes servant à modifier les paramètres des comportements
+        /// 
+        /// @param[in] control : Composante à partir de laquelle on veut assigner les handles
         ///
         ////////////////////////////////////////////////////////////////////////
-        void setUpAllControls(Control control)
+        private void assignerHandles(Control control)
         {
             foreach (Control item in control.Controls)
             {
                 if (item.Tag != null)
                 {
+                    item.Enabled = false;
                     int indexControl = Int32.Parse(item.Tag.ToString().Split(';')[0]);
                     if (item.GetType().Equals(typeof(ComboBox)) && indexControl <= 23)
                     {
@@ -190,10 +281,46 @@ namespace InterfaceGraphique
                         combo.BindingContext = new BindingContext();
                         combo.DataSource = comportementsList;
                     }
-                    FonctionsNatives.setHandle((IntPtr)item.Handle, indexControl);
+                    FonctionsNatives.assignerConfigureHandles((IntPtr)item.Handle, indexControl);
                 }
 
-                setUpAllControls(item);
+                assignerHandles(item);
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void changerEtatComposantesParametres(bool etat)
+        ///
+        /// Fonction appelant la fonction récursive du même nom à partir de la composante représetant les onglets principaux.
+        /// 
+        /// @param[in] etat : Représentante si la composante doiêtre active ou non
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void changerEtatComposantesParametres(bool etat)
+        {
+            button_Default.Enabled = etat;
+            changerEtatComposantesParametres(configureTabs, etat);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void changerEtatComposantesParametres(Control control, bool etat)
+        ///
+        /// Fonction appelant la fonction récursive du même nom à partir de la composante représetant les onglets principaux.
+        /// 
+        /// @param[in] control : Composante à partir de laquelle on cherche les composantes à modifier
+        /// @param[in] etat : Représentante si la composante doiêtre active ou non
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void changerEtatComposantesParametres(Control control, bool etat)
+        {
+            foreach (Control item in control.Controls)
+            {
+                if (item.Tag != null)
+                    item.Enabled = etat;
+
+                changerEtatComposantesParametres(item, etat);
             }
         }
 
@@ -358,7 +485,6 @@ namespace InterfaceGraphique
         /// @param[in] box: la text box modifiée par l'utilisateur
         /// @param[in] parametre: représente si c'est un angle ou une durée
         ///
-        ///  
         ////////////////////////////////////////////////////////////////////////
         private void angleEtDureeValidation(TextBox box, typeParametre parametre)
         {
@@ -386,15 +512,14 @@ namespace InterfaceGraphique
         /// Cette fonction permet de vérifier l'intégrité d'une largeur de zone de capteur de distance entrée par un utilisateur
         ///
         /// @param[in] box: la text box modifiée par l'utilisateur
-        ///
         /// 
         ////////////////////////////////////////////////////////////////////////
         private void largeurZoneValidation(TextBox box)
         {
             int indexTextBox = int.Parse(box.Tag.ToString().Split(';')[1]);
             int indexTextBoxComplementaire = indexTextBox % 2 == 0 ? indexTextBox + 1 : indexTextBox - 1;
-            largeurZoneTextBoxes[indexTextBoxComplementaire].TextChanged -= largeurZoneTxtBox_TextChanged;
-            TextBox boxComplementaire = largeurZoneTextBoxes[indexTextBoxComplementaire];
+            largeurZoneTextBox[indexTextBoxComplementaire].TextChanged -= largeurZoneTxtBox_TextChanged;
+            TextBox boxComplementaire = largeurZoneTextBox[indexTextBoxComplementaire];
             double largeur1;
             double largeur2 = stringToDouble(boxComplementaire.Text);
             int indexParametre = (int)typeParametre.LARGEUR_ZONE;
@@ -423,8 +548,6 @@ namespace InterfaceGraphique
         /// @param[in] box: la text box modifiée par l'utilisateur
         /// @param[in] parametre: représente si c'est un angle, une durée ou une largeur de zone
         ///
-        /// @return: Aucun
-        /// 
         ////////////////////////////////////////////////////////////////////////
         private void parametresValidation(TextBox box, typeParametre parametre)
         {
@@ -472,14 +595,19 @@ namespace InterfaceGraphique
             return false;
         }
 
-        //String représentant l'ancienne valeur du textbox
+        /// <summary>
+        /// String représentant l'ancienne valeur du textbox
+        /// </summary>
         private string oldText;
-        //Integer représentant l'ancienne position du caret
+        
+        /// <summary>
+        /// Integer représentant l'ancienne position du caret
+        /// </summary>
         private int oldCaretIndex;
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void angleDGTxtBox_TextChanged(object sender, EventArgs e)
+        /// @fn private void angleTxtBox_TextChanged(object sender, EventArgs e)
         ///
         /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
         /// remet l'ancient text
@@ -498,7 +626,7 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
+        /// @fn private void dureeTxtBox_TextChanged(object sender, EventArgs e)
         ///
         /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
         /// remet l'ancient text
@@ -517,7 +645,7 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void angleDDTxtBox_TextChanged(object sender, EventArgs e)
+        /// @fn private void largeurZoneTxtBox_TextChanged(object sender, EventArgs e)
         ///
         /// Cette fonction vérifie si l'entrer est valide. Change le text si valide sinon
         /// remet l'ancient text
@@ -528,7 +656,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void largeurZoneTxtBox_TextChanged(object sender, EventArgs e)
         {
-            if (initialisation)
+            if (initialisationParametres)
                 return;
 
             TextBox box = sender as TextBox;
@@ -574,7 +702,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void comboBoxProfil_SelectedIndexChanged(object sender, EventArgs e)
         ///
-        /// Cette fonction selectionne l'index 1 des textbox de la fenetre
+        /// Cette fonction charge le profil lors d'un changement d'indexe de la ComboBox contenat les profils pouvant être chargés
         ///
         /// @param objet sender: control qui gère l'action
         /// @param EventArgs e: evenement d'un touche du clavier
@@ -592,6 +720,15 @@ namespace InterfaceGraphique
             changerProfil(nomProfil);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void changerProfil(string nomProfil)
+        ///
+        /// Cette fonction charge le profil sélectionner dans la ComboBox contenat les profils pouvant être chargés
+        ///
+        /// @param nomProfil : le nom du profil à charger
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void changerProfil(string nomProfil)
         {
             FonctionsNatives.changerProfil(nomProfil + extensionProfils);
@@ -602,6 +739,15 @@ namespace InterfaceGraphique
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void changerProfilSelectionne(string nomProfil)
+        ///
+        /// Cette fonction change le profil sélectionné par la ComboBox contenat les profils pouvant être chargés
+        ///
+        /// @param nomProfil : le nom du profil à sélectionner
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public void changerProfilSelectionne(string nomProfil){
             comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfil);
         }
@@ -619,8 +765,21 @@ namespace InterfaceGraphique
             ATTENTE_CONFIRMATION
         }
 
+        /// <summary>
+        /// Représente l'état du bouton pour créer un profil
+        /// </summary>
         private actionProfil etatCreationProfil = actionProfil.ATTENTE_ACTION;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void buttonCréerProfil_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction permet de gérer la création d'un profil
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un click de souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void buttonCréerProfil_Click(object sender, EventArgs e)
         {
             if (etatCreationProfil == actionProfil.ATTENTE_ACTION)
@@ -656,6 +815,16 @@ namespace InterfaceGraphique
             
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void buttonDeleteProfil_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction permet de gérer la suppression d'un profil
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un click de souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void buttonDeleteProfil_Click(object sender, EventArgs e)
         {
             string profilASupprimer = comboBoxProfil.Text;
@@ -670,19 +839,32 @@ namespace InterfaceGraphique
             comboBoxProfil.SelectedIndexChanged += comboBoxProfil_SelectedIndexChanged;
         }
 
+        /// <summary>
+        /// Représente l'état du bouton pour modifier un profil
+        /// </summary>
         private actionProfil etatModificationProfil = actionProfil.ATTENTE_ACTION;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void modifierProfilButt_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction permet de gérer la modification d'un profil
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un click de souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void modifierProfilButt_Click(object sender, EventArgs e)
         {
             if (comboBoxProfil.SelectedIndex == indexProfilDefaut)
                 return;
 
-            bool tabEnabled;
+            bool composanteEnabled;
 
 
             if (etatModificationProfil == actionProfil.ATTENTE_ACTION)
             {
-                tabEnabled = true;
+                composanteEnabled = true;
                 modifierProfilButt.Text = "Enregistrer";
                 etatModificationProfil = actionProfil.ATTENTE_CONFIRMATION;
                 buttonCréerProfil.Enabled = false;
@@ -713,7 +895,7 @@ namespace InterfaceGraphique
                 
                 FonctionsNatives.sauvegarderProfil(comboBoxProfil.Text + extensionProfils);
                 
-                tabEnabled = false;
+                composanteEnabled = false;
                 modifierProfilButt.Text = "Modifier";
                 etatModificationProfil = actionProfil.ATTENTE_ACTION;
                 buttonCréerProfil.Enabled = true;
@@ -722,18 +904,19 @@ namespace InterfaceGraphique
                 comboBoxProfil.Enabled = true;
             }
 
-            foreach (Control tab in configureTabs.TabPages)
-            {
-                tab.Enabled = tabEnabled;
-
-            }
-
-            foreach (Control tab in capteursDistTabs.TabPages)
-            {
-                tab.Enabled = tabEnabled;
-            }
+            changerEtatComposantesParametres(composanteEnabled);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void modifierProfilButt_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction permet de gérer la modification d'un profil
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un click de souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void optionsDebogagesCB_SelectionChangeCommitted(object sender, EventArgs e)
         {
             bool estActif = optionsDebogagesCB.SelectedIndex == 0;
@@ -742,6 +925,16 @@ namespace InterfaceGraphique
             comboBox_capteur.Enabled = estActif;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void button_Default_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction remet les touches contrôlant le robot aux valeurs par défaut
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un click de souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void button_Default_Click(object sender, EventArgs e)
         {
             FonctionsNatives.modifierToucheCommande('W', TypeCommande.AVANCER);
@@ -756,7 +949,17 @@ namespace InterfaceGraphique
             textBoxModeManuel.Text = "ESPACE";
         }
 
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private double stringToDouble(string aConvertir)
+        ///
+        /// Cette fonction convertit une string à un double. Si la string est vide, celle-ci renvoie 0.
+        ///
+        /// @param aConvertir : la string à convertir
+        /// 
+        /// @return double La valeur de la string en double
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private double stringToDouble(string aConvertir)
         {
             if (aConvertir == "")
@@ -826,7 +1029,7 @@ namespace InterfaceGraphique
         public static extern char obtenirToucheCommande(TypeCommande commande);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void setHandle(IntPtr handle, int ctrl);
+        public static extern void assignerConfigureHandles(IntPtr handle, int ctrl);
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
@@ -863,5 +1066,6 @@ namespace InterfaceGraphique
 
     }
 }
-
-
+////////////////////////////////////////////////
+/// @}
+////////////////////////////////////////////////

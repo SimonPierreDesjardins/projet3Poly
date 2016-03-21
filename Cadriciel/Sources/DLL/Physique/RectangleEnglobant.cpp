@@ -299,7 +299,7 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
     coins[3] = positionCentre_ + distanceCentreLargeur - distanceCentreHauteur;
 }
 
-const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
+glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
 {
     const int N_COINS = 4;
 
@@ -311,12 +311,13 @@ const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleE
 
     // On commence par vérifier si ou ou plusieurs coins est dans l'autre rectangle.
     bool coinDansAutreRectangle = false;
-    for (int i = 0; i < N_COINS && !coinDansAutreRectangle; i++)
+    for (int i = 0; i < N_COINS; i++)
     {
-        coinDansAutreRectangle = rectangle.calculerEstDansForme(coins_[i]);
-        if (coinDansAutreRectangle)
+        bool coinDansRectangle = rectangle.calculerEstDansForme(coins_[i]);
+        if (coinDansRectangle)
         {
             normale += rectangle.obtenirPositionCentre() - coins_[i];
+            coinDansAutreRectangle = true;
         }
     }
 
@@ -355,7 +356,7 @@ const glm::dvec3&  RectangleEnglobant::calculerNormaleCollision(const RectangleE
     return glm::normalize(normale);
 }
 
-const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
+glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
 {
     glm::dvec3 coins[4];
     calculerPositionCoins(coins);
@@ -395,7 +396,7 @@ const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const CercleEnglo
     }
     return glm::normalize(normale);
 }
-const glm::dvec3& RectangleEnglobant::calculerNormaleCollision(const glm::dvec3 point) const
+glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const glm::dvec3& point) const
 {
     const int N_COINS = 4;
     glm::dvec3 coins[N_COINS];
