@@ -168,6 +168,30 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		switch (wParam)
 		{
+		case VK_LEFT:
+			gererFlecheGauche();
+			break;
+
+		case VK_RIGHT:
+			gererFlecheDroit();
+			break;
+
+		case VK_UP:
+			gererFlecheHaut();
+			break;
+
+		case VK_DOWN:
+			gererFlecheBas();
+			break;
+
+		case VK_OEM_PLUS:
+			gererTouchePlus();
+			break;
+
+		case VK_OEM_MINUS:
+			gererToucheMoins();
+			break;
+
 		case 'J':
 			inverserLumiereAmbiante();
 			break;
@@ -212,8 +236,11 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			if (!estRepetition)
 			{
                 CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-                TypeCommande type = commande->obtenirTypeCommande();
-                actionsAppuyees_.at(type) = true;
+                if (commande != nullptr)
+                {
+                    TypeCommande type = commande->obtenirTypeCommande();
+                    actionsAppuyees_.at(type) = true;
+                }
 				controleRobot_->traiterCommande(commande, true);
 			}
 		}
@@ -222,15 +249,14 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
 		if (!controleRobot_->getEnPause())
 		{
-			CommandeRobot* commande = profil_->obtenirCommandeRobot(wParam);
-			if (commande != nullptr && commande->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
+			CommandeRobot* commandeCourante = profil_->obtenirCommandeRobot(wParam);
+			if (commandeCourante != nullptr && commandeCourante->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
 			{
                 // Arreter les moteurs.
                 std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
                 controleRobot_->traiterCommande(commandeArreter.get(), true);
 
                 // Indiquer que la commande n'est plus appuyée dans les flags d'actions appuyées
-                CommandeRobot* commandeCourante = profil_->obtenirCommandeRobot(wParam);
                 TypeCommande type = commandeCourante->obtenirTypeCommande();
                 actionsAppuyees_.at(type) = false;
 
@@ -244,6 +270,25 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                 }
 			}
+		}
+	}
+	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris())
+	{
+		switch (msg)
+		{
+		case WM_RBUTTONDBLCLK:
+		case WM_RBUTTONDOWN:
+			gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_RBUTTONUP:
+			gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEMOVE:
+			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
 		}
 	}
 }

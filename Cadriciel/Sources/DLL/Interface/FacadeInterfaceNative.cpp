@@ -554,9 +554,13 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomProfilDefaut().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl chargerProfilParDefaut()
+	__declspec(dllexport) void __cdecl obtenirNomDernierProfil(char* chemin, int longueur){
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirNomDernierProfil().c_str());
+	}
+
+	__declspec(dllexport) void __cdecl chargerDernierProfil()
 	{
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerProfilParDefaut();
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->chargerDernierProfil();
 	}
 
 	__declspec(dllexport) void __cdecl sauvegarderProfil(char* nomProfil){
@@ -579,7 +583,9 @@ extern "C"
 		if (mode != nullptr){
 			mode->preChangementDeProfil();
 		}
+
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->changerProfil(std::string(nomProfil));
+
 		if (mode != nullptr){
 			mode->postChangementDeProfil();
 		}
@@ -599,6 +605,10 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause){
 		//FacadeModele::obtenirInstance()->obtenirMode()->
+	}
+
+	__declspec(dllexport) int* __cdecl obtenirLimitesParametres(){
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirLimiteParametres();
 	}
 }
 

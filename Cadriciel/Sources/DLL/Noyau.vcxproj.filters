@@ -310,6 +310,9 @@
     <ClCompile Include="Physique\CercleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
+    <ClCompile Include="ComportementsTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -533,6 +536,9 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudRoues.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
+    </ClInclude>
+    <ClInclude Include="ComportementsTest.h">
+      <Filter>Header Files\Tests</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -58,7 +58,7 @@ class ProfilUtilisateur
 
 		void modifierToucheCommande(const uint8_t& touche, const TypeCommande& controle);
 
-		void chargerProfilParDefaut();
+		void chargerDernierProfil();
 
 		CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
 
@@ -75,6 +75,8 @@ class ProfilUtilisateur
 		std::string obtenirCheminProfils();
 
 		std::string obtenirNomProfilDefaut();
+
+		std::string obtenirNomDernierProfil();
 
         inline SuiveurLigne* obtenirSuiveurLigne();
         inline NoeudRobot::ConteneurCapteursDistance* obtenirCapteursDistance();
@@ -96,6 +98,8 @@ class ProfilUtilisateur
 
 		bool obtenirOptionDebogage(optionsDebogagesEnum option);
 
+		int* obtenirLimiteParametres();
+
 	private:
 		void changerDernierProfil(std::string nomProfil);
 
@@ -104,6 +108,8 @@ class ProfilUtilisateur
 		bool ouvrirProfil(std::string readOrWrite);
 
 		bool ouvrir(std::string nomFichier, std::string readOrWrite, FILE*& fichier);
+
+		void creerProfilDefaut();
 
 		std::vector<std::unique_ptr<ComportementAbstrait>> comportements_;
 		
@@ -123,17 +129,25 @@ class ProfilUtilisateur
 
 		const std::string DERNIER_PROFIL = "dernier_profil";
 
-		const int DUREE_MAX_COMPORTEMENT_MS = 2000;
+		const int DUREE_MAX_COMPORTEMENT = 2000;
 
-		const int DUREE_MIN_COMPORTEMENT_MS = 0;
+		const int DUREE_MIN_COMPORTEMENT = 0;
 
 		const int LARGEUR_TOTAL_DETECTION_DISTANCE = 30;
+
+		const int LARGEUR_MIN_DETECTION_DISTANCE = 0;
+
+		const int ANGLE_MAX_COMPORTEMENT = 360;
+
+		const int ANGLE_MIN_COMPORTEMENT = 0;
 
 		std::string dernierProfil;
 
 		std::unordered_map<ConfigureControl, HWND> configureHandles;
 
-		std::vector<char> touches_;
+		std::array<char, 5> touches_;
+
+		const std::array<char, 10>* toucheNonChangeable;
 
 		// Utilisation d'une unordered map pour un temps d'acces constant.
 		std::unordered_map<unsigned char, std::unique_ptr<CommandeRobot>> commandes_;
@@ -158,18 +172,6 @@ inline SuiveurLigne* ProfilUtilisateur::obtenirSuiveurLigne()
 inline NoeudRobot::ConteneurCapteursDistance* ProfilUtilisateur::obtenirCapteursDistance()
 {
     return &capteursDistance_;
-}
-
-inline int ProfilUtilisateur::obtenirDureeMaxComportement(){
-	return DUREE_MAX_COMPORTEMENT_MS;
-}
-
-inline int ProfilUtilisateur::obtenirDureeMinComportement(){
-	return DUREE_MIN_COMPORTEMENT_MS;
-}
-
-inline int ProfilUtilisateur::obtenirLargeurTotalDetectionDistance(){
-	return LARGEUR_TOTAL_DETECTION_DISTANCE;
 }
 ////////////////////////////////////////////////
 /// @}

@@ -66,7 +66,8 @@ extern "C"
 	__declspec(dllexport) void __cdecl modifierToucheCommande(char touche, int commande);
 
 	__declspec(dllexport) void __cdecl obtenirNomProfilDefaut(char* chemin, int longueur);
-	__declspec(dllexport) void __cdecl chargerProfilParDefaut();
+	__declspec(dllexport) void __cdecl obtenirNomDernierProfil(char* chemin, int longueur);
+	__declspec(dllexport) void __cdecl chargerDernierProfil();
 
 	__declspec(dllexport) void __cdecl assignerProfils();
 
@@ -86,6 +87,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil);
 	__declspec(dllexport) void __cdecl mettreEnPause(bool estEnPause);
 
+	__declspec(dllexport) int* __cdecl obtenirLimitesParametres();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

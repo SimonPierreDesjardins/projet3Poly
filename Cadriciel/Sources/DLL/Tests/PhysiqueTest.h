@@ -26,12 +26,12 @@
 class PhysiqueTest : public CppUnit::TestFixture
 {
 
-	// =================================================================
-	// Déclaration de la suite de tests et des méthodes de tests
-	//
-	// Important, vous devez définir chacun de vos cas de tests à l'aide
-	// de la macro CPPUNIT_TEST sinon ce dernier ne sera pas exécuté !
-	// =================================================================
+// =================================================================
+// Déclaration de la suite de tests et des méthodes de tests
+//
+// Important, vous devez définir chacun de vos cas de tests à l'aide
+// de la macro CPPUNIT_TEST sinon ce dernier ne sera pas exécuté !
+// =================================================================
   CPPUNIT_TEST_SUITE( PhysiqueTest );
   CPPUNIT_TEST(testIntersectionQuad);
 

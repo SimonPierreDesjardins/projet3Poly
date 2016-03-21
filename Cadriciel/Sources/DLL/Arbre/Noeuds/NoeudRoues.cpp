@@ -59,7 +59,7 @@ NoeudRoues::~NoeudRoues()
 
 void NoeudRoues::setVitesseCourante(float vitesse)
 {
-	vitesseCourante_ += vitesse;//(float)(int(0.016 * 360) % 360);
+	vitesseCourante_ += (float)((int)((int)vitesse * 0.15) % 360);//(float)(int(0.016 * 360) % 360);
 	
 }
 
@@ -76,20 +76,19 @@ void NoeudRoues::afficherConcret() const
 {
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
-	
-	//Placer la roue à la bonne emplacement
-	//glTranslatef(0.0, 0.0, 0.8);
-	//glTranslatef(0.0, 0.2, 0.0);
+
+	// Sauvegarde de la matrice.
+	glPushMatrix();
+
+	glColor3f(0.3, 0.3, 0.3);
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	glRotatef(vitesseCourante_, 0.0, 1.0, 0.0);
 
-
-	// Sauvegarde de la matrice.
-	glPushMatrix();
 	// Affichage du modèle.
 	vbo_->dessiner();
+
 	// Restauration de la matrice.
 	glPopMatrix();
 }

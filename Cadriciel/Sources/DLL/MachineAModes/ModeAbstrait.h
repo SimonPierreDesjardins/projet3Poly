@@ -66,8 +66,22 @@ public:
 	////////////////////////////////////////////////////////////////////////
 	virtual void postChangementDeProfil(){};
 
+	virtual void gererTouchePlus();
+	virtual void gererToucheMoins();
+
+	virtual void gererFlecheGauche();
+	virtual void gererFlecheBas();
+	virtual void gererFlecheHaut();
+	virtual void gererFlecheDroit();
+
+	virtual void gererClicDroitEnfonce(const int& x, const int& y);
+	virtual void gererClicDroitRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int & x, const int& y);
+
 protected:
 	int typeMode_;
+	bool clicDroitEnfonce_{ false };
+	static glm::ivec2 currentPosition_;
 
 };
 

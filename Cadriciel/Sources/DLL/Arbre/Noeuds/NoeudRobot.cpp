@@ -138,16 +138,15 @@ void NoeudRobot::afficherConcret() const
 	vbo_->dessiner();
 
     // Débugage des capteurs de distance.
-    suiveurLigne_->afficher();
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 	{
+        suiveurLigne_->afficher();
 		// Débugage des capteurs de distance.
 		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
 		{
 			capteursDistance_->at(i).afficher();
 		}
-	}    
-    
+	}        
 	// Restauration de la matrice.
 	glPopMatrix();
 
@@ -740,8 +739,8 @@ void NoeudRobot::positionnerRoues()
 	//Positionner la roue gauche en fonction du robot
 	roueGauche_->assignerAngleRotation(angleRotation_);
 	glm::dvec3 position = positionRelative_;
-	position[0] = position[0] - sin(angleRotation_*PI / 180)*0.15;
-	position[1] = position[1] + cos(angleRotation_*PI / 180)*0.15;
+	position[0] = position[0] - sin(angleRotation_*PI / 180)*0.0;
+	position[1] = position[1] + cos(angleRotation_*PI / 180)*0.0;
 	position[2] = 0.8;
 	roueGauche_->assignerPositionRelative(position);
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
@@ -749,8 +748,8 @@ void NoeudRobot::positionnerRoues()
 	//Positionner la roue droite en fonction du robot
 	roueDroite_->assignerAngleRotation(angleRotation_);
 	position = positionRelative_;
-	position[0] = position[0] + sin(angleRotation_*PI / 180)*4.3;
-	position[1] = position[1] - cos(angleRotation_*PI / 180)*4.3;
+	position[0] = position[0] + sin(angleRotation_*PI / 180)*4.2;
+	position[1] = position[1] - cos(angleRotation_*PI / 180)*4.2;
 	position[2] = 0.8;
 	roueDroite_->assignerPositionRelative(position);
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);

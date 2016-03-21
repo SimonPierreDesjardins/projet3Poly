@@ -17,6 +17,8 @@
 
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
+#include <unordered_map>
+#include <array>
 
 class ProfilUtilisateur;
 
@@ -32,6 +34,16 @@ class ProfilUtilisateur;
 
 class ModeTest : public ModeAbstrait
 {
+private:
+	std::unique_ptr<ControleRobot> controleRobot_;
+	ProfilUtilisateur* profil_{ nullptr };
+	static std::array<char, 9> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
+
+	bool lumiereAmbiante{ true };
+	bool lumiereDirectionnelle{ true };
+	bool lumiereSpot{ true };
+
 public:
 
 	//Constructeur par défaut
@@ -42,17 +54,21 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
+	void inverserLumiereAmbiante();
+	void inverserLumiereDirectionnelle();
+	void inverserLumiereSpot();
+
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	
 protected:
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_;
-    bool toucheEstRelachee_{ false };
-    std::array<bool, 5> actionsAppuyees_;
+	inline static std::array<char, 9>* getTouchesNonConfigurable();
 };
 
-
+std::array<char, 9>* ModeTest::getTouchesNonConfigurable()
+{
+	return &touchesNonConfigurable_;
+}
 #endif /// MODE_TEST_H
 
 ///////////////////////////////////////////////////////////////////////////////
