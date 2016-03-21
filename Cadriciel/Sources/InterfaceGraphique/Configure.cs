@@ -166,10 +166,10 @@ namespace InterfaceGraphique
 
             initialisationParametres = false;
 
-            foreach (Control tab in configureTabs.TabPages)
+            /*foreach (Control tab in configureTabs.TabPages)
             {
                 tab.Enabled = false;
-            }
+            }*/
            
         }
 
@@ -247,9 +247,22 @@ namespace InterfaceGraphique
 
         ////////////////////////////////////////////////////////////////////////
         ///
+        /// @fn private void assignerHandles()
+        ///
+        /// Fonction appelant la fonction récursive du même nom à partir de la composante représetant les onglets principaux.
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void assignerHandles()
+        {
+            button_Default.Enabled = false;
+            assignerHandles(configureTabs);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
         /// @fn private void assignerHandles(Control control)
         ///
-        /// Fonction récursive permettant d'envoyer le handle de chaque composant au modele
+        /// Fonction récursive permettant d'envoyer le handle de chaque composant au modele et de desactiver les composantes servant à modifier les paramètres des comportements
         /// 
         /// @param[in] control : Composante à partir de laquelle on veut assigner les handles
         ///
@@ -260,6 +273,7 @@ namespace InterfaceGraphique
             {
                 if (item.Tag != null)
                 {
+                    item.Enabled = false;
                     int indexControl = Int32.Parse(item.Tag.ToString().Split(';')[0]);
                     if (item.GetType().Equals(typeof(ComboBox)) && indexControl <= 23)
                     {
@@ -271,6 +285,42 @@ namespace InterfaceGraphique
                 }
 
                 assignerHandles(item);
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void changerEtatComposantesParametres(bool etat)
+        ///
+        /// Fonction appelant la fonction récursive du même nom à partir de la composante représetant les onglets principaux.
+        /// 
+        /// @param[in] etat : Représentante si la composante doiêtre active ou non
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void changerEtatComposantesParametres(bool etat)
+        {
+            button_Default.Enabled = etat;
+            changerEtatComposantesParametres(configureTabs, etat);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void changerEtatComposantesParametres(Control control, bool etat)
+        ///
+        /// Fonction appelant la fonction récursive du même nom à partir de la composante représetant les onglets principaux.
+        /// 
+        /// @param[in] control : Composante à partir de laquelle on cherche les composantes à modifier
+        /// @param[in] etat : Représentante si la composante doiêtre active ou non
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void changerEtatComposantesParametres(Control control, bool etat)
+        {
+            foreach (Control item in control.Controls)
+            {
+                if (item.Tag != null)
+                    item.Enabled = etat;
+
+                changerEtatComposantesParametres(item, etat);
             }
         }
 
@@ -809,12 +859,12 @@ namespace InterfaceGraphique
             if (comboBoxProfil.SelectedIndex == indexProfilDefaut)
                 return;
 
-            bool tabEnabled;
+            bool composanteEnabled;
 
 
             if (etatModificationProfil == actionProfil.ATTENTE_ACTION)
             {
-                tabEnabled = true;
+                composanteEnabled = true;
                 modifierProfilButt.Text = "Enregistrer";
                 etatModificationProfil = actionProfil.ATTENTE_CONFIRMATION;
                 buttonCréerProfil.Enabled = false;
@@ -845,7 +895,7 @@ namespace InterfaceGraphique
                 
                 FonctionsNatives.sauvegarderProfil(comboBoxProfil.Text + extensionProfils);
                 
-                tabEnabled = false;
+                composanteEnabled = false;
                 modifierProfilButt.Text = "Modifier";
                 etatModificationProfil = actionProfil.ATTENTE_ACTION;
                 buttonCréerProfil.Enabled = true;
@@ -854,11 +904,7 @@ namespace InterfaceGraphique
                 comboBoxProfil.Enabled = true;
             }
 
-            foreach (Control tab in configureTabs.TabPages)
-            {
-                tab.Enabled = tabEnabled;
-
-            }
+            changerEtatComposantesParametres(composanteEnabled);
         }
 
         ////////////////////////////////////////////////////////////////////////

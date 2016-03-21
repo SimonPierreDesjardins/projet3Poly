@@ -38,8 +38,16 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 ProfilUtilisateur::ProfilUtilisateur(){
-	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL))
+	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL)){
+		struct stat buffer;
+		if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
+			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
+			CreateDirectory(wideString.c_str(), NULL);
+		}
 		changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
+	}
+	
 	
 	
 	std::ifstream fichierDernierProfilR(CHEMIN_PROFIL + DERNIER_PROFIL);
@@ -360,13 +368,6 @@ void ProfilUtilisateur::chargerDernierProfil(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::creerProfilDefaut(){
-	struct stat buffer;
-	if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
-		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-		std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
-		CreateDirectory(wideString.c_str(), NULL);
-	}
-
 	touches_.at(INVERSER_MODE_CONTROLE) = ' ';
 	touches_.at(AVANCER) = 'W';
 	touches_.at(RECULER) = 'S';

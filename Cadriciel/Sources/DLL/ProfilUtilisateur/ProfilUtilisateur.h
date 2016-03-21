@@ -118,7 +118,7 @@ class ProfilUtilisateur
 		FILE* profil_;
 
 		/// Chemin vers le dossier Donnees
-		const std::string CHEMIN_PROFIL = "./../../Donnees/";
+		const std::string CHEMIN_PROFIL = "./Donnees/";
 
 		/// Extension d'un fichier de type profil
 		const std::string EXTENSION_PROFIL = ".profil";
