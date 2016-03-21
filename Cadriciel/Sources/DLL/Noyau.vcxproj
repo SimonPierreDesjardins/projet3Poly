@@ -145,7 +145,6 @@
     <ClCompile Include="Arbre\Noeuds\NoeudRoues.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudSegment.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudTable.cpp" />
-    <ClCompile Include="CapteurTest.cpp" />
     <ClCompile Include="Capteur\CapteurDistance.cpp" />
     <ClCompile Include="Capteur\CapteurOptique.cpp" />
     <ClCompile Include="Capteur\SuiveurLigne.cpp" />
@@ -185,6 +184,7 @@
     <ClCompile Include="Physique\RectangleEnglobant.cpp" />
     <ClCompile Include="ProfilUtilisateur\ProfilUtilisateur.cpp" />
     <ClCompile Include="Tests\BancTests.cpp" />
+    <ClCompile Include="Tests\CapteurTest.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
     <ClCompile Include="Tests\PhysiqueTest.cpp" />

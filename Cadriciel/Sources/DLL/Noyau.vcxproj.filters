@@ -313,7 +313,7 @@
     <ClCompile Include="ControleRobotTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
-    <ClCompile Include="CapteurTest.cpp">
+    <ClCompile Include="Tests\CapteurTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
   </ItemGroup>
