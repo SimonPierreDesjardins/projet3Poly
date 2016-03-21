@@ -746,17 +746,6 @@ namespace utilitaire {
 
 	void time_in_HH_MM_SS_MMM()
 	{
-		/*time_t now;
-		struct tm *current;
-		now = time(0);
-		current = localtime(&now);
-		std::cout << "hour: " << current->tm_hour << std::endl;
-		std::cout << "mins: " << current->tm_min << std::endl;
-		std::cout << "sec: " << current->tm_sec << std::endl;
-
-		struct timeval detail_time;
-		gettimeofday(&detail_time, NULL);
-		std::cout << "milli: " << detail_time.tv_usec / 1000 << std::endl;*/
 		SYSTEMTIME localTime;
 
 		GetLocalTime(&localTime);
