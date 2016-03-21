@@ -313,6 +313,9 @@
     <ClCompile Include="ControleRobotTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
+    <ClCompile Include="Tests\ProfilUtilisateurTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -538,6 +541,9 @@
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
     <ClInclude Include="ControleRobotTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\ProfilUtilisateurTest.h">
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
   </ItemGroup>

@@ -35,6 +35,8 @@ public:
 
 	void setAngleMaxRotation(double angle);
 
+	inline double obtenirMaxAngle();
+
 	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
 	virtual void fromJson(const rapidjson::Value& comportementJSON);
@@ -52,6 +54,19 @@ private:
 	// Flag dictant au comportement d'ignorer la ligne
 	bool ignorerLigne_;
 };
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double ComportementDeviation::obtenirMaxAngle()
+///
+/// Retourne l'angle maximal à atteindre lors de la déviation
+///
+/// @return double L'angle maximal à atteindre.
+///
+////////////////////////////////////////////////////////////////////////
+inline double ComportementDeviation::obtenirMaxAngle(){
+	return maxAngle_;
+}
 
 #endif // COMPORTEMENT_DEVIATION
 

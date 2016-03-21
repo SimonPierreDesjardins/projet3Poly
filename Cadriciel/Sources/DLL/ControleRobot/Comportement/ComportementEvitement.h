@@ -38,6 +38,10 @@ public:
 
 	void setTempsMaxReculons(double temps);
 
+	inline double obtenirMaxAngle();
+
+	inline double obtenirMaxTemps();
+
 	virtual void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
 	virtual void fromJson(const rapidjson::Value& comportementJSON);
@@ -60,6 +64,32 @@ private:
 	// L'angle absolue a atteindre pour changement de comportment
 	double angleCible_;
 };
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double ComportementEvitement::obtenirMaxAngle()
+///
+/// Retourne l'angle maximal à atteindre lors de l'évitement
+///
+/// @return double L'angle maximal à atteindre.
+///
+////////////////////////////////////////////////////////////////////////
+inline double ComportementEvitement::obtenirMaxAngle(){
+	return maxAngle_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double ComportementEvitement::obtenirMaxAngle()
+///
+/// Retourne la durée à attendre lors de l'évitement
+///
+/// @return double La durée à attendre.
+///
+////////////////////////////////////////////////////////////////////////
+inline double ComportementEvitement::obtenirMaxTemps(){
+	return maxTemps_;
+}
 
 #endif // COMPORTEMENT_EVITEMENT
 

@@ -43,6 +43,8 @@ enum optionsDebogagesEnum
 ///////////////////////////////////////////////////////////////////////////
 class ProfilUtilisateur
 {
+	friend class ProfilUtilisateurTest;
+
 	public:
 		ProfilUtilisateur();
 
@@ -59,8 +61,6 @@ class ProfilUtilisateur
 		void chargerDernierProfil();
 
 		CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
-
-		void modifierToucheCommande(char touche, TypeCommande commande);
 
 		bool toucheEstUtilise(char touche);
 

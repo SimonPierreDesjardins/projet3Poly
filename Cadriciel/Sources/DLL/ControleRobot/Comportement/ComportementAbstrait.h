@@ -38,6 +38,7 @@ namespace rapidjson {
 ///////////////////////////////////////////////////////////////////////////
 class ComportementAbstrait
 {
+	
 public:
 	ComportementAbstrait();
 	ComportementAbstrait(TypeComportement prochainComportement);
