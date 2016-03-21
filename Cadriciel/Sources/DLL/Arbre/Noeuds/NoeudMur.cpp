@@ -52,25 +52,61 @@ NoeudMur::~NoeudMur()
 
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant* NoeudMur::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante d'un mur.
+///
+/// @return Pointeur sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 RectangleEnglobant* NoeudMur::obtenirFormeEnglobante()
 {
     return &rectangleEnglobant_;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const RectangleEnglobant* NoeudMur::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante d'un mur.
+///
+/// @return Pointeur sur un rectangle englobant const.
+///
+////////////////////////////////////////////////////////////////////////
 const RectangleEnglobant* NoeudMur::obtenirFormeEnglobante() const
 {
     return &rectangleEnglobant_;
 }
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudMur::animer(float dt)
+///
+/// Cette fonction permet d'appeler la mise a jour lors de l'animation.
+///
+/// param[in] dt : intervalle de temps en float
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudMur::animer(float dt)
 {
     mettreAJourFormeEnglobante();
 }
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudMur::mettreAJourFormeEnglobante()
+///
+/// Cette fonction permet de faire la mise à jour de la forme englobante pour le mur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void NoeudMur::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;

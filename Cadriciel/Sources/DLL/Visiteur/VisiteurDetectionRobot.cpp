@@ -1,3 +1,12 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file VisiteurDetectionRobot.cpp
+/// @author Simon-Pierre Desjardins
+/// @date 2016-02-21
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
 #include "VisiteurDetectionRobot.h"
 
 #include "ArbreRenduINF2990.h"
@@ -8,10 +17,32 @@
 #include "SuiveurLigne.h"
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDetectionRobot::VisiteurDetectionRobot()
+///
+/// Constructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurDetectionRobot::VisiteurDetectionRobot()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
+///
+/// Constructeur par paramètre qui permet d'initialiser un profil selon le robot en paramètre.
+///
+/// @param[in] noeud:  Pointeur sur un noeud robot
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 
 VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
     : robot_(robot)
@@ -22,18 +53,50 @@ VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
 }
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDetectionRobot::~VisiteurDetectionRobot()
+///
+/// Destructeur
+///
+/// @param[in] Aucun
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 VisiteurDetectionRobot::~VisiteurDetectionRobot()
 {
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(ArbreRendu* arbre)
+///
+/// Fonction qui permet de donner l'accès à la table de l'arbre.
+///
+/// @param[in] arbre:  Pointeur sur l'arbre rendu.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDetectionRobot::visiter(ArbreRendu* arbre)
 {
 	estEnCollision_ = false;
     arbre->chercher(ArbreRenduINF2990::NOM_TABLE)->accepterVisiteur(this);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudTable* table)
+///
+/// Fonction qui vérifie si le robot est en collision avec la table , 
+///	qui donne l'accès aux enfants de la table et qui vérifie si les capteurs de distance détectent la table.
+///
+/// @param[in] table:  Pointeur sur un noeud table.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDetectionRobot::visiter(NoeudTable* table)
 {	
 	bool estEnCollision = robot_->verifierCollision(table);
@@ -60,13 +123,33 @@ void VisiteurDetectionRobot::visiter(NoeudTable* table)
     }
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudLigne* ligne)
+///
+/// Fonction qui vérifie si le robot détecte une ligne 
+///
+/// @param[in] ligne:  Pointeur sur un noeud ligne.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDetectionRobot::visiter(NoeudLigne* ligne)
 {
     suiveurLigne_->verifierDetection(ligne);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudPoteau* poteau)
+///
+/// Fonction qui vérifie si le robot est en collision avec un poteau et si le capteur du robot détecte un poteau.
+///
+/// @param[in] poteau:  Pointeur sur un noeud poteau.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDetectionRobot::visiter(NoeudPoteau* poteau)
 {
 	bool estEnCollision = robot_->verifierCollision(poteau);
@@ -80,7 +163,17 @@ void VisiteurDetectionRobot::visiter(NoeudPoteau* poteau)
     }
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudMur* mur)
+///
+/// Fonction qui vérifie si le robot est en collision avec un mur et si le capteur du robot détecte un mur.
+///
+/// @param[in] mur:  Pointeur sur un noeud mur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void VisiteurDetectionRobot::visiter(NoeudMur* mur)
 {
 	bool estEnCollision = robot_->verifierCollision(mur);
@@ -93,3 +186,7 @@ void VisiteurDetectionRobot::visiter(NoeudMur* mur)
         capteursDistance_->at(i).verifierDetection(mur);
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

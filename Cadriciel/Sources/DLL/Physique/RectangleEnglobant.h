@@ -92,32 +92,95 @@ private:
     double hauteur_{ 0.0 };
     double largeur_{ 0.0 };
 };
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void RectangleEnglobant::assignerAngle(const double& angle)
+///
+/// Cette fonction assigne l'angle du rectangle englobante.
+///
+/// @param[in] angle : Angle du rectangle englobant en double.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void RectangleEnglobant::assignerAngle(const double& angle)
 {
     angle_ = angle;
 }
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void RectangleEnglobant::assignerHauteur(const double& hauteur)
+///
+/// Cette fonction assigne la hauteur du rectangle englobante.
+///
+/// @param[in] hauteur : hauteur du rectangle englobant en double.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void RectangleEnglobant::assignerHauteur(const double& hauteur)
 {
     hauteur_ = hauteur;
 }
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void RectangleEnglobant::assignerLargeur(const double& largeur)
+///
+/// Cette fonction assigne la largeur du rectangle englobante.
+///
+/// @param[in] largeur : largeur du rectangle englobant en double.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void RectangleEnglobant::assignerLargeur(const double& largeur)
 {
     largeur_ = largeur;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double RectangleEnglobant::obtenirAngle() const
+///
+/// Cette fonction retourne l'angle du rectangle englobant.
+///
+/// @param[in] Aucun.
+///
+/// @return double: Angle du rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 inline double RectangleEnglobant::obtenirAngle() const
 {
     return angle_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double RectangleEnglobant::obtenirHauteur() const
+///
+/// Cette fonction retourne la hauteur du rectangle englobant.
+///
+/// @param[in] Aucun.
+///
+/// @return double: Hauteur du rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 inline double RectangleEnglobant::obtenirHauteur() const
 {
     return hauteur_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double RectangleEnglobant::obtenirLargeur() const
+///
+/// Cette fonction retourne la largeur du rectangle englobant.
+///
+/// @param[in] Aucun.
+///
+/// @return double: Largeur du rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 inline double RectangleEnglobant::obtenirLargeur() const
 {
     return largeur_;
