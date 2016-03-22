@@ -12,7 +12,6 @@
 #include "rapidjson\writer.h"
 #include "rapidjson\reader.h"
 #include "rapidjson\filewritestream.h"
-#include "rapidjson\filereadstream.h"
 #include <sys\stat.h>
 #include <windows.h>
 #include <locale>
@@ -39,12 +38,7 @@
 ////////////////////////////////////////////////////////////////////////
 ProfilUtilisateur::ProfilUtilisateur(){
 	if (!utilitaire::fichierExiste(CHEMIN_PROFIL + DERNIER_PROFIL)){
-		struct stat buffer;
-		if (stat(CHEMIN_PROFIL.c_str(), &buffer) != 0){
-			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
-			std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
-			CreateDirectory(wideString.c_str(), NULL);
-		}
+		creationDossierDonnees();
 		changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
 	}
 	
@@ -78,6 +72,26 @@ ProfilUtilisateur::ProfilUtilisateur(){
 ////////////////////////////////////////////////////////////////////////
 ProfilUtilisateur::~ProfilUtilisateur(){
 
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::creationDossierDonnees()
+///
+///	Fonction servant à vérifier si le dossier Donnees existe. Dans le cas où il n'existe pas, on le crée.
+///
+/// @return bool Représente si le dossier existait déjà
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::creationDossierDonnees(){
+	struct stat buffer;
+	bool dossierDonneesExiste = stat(CHEMIN_PROFIL.c_str(), &buffer) == 0;
+	if (!dossierDonneesExiste){
+		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
+		std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
+		CreateDirectory(wideString.c_str(), NULL);
+	}
+	return dossierDonneesExiste;
 }
 
 ////////////////////////////////////////////////////////////////////////

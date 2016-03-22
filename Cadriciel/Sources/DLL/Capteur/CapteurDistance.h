@@ -89,8 +89,13 @@ public:
 	inline void assignerParametreZoneDanger(TypeComportement comportement, double largeur);
 	inline void assignerParametreZoneSecuritaire(TypeComportement comportement, double largeur);
 
-	inline TypeComportement obtenirComportementZoneDanger(){return comportementSecuritaire_;}
-	inline TypeComportement obtenirComportementZoneSecuritaire(){ return comportementDanger_; };
+	inline bool obtenirEstActif();
+
+	inline TypeComportement obtenirComportementZoneDanger();
+	inline TypeComportement obtenirComportementZoneSecuritaire();
+
+	inline double obtenirLargeurDanger();
+	inline double obtenirLargeurSecuritaire();
 
 	void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
@@ -156,7 +161,7 @@ inline void CapteurDistance::assignerParametreZoneSecuritaire(TypeComportement c
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
-/// inline EtatCapteurDistance CapteurDistance::obtenirEtat()
+/// @fn inline EtatCapteurDistance CapteurDistance::obtenirEtat()
 ///
 /// Cette méthode retourne l'état du capteur de distance.
 ///
@@ -172,7 +177,7 @@ inline EtatCapteurDistance CapteurDistance::obtenirEtat()
 
 ////////////////////////////////////////////////////////////////////////////////
 ///
-/// inline void CapteurDistance::reinitialiserEtat()
+/// @fn inline void CapteurDistance::reinitialiserEtat()
 ///
 /// Cette méthode permet de réinitialiser l'état du capteur à aucune détection.
 ///
@@ -182,6 +187,71 @@ inline EtatCapteurDistance CapteurDistance::obtenirEtat()
 inline void CapteurDistance::reinitialiserEtat()
 {
     etat_ = AUCUNE_DETECTION;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline bool CapteurDistance::obtenirEstActif()
+///
+/// Retourne si le capteur est actif ou non
+///
+/// @return bool
+///
+////////////////////////////////////////////////////////////////////////////////
+inline bool CapteurDistance::obtenirEstActif(){
+	return estActif_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline TypeComportement CapteurDistance::obtenirComportementZoneDanger()
+///
+/// Retourne le comportement à adopter dans une zone de danger
+///
+/// @return TypeComportement
+///
+////////////////////////////////////////////////////////////////////////////////
+inline TypeComportement CapteurDistance::obtenirComportementZoneDanger(){
+	return comportementDanger_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline TypeComportement CapteurDistance::obtenirComportementZoneSecuritaire()
+///
+/// Retourne le comportement à adopter dans une zone sécuritaire
+///
+/// @return TypeComportement
+///
+////////////////////////////////////////////////////////////////////////////////
+inline TypeComportement CapteurDistance::obtenirComportementZoneSecuritaire(){
+	return comportementSecuritaire_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double CapteurDistance::obtenirLargeurDanger()
+///
+/// Retourne la largeur de la zone de danger
+///
+/// @return double
+///
+////////////////////////////////////////////////////////////////////////////////
+inline double CapteurDistance::obtenirLargeurDanger(){
+	return largeurDanger_;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline double CapteurDistance::obtenirLargeurSecuritaire()
+///
+/// Retourne la largeur de la zone sécuritaire
+///
+/// @return double
+///
+////////////////////////////////////////////////////////////////////////////////
+inline double CapteurDistance::obtenirLargeurSecuritaire(){
+	return largeurSecuritaire_;
 }
 
 #endif // CAPTEUR_DISTANCE_H

@@ -82,6 +82,8 @@ public:
 	void toJSON(rapidjson::Writer<rapidjson::FileWriteStream>& writer);
 
 	void assignerActif(bool estActif);
+
+	inline bool obtenirEstActif();
 		
 private:
 	bool estActif_;
@@ -96,4 +98,20 @@ private:
     void initialiser();
 };
 
+////////////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline bool SuiveurLigne::obtenirEstActif()
+///
+/// Retourne si le suiveur de ligne est actif ou non
+///
+/// @return bool
+///
+////////////////////////////////////////////////////////////////////////////////
+inline bool SuiveurLigne::obtenirEstActif(){
+	return estActif_;
+}
+
 #endif // SUIVEUR_LIGNE_H
+////////////////////////////////////////////////
+/// @}
+////////////////////////////////////////////////

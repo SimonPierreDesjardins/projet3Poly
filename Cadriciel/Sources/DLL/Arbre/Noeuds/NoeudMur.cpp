@@ -147,7 +147,7 @@ void NoeudMur::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    rectangleEnglobant_.afficher(positionCourante_);
+    //rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

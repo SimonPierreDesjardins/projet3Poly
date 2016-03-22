@@ -16,6 +16,7 @@
 #include "CommandeRobot.h"
 #include "ComportementAbstrait.h"
 #include "./../../Enum/ConfigureControlEnum.cs"
+#include "rapidjson\filereadstream.h"
 #include <deque>
 #include <Windows.h>
 #include "CapteurDistance.h"
@@ -43,8 +44,12 @@ enum optionsDebogagesEnum
 ///////////////////////////////////////////////////////////////////////////
 class ProfilUtilisateur
 {
+	friend class ProfilUtilisateurTest;
+
 	public:
 		ProfilUtilisateur();
+
+		ProfilUtilisateur(std::string cheminProfil);
 
 		~ProfilUtilisateur();
 
@@ -59,8 +64,6 @@ class ProfilUtilisateur
 		void chargerDernierProfil();
 
 		CommandeRobot* obtenirCommandeRobot(unsigned char touche) const;
-
-		void modifierToucheCommande(char touche, TypeCommande commande);
 
 		bool toucheEstUtilise(char touche);
 
@@ -99,6 +102,8 @@ class ProfilUtilisateur
 		int* obtenirLimiteParametres();
 
 	private:
+		bool creationDossierDonnees();
+
 		void changerDernierProfil(std::string nomProfil);
 
 		void sauvegarder();

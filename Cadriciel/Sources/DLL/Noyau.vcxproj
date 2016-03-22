@@ -40,10 +40,10 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\Exe\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\..\Exe</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\Exe\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\..\Exe</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
@@ -62,7 +62,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>X:\Bureau\3 Poly\INF2990\inf2990-06\Cadriciel\Sources\DLL\MachineAModes;X:\inf2990-06\Cadriciel\Sources\DLL\MachineAEtats;../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Comportement;Configuration;Interface;Tests;Visiteur;MachineAEtats;MachineAModes;ControleRobot;Commande;ProfilUtilisateur;ControleRobot\Commande;ControleRobot\Comportement;Capteur;Physique;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Comportement;Configuration;Interface;Tests;Visiteur;MachineAEtats;MachineAModes;ControleRobot;Commande;ProfilUtilisateur;ControleRobot\Commande;ControleRobot\Comportement;Capteur;Physique;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;GLEW_BUILD;_DEBUG;_WINDOWS;_USRDLL;INF2990_EXPORTS;FTGL_LIBRARY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -149,7 +149,6 @@
     <ClCompile Include="Capteur\CapteurDistance.cpp" />
     <ClCompile Include="Capteur\CapteurOptique.cpp" />
     <ClCompile Include="Capteur\SuiveurLigne.cpp" />
-    <ClCompile Include="ControleRobotTest.cpp" />
     <ClCompile Include="Configuration\ConfigScene.cpp" />
     <ClCompile Include="Arbre\ArbreRendu.cpp" />
     <ClCompile Include="Arbre\ArbreRenduINF2990.cpp" />
@@ -187,8 +186,10 @@
     <ClCompile Include="Tests\BancTests.cpp" />
     <ClCompile Include="Tests\CapteurTest.cpp" />
     <ClCompile Include="Tests\ConfigSceneTest.cpp" />
+    <ClCompile Include="Tests\ControleRobotTest.cpp" />
     <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
     <ClCompile Include="Tests\PhysiqueTest.cpp" />
+    <ClCompile Include="Tests\ProfilUtilisateurTest.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
@@ -216,7 +217,6 @@
     <ClInclude Include="Arbre\Noeuds\NoeudSegment.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTable.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudTypes.h" />
-    <ClInclude Include="CapteurTest.h" />
     <ClInclude Include="Capteur\CapteurDistance.h" />
     <ClInclude Include="Capteur\CapteurOptique.h" />
     <ClInclude Include="Capteur\SuiveurLigne.h" />
@@ -258,11 +258,13 @@
     <ClInclude Include="Physique\FormeEnglobanteAbstraite.h" />
     <ClInclude Include="Physique\RectangleEnglobant.h" />
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
-    <ClInclude Include="ControleRobotTest.h" />
     <ClInclude Include="Tests\BancTests.h" />
+    <ClInclude Include="Tests\CapteurTest.h" />
     <ClInclude Include="Tests\ConfigSceneTest.h" />
+    <ClInclude Include="Tests\ControleRobotTest.h" />
     <ClInclude Include="Tests\NoeudAbstraitTest.h" />
     <ClInclude Include="Tests\PhysiqueTest.h" />
+    <ClInclude Include="Tests\ProfilUtilisateurTest.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />

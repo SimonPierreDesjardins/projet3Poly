@@ -1,3 +1,13 @@
+///////////////////////////////////////////////////////////////////////////////
+/// @file RectangleEnglobant.cpp
+/// @author Olivier St-Amour
+/// @date 2015-02-14
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////////
+
 #include "RectangleEnglobant.h"
 
 #include "GL/glew.h"
@@ -8,30 +18,89 @@
 #include "AideCollision.h"
 #include "Droite3D.h"
 
-#include <iostream>
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::RectangleEnglobant()
+///
+/// Constructeur par défaut de la classe
+///
+/// @param[in] Aucun.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 RectangleEnglobant::RectangleEnglobant()
 {
 }
 
-
-RectangleEnglobant::RectangleEnglobant(const glm::dvec3& centre, const double& angle, 
-    const double& hauteur, const double& largeur)
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::RectangleEnglobant(	const glm::dvec3& centre, const double& angle, 
+///												const double& hauteur, const double& largeur)
+///
+/// Constructeur qui initialise les attributs de la classe.
+///
+/// @param[in]	centre : position centrale du rectangle englobant,
+///				angle : angle du rectangle englobant.
+///				hauteur : hauteur du rectangle englobant.
+///				largeur : largeur du rectangle englobant
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
+RectangleEnglobant::RectangleEnglobant(	const glm::dvec3& centre, const double& angle, 
+										const double& hauteur, const double& largeur)
         : FormeEnglobanteAbstraite(centre), angle_(angle), hauteur_(hauteur), largeur_(largeur)
 {
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::~RectangleEnglobant()
+///
+/// Destructeur de la classe.
+///
+/// @param[in]	Aucun.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 RectangleEnglobant::~RectangleEnglobant()
 {
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante)
+///
+/// Initialise les attributs de la classe selon la boiteEnglobante passée en paramètre.
+///
+/// @param[in]	boiteEnglobante : la boîte englobante à partir de laquelle on veut créer un rectangleEnglobant.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::initialiser(const utilitaire::BoiteEnglobante& boiteEnglobante)
 {
     hauteur_ = glm::abs(boiteEnglobante.coinMax.y - boiteEnglobante.coinMin.y);
     largeur_ = glm::abs(boiteEnglobante.coinMax.x - boiteEnglobante.coinMin.x);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerEstDansLimites(	const double& xMin, const double& xMax,
+///													const double& yMin, const double& yMax)
+///
+/// Détermine si le rectangle englobant est à l'intérieur de la zone passée en paramètre.
+///
+/// @param[in]	xMin : la valeur en x du coin minimum de la zone.
+///				xMax : la valeur en x du coin maximum de la zone.
+///				yMin : la valeur en y du coin minimum de la zone.
+///				yMax : la valeur en y du coin maximum de la zone.
+///
+/// @return bool : indique si le rectangle est dans la zone ou non.
+///
+////////////////////////////////////////////////////////////////////////
 bool RectangleEnglobant::calculerEstDansLimites(const double& xMin, const double& xMax,
                                                 const double& yMin, const double& yMax) const
 {
@@ -49,6 +118,17 @@ bool RectangleEnglobant::calculerEstDansLimites(const double& xMin, const double
     return coinsDansLimite;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerEstDansForme(const glm::dvec3& point)
+///
+/// Détermine si le point passé en paramètre est dans le rectangle englobant.
+///
+/// @param[in]	point : point dont on veut vérifier la position.
+///
+/// @return bool : indique si oui ou non le point se trouve dans le rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
 bool RectangleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
 {
     // Obtenir les vecteurs unitaires qui représentent l'orientation du rectangle.
@@ -67,7 +147,17 @@ bool RectangleEnglobant::calculerEstDansForme(const glm::dvec3& point) const
                                       projectionLargeur, -largeur_ / 2.0, largeur_ / 2.0);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle)
+///
+/// Détermine s'il y a intersection entre le rectangle englobant actuel et le rectangle englobant passé en paramètre.
+///
+/// @param[in]	rectangle : rectangle avec lequel on veut vérifier l'intersection.
+///
+/// @return bool : indique si oui ou non il y a intersection entre les rectangles englobants.
+///
+////////////////////////////////////////////////////////////////////////
 bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangle) const
 {     
     const int HAUTEUR = 0;
@@ -113,8 +203,18 @@ bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangl
     return enIntersection;
 }
 
-
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const
+///
+/// Calcul les vecteurs (unitaires) d'orientation du rectangle englobant et les met dans les variables passées en paramètres.
+///
+/// @param[in]	orientationHauteur : variable dans laquelle on met le vecteur correspondant à l'orientation de la hauteur du rectangle englobant.
+///				orientationLargeur : variable dans laquelle on met le vecteur correspondant à l'orientation de la largeur du rectangle englobant.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationHauteur, glm::dvec3& orientationLargeur) const
 {
     // Calcule du vecteur qui représente la hauteur.
@@ -130,7 +230,17 @@ void RectangleEnglobant::calculerVecteursOrientation(glm::dvec3& orientationHaut
     orientationHauteur = glm::normalize(orientationHauteur);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerRayon() const
+///
+/// Calcul le rayon d'un cercle autour du rectangle.
+///
+/// @param[in]	Aucun.
+///
+/// @return double : le rayon du cercle.
+///
+////////////////////////////////////////////////////////////////////////
 double RectangleEnglobant::calculerRayon() const
 {
     // Obtenir les vecteurs unitaires qui représente l'orientation du rectangle.
@@ -143,7 +253,19 @@ double RectangleEnglobant::calculerRayon() const
     return glm::distance(orientationHauteur, orientationLargeur);
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerDistancesPoint(	glm::dvec3 distances[4], 
+///													const glm::dvec3& point) const
+///
+/// Calcul la distance entre les coins du rectangle englobant et le point passé en paramètre et met les valeurs dans la variable coins passée en paramètre.
+///
+/// @param[in]	distances : tableau de 4 vecteurs dans lequel on met les valeurs correspondant à la distance entre chaque coin du rectangle et le point passé en paramètre.
+///				point : point duquel on veut la distance avec les coins du rectangle.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::calculerDistancesPoint(glm::dvec3 distances[4], 
     const glm::dvec3& point) const
 {
@@ -163,7 +285,21 @@ void RectangleEnglobant::calculerDistancesPoint(glm::dvec3 distances[4],
     distances[3] = ( distancePointCentre + distanceCentreHauteur - distanceCentreLargeur );
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerIntervalleProjection(	glm::dvec3 distances[4], 
+///															const glm::dvec3& orientation, double& min, double& max) const
+///
+/// Projette les quatres vecteurs passés en paramètre sur l'orientation passée en paramètre et retourne l'intervalle de ces projections via les variables min et max passées en paramètre.
+///
+/// @param[in]	distances : les quatres vecteurs que l'on veut projeter.
+///				orientation : le vecteur sur lequel on fait les projections.
+///				min : valeur minimum de l'intervalle intervalle calculé.
+///				max : valeur maximum du l'intervalle intervalle calculé.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::calculerIntervalleProjection(glm::dvec3 distances[4], 
     const glm::dvec3& orientation, double& min, double& max) const
 {
@@ -189,7 +325,21 @@ void RectangleEnglobant::calculerIntervalleProjection(glm::dvec3 distances[4],
     }
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerDisjonctionSurIntervalle(	const double& min1, const double& max1,
+///																const double& min2, const double& max2) const
+///
+/// Détermine si les deux intervalles passés en paramètre sont en disjonction.
+///
+/// @param[in]	min1 : valeur minimum du premier intervalle.
+///				max1 : valeur maximum du premier intervalle.
+///				min2 : valeur minimum du deuxième intervalle.
+///				max2 : valeur maximum du deuxième intervalle.
+///
+/// @return bool : indique si oui ou non les intervalles sont en disjonction (séparés).
+///
+////////////////////////////////////////////////////////////////////////
 bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, const double& max1,
     const double& min2, const double& max2) const
 {
@@ -204,7 +354,21 @@ bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, co
     return disjonction12 || disjonction21;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
+///										const double& angle, const double& hauteur, const double& largeur)
+///
+/// Met à jour les attributs de la classe selon les données passées en paramètres.
+///
+/// @param[in]	positionCentre : position du centre du rectangle englobant.
+///				angle : angle du rectangle englobant.
+///				hauteur : hauteur du rectangle englobant.
+///				largeur : largeur du rectangle englobant
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
     const double& angle, const double& hauteur, const double& largeur)
 {
@@ -214,7 +378,17 @@ void RectangleEnglobant::mettreAJour(const glm::dvec3& positionCentre,
     largeur_ = largeur;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle)
+///
+/// Détermine s'il y a intersection entre le rectangle englobant actuel et le cercle englobant passé en paramètre.
+///
+/// @param[in]	cercle : cercle avec lequel on veut vérifier l'intersection.
+///
+/// @return bool : indique si oui ou non il y a intersection entre le rectangle et le cercle.
+///
+////////////////////////////////////////////////////////////////////////
 bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) const
 {
     glm::dvec3 positionCercle = cercle.obtenirPositionCentre();
@@ -248,7 +422,17 @@ bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) con
     return intersection;
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::afficher(const glm::dvec3& origine)
+///
+/// Affiche le rectangle englobant autour de l'objet.
+///
+/// @param[in]	origine : point de repère selon lequel le rectangle englobant est afficher.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::afficher(const glm::dvec3& origine) const
 {
     glm::dvec3 positionRelative = positionCentre_ - origine;
@@ -278,13 +462,33 @@ void RectangleEnglobant::afficher(const glm::dvec3& origine) const
     glPopMatrix();
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::afficher()
+///
+/// Appelle la fonction afficher avec la table comme origine. 
+///
+/// @param[in]	Aucun.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::afficher() const
 {
     afficher({ 0.0, 0.0, 5.0 });
 }
 
-
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4])
+///
+/// Calcule les coins du rectangle englobant et les met dans la variable passée en paramètre.
+///
+/// @param[in]	coins : tableau contenant les variables dans lesquelles ont met la position des coins du rectangle englobant.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
 {
     glm::dvec3 orientationHauteur, orientationLargeur;
@@ -299,6 +503,17 @@ void RectangleEnglobant::calculerPositionCoins(glm::dvec3 coins[4]) const
     coins[3] = positionCentre_ + distanceCentreLargeur - distanceCentreHauteur;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
+///
+/// Calcule la normale de la collision.
+///
+/// @param[in]	rectangle : rectangle avec lequel la colision a eu lieu.
+///
+/// @return glm::dvec3 : vecteur qui représente la normale de la collision.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant& rectangle) const
 {
     const int N_COINS = 4;
@@ -356,6 +571,17 @@ glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const RectangleEnglobant
     return glm::normalize(normale);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
+///
+/// Calcule la normale de la collision.
+///
+/// @param[in]	cercle : cercle avec lequel la colision a eu lieu.
+///
+/// @return glm::dvec3 : vecteur qui représente la normale de la collision.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& cercle) const
 {
     glm::dvec3 coins[4];
@@ -396,6 +622,18 @@ glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const CercleEnglobant& c
     }
     return glm::normalize(normale);
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant::calculerNormaleCollision(const glm::dvec3& point) const
+///
+/// Calcule la normale de la collision.
+///
+/// @param[in]	point : point avec lequel la colision a eu lieu.
+///
+/// @return glm::dvec3 : vecteur qui représente la normale de la collision.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 RectangleEnglobant::calculerNormaleCollision(const glm::dvec3& point) const
 {
     const int N_COINS = 4;

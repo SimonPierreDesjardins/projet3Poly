@@ -154,7 +154,7 @@ void NoeudSegment::afficherConcret() const
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
-    rectangleEnglobant_.afficher(positionCourante_);
+    //rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

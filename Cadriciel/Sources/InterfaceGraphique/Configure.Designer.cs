@@ -272,7 +272,7 @@
             this.button_Default.Name = "button_Default";
             this.button_Default.Size = new System.Drawing.Size(119, 43);
             this.button_Default.TabIndex = 11;
-            this.button_Default.Text = "Default";
+            this.button_Default.Text = "Défaut";
             this.button_Default.UseVisualStyleBackColor = true;
             this.button_Default.Click += new System.EventHandler(this.button_Default_Click);
             // 

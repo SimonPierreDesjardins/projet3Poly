@@ -45,7 +45,7 @@ extern "C"
 			return;
 		}
 		FacadeModele::obtenirInstance()->initialiserOpenGL((HWND)(handle));
-        executerTests();
+        //executerTests();
 	}
 
 	////////////////////////////////////////////////////////////////////////

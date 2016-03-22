@@ -310,10 +310,13 @@
     <ClCompile Include="Physique\CercleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
-    <ClCompile Include="ControleRobotTest.cpp">
+    <ClCompile Include="Tests\ProfilUtilisateurTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
     <ClCompile Include="Tests\CapteurTest.cpp">
+      <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="Tests\ControleRobotTest.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>
   </ItemGroup>
@@ -540,10 +543,13 @@
     <ClInclude Include="Arbre\Noeuds\NoeudRoues.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
     </ClInclude>
-    <ClInclude Include="ControleRobotTest.h">
+    <ClInclude Include="Tests\ControleRobotTest.h">
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
-    <ClInclude Include="CapteurTest.h">
+    <ClInclude Include="Tests\ProfilUtilisateurTest.h">
+      <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Tests\CapteurTest.h">
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
   </ItemGroup>

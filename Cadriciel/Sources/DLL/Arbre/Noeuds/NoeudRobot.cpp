@@ -30,8 +30,6 @@
 
 #include "RectangleEnglobant.h"
 
-#include <iostream>
-
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
@@ -153,7 +151,7 @@ void NoeudRobot::afficherConcret() const
     // Débugage des capteurs de distance.
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 	{
-        suiveurLigne_->afficher();
+        //suiveurLigne_->afficher();
 		// Débugage des capteurs de distance.
 		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
 		{
@@ -163,7 +161,7 @@ void NoeudRobot::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-	rectangleEnglobant_.afficher(positionCourante_);
+	//rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////
