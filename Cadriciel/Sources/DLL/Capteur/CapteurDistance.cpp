@@ -177,7 +177,7 @@ void CapteurDistance::verifierDetection(NoeudMur* mur)
     RectangleEnglobant* rectangle = mur->obtenirFormeEnglobante();
     // Si le capteur se trouve déjà en détection de  zone de danger,
     // on le laisse dans cet état.
-    if (etat_ != DETECTION_ZONE_DANGER)
+    if (etat_ != DETECTION_ZONE_DANGER && estActif_)
     {
         bool danger = zoneDanger_.calculerIntersection(*rectangle);
         if (!danger)
@@ -249,7 +249,7 @@ void CapteurDistance::verifierDetection(NoeudTable* table)
     }
     // Si le capteur se trouve déjà en détection de zone de danger,
     // on le laisse dans cet état.
-    if (etat_ != DETECTION_ZONE_DANGER)
+    if (etat_ != DETECTION_ZONE_DANGER && estActif_)
     {
         if (!danger)
         {

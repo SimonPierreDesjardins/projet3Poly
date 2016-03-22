@@ -97,50 +97,51 @@ void ComportementBalayage::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementBalayage::mettreAJour(){
-
-	//Si une ligne est trouvée nous passons à la suivie de ligne
-	if (controleRobot_->ligneDetectee()){
-		controleRobot_->assignerComportement(SUIVIDELIGNE, L"Ligne détectée");
-	}
-
-	NoeudRobot* noeud = controleRobot_->obtenirNoeud();
-
-	switch (etatRotation){
-
-	// Nous sommes dans la premiere rotation 90 deg antihoraire
-	case 0:
-		// Envoie la commande de rotation anti-horaire
-		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
-		// si tu atteins l'angle voulu
-		if ((noeud != nullptr) && (noeud->obtenirAngleRotation() > angleCible)){
-			//change l'angle cible et l'état
-			angleCible = noeud->obtenirAngleRotation() - 180;
-			etatRotation++;
+	if (controleRobot_ != nullptr){
+		//Si une ligne est trouvée nous passons à la suivie de ligne
+		if (controleRobot_->ligneDetectee()){
+			controleRobot_->assignerComportement(SUIVIDELIGNE, L"Ligne détectée");
 		}
-		break;
+
+		NoeudRobot* noeud = controleRobot_->obtenirNoeud();
+
+		switch (etatRotation){
+
+			// Nous sommes dans la premiere rotation 90 deg antihoraire
+		case 0:
+			// Envoie la commande de rotation anti-horaire
+			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
+			// si tu atteins l'angle voulu
+			if ((noeud != nullptr) && (noeud->obtenirAngleRotation() > angleCible)){
+				//change l'angle cible et l'état
+				angleCible = noeud->obtenirAngleRotation() - 180;
+				etatRotation++;
+			}
+			break;
 
 
-	// Nous sommes dans la deuxieme rotation 180 deg horaire
-	case 1:
-		// Envoie la commande de rotation anti-horaire
-		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
-		// si tu atteins l'angle voulu
-		if ((noeud != nullptr) && (noeud->obtenirAngleRotation() < angleCible)){
-			//change l'angle cible et l'état
-			angleCible = noeud->obtenirAngleRotation() + 90;
-			etatRotation++;
+			// Nous sommes dans la deuxieme rotation 180 deg horaire
+		case 1:
+			// Envoie la commande de rotation anti-horaire
+			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
+			// si tu atteins l'angle voulu
+			if ((noeud != nullptr) && (noeud->obtenirAngleRotation() < angleCible)){
+				//change l'angle cible et l'état
+				angleCible = noeud->obtenirAngleRotation() + 90;
+				etatRotation++;
+			}
+			break;
+
+		case 2:
+			// Envoie la commande de rotation anti-horaire
+			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
+			// si tu atteins l'angle voulu
+			if ((noeud != nullptr) && (noeud->obtenirAngleRotation() > angleCible)){
+				controleRobot_->assignerComportement(comportementSuivant_, L"Balayage terminé");
+			}
+			break;
+
 		}
-		break;
-
-	case 2:
-		// Envoie la commande de rotation anti-horaire
-		controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
-		// si tu atteins l'angle voulu
-		if ((noeud != nullptr) && (noeud->obtenirAngleRotation() > angleCible)){
-			controleRobot_->assignerComportement(comportementSuivant_, L"Balayage terminé");
-		}
-		break;
-
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////

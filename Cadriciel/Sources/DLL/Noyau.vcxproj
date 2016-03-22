@@ -90,7 +90,8 @@
     <PostBuildEvent>
       <Message>
       </Message>
-      <Command>..\..\Exe\InterfaceGraphique.exe testsC++</Command>
+      <Command>
+      </Command>
     </PostBuildEvent>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>

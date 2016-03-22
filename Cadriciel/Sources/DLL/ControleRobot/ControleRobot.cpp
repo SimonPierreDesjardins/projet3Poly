@@ -235,6 +235,7 @@ void ControleRobot::terminerBoucleRobot(){
 	// Fermeture du thread s'il est joignable
 	if ((logiqueRobot != nullptr) && (logiqueRobot->joinable())){
 		logiqueRobot->join();
+		logiqueRobot = nullptr;
 	}
 
 	// Nous redonnons à manuel sa valeur de départ
@@ -406,7 +407,7 @@ NoeudRobot* ControleRobot::obtenirNoeud(){
 ////////////////////////////////////////////////////////////////////////
 bool ControleRobot::ligneDetectee(){
 	bool ret = false;
-	if (robot_ != nullptr){
+	if ((robot_ != nullptr) && (robot_->obtenirSuiveurLigne() != nullptr)){
 		ret = robot_->obtenirSuiveurLigne()->obtenirEtatCapteurs() != 0x00;
 	}
 	return 	ret;

@@ -158,7 +158,7 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerConfigureHandles((IntPtr)comboBoxProfil.Handle, Int32.Parse((String)comboBoxProfil.Tag));
 
-            assignerHandles(configureTabs);
+            assignerHandles();
 
             initialisationParametres = true;
 
