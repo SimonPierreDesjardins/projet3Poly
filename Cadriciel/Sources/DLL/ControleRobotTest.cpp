@@ -133,12 +133,21 @@ void ControleRobotTest::testAssignationDeComportement(){
 }
 
 void ControleRobotTest::testPassageModeAutomatique(){
-	/*
+	std::vector<std::unique_ptr< ComportementAbstrait>> vecComportements;
+	vecComportements.push_back(std::make_unique <ComportementDefaut>());
+	vecComportements.push_back(std::make_unique <ComportementSuiviLigne>());
+	vecComportements.push_back(std::make_unique <ComportementBalayage>());
+
+	controleRobot_->assignerVecteurComportements(&vecComportements);
+
 	controleRobot_->passerAModeManuel();
 	controleRobot_->assignerComportement(BALAYAGE180, L"Test de passage au mode automatique");
 	controleRobot_->passerAModeAutomatique();
+	CPPUNIT_ASSERT(controleRobot_->logiqueRobot != nullptr);
+	CPPUNIT_ASSERT(controleRobot_->manuel == false);
 	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDefaut") != std::wstring::npos);
-    */
+
+	controleRobot_->passerAModeManuel();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -151,16 +160,34 @@ void ControleRobotTest::testPassageModeAutomatique(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ControleRobotTest::testPassageModeManuel(){
+	std::vector<std::unique_ptr< ComportementAbstrait>> vecComportements;
+	vecComportements.push_back(std::make_unique <ComportementDefaut>());
+	controleRobot_->assignerVecteurComportements(&vecComportements);
+
+	controleRobot_->passerAModeManuel();
+	controleRobot_->passerAModeAutomatique();
 	controleRobot_->passerAModeManuel();
 	CPPUNIT_ASSERT(controleRobot_->logiqueRobot == nullptr);
 	CPPUNIT_ASSERT(controleRobot_->manuel == true);
 }
 
 void ControleRobotTest::testAlternanceModeManuelAuto(){
-	//controleRobot_->passerAModeAutomatique();
+	
+	std::vector<std::unique_ptr< ComportementAbstrait>> vecComportements;
+	vecComportements.push_back(std::make_unique <ComportementDefaut>());
+	controleRobot_->assignerVecteurComportements(&vecComportements);
+
+	controleRobot_->passerAModeManuel();
+	controleRobot_->passerAModeAutomatique();
 	controleRobot_->inverserModeControle();
 	CPPUNIT_ASSERT(controleRobot_->logiqueRobot == nullptr);
 	CPPUNIT_ASSERT(controleRobot_->manuel == true);
+	controleRobot_->inverserModeControle();
+	CPPUNIT_ASSERT(controleRobot_->logiqueRobot != nullptr);
+	CPPUNIT_ASSERT(controleRobot_->manuel == false);
+	CPPUNIT_ASSERT(controleRobot_->comportement_->obtenirNomComportement().find(L"ComportementDefaut") != std::wstring::npos);
+	controleRobot_->passerAModeManuel();
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////

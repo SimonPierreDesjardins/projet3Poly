@@ -115,34 +115,36 @@ void ComportementDeviation::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementDeviation::mettreAJour(){
-	//Implémentation de l'exception Rapport d'élicitation p.22
-	if (controleRobot_->ligneDetectee()){
-		if (!ignorerLigne_){
-			controleRobot_->assignerComportement(SUIVIDELIGNE, L"Ligne détectée");
-		}
-	}
-	else{
-		ignorerLigne_ = false;
-	}
-
-	bool angleAtteinte = false;
-
-	NoeudRobot* noeud = controleRobot_->obtenirNoeud();
-	// Rotation du robot
-	if (noeud != nullptr){
-		if (gauche){
-			// Dévier à gauche et vérifier angle
-			controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
-			angleAtteinte = noeud->obtenirAngleRotation() > angleCible_;
+	if (controleRobot_ != nullptr){
+		//Implémentation de l'exception Rapport d'élicitation p.22
+		if (controleRobot_->ligneDetectee()){
+			if (!ignorerLigne_){
+				controleRobot_->assignerComportement(SUIVIDELIGNE, L"Ligne détectée");
+			}
 		}
 		else{
-			// Dévier à droite et vérifier angle
-			controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
-			angleAtteinte = noeud->obtenirAngleRotation() < angleCible_;
+			ignorerLigne_ = false;
 		}
-	}
-	if (angleAtteinte){
-		controleRobot_->assignerComportement(comportementSuivant_, L"Deviation terminée");
+
+		bool angleAtteinte = false;
+
+		NoeudRobot* noeud = controleRobot_->obtenirNoeud();
+		// Rotation du robot
+		if (noeud != nullptr){
+			if (gauche){
+				// Dévier à gauche et vérifier angle
+				controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
+				angleAtteinte = noeud->obtenirAngleRotation() > angleCible_;
+			}
+			else{
+				// Dévier à droite et vérifier angle
+				controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
+				angleAtteinte = noeud->obtenirAngleRotation() < angleCible_;
+			}
+		}
+		if (angleAtteinte){
+			controleRobot_->assignerComportement(comportementSuivant_, L"Deviation terminée");
+		}
 	}
 }
 

@@ -89,52 +89,52 @@ void ComportementSuiviLigne::initialiser(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ComportementSuiviLigne::mettreAJour(){
-	static uint8_t dernierEtat;
-    // TODO: On veut probablement verouiller le mutex ici afin d'éviter d'avoir des résultats incohérents.
-	uint8_t etatSuiveurLigne = controleRobot_->obtenirNoeud()->obtenirSuiveurLigne()->obtenirEtatCapteurs();
+	if (controleRobot_ != nullptr){
+		static uint8_t dernierEtat;
+		// TODO: On veut probablement verouiller le mutex ici afin d'éviter d'avoir des résultats incohérents.
+		uint8_t etatSuiveurLigne = controleRobot_->obtenirNoeud()->obtenirSuiveurLigne()->obtenirEtatCapteurs();
 
-	// Tant que nous n'avons pas perdu la ligne, on la suit
-	if (!rechercheLigne){
-		dernierEtat = etatSuiveurLigne;
-		switch (etatSuiveurLigne){
-		case (0x07) :
-		case(0x04) :
-			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
-			break;
-		case(0x06) :
-			controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
-			break;
-		case(0x01) :
-			controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
-			break;
-		case(0x03) :
-			controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
-			break;
-		case(0x02) :
-			controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
-			break;
-		default:
-			// On a perdu la ligne
-			rechercheLigne = true;
-			heurePerteLigne_ = time(nullptr);
-			break;
+		// Tant que nous n'avons pas perdu la ligne, on la suit
+		if (!rechercheLigne){
+			dernierEtat = etatSuiveurLigne;
+			switch (etatSuiveurLigne){
+			case (0x07) :
+			case (0x04) :
+					   controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
+				break;
+			case(0x06) :
+				controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
+				break;
+			case(0x01) :
+				controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
+				break;
+			case(0x03) :
+				controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
+				break;
+			case(0x02) :
+				controleRobot_->traiterCommande(&CommandeRobot(AVANCER), false);
+				break;
+			default:
+				// On a perdu la ligne
+				rechercheLigne = true;
+				heurePerteLigne_ = time(nullptr);
+				break;
+			}
+		}
+		// Si nous avons perdu la ligne, on se laisse une chance
+		else{
+			// On tente de retrouver une ligne là où nous l'avions vue.
+			//if (dernierEtat & 0x06 != 0)
+			// ligne retrouvée!
+			if (etatSuiveurLigne != 0x00){
+				rechercheLigne = false;
+			}
+			// trop tard, change de comportement
+			else if (difftime(time(nullptr), heurePerteLigne_) > 0.8){
+				controleRobot_->assignerComportement(comportementSuivant_, L"Ligne perdue");
+			}
 		}
 	}
-	// Si nous avons perdu la ligne, on se laisse une chance
-	else{
-		// On tente de retrouver une ligne là où nous l'avions vue.
-		//if (dernierEtat & 0x06 != 0)
-		// ligne retrouvée!
-		if (etatSuiveurLigne != 0x00){
-			rechercheLigne = false;
-		}
-		// trop tard, change de comportement
-		else if (difftime(time(nullptr), heurePerteLigne_) > 0.8){
-			controleRobot_->assignerComportement(comportementSuivant_, L"Ligne perdue");
-		}
-
-	}
-	
 }
 
 ///////////////////////////////////////////////////////////////////////////////
