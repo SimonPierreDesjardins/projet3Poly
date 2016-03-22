@@ -272,7 +272,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void afficherMenuTest(bool afficherMenu)
         {
-            menuSimTest.Visible = afficherMenu;
+            menuSimTest.Visible = false;
             modeEditionMenuSimTest.Visible = afficherMenu;
             premierePersonneMenuSimTest.Visible = !afficherMenu;
             viewPort_.Visible = afficherMenu;
@@ -1269,7 +1269,7 @@ namespace InterfaceGraphique
 
                 case Keys.Escape:
                     estEnPause = !estEnPause;
-                    //FonctionsNatives.mettreEnPause(estEnPause);
+                    menuSimTest.Visible = estEnPause;
                     picturePause.Visible = estEnPause;
                     menuSimTest.Visible = estEnPause;
                     break;
