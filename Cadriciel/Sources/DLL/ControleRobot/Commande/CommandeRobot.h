@@ -25,6 +25,7 @@
 /// @date 2016-02-16
 ///////////////////////////////////////////////////////////////////////////
 class CommandeRobot{
+	friend ControleRobotTest;
 	public:
         /// Constructeur par défaut.
         CommandeRobot();

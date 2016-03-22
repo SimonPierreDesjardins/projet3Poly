@@ -92,6 +92,8 @@
             this.capteurDistGaucheCB = new System.Windows.Forms.ComboBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.label19 = new System.Windows.Forms.Label();
             this.longueurSecuritaireCentreTxtBox = new System.Windows.Forms.TextBox();
@@ -102,6 +104,8 @@
             this.capteurDistCentreCB = new System.Windows.Forms.ComboBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.longueurSecuritaireDroitTxtBox = new System.Windows.Forms.TextBox();
@@ -124,10 +128,6 @@
             this.ZoneCapteurs = new System.Windows.Forms.Label();
             this.EtatEclairage = new System.Windows.Forms.Label();
             this.ChangeComportement = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -150,6 +150,7 @@
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -166,8 +167,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.configureTabs);
-            this.splitContainer1.Size = new System.Drawing.Size(748, 553);
-            this.splitContainer1.SplitterDistance = 27;
+            this.splitContainer1.Size = new System.Drawing.Size(768, 553);
+            this.splitContainer1.SplitterDistance = 30;
             this.splitContainer1.TabIndex = 0;
             // 
             // retourMenuButt
@@ -242,7 +243,7 @@
             this.configureTabs.Location = new System.Drawing.Point(0, 3);
             this.configureTabs.Name = "configureTabs";
             this.configureTabs.SelectedIndex = 0;
-            this.configureTabs.Size = new System.Drawing.Size(748, 519);
+            this.configureTabs.Size = new System.Drawing.Size(768, 547);
             this.configureTabs.TabIndex = 2;
             // 
             // tabPage1
@@ -262,7 +263,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(740, 493);
+            this.tabPage1.Size = new System.Drawing.Size(760, 521);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Touches clavier";
             // 
@@ -279,7 +280,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(256, 307);
+            this.label5.Location = new System.Drawing.Point(272, 310);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(179, 13);
             this.label5.TabIndex = 10;
@@ -288,7 +289,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(320, 74);
+            this.label4.Location = new System.Drawing.Point(336, 77);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(47, 13);
             this.label4.TabIndex = 9;
@@ -297,7 +298,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(529, 163);
+            this.label3.Location = new System.Drawing.Point(545, 166);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(122, 13);
             this.label3.TabIndex = 8;
@@ -306,7 +307,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(323, 163);
+            this.label2.Location = new System.Drawing.Point(339, 166);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 7;
@@ -315,7 +316,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(43, 163);
+            this.label1.Location = new System.Drawing.Point(59, 166);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(139, 13);
             this.label1.TabIndex = 6;
@@ -327,7 +328,7 @@
             this.textBoxAntiHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxAntiHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAntiHoraire.HideSelection = false;
-            this.textBoxAntiHoraire.Location = new System.Drawing.Point(26, 182);
+            this.textBoxAntiHoraire.Location = new System.Drawing.Point(42, 185);
             this.textBoxAntiHoraire.MaxLength = 1;
             this.textBoxAntiHoraire.Name = "textBoxAntiHoraire";
             this.textBoxAntiHoraire.ReadOnly = true;
@@ -344,7 +345,7 @@
             this.textBoxModeManuel.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxModeManuel.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxModeManuel.HideSelection = false;
-            this.textBoxModeManuel.Location = new System.Drawing.Point(226, 323);
+            this.textBoxModeManuel.Location = new System.Drawing.Point(242, 326);
             this.textBoxModeManuel.Name = "textBoxModeManuel";
             this.textBoxModeManuel.ReadOnly = true;
             this.textBoxModeManuel.Size = new System.Drawing.Size(234, 49);
@@ -360,7 +361,7 @@
             this.textBoxAvancer.Cursor = System.Windows.Forms.Cursors.Hand;
             this.textBoxAvancer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxAvancer.HideSelection = false;
-            this.textBoxAvancer.Location = new System.Drawing.Point(260, 90);
+            this.textBoxAvancer.Location = new System.Drawing.Point(276, 93);
             this.textBoxAvancer.MaxLength = 1;
             this.textBoxAvancer.Name = "textBoxAvancer";
             this.textBoxAvancer.ReadOnly = true;
@@ -377,7 +378,7 @@
             this.textBoxHoraire.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxHoraire.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxHoraire.HideSelection = false;
-            this.textBoxHoraire.Location = new System.Drawing.Point(507, 182);
+            this.textBoxHoraire.Location = new System.Drawing.Point(523, 185);
             this.textBoxHoraire.MaxLength = 1;
             this.textBoxHoraire.Name = "textBoxHoraire";
             this.textBoxHoraire.ReadOnly = true;
@@ -393,7 +394,7 @@
             this.textBoxReculer.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper;
             this.textBoxReculer.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.textBoxReculer.HideSelection = false;
-            this.textBoxReculer.Location = new System.Drawing.Point(260, 182);
+            this.textBoxReculer.Location = new System.Drawing.Point(276, 185);
             this.textBoxReculer.MaxLength = 1;
             this.textBoxReculer.Name = "textBoxReculer";
             this.textBoxReculer.ReadOnly = true;
@@ -410,7 +411,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(740, 493);
+            this.tabPage2.Size = new System.Drawing.Size(760, 521);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Comportements & capteurs";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -907,6 +908,24 @@
             this.panel2.Size = new System.Drawing.Size(567, 64);
             this.panel2.TabIndex = 91;
             // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(307, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(135, 13);
+            this.label11.TabIndex = 59;
+            this.label11.Text = "Longueur zone danger (po)";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Location = new System.Drawing.Point(292, 39);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(150, 13);
+            this.label20.TabIndex = 60;
+            this.label20.Text = "Longueur zone sécuritaire (po)";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -1015,6 +1034,24 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(567, 64);
             this.panel1.TabIndex = 89;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(307, 9);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(135, 13);
+            this.label15.TabIndex = 61;
+            this.label15.Text = "Longueur zone danger (po)";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(292, 39);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(150, 13);
+            this.label17.TabIndex = 62;
+            this.label17.Text = "Longueur zone sécuritaire (po)";
             // 
             // label7
             // 
@@ -1163,7 +1200,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(740, 493);
+            this.tabPage3.Size = new System.Drawing.Size(760, 521);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Options de débogage";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1261,47 +1298,11 @@
             this.ChangeComportement.TabIndex = 1;
             this.ChangeComportement.Text = "Changement de comportement";
             // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(307, 9);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(135, 13);
-            this.label11.TabIndex = 59;
-            this.label11.Text = "Longueur zone danger (po)";
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(292, 39);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(150, 13);
-            this.label20.TabIndex = 60;
-            this.label20.Text = "Longueur zone sécuritaire (po)";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(307, 9);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(135, 13);
-            this.label15.TabIndex = 61;
-            this.label15.Text = "Longueur zone danger (po)";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(292, 39);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(150, 13);
-            this.label17.TabIndex = 62;
-            this.label17.Text = "Longueur zone sécuritaire (po)";
-            // 
             // Configure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(748, 553);
+            this.ClientSize = new System.Drawing.Size(768, 553);
             this.ControlBox = false;
             this.Controls.Add(this.splitContainer1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;

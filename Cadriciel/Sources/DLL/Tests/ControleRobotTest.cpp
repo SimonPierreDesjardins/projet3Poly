@@ -208,6 +208,40 @@ void ControleRobotTest::testAlternanceModeManuelAuto(){
 	
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ControleRobotTest::testCommande()
+///
+/// Test le constructeur de commandeRobot
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobotTest::testCommande(){
+	CommandeRobot commandeRobot;
+	commandeRobot = CommandeRobot(AVANCER);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(commandeRobot.vitesseMoteurD_, commandeRobot.vitesseMoteurG_, 0);
+	CPPUNIT_ASSERT(commandeRobot.vitesseMoteurD_ > 0);
+
+	commandeRobot = CommandeRobot(RECULER);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(commandeRobot.vitesseMoteurD_, commandeRobot.vitesseMoteurG_, 0);
+	CPPUNIT_ASSERT(commandeRobot.vitesseMoteurD_ < 0);
+
+	commandeRobot = CommandeRobot(ARRETER);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(commandeRobot.vitesseMoteurD_, commandeRobot.vitesseMoteurG_, 0);
+	CPPUNIT_ASSERT(commandeRobot.vitesseMoteurD_ == 0);
+
+	commandeRobot = CommandeRobot(ROTATION_DROITE);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(commandeRobot.vitesseMoteurD_, -commandeRobot.vitesseMoteurG_, 0);
+	CPPUNIT_ASSERT(commandeRobot.vitesseMoteurD_ <= 0);
+	CPPUNIT_ASSERT(commandeRobot.vitesseMoteurG_ > 0);
+
+	commandeRobot = CommandeRobot(ROTATION_GAUCHE);
+	CPPUNIT_ASSERT_DOUBLES_EQUAL(commandeRobot.vitesseMoteurD_, -commandeRobot.vitesseMoteurG_, 0);
+	CPPUNIT_ASSERT(commandeRobot.vitesseMoteurD_ > 0);
+	CPPUNIT_ASSERT(commandeRobot.vitesseMoteurG_ <= 0);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

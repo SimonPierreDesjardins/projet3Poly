@@ -14,6 +14,7 @@
 #include <memory>
 #include "ControleRobot.h"
 #include "ComportementAbstrait.h"
+#include "CommandeRobot.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobotTest
@@ -38,6 +39,7 @@ class ControleRobotTest : public CppUnit::TestFixture
 	CPPUNIT_TEST(testPassageModeAutomatique);
 	CPPUNIT_TEST(testPassageModeManuel);
 	CPPUNIT_TEST(testAlternanceModeManuelAuto);
+	CPPUNIT_TEST(testCommande);
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -65,6 +67,8 @@ public:
 	void testPassageModeAutomatique();
 	void testPassageModeManuel();
 	void testAlternanceModeManuelAuto();
+
+	void testCommande();
 
 private:
 	ControleRobot* controleRobot_;
