@@ -311,12 +311,12 @@ bool ProfilUtilisateur::chargerProfil(){
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLAGAUCHE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_GAUCHE_CB), comportements_.at(EVITEMENTPARLAGAUCHE)->obtenirComportementSuivant());
 	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
-	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_GAUCHE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLAGAUCHE]["maxTemps"].GetDouble()*1000).substr(0, 5).c_str());
 
 	comportements_.push_back(std::make_unique<ComportementEvitement>(comportementsJSON[EVITEMENTPARLADROITE]));
 	ComboBox_SetCurSel(configureHandles.at(EVITEMENT_DROITE_CB), comportements_.at(EVITEMENTPARLADROITE)->obtenirComportementSuivant());
 	SendMessage(configureHandles.at(EVITEMENT_DROITE_ANGLE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(abs(comportementsJSON[EVITEMENTPARLADROITE]["maxAngle"].GetDouble())).substr(0, 5).c_str());
-	SendMessage(configureHandles.at(EVITEMENT_DROITE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLADROITE]["maxTemps"].GetDouble()).substr(0, 5).c_str());
+	SendMessage(configureHandles.at(EVITEMENT_DROITE_DUREE_TXT_BOX), WM_SETTEXT, 0, (LPARAM)std::to_wstring(comportementsJSON[EVITEMENTPARLADROITE]["maxTemps"].GetDouble()*1000).substr(0, 5).c_str());
 
 	itr++;
 

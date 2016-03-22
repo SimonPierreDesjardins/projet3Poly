@@ -165,11 +165,6 @@ namespace InterfaceGraphique
             assignerProfilsCB();
 
             initialisationParametres = false;
-
-            /*foreach (Control tab in configureTabs.TabPages)
-            {
-                tab.Enabled = false;
-            }*/
            
         }
 
@@ -229,14 +224,18 @@ namespace InterfaceGraphique
                 nomFichier = System.IO.Path.GetFileName(fichiersProfil[i]);
                 fichiersProfil[i] = nomFichier.Substring(0, nomFichier.IndexOf('.'));
             }
-
+            indexProfilDefaut = fichiersProfil.FindIndex(nom => nom == nomProfilDefaut);
+            string tmp = fichiersProfil[0];
+            fichiersProfil[0] = fichiersProfil[indexProfilDefaut];
+            fichiersProfil[indexProfilDefaut] = tmp;
+            indexProfilDefaut = 0;
             comboBoxProfil.Items.AddRange(fichiersProfil.ToArray());
 
             comboBoxProfil.SelectedIndexChanged -= comboBoxProfil_SelectedIndexChanged;
             comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomDernierProfil);
             comboBoxProfil.SelectedIndexChanged += comboBoxProfil_SelectedIndexChanged;
 
-            indexProfilDefaut = comboBoxProfil.FindString(nomProfilDefaut);
+            
 
             int indexCommande = 0;
             foreach (TextBox box in touchesCommande)
@@ -491,7 +490,7 @@ namespace InterfaceGraphique
             double nombre;
             string nouvelleValeur = null;
             int indexParametre = (int)parametre;
-            if (Double.TryParse(box.Text.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre) && BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] < 2)
+            if (Double.TryParse(box.Text.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out nombre) && BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(nombre))[3])[2] <= 2)
             {
                 if (nombre > limitesParametres[indexParametre].limiteMax)
                     nouvelleValeur = limitesParametres[indexParametre].limiteMax.ToString();
@@ -523,10 +522,13 @@ namespace InterfaceGraphique
             double largeur1;
             double largeur2 = stringToDouble(boxComplementaire.Text);
             int indexParametre = (int)typeParametre.LARGEUR_ZONE;
-            if (Double.TryParse(box.Text.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out largeur1) && BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(largeur1))[3])[2] < 2)
+            if (Double.TryParse(box.Text.Replace(',', '.'), System.Globalization.NumberStyles.Float, culture, out largeur1) && BitConverter.GetBytes(decimal.GetBits(Convert.ToDecimal(largeur1))[3])[2] <= 2)
             {
                 if (largeur1 > limitesParametres[indexParametre].limiteMax)
+                {
                     box.Text = limitesParametres[indexParametre].limiteMax.ToString();
+                    boxComplementaire.Text = limitesParametres[indexParametre].limiteMin.ToString();
+                }
                 else if (largeur1 + largeur2 > limitesParametres[indexParametre].limiteMax)
                     boxComplementaire.Text = (limitesParametres[indexParametre].limiteMax - largeur1).ToString();
                 else if (largeur1 < limitesParametres[indexParametre].limiteMin)
@@ -553,9 +555,10 @@ namespace InterfaceGraphique
         {
             if (box.Text == "")
                 box.Text = "0";
-            else if(oldText == "0" && box.Text[1] != '0')
+            else if (oldText == "0" && box.Text[1] != '0' && box.Text[1] != '.' && box.Text[1] != ',')
                 box.Text = box.Text.Replace("0", "");
-            else if (!decimalCheck(box))
+            
+            if (!decimalCheck(box))
             {
                 switch (parametre)
                 {
@@ -587,11 +590,14 @@ namespace InterfaceGraphique
         private bool decimalCheck(TextBox box)
         {
             if (box.Text.Count(f => f == '.' | f == ',') == 1 && (box.Text.IndexOf('.') > box.TextLength - 3 || box.Text.IndexOf(',') > box.TextLength - 3))
-                if (box.Tag as Object[] == null)
+            {
+                string[] tags = box.Tag.ToString().Split(';');
+                if (tags[tags.Length - 1] != "true")
                 {
-                    box.Tag = new Object[2] { box.Tag, 1 };
+                    box.Tag = box.Tag + ";true";
                     return true;
                 }
+            }
             return false;
         }
 
@@ -881,8 +887,8 @@ namespace InterfaceGraphique
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationGCB.SelectedValue, stringToDouble(angleDGTxtBox.Text), TypeComportement.DEVIATIONVERSLAGAUCHE);
                 FonctionsNatives.assignerComportementDeviation((TypeComportement)deviationDCB.SelectedValue, stringToDouble(angleDDTxtBox.Text), TypeComportement.DEVIATIONVERSLADROITE);
                 
-                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, stringToDouble(angleEGTxtBox.Text), stringToDouble(dureeEGTxtBox.Text), TypeComportement.EVITEMENTPARLAGAUCHE);
-                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, stringToDouble(angleEDTxtBox.Text), stringToDouble(dureeEDTxtBox.Text), TypeComportement.EVITEMENTPARLADROITE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementGCB.SelectedValue, stringToDouble(angleEGTxtBox.Text), stringToDouble(dureeEGTxtBox.Text)/1000, TypeComportement.EVITEMENTPARLAGAUCHE);
+                FonctionsNatives.assignerComportementEvitement((TypeComportement)evitementDCB.SelectedValue, stringToDouble(angleEDTxtBox.Text), stringToDouble(dureeEDTxtBox.Text)/1000, TypeComportement.EVITEMENTPARLADROITE);
                 
                 FonctionsNatives.assignerCapteurDistance(capteurDistDroitCB.SelectedIndex == 0, (TypeComportement)zoneDangerDroitCB.SelectedValue, stringToDouble(longueurDangerDroitTxtBox.Text), (TypeComportement)zoneSecuritaireDroitCB.SelectedValue, stringToDouble(longueurSecuritaireDroitTxtBox.Text), 0);
                 FonctionsNatives.assignerCapteurDistance(capteurDistCentreCB.SelectedIndex == 0, (TypeComportement)zoneDangerCentreCB.SelectedValue, stringToDouble(longueurDangerCentreTxtBox.Text), (TypeComportement)zoneSecuritaireCentreCB.SelectedValue, stringToDouble(longueurSecuritaireCentreTxtBox.Text), 1);

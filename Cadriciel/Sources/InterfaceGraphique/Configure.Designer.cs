@@ -541,31 +541,31 @@
             // 
             this.dureeEvitementDLbl.AutoSize = true;
             this.dureeEvitementDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dureeEvitementDLbl.Location = new System.Drawing.Point(570, 285);
+            this.dureeEvitementDLbl.Location = new System.Drawing.Point(551, 286);
             this.dureeEvitementDLbl.Name = "dureeEvitementDLbl";
-            this.dureeEvitementDLbl.Size = new System.Drawing.Size(36, 13);
+            this.dureeEvitementDLbl.Size = new System.Drawing.Size(58, 13);
             this.dureeEvitementDLbl.TabIndex = 81;
-            this.dureeEvitementDLbl.Text = "Durée";
+            this.dureeEvitementDLbl.Text = "Durée (ms)";
             // 
             // dureeEvitementGLbl
             // 
             this.dureeEvitementGLbl.AutoSize = true;
             this.dureeEvitementGLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dureeEvitementGLbl.Location = new System.Drawing.Point(570, 223);
+            this.dureeEvitementGLbl.Location = new System.Drawing.Point(551, 224);
             this.dureeEvitementGLbl.Name = "dureeEvitementGLbl";
-            this.dureeEvitementGLbl.Size = new System.Drawing.Size(36, 13);
+            this.dureeEvitementGLbl.Size = new System.Drawing.Size(58, 13);
             this.dureeEvitementGLbl.TabIndex = 79;
-            this.dureeEvitementGLbl.Text = "Durée";
+            this.dureeEvitementGLbl.Text = "Durée (ms)";
             // 
             // angleEvitementDLbl
             // 
             this.angleEvitementDLbl.AutoSize = true;
             this.angleEvitementDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleEvitementDLbl.Location = new System.Drawing.Point(570, 259);
+            this.angleEvitementDLbl.Location = new System.Drawing.Point(557, 260);
             this.angleEvitementDLbl.Name = "angleEvitementDLbl";
-            this.angleEvitementDLbl.Size = new System.Drawing.Size(34, 13);
+            this.angleEvitementDLbl.Size = new System.Drawing.Size(47, 13);
             this.angleEvitementDLbl.TabIndex = 77;
-            this.angleEvitementDLbl.Text = "Angle";
+            this.angleEvitementDLbl.Text = "Angle (°)";
             // 
             // evitementDCB
             // 
@@ -592,11 +592,11 @@
             // 
             this.angleDeviationDLbl.AutoSize = true;
             this.angleDeviationDLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleDeviationDLbl.Location = new System.Drawing.Point(570, 154);
+            this.angleDeviationDLbl.Location = new System.Drawing.Point(557, 155);
             this.angleDeviationDLbl.Name = "angleDeviationDLbl";
-            this.angleDeviationDLbl.Size = new System.Drawing.Size(34, 13);
+            this.angleDeviationDLbl.Size = new System.Drawing.Size(47, 13);
             this.angleDeviationDLbl.TabIndex = 73;
-            this.angleDeviationDLbl.Text = "Angle";
+            this.angleDeviationDLbl.Text = "Angle (°)";
             // 
             // deviationDCB
             // 
@@ -623,11 +623,11 @@
             // 
             this.angleEvitementGLbl.AutoSize = true;
             this.angleEvitementGLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleEvitementGLbl.Location = new System.Drawing.Point(570, 197);
+            this.angleEvitementGLbl.Location = new System.Drawing.Point(557, 198);
             this.angleEvitementGLbl.Name = "angleEvitementGLbl";
-            this.angleEvitementGLbl.Size = new System.Drawing.Size(34, 13);
+            this.angleEvitementGLbl.Size = new System.Drawing.Size(47, 13);
             this.angleEvitementGLbl.TabIndex = 69;
-            this.angleEvitementGLbl.Text = "Angle";
+            this.angleEvitementGLbl.Text = "Angle (°)";
             // 
             // balayageLbl
             // 
@@ -675,11 +675,11 @@
             // 
             this.angleDeviationGLbl.AutoSize = true;
             this.angleDeviationGLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.angleDeviationGLbl.Location = new System.Drawing.Point(570, 117);
+            this.angleDeviationGLbl.Location = new System.Drawing.Point(557, 118);
             this.angleDeviationGLbl.Name = "angleDeviationGLbl";
-            this.angleDeviationGLbl.Size = new System.Drawing.Size(34, 13);
+            this.angleDeviationGLbl.Size = new System.Drawing.Size(47, 13);
             this.angleDeviationGLbl.TabIndex = 63;
-            this.angleDeviationGLbl.Text = "Angle";
+            this.angleDeviationGLbl.Text = "Angle (°)";
             // 
             // deviationGCB
             // 
