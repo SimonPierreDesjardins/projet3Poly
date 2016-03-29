@@ -1069,7 +1069,6 @@ namespace InterfaceGraphique
             Marshal.Copy(obtenirLimitesParametres(), limitesParametres, 0, taille);
             return limitesParametres;
         }
-
     }
 }
 ////////////////////////////////////////////////

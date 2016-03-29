@@ -13,6 +13,7 @@
 
 #include "ControleRobot.h"
 #include "./../../Enum/TypeCommandeEnum.cs"
+#include "EnginSon.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class CommandeRobot
@@ -61,6 +62,9 @@ class CommandeRobot{
 
 		/// Représente si l'on change le mode d'utilisation du robot ou non. Si oui, celle-ci correspondra à un des deux modes d'utilisation (MODE_MANUEL ou MODE_AUTO)
 		TypeCommande typeCommande_;
+
+		/// le fichier son associé au déplacement du robot
+		typeSon sonMoteur;
 };
 
 

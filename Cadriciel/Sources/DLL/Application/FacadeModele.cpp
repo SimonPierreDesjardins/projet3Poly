@@ -44,6 +44,8 @@
 #include "EtatTypes.h"
 #include "ModeTypes.h"
 
+#include "EnginSon.h"
+
 /// Pointeur vers l'instance unique de la classe.
 std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 

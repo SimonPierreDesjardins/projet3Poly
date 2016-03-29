@@ -85,9 +85,6 @@
     <Filter Include="Header Files\ProfilUtilisateur">
       <UniqueIdentifier>{47265ae1-5a37-4726-b79d-cc508dac804f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ProfilUtilisateur">
-      <UniqueIdentifier>{a8172218-5e9e-4b05-b2ce-f5519fa2d1d2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ControleRobot\Commande">
       <UniqueIdentifier>{90b9b5a1-34a3-494b-8820-16fec8ae4fb2}</UniqueIdentifier>
     </Filter>
@@ -111,6 +108,15 @@
     </Filter>
     <Filter Include="Source Files\Physique">
       <UniqueIdentifier>{1e1e15a9-50ce-4465-8893-c8e89798d793}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ProfilUtilisateur">
+      <UniqueIdentifier>{a8172218-5e9e-4b05-b2ce-f5519fa2d1d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\EnginSon">
+      <UniqueIdentifier>{74959802-cca0-47c5-b333-d62e06232468}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\EnginSon">
+      <UniqueIdentifier>{e3c02443-527b-4c1d-a44c-9bfcd9a24b69}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +324,9 @@
     </ClCompile>
     <ClCompile Include="Tests\ControleRobotTest.cpp">
       <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="EnginSon\EnginSon.cpp">
+      <Filter>Source Files\EnginSon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -551,6 +560,9 @@
     </ClInclude>
     <ClInclude Include="Tests\CapteurTest.h">
       <Filter>Header Files\Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="EnginSon\EnginSon.h">
+      <Filter>Header Files\EnginSon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,6 +22,9 @@
 
 #include <iostream>
 
+#include "EnginSon.h"
+
+
 std::array<char, 10> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B' } };
   
 ////////////////////////////////////////////////////////////////////////
@@ -40,6 +43,7 @@ ModeSimulation::ModeSimulation()
 	// On fait démarrer le robot en mode automatique
 	controleRobot_->passerAModeAutomatique();
     actionsAppuyees_ = { { false, false, false, false, false } };
+	EnginSon::obtenirInstance()->jouerMusique();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -52,6 +56,7 @@ ModeSimulation::ModeSimulation()
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::~ModeSimulation()
 {
+	EnginSon::obtenirInstance()->stopMusique();
 	controleRobot_ = nullptr;
 }
 

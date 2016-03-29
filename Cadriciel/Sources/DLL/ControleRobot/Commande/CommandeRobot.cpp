@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////
 #include "CommandeRobot.h"
 
-
+#include <cmath>
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// @fn CommandeRobot::CommandeRobot()
@@ -41,37 +41,43 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 	case AVANCER:
 		vitesseMoteurD_ = 20.0;
 		vitesseMoteurG_ = 20.0;
+		sonMoteur = AVANCER_RECULER;
 		break;
 	
 	case RECULER:
 		vitesseMoteurD_ = -20.0;
 		vitesseMoteurG_ = -20.0;
+		sonMoteur = AVANCER_RECULER;
 		break;
 	
 	case ROTATION_GAUCHE:
 		vitesseMoteurD_ = 20.0;
 		vitesseMoteurG_ = -20.0;
+		sonMoteur = TOURNER;
 		break;
 	
 	case ROTATION_DROITE:
 		vitesseMoteurD_ = -20.0;
 		vitesseMoteurG_ = 20.0;
+		sonMoteur = TOURNER;
 		break;
 
 	case DEVIATION_GAUCHE:
 		vitesseMoteurD_ = 20.0;
 		vitesseMoteurG_ = 5.0;
+		sonMoteur = DEVIATION;
 		break;
 
 	case DEVIATION_DROITE:
 		vitesseMoteurD_ = 5.0;
 		vitesseMoteurG_ = 20.0;
+		sonMoteur = DEVIATION;
 		break;
 	
 	case ARRETER:
 		vitesseMoteurD_ = 0.0;
 		vitesseMoteurG_ = 0.0;
-
+		sonMoteur = MUSIQUE;
 	default:
 		break;
 	}
@@ -124,6 +130,7 @@ void CommandeRobot::inverserVitesseMoteurs()
 /// @date 2016-02-20
 ///////////////////////////////////////////////////////////////////////////
 void CommandeRobot::executer(ControleRobot* ia){
+	sonMoteur == MUSIQUE ? EnginSon::obtenirInstance()->stopRobotSon() : EnginSon::obtenirInstance()->jouerSonRobot(sonMoteur, abs(vitesseMoteurG_ - vitesseMoteurD_));
 	if (typeCommande_ == INVERSER_MODE_CONTROLE)
 		ia->inverserModeControle();
     if (ajout_) 

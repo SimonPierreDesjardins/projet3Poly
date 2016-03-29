@@ -691,6 +691,7 @@ bool ProfilUtilisateur::obtenirOptionDebogage(optionsDebogagesEnum option)
 int* ProfilUtilisateur::obtenirLimiteParametres(){
 	return new int[6] {ANGLE_MIN_COMPORTEMENT, ANGLE_MAX_COMPORTEMENT, DUREE_MIN_COMPORTEMENT, DUREE_MAX_COMPORTEMENT, LARGEUR_MIN_DETECTION_DISTANCE, LARGEUR_TOTAL_DETECTION_DISTANCE};
 }
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

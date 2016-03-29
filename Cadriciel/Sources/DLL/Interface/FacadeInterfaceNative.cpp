@@ -22,6 +22,7 @@
 #include "CommandeRobot.h"
 #include "ComportementAbstrait.h"
 #include "CommandeRobot.h"
+#include "EnginSon.h"
 
 extern "C"
 {
@@ -68,6 +69,7 @@ extern "C"
 		// libération des listes d'affichages, par exemple, sera faite une fois que
 		// le contexte n'existera plus, et sera donc sans effet.
 		FacadeModele::libererInstance();
+		EnginSon::libererInstance();
 	}
 
 	////////////////////////////////////////////////////////////////////////

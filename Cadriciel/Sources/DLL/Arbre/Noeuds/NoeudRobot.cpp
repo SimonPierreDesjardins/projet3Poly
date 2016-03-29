@@ -30,6 +30,8 @@
 
 #include "RectangleEnglobant.h"
 
+#include "EnginSon.h"
+
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
@@ -291,6 +293,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     // Le poteau est en intersection et il ne se trouve pas déjà en collision.
     if (enIntersection)
     {
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU);
         // On calcule les composantes de la collision.
         enCollision = true;
         cercle->assignerEnCollision(enCollision);
@@ -332,6 +335,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
     // Le poteau est en intersection et il ne se trouve pas déjà en collision.
     if (enIntersection)
     {
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR);
         enCollision = true;
         rectangle->assignerEnCollision(enCollision);
 
@@ -387,6 +391,7 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
     // La table est en intersection et elle ne se trouve pas déjà en collision.
     if (enIntersection)
     {
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_TABLE);
         // On calcule les composantes de la collision.
         calculerComposantesCollision(-normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
