@@ -124,8 +124,7 @@ void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 {
 	if (clicDroitEnfonce_) {
 		if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(NULL, NULL);
+			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
 		}
 		else {
 			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
@@ -233,31 +232,6 @@ void EtatAbstrait::gererToucheMoins(){
 	}
 	else {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-	}
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void EtatAbstrait::gererMoletteSouris(const int & delta)
-///
-/// Cette fonction gère la molette de la souris. Permet d'effecter un zoom
-/// avec la caméra
-///
-/// @param const int & delta: la valeur de la molette de la souris
-///
-////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererMoletteSouris(const int & delta){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		if (delta > 0) {
-
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-		}
-		else {
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-		}
 	}
 }
 

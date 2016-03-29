@@ -77,6 +77,7 @@ public:
 	virtual void gererClicDroitEnfonce(const int& x, const int& y);
 	virtual void gererClicDroitRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
+	virtual void gererMoletteSouris(const int & delta);
 
 protected:
 	int typeMode_;

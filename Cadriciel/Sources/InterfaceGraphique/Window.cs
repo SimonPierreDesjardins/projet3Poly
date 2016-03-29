@@ -1496,6 +1496,36 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        private void orthographiqueMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void orbiteMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrbite();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void orthographiqueMenuSimTest_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void orbiteMenuSimTest_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrbite();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVuePremierePersonne();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -1590,5 +1620,14 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void mettreEnPause(bool estEnPause);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerVueOrtho();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerVueOrbite();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerVuePremierePersonne();
     }
 }

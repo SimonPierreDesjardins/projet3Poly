@@ -1,15 +1,14 @@
-
 ////////////////////////////////////////////////////////////////////////////////////
-/// @file ProjectionOrtho.h
-/// @author DGI
-/// @date 2006-12-15
+/// @file ProjectionPerspective.h
+/// @author Frédéric Grégoire
+/// @date 2016-03-29
 /// @version 1.0
 ///
 /// @addtogroup utilitaire Utilitaire
 /// @{
 ////////////////////////////////////////////////////////////////////////////////////
-#ifndef __UTILITAIRE_PROJECTIONORTHO_H__
-#define __UTILITAIRE_PROJECTIONORTHO_H__
+#ifndef __UTILITAIRE_PROJECTIONPERSPECTIVE_H__
+#define __UTILITAIRE_PROJECTIONPERSPECTIVE_H__
 
 
 #include "Projection.h"
@@ -19,22 +18,22 @@ namespace vue {
 
 
 	////////////////////////////////////////////////////////////////////////
-	/// @class ProjectionOrtho
-	/// @brief Classe implantant une projection orthogonale.
+	/// @class ProjectionPerspective
+	/// @brief Classe implantant une projection perspective.
 	///
 	/// Cette classe implante l'interface de projection définie par la
 	/// classe de base Projection et ajoute certaines fonctionnalitées
-	/// spécifiques à la projection orthogonale, comme le zoom autour d'un
+	/// spécifiques à la projection perspective, comme le zoom autour d'un
 	/// point en particulier et le zoom élastique.
 	///
-	/// @author Martin Bisson
-	/// @date 2006-12-15
+	/// @author Frédéric Grégoire
+	/// @date 2016-03-29
 	////////////////////////////////////////////////////////////////////////
-	class ProjectionOrtho : public Projection
+	class ProjectionPerspective : public Projection
 	{
 	public:
 		/// Constructeur.
-		ProjectionOrtho(int xMin
+		ProjectionPerspective(int xMin
 			, int xMaxCloture,
 			int yMinCloture, int yMaxCloture,
 			double zAvant, double zArriere,
@@ -69,9 +68,7 @@ namespace vue {
 		void centrerSurPoint(const glm::ivec2& pointCentre);
 
 		/// Obtenir les coordonnées de la fenêtre virtuelle.
-		inline void obtenirCoordonneesFenetreVirtuelle(
-			double& xMin, double& xMax, double& yMin, double& yMax
-			) const;
+		inline void obtenirCoordonneesFenetreVirtuelle(double& xMin, double& xMax, double& yMin, double& yMax) const;
 
 
 	private:
@@ -107,7 +104,7 @@ namespace vue {
 	/// @return Les coordonnées de la fenêtre virtuelle.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline void ProjectionOrtho::obtenirCoordonneesFenetreVirtuelle(
+	inline void ProjectionPerspective::obtenirCoordonneesFenetreVirtuelle(
 		double& xMin, double& xMax, double& yMin, double& yMax
 		) const
 	{
@@ -121,7 +118,7 @@ namespace vue {
 }; // Fin de l'espace de nom vue.
 
 
-#endif // __UTILITAIRE_PROJECTIONORTHO_H__
+#endif // __UTILITAIRE_PROJECTIONPERSPECTIVE_H__
 
 
 ///////////////////////////////////////////////////////////////////////////

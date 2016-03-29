@@ -14,7 +14,6 @@
 
 namespace vue {
 
-
 	///////////////////////////////////////////////////////////////////////////
 	/// @class Camera
 	/// @brief Classe représentant une caméra dans le monde en 3D.
@@ -62,11 +61,8 @@ namespace vue {
 		/// Rotation de la position de la caméra autour de son point de visé.
 		void orbiterXY(double rotationX, double rotationY, bool empecheInversion = true);
 
-
-
 		/// Positionner la caméra (appel à gluLookAt).
 		void positionner() const;
-
 
 	private:
 		/// La position de la caméra.
@@ -79,8 +75,6 @@ namespace vue {
 		const glm::dvec3 directionHautMonde_;
 
 	};
-
-
 
 
 	////////////////////////////////////////////////////////////////////////
@@ -99,7 +93,6 @@ namespace vue {
 		position_ = position;
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn inline void Camera::assignerPointVise(const glm::dvec3& pointVise)
@@ -115,7 +108,6 @@ namespace vue {
 	{
 		pointVise_ = pointVise;
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -133,7 +125,6 @@ namespace vue {
 		directionHaut_ = directionHaut;
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn inline const glm::dvec3& Camera::obtenirPosition() const
@@ -147,7 +138,6 @@ namespace vue {
 	{
 		return position_;
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -163,7 +153,6 @@ namespace vue {
 		return pointVise_;
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn inline const glm::dvec3& Camera::obtenirDirectionHaut() const
@@ -178,10 +167,7 @@ namespace vue {
 		return directionHaut_;
 	}
 
-
 } // Fin de l'espace de nom vue.
-
-
 #endif // __UTILITAIRE_CAMERA_H__
 
 

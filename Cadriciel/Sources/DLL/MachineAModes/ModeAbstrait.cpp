@@ -123,7 +123,11 @@ void ModeAbstrait::gererMouvementSouris(const int & x, const int& y)
 {
 	if (clicDroitEnfonce_)
 	{
-		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
+		if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
+		}
+		else
+			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
 	}
 	currentPosition_ = glm::ivec2(x, y);
 		
@@ -141,7 +145,7 @@ void ModeAbstrait::gererMouvementSouris(const int & x, const int& y)
 void ModeAbstrait::gererTouchePlus()
 {
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
+		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
 	}
 	else {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
@@ -161,7 +165,7 @@ void ModeAbstrait::gererTouchePlus()
 void ModeAbstrait::gererToucheMoins()
 {
 	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
+		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 	}
 	else {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
@@ -180,7 +184,11 @@ void ModeAbstrait::gererToucheMoins()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheGauche()
 {
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+		FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(1, 0);
+	}
+	else
+		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -194,7 +202,11 @@ void ModeAbstrait::gererFlecheGauche()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheBas()
 {
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+		FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(0, 1);
+	}
+	else
+		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -207,7 +219,11 @@ void ModeAbstrait::gererFlecheBas()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheHaut()
 {
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+		FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(0, -1);
+	}
+	else
+		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -221,7 +237,28 @@ void ModeAbstrait::gererFlecheHaut()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheDroit()
 {
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
+		FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(-1, 0);
+	}
+	else
+		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeAbstrait::gererMoletteSouris(const int & delta)
+///
+/// Cette fonction gère la molette de la souris. Permet d'effecter un zoom
+/// avec la caméra
+///
+/// @param const int & delta: la valeur de la molette de la souris
+///
+////////////////////////////////////////////////////////////////////////
+void ModeAbstrait::gererMoletteSouris(const int & delta){
+		if (delta > 0)
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
+		else
+			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

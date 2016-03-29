@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////////
-/// @file ProjectionOrtho.cpp
+/// @file ProjectionPerspective.cpp
 /// @author DGI
-/// @date 2006-12-15
+/// @date 2016-03-29
 /// @version 1.0
 ///
 /// @addtogroup utilitaire Utilitaire
@@ -9,7 +9,7 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 #include "GL/glew.h"
-#include "ProjectionOrtho.h"
+#include "ProjectionPerspective.h"
 #include <iostream>
 #include <algorithm>
 
@@ -19,9 +19,9 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn ProjectionOrtho::ProjectionOrtho(int xMinCloture, int xMaxCloture, int yMinCloture, int yMaxCloture, double zAvant,  double zArriere, double zoomInMax, double zoomOutMax, double incrementZoom, double xMinFenetre, double xMaxFenetre, double yMinFenetre, double yMaxFenetre)
+	/// @fn ProjectionPerspective::ProjectionPerspective(int xMinCloture, int xMaxCloture, int yMinCloture, int yMaxCloture, double zAvant,  double zArriere, double zoomInMax, double zoomOutMax, double incrementZoom, double xMinFenetre, double xMaxFenetre, double yMinFenetre, double yMaxFenetre)
 	///
-	/// Constructeur d'une projection orthogonale.  Ne fait qu'assigner les
+	/// Constructeur d'une projection perspective.  Ne fait qu'assigner les
 	/// variables membres et ajuste ensuite le rapport d'aspect.
 	///
 	/// @param[in] xMinCloture   : coordonnée minimale en @a x de la clôture.
@@ -45,7 +45,7 @@ namespace vue {
 	/// @return Aucune (constructeur).
 	///
 	////////////////////////////////////////////////////////////////////////
-	ProjectionOrtho::ProjectionOrtho(int xMinCloture, int xMaxCloture,
+	ProjectionPerspective::ProjectionPerspective(int xMinCloture, int xMaxCloture,
 		int yMinCloture, int yMaxCloture,
 		double zAvant, double zArriere,
 		double zoomInMax, double zoomOutMax,
@@ -67,14 +67,14 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::zoomerIn()
+	/// @fn void ProjectionPerspective::zoomerIn()
 	///
 	/// Permet de faire un zoom in selon l'incrément de zoom.
 	/// 
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::zoomerIn()
+	void ProjectionPerspective::zoomerIn()
 	{
 		if (currentZoom_ > zoomInMax_){
 			double ajoutX, ajoutY, fx, fy;
@@ -94,14 +94,14 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::zoomerOut()
+	/// @fn void ProjectionPerspective::zoomerOut()
 	///
 	/// Permet de faire un zoom out de 10% selon l'incrément de zoom.
 	///
 	/// @return Aucune.
 	///
 	//////////////////////////////////////////////////////////////////////// 
-	void ProjectionOrtho::zoomerOut()
+	void ProjectionPerspective::zoomerOut()
 	{
 		if (currentZoom_ < zoomOutMax_){
 			double ajoutX, ajoutY, fx, fy;
@@ -121,7 +121,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::redimensionnerFenetre( const glm::ivec2& coinMin, const glm::ivec2& coinMax )
+	/// @fn void ProjectionPerspective::redimensionnerFenetre( const glm::ivec2& coinMin, const glm::ivec2& coinMax )
 	///
 	/// Permet d'ajuster les coordonnées de la fenêtre virtuelle en fonction
 	/// d'un redimensionnement de la fenêtre.
@@ -138,7 +138,7 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::redimensionnerFenetre(const glm::ivec2& coinMin,
+	void ProjectionPerspective::redimensionnerFenetre(const glm::ivec2& coinMin,
 		const glm::ivec2& coinMax)
 	{
 		if (coinMax.x < 100 && coinMax.y < 100)
@@ -154,8 +154,8 @@ namespace vue {
 		//Redimensionnement fenetre virtuelle
 		double ajoutX, ajoutY;
 
-		ajoutX = dx*(xMaxFenetre_-xMinFenetre_)*0.5;
-		ajoutY = dy*(yMaxFenetre_-yMinFenetre_)*0.5;
+		ajoutX = dx*(xMaxFenetre_ - xMinFenetre_)*0.5;
+		ajoutY = dy*(yMaxFenetre_ - yMinFenetre_)*0.5;
 
 		yMinFenetre_ -= ajoutY;
 		yMaxFenetre_ += ajoutY;
@@ -170,7 +170,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::appliquer() const
+	/// @fn void ProjectionPerspective::appliquer() const
 	///
 	/// Cette fonction permet d'appliquer la fenêtre virtuelle en appelant les
 	/// fonctions d'OpenGL selon le type de projection et les propriétés de la
@@ -179,17 +179,17 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::appliquer() const
+	void ProjectionPerspective::appliquer() const
 	{
-		glOrtho(xMinFenetre_, xMaxFenetre_,
-			yMinFenetre_, yMaxFenetre_,
-			zAvant_, zArriere_);
+		double aspect = (xMaxFenetre_ - xMinFenetre_) / (yMaxFenetre_ - yMinFenetre_);
+		//Ne pas utiliser glFrustum
+		gluPerspective(30, aspect, zAvant_, zArriere_);
 	}
 
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::zoomerIn( const glm::ivec2& coin1, const glm::ivec2& coin2)
+	/// @fn void ProjectionPerspective::zoomerIn( const glm::ivec2& coin1, const glm::ivec2& coin2)
 	///
 	/// Permet de faire un zoom in sur un rectangle déterminé par deux coins.
 	/// Ainsi la région délimitée par le rectangle deviendra la fenêtre
@@ -202,7 +202,7 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::zoomerIn(const glm::ivec2& coin1, const glm::ivec2& coin2)
+	void ProjectionPerspective::zoomerIn(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
 		// S'assurer que coin 1 est le coin supérieur droit pour les opérations
 		//dimensions du rectum
@@ -217,7 +217,7 @@ namespace vue {
 		double R = W / H;
 		//ratio rectangle
 		double r = w / h;
-		
+
 		// convertir coin supérieur gauche en position fenetre virtuelle
 		double decalageX = double(std::min(coin1.x, coin2.x)) / xMaxCloture_*W;
 		double decalageY = double(std::min(coin1.y, coin2.y)) / yMaxCloture_*H;
@@ -237,7 +237,7 @@ namespace vue {
 		//Appliquer les transformations a la fenetre
 		yMaxFenetre_ -= decalageY;
 		yMinFenetre_ = yMaxFenetre_ - H;
-		
+
 		xMinFenetre_ += decalageX;
 		xMaxFenetre_ = xMinFenetre_ + W;
 	}
@@ -245,7 +245,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::zoomerOut( const glm::ivec2& coin1, const glm::ivec2& coin2)
+	/// @fn void ProjectionPerspective::zoomerOut( const glm::ivec2& coin1, const glm::ivec2& coin2)
 	///
 	/// Permet de faire un zoom out sur un rectangle délimité par deux coins.
 	/// Ainsi la fenêtre virtuelle avant le zoom sera placée à l'interieur de
@@ -258,7 +258,7 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::zoomerOut(const glm::ivec2& coin1, const glm::ivec2& coin2)
+	void ProjectionPerspective::zoomerOut(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
 
 		//dimensions du rectum
@@ -290,12 +290,12 @@ namespace vue {
 
 		}
 		else{
-			
+
 			//Rajuster le décalage en X pour centrer
 			decalageX += (r - R)*H / 2;
 
 			//Transformer H
-			H = yMaxCloture_/h *H;
+			H = yMaxCloture_ / h *H;
 			// Deduire W par ratio
 			W = H*R;
 		}
@@ -315,7 +315,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::translater( double deplacementX, double deplacementY )
+	/// @fn void ProjectionPerspective::translater( double deplacementX, double deplacementY )
 	///
 	/// Permet de déplacer la fenêtre virtuelle en @a x et en @a y.  Les
 	/// déplacement doivent être exprimés en proportion de la fenêtre virtuelle.
@@ -326,18 +326,18 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::translater(double deplacementX, double deplacementY)
+	void ProjectionPerspective::translater(double deplacementX, double deplacementY)
 	{
-			xMinFenetre_ += deplacementX;
-			xMaxFenetre_ += deplacementX;
-			yMinFenetre_ += deplacementY;
-			yMaxFenetre_ += deplacementY;
+		xMinFenetre_ += deplacementX;
+		xMaxFenetre_ += deplacementX;
+		yMinFenetre_ += deplacementY;
+		yMaxFenetre_ += deplacementY;
 	}
 
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::translater(const glm::ivec2& deplacement)
+	/// @fn void ProjectionPerspective::translater(const glm::ivec2& deplacement)
 	///
 	/// Permet de translater la fenêtre virtuelle en fonction d'un déplacement
 	/// en coordonnées de clôture.
@@ -347,7 +347,7 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::translater(const glm::ivec2& deplacement)
+	void ProjectionPerspective::translater(const glm::ivec2& deplacement)
 	{
 		double deplacementX, deplacementY, fx, fy, cx, cy;
 		fx = (xMaxFenetre_ - xMinFenetre_);
@@ -363,7 +363,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::centrerSurPoint( const glm::ivec2& pointCentre )
+	/// @fn void ProjectionPerspective::centrerSurPoint( const glm::ivec2& pointCentre )
 	///
 	/// Permet de centrer la fenêtre virtuelle sur un point de l'écran. Le
 	/// point de l'écran est convertit en coordonnées virtuelles et il devient
@@ -374,7 +374,7 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::centrerSurPoint(const glm::ivec2& pointCentre)
+	void ProjectionPerspective::centrerSurPoint(const glm::ivec2& pointCentre)
 	{
 		// À IMPLANTER.
 	}
@@ -382,7 +382,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn void ProjectionOrtho::ajusterRapportAspect()
+	/// @fn void ProjectionPerspective::ajusterRapportAspect()
 	///
 	/// Permet d'ajuster les coordonnées de la fenêtre virtuelle en fonction
 	/// de la clôture de façon à ce que le rapport d'aspect soit respecté.
@@ -390,7 +390,7 @@ namespace vue {
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	void ProjectionOrtho::ajusterRapportAspect()
+	void ProjectionPerspective::ajusterRapportAspect()
 	{
 
 		GLdouble fx, fy, cx, cy, ratioCloture, ratioFenetre, ajout;
@@ -407,7 +407,7 @@ namespace vue {
 			xMaxFenetre_ += ajout;
 		}
 		else{
-			ajout = (1 /ratioCloture - 1 / ratioFenetre)*fy*0.5;
+			ajout = (1 / ratioCloture - 1 / ratioFenetre)*fy*0.5;
 			yMinFenetre_ -= ajout;
 			yMaxFenetre_ += ajout;
 		}

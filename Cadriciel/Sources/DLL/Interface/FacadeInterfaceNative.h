@@ -87,6 +87,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl supprimerProfil(char* nomProfil);
 
 	__declspec(dllexport) int* __cdecl obtenirLimitesParametres();
+
+	__declspec(dllexport) void __cdecl assignerVueOrtho();
+	__declspec(dllexport) void __cdecl assignerVueOrbite();
+	__declspec(dllexport) void __cdecl assignerVuePremierePersonne();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

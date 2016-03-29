@@ -115,8 +115,11 @@
     <ClCompile Include="Vue\Camera.cpp" />
     <ClCompile Include="Vue\Projection.cpp" />
     <ClCompile Include="Vue\ProjectionOrtho.cpp" />
+    <ClCompile Include="Vue\ProjectionPerspective.cpp" />
     <ClCompile Include="Vue\Vue.cpp" />
+    <ClCompile Include="Vue\VueOrbite.cpp" />
     <ClCompile Include="Vue\VueOrtho.cpp" />
+    <ClCompile Include="Vue\VuePremierePersonne.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AideCollision.h" />
@@ -141,8 +144,11 @@
     <ClInclude Include="Vue\Camera.h" />
     <ClInclude Include="Vue\Projection.h" />
     <ClInclude Include="Vue\ProjectionOrtho.h" />
+    <ClInclude Include="Vue\ProjectionPerspective.h" />
     <ClInclude Include="Vue\Vue.h" />
+    <ClInclude Include="Vue\VueOrbite.h" />
     <ClInclude Include="Vue\VueOrtho.h" />
+    <ClInclude Include="Vue\VuePremierePersonne.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

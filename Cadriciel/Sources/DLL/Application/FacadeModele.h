@@ -70,6 +70,14 @@ public:
   
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
+
+   //Assigne les parametres pour la vue ortho
+   void assignerVueOrtho();
+   //Assigne les parametres pour la vue orbite
+   void assignerVueOrbite();
+   //Assigne les parametres pour la vue à la première personne
+   void assignerVuePremierePersonne();
+   
    /// Retourne l'arbre de rendu.
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
