@@ -20,6 +20,7 @@
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
+#include "BoiteEnvironnement.h"
 
 class NoeudAbstrait;
 ///////////////////////////////////////////////////////////////////////////
@@ -115,6 +116,8 @@ private:
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
+
+   std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////

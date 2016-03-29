@@ -40,6 +40,8 @@ const std::string ArbreRenduINF2990::NOM_DEPART{ "depart" };
 const std::string ArbreRenduINF2990::NOM_JONCTION{ "jonction" };
 /// La chaîne représentant le type du point de départ.
 const std::string ArbreRenduINF2990::NOM_ROUES{ "roues" };
+/// La chaine représentant le type du skybox
+const std::string ArbreRenduINF2990::NOM_SKYBOX{ "skybox" };
 
 ////////////////////////////////////////////////////////////////////////
 ///

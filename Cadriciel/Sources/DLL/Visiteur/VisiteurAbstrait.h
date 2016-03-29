@@ -26,6 +26,7 @@ class NoeudDuplication;
 class NoeudDepart;
 class NoeudJonction;
 class NoeudRoues;
+class NoeudSkybox;
 
 namespace modele{
 	class Modele3D;

@@ -182,6 +182,18 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 			1, 1000, 1, 10000, 1.25,
 			-50, 50, -50, 50 }
 	);
+
+	// Création de l'environnement
+	/*
+	fichierXpos, fichierXneg,
+    fichierYpos, fichierYneg,
+    fichierZpos, fichierZneg
+         );
+	*/
+	environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
+		"C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_xpos.png", "C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_xneg.png",
+		"C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_ypos.png", "C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_yneg.png",
+		"C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_zpos.png", "C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_zneg.png");
 }
 
 
@@ -288,6 +300,17 @@ void FacadeModele::afficher() const
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	vue_->appliquerCamera();
+
+	// obtenir la cloture pour ajuster la taille de l'environnement en fonction
+	int xmin;
+	int xmax;
+	int ymin;
+	int ymax;
+	vue_->obtenirProjection().obtenirCoordonneesCloture(xmin, xmax, ymin, ymax);
+
+	// AfficherEnvironnement
+
+	environnement_->afficher(glm::dvec3(0.0), 150);
 
 	// Afficher la scène
 	afficherBase();
