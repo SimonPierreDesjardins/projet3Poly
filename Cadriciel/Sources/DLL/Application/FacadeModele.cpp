@@ -182,6 +182,9 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 			1, 1000, 1, 10000, 1.25,
 			-50, 50, -50, 50 }
 	);
+
+    // Création du module qui gère l'affichage du texte avec OpenGL.
+    affichageTexte_ = std::make_unique<AffichageTexte>();
 }
 
 
@@ -294,6 +297,8 @@ void FacadeModele::afficher() const
 
 	// Compte de l'affichage
 	utilitaire::CompteurAffichage::obtenirInstance()->signalerAffichage();
+
+    affichageTexte_->afficher();
 
 	// Échange les tampons pour que le résultat du rendu soit visible.
 	::SwapBuffers(hDC_);

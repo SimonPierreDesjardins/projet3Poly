@@ -17,6 +17,7 @@
 
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
+#include "AffichageTexte.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
@@ -76,6 +77,8 @@ public:
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
    /// Retourne le profil de l'utilisateur.
    inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
+   // Retoune l'affichage du texte.
+   inline AffichageTexte* obtenirAffichageTexte() const;
    /// Réinitialise la scène.
    void reinitialiser();
 
@@ -115,6 +118,7 @@ private:
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
+   std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -190,6 +194,22 @@ ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur() const
 {
 	return profil_.get();
 }
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
+///
+/// Cette fonction retourne le module qui gère l'affichage du texte.
+///
+/// @return L'arbre de rendu de la scène.
+///
+////////////////////////////////////////////////////////////////////////
+inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
+{
+    return affichageTexte_.get();
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///

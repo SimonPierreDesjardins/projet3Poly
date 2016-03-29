@@ -36,6 +36,7 @@ ModeTest::ModeTest()
 	// On fait démarrer le robot en mode automatique
 	controleRobot_->passerAModeAutomatique();
     actionsAppuyees_ = { { false, false, false, false, false } };
+    affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
 }
 
 

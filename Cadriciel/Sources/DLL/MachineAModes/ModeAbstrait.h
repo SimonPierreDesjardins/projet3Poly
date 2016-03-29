@@ -19,7 +19,7 @@
 
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class ModeAbstrait
+/// @class ModeAbstraitC:\Users\Olivier St-Amour\Documents\Polytechnique\hiver_2016\inf2990-06\Cadriciel\Sources\InterfaceGraphique\Program.cs
 /// @brief Classe qui représente le mode abstrait de notre machine à modes
 ///
 ///        Cette classe s'occupe de déclarer les fonctions qui seront implémentés 
