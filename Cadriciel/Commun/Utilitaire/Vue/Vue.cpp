@@ -29,9 +29,9 @@ namespace vue {
 	/// @return Aucune (constructeur).
 	///
 	////////////////////////////////////////////////////////////////////////////
-	Vue::Vue(const Camera& camera)
+    Vue::Vue(const Camera& camera) 
+        : camera_(camera)
 	{
-		camera_ = camera;
 	}
 
 

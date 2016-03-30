@@ -199,6 +199,7 @@ void NoeudRobot::animer(float dt)
 {
     mutexControleRobot_->lock();
     mettreAJourPosition(dt);
+    //FacadeModele::obtenirInstance()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{0.0, 0.0, 4.0});
     if (estEnCollision_)
     {
         effectuerCollision(dt);

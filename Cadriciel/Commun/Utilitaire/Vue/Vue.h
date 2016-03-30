@@ -53,9 +53,9 @@ namespace vue {
 		bool convertirClotureAVirtuelle(int x, int y, const math::Plan3D& plan, glm::dvec3& point) const;
 
 		/// Obtient la caméra associée à cette vue.
-		inline vue::Camera* obtenirCamera();
+		inline Camera* obtenirCamera();
 		/// Obtient la caméra associée à cette vue (version constante).
-		inline const vue::Camera* obtenirCamera() const;
+		inline const Camera* obtenirCamera() const;
 
 
 		// Obtention de la projection
@@ -99,8 +99,8 @@ namespace vue {
 
 	protected:
 		/// Caméra utilisée pour cette vue
-		//Camera camera_;
-		std::unique_ptr<vue::Camera> camera_{ nullptr };
+		Camera camera_;
+		//std::unique_ptr<vue::Camera> camera_{ nullptr };
 	};
 
 
@@ -113,9 +113,9 @@ namespace vue {
 	/// @return La caméra associée à cet objet.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline vue::Camera* Vue::obtenirCamera()
+	inline Camera* Vue::obtenirCamera()
 	{
-		return camera_.get();
+		return &camera_;
 	}
 
 
@@ -129,9 +129,9 @@ namespace vue {
 	/// @return La caméra associée à cet objet.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline const vue::Camera* Vue::obtenirCamera() const
+	inline const Camera* Vue::obtenirCamera() const
 	{
-		return camera_.get();
+		return &camera_;
 	}
 
 

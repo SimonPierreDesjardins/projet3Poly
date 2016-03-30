@@ -121,10 +121,16 @@ private:
 
    /// Vue courante de la scène.
    std::unique_ptr<vue::Vue> vue_{ nullptr };
-   std::unique_ptr<vue::Camera> camera_{ nullptr };
+   /// Référence à la caméra de la vue.
+   vue::Camera* camera_{ nullptr };
+
    /// Arbre de rendu contenant les différents objets de la scène.
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
+
+   /// Le mode d'utilisation courant.
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
+
+   /// Le profil utilisateur.
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
 };
 
@@ -170,7 +176,7 @@ inline vue::Vue* FacadeModele::obtenirVue()
 ////////////////////////////////////////////////////////////////////////
 inline vue::Camera* FacadeModele::obtenirCamera()
 {
-	return camera_.get();
+	return camera_;
 }
 
 ////////////////////////////////////////////////////////////////////////

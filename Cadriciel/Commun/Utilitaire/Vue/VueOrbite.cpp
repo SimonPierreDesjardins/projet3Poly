@@ -91,7 +91,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::appliquerCamera() const
 	{
-		camera_->positionner();
+		camera_.positionner();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ namespace vue {
 	{
 		rho -= 1;
 
-		camera_->assignerPosition(glm::dvec3(
+		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
@@ -148,7 +148,7 @@ namespace vue {
 	{
 		rho += 1;
 
-		camera_->assignerPosition(glm::dvec3(
+		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
@@ -262,10 +262,10 @@ namespace vue {
 		theta -= rotationX;
 		phi -= rotationY;
 		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
-		camera_->assignerDirectionHaut(position);
+		camera_.assignerDirectionHaut(position);
 
 
-		camera_->assignerPosition(glm::dvec3(
+		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
@@ -293,10 +293,10 @@ namespace vue {
 		theta -= rotation[0];
 		phi -= rotation[1];
 		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
-		camera_->assignerDirectionHaut(position);
+		camera_.assignerDirectionHaut(position);
 
 
-		camera_->assignerPosition(glm::dvec3(
+		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
