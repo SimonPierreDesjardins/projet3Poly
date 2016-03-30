@@ -56,7 +56,8 @@ namespace vue {
 		inline Camera* obtenirCamera();
 		/// Obtient la caméra associée à cette vue (version constante).
 		inline const Camera* obtenirCamera() const;
-
+		/// Obtient le bool disant si la caméra est en première personne
+		inline bool estPremierePersonne();
 
 		// Obtention de la projection
 		virtual const Projection& obtenirProjection() const = 0;
@@ -66,19 +67,16 @@ namespace vue {
 		virtual void appliquerCamera() const = 0;
 
 		/// Modification de la clotûre
-		virtual void redimensionnerFenetre(const glm::ivec2& coinMin,
-			const glm::ivec2& coinMax) = 0;
+		virtual void redimensionnerFenetre(const glm::ivec2& coinMin, const glm::ivec2& coinMax) = 0;
 
 		/// Zoom in, c'est-à-dire un agrandissement.
 		virtual void zoomerIn() = 0;
 		/// Zoom out, c'est-à-dire un rapetissement.
 		virtual void zoomerOut() = 0;
 		/// Zoom in élastique
-		virtual void zoomerInElastique(const glm::ivec2& coin1,
-			const glm::ivec2& coin2) = 0;
+		virtual void zoomerInElastique(const glm::ivec2& coin1, const glm::ivec2& coin2) = 0;
 		/// Zoom out élastique
-		virtual void zoomerOutElastique(const glm::ivec2& coin1,
-			const glm::ivec2& coin2) = 0;
+		virtual void zoomerOutElastique(const glm::ivec2& coin1, const glm::ivec2& coin2) = 0;
 
 		/// Déplacement dans le plan XY par rapport à la vue
 		virtual void deplacerXY(double deplacementX, double deplacementY) = 0;
@@ -100,7 +98,7 @@ namespace vue {
 	protected:
 		/// Caméra utilisée pour cette vue
 		Camera camera_;
-		//std::unique_ptr<vue::Camera> camera_{ nullptr };
+		bool estPremierePersonne_{ false };
 	};
 
 
@@ -132,6 +130,21 @@ namespace vue {
 	inline const Camera* Vue::obtenirCamera() const
 	{
 		return &camera_;
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn inline const Camera& Vue::obtenirCamera() const
+	///
+	/// Cette fonction retourne la caméra associée à cette vue (version
+	/// constante).
+	///
+	/// @return La caméra associée à cet objet.
+	///
+	////////////////////////////////////////////////////////////////////////
+	inline bool Vue::estPremierePersonne()
+	{
+		return estPremierePersonne_;
 	}
 
 

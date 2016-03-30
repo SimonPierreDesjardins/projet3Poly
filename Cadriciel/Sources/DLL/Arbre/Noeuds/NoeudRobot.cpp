@@ -199,7 +199,18 @@ void NoeudRobot::animer(float dt)
 {
     mutexControleRobot_->lock();
     mettreAJourPosition(dt);
-    //FacadeModele::obtenirInstance()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{0.0, 0.0, 4.0});
+
+	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()){
+		FacadeModele::obtenirInstance()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ 0.0, 0.0, 4.0 });
+		
+		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(angleRotation_)), sin(utilitaire::DEG_TO_RAD(angleRotation_)), 0 };
+		//position = { 1, 0, 0 };
+		FacadeModele::obtenirInstance()->obtenirCamera()->assignerDirectionHaut(position);
+		
+		glm::dvec3 positionVise{ cos(angleRotation_*PI / 180)*100, sin(angleRotation_* PI / 180)*100, 1 };
+		FacadeModele::obtenirInstance()->obtenirCamera()->assignerPointVise(positionVise);
+	}
+    
     if (estEnCollision_)
     {
         effectuerCollision(dt);

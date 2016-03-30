@@ -365,7 +365,7 @@ void FacadeModele::assignerVueOrbite()
 		camera, vue::ProjectionPerspective{
 		0, 500, 0, 500,
 		1, 1000, 1, 10000, 1.25,
-		-50, 50, -50, 50, true });
+		-50, 50, -50, 50, true }, false);
 
     camera_ = vue_->obtenirCamera();
 }
@@ -381,16 +381,18 @@ void FacadeModele::assignerVueOrbite()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerVuePremierePersonne()
 {
+	glm::dvec3 positionRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_ROBOT)->obtenirPositionCourante();
+	double angleRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_ROBOT)->obtenirAngleRotation();
 
     vue::Camera camera = vue::Camera(
-		glm::dvec3(0, 0, 4), glm::dvec3(100, 0, 1),
+		glm::dvec3(positionRobot.x, positionRobot.y, 4), glm::dvec3(100, 0, 1),
 		glm::dvec3(1, 0, 0), glm::dvec3(0, 0, 1));
 
 	vue_ = std::make_unique<vue::VueOrbite>(
 		camera, vue::ProjectionPerspective{
 		0, 500, 0, 500,
-		1, 1000, 1, 10000, 1.25,
-		-50, 50, -50, 50, true });
+		1, 1000, 10, 1000, 1.25,
+		-50, 50, -50, 50, true }, true);
 
     camera_ = vue_->obtenirCamera();
 }

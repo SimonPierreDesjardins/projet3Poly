@@ -122,13 +122,12 @@ void EtatAbstrait::gererClicGaucheRelache(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 {
-	if (clicDroitEnfonce_) {
-		if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
+	if (clicDroitEnfonce_)
+	{
+		if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		}
-		else {
+		else
 			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
-		}
 	}
 	currentPosition_ = glm::ivec2(x, y);
 }

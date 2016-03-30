@@ -31,7 +31,7 @@ namespace vue {
 	{
 	public:
 		// Constructeur.
-		VueOrbite(Camera const& camera, ProjectionPerspective const& projection);
+		VueOrbite(Camera const& camera, ProjectionPerspective const& projection, bool estPremierePersonne);
 
 		/// Obtention de la projection.
 		virtual const ProjectionPerspective& obtenirProjection() const;
@@ -65,11 +65,11 @@ namespace vue {
 		/// Rotation selon l'axe des Z par rapport à la vue.
 		virtual void rotaterZ(double rotation);
 
+		double verifierPhi(double changement);
+
 	private:
 		/// Projection utilisée pour cette vue.
 		ProjectionPerspective projection_;
-
-		bool estPremierePersonne_;
 
 		double theta;
 		double phi;

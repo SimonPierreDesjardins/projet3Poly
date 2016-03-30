@@ -42,13 +42,16 @@ namespace vue {
 	/// @return Aucune (constructeur).
 	///
 	////////////////////////////////////////////////////////////////////////
-	VueOrbite::VueOrbite(Camera const& camera, ProjectionPerspective const& projection) :
+	VueOrbite::VueOrbite(Camera const& camera, ProjectionPerspective const& projection, bool estPremierePersonne) :
 		Vue{ camera },
 		projection_{ projection }
 	{
+		estPremierePersonne_ = estPremierePersonne;
+		if (!estPremierePersonne_){
 			theta = 90;
 			phi = 0;
-			rho = 170;	
+			rho = 170;
+		}	
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -205,6 +208,17 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::deplacerXY(double deplacementX, double deplacementY)
 	{
+		theta -= deplacementX*0.1;
+		verifierPhi(-deplacementY*0.1);
+		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
+		camera_.assignerDirectionHaut(position);
+
+
+		camera_.assignerPosition(glm::dvec3(
+			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
+			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
+			rho*cos(utilitaire::DEG_TO_RAD(phi)))
+			);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -222,6 +236,27 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::deplacerXY(const glm::ivec2& deplacement)
 	{
+		theta -= deplacement[0];
+		verifierPhi(-deplacement[1]);
+
+		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
+		camera_.assignerDirectionHaut(position);
+
+
+		camera_.assignerPosition(glm::dvec3(
+			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
+			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
+			rho*cos(utilitaire::DEG_TO_RAD(phi)))
+			);
+	}
+
+	double VueOrbite::verifierPhi(double changement){
+		phi += changement;
+		if (phi > 0)
+			phi = 0;
+		else if (phi < -89.9)
+			phi = -89.9;
+		return phi;
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -259,18 +294,6 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::rotaterXY(double rotationX, double rotationY)
 	{
-		theta -= rotationX;
-		phi -= rotationY;
-		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
-		camera_.assignerDirectionHaut(position);
-
-
-		camera_.assignerPosition(glm::dvec3(
-			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
-			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
-			rho*cos(utilitaire::DEG_TO_RAD(phi)))
-			);
-		
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -290,17 +313,6 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::rotaterXY(const glm::ivec2& rotation)
 	{
-		theta -= rotation[0];
-		phi -= rotation[1];
-		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
-		camera_.assignerDirectionHaut(position);
-
-
-		camera_.assignerPosition(glm::dvec3(
-			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
-			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
-			rho*cos(utilitaire::DEG_TO_RAD(phi)))
-			);
 	}
 
 	////////////////////////////////////////////////////////////////////////
