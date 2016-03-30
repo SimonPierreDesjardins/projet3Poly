@@ -1,10 +1,16 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file AffichageTexte.h
+/// @author Olivier St-Amour
+/// @date 2016-03-29
+/// @version 3.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
 #ifndef AFFICHAGE_TEXTE_H
 #define AFFICHAGE_TEXTE_H
 
-#include <string>
 #include <chrono>
-#include <ctime>
-#include <glm/glm.hpp>
 #include <FTGL/ftgl.h>
 
 namespace vue
@@ -14,6 +20,17 @@ namespace vue
 
 class ProfilUtilisateur;
 
+///////////////////////////////////////////////////////////////////////////
+/// @class AffichageTexte
+/// @brief Classe qui permet de faire l'affichage OpenGL.
+///
+///        Cette classe permet de faire l'affichage du chronomètre ainsi 
+///        que le nom du profil courant.   
+///	       
+/// 
+/// @author Olivier St-Amour
+/// @date 2016-03-29
+///////////////////////////////////////////////////////////////////////////
 class AffichageTexte
 {
 public:
@@ -46,14 +63,44 @@ private:
     std::chrono::time_point<std::chrono::system_clock> debut_, pause_;
 };
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void AffichageTexte::assignerTempsEstAffiche(const bool& tempsEstAffiche)
+///
+/// Fonction qui permet d'assigner le boolean qui indique si l'affichage 
+/// du temps est réalisé.
+///
+/// @param[in] tempsEstAffiche : le boolean qui indique si l'affichage est réalisé.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void AffichageTexte::assignerTempsEstAffiche(const bool& tempsEstAffiche)
 {
     tempsEstAffiche_ = tempsEstAffiche;
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void AffichageTexte::assignerProfilEstAffiche(const bool& profilEstAffiche)
+///
+/// Fonction qui permet d'assigner le boolean qui indique sur l'affichage 
+/// du profil courant est réalisé.
+///
+/// @param[in] tempsEstAffiche : le boolean qui indique si l'affichage est réalisé.
+/// 
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 inline void AffichageTexte::assignerProfilEstAffiche(const bool& profilEstAffiche)
 {
     profilEstAffiche_ = profilEstAffiche;
 }
 
 #endif // AFFICHAGE_TEXTE_H
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

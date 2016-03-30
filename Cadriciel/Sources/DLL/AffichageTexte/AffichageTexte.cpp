@@ -1,6 +1,15 @@
-#include <Windows.h>
+///////////////////////////////////////////////////////////////////////////
+/// @file AffichageTexte.cpp
+/// @author Olivier St-Amour
+/// @date 2016-03-29
+/// @version 3.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
+
 #include <chrono>
-#include <ctime>
+#include <string>
 #include <FTGL/ftgl.h>
 #include "FacadeModele.h"
 #include "ProjectionOrtho.h"
@@ -8,6 +17,15 @@
 #include "AffichageTexte.h"
 
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn AffichageTexte::AffichageTexte()
+///
+/// Constructeur par défaut.
+///
+/// @return Aucune (constructeur).
+///
+////////////////////////////////////////////////////////////////////////
 AffichageTexte::AffichageTexte()
 {
     assert(!font_.Error());
@@ -17,19 +35,50 @@ AffichageTexte::AffichageTexte()
     reinitialiserChrono();
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn AffichageTexte::~AffichageTexte()
+///
+/// Destructeur.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
 AffichageTexte::~AffichageTexte()
 {
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void AffichageTexte::demarrerChrono()
+///
+/// Fonction qui permet de démarrer le chronomètre de l'affichage.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void AffichageTexte::demarrerChrono()
 {
     if (enPause_)
     {
+        // Le temps du début est le temps courant soustrait du temps à la dernière pause.
         debut_ = std::chrono::system_clock::now() - (pause_ - debut_);
         enPause_ = false;
     }
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void AffichageTexte::pauseChrono()
+///
+/// Fonction qui permet de mettre en pause le chronomètre de l'affichage.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void AffichageTexte::pauseChrono()
 {
     if (!enPause_)
@@ -39,12 +88,31 @@ void AffichageTexte::pauseChrono()
     }
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void AffichageTexte::reinitialiserChrono()
+///
+/// Fonction qui permet de réinitialiser (0) le chronomètre de l'affichage.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void AffichageTexte::reinitialiserChrono()
 {
     debut_ = std::chrono::system_clock::now();
     pause_ = std::chrono::system_clock::now();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void AffichageTexte::afficher()
+///
+/// Fonction qui permet de faire l'affiche du profil et du chrono.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void AffichageTexte::afficher()
 {
     glm::ivec2 dimensions = vue_->obtenirProjection().obtenirDimensionCloture();
@@ -83,24 +151,27 @@ void AffichageTexte::afficher()
             duree = std::chrono::duration<double>(pause_ - debut_).count();
         }
 
-        // Obtenir la durée en secondes sous forme de string.
         std::string secondes{ std::to_string((int)duree % 60) };
+        // Conserver le format SS si le temps est moins de 10 sec.
         if (secondes.size() < 2)
         {
-            secondes = "0" + secondes;
+            secondes.insert(0, "0");
         }
 
-        // Obtenir la durée en minutes sous forme de string.
         std::string minutes{ std::to_string(((int)duree / 60) % 60) };
+        // Conserver le format MM si le temps est moins de 10 minutes.
         if (minutes.size() < 2)
         {
-            minutes = "0" + minutes;
+            minutes.insert(0, "0");
         }
 
         // Formatage du temps sous la forme "MM : SS".
         std::string compteur = minutes + " : " + secondes;
         font_.Render(compteur.c_str(), -1, positionTemps);
     }
-
     glPopAttrib();
 }
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

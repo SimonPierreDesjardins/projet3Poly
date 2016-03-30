@@ -136,7 +136,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AffichageTexte\AffichageTexte.cpp" />
-    <ClCompile Include="AffichageTexte\Chrono.cpp" />
     <ClCompile Include="Application\FacadeModele.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp" />
@@ -208,7 +207,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AffichageTexte\AffichageTexte.h" />
-    <ClInclude Include="AffichageTexte\Chrono.h" />
     <ClInclude Include="Application\FacadeModele.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDepart.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h" />

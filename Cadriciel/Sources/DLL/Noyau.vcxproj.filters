@@ -328,9 +328,6 @@
     <ClCompile Include="AffichageTexte\AffichageTexte.cpp">
       <Filter>Source Files\AffichageTexte</Filter>
     </ClCompile>
-    <ClCompile Include="AffichageTexte\Chrono.cpp">
-      <Filter>Source Files\AffichageTexte</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\FacadeModele.h">
@@ -565,9 +562,6 @@
       <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="AffichageTexte\AffichageTexte.h">
-      <Filter>Header Files\AffichageTexte</Filter>
-    </ClInclude>
-    <ClInclude Include="AffichageTexte\Chrono.h">
       <Filter>Header Files\AffichageTexte</Filter>
     </ClInclude>
   </ItemGroup>
