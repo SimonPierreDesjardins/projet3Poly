@@ -19,6 +19,7 @@
 
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
+#include "AffichageTexte.h"
 
 #include <iostream>
 
@@ -40,6 +41,12 @@ ModeSimulation::ModeSimulation()
 	// On fait démarrer le robot en mode automatique
 	controleRobot_->passerAModeAutomatique();
     actionsAppuyees_ = { { false, false, false, false, false } };
+
+    affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
+    affichageTexte_->assignerProfilEstAffiche(true);
+    affichageTexte_->assignerTempsEstAffiche(true);
+    affichageTexte_->reinitialiserChrono();
+    affichageTexte_->demarrerChrono();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -53,6 +60,10 @@ ModeSimulation::ModeSimulation()
 ModeSimulation::~ModeSimulation()
 {
 	controleRobot_ = nullptr;
+    affichageTexte_->assignerProfilEstAffiche(false);
+    affichageTexte_->assignerTempsEstAffiche(false);
+    affichageTexte_->reinitialiserChrono();
+    affichageTexte_->pauseChrono();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -221,10 +232,23 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			controleRobot_->robot_->positionDepart();
 			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 			controleRobot_->passerAModeAutomatique();
+            affichageTexte_->reinitialiserChrono();
 			break;
 
-		case VK_ESCAPE:
-			controleRobot_->setEnPause(!(controleRobot_->getEnPause()));
+        case VK_ESCAPE:
+        {
+            bool estEnPause = controleRobot_->getEnPause();
+            controleRobot_->setEnPause(!estEnPause);
+            if (estEnPause)
+            {
+                affichageTexte_->demarrerChrono();
+            }
+            else
+            {
+                affichageTexte_->pauseChrono();
+            }
+        }
+        break;
 
 		default:
 			break;

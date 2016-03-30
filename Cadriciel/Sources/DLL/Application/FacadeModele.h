@@ -10,19 +10,19 @@
 #ifndef __APPLICATION_FACADEMODELE_H__
 #define __APPLICATION_FACADEMODELE_H__
 
-
 #include <windows.h>
 #include <string>
 #include <memory>
 
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
-#include "AffichageTexte.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
+#include "AffichageTexte.h"
 
 class NoeudAbstrait;
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class FacadeModele
 /// @brief Classe qui constitue une interface (une façade) sur l'ensemble
