@@ -46,18 +46,18 @@ namespace vue {
 		Vue{ camera },
 		projection_{ projection }
 	{
-		theta = 90;
-		phi = 0;
-		rho = 170;
+			theta = 90;
+			phi = 0;
+			rho = 170;	
 	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn const ProjectionOrtho& VueOrbite::obtenirProjection() const
 	///
-	/// Retourne la projection orthogonale associée à cette vue.
+	/// Retourne la projection perspective associée à cette vue.
 	///
-	/// @return La projection orthogonale associée à cette vue.
+	/// @return La projection perspective associée à cette vue.
 	///
 	////////////////////////////////////////////////////////////////////////
 	const ProjectionPerspective& VueOrbite::obtenirProjection() const
@@ -91,7 +91,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::appliquerCamera() const
 	{
-		camera_.positionner();
+		camera_->positionner();
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -128,7 +128,7 @@ namespace vue {
 	{
 		rho -= 1;
 
-		camera_.assignerPosition(glm::dvec3(
+		camera_->assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
@@ -148,7 +148,7 @@ namespace vue {
 	{
 		rho += 1;
 
-		camera_.assignerPosition(glm::dvec3(
+		camera_->assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
@@ -171,7 +171,6 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::zoomerInElastique(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
-		//projection_.zoomerIn(coin1, coin2);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -190,7 +189,6 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::zoomerOutElastique(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
-		//projection_.zoomerOut(coin1, coin2);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -207,14 +205,6 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::deplacerXY(double deplacementX, double deplacementY)
 	{
-		//https://fr.wikipedia.org/wiki/Coordonn%C3%A9es_sph%C3%A9riques
-		// φ commence a 0
-		// θ commence a 0
-		glm::dvec3 position = camera_.obtenirPosition();
-
-		position[0] -= deplacementX*0.1;
-		position[1] -= deplacementY*0.1;
-		camera_.assignerPosition(position);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -232,11 +222,6 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::deplacerXY(const glm::ivec2& deplacement)
 	{
-		glm::dvec3 position = camera_.obtenirPosition();
-
-		position[0] -= deplacement[0]*0.1;
-		position[1] -= deplacement[1]*0.1;
-		camera_.assignerPosition(position);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -277,10 +262,10 @@ namespace vue {
 		theta -= rotationX;
 		phi -= rotationY;
 		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
-		camera_.assignerDirectionHaut(position);
+		camera_->assignerDirectionHaut(position);
 
 
-		camera_.assignerPosition(glm::dvec3(
+		camera_->assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
@@ -308,10 +293,10 @@ namespace vue {
 		theta -= rotation[0];
 		phi -= rotation[1];
 		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
-		camera_.assignerDirectionHaut(position);
+		camera_->assignerDirectionHaut(position);
 
 
-		camera_.assignerPosition(glm::dvec3(
+		camera_->assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))

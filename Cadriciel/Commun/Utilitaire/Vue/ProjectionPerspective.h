@@ -33,8 +33,8 @@ namespace vue {
 	{
 	public:
 		/// Constructeur.
-		ProjectionPerspective(int xMin
-			, int xMaxCloture,
+		ProjectionPerspective(
+			int xMin, int xMaxCloture,
 			int yMinCloture, int yMaxCloture,
 			double zAvant, double zArriere,
 			double zoomInMax, double zoomOutMax,
@@ -49,8 +49,7 @@ namespace vue {
 		/// Zoom out, c'est-à-dire un rapetissement.
 		virtual void zoomerOut();
 		/// Modification de la clôture.
-		virtual void redimensionnerFenetre(const glm::ivec2& coinMin,
-			const glm::ivec2& coinMax);
+		virtual void redimensionnerFenetre(const glm::ivec2& coinMin, const glm::ivec2& coinMax);
 		/// Application de la projection.
 		virtual void appliquer() const;
 
@@ -91,7 +90,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn inline void ProjectionOrtho::obtenirCoordonneesFenetreVirtuelle(double& xMin, double& xMax, double& yMin, double& yMax) const
+	/// @fn inline void ProjectionPerspective::obtenirCoordonneesFenetreVirtuelle(double& xMin, double& xMax, double& yMin, double& yMax) const
 	///
 	/// Cette fonction retourne les coordonnées de la fenêtre virtuelle
 	/// associée à cette projection.
@@ -104,9 +103,7 @@ namespace vue {
 	/// @return Les coordonnées de la fenêtre virtuelle.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline void ProjectionPerspective::obtenirCoordonneesFenetreVirtuelle(
-		double& xMin, double& xMax, double& yMin, double& yMax
-		) const
+	inline void ProjectionPerspective::obtenirCoordonneesFenetreVirtuelle(double& xMin, double& xMax, double& yMin, double& yMax) const
 	{
 		xMin = xMinFenetre_;
 		xMax = xMaxFenetre_;

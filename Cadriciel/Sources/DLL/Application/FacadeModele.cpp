@@ -170,15 +170,16 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	arbre_->initialiser();
 
 	// On crée une vue par défaut.
+	camera_ = std::make_unique<vue::Camera>(
+		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
+		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)); 
+
 	vue_ = std::make_unique<vue::VueOrtho>(
-		vue::Camera{
-			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
-		vue::ProjectionOrtho{
-			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
-			-50, 50, -50, 50, false }
-	);
+		*camera_, vue::ProjectionOrtho{
+		0, 500, 0, 500,
+		1, 1000, 1, 10000, 1.25,
+		-50, 50, -50, 50, false });
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -332,14 +333,15 @@ void FacadeModele::afficherBase() const
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerVueOrtho()
 {
-	vue_ = std::make_unique<vue::VueOrtho>(
-		vue::Camera{
+	camera_ = std::make_unique<vue::Camera>(
 		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
-		vue::ProjectionOrtho{
-			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
-			-50, 50, -50, 50, false });
+		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1));
+
+	vue_ = std::make_unique<vue::VueOrtho>(
+		*camera_, vue::ProjectionOrtho{
+		0, 500, 0, 500,
+		1, 1000, 1, 10000, 1.25,
+		-50, 50, -50, 50, false });
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -353,14 +355,15 @@ void FacadeModele::assignerVueOrtho()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerVueOrbite()
 {
-	vue_ = std::make_unique<vue::VueOrbite>(
-		vue::Camera{
+	camera_ = std::make_unique<vue::Camera>(
 		glm::dvec3(0, 0, 170), glm::dvec3(0, 0, 0),
-		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
-		vue::ProjectionPerspective{
-			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
-			-50, 50, -50, 50, true });
+		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1));
+
+	vue_ = std::make_unique<vue::VueOrbite>(
+		*camera_, vue::ProjectionPerspective{
+		0, 500, 0, 500,
+		1, 1000, 1, 10000, 1.25,
+		-50, 50, -50, 50, true });
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -374,14 +377,15 @@ void FacadeModele::assignerVueOrbite()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerVuePremierePersonne()
 {
-	vue_ = std::make_unique<vue::VueOrtho>(
-		vue::Camera{
-		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
-		vue::ProjectionOrtho{
-			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
-			-50, 50, -50, 50, true });
+	camera_ = std::make_unique<vue::Camera>(
+		glm::dvec3(0, 0, 4), glm::dvec3(100, 0, 1),
+		glm::dvec3(1, 0, 0), glm::dvec3(0, 0, 1));
+
+	vue_ = std::make_unique<vue::VueOrbite>(
+		*camera_, vue::ProjectionPerspective{
+		0, 500, 0, 500,
+		1, 1000, 1, 10000, 1.25,
+		-50, 50, -50, 50, true });
 }
 
 ////////////////////////////////////////////////////////////////////////

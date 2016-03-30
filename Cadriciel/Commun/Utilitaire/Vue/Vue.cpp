@@ -30,8 +30,8 @@ namespace vue {
 	///
 	////////////////////////////////////////////////////////////////////////////
 	Vue::Vue(const Camera& camera)
-		: camera_{ camera }
 	{
+		camera_ = camera;
 	}
 
 

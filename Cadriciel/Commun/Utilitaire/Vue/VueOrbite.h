@@ -68,6 +68,9 @@ namespace vue {
 	private:
 		/// Projection utilisée pour cette vue.
 		ProjectionPerspective projection_;
+
+		bool estPremierePersonne_;
+
 		double theta;
 		double phi;
 		double rho;

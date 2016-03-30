@@ -12,6 +12,7 @@
 
 
 #include "Camera.h"
+#include <memory>
 
 namespace math {
 	class Plan3D;
@@ -52,9 +53,9 @@ namespace vue {
 		bool convertirClotureAVirtuelle(int x, int y, const math::Plan3D& plan, glm::dvec3& point) const;
 
 		/// Obtient la caméra associée à cette vue.
-		inline Camera& obtenirCamera();
+		inline vue::Camera* obtenirCamera();
 		/// Obtient la caméra associée à cette vue (version constante).
-		inline const Camera& obtenirCamera() const;
+		inline const vue::Camera* obtenirCamera() const;
 
 
 		// Obtention de la projection
@@ -98,8 +99,8 @@ namespace vue {
 
 	protected:
 		/// Caméra utilisée pour cette vue
-		Camera camera_;
-
+		//Camera camera_;
+		std::unique_ptr<vue::Camera> camera_{ nullptr };
 	};
 
 
@@ -112,9 +113,9 @@ namespace vue {
 	/// @return La caméra associée à cet objet.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline Camera& Vue::obtenirCamera()
+	inline vue::Camera* Vue::obtenirCamera()
 	{
-		return camera_;
+		return camera_.get();
 	}
 
 
@@ -128,9 +129,9 @@ namespace vue {
 	/// @return La caméra associée à cet objet.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline const Camera& Vue::obtenirCamera() const
+	inline const vue::Camera* Vue::obtenirCamera() const
 	{
-		return camera_;
+		return camera_.get();
 	}
 
 

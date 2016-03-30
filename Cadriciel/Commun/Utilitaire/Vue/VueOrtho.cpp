@@ -93,7 +93,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrtho::appliquerCamera() const
 	{
-		camera_.positionner();
+		camera_->positionner();
 	}
 
 
@@ -268,7 +268,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrtho::rotaterXY(double rotationX, double rotationY)
 	{
-		camera_.orbiterXY(rotationX * 360, rotationY * 180);
+		camera_->orbiterXY(rotationX * 360, rotationY * 180);
 	}
 
 
