@@ -427,8 +427,7 @@ void NoeudAbstrait::afficher() const
 {
 	if (affiche_) {
 		glPushMatrix();
-		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT | GL_ENABLE_BIT);
-
+		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT);
 
 		// La translation de la position relative		
 		glTranslated(

@@ -143,7 +143,7 @@ void NoeudRobot::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	// TODO: Figurer pourquoi plateforme est transparente sans cette ligne.
-	glColor3f(0.0, 0.0, 0.0);
+	//glColor3f(0.0, 0.0, 0.0);
 
 	// Affichage du modèle.
 	vbo_->dessiner();

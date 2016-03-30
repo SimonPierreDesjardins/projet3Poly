@@ -51,7 +51,6 @@ std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn FacadeModele* FacadeModele::obtenirInstance()
@@ -298,7 +297,7 @@ void FacadeModele::afficher() const
 	// Compte de l'affichage
 	utilitaire::CompteurAffichage::obtenirInstance()->signalerAffichage();
 
-    affichageTexte_->afficher();
+    //affichageTexte_->afficher();
 
 	// Échange les tampons pour que le résultat du rendu soit visible.
 	::SwapBuffers(hDC_);
@@ -321,7 +320,7 @@ void FacadeModele::afficherBase() const
 	glm::vec4 position{ 0, 0, 1, 0 };
 	
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
-	glm::vec4 contributionMaximale{ 1.0, 1.0, 1.0, 1.0 };
+    glm::vec4 contributionMaximale{ 1.0 , 1.0, 1.0, 1.0 };
 
 	glLightfv(GL_LIGHT0, GL_POSITION, glm::value_ptr(position));
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)

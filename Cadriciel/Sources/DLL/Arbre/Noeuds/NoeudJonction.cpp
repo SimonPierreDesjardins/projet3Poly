@@ -132,7 +132,7 @@ void NoeudJonction::afficherConcret() const
 	}
 	else 
     {
-		glColor4d(0.0, 0.0, 0.0, 1.0);
+//		glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 	// Affichage du modèle.
