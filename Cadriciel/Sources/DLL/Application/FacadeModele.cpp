@@ -320,13 +320,13 @@ void FacadeModele::afficherBase() const
 	glm::vec4 position{ 0, 0, 1, 0 };
 	
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
-    glm::vec4 contributionMaximale{ 1.0 , 1.0, 1.0, 1.0 };
+    glm::vec4 contributionMaximale{ 1.0, 1.0, 1.0, 1.0 };
 
 	glLightfv(GL_LIGHT0, GL_POSITION, glm::value_ptr(position));
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
 	glLightfv(GL_LIGHT0, GL_AMBIENT, glm::value_ptr(zeroContribution));
 	// On sature les objets de lumière
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, glm::value_ptr(contributionMaximale));
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, glm::value_ptr(zeroContribution));
 	// Pas de composante spéculaire.
 	glLightfv(GL_LIGHT0, GL_SPECULAR, glm::value_ptr(zeroContribution));
 
