@@ -159,14 +159,15 @@ namespace InterfaceGraphique
             afficherMenuPrincipal(false);
             afficherMenuEdition(true);
             panneauOperation_.Visible = false;
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
             FonctionsNatives.assignerMode(Mode.EDITION);
             verificationDuNombreElementChoisi();
             changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
             viewPort_.Focus();
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -742,12 +743,13 @@ namespace InterfaceGraphique
                 afficherMenuPrincipal(false);
                 afficherMenuEdition(false);
                 afficherMenuSimulation(true);
+
+                FonctionsNatives.assignerVueOrtho();
+                FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
                 FonctionsNatives.assignerMode(Mode.SIMULATION);
             }
             viewPort_.Focus();
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
