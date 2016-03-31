@@ -20,9 +20,9 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	/// @class VueOrbite
-	/// @brief Classe concrète de vue orbitale.
+	/// @brief Classe concrète de vue orbitale et permiere personne.
 	///
-	/// Cette classe implante le comportement attendu d'une vue orbitale.
+	/// Cette classe implante le comportement attendu d'une vue avec une projection perspective.
 	///
 	/// @author Frédéric Grégoire
 	/// @date 2016-03-29
@@ -66,18 +66,18 @@ namespace vue {
 		virtual void rotaterZ(double rotation);
 
 		double verifierPhi(double changement);
+		double verifierRho(double changement);
 
 	private:
 		/// Projection utilisée pour cette vue.
 		ProjectionPerspective projection_;
 
+		//Variable pour les coordonnées sphérique
 		double theta;
 		double phi;
 		double rho;
 
 	};
-
-
 }; // Fin de l'espace de nom vue.
 
 

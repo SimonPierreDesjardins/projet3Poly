@@ -121,12 +121,10 @@ void ModeAbstrait::gererClicDroitRelache(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererMouvementSouris(const int & x, const int& y)
 {
-	if (clicDroitEnfonce_)
-	{
-		if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-		}
-		else
+	if (clicDroitEnfonce_){
+		if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
+		}
 	}
 	currentPosition_ = glm::ivec2(x, y);
 		
@@ -143,9 +141,7 @@ void ModeAbstrait::gererMouvementSouris(const int & x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererTouchePlus()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-	}
-	else {
+	if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
 	}
 }
@@ -161,12 +157,9 @@ void ModeAbstrait::gererTouchePlus()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererToucheMoins()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-	}
-	else {
+	if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 	}
-
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -180,10 +173,9 @@ void ModeAbstrait::gererToucheMoins()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheGauche()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-	}
-	else
+	if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -197,10 +189,9 @@ void ModeAbstrait::gererFlecheGauche()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheBas()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-	}
-	else
+	if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
+	}
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -213,10 +204,9 @@ void ModeAbstrait::gererFlecheBas()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheHaut()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-	}
-	else
+	if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -230,10 +220,9 @@ void ModeAbstrait::gererFlecheHaut()
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererFlecheDroit()
 {
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-	}
-	else
+	if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -247,9 +236,7 @@ void ModeAbstrait::gererFlecheDroit()
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModeAbstrait::gererMoletteSouris(const int & delta){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-	}
-	else{
+	if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 		if (delta > 0)
 			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
 		else

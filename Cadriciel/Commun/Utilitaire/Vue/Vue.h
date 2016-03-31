@@ -119,7 +119,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn inline const Camera& Vue::obtenirCamera() const
+	/// @fn inline const Camera* Vue::obtenirCamera() const
 	///
 	/// Cette fonction retourne la caméra associée à cette vue (version
 	/// constante).
@@ -134,19 +134,18 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn inline const Camera& Vue::obtenirCamera() const
+	/// @fn inline bool Vue::estPremierePersonne()
 	///
-	/// Cette fonction retourne la caméra associée à cette vue (version
-	/// constante).
+	/// Cette fonction retourne un bool qui dit si la caméra est en première
+	/// personne ou non
 	///
-	/// @return La caméra associée à cet objet.
+	/// @return bool: Vue est premiere personne
 	///
 	////////////////////////////////////////////////////////////////////////
 	inline bool Vue::estPremierePersonne()
 	{
 		return estPremierePersonne_;
 	}
-
 
 }; // Fin de l'espace de nom vue.
 

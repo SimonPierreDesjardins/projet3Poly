@@ -15,7 +15,7 @@ namespace vue {
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn VueOrbite::VueOrbite(const Camera& camera, int xMinCloture, int xMaxCloture, int yMinCloture, int yMaxCloture, double zAvant, double zArriere, double zoomInMax, double zoomOutMax, double incrementZoom, double xMinFenetre, double xMaxFenetre, double yMinFenetre, double yMaxFenetre)
+	/// @fn VueOrbite::VueOrbite(const Camera& camera, int xMinCloture, int xMaxCloture, int yMinCloture, int yMaxCloture, double zAvant, double zArriere, double zoomInMax, double zoomOutMax, double incrementZoom, double xMinFenetre, double xMaxFenetre, double yMinFenetre, double yMaxFenetre, bool estPremierePersonne)
 	///
 	/// Constructeur d'une vue orthogonale.  Ne fait que créer les objets
 	/// Projection et Camera correspondant.
@@ -38,6 +38,7 @@ namespace vue {
 	///                            virtuelle.
 	/// @param[in] yMaxFenetre   : coordonnée maximale en @a y de la fenêtre
 	///                            virtuelle.
+	/// @param[in] estPremierePrsonne   : bool disant si la vue est premiere personne
 	/// 
 	/// @return Aucune (constructeur).
 	///
@@ -129,7 +130,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::zoomerIn()
 	{
-		rho -= 1;
+		verifierRho(-1);
 
 		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
@@ -149,7 +150,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::zoomerOut()
 	{
-		rho += 1;
+		verifierRho(1);
 
 		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
@@ -236,12 +237,11 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::deplacerXY(const glm::ivec2& deplacement)
 	{
-		theta -= deplacement[0];
-		verifierPhi(-deplacement[1]);
+		theta -= deplacement[0]*0.5;
+		verifierPhi(-deplacement[1]*0.5);
 
 		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
 		camera_.assignerDirectionHaut(position);
-
 
 		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
@@ -250,6 +250,18 @@ namespace vue {
 			);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn double VueOrbite::verifierPhi(double changement)
+	///
+	/// Assure que le phi soit dans des bonnes valeurs. Dans le cas contraire, il retourne 
+	/// la limite permisse, sinon il applique le changement.
+	///
+	/// @param[in]  changement: Changement de valeur a la variable
+	///
+	/// @return la variable modifier ou la limite permise.
+	///
+	////////////////////////////////////////////////////////////////////////
 	double VueOrbite::verifierPhi(double changement){
 		phi += changement;
 		if (phi > 0)
@@ -257,6 +269,27 @@ namespace vue {
 		else if (phi < -89.9)
 			phi = -89.9;
 		return phi;
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn double VueOrbite::verifierRho(double changement)
+	///
+	/// Assure que le rho soit dans des bonnes valeurs. Dans le cas contraire, il retourne 
+	/// la limite permisse, sinon il applique le changement.
+	///
+	/// @param[in]  changement: Changement de valeur a la variable
+	///
+	/// @return la variable modifier ou la limite permise.
+	///
+	////////////////////////////////////////////////////////////////////////
+	double VueOrbite::verifierRho(double changement){
+		rho += changement;
+		if (rho < 5)
+			rho = 5;
+		else if (rho > 300)
+			rho = 300;;
+		return rho;
 	}
 
 	////////////////////////////////////////////////////////////////////////

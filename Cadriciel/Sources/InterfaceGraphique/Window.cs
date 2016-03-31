@@ -164,6 +164,9 @@ namespace InterfaceGraphique
             changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
             viewPort_.Focus();
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -742,6 +745,9 @@ namespace InterfaceGraphique
                 FonctionsNatives.assignerMode(Mode.SIMULATION);
             }
             viewPort_.Focus();
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1135,6 +1141,9 @@ namespace InterfaceGraphique
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         afficherMenuEdition(false);
                         afficherMenuPrincipal(true);
+
+                        FonctionsNatives.assignerVueOrtho();
+                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     }
                     break;
 
@@ -1224,14 +1233,15 @@ namespace InterfaceGraphique
                         afficherMenuPrincipal(true);
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         estEnPause = false;
-                        //FonctionsNatives.mettreEnPause(estEnPause);
                         picturePause.Visible = estEnPause;
+
+                        FonctionsNatives.assignerVueOrtho();
+                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     }
                     break;
 
                 case Keys.Escape:
                     estEnPause = !estEnPause;
-                    //FonctionsNatives.mettreEnPause(estEnPause);
                     picturePause.Visible = estEnPause;
                     menuSimTest.Visible = estEnPause;
                     break;
@@ -1264,6 +1274,9 @@ namespace InterfaceGraphique
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         afficherMenuTest(false);
                         afficherMenuPrincipal(true);
+
+                        FonctionsNatives.assignerVueOrtho();
+                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     }
                     break;
 

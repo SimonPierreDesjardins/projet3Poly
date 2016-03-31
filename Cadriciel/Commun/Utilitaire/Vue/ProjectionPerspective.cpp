@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////
 /// @file ProjectionPerspective.cpp
-/// @author DGI
+/// @author Frédéric Grégoire
 /// @date 2016-03-29
 /// @version 1.0
 ///
@@ -15,7 +15,6 @@
 
 
 namespace vue {
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -64,7 +63,6 @@ namespace vue {
 		ajusterRapportAspect();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionPerspective::zoomerIn()
@@ -91,7 +89,6 @@ namespace vue {
 		}
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionPerspective::zoomerOut()
@@ -117,7 +114,6 @@ namespace vue {
 			currentZoom_ += incrementZoom_;
 		}
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -167,7 +163,6 @@ namespace vue {
 		mettreAJourProjection();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionPerspective::appliquer() const
@@ -182,10 +177,8 @@ namespace vue {
 	void ProjectionPerspective::appliquer() const
 	{
 		double aspect = (xMaxFenetre_ - xMinFenetre_) / (yMaxFenetre_ - yMinFenetre_);
-		//Ne pas utiliser glFrustum
 		gluPerspective(30, aspect, zAvant_, zArriere_);
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -242,7 +235,6 @@ namespace vue {
 		xMaxFenetre_ = xMinFenetre_ + W;
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionPerspective::zoomerOut( const glm::ivec2& coin1, const glm::ivec2& coin2)
@@ -260,7 +252,6 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionPerspective::zoomerOut(const glm::ivec2& coin1, const glm::ivec2& coin2)
 	{
-
 		//dimensions du rectum
 		double w = std::abs(coin2.x - coin1.x);
 		double h = std::abs(coin2.y - coin1.y);
@@ -312,7 +303,6 @@ namespace vue {
 		xMaxFenetre_ = xMinFenetre_ + W;
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionPerspective::translater( double deplacementX, double deplacementY )
@@ -333,7 +323,6 @@ namespace vue {
 		yMinFenetre_ += deplacementY;
 		yMaxFenetre_ += deplacementY;
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -360,7 +349,6 @@ namespace vue {
 		translater(deplacementX, deplacementY);
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionPerspective::centrerSurPoint( const glm::ivec2& pointCentre )
@@ -376,9 +364,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionPerspective::centrerSurPoint(const glm::ivec2& pointCentre)
 	{
-		// À IMPLANTER.
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -412,7 +398,6 @@ namespace vue {
 			yMaxFenetre_ += ajout;
 		}
 	}
-
 }; // Fin du namespace vue.
 
 

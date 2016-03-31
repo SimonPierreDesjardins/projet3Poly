@@ -71,7 +71,6 @@ public:
   
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
-   inline vue::Camera* obtenirCamera();
 
    //Assigne les parametres pour la vue ortho
    void assignerVueOrtho();
@@ -121,8 +120,6 @@ private:
 
    /// Vue courante de la scène.
    std::unique_ptr<vue::Vue> vue_{ nullptr };
-   /// Référence à la caméra de la vue.
-   vue::Camera* camera_{ nullptr };
 
    /// Arbre de rendu contenant les différents objets de la scène.
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
@@ -162,21 +159,6 @@ inline ModeAbstrait* FacadeModele::obtenirMode()
 inline vue::Vue* FacadeModele::obtenirVue()
 {
    return vue_.get();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline vue::Camera* FacadeModele::obtenirCamera()
-///
-/// Cette fonction retourne la camera qui est présentement utilisée pour
-/// voir la scène.
-///
-/// @return La camera courante.
-///
-////////////////////////////////////////////////////////////////////////
-inline vue::Camera* FacadeModele::obtenirCamera()
-{
-	return camera_;
 }
 
 ////////////////////////////////////////////////////////////////////////

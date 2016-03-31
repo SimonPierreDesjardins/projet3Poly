@@ -53,8 +53,6 @@ public:
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-	virtual void gererTouchePlus();
-	virtual void gererToucheMoins();
 	virtual void gererToucheAltEnfoncee();
 	virtual void gererToucheAltRelachee();
 

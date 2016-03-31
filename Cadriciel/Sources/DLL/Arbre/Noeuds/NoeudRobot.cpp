@@ -200,14 +200,13 @@ void NoeudRobot::animer(float dt)
     mutexControleRobot_->lock();
     mettreAJourPosition(dt);
 
-	//TODO CHANGER DE PLACE (STATIC BOOL FRED) 
 	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()){
-		FacadeModele::obtenirInstance()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ 0.0, 0.0, 4.0 });
+		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ 0.0, 0.0, 4.0 });
 		
 		glm::dvec3 positionVise{ cos(angleRotation_*PI / 180)*1000, sin(angleRotation_* PI / 180)*1000, 1 };
-		FacadeModele::obtenirInstance()->obtenirCamera()->assignerPointVise(positionVise);
+		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPointVise(positionVise);
 
-		FacadeModele::obtenirInstance()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ -cos(angleRotation_*PI / 180) * 4, -sin(angleRotation_* PI / 180) * 4, 4.0 });
+		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ -cos(angleRotation_*PI / 180) * 4, -sin(angleRotation_* PI / 180) * 4, 4.0 });
 	}
     
     if (estEnCollision_)

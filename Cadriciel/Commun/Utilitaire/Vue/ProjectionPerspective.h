@@ -85,9 +85,6 @@ namespace vue {
 
 	};
 
-
-
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn inline void ProjectionPerspective::obtenirCoordonneesFenetreVirtuelle(double& xMin, double& xMax, double& yMin, double& yMax) const
@@ -110,8 +107,6 @@ namespace vue {
 		yMin = yMinFenetre_;
 		yMax = yMaxFenetre_;
 	}
-
-
 }; // Fin de l'espace de nom vue.
 
 
