@@ -386,7 +386,7 @@ void FacadeModele::assignerVuePremierePersonne()
 
     vue::Camera camera = vue::Camera(
 		glm::dvec3(positionRobot.x, positionRobot.y, 4), glm::dvec3(100, 0, 1),
-		glm::dvec3(1, 0, 0), glm::dvec3(0, 0, 1));
+		glm::dvec3(0, 0, 1), glm::dvec3(0, 0, 1));
 
 	vue_ = std::make_unique<vue::VueOrbite>(
 		camera, vue::ProjectionPerspective{
