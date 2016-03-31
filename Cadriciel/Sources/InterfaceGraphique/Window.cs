@@ -272,7 +272,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void afficherMenuTest(bool afficherMenu)
         {
-            menuSimTest.Visible = false;
+            menuSimTest.Visible = afficherMenu;
             modeEditionMenuSimTest.Visible = afficherMenu;
             premierePersonneMenuSimTest.Visible = !afficherMenu;
             viewPort_.Visible = afficherMenu;

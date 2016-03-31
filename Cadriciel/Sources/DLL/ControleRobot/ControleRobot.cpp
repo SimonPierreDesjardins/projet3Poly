@@ -186,6 +186,7 @@ void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	assignerComportement(DEFAUT, L"Passage au mode automatique");
 	initialiserBoucleRobot();
+	EnginSon::obtenirInstance()->jouerSonRobot(CHANGEMENT_AUTOMATIQUE_SON);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -200,6 +201,7 @@ void ControleRobot::passerAModeAutomatique() {
 void ControleRobot::passerAModeManuel(){
 	manuel = true;
 	terminerBoucleRobot();
+	EnginSon::obtenirInstance()->jouerSonRobot(CHANGEMENT_MANUEL_SON);
 }
 
 ////////////////////////////////////////////////////////////////////////

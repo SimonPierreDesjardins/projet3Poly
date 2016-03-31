@@ -16,15 +16,16 @@
 #include <array>
 
 enum typeSon {
+	ARRETER_SON = -1,
 	MUSIQUE,
-	AVANCER_RECULER,
-	TOURNER,
-	DEVIATION,
-	CHANGEMENT_MANUEL,
-	CHANGEMENT_AUTOMATIQUE,
-	COLLISION_POTEAU,
-	COLLISION_MUR,
-	COLLISION_TABLE
+	AVANCER_RECULER_SON,
+	TOURNER_SON,
+	DEVIATION_SON,
+	CHANGEMENT_MANUEL_SON,
+	CHANGEMENT_AUTOMATIQUE_SON,
+	COLLISION_POTEAU_SON,
+	COLLISION_MUR_SON,
+	COLLISION_TABLE_SON
 };
 
 class EnginSon{
@@ -57,7 +58,7 @@ private:
 
 	typeSon dernierSonRobot;
 
-	float dernierVolumeSonRobot;
+	void changerMode(typeSon son);
 
 public:
 	EnginSon();
@@ -65,12 +66,13 @@ public:
 	static EnginSon* obtenirInstance();
 	static void libererInstance();
 	void jouerMusique();
-	void jouerSonRobot(typeSon son, float puissance);
-	void changerMode();
+	void jouerSonRobot(typeSon son);
+	
 	void jouerCollision(typeSon son);
 	void stopMusique();
 	void stopRobotSon();
 	void stopCollisionSon();
+	FMOD::System* obtenirSystem(){ return m_pSystem; };
 };
 
 

@@ -327,7 +327,7 @@ void FacadeModele::afficherBase() const
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, glm::value_ptr(contributionMaximale));
 	// Pas de composante spéculaire.
 	glLightfv(GL_LIGHT0, GL_SPECULAR, glm::value_ptr(zeroContribution));
-
+	EnginSon::obtenirInstance()->obtenirSystem()->update();
 	// Afficher la scène.
 	arbre_->afficher();
 }

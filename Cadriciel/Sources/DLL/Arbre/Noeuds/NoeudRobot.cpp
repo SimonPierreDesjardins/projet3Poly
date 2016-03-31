@@ -293,7 +293,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     // Le poteau est en intersection et il ne se trouve pas déjà en collision.
     if (enIntersection)
     {
-		EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU);
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
         // On calcule les composantes de la collision.
         enCollision = true;
         cercle->assignerEnCollision(enCollision);
@@ -335,7 +335,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
     // Le poteau est en intersection et il ne se trouve pas déjà en collision.
     if (enIntersection)
     {
-		EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR);
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON);
         enCollision = true;
         rectangle->assignerEnCollision(enCollision);
 
@@ -391,7 +391,7 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
     // La table est en intersection et elle ne se trouve pas déjà en collision.
     if (enIntersection)
     {
-		EnginSon::obtenirInstance()->jouerCollision(COLLISION_TABLE);
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_TABLE_SON);
         // On calcule les composantes de la collision.
         calculerComposantesCollision(-normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
