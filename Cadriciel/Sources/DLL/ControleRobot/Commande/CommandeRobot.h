@@ -65,6 +65,7 @@ class CommandeRobot{
 
 		/// le fichier son associé au déplacement du robot
 		typeSon sonMoteur;
+
 };
 
 

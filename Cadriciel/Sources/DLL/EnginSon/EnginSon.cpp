@@ -9,13 +9,13 @@ std::unique_ptr<EnginSon> EnginSon::instance_{ nullptr };
 
 EnginSon::EnginSon(){
 	FMOD::System_Create(&m_pSystem);
-	m_pSystem->init(3, FMOD_INIT_NORMAL, NULL);
-	nomsSons_ = { { "On_the_Ground_60s.wav", "avancer_reculer.wav", "avancer_reculer.wav",
-					"avancer_reculer.wav", "avancer_reculer.wav", "avancer_reculer.wav",
+	m_pSystem->init(4, FMOD_INIT_NORMAL, NULL);
+	nomsSons_ = { { "On_the_Ground.wav", "avancer_reculer.wav", "avancer_reculer.wav",
+					"avancer_reculer.wav", "bike_honk.wav", "bike_horn.wav",
 					"Frying_Pan_Hit.wav", "Frying_Pan_Impact.wav", "knock.wav" } };
 	for (int i = 0; i < sons_.size(); i++)
 	{
-		m_pSystem->createSound((CHEMIN_SONS + nomsSons_.at(i)).c_str(), FMOD_HARDWARE, 0, &sons_.at(i));
+		m_pSystem->createSound((CHEMIN_SONS + nomsSons_.at(i)).c_str(), FMOD_CREATESAMPLE, 0, &sons_.at(i));
 	}
 }
 
@@ -45,25 +45,47 @@ void EnginSon::jouerMusique(){
 	pSound->setMode(FMOD_LOOP_NORMAL);
 	pSound->setLoopCount(-1);
 
-	m_pSystem->playSound(FMOD_CHANNEL_FREE, pSound, false, &musiqueChannel);
+	m_pSystem->playSound(FMOD_CHANNEL_FREE, pSound, true, &musiqueChannel);
+	musiqueChannel->setVolume(2);
+	musiqueChannel->setPaused(false);
+
+	m_pSystem->update();
 }
 
-void EnginSon::jouerSonRobot(typeSon son, double vitesse){
+void EnginSon::jouerSonRobot(typeSon son, float vitesse){
+	SoundClass sound;
 	SoundClass pSound = sons_.at(son);
+	robotChannel->getCurrentSound(&sound);
+
+	if (sound == pSound)
+		return;
+	else if (sound != 0)
+		robotChannel->stop();
+	
+	dernierSonRobot = son;
+	dernierVolumeSonRobot = vitesse;
+	
 	pSound->setMode(FMOD_LOOP_NORMAL);
 	pSound->setLoopCount(-1);
+	
+	m_pSystem->playSound(FMOD_CHANNEL_REUSE, pSound, true, &robotChannel);
 
-	m_pSystem->playSound(FMOD_CHANNEL_FREE, pSound, true, &robotChannel);
-
-	robotChannel->setVolume(vitesse / 60.0);
+	robotChannel->setVolume(0.5f);
 
 	robotChannel->setPaused(false);
+}
+
+void EnginSon::changerMode(){
+	SoundClass sound;
+	robotChannel->getCurrentSound(&sound);
+	if(sound != NULL)	stopRobotSon();
+	m_pSystem->playSound(FMOD_CHANNEL_FREE, sons_.at(CHANGEMENT_AUTOMATIQUE), false, 0);
 }
 
 void EnginSon::jouerCollision(typeSon son){
 	SoundClass pSound = sons_.at(son);
 	pSound->setMode(FMOD_LOOP_OFF);
-
+	
 	m_pSystem->playSound(FMOD_CHANNEL_FREE, pSound, false, &collisionChannel);
 }
 
@@ -72,6 +94,7 @@ void EnginSon::stopMusique(){
 }
 
 void EnginSon::stopRobotSon(){
+	dernierSonRobot = MUSIQUE;
 	robotChannel->stop();
 }
 

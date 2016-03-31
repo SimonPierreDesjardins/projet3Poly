@@ -51,7 +51,13 @@ private:
 
 	FMOD::Channel* collisionChannel;
 
+	FMOD::Channel* changerModeChannel;
+
 	FMOD::Channel* obtenirChannel(typeSon son);
+
+	typeSon dernierSonRobot;
+
+	float dernierVolumeSonRobot;
 
 public:
 	EnginSon();
@@ -59,7 +65,8 @@ public:
 	static EnginSon* obtenirInstance();
 	static void libererInstance();
 	void jouerMusique();
-	void jouerSonRobot(typeSon son, double puissance);
+	void jouerSonRobot(typeSon son, float puissance);
+	void changerMode();
 	void jouerCollision(typeSon son);
 	void stopMusique();
 	void stopRobotSon();

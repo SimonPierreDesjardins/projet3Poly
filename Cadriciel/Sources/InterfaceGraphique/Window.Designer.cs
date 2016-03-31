@@ -678,7 +678,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 428);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuEdition_);
             this.Controls.Add(this.bouttonSimulation_);
@@ -686,6 +685,7 @@
             this.Controls.Add(this.bouttonEditeur_);
             this.Controls.Add(this.bouttonConfiguration_);
             this.Controls.Add(this.viewPort_);
+            this.Controls.Add(this.menuSimTest);
             this.MainMenuStrip = this.menuSimTest;
             this.MinimumSize = new System.Drawing.Size(100, 148);
             this.Name = "Window";
