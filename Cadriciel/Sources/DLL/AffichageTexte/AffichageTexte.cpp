@@ -115,7 +115,7 @@ void AffichageTexte::reinitialiserChrono()
 ////////////////////////////////////////////////////////////////////////
 void AffichageTexte::afficher()
 {
-    glm::ivec2 dimensions = vue_->obtenirProjection().obtenirDimensionCloture();
+    glm::ivec2 dimensions = FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().obtenirDimensionCloture();
     
     // Positionner le texte à un certain décallage par rapport à la clôture.
     FTPoint positionProfil(OFFSET_X, dimensions.y - OFFSET_Y, 0.0);

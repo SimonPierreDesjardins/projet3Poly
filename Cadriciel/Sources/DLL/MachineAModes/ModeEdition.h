@@ -69,17 +69,7 @@ public:
 
 	
 	//Gestion des différentes touches et de leur effet selon le mode choisi
-	virtual void gererTouchePlus();
-	virtual void gererToucheMoins();
-
-	virtual void gererFlecheGauche();
-	virtual void gererFlecheBas();
-	virtual void gererFlecheHaut();
-	virtual void gererFlecheDroit();
-
 	virtual void gererToucheT();
-
-	virtual void gererMoletteSouris(const int & delta);
 
 	virtual void gererToucheSupprimer();
 

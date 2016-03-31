@@ -54,46 +54,6 @@ ModeEdition::~ModeEdition()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeEdition::gererTouchePlus()
-///
-/// Cette fonction permet de gérer la touche + dans le modeEdition.
-///
-/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom in.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererTouchePlus()
-{
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	} 
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-	}
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererToucheMoins()
-///
-/// Cette fonction permet de gérer la touche - dans le modeEdition.
-///
-/// Si nous ne sommes pas en perspective, la touche plus effectue un zoom out.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererToucheMoins()
-{
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-	}
-
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn void ModeEdition::gererToucheT()
 ///
 /// Cette fonction permet de gérer la touche T dans le modeEdition.
@@ -104,61 +64,6 @@ void ModeEdition::gererToucheMoins()
 void ModeEdition::gererToucheT()
 {
 	//FacadeModele::obtenirInstance()->assignerMode(TEST);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheGauche()
-///
-/// Cette fonction permet de gérer la touche flèche gauche dans le modeEdition.
-///
-/// Fait un déplacement de 10 pixels selon l'axe des x.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererFlecheGauche()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(10, 0);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheBas()
-///
-/// Cette fonction permet de gérer la touche flèche bas dans le modeEdition.
-///
-/// Fait un déplacement de 10 pixels selon l'axe des y.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererFlecheBas()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, 10);
-}
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheHaut()
-///
-/// Cette fonction permet de gérer la touche flèche haut dans le modeEdition.
-///
-/// Fait un déplacement de -10 pixels selon l'axe des y.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererFlecheHaut()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(0, -10);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererFlecheDroit()
-///
-/// Cette fonction permet de gérer la touche flèche droit dans le modeEdition.
-///
-/// Fait un déplacement de -10 pixels selon l'axe des x.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererFlecheDroit()
-{
-	FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(-10, 0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -184,32 +89,6 @@ void ModeEdition::sauvegarder()
 void ModeEdition::gererToucheSupprimer()
 {
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeEdition::gererMoletteSouris(const int & delta)
-///
-/// Cette fonction permet de gérer la molette de le souris dans le modeEdition.
-///
-/// Selon le signe du delta, nous ferons un zoom in ou out.
-///
-///@param[in] delta : La différence entre du mouvement de molette de la souris.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeEdition::gererMoletteSouris(const int& delta)
-{
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		if (delta > 0) {
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-		}
-		else {
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-		}
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
