@@ -41,7 +41,8 @@ namespace vue {
 			double zoomInMax, double zoomOutMax,
 			double incrementZoom,
 			double xMinFenetre, double xMaxFenetre,
-			double yMinFenetre, double yMaxFenetre);
+			double yMinFenetre, double yMaxFenetre,
+			bool perspective);
 
 
 		/// Zoom in, c'est-à-dire un agrandissement.

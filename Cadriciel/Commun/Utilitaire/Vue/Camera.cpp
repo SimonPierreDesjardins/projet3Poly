@@ -15,7 +15,6 @@
 
 namespace vue {
 
-
 	////////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn Camera::Camera(const glm::dvec3& position, const glm::dvec3& pointVise, const glm::dvec3& directionHautCamera, const glm::dvec3& directionHautMonde)
@@ -43,7 +42,6 @@ namespace vue {
 	{
 	}
 
-
 	////////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void Camera::deplacerXY( double deplacementX, double deplacementY )
@@ -62,7 +60,6 @@ namespace vue {
 	{
 	}
 
-
 	////////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void Camera::deplacerZ( double deplacement, bool bougePointVise )
@@ -79,7 +76,6 @@ namespace vue {
 	void Camera::deplacerZ(double deplacement, bool bougePointVise)
 	{
 	}
-
 
 	////////////////////////////////////////////////////////////////////////////
 	///
@@ -106,7 +102,6 @@ namespace vue {
 	{
 	}
 
-
 	////////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void Camera::orbiterXY( double rotationX, double rotationY, bool empecheInversion )
@@ -131,7 +126,6 @@ namespace vue {
 		)
 	{
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///

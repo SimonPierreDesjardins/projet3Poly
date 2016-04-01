@@ -115,7 +115,6 @@ void NoeudTable::afficherConcret() const
 	glPushMatrix();
 	// Affichage du modèle.
 	//glColor4f(1, 1, 1, 1);
-    glTranslated(0.0, 0.0, -5.0);
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();

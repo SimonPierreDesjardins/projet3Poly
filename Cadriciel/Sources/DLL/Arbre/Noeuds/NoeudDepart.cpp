@@ -101,7 +101,6 @@ void NoeudDepart::afficherConcret() const
     {
 		//glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
-
 	glRotated(angleRotation_, 0, 0, 1);
 
 	// Affichage du modèle.

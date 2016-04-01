@@ -15,6 +15,7 @@
 #include <memory>
 
 #include "Vue.h"
+#include "Camera.h"
 #include "ArbreRenduINF2990.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
@@ -71,6 +72,14 @@ public:
   
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
+
+   //Assigne les parametres pour la vue ortho
+   void assignerVueOrtho();
+   //Assigne les parametres pour la vue orbite
+   void assignerVueOrbite();
+   //Assigne les parametres pour la vue à la première personne
+   void assignerVuePremierePersonne();
+   
    /// Retourne l'arbre de rendu.
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
@@ -114,9 +123,14 @@ private:
 
    /// Vue courante de la scène.
    std::unique_ptr<vue::Vue> vue_{ nullptr };
+
    /// Arbre de rendu contenant les différents objets de la scène.
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
+
+   /// Le mode d'utilisation courant.
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
+
+   /// Le profil utilisateur.
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
 };

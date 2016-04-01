@@ -1,0 +1,89 @@
+//////////////////////////////////////////////////////////////////////////////
+/// @file VueOrbite.h
+/// @author Frédéric Grégoire
+/// @date 2016-03-29
+/// @version 1.0
+///
+/// @addtogroup utilitaire Utilitaire
+/// @{
+//////////////////////////////////////////////////////////////////////////////
+#ifndef __UTILITAIRE_VUEORBITE_H__
+#define __UTILITAIRE_VUEORBITE_H__
+
+
+#include "Vue.h"
+#include "Camera.h"
+#include "ProjectionPerspective.h"
+
+namespace vue {
+
+
+	////////////////////////////////////////////////////////////////////////
+	/// @class VueOrbite
+	/// @brief Classe concrète de vue orbitale et permiere personne.
+	///
+	/// Cette classe implante le comportement attendu d'une vue avec une projection perspective.
+	///
+	/// @author Frédéric Grégoire
+	/// @date 2016-03-29
+	////////////////////////////////////////////////////////////////////////
+	class VueOrbite : public Vue
+	{
+	public:
+		// Constructeur.
+		VueOrbite(Camera const& camera, ProjectionPerspective const& projection, bool estPremierePersonne);
+
+		/// Obtention de la projection.
+		virtual const ProjectionPerspective& obtenirProjection() const;
+		/// Application de la projection.
+		virtual void appliquerProjection() const;
+		/// Application de la caméra.
+		virtual void appliquerCamera() const;
+
+		/// Modification de la clotûre.
+		virtual void redimensionnerFenetre(const glm::ivec2& coinMin, const glm::ivec2& coinMax);
+
+		/// Zoom in, c'est-à-dire un agrandissement.
+		virtual void zoomerIn();
+		/// Zoom out, c'est-à-dire un rapetissement.
+		virtual void zoomerOut();
+		/// Zoom in élastique.
+		virtual void zoomerInElastique(const glm::ivec2& coin1, const glm::ivec2& coin2);
+		/// Zoom out élastique.
+		virtual void zoomerOutElastique(const glm::ivec2& coin1, const glm::ivec2& coin2);
+
+		/// Déplacement dans le plan XY par rapport à la vue.
+		virtual void deplacerXY(double deplacementX, double deplacementY);
+		/// Déplacement dans le plan XY par rapport à la vue.
+		virtual void deplacerXY(const glm::ivec2& deplacement);
+		/// Déplacement selon l'axe des Z par rapport à la vue.
+		virtual void deplacerZ(double deplacement);
+		/// Rotation selon les axes des X et des Y par rapport à la vue.
+		virtual void rotaterXY(double rotationX, double rotationY);
+		/// Rotation selon les axes des X et des Y par rapport à la vue.
+		virtual void rotaterXY(const glm::ivec2& rotation);
+		/// Rotation selon l'axe des Z par rapport à la vue.
+		virtual void rotaterZ(double rotation);
+
+		double verifierPhi(double changement);
+		double verifierRho(double changement);
+
+	private:
+		/// Projection utilisée pour cette vue.
+		ProjectionPerspective projection_;
+
+		//Variable pour les coordonnées sphérique
+		double theta;
+		double phi;
+		double rho;
+
+	};
+}; // Fin de l'espace de nom vue.
+
+
+#endif // __UTILITAIRE_VUEORBITE_H__
+
+
+///////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////
