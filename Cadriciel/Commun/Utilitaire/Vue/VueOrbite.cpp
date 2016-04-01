@@ -130,7 +130,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::zoomerIn()
 	{
-		verifierRho(-1);
+		verifierRho(-10);
 
 		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
@@ -150,7 +150,7 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void VueOrbite::zoomerOut()
 	{
-		verifierRho(1);
+		verifierRho(10);
 
 		camera_.assignerPosition(glm::dvec3(
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*cos(utilitaire::DEG_TO_RAD(theta)),
