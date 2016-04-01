@@ -52,8 +52,6 @@ public:
    /// Libère le contexte OpenGL.
    void libererOpenGL();
 
-   /// Cherc
-   void chercherSelection(const double& x, const double& y, const double& dx, const double& dy) const;
    /// Affiche le contenu du modèle.
    void afficher() const;
    /// Affiche la base du contenu du modèle.

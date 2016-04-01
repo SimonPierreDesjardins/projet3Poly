@@ -299,42 +299,6 @@ void FacadeModele::afficher() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ArbreRendu::chercherSelection(const glm::dvec2&, const double& dx, const double& dy)
-///
-/// Fonction permettant d'obtenir le chemin vers le fichier contenant la structure de base de l'arbre de rendu.
-///
-///
-/// @return 
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::chercherSelection(const double& x, const double& y, const double& dx, const double& dy) const
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-    GLuint tampon[GL_BUFFER_SIZE];
-    glSelectBuffer(GL_BUFFER_SIZE, tampon);
-    glRenderMode(GL_SELECT);
-
-    GLint cloture[4];
-    glGetIntegerv(GL_VIEWPORT, cloture);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-
-    gluPickMatrix(x, (GLdouble)(cloture[3]) - y, dx, dy, cloture);
-    vue_->obtenirProjection().appliquer();
-
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    vue_->appliquerCamera();
-
-    glInitNames();
-    arbre_->afficher(-1);
-
-    GLint nSelection = glRenderMode(GL_RENDER);
-}
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn void FacadeModele::afficherBase() const
 ///
 /// Cette fonction affiche la base du contenu de la scène, c'est-à-dire

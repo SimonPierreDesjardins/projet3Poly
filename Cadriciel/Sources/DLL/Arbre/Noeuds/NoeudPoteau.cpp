@@ -127,12 +127,13 @@ void NoeudPoteau::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	if (estSelectionne()) {
-		glColor4d(1.0, 0.2, 0.0, 1.0);
+	if (estSelectionne()) 
+    {
+        glDisable(GL_COLOR_MATERIAL);
+		glColor4d(1.0, 0.20, 0.0, 1.0);
+        glEnable(GL_COLOR_MATERIAL);
 	}
-	else {
-		//glColor4d(0.0, 0.0, 0.0, 1.0);
-	}
+
 	// Effectuer la mise à échelle.
 	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
 	
