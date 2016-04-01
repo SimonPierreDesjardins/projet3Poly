@@ -108,7 +108,7 @@ void VisiteurSelection::visiter(NoeudTable* table)
     {
         NoeudAbstrait* enfant = nullptr;
         enfant = table->chercher(*it);
-        assert(enfant, "enfant de la table recherché n'existe pas: " + *it);
+        assert(enfant);
         if (!ctrlAppuye_)
         {
             enfant->selectionnerTout();
