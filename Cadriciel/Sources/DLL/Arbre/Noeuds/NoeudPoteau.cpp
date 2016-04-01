@@ -131,13 +131,15 @@ void NoeudPoteau::afficherConcret() const
 		glColor4d(1.0, 0.2, 0.0, 1.0);
 	}
 	else {
-		glColor4d(0.0, 0.0, 0.0, 1.0);
+		//glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 	// Effectuer la mise à échelle.
 	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
+
+    
 
 	// Restauration de la matrice.
 	glPopMatrix();

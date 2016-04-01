@@ -307,10 +307,10 @@ void FacadeModele::afficher() const
 void FacadeModele::afficherBase() const
 {
 	// Positionner la lumière.
-	glm::vec4 position{ 0, 0, 1, 0 };
+	glm::vec4 position{ 1, 1, 1, 0 };
 	
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
-	glm::vec4 contributionMaximale{ 1.0, 1.0, 1.0, 1.0 };
+    glm::vec4 contributionMaximale{ 1.0, 1.0, 1.0, 1.0 };
 
 	glLightfv(GL_LIGHT0, GL_POSITION, glm::value_ptr(position));
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)

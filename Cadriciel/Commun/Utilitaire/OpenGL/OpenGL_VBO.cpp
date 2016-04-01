@@ -139,7 +139,6 @@ namespace opengl{
 
 			//possedeCouleurs = false;
 			
-
 			possedeNormales ? glEnable(GL_LIGHTING) : glDisable(GL_LIGHTING);
 			possedeCouleurs ? glEnable(GL_COLOR_MATERIAL) : glDisable(GL_COLOR_MATERIAL);
 
@@ -252,6 +251,5 @@ namespace opengl{
 			materiau.filDeFer_ ? GL_LINE : GL_FILL);
 
 		materiau.afficherDeuxCotes_ ? glEnable(GL_CULL_FACE) : glDisable(GL_CULL_FACE);
-
 	}
 }

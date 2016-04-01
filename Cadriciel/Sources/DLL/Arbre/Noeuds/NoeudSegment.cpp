@@ -143,7 +143,7 @@ void NoeudSegment::afficherConcret() const
 	}
 	else 
     {
-		glColor4d(0.0, 0.0, 0.0, 1.0);
+		//glColor4d(0.0, 0.0, 0.0, 1.0);
 	}
 
 	//Ajustement du mur avant la création
