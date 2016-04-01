@@ -155,7 +155,7 @@ public:
 	/// Assigne le mode d'affichage des polygones.
 	virtual void assignerModePolygones(GLenum modePolygones);
 	/// Affiche le noeud.
-	virtual void afficher() const;
+	virtual void afficher(const int& index) const;
 	/// Affiche le noeud de manière concrète.
 	virtual void afficherConcret() const;
 	/// Anime le noeud.

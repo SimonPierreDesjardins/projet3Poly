@@ -8,12 +8,13 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
+#include <glm\glm.hpp>
 #include "EtatSelection.h"
 #include "FacadeModele.h"
 #include "Vue.h"
+#include "Plan3D.h"
 #include "ArbreRenduINF2990.h"
 #include "AideGl.h"
-#include "glm\glm.hpp"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -26,7 +27,7 @@ EtatSelection::EtatSelection()
 {
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	vue_ = FacadeModele::obtenirInstance()->obtenirVue();
+	facade_ = FacadeModele::obtenirInstance();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -64,6 +65,7 @@ void EtatSelection::gererClicGaucheRelache(const int& x, const int& y)
 		gererDragGauche(anchor.x, anchor.y, x, y);
 	}
 	else {
+        facade_->chercherSelection(x, y, 20, 20);
 		gererClicGauche((anchor.x + currentPosition_.x) / 2, (anchor.y + currentPosition_.y) / 2);
 	}
 }
@@ -115,12 +117,14 @@ void EtatSelection::gererMouvementSouris(const int & x, const int& y){
 void EtatSelection::gererClicGauche(const int& x, const int& y)
 {
 	visiteurSelection_->assignerEstDrag(false);
+
 	glm::dvec3 positionRelative = { 0.0, 0.0, 0.0 }; 
-	if (vue_ != nullptr) {
-		vue_->convertirClotureAVirtuelle(x, y, positionRelative);
-	} 
+    vue::Vue* vue = facade_->obtenirVue();
+	vue->convertirClotureAVirtuelle(x, y, positionRelative);
+
 	visiteurSelection_->assignerPositionRelative(positionRelative);
-	if (arbre_ != nullptr) {
+	if (arbre_ != nullptr) 
+    {
 		arbre_->accepterVisiteur(visiteurSelection_.get());
 	}
 }

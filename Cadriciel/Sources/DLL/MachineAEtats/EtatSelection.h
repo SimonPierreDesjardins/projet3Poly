@@ -14,10 +14,7 @@
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
 
-namespace vue
-{
-	class Vue;
-};
+class FacadeModele;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EtatSelection
@@ -48,7 +45,7 @@ private:
 private : 
 	std::unique_ptr<VisiteurSelection> visiteurSelection_{ nullptr };
 	ArbreRendu* arbre_{ nullptr };
-	vue::Vue* vue_{ nullptr };
+    FacadeModele* facade_{ nullptr };
 };
 
 #endif
