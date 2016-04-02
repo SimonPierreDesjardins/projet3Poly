@@ -20,6 +20,7 @@
 
 class ProfilUtilisateur;
 class AffichageTexte;
+class ControleurLumiere;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeSimulation
@@ -43,6 +44,8 @@ private:
 	bool lumiereSpot { true };
 
     AffichageTexte* affichageTexte_{ nullptr };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
 
 public:
 	//Constructeur par défaut

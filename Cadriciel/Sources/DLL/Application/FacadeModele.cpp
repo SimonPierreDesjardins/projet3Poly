@@ -157,11 +157,11 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
+	controleurLumiere_ = std::make_unique<ControleurLumiere>();
 	// Lumière ambiante "globale"
 	// Attention :
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	glm::vec4 ambiant{ 0.2f, 0.2f, 0.2f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambiant));
+	controleurLumiere_->afficherLumiereAmbianteGlobale();
 
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
@@ -180,6 +180,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 
     // Création du module qui gère l'affichage du texte avec OpenGL.
     affichageTexte_ = std::make_unique<AffichageTexte>();
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -309,19 +310,8 @@ void FacadeModele::afficher() const
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::afficherBase() const
 {
-	// Positionner la lumière.
-	glm::vec4 position{ 1, 1, 1, 0 };
-	
-	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
-    glm::vec4 contributionMaximale{ 1.0, 1.0, 1.0, 1.0 };
-
-	glLightfv(GL_LIGHT0, GL_POSITION, glm::value_ptr(position));
-	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	glLightfv(GL_LIGHT0, GL_AMBIENT, glm::value_ptr(zeroContribution));
-	// On sature les objets de lumière
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, glm::value_ptr(contributionMaximale));
-	// Pas de composante spéculaire.
-	glLightfv(GL_LIGHT0, GL_SPECULAR, glm::value_ptr(zeroContribution));
+	//Affiche la lumière directionnelle
+	controleurLumiere_->afficherLumiereDirectionnelle();
 
 	// Afficher la scène.
 	arbre_->afficher(-1);

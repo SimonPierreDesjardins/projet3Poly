@@ -20,8 +20,12 @@
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
 #include "AffichageTexte.h"
+#include "ControleurLumiere.h"
 
 #include <iostream>
+
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 std::array<char, 10> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B' } };
   
@@ -47,6 +51,8 @@ ModeSimulation::ModeSimulation()
     affichageTexte_->assignerTempsEstAffiche(true);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
+
+	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -78,6 +84,10 @@ ModeSimulation::~ModeSimulation()
 void ModeSimulation::inverserLumiereAmbiante()
 {
 	lumiereAmbiante = !lumiereAmbiante;
+
+	controleurLumiere_->assignerLumiereAmbianteGlobale(lumiereAmbiante);
+	controleurLumiere_->afficherLumiereAmbianteGlobale();
+	
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();
@@ -100,6 +110,10 @@ void ModeSimulation::inverserLumiereAmbiante()
 void ModeSimulation::inverserLumiereDirectionnelle()
 {
 	lumiereDirectionnelle = !lumiereDirectionnelle;
+	
+	controleurLumiere_->assignerLumiereDirectionnelle(lumiereDirectionnelle);
+	controleurLumiere_->afficherLumiereDirectionnelle();
+
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();

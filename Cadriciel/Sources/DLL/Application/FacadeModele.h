@@ -21,6 +21,7 @@
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
 #include "AffichageTexte.h"
+#include "ControleurLumiere.h"
 
 class NoeudAbstrait;
 
@@ -89,6 +90,8 @@ public:
    inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
    // Retoune l'affichage du texte.
    inline AffichageTexte* obtenirAffichageTexte() const;
+
+   inline ControleurLumiere* obtenirControleurLumiere() const;
    /// Réinitialise la scène.
    void reinitialiser();
 
@@ -134,6 +137,8 @@ private:
    /// Le profil utilisateur.
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
+
+   std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -225,6 +230,19 @@ inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
     return affichageTexte_.get();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
+///
+/// Cette fonction retourne le module qui gère l<affichage de la lumiere
+///
+/// @return le controleur de lumiere.
+///
+////////////////////////////////////////////////////////////////////////
+inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
+{
+	return controleurLumiere_.get();
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

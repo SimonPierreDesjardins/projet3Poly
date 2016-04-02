@@ -118,6 +118,12 @@
     <Filter Include="Source Files\AffichageTexte">
       <UniqueIdentifier>{c2ffa848-e633-41b6-8759-d770488697e3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Lumière">
+      <UniqueIdentifier>{07e76da0-e3b0-445c-aa89-85b31df29893}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lumière">
+      <UniqueIdentifier>{caed3dd1-592e-4710-823d-6bc213e2a142}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -327,6 +333,9 @@
     </ClCompile>
     <ClCompile Include="AffichageTexte\AffichageTexte.cpp">
       <Filter>Source Files\AffichageTexte</Filter>
+    </ClCompile>
+    <ClCompile Include="Lumière\ControleurLumiere.cpp">
+      <Filter>Source Files\Lumière</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -563,6 +572,9 @@
     </ClInclude>
     <ClInclude Include="AffichageTexte\AffichageTexte.h">
       <Filter>Header Files\AffichageTexte</Filter>
+    </ClInclude>
+    <ClInclude Include="Lumière\ControleurLumiere.h">
+      <Filter>Header Files\Lumière</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
