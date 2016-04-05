@@ -36,7 +36,7 @@ class ModeSimulation : public ModeAbstrait
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
 	ProfilUtilisateur* profil_{ nullptr };
-	static std::array<char, 10> touchesNonConfigurable_;
+	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
 
 	bool lumiereAmbiante { true };
@@ -62,10 +62,10 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
-	inline static std::array<char, 10>* getTouchesNonConfigurable();
+	inline static std::array<char, 11>* getTouchesNonConfigurable();
 };
 
-std::array<char, 10>* ModeSimulation::getTouchesNonConfigurable()
+std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()
 {
 	return &touchesNonConfigurable_;
 }

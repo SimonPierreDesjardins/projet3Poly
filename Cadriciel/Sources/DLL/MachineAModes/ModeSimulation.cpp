@@ -22,6 +22,7 @@
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
+
 #include <iostream>
 
 #include "EnginSon.h"
@@ -29,7 +30,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-std::array<char, 10> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B' } };
+std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
   
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -140,6 +141,10 @@ void ModeSimulation::inverserLumiereDirectionnelle()
 void ModeSimulation::inverserLumiereSpot()
 {
 	lumiereSpot = !lumiereSpot;
+	glm::dvec3 positionRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_ROBOT)->obtenirPositionCourante();
+	controleurLumiere_->assignerLumiereSpotGyro(lumiereSpot);
+	controleurLumiere_->assignerLumiereSpotRobot(lumiereSpot);
+
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();

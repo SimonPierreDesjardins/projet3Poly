@@ -87,6 +87,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	positionnerRoues();
 	table_->ajouter(roueGauche);
 	table_->ajouter(roueDroite);
+
+	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 
@@ -218,6 +220,8 @@ void NoeudRobot::animer(float dt)
     mettreAJourCapteurs();
     arbre_->accepterVisiteur(visiteur_.get());
 	positionnerRoues();
+	controleurLumiere_->afficherLumiereSpotGyro(positionCourante_);
+	//controleurLumiere_->afficherLumiereSpotRobot(positionCourante_);
     mutexControleRobot_->unlock();
 }
 

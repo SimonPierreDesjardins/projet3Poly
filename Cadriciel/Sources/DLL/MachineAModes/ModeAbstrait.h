@@ -18,6 +18,7 @@
 #include "./../../Enum/ModeEnum.cs"
 
 
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeAbstraitC:\Users\Olivier St-Amour\Documents\Polytechnique\hiver_2016\inf2990-06\Cadriciel\Sources\InterfaceGraphique\Program.cs
 /// @brief Classe qui représente le mode abstrait de notre machine à modes

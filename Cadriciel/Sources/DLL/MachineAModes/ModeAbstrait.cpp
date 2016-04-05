@@ -16,6 +16,7 @@
 #include "Vue.h"
 #include "Projection.h"
 
+
 glm::ivec2 ModeAbstrait::currentPosition_ = { 0.0, 0.0 };
 
 ////////////////////////////////////////////////////////////////////////

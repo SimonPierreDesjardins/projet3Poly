@@ -67,7 +67,7 @@ void NoeudPoteau::mettreAJourFormeEnglobante()
     double largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
     double rayon = hauteur > largeur ? hauteur : largeur;
     rayon /= 2.0;
-    cercleEnglobant_.mettreAJour(positionCourante_, rayon);
+    cercleEnglobant_.mettreAJour(positionCourante_, rayon * facteurMiseAEchelle_);
 }
 
 ////////////////////////////////////////////////////////////////////////

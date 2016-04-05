@@ -41,7 +41,7 @@ private:
 	ProfilUtilisateur* profil_{ nullptr };
     AffichageTexte* affichageTexte_{ nullptr };
 
-	static std::array<char, 9> touchesNonConfigurable_;
+	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
 
 	bool lumiereAmbiante{ true };
@@ -66,10 +66,10 @@ public:
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	
 protected:
-	inline static std::array<char, 9>* getTouchesNonConfigurable();
+	inline static std::array<char, 11>* getTouchesNonConfigurable();
 };
 
-std::array<char, 9>* ModeTest::getTouchesNonConfigurable()
+std::array<char, 11>* ModeTest::getTouchesNonConfigurable()
 {
 	return &touchesNonConfigurable_;
 }

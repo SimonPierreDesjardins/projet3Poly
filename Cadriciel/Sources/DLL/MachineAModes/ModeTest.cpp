@@ -18,7 +18,7 @@
 
 #include <iostream>
 
-std::array<char, 9> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', 'J', 'K', 'L', 'B' } };
+std::array<char, 11> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -300,6 +300,10 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case WM_MOUSEMOVE:
 			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			break;
+
+		case WM_MOUSEWHEEL:
+			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
 			break;
 		}
 	}
