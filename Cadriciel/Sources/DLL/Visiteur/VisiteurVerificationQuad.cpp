@@ -13,6 +13,11 @@
 #include "RectangleEnglobant.h"
 #include "CercleEnglobant.h"
 
+#define coinMinX -48
+#define coinMaxX  48
+#define coinMinY -24
+#define coinMaxY  24
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurVerificationQuad::VisiteurVerificationQuad()
@@ -113,8 +118,7 @@ void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 {
-    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
-                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
+    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -130,8 +134,7 @@ void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 {
-    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
-                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -147,8 +150,7 @@ void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudDepart* noeud)
 {
-    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
-                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -182,8 +184,7 @@ void VisiteurVerificationQuad::visiter(NoeudLigne* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 {
-    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(boiteTable_.coinMin.x, boiteTable_.coinMax.x,
-                                                                                        boiteTable_.coinMin.y, boiteTable_.coinMax.y);
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
 }
 
 ////////////////////////////////////////////////////////////////////////

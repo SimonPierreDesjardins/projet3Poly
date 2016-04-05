@@ -301,6 +301,10 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_MOUSEMOVE:
 			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
+
+		case WM_MOUSEWHEEL:
+			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			break;
 		}
 	}
 }
