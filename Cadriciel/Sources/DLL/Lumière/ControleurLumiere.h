@@ -10,6 +10,8 @@
 #ifndef CONTROLEUR_LUMIERE_H
 #define CONTROLEUR_LUMIERE_H
 
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 class ModeAbstrait;
 ///////////////////////////////////////////////////////////////////////////
@@ -30,20 +32,22 @@ public:
 
 	void afficherLumiereAmbianteGlobale();
 	void afficherLumiereDirectionnelle();
+	void afficherLumiereSpotGyro(glm::dvec3 positionRobot);
+	void afficherLumiereSpotRobot(glm::dvec3 positionRobot);
 
 	void assignerLumiereAmbianteGlobale(bool estIllumine);
 	void assignerLumiereDirectionnelle(bool estIllumine);
-	void assignerLumiereSpot(bool estIllumine);
+	void assignerLumiereSpotGyro(bool estIllumine);
+	void assignerLumiereSpotRobot(bool estIllumine);
 
 private:
 
 	ModeAbstrait* mode_{ nullptr };
 
-	bool lumiereDirectionnelle{ true };
-	bool lumiereAmbiante{ true };
-	bool lumiereSpot{ true };
-
-
+	bool lumiereDirectionnelle_{ true };
+	bool lumiereAmbiante_{ true };
+	bool lumiereSpotGyro_{ true };
+	bool lumiereSpotRobot_{ true };
 };
 
 

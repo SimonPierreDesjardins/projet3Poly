@@ -18,6 +18,7 @@
 #include "VisiteurDetectionRobot.h"
 #include <mutex>
 #include <array>
+#include "ControleurLumiere.h"
 
 class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
@@ -127,6 +128,8 @@ private:
 	NoeudAbstrait* table_;
 	NoeudRoues* roueGauche_;
 	NoeudRoues* roueDroite_;
+	
+	ControleurLumiere* controleurLumiere_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////

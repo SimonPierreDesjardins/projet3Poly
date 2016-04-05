@@ -22,6 +22,7 @@
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
+
 #include <iostream>
 
 #include "glm/glm.hpp"
@@ -136,6 +137,10 @@ void ModeSimulation::inverserLumiereDirectionnelle()
 void ModeSimulation::inverserLumiereSpot()
 {
 	lumiereSpot = !lumiereSpot;
+	glm::dvec3 positionRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_ROBOT)->obtenirPositionCourante();
+	controleurLumiere_->assignerLumiereSpotGyro(lumiereSpot);
+	controleurLumiere_->assignerLumiereSpotRobot(lumiereSpot);
+
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();

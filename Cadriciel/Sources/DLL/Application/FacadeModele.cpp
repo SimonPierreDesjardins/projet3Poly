@@ -145,6 +145,8 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	/// Pour normaliser les normales dans le cas d'utilisation de glScale[fd]
 	glEnable(GL_NORMALIZE);
 	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+	glEnable(GL_LIGHT2);
 
 	// Qualité
 	glShadeModel(GL_SMOOTH);
@@ -312,6 +314,7 @@ void FacadeModele::afficherBase() const
 {
 	//Affiche la lumière directionnelle
 	controleurLumiere_->afficherLumiereDirectionnelle();
+	controleurLumiere_->afficherLumiereSpotGyro(glm::dvec3(0.0,0.0,0.0));
 
 	// Afficher la scène.
 	arbre_->afficher(-1);
