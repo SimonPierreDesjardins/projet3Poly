@@ -423,13 +423,14 @@ void NoeudAbstrait::assignerModePolygones(GLenum modePolygones)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::afficher() const
+void NoeudAbstrait::afficher(const int& index) const
 {
-	if (affiche_) {
+	if (affiche_) 
+    {
+        glPushName(index);
 		glPushMatrix();
-		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT | GL_ENABLE_BIT);
-
-
+		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT);
+        
 		// La translation de la position relative		
 		glTranslated(
 			positionRelative_[0], positionRelative_[1], positionRelative_[2]
@@ -444,6 +445,7 @@ void NoeudAbstrait::afficher() const
 		// Restauration
 		glPopAttrib();
 		glPopMatrix();
+        glPopName();
 	}
 }
 

@@ -12,6 +12,7 @@
 
 
 #include "Camera.h"
+#include <memory>
 
 namespace math {
 	class Plan3D;
@@ -20,9 +21,7 @@ namespace math {
 
 namespace vue {
 
-
 	class Projection;
-
 
 	////////////////////////////////////////////////////////////////////////
 	/// @class Vue
@@ -54,10 +53,11 @@ namespace vue {
 		bool convertirClotureAVirtuelle(int x, int y, const math::Plan3D& plan, glm::dvec3& point) const;
 
 		/// Obtient la caméra associée à cette vue.
-		inline Camera& obtenirCamera();
+		inline Camera* obtenirCamera();
 		/// Obtient la caméra associée à cette vue (version constante).
-		inline const Camera& obtenirCamera() const;
-
+		inline const Camera* obtenirCamera() const;
+		/// Obtient le bool disant si la caméra est en première personne
+		inline bool estPremierePersonne();
 
 		// Obtention de la projection
 		virtual const Projection& obtenirProjection() const = 0;
@@ -67,19 +67,16 @@ namespace vue {
 		virtual void appliquerCamera() const = 0;
 
 		/// Modification de la clotûre
-		virtual void redimensionnerFenetre(const glm::ivec2& coinMin,
-			const glm::ivec2& coinMax) = 0;
+		virtual void redimensionnerFenetre(const glm::ivec2& coinMin, const glm::ivec2& coinMax) = 0;
 
 		/// Zoom in, c'est-à-dire un agrandissement.
 		virtual void zoomerIn() = 0;
 		/// Zoom out, c'est-à-dire un rapetissement.
 		virtual void zoomerOut() = 0;
 		/// Zoom in élastique
-		virtual void zoomerInElastique(const glm::ivec2& coin1,
-			const glm::ivec2& coin2) = 0;
+		virtual void zoomerInElastique(const glm::ivec2& coin1, const glm::ivec2& coin2) = 0;
 		/// Zoom out élastique
-		virtual void zoomerOutElastique(const glm::ivec2& coin1,
-			const glm::ivec2& coin2) = 0;
+		virtual void zoomerOutElastique(const glm::ivec2& coin1, const glm::ivec2& coin2) = 0;
 
 		/// Déplacement dans le plan XY par rapport à la vue
 		virtual void deplacerXY(double deplacementX, double deplacementY) = 0;
@@ -101,7 +98,7 @@ namespace vue {
 	protected:
 		/// Caméra utilisée pour cette vue
 		Camera camera_;
-
+		bool estPremierePersonne_{ false };
 	};
 
 
@@ -114,15 +111,15 @@ namespace vue {
 	/// @return La caméra associée à cet objet.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline Camera& Vue::obtenirCamera()
+	inline Camera* Vue::obtenirCamera()
 	{
-		return camera_;
+		return &camera_;
 	}
 
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn inline const Camera& Vue::obtenirCamera() const
+	/// @fn inline const Camera* Vue::obtenirCamera() const
 	///
 	/// Cette fonction retourne la caméra associée à cette vue (version
 	/// constante).
@@ -130,11 +127,25 @@ namespace vue {
 	/// @return La caméra associée à cet objet.
 	///
 	////////////////////////////////////////////////////////////////////////
-	inline const Camera& Vue::obtenirCamera() const
+	inline const Camera* Vue::obtenirCamera() const
 	{
-		return camera_;
+		return &camera_;
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn inline bool Vue::estPremierePersonne()
+	///
+	/// Cette fonction retourne un bool qui dit si la caméra est en première
+	/// personne ou non
+	///
+	/// @return bool: Vue est premiere personne
+	///
+	////////////////////////////////////////////////////////////////////////
+	inline bool Vue::estPremierePersonne()
+	{
+		return estPremierePersonne_;
+	}
 
 }; // Fin de l'espace de nom vue.
 

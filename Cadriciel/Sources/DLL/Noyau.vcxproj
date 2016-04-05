@@ -62,7 +62,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Comportement;Configuration;Interface;Tests;Visiteur;MachineAEtats;MachineAModes;ControleRobot;Commande;ProfilUtilisateur;ControleRobot\Commande;ControleRobot\Comportement;Capteur;Physique;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Lumière;../../Commun/Externe/Box2D/include;../../Commun/Externe/assimp/include;../../Commun/Externe/cppunit/include;../../Commun/Externe/FMOD/include;../../Commun/Externe/FreeImage/include;../../Commun/Externe/FreeType/include;../../Commun/Externe/FTGL/include;../../Commun/Externe/GLEW/include;../../Commun/Externe/glm/include;../../Commun/Externe/RapidJSON/include;../../Commun/Externe/tinyxml2/include;../../Commun/Utilitaire;../../Commun/Utilitaire/OpenGL;../../Commun/Utilitaire/Modele;../../Commun/Utilitaire/Vue;Application;Arbre;Arbre/Noeuds;Arbre/Usines;Comportement;Configuration;Interface;Tests;Visiteur;MachineAEtats;MachineAModes;ControleRobot;Commande;ProfilUtilisateur;ControleRobot\Commande;ControleRobot\Comportement;Capteur;Physique;AffichageTexte;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;GLEW_BUILD;_DEBUG;_WINDOWS;_USRDLL;INF2990_EXPORTS;FTGL_LIBRARY_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -135,6 +135,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AffichageTexte\AffichageTexte.cpp" />
     <ClCompile Include="Application\FacadeModele.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDepart.cpp" />
     <ClCompile Include="Arbre\Noeuds\NoeudDuplication.cpp" />
@@ -163,6 +164,7 @@
     <ClCompile Include="ControleRobot\Comportement\ComportementSuiviLigne.cpp" />
     <ClCompile Include="ControleRobot\ControleRobot.cpp" />
     <ClCompile Include="Interface\FacadeInterfaceNative.cpp" />
+    <ClCompile Include="Lumière\ControleurLumiere.cpp" />
     <ClCompile Include="MachineAEtats\EtatAbstrait.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationLigne.cpp" />
     <ClCompile Include="MachineAEtats\EtatCreationMur.cpp" />
@@ -205,6 +207,7 @@
     <ClCompile Include="Visiteur\VisteurAbstrait.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AffichageTexte\AffichageTexte.h" />
     <ClInclude Include="Application\FacadeModele.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDepart.h" />
     <ClInclude Include="Arbre\Noeuds\NoeudDuplication.h" />
@@ -236,6 +239,7 @@
     <ClInclude Include="ControleRobot\Comportement\ComportementTypes.h" />
     <ClInclude Include="ControleRobot\ControleRobot.h" />
     <ClInclude Include="Interface\FacadeInterfaceNative.h" />
+    <ClInclude Include="Lumière\ControleurLumiere.h" />
     <ClInclude Include="MachineAEtats\EtatAbstrait.h" />
     <ClInclude Include="MachineAEtats\EtatCreationLigne.h" />
     <ClInclude Include="MachineAEtats\EtatCreationMur.h" />

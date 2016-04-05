@@ -76,6 +76,9 @@ public:
 	// Obtenir le nombre d'objet sélectionné
 	int obtenirNombreSelection();
 
+    // Permet de lancer la sélection opengl.
+    std::vector<int> chercherSelection(const glm::dvec2&, const double& dx, const double& dy);
+
 	// Obtient l'angle de rotaion du noeud selectionné. 
 	double obtenirAngleRotation();
 	// Obtient le facteur de mise à échelle du noeud selectionné. 

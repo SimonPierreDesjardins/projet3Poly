@@ -14,6 +14,8 @@
 #include "VisiteurAbstrait.h"
 #include "Utilitaire.h"
 #include <memory>
+#include <vector>
+#include <iterator>
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurSelection
@@ -25,34 +27,44 @@
 class VisiteurSelection : public VisiteurAbstrait
 {
 public:
+    using Iterateur = std::vector<int>::iterator;
+
 	/// Constructeur par défaut.
 	VisiteurSelection();
 
 	/// Destructeur.
 	virtual ~VisiteurSelection();
 	
+    // Initialiser la sélection.
+    void selectionner(Iterateur debut, Iterateur fin);
+
 	/// Parcours du noeudTable.
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
-	virtual void visiter(NoeudPoteau* noeud);
-	virtual void visiter(NoeudMur* noeud);
-	virtual void visiter(NoeudLigne* noeud);
-	virtual void visiter(NoeudDepart* noeud);
-	virtual void visiter(NoeudSegment* noeud);
-	virtual void visiter(NoeudJonction* noeud);
 
 	//Indique si la touche control est appuyee
-	void assignerControl(bool ctrlAppuye);
-	void assignerPositionRectElast(const glm::dvec3& positionPremierClic, const glm::dvec3& positionDeuxiemeClic);
-	bool quadEstDansRectangleElastique(const utilitaire::QuadEnglobant& quad);
+	inline void assignerCtrlAppuye(const bool& ctrlAppuye);
 
 private:
 	bool ctrlAppuye_ = false;
-	double xMinRectangleElastique_;
-	double xMaxRectangleElastique_;
-	double yMinRectangleElastique_;
-	double yMaxRectangleElastique_;
+    Iterateur debut_, fin_;
+
 };
+
+////////////////////////////////////////////////////////////////////////
+///
+/// inline void VisiteurSelection::assignerCtrlAppuye(const bool& ctrlAppuye)
+///
+/// Fonction qui assigne un booléen selon l'état de la touche Ctrl
+///
+/// @param[in] ctrlAppuye : l'état que l'on veut assigner au booléen.
+///
+////////////////////////////////////////////////////////////////////////
+inline void VisiteurSelection::assignerCtrlAppuye(const bool& ctrlAppuye)
+{
+    ctrlAppuye_ = ctrlAppuye;
+}
+
 #endif // VISITEUR_SELECTION_H
 
 ///////////////////////////////////////////////////////////////////////////////

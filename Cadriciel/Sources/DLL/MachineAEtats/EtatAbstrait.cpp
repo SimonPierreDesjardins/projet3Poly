@@ -122,14 +122,10 @@ void EtatAbstrait::gererClicGaucheRelache(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
 {
-	if (clicDroitEnfonce_) {
-		if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-			FacadeModele::obtenirInstance()->obtenirVue()->rotaterXY(NULL, NULL);
-		}
-		else {
+	if (clicDroitEnfonce_){
+		if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
 			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
-		}
+		}			
 	}
 	currentPosition_ = glm::ivec2(x, y);
 }
@@ -202,63 +198,6 @@ void EtatAbstrait::gererToucheAltEnfoncee()
 void EtatAbstrait::gererToucheAltRelachee()
 {
 	toucheAltEnfonce_ = false;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void EtatAbstrait::gererTouchePlus()
-///
-/// Cette fonction gère la touche +=, permet de faire un zoom avant.
-///
-////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererTouchePlus(){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-		//TODO: Gérer le zoom plus pour une camera
-	}
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-	}
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void EtatAbstrait::gererToucheMoins()
-///
-/// Cette fonction gère la touche -=, permet de faire un zoom arrière.
-///
-////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererToucheMoins(){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-		//TODO: Gérer le zoom moins pour une camera
-	}
-	else {
-		FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-	}
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void EtatAbstrait::gererMoletteSouris(const int & delta)
-///
-/// Cette fonction gère la molette de la souris. Permet d'effecter un zoom
-/// avec la caméra
-///
-/// @param const int & delta: la valeur de la molette de la souris
-///
-////////////////////////////////////////////////////////////////////////
-void EtatAbstrait::gererMoletteSouris(const int & delta){
-	if (FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()) {
-
-	}
-	else {
-		if (delta > 0) {
-
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerIn();
-		}
-		else {
-			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
-		}
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////

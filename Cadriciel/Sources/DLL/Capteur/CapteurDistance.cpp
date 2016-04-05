@@ -339,10 +339,10 @@ void CapteurDistance::afficher() const
     glRotated(angleRelatif_, 0.0, 0.0, 1.0);
 
 	glBegin(GL_QUADS);
-	glVertex3d(largeurDanger, hauteurDanger / 2.0, 5.0);
-	glVertex3d(0.0, hauteurDanger / 2.0, 5.0);
-	glVertex3d(0.0, - hauteurDanger / 2.0, 5.0);
-	glVertex3d(largeurDanger, - hauteurDanger / 2.0, 5.0);
+	glVertex3d(largeurDanger, hauteurDanger / 2.0, 0.05);
+	glVertex3d(0.0, hauteurDanger / 2.0, 0.05);
+	glVertex3d(0.0, - hauteurDanger / 2.0, 0.05);
+	glVertex3d(largeurDanger, - hauteurDanger / 2.0, 0.05);
 	glEnd();
 
     double largeurSecuritaire = zoneSecuritaire_.obtenirLargeur();
@@ -354,10 +354,10 @@ void CapteurDistance::afficher() const
 	glTranslated(largeurDanger, 0.0, 0.0);
 
 	glBegin(GL_QUADS);
-	glVertex3d(largeurSecuritaire, hauteurDanger / 2.0, 5.0);
-	glVertex3d(0.0, hauteurDanger / 2.0, 5.0);
-	glVertex3d(0.0, - hauteurDanger / 2.0, 5.0);
-	glVertex3d(largeurSecuritaire, - hauteurDanger / 2.0, 5.0);
+	glVertex3d(largeurSecuritaire, hauteurDanger / 2.0, 0.05);
+	glVertex3d(0.0, hauteurDanger / 2.0, 0.05);
+	glVertex3d(0.0, - hauteurDanger / 2.0, 0.05);
+	glVertex3d(largeurSecuritaire, - hauteurDanger / 2.0, 0.05);
 	glEnd();
     glPopMatrix();
 

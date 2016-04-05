@@ -14,7 +14,6 @@
 
 namespace vue {
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn Projection::Projection(int xMinCloture, int xMaxCloture, int yMinCloture, int yMaxCloture, double zAvant,  double zArriere, double zoomInMax, double zoomOutMax, double incrementZoom, bool estPerspective)

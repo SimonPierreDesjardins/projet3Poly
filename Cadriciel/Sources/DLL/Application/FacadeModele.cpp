@@ -24,6 +24,7 @@
 #include "FacadeModele.h"
 
 #include "VueOrtho.h"
+#include "VueOrbite.h"
 #include "Camera.h"
 #include "Projection.h"
 
@@ -50,8 +51,6 @@ std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 /// Chaîne indiquant le nom du fichier de configuration du projet.
 const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 
-
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn FacadeModele* FacadeModele::obtenirInstance()
@@ -73,7 +72,6 @@ FacadeModele* FacadeModele::obtenirInstance()
 	}
 	return instance_.get();
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -104,7 +102,6 @@ FacadeModele::~FacadeModele()
 	arbre_.reset(nullptr);
 	vue_.reset(nullptr);
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -160,11 +157,11 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 
+	controleurLumiere_ = std::make_unique<ControleurLumiere>();
 	// Lumière ambiante "globale"
 	// Attention :
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	glm::vec4 ambiant{ 0.2f, 0.2f, 0.2f, 1.0f };
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambiant));
+	controleurLumiere_->afficherLumiereAmbianteGlobale();
 
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
@@ -172,28 +169,20 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	arbre_ = std::make_unique<ArbreRenduINF2990>();
 	arbre_->initialiser();
 
-	// On crée une vue par défaut.
-	vue_ = std::make_unique<vue::VueOrtho>(
-		vue::Camera{
-			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1) },
+	// On crée une vue par défaut. 
+	vue_ = std::make_unique<vue::VueOrtho>(vue::Camera(
+		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
+		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
 		vue::ProjectionOrtho{
-			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
-			-50, 50, -50, 50 }
-	);
+		0, 500, 0, 500,
+		1, 1000, 1, 10000, 1.25,
+		-50, 50, -50, 50, false });
 
-	// Création de l'environnement
-	/*
-	fichierXpos, fichierXneg,
-    fichierYpos, fichierYneg,
-    fichierZpos, fichierZneg
-         );
-	*/
-	
-	assignerEnvironnement(0);
+	// Création du module qui gère l'affichage du texte avec OpenGL.
+	affichageTexte_ = std::make_unique<AffichageTexte>();
+
+	assignerEnvironnement(1);
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -226,7 +215,6 @@ void FacadeModele::chargerConfiguration() const
 	}
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void FacadeModele::enregistrerConfiguration() const
@@ -250,7 +238,6 @@ void FacadeModele::enregistrerConfiguration() const
 	document.SaveFile(FacadeModele::FICHIER_CONFIGURATION.c_str());
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void FacadeModele::libererOpenGL()
@@ -267,13 +254,11 @@ void FacadeModele::libererOpenGL()
 	// On libère les instances des différentes configurations.
 	ConfigScene::libererInstance();
 
-
 	bool succes{ aidegl::detruireContexteGL(hWnd_, hDC_, hGLRC_) };
 	assert(succes && "Le contexte OpenGL n'a pu être détruit.");
 
 	FreeImage_DeInitialise();
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -288,8 +273,11 @@ void FacadeModele::afficher() const
 {
 	if (!peutAfficher_)
 		return;
+    
 	// Efface l'ancien rendu
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+    glInitNames();
 
 	// Ne devrait pas être nécessaire
 	vue_->appliquerProjection();
@@ -316,10 +304,11 @@ void FacadeModele::afficher() const
 	// Compte de l'affichage
 	utilitaire::CompteurAffichage::obtenirInstance()->signalerAffichage();
 
+    affichageTexte_->afficher();
+
 	// Échange les tampons pour que le résultat du rendu soit visible.
 	::SwapBuffers(hDC_);
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -333,24 +322,78 @@ void FacadeModele::afficher() const
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::afficherBase() const
 {
-	// Positionner la lumière.
-	glm::vec4 position{ 0, 0, 1, 0 };
-	
-	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
-	glm::vec4 contributionMaximale{ 1.0, 1.0, 1.0, 1.0 };
-
-	glLightfv(GL_LIGHT0, GL_POSITION, glm::value_ptr(position));
-	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	glLightfv(GL_LIGHT0, GL_AMBIENT, glm::value_ptr(zeroContribution));
-	// On sature les objets de lumière
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, glm::value_ptr(contributionMaximale));
-	// Pas de composante spéculaire.
-	glLightfv(GL_LIGHT0, GL_SPECULAR, glm::value_ptr(zeroContribution));
+	//Affiche la lumière directionnelle
+	controleurLumiere_->afficherLumiereDirectionnelle();
 
 	// Afficher la scène.
-	arbre_->afficher();
+	arbre_->afficher(-1);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::reinitialiser()
+///
+/// Cette fonction réinitialise la scène à un état "vide".
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerVueOrtho()
+{
+	vue_ = std::make_unique<vue::VueOrtho>(
+		vue::Camera(
+			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
+			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
+		vue::ProjectionOrtho{
+			0, 500, 0, 500,
+			1, 1000, 1, 10000, 1.25,
+			-50, 50, -50, 50, false });
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::reinitialiser()
+///
+/// Cette fonction réinitialise la scène à un état "vide".
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerVueOrbite()
+{
+	vue_ = std::make_unique<vue::VueOrbite>(
+		vue::Camera(
+			glm::dvec3(0, 0, 170), glm::dvec3(0, 0, 0),
+			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
+		vue::ProjectionPerspective{
+			0, 500, 0, 500,
+			1, 1000, 1, 10000, 1.25,
+			-50, 50, -50, 50, true }, false);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::reinitialiser()
+///
+/// Cette fonction réinitialise la scène à un état "vide".
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerVuePremierePersonne()
+{
+	glm::dvec3 positionRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_ROBOT)->obtenirPositionCourante();
+	double angleRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_ROBOT)->obtenirAngleRotation();
+
+	vue_ = std::make_unique<vue::VueOrbite>(
+		vue::Camera(
+			glm::dvec3(positionRobot.x, positionRobot.y, 4), glm::dvec3(100, 0, 1),
+			glm::dvec3(0, 0, 1), glm::dvec3(0, 0, 1)), 
+		vue::ProjectionPerspective{
+			0, 500, 0, 500,
+			1, 1000, 10, 1000, 1.25,
+			-50, 50, -50, 50, true }, true);
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -366,7 +409,6 @@ void FacadeModele::reinitialiser()
 	// Réinitialisation de la scène.
 	arbre_->initialiser();
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -389,8 +431,6 @@ void FacadeModele::animer(float temps)
 	// Mise à jour de la vue.
 	vue_->animer(temps);
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -448,13 +488,28 @@ void FacadeModele::assignerMode(Mode mode)
 ///
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerEnvironnement(int noEnviro){
+	// Création de l'environnement
+	/*
+	fichierXpos, fichierXneg,
+	fichierYpos, fichierYneg,
+	fichierZpos, fichierZneg
+	);
+	*/
 	switch (noEnviro){
+	case 1:
+		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
+			".\\media\\textures\\skybox2_xpos.png", ".\\media\\textures\\skybox2_xneg.png",
+			".\\media\\textures\\skybox2_ypos.png", ".\\media\\textures\\skybox2_yneg.png",
+			".\\media\\textures\\skybox2_zpos.png", ".\\media\\textures\\skybox2_zneg.png");
+		break;
 	case 0:
 	default:
 		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
 			".\\media\\textures\\skybox_xpos.png", ".\\media\\textures\\skybox_xneg.png",
 			".\\media\\textures\\skybox_ypos.png", ".\\media\\textures\\skybox_yneg.png",
 			".\\media\\textures\\skybox_zpos.png", ".\\media\\textures\\skybox_zneg.png");
+		break;
+
 	}
 }
 

@@ -93,13 +93,12 @@ void NoeudDepart::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	if (estSelectionne()) {
+	if (estSelectionne()) 
+    {
+        glDisable(GL_COLOR_MATERIAL);
 		glColor4d(1.0, 0.20, 0.0, 1.0);
+        glEnable(GL_COLOR_MATERIAL);
 	}
-	else {
-		glColor4d(0.0, 0.0, 0.0, 1.0);
-	}
-
 	glRotated(angleRotation_, 0, 0, 1);
 
 	// Affichage du modèle.
