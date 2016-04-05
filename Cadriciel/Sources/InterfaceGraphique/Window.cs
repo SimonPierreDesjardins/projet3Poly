@@ -80,8 +80,7 @@ namespace InterfaceGraphique
             barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
-            configuration = new Configure(profilsMenuSimTest, ajouterProfilSimulation);
-            populerProfils();
+            configuration = new Configure(profilsMenuSimTest);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -240,29 +239,6 @@ namespace InterfaceGraphique
             modeEditionMenuSimTest.Visible = !afficherMenu;
             premierePersonneMenuSimTest.Visible = afficherMenu;
             viewPort_.Visible = afficherMenu;
-        }
-
-        private void populerProfils()
-        {
-            foreach (string nomProfil in configuration.FichiersProfil)
-            {
-                ajouterProfilSimulation(nomProfil);
-            }
-            (profilsMenuSimTest.DropDownItems.Find(configuration.NomDernierProfil, false)[0] as ToolStripMenuItem).Checked = true;
-        }
-
-        public void ajouterProfilSimulation(string nomProfil)
-        {
-            ToolStripMenuItem item = new ToolStripMenuItem(nomProfil);
-            item.Name = nomProfil;
-            item.Click += new EventHandler(profilItem_Click);
-            profilsMenuSimTest.DropDownItems.Add(item);
-        }
-
-        private void profilItem_Click(object sender, EventArgs e)
-        {
-            ToolStripMenuItem item = sender as ToolStripMenuItem;
-            configuration.changerProfilSelectionne(item.Text);
         }
 
         ////////////////////////////////////////////////////////////////////////

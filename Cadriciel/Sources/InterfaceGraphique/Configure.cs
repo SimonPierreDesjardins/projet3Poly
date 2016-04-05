@@ -65,16 +65,6 @@ namespace InterfaceGraphique
         private int indexProfilDefaut;
 
         /// <summary>
-        /// Fonction déléguée représentant la fonction servant à ajouter un profil dans le ToolStripMenuItem contenant les profils lors d'une simulation ou test
-        /// </summary>
-        public delegate void ajouterProfilSimulationDelegue(string nomProfil);
-
-        /// <summary>
-        /// Référence vers la fonction servant à ajouter un profil dans le ToolStripMenuItem contenant les profils lors d'une simulation ou test
-        /// </summary>
-        private ajouterProfilSimulationDelegue ajouterProfilSimulation;
-
-        /// <summary>
         /// Référence vers le ToolStripMenuItem contenant les profils lors d'une simulation ou test
         /// </summary>
         private ToolStripMenuItem profilsSimulationItem;
@@ -128,13 +118,11 @@ namespace InterfaceGraphique
         /// @param[in] fonction : Référence servant à ajouter un profil dans le ToolStripMenuItem contenant les profils lors d'une simulation ou test
         ///
         ////////////////////////////////////////////////////////////////////////
-        public Configure(ToolStripMenuItem menuItem, ajouterProfilSimulationDelegue fonction)
+        public Configure(ToolStripMenuItem menuItem)
         {
             InitializeComponent();
 
             profilsSimulationItem = menuItem;
-
-            ajouterProfilSimulation = fonction;
 
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
@@ -165,41 +153,57 @@ namespace InterfaceGraphique
             assignerProfilsCB();
 
             initialisationParametres = false;
-           
+
+            populerProfilsSimulation();           
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public List<string> FichiersProfil
+        /// @fn private void populerProfilsSimulation()
         ///
-        /// Fonction retournant la liste des noms de profils
-        ///
-        /// @return List<string>
+        /// Fonction servant à ajoutant les profil dans le menu simulation et test
         ///
         ////////////////////////////////////////////////////////////////////////
-        public List<string> FichiersProfil
+        private void populerProfilsSimulation()
         {
-            get
+            foreach (string nomProfil in fichiersProfil)
             {
-                return fichiersProfil;
+                ajouterProfilSimulation(nomProfil);
             }
+            (profilsSimulationItem.DropDownItems.Find(FonctionsNatives.obtenirNomDernierProfil(), false)[0] as ToolStripMenuItem).Checked = true;
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public string NomDernierProfil
+        /// @fn private void ajouterProfilSimulation(string nomProfil)
         ///
-        /// Fonction retournant le nom du dernier profil chargé
+        /// Fonction initialisant un ToolStripMenuItem dans le ToolStripMenuItem Profil du menu simulation et test.
         ///
-        /// @return string
+        /// @param nomProfil : le nom du profil à ajouter
         ///
         ////////////////////////////////////////////////////////////////////////
-        public string NomDernierProfil
+        private void ajouterProfilSimulation(string nomProfil)
         {
-            get
-            {
-                return FonctionsNatives.obtenirNomDernierProfil();
-            }
+            ToolStripMenuItem item = new ToolStripMenuItem(nomProfil);
+            item.Name = nomProfil;
+            item.Click += new EventHandler(profilItem_Click);
+            profilsSimulationItem.DropDownItems.Add(item);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void profilItem_Click(object sender, EventArgs e)
+        ///
+        /// Évènement lorsqu'on click sur un profil dans le menu simulation ou test.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement d'un click de souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void profilItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(item.Text);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -755,7 +759,7 @@ namespace InterfaceGraphique
         /// 
         ////////////////////////////////////////////////////////////////////////
         public void changerProfilSelectionne(string nomProfil){
-            comboBoxProfil.SelectedIndex = comboBoxProfil.FindString(nomProfil);
+            
         }
 
         ////////////////////////////////////////////////////////////////////////
