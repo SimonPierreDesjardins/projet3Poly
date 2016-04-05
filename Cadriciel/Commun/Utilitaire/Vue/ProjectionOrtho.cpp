@@ -87,7 +87,7 @@ namespace vue {
 			yMinFenetre_ -= ajoutY;
 			yMaxFenetre_ += ajoutY;
 
-			currentZoom_ -= 1 / incrementZoom_;
+			currentZoom_ -= incrementZoom_;
 		}
 	}
 
@@ -271,6 +271,7 @@ namespace vue {
 
 		//ratio fenetre
 		double R = W / H;
+
 		//ratio rectangle
 		double r = w / h;
 

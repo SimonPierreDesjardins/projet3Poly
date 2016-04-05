@@ -17,6 +17,8 @@
 
 #include <windows.h>
 #include <cassert>
+#include "wtypes.h"
+#include <iostream>
 
 #include "GL/glew.h"
 #include "FreeImage.h"
@@ -181,7 +183,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Création du module qui gère l'affichage du texte avec OpenGL.
 	affichageTexte_ = std::make_unique<AffichageTexte>();
 
-	assignerEnvironnement(1);
+	//assignerEnvironnement(1);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -294,9 +296,13 @@ void FacadeModele::afficher() const
 	int ymax;
 	vue_->obtenirProjection().obtenirCoordonneesCloture(xmin, xmax, ymin, ymax);
 
-	// AfficherEnvironnement
+	int horizontal = 0;
+	int vertical = 0;
+	FacadeModele::obtenirInstance()->getDesktopResolution(horizontal, vertical);
 
-	environnement_->afficher(glm::dvec3(0.0), 150);
+	// AfficherEnvironnement
+	if (environnement_ != nullptr)
+		environnement_->afficher(glm::dvec3(0.0), horizontal / 2);
 
 	// Afficher la scène
 	afficherBase();
@@ -331,9 +337,9 @@ void FacadeModele::afficherBase() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::reinitialiser()
+/// @fn void FacadeModele::assignerVueOrtho()
 ///
-/// Cette fonction réinitialise la scène à un état "vide".
+/// Cette fonction assigne une vue ortho à la scène
 ///
 /// @return Aucune.
 ///
@@ -346,15 +352,15 @@ void FacadeModele::assignerVueOrtho()
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionOrtho{
 			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
+			1, 1000, 80, 105, 1.25,
 			-50, 50, -50, 50, false });
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::reinitialiser()
+/// @fn void FacadeModele::assignerVueOrbite()
 ///
-/// Cette fonction réinitialise la scène à un état "vide".
+/// Cette fonction assigne une vue orbite à la scène
 ///
 /// @return Aucune.
 ///
@@ -367,15 +373,15 @@ void FacadeModele::assignerVueOrbite()
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionPerspective{
 			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
+			1, 10000, 1, 100000, 1.25,
 			-50, 50, -50, 50, true }, false);
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::reinitialiser()
+/// @fn void FacadeModele::assignerVuePremierePersonne()
 ///
-/// Cette fonction réinitialise la scène à un état "vide".
+/// Cette fonction assigne une vue première personne à la scène
 ///
 /// @return Aucune.
 ///
@@ -391,7 +397,7 @@ void FacadeModele::assignerVuePremierePersonne()
 			glm::dvec3(0, 0, 1), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionPerspective{
 			0, 500, 0, 500,
-			1, 1000, 10, 1000, 1.25,
+			1, 10000, 10, 10000, 1.25,
 			-50, 50, -50, 50, true }, true);
 }
 
@@ -496,18 +502,23 @@ void FacadeModele::assignerEnvironnement(int noEnviro){
 	);
 	*/
 	switch (noEnviro){
+
+	case 0:
+		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
+			".\\media\\textures\\skybox_xpos.png", ".\\media\\textures\\skybox_xneg.png",
+			".\\media\\textures\\skybox_ypos.png", ".\\media\\textures\\skybox_yneg.png",
+			".\\media\\textures\\skybox_zpos.png", ".\\media\\textures\\skybox_zneg.png");
+		break;
+
 	case 1:
 		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
 			".\\media\\textures\\skybox2_xpos.png", ".\\media\\textures\\skybox2_xneg.png",
 			".\\media\\textures\\skybox2_ypos.png", ".\\media\\textures\\skybox2_yneg.png",
 			".\\media\\textures\\skybox2_zpos.png", ".\\media\\textures\\skybox2_zneg.png");
 		break;
-	case 0:
+
 	default:
-		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\skybox_xpos.png", ".\\media\\textures\\skybox_xneg.png",
-			".\\media\\textures\\skybox_ypos.png", ".\\media\\textures\\skybox_yneg.png",
-			".\\media\\textures\\skybox_zpos.png", ".\\media\\textures\\skybox_zneg.png");
+		environnement_ = nullptr;
 		break;
 
 	}
@@ -539,6 +550,26 @@ void FacadeModele::stopAffichage()
 	peutAfficher_ = false;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
+///
+/// Cette fonction retourne la largeur et la hauteur de l'écran
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
+{
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	horizontal = desktop.right;
+	vertical = desktop.bottom;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

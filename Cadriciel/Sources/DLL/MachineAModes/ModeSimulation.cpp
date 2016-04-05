@@ -53,6 +53,8 @@ ModeSimulation::ModeSimulation()
     affichageTexte_->demarrerChrono();
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
+
+	FacadeModele::obtenirInstance()->assignerEnvironnement(0);
 }
 
 ////////////////////////////////////////////////////////////////////////
