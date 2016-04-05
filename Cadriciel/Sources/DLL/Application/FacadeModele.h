@@ -10,18 +10,21 @@
 #ifndef __APPLICATION_FACADEMODELE_H__
 #define __APPLICATION_FACADEMODELE_H__
 
-
 #include <windows.h>
 #include <string>
 #include <memory>
 
 #include "Vue.h"
+#include "Camera.h"
 #include "ArbreRenduINF2990.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
+#include "AffichageTexte.h"
+#include "ControleurLumiere.h"
 
 class NoeudAbstrait;
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class FacadeModele
 /// @brief Classe qui constitue une interface (une façade) sur l'ensemble
@@ -49,6 +52,7 @@ public:
    void enregistrerConfiguration() const;
    /// Libère le contexte OpenGL.
    void libererOpenGL();
+
    /// Affiche le contenu du modèle.
    void afficher() const;
    /// Affiche la base du contenu du modèle.
@@ -70,12 +74,24 @@ public:
   
    /// Retourne la vue courante.
    inline vue::Vue* obtenirVue();
+
+   //Assigne les parametres pour la vue ortho
+   void assignerVueOrtho();
+   //Assigne les parametres pour la vue orbite
+   void assignerVueOrbite();
+   //Assigne les parametres pour la vue à la première personne
+   void assignerVuePremierePersonne();
+   
    /// Retourne l'arbre de rendu.
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
    /// Retourne l'arbre de rendu.
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
    /// Retourne le profil de l'utilisateur.
    inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
+   // Retoune l'affichage du texte.
+   inline AffichageTexte* obtenirAffichageTexte() const;
+
+   inline ControleurLumiere* obtenirControleurLumiere() const;
    /// Réinitialise la scène.
    void reinitialiser();
 
@@ -111,10 +127,18 @@ private:
 
    /// Vue courante de la scène.
    std::unique_ptr<vue::Vue> vue_{ nullptr };
+
    /// Arbre de rendu contenant les différents objets de la scène.
    std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
+
+   /// Le mode d'utilisation courant.
    std::unique_ptr<ModeAbstrait> mode_{ nullptr };
+
+   /// Le profil utilisateur.
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
+   std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
+
+   std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -189,6 +213,35 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur() const
 {
 	return profil_.get();
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
+///
+/// Cette fonction retourne le module qui gère l'affichage du texte.
+///
+/// @return L'arbre de rendu de la scène.
+///
+////////////////////////////////////////////////////////////////////////
+inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
+{
+    return affichageTexte_.get();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
+///
+/// Cette fonction retourne le module qui gère l<affichage de la lumiere
+///
+/// @return le controleur de lumiere.
+///
+////////////////////////////////////////////////////////////////////////
+inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
+{
+	return controleurLumiere_.get();
 }
 
 ////////////////////////////////////////////////////////////////////////

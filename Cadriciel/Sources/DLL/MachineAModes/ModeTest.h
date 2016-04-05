@@ -21,6 +21,7 @@
 #include <array>
 
 class ProfilUtilisateur;
+class AffichageTexte;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeTest
@@ -36,7 +37,10 @@ class ModeTest : public ModeAbstrait
 {
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
+
 	ProfilUtilisateur* profil_{ nullptr };
+    AffichageTexte* affichageTexte_{ nullptr };
+
 	static std::array<char, 9> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
 

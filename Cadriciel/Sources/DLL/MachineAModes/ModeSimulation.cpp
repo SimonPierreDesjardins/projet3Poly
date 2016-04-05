@@ -19,11 +19,15 @@
 
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
+#include "AffichageTexte.h"
+#include "ControleurLumiere.h"
 
 #include <iostream>
 
 #include "EnginSon.h"
 
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 std::array<char, 10> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B' } };
   
@@ -44,6 +48,14 @@ ModeSimulation::ModeSimulation()
 	controleRobot_->passerAModeAutomatique();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
+
+    affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
+    affichageTexte_->assignerProfilEstAffiche(true);
+    affichageTexte_->assignerTempsEstAffiche(true);
+    affichageTexte_->reinitialiserChrono();
+    affichageTexte_->demarrerChrono();
+
+	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -58,6 +70,10 @@ ModeSimulation::~ModeSimulation()
 {
 	EnginSon::obtenirInstance()->stopMusique();
 	controleRobot_ = nullptr;
+    affichageTexte_->assignerProfilEstAffiche(false);
+    affichageTexte_->assignerTempsEstAffiche(false);
+    affichageTexte_->reinitialiserChrono();
+    affichageTexte_->pauseChrono();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -72,6 +88,10 @@ ModeSimulation::~ModeSimulation()
 void ModeSimulation::inverserLumiereAmbiante()
 {
 	lumiereAmbiante = !lumiereAmbiante;
+
+	controleurLumiere_->assignerLumiereAmbianteGlobale(lumiereAmbiante);
+	controleurLumiere_->afficherLumiereAmbianteGlobale();
+	
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();
@@ -94,6 +114,10 @@ void ModeSimulation::inverserLumiereAmbiante()
 void ModeSimulation::inverserLumiereDirectionnelle()
 {
 	lumiereDirectionnelle = !lumiereDirectionnelle;
+	
+	controleurLumiere_->assignerLumiereDirectionnelle(lumiereDirectionnelle);
+	controleurLumiere_->afficherLumiereDirectionnelle();
+
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();
@@ -226,10 +250,23 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			controleRobot_->robot_->positionDepart();
 			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 			controleRobot_->passerAModeAutomatique();
+            affichageTexte_->reinitialiserChrono();
 			break;
 
-		case VK_ESCAPE:
-			controleRobot_->setEnPause(!(controleRobot_->getEnPause()));
+        case VK_ESCAPE:
+        {
+            bool estEnPause = controleRobot_->getEnPause();
+            controleRobot_->setEnPause(!estEnPause);
+            if (estEnPause)
+            {
+                affichageTexte_->demarrerChrono();
+            }
+            else
+            {
+                affichageTexte_->pauseChrono();
+            }
+        }
+        break;
 
 		default:
 			break;
@@ -294,6 +331,9 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
+		case WM_MOUSEWHEEL:
+			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			break;
 		}
 	}
 }

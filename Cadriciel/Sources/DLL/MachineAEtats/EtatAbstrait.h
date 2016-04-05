@@ -43,7 +43,6 @@ public:
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
-	virtual void gererMoletteSouris(const int & delta);
 
 	// Gestion du symbole du curseur.
 	void gererPositionCurseur(const glm::dvec3& position);
@@ -54,8 +53,6 @@ public:
 	virtual void gererToucheEchappe();
 	virtual void gererToucheControlEnfoncee();
 	virtual void gererToucheControlRelachee();
-	virtual void gererTouchePlus();
-	virtual void gererToucheMoins();
 	virtual void gererToucheAltEnfoncee();
 	virtual void gererToucheAltRelachee();
 

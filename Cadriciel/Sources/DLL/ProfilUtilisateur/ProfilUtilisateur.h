@@ -181,7 +181,6 @@ class ProfilUtilisateur
 		/// Tableau contenant si les options de débogages sont actives ou non et l'état de chacune des options
 		std::array<bool, 4> optionsDebogages_;
 };
-#endif // __PROFILUTILISATEUR_H__
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -210,6 +209,9 @@ inline NoeudRobot::ConteneurCapteursDistance* ProfilUtilisateur::obtenirCapteurs
 {
     return &capteursDistance_;
 }
+
+#endif // __PROFILUTILISATEUR_H__
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

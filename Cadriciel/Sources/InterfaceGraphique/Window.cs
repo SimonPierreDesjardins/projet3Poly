@@ -159,6 +159,10 @@ namespace InterfaceGraphique
             afficherMenuPrincipal(false);
             afficherMenuEdition(true);
             panneauOperation_.Visible = false;
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
             FonctionsNatives.assignerMode(Mode.EDITION);
             verificationDuNombreElementChoisi();
             changeIconColor();
@@ -739,6 +743,10 @@ namespace InterfaceGraphique
                 afficherMenuPrincipal(false);
                 afficherMenuEdition(false);
                 afficherMenuSimulation(true);
+
+                FonctionsNatives.assignerVueOrtho();
+                FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
                 FonctionsNatives.assignerMode(Mode.SIMULATION);
             }
             viewPort_.Focus();
@@ -1135,6 +1143,9 @@ namespace InterfaceGraphique
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         afficherMenuEdition(false);
                         afficherMenuPrincipal(true);
+
+                        FonctionsNatives.assignerVueOrtho();
+                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     }
                     break;
 
@@ -1224,14 +1235,15 @@ namespace InterfaceGraphique
                         afficherMenuPrincipal(true);
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         estEnPause = false;
-                        //FonctionsNatives.mettreEnPause(estEnPause);
                         picturePause.Visible = estEnPause;
+
+                        FonctionsNatives.assignerVueOrtho();
+                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     }
                     break;
 
                 case Keys.Escape:
                     estEnPause = !estEnPause;
-                    //FonctionsNatives.mettreEnPause(estEnPause);
                     picturePause.Visible = estEnPause;
                     menuSimTest.Visible = estEnPause;
                     break;
@@ -1264,6 +1276,9 @@ namespace InterfaceGraphique
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         afficherMenuTest(false);
                         afficherMenuPrincipal(true);
+
+                        FonctionsNatives.assignerVueOrtho();
+                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     }
                     break;
 
@@ -1496,6 +1511,36 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        private void orthographiqueMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void orbiteMenuEdition__Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrbite();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void orthographiqueMenuSimTest_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void orbiteMenuSimTest_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVueOrbite();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
+        private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerVuePremierePersonne();
+            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+        }
+
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -1590,5 +1635,14 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void mettreEnPause(bool estEnPause);
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerVueOrtho();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerVueOrbite();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerVuePremierePersonne();
     }
 }

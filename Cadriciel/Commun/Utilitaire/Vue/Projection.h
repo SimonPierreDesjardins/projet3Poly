@@ -60,9 +60,7 @@ namespace vue {
 		/// Obtention des dimensions de la fenêtre de clotûre.
 		inline glm::ivec2 obtenirDimensionCloture() const;
 		/// Obtention des coordonnées de la fenêtre de clôture.
-		inline void obtenirCoordonneesCloture(
-			int& xMin, int& xMax, int& yMin, int& yMax
-			) const;
+		inline void obtenirCoordonneesCloture(int& xMin, int& xMax, int& yMin, int& yMax) const;
 
 		/// Vérification de si la projection est perspective.
 		inline bool estPerspective() const;

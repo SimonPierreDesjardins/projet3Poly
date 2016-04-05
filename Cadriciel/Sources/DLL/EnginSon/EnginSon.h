@@ -101,7 +101,23 @@ public:
 
 	/// Arrête la musique
 	void stopMusique();
+
+	/// Retourne référence vers le système de son
+	inline FMOD::System* obtenirSystemeSon();
 };
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline FMOD::System* EnginSon::obtenirSystemeSon()
+///
+/// Retourne une référence vers le système
+///
+/// @return Référence vers le système
+///
+////////////////////////////////////////////////////////////////////////
+inline FMOD::System* EnginSon::obtenirSystemeSon(){
+	return systeme_;
+}
 
 
 #endif

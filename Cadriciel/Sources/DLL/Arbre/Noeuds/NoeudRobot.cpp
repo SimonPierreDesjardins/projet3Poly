@@ -31,6 +31,7 @@
 #include "RectangleEnglobant.h"
 
 #include "EnginSon.h"
+#include "Camera.h"
 
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
 const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
@@ -145,7 +146,7 @@ void NoeudRobot::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	// TODO: Figurer pourquoi plateforme est transparente sans cette ligne.
-	glColor3f(0.0, 0.0, 0.0);
+	//glColor3f(0.0, 0.0, 0.0);
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -199,6 +200,16 @@ void NoeudRobot::animer(float dt)
 {
     mutexControleRobot_->lock();
     mettreAJourPosition(dt);
+
+	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()){
+		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ 0.0, 0.0, 4.0 });
+		
+		glm::dvec3 positionVise{ cos(angleRotation_*PI / 180)*1000, sin(angleRotation_* PI / 180)*1000, 1 };
+		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPointVise(positionVise);
+
+		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ -cos(angleRotation_*PI / 180) * 4, -sin(angleRotation_* PI / 180) * 4, 4.0 });
+	}
+    
     if (estEnCollision_)
     {
         effectuerCollision(dt);

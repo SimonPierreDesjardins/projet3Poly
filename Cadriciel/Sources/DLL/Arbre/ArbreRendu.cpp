@@ -13,6 +13,7 @@
 #include "VisiteurAbstrait.h"
 #include "FacadeModele.h"
 #include "VisiteurTypes.h"
+#include "Projection.h"
 
 #include "GL/glew.h"
 
@@ -223,6 +224,7 @@ std::string ArbreRendu::obtenirCheminFichierZoneDefaut()
 {
 	return cheminFichierZoneDefaut;
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///

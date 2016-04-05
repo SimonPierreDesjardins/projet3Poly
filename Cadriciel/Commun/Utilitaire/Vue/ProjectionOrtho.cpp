@@ -51,10 +51,11 @@ namespace vue {
 		double zoomInMax, double zoomOutMax,
 		double incrementZoom,
 		double xMinFenetre, double xMaxFenetre,
-		double yMinFenetre, double yMaxFenetre) :
+		double yMinFenetre, double yMaxFenetre,
+		bool perspective) :
 		Projection{ xMinCloture, xMaxCloture, yMinCloture, yMaxCloture,
 		zAvant, zArriere,
-		zoomInMax, zoomOutMax, incrementZoom, false },
+		zoomInMax, zoomOutMax, incrementZoom, perspective },
 		xMinFenetre_{ xMinFenetre },
 		xMaxFenetre_{ xMaxFenetre },
 		yMinFenetre_{ yMinFenetre },
@@ -327,10 +328,10 @@ namespace vue {
 	////////////////////////////////////////////////////////////////////////
 	void ProjectionOrtho::translater(double deplacementX, double deplacementY)
 	{
-		xMinFenetre_ += deplacementX;
-		xMaxFenetre_ += deplacementX;
-		yMinFenetre_ += deplacementY;
-		yMaxFenetre_ += deplacementY;
+			xMinFenetre_ += deplacementX;
+			xMaxFenetre_ += deplacementX;
+			yMinFenetre_ += deplacementY;
+			yMaxFenetre_ += deplacementY;
 	}
 
 

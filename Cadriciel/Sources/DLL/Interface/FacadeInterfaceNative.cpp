@@ -769,6 +769,48 @@ extern "C"
 	__declspec(dllexport) int* __cdecl obtenirLimitesParametres(){
 		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirLimiteParametres();
 	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerVueOrtho()
+	///
+	///	Fonction qui assigne la vue en mode ortho
+	///
+	/// @return aucun
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerVueOrtho()
+	{
+		FacadeModele::obtenirInstance()->assignerVueOrtho();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerVueOrbite()
+	///
+	///	Fonction qui assigne la vue en mode orbite
+	///
+	/// @return aucun
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerVueOrbite()
+	{
+		FacadeModele::obtenirInstance()->assignerVueOrbite();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl assignerVuePremierePersonne()
+	///
+	///	Fonction qui assigne la vue en mode premiere personne
+	///
+	/// @return aucun
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl assignerVuePremierePersonne()
+	{
+		FacadeModele::obtenirInstance()->assignerVuePremierePersonne();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

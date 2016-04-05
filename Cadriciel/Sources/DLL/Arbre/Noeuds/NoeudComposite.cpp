@@ -435,10 +435,10 @@ void NoeudComposite::afficherConcret() const
 {
 	NoeudAbstrait::afficherConcret();
 
-	for (std::shared_ptr<NoeudAbstrait> const enfant : enfants_) {
-		enfant->afficher();
-	}
-		
+    for (int i = 0; i < enfants_.size(); i++)
+    {
+        enfants_.at(i)->afficher(i);
+    }		
 }
 
 ////////////////////////////////////////////////////////////////////////
