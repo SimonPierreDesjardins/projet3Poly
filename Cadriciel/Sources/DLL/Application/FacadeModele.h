@@ -104,6 +104,9 @@ public:
    /// Assigne un skybox à rendre
    void assignerEnvironnement(int noEnviro);
 
+   /// Retourne la dimension de l'écran
+   void getDesktopResolution(int& horizontal, int& vertical);
+
 private:
    /// Constructeur par défaut.
    FacadeModele() = default;
