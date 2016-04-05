@@ -183,7 +183,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Création du module qui gère l'affichage du texte avec OpenGL.
 	affichageTexte_ = std::make_unique<AffichageTexte>();
 
-	assignerEnvironnement(1);
+	//assignerEnvironnement(1);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -301,7 +301,8 @@ void FacadeModele::afficher() const
 	FacadeModele::obtenirInstance()->getDesktopResolution(horizontal, vertical);
 
 	// AfficherEnvironnement
-	environnement_->afficher(glm::dvec3(0.0), horizontal / 2);
+	if (environnement_ != nullptr)
+		environnement_->afficher(glm::dvec3(0.0), horizontal / 2);
 
 	// Afficher la scène
 	afficherBase();
@@ -501,6 +502,14 @@ void FacadeModele::assignerEnvironnement(int noEnviro){
 	);
 	*/
 	switch (noEnviro){
+
+	case 0:
+		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
+			".\\media\\textures\\skybox_xpos.png", ".\\media\\textures\\skybox_xneg.png",
+			".\\media\\textures\\skybox_ypos.png", ".\\media\\textures\\skybox_yneg.png",
+			".\\media\\textures\\skybox_zpos.png", ".\\media\\textures\\skybox_zneg.png");
+		break;
+
 	case 1:
 		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
 			".\\media\\textures\\skybox2_xpos.png", ".\\media\\textures\\skybox2_xneg.png",
@@ -508,12 +517,8 @@ void FacadeModele::assignerEnvironnement(int noEnviro){
 			".\\media\\textures\\skybox2_zpos.png", ".\\media\\textures\\skybox2_zneg.png");
 		break;
 
-	case 0:
 	default:
-		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\skybox_xpos.png", ".\\media\\textures\\skybox_xneg.png",
-			".\\media\\textures\\skybox_ypos.png", ".\\media\\textures\\skybox_yneg.png",
-			".\\media\\textures\\skybox_zpos.png", ".\\media\\textures\\skybox_zneg.png");
+		environnement_ = nullptr;
 		break;
 
 	}

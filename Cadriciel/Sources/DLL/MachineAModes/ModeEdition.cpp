@@ -35,7 +35,7 @@ ModeEdition::ModeEdition()
 	etat_ = make_unique <EtatSelection>();
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(1);
+	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
 }
 
 ////////////////////////////////////////////////////////////////////////
