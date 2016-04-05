@@ -979,7 +979,7 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerAutorisationInputSouris(false);
             if (explorateur.ShowDialog() == DialogResult.OK)
             {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
+                FonctionsNatives.assignerCheminFichierZone(explorateur.CheminFichier);
                 FonctionsNatives.sauvegarder();
                 enregistrerMenuEdition_.Enabled = true;
             }

@@ -38,7 +38,24 @@ namespace InterfaceGraphique
         /// <summary>
         /// Chemin vers le fichier que l'utilisateur a sélectionné
         /// </summary>
-        public String cheminFichier;
+        private String cheminFichier;
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public String CheminFichier
+        ///
+        /// Retourne le chemin vers le fichier à sauvegarder.
+        ///
+        /// @return String
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public String CheminFichier
+        {
+            get
+            {
+                return cheminFichier;
+            }
+        }
 
         /// <summary>
         /// Chemin vers le fichier contenant la zone par defaut
@@ -54,6 +71,11 @@ namespace InterfaceGraphique
         /// Nom du fichier contenant la zone par defaut
         /// </summary>
         private String nomFichierZoneDefaut;
+
+        /// <summary>
+        /// Extension d'un fichier de type zone
+        /// </summary>
+        private String extensionFichierZone;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -72,6 +94,7 @@ namespace InterfaceGraphique
             cheminFichierZoneDefaut = str.ToString();
             cheminDossierZone = cheminFichierZoneDefaut.Substring(0,cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
+            extensionFichierZone = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("."));
             InitializeComponent();
             PopulateTreeView();
         }
@@ -173,7 +196,7 @@ namespace InterfaceGraphique
                 item.SubItems.AddRange(subItems);
                 listView1.Items.Add(item);
             }
-            foreach (FileInfo file in nodeDirInfo.GetFiles("*.json"))
+            foreach (FileInfo file in nodeDirInfo.GetFiles("*" + extensionFichierZone))
             {
                 if (file.Name == nomFichierZoneDefaut)
                     continue;
@@ -252,16 +275,32 @@ namespace InterfaceGraphique
         {
 
             NouveauFichier fenetre = new NouveauFichier();
+
             if (fenetre.ShowDialog() == DialogResult.OK)
-                cheminFichier = Path.GetFullPath(cheminDossierZone + fenetre.nomFichier);
-            fenetre.Dispose();
-            ouvreDossier(rootNode);
+            {
+                cheminFichier = Path.GetFullPath(cheminDossierZone + fenetre.NomFichier + extensionFichierZone);
+                fenetre.Dispose();
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else
+                fenetre.Dispose();
         }
 
         static partial class FonctionNative
         {
             [System.Runtime.InteropServices.DllImport(@"Noyau.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
             public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
+        }
+
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                DialogResult = DialogResult.OK;
+                cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+                Close();
+            }
         }
 
     }

@@ -34,7 +34,29 @@ namespace InterfaceGraphique
         /// <summary>
         /// Nom du fichier à créer
         /// </summary>
-        public string nomFichier;
+        private String nomFichier;
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public String NomFichier
+        ///
+        /// Retourne le nom du fichier à sauvegarder.
+        ///
+        /// @return String
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public String NomFichier
+        {
+            get
+            {
+                return nomFichier;
+            }
+        }
+
+        /// <summary>
+        /// Extension d'un fichier de type zone
+        /// </summary>
+        private String extensionFichierZone;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -52,6 +74,7 @@ namespace InterfaceGraphique
             FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
             cheminFichierZoneDefaut = str.ToString();
             cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/") + 1);
+            extensionFichierZone = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("."));
             InitializeComponent();
         }
 
@@ -73,13 +96,13 @@ namespace InterfaceGraphique
             nomFichier = nomFichierTextBox.Text;
             if (nomFichier != "")
             {
-                if (System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + nomFichier + ".json")))
+                if (System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + nomFichier + extensionFichierZone)))
                 {
                     MessageBox.Show("Vous ne pouvez pas nommer votre fichier ainsi car le fichier existe déjà.", "Nom déjà utilisé", MessageBoxButtons.OK);
                     return;
                 }
-                creerFichierButt.DialogResult = DialogResult.OK;
-                System.IO.File.Create(cheminDossierZone + nomFichier + ".json").Dispose();
+                DialogResult = DialogResult.OK;
+                System.IO.File.Create(cheminDossierZone + nomFichier + extensionFichierZone).Dispose();
             }
             Close();
         }

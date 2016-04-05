@@ -233,5 +233,15 @@ namespace InterfaceGraphique
             public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
         }
 
+        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (listView1.SelectedItems.Count > 0)
+            {
+                DialogResult = DialogResult.OK;
+                cheminFichier = ((FileInfo)listView1.SelectedItems[0].Tag).FullName;
+                Close();
+            }
+        }
+
     }
 }
