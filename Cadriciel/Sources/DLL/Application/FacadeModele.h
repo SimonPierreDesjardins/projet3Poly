@@ -85,6 +85,9 @@ public:
    void stopAffichage();
    void continuerAffichage();
 
+   /// Assigne un skybox à rendre
+   void assignerEnvironnement(int noEnviro);
+
 private:
    /// Constructeur par défaut.
    FacadeModele() = default;

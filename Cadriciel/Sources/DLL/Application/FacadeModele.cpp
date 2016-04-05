@@ -190,10 +190,8 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
     fichierZpos, fichierZneg
          );
 	*/
-	environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-		"C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_xpos.png", "C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_xneg.png",
-		"C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_ypos.png", "C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_yneg.png",
-		"C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_zpos.png", "C:\\Users\\Public\\Documents\\inf2990-06\\Cadriciel\\Exe\\media\\textures\\skybox_zneg.png");
+	
+	assignerEnvironnement(0);
 }
 
 
@@ -433,6 +431,30 @@ void FacadeModele::assignerMode(Mode mode)
 
 		default:
 			break;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerEnvironnement(int noEnviro)
+///
+/// Cette fonction change la boite d'environnement de travaille à celui spécifié par le paramètre
+/// 0: Lac
+/// 1: Salle d'essai
+///
+/// @param[in] noEnviro : Numéro correspondant à l'environnement à afficher
+///
+/// @return aucun
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerEnvironnement(int noEnviro){
+	switch (noEnviro){
+	case 0:
+	default:
+		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
+			".\\media\\textures\\skybox_xpos.png", ".\\media\\textures\\skybox_xneg.png",
+			".\\media\\textures\\skybox_ypos.png", ".\\media\\textures\\skybox_yneg.png",
+			".\\media\\textures\\skybox_zpos.png", ".\\media\\textures\\skybox_zneg.png");
 	}
 }
 
