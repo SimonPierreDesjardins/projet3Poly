@@ -183,6 +183,12 @@ FILE* ArbreRendu::obtenirFichierZone(std::string mode)
 {
 	FILE* fichierZone;
 	errno_t err;
+	if (cheminFichierZone.substr(cheminFichierZone.find_last_of('\\') + 1, cheminFichierZone.length() - 1) == cheminFichierZoneDefaut.substr(cheminFichierZoneDefaut.find_last_of('/') + 1, cheminFichierZoneDefaut.length() - 1) && mode == "w"){
+		std::string temp = cheminFichierZone.substr(0,cheminFichierZone.find_first_of('.'));
+		int i = 1;
+		while (utilitaire::fichierExiste(cheminFichierZone))
+			cheminFichierZone = temp + std::to_string(i++) + EXTENSION_ZONE;
+	}
 	if (err = fopen_s(&fichierZone, cheminFichierZone.c_str(), mode.c_str()) != 0) {
 		return NULL;
 	}

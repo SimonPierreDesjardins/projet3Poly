@@ -34,6 +34,11 @@ namespace InterfaceGraphique
         /// </summary>
         private String nomFichierZoneDefaut;
 
+        /// <summary>
+        /// Extension d'un fichier de type zone
+        /// </summary>
+        private String extensionFichierZone;
+
         bool afficherZoneDefaut = false;
 
         ////////////////////////////////////////////////////////////////////////
@@ -53,6 +58,7 @@ namespace InterfaceGraphique
             cheminFichierZoneDefaut = str.ToString();
             cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
+            extensionFichierZone = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("."));
             InitializeComponent();
             afficherZoneDefaut = afficher;
             PopulateTreeView();
@@ -157,7 +163,7 @@ namespace InterfaceGraphique
                 item.SubItems.AddRange(subItems);
                 listView1.Items.Add(item);
             }
-            foreach (FileInfo file in nodeDirInfo.GetFiles("*.json"))
+            foreach (FileInfo file in nodeDirInfo.GetFiles("*" + extensionFichierZone))
             {
 
                 if (file.Length > 0 && (file.Name != nomFichierZoneDefaut || afficherZoneDefaut))

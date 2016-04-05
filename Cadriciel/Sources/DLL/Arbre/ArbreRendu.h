@@ -100,8 +100,11 @@ protected:
 	/// Retourne un pointeur vers le fichier de structure de base
 	FILE* obtenirFichierZoneDefaut(std::string mode);
 
+	/// Constante représentant l'extension d'un fichier zone
+	const std::string EXTENSION_ZONE = ".zone";
+
 	/// Constante représentant le fichier zone contenant la structure de base
-	const std::string cheminFichierZoneDefaut = "./Zones/zone_par_defaut.json";
+	const std::string cheminFichierZoneDefaut = "./Zones/defaut" + EXTENSION_ZONE;
 
 	/// Chemin vers le fichier de zone sélectionné par l'utilisateur
 	std::string cheminFichierZone;
