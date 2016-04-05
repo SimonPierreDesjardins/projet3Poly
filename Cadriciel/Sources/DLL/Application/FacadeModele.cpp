@@ -314,7 +314,8 @@ void FacadeModele::afficherBase() const
 {
 	//Affiche la lumière directionnelle
 	controleurLumiere_->afficherLumiereDirectionnelle();
-	controleurLumiere_->afficherLumiereSpotGyro(glm::dvec3(0.0,0.0,0.0));
+	controleurLumiere_->afficherLumiereSpotGyro();
+	controleurLumiere_->afficherLumiereSpotRobot();
 
 	// Afficher la scène.
 	arbre_->afficher(-1);

@@ -219,8 +219,7 @@ void NoeudRobot::animer(float dt)
     mettreAJourCapteurs();
     arbre_->accepterVisiteur(visiteur_.get());
 	positionnerRoues();
-	controleurLumiere_->afficherLumiereSpotGyro(positionCourante_);
-	//controleurLumiere_->afficherLumiereSpotRobot(positionCourante_);
+	controleurLumiere_->animer(positionCourante_, dt);
     mutexControleRobot_->unlock();
 }
 

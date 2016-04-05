@@ -46,8 +46,6 @@ public:
 
 private:
     RectangleEnglobant rectangleEnglobant_;
-
-	ControleurLumiere* controleurLumiere_{ nullptr };
 };
 
 #endif

@@ -33,7 +33,6 @@
 NoeudTable::NoeudTable(const std::string& typeNoeud)
 	: NoeudComposite{ typeNoeud }
 {
-	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 
@@ -116,9 +115,6 @@ void NoeudTable::afficherConcret() const
 	glPushMatrix();
 	// Affichage du modèle.
 	//glColor4f(1, 1, 1, 1);
-
-	controleurLumiere_->afficherLumiereSpotGyro(positionCourante_);
-
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
