@@ -18,7 +18,7 @@
 
 #include <iostream>
 
-std::array<char, 9> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', 'J', 'K', 'L', 'B' } };
+std::array<char, 11> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
 
 ////////////////////////////////////////////////////////////////////////
 ///

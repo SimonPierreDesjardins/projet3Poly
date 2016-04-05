@@ -503,7 +503,7 @@ bool ProfilUtilisateur::toucheEstUtilise(char touche){
 	toucheModifiable = it != commandes_.end();
 
 	
-	for (int i = 0; i < 10 && !trouve; i++)
+	for (int i = 0; i < 11 && !trouve; i++)
 	{
 		if (toucheNonChangeable->at(i) == touche)
 		{ 
