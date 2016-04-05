@@ -302,7 +302,7 @@ void FacadeModele::afficher() const
 
 	// AfficherEnvironnement
 	if (environnement_ != nullptr)
-		environnement_->afficher(glm::dvec3(0.0), horizontal / 2);
+		environnement_->afficher(glm::dvec3(0.0, 0.0, 0.0), horizontal / 2);
 
 	// Afficher la scène
 	afficherBase();
