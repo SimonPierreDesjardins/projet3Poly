@@ -19,19 +19,19 @@ using System.Runtime.InteropServices;
 using ModeEnum;
 
 namespace InterfaceGraphique
-{    
+{
     public partial class Window : Form, IMessageFilter
     {
-        private const int WM_KEYDOWN =      0x0100;
-        private const int WM_KEYUP =        0x0101;
-        private const int WM_SYSKEYDOWN =   0x0104;
-        private const int WM_SYSKEYUP =     0x0105;
-        private const int WM_LBUTTONDOWN =  0x0201;
-        private const int WM_LBUTTONUP =    0x0202;
-        private const int WM_RBUTTONDOWN =  0x0204;
-        private const int WM_RBUTTONUP =    0x0205;
-        private const int WM_MOUSEMOVE =    0x0200;
-        private const int WM_MOUSEWHEEL =   0x020A;
+        private const int WM_KEYDOWN = 0x0100;
+        private const int WM_KEYUP = 0x0101;
+        private const int WM_SYSKEYDOWN = 0x0104;
+        private const int WM_SYSKEYUP = 0x0105;
+        private const int WM_LBUTTONDOWN = 0x0201;
+        private const int WM_LBUTTONUP = 0x0202;
+        private const int WM_RBUTTONDOWN = 0x0204;
+        private const int WM_RBUTTONUP = 0x0205;
+        private const int WM_MOUSEMOVE = 0x0200;
+        private const int WM_MOUSEWHEEL = 0x020A;
 
         private Configure configuration;
 
@@ -46,15 +46,15 @@ namespace InterfaceGraphique
 
         public bool PreFilterMessage(ref Message m)
         {
-            if(!arreterToutMessage_)
+            if (!arreterToutMessage_)
             {
                 // On veut seulement traiter les inputs sur le view_port.
                 if (m.HWnd == viewPort_.Handle ||
-                    m.Msg == WM_KEYUP          || 
-                    m.Msg == WM_KEYDOWN        || 
-                    m.Msg == WM_SYSKEYUP       || 
-                    m.Msg == WM_SYSKEYDOWN     ||
-                    m.Msg == WM_MOUSEWHEEL)   
+                    m.Msg == WM_KEYUP ||
+                    m.Msg == WM_KEYDOWN ||
+                    m.Msg == WM_SYSKEYUP ||
+                    m.Msg == WM_SYSKEYDOWN ||
+                    m.Msg == WM_MOUSEWHEEL)
                 {
                     FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
                 }
@@ -118,7 +118,7 @@ namespace InterfaceGraphique
                 });
             }
             catch (Exception)
-            {}
+            { }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -135,11 +135,11 @@ namespace InterfaceGraphique
         {
             arreterToutMessage();
 
-            lock(Program.unLock)
+            lock (Program.unLock)
             {
                 FonctionsNatives.libererOpenGL();
                 Program.peutAfficher = false;
-                
+
             }
         }
 
@@ -183,8 +183,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void buttonQuitter_Click(object sender, EventArgs e)
         {
-                configuration.Dispose();
-                Application.Exit();
+            configuration.Dispose();
+            Application.Exit();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -259,7 +259,8 @@ namespace InterfaceGraphique
             profilsMenuSimTest.DropDownItems.Add(item);
         }
 
-        private void profilItem_Click(object sender, EventArgs e){
+        private void profilItem_Click(object sender, EventArgs e)
+        {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             configuration.changerProfilSelectionne(item.Text);
         }
@@ -276,7 +277,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void afficherMenuTest(bool afficherMenu)
         {
-            menuSimTest.Visible = afficherMenu;
+            menuSimTest.Visible = false;
             modeEditionMenuSimTest.Visible = afficherMenu;
             premierePersonneMenuSimTest.Visible = !afficherMenu;
             viewPort_.Visible = afficherMenu;
@@ -984,7 +985,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
         {
-            enregistrerSousZone();            
+            enregistrerSousZone();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1009,7 +1010,7 @@ namespace InterfaceGraphique
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
-            
+
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1055,7 +1056,7 @@ namespace InterfaceGraphique
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
             panneauOperation_.Visible = false;
-            
+
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1072,7 +1073,7 @@ namespace InterfaceGraphique
         {
             int mode = FonctionsNatives.obtenirMode();
 
-            switch(mode)
+            switch (mode)
             {
                 //Mode Menu_Principal
                 case 0:
@@ -1082,7 +1083,7 @@ namespace InterfaceGraphique
                 case 1:
                     gererToucheSimulation(sender, e);
                     break;
-                
+
                 //Mode Edition
                 case 2:
                     gererToucheEdition(sender, e);
@@ -1101,7 +1102,7 @@ namespace InterfaceGraphique
                     break;
             }
 
-            
+
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1207,7 +1208,7 @@ namespace InterfaceGraphique
 
                 default:
                     break;
-            }     
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1222,7 +1223,7 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(object sender, PreviewKeyDownEventArgs e)
         {
-            
+
 
             switch (e.KeyCode)
             {
@@ -1391,7 +1392,7 @@ namespace InterfaceGraphique
         /// des opérations si un objet est sélectionné
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void verificationDuNombreElementChoisi ()
+        private void verificationDuNombreElementChoisi()
         {
             FonctionsNatives.assignerAutorisationInputClavier(true);
 
@@ -1575,7 +1576,7 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirAffichagesParSeconde();
- 
+
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void repartirMessage(int msg, IntPtr wParam, IntPtr lParam);
 
@@ -1617,7 +1618,7 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerCheminFichierZone(string chemin);
-        
+
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAutorisationInputClavier(bool autorisation);
 
