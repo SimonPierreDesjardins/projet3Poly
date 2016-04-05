@@ -103,6 +103,22 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 		if ((typeCommande == INVERSER_MODE_CONTROLE) || (manuel == provientUtilisateur))
 		{
 			commande->executer(this);
+			float vitesseG, vitesseD;
+			vitesseG = robot_->obtenirVitesseGauche();
+			vitesseD = robot_->obtenirVitesseDroite();
+			typeSon son;
+			if (typeCommande == INVERSER_MODE_CONTROLE)
+				son = manuel ? CHANGEMENT_MANUEL_SON : CHANGEMENT_AUTOMATIQUE_SON;
+			else if (vitesseG == vitesseD && vitesseG == 0)
+				son = ARRETER_SON;
+			else if (vitesseG == vitesseD)
+				son = AVANCER_RECULER_SON;
+			else if (abs(vitesseG) == abs(vitesseD))
+				son = TOURNER_SON;
+			else
+				son = DEVIATION_SON;
+
+			EnginSon::obtenirInstance()->jouerSonRobot(son);
 		}
 	}
 }
@@ -186,7 +202,6 @@ void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	assignerComportement(DEFAUT, L"Passage au mode automatique");
 	initialiserBoucleRobot();
-	EnginSon::obtenirInstance()->jouerSonRobot(CHANGEMENT_AUTOMATIQUE_SON);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -201,7 +216,6 @@ void ControleRobot::passerAModeAutomatique() {
 void ControleRobot::passerAModeManuel(){
 	manuel = true;
 	terminerBoucleRobot();
-	EnginSon::obtenirInstance()->jouerSonRobot(CHANGEMENT_MANUEL_SON);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -417,12 +431,9 @@ bool ControleRobot::ligneDetectee(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ControleRobot::ligneDetectee()
+/// @fn ControleRobot::setEnPause(bool pause)
 ///
-/// Fonction indiquant si le robot détecte une ligne. Utilisée par les comportements pour ne pas qu'ils aient
-/// à passer par le noeud du robot.
-///
-/// @return Si oui ou non une ligne est detectee.
+/// Fonction permettant d'assigner une valeur au booléen enPause;
 ///
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::setEnPause(bool pause)

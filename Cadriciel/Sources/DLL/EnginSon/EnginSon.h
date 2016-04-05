@@ -14,7 +14,9 @@
 #include <memory>
 #include "fmod.hpp"
 #include <array>
+#include "NoeudRobot.h"
 
+/// Représente les sons possibles
 enum typeSon {
 	ARRETER_SON = -1,
 	MUSIQUE,
@@ -30,49 +32,75 @@ enum typeSon {
 
 class EnginSon{
 private:
+	/// Représente un objet de type son
 	typedef FMOD::Sound* SoundClass;
 
+	/// Constructeur par copie désactivé
 	EnginSon(const EnginSon&) = delete;
+
 	/// Opérateur d'assignation désactivé.
 	EnginSon& operator =(const EnginSon&) = delete;
+
+	/// Chemin vers le dossier contenant les sons
 	static const std::string CHEMIN_SONS;
+
+	/// Instance du singleton
 	static std::unique_ptr<EnginSon> instance_;
 
-	FMOD::System *m_pSystem;
+	/// Référence vers le système FMOD
+	FMOD::System *systeme_;
 
+	/// Tableau contenant les 9 sons possibles
 	std::array<SoundClass, 9> sons_;
 
+	/// Tableau contenant les noms des 9 sons possibles
 	std::array<std::string, 9> nomsSons_;
 
-	std::array<int, 9> channels_;
-
+	/// Channel jouant la musique en boucle
 	FMOD::Channel* musiqueChannel;
 
+	/// Channel jouant les sons de moteur du robot
 	FMOD::Channel* robotChannel;
 
+	/// Channel jouant les sons de collision
 	FMOD::Channel* collisionChannel;
 
+	/// Channel jouant les sons associés au changement de mode du robot
 	FMOD::Channel* changerModeChannel;
 
-	FMOD::Channel* obtenirChannel(typeSon son);
-
+	/// Représente le dernier son de moteur du robot
 	typeSon dernierSonRobot;
 
+	/// Joue le son associé à un changement de mode du robot
 	void changerMode(typeSon son);
 
-public:
-	EnginSon();
-	~EnginSon();
-	static EnginSon* obtenirInstance();
-	static void libererInstance();
-	void jouerMusique();
-	void jouerSonRobot(typeSon son);
-	
-	void jouerCollision(typeSon son);
-	void stopMusique();
+	/// Arrête les sons de moteur du robot
 	void stopRobotSon();
-	void stopCollisionSon();
-	FMOD::System* obtenirSystem(){ return m_pSystem; };
+
+public:
+	/// Constructeur par défaut
+	EnginSon();
+
+	/// Destructeur
+	~EnginSon();
+
+	/// Retourne l'instance du singleton
+	static EnginSon* obtenirInstance();
+
+	/// Libere l'instance du singleton
+	static void libererInstance();
+
+	/// Joue la musique
+	void jouerMusique();
+
+	/// Joue les sons de moteur du robot
+	void jouerSonRobot(typeSon son);
+
+	/// Joue les sons de collision
+	void jouerCollision(typeSon son);
+
+	/// Arrête la musique
+	void stopMusique();
 };
 
 
