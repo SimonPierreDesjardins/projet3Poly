@@ -11,7 +11,7 @@
 #define CONTROLEUR_LUMIERE_H
 
 #include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
+#include "glm/gtc/type_ptr.hpp" 
 
 class ModeAbstrait;
 ///////////////////////////////////////////////////////////////////////////

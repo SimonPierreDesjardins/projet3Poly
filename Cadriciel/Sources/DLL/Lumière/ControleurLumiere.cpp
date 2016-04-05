@@ -54,7 +54,7 @@ void ControleurLumiere::afficherLumiereAmbianteGlobale()
 {
 	if (lumiereAmbiante_)
 	{
-		glm::vec4 ambiant{ 1.0f, 1.0f, 1.0f, 1.0f };
+		glm::vec4 ambiant{ 0.5f, 0.5f, 0.5f, 1.0f };
 		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, glm::value_ptr(ambiant));
 	}
 	else
