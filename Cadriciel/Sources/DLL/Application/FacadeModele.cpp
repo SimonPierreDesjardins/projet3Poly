@@ -505,16 +505,16 @@ void FacadeModele::assignerEnvironnement(int noEnviro){
 
 	case 0:
 		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\skybox_xpos.png", ".\\media\\textures\\skybox_xneg.png",
-			".\\media\\textures\\skybox_ypos.png", ".\\media\\textures\\skybox_yneg.png",
-			".\\media\\textures\\skybox_zpos.png", ".\\media\\textures\\skybox_zneg.png");
+			".\\media\\textures\\Skybox1\\posz.jpg", ".\\media\\textures\\Skybox1\\negz.jpg",
+			".\\media\\textures\\Skybox1\\posx.jpg", ".\\media\\textures\\Skybox1\\negx.jpg",
+			".\\media\\textures\\Skybox1\\negy.jpg", ".\\media\\textures\\Skybox1\\posy.jpg");
 		break;
 
 	case 1:
 		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\skybox2_xpos.png", ".\\media\\textures\\skybox2_xneg.png",
-			".\\media\\textures\\skybox2_ypos.png", ".\\media\\textures\\skybox2_yneg.png",
-			".\\media\\textures\\skybox2_zpos.png", ".\\media\\textures\\skybox2_zneg.png");
+			".\\media\\textures\\Skybox2\\posz.jpg", ".\\media\\textures\\Skybox2\\negz.jpg",
+			".\\media\\textures\\Skybox2\\posx.jpg", ".\\media\\textures\\Skybox2\\negx.jpg",
+			".\\media\\textures\\Skybox2\\negy.jpg", ".\\media\\textures\\Skybox2\\posy.jpg");
 		break;
 
 	default:
