@@ -184,6 +184,7 @@ void ControleRobot::inverserModeControle(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
+	FacadeModele::obtenirInstance()->obtenirControleurLumiere()->assignerLumiereSpotGyro(false);
 	assignerComportement(DEFAUT, L"Passage au mode automatique");
 	initialiserBoucleRobot();
 }
@@ -199,6 +200,7 @@ void ControleRobot::passerAModeAutomatique() {
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeManuel(){
 	manuel = true;
+	FacadeModele::obtenirInstance()->obtenirControleurLumiere()->assignerLumiereSpotGyro(true);
 	terminerBoucleRobot();
 }
 
@@ -434,6 +436,10 @@ bool ControleRobot::getEnPause()
 	return enPause;
 }
 
+bool ControleRobot::getManuel()
+{
+	return manuel;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

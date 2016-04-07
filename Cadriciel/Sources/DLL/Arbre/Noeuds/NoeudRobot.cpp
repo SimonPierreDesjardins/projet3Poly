@@ -219,7 +219,7 @@ void NoeudRobot::animer(float dt)
     mettreAJourCapteurs();
     arbre_->accepterVisiteur(visiteur_.get());
 	positionnerRoues();
-	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(), dt);
+	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(),dt);
     mutexControleRobot_->unlock();
 }
 

@@ -59,7 +59,6 @@ private:
 	GLfloat orientationSpotGyro_[3];
 
 	int compteur_{0};
-	//GLfloat direction_[];
 };
 
 

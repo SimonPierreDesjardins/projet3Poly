@@ -11,8 +11,9 @@
 
 #include "ControleurLumiere.h"
 #include "FacadeModele.h"
+#include <iostream>
 
-
+using namespace std;
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void ControleurLumiere::ControleurLumiere()
@@ -120,7 +121,7 @@ void ControleurLumiere::afficherLumiereSpotGyro()
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
 	glLightfv(GL_LIGHT2, GL_AMBIENT, glm::value_ptr(zeroContribution));
 	// On sature les objets de lumière
-	if (lumiereSpotGyro_)
+	if (lumiereSpotGyro_ && lumiereSpotRobot_)
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, glm::value_ptr(contributionMaximale));
 	else
 		glLightfv(GL_LIGHT2, GL_DIFFUSE, glm::value_ptr(zeroContribution));
@@ -151,7 +152,7 @@ void ControleurLumiere::afficherLumiereSpotRobot()
 
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
 	glm::vec4 contributionMaximale{ 0.5, 0.5, 0.5, 1.0 };
-	GLfloat direction[] = { 0.1, 0.1, -1.0 };
+	GLfloat direction[] = { 0, 0, -1.0 };
 	//glm::vec4 position{0.0, 0.0, 15.0, 1.0};
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, direction);
 	glLightfv(GL_LIGHT1, GL_POSITION, positionSpotRobot_);
@@ -175,6 +176,17 @@ void ControleurLumiere::afficherLumiereSpotRobot()
     glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.00);
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ControleurLumiere::animer(const glm::dvec3& positionRobot)
+///
+/// Fonction qui permet d'animer les différentes lumières
+///
+/// @param[in] positionRobot : la position courante du robot
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
 void ControleurLumiere::animer(const glm::dvec3& positionRobot, float dt)
 {
 	positionSpotRobot_[0] = positionRobot.x;
@@ -187,10 +199,11 @@ void ControleurLumiere::animer(const glm::dvec3& positionRobot, float dt)
 	positionSpotGyro_[2] = positionRobot.z + 5.0;
 	positionSpotGyro_[3] = 1.0;
 
-	compteur_ += 225 * dt;
+	//cout << dt << endl;
+	compteur_ += dt *720;
 	compteur_ = compteur_ % 360;
-	orientationSpotGyro_[0] += glm::cos(utilitaire::DEG_TO_RAD(compteur_));
-	orientationSpotGyro_[1] += glm::sin(utilitaire::DEG_TO_RAD(compteur_));
+	orientationSpotGyro_[0] = glm::cos(utilitaire::DEG_TO_RAD(compteur_));
+	orientationSpotGyro_[1] = glm::sin(utilitaire::DEG_TO_RAD(compteur_));
 }
 
 
@@ -237,7 +250,7 @@ void ControleurLumiere::assignerLumiereDirectionnelle(bool estIllumine)
 ////////////////////////////////////////////////////////////////////////
 void ControleurLumiere::assignerLumiereSpotGyro(bool estIllumine)
 {
-	lumiereSpotGyro_ = estIllumine;
+		lumiereSpotGyro_ = estIllumine;
 }
 ////////////////////////////////////////////////////////////////////////
 ///

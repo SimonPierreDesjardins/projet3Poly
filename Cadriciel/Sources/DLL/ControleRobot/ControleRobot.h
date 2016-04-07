@@ -70,6 +70,8 @@ public:
 	void setEnPause(bool pause);
 	bool getEnPause();
 
+	bool getManuel();
+
 private:
 	// Fonctions pour gérer multithreading robot
 	void initialiserBoucleRobot();
