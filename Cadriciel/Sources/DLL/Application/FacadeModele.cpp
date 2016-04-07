@@ -134,6 +134,8 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// FreeImage, utilisée par le chargeur, doit être initialisée
 	FreeImage_Initialise();
 
+   // chargerNuanceurs();
+
 	// La couleur de fond
 	glClearColor(0.32f, 0.32f, 0.32f, 1.0f);
 
@@ -184,6 +186,24 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
     affichageTexte_ = std::make_unique<AffichageTexte>();
 	
 }
+
+
+void FacadeModele::chargerNuanceurs()
+{
+    programme_.initialiser();
+
+    nuanceurSommets_.initialiser(opengl::Nuanceur::Type::NUANCEUR_VERTEX, "Nuanceurs/NuanceurSommets.glsl");
+    assert(nuanceurSommets_.sourceEstCharge());
+
+    nuanceurFragments_.initialiser(opengl::Nuanceur::Type::NUANCEUR_FRAGMENT, "Nuanceurs/NuanceurFragments.glsl");
+    assert(nuanceurFragments_.sourceEstCharge());
+
+    programme_.attacherNuanceur(nuanceurSommets_);
+    programme_.attacherNuanceur(nuanceurFragments_);
+
+    opengl::Programme::Start(programme_);
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -259,7 +279,12 @@ void FacadeModele::libererOpenGL()
 	assert(succes && "Le contexte OpenGL n'a pu être détruit.");
 
 	FreeImage_DeInitialise();
+
+    opengl::Programme::Stop(programme_);
 }
+
+
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -278,10 +303,12 @@ void FacadeModele::afficher() const
 	// Efface l'ancien rendu
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+
     glInitNames();
 
 	// Ne devrait pas être nécessaire
 	vue_->appliquerProjection();
+
 
 	// Positionne la caméra
 	glMatrixMode(GL_MODELVIEW);

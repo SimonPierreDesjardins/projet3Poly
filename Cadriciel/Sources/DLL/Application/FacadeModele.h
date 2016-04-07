@@ -16,12 +16,17 @@
 
 #include "Vue.h"
 #include "Camera.h"
+#include "OpenGL_Programme.h"
+#include "OpenGL_Nuanceur.h"
+
 #include "ArbreRenduINF2990.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
+
+
 
 class NoeudAbstrait;
 
@@ -46,6 +51,7 @@ public:
 
    /// Crée un contexte OpenGL et initialise celui-ci.
    void initialiserOpenGL(HWND hWnd);
+
    /// Charge la configuration à partir d'un fichier XML.
    void chargerConfiguration() const;
    /// Enregistre la configuration courante dans un fichier XML.
@@ -125,6 +131,13 @@ private:
    /// Poignée ("handle") vers le "device context".
    HDC   hDC_{ nullptr };
 
+   /// Le programme qui permet de lancer les nuanceurs.
+   opengl::Programme programme_;
+   /// Le nuanceur le sommets.
+   opengl::Nuanceur nuanceurSommets_;
+   /// Le nuanceur de fragments.
+   opengl::Nuanceur nuanceurFragments_;
+    
    /// Vue courante de la scène.
    std::unique_ptr<vue::Vue> vue_{ nullptr };
 
@@ -136,9 +149,12 @@ private:
 
    /// Le profil utilisateur.
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
+   /// Le controle de l'affichage du texte.
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
-
+   /// Le controle de l'affichage des lumières.
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
+
+   void chargerNuanceurs();
 };
 
 ////////////////////////////////////////////////////////////////////////
