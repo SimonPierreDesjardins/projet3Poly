@@ -257,7 +257,7 @@ void ControleRobot::terminerBoucleRobot(){
 	// Nous redonnons à manuel sa valeur de départ
 	manuel = man;
 	
-	traiterCommande(&CommandeRobot(ARRETER), false);
+	assignerVitessesMoteurs(0, 0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -280,7 +280,7 @@ void ControleRobot::boucleInfinieLogiqueRobot()
 			comportement_->mettreAJour();
 		}
 		else{
-			traiterCommande(&CommandeRobot(ARRETER), false);
+			assignerVitessesMoteurs(0, 0);
 		}
 	}
 }
