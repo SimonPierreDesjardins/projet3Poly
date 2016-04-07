@@ -32,7 +32,7 @@
 ModeEdition::ModeEdition()
 {
 	typeMode_ = EDITION;
-	etat_ = make_unique <EtatSelection>();
+	etat_ = std::make_unique <EtatSelection>();
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 }
 
@@ -75,7 +75,7 @@ void ModeEdition::gererToucheT()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::sauvegarder()
 {
-	unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();
+	std::unique_ptr<VisiteurSauvegarde> visiteur = std::make_unique<VisiteurSauvegarde>();
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
 }
 
@@ -136,42 +136,42 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_D:
-				etat_ = make_unique<EtatDeplacement>();
+				etat_ = std::make_unique<EtatDeplacement>();
 				break;
 
 			case VK_KEY_S:
 				// Verification de controle pour ne pas changer d'outils lors du ctrl+s
 				if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
-					etat_ = make_unique<EtatSelection>();
+					etat_ = std::make_unique<EtatSelection>();
 				}
 				break;
 
 			case VK_KEY_R:
-				etat_ = make_unique<EtatRotation>();
+				etat_ = std::make_unique<EtatRotation>();
 				break;
 
 			case VK_KEY_E:
-				etat_ = make_unique<EtatMiseAEchelle>();
+				etat_ = std::make_unique<EtatMiseAEchelle>();
 				break;
 
 			case VK_KEY_C:
-				etat_ = make_unique<EtatDuplication>();
+				etat_ = std::make_unique<EtatDuplication>();
 				break;
 
 			case VK_KEY_Z:
-				etat_ = make_unique<EtatLoupe>();
+				etat_ = std::make_unique<EtatLoupe>();
 				break;
 
 			case VK_KEY_P:
-				etat_ = make_unique<EtatCreationPoteau>();
+				etat_ = std::make_unique<EtatCreationPoteau>();
 				break;
 
 			case VK_KEY_M:
-				etat_ = make_unique<EtatCreationMur>();
+				etat_ = std::make_unique<EtatCreationMur>();
 				break;
 
 			case VK_KEY_L:
-				etat_ = make_unique<EtatCreationLigne>();
+				etat_ = std::make_unique<EtatCreationLigne>();
 				break;
 
 			case VK_KEY_T:

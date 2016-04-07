@@ -243,7 +243,7 @@ void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
 {
-	for each(shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants()) {
+	for each(std::shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants()) {
 		noeudAbs->accepterVisiteur(this);
 	}
 }

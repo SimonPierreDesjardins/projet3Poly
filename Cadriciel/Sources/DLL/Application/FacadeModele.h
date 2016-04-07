@@ -26,8 +26,6 @@
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
-
-
 class NoeudAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -94,10 +92,13 @@ public:
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
    /// Retourne le profil de l'utilisateur.
    inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
-   // Retoune l'affichage du texte.
+   // Retourne l'affichage du texte.
    inline AffichageTexte* obtenirAffichageTexte() const;
-
+   // Retourne le controleur de lumière.
    inline ControleurLumiere* obtenirControleurLumiere() const;
+   // Retourne le programme.
+   inline const opengl::Programme& obtenirProgramme();
+
    /// Réinitialise la scène.
    void reinitialiser();
 
@@ -259,6 +260,22 @@ inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
 {
 	return controleurLumiere_.get();
 }
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline opengl::Programme* FacadeModele::obtenirProgramme()
+///
+/// Cette fonction retourne le programme des nuanceurs.
+///
+/// @return le programme opengl.
+///
+////////////////////////////////////////////////////////////////////////
+inline const opengl::Programme& FacadeModele::obtenirProgramme()
+{
+    return programme_;
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///

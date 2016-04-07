@@ -70,7 +70,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
     capteursDistance_ = profil_->obtenirCapteursDistance();
 
     // À modifier avec le merge du profile.
-    visiteur_ = make_unique<VisiteurDetectionRobot>(this);
+    visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
 
 	positionRelative_ = depart_->obtenirPositionRelative();
 	angleRotation_ = depart_->obtenirAngleRotation();

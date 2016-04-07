@@ -144,7 +144,7 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 	
 	if ((profil_ != nullptr) && profil_->obtenirOptionDebogage(DEBOGAGE_COMPORTEMENTS)){
 		utilitaire::time_in_HH_MM_SS_MMM();
-		std::wcout << L" - " << declencheur << L" - " << comportement_->obtenirNomComportement() << endl;
+		std::wcout << L" - " << declencheur << L" - " << comportement_->obtenirNomComportement() << std::endl;
 	}
 
 	// Assignation du controleur au comportement et initialisation

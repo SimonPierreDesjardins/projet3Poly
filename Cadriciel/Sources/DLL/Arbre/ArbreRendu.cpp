@@ -165,7 +165,7 @@ void ArbreRendu::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void ArbreRendu::assignerCheminFichierZone(std::string chemin)
 {
-	cheminFichierZone = string(chemin);
+	cheminFichierZone = std::string(chemin);
 }
 
 ////////////////////////////////////////////////////////////////////////
