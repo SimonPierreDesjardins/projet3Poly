@@ -54,6 +54,7 @@ public:
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	virtual void animer(float dt);
+	void suivreCamera();
 
     /// Méthode permettant au robot de vérifier la collision avec un noeud.
     bool verifierCollision(NoeudPoteau* poteau);

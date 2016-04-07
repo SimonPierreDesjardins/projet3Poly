@@ -203,15 +203,6 @@ void NoeudRobot::animer(float dt)
     mutexControleRobot_->lock();
     mettreAJourPosition(dt);
 
-	if (FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()){
-		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ 0.0, 0.0, 4.0 });
-		
-		glm::dvec3 positionVise{ cos(angleRotation_*PI / 180)*1000, sin(angleRotation_* PI / 180)*1000, 1 };
-		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPointVise(positionVise);
-
-		FacadeModele::obtenirInstance()->obtenirVue()->obtenirCamera()->assignerPosition(positionCourante_ + glm::dvec3{ -cos(angleRotation_*PI / 180) * 4, -sin(angleRotation_* PI / 180) * 4, 4.0 });
-	}
-    
     if (estEnCollision_)
     {
         effectuerCollision(dt);
@@ -219,10 +210,41 @@ void NoeudRobot::animer(float dt)
     mettreAJourFormeEnglobante();
     mettreAJourCapteurs();
     arbre_->accepterVisiteur(visiteur_.get());
+	
 	positionnerRoues();
+	suivreCamera();
+
 	controleurLumiere_->afficherLumiereSpotGyro(positionCourante_);
 	//controleurLumiere_->afficherLumiereSpotRobot(positionCourante_);
     mutexControleRobot_->unlock();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// void NoeudRobot::suivreCamera()
+///
+/// Cette méthode positionne la caméra première personne en fonction de la 
+/// position courante du robot
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::suivreCamera()
+{
+	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
+
+	if (vue->estPremierePersonne())
+	{
+		vue::Camera* camera = vue->obtenirCamera();
+		glm::dvec3 positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
+
+		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
+
+		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 4 };
+		camera->assignerPointVise(positionRectangle + positionVise);
+
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 4, sin(angleRotation_* PI / 180) * 4, -4.0 });
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -328,7 +350,6 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     return enIntersection;
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::verifierCollision(NoeudMur* noeud)
@@ -423,7 +444,6 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
     }
     return enIntersection;
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
