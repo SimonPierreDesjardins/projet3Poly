@@ -63,6 +63,7 @@ ModeTest::ModeTest()
 ////////////////////////////////////////////////////////////////////////
 ModeTest::~ModeTest()
 {
+	controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
     affichageTexte_->reinitialiserChrono();

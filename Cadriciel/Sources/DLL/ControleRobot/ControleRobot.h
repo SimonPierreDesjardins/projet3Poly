@@ -74,6 +74,9 @@ public:
 	bool getManuel();
 
 private:
+	// Joue le son approprié du robot
+	void jouerSonRobot(double vit_G, double vit_D);
+
 	// Fonctions pour gérer multithreading robot
 	void initialiserBoucleRobot();
 	void terminerBoucleRobot();

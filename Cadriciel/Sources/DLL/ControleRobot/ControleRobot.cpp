@@ -103,22 +103,11 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 		if ((typeCommande == INVERSER_MODE_CONTROLE) || (manuel == provientUtilisateur))
 		{
 			commande->executer(this);
-			float vitesseG, vitesseD;
-			vitesseG = robot_->obtenirVitesseGauche();
-			vitesseD = robot_->obtenirVitesseDroite();
-			typeSon son;
-			if (typeCommande == INVERSER_MODE_CONTROLE)
-				son = manuel ? CHANGEMENT_MANUEL_SON : CHANGEMENT_AUTOMATIQUE_SON;
-			else if (vitesseG == vitesseD && vitesseG == 0)
-				son = ARRETER_SON;
-			else if (vitesseG == vitesseD)
-				son = AVANCER_RECULER_SON;
-			else if (abs(vitesseG) == abs(vitesseD))
-				son = TOURNER_SON;
-			else
-				son = DEVIATION_SON;
 
-			EnginSon::obtenirInstance()->jouerSonRobot(son);
+			if (typeCommande == INVERSER_MODE_CONTROLE){
+				typeSon son = manuel ? CHANGEMENT_MANUEL_SON : CHANGEMENT_AUTOMATIQUE_SON;
+				EnginSon::obtenirInstance()->jouerSonRobot(son);
+			}
 		}
 	}
 }
@@ -375,6 +364,7 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 	if (robot_ != nullptr){
 		robot_->assignerVitesseGauche(vit_G);
 		robot_->assignerVitesseDroite(vit_D);
+		jouerSonRobot(vit_G, vit_D);
 	}
 }
 
@@ -397,7 +387,34 @@ void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
 		vit_D += robot_->obtenirVitesseDroite();
 		robot_->assignerVitesseGauche(vit_G);
 		robot_->assignerVitesseDroite(vit_D);
+		jouerSonRobot(vit_G, vit_D);
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ControleRobot::jouerSonRobot(double vit_G, double vit_D)
+///
+/// Joue le son approprié du robot en fonction des vitesses de ses moteurs
+///
+/// @param vit_G: La vitesse à la roue gauche
+/// @param vit_D: La vitesse à la roue droite
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleRobot::jouerSonRobot(double vit_G, double vit_D){
+	typeSon son;
+	if (vit_G == vit_D && vit_G == 0)
+		son = ARRETER_SON;
+	else if (vit_G == vit_D)
+		son = AVANCER_RECULER_SON;
+	else if (abs(vit_G) == abs(vit_D))
+		son = TOURNER_SON;
+	else
+		son = DEVIATION_SON;
+
+	EnginSon::obtenirInstance()->jouerSonRobot(son);
 }
 
 ////////////////////////////////////////////////////////////////////////
