@@ -48,7 +48,7 @@ ModeTest::ModeTest()
 	FacadeModele::obtenirInstance()->assignerEnvironnement(1);
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
-	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 }
 
