@@ -49,7 +49,6 @@ ControleRobot::ControleRobot()
 		}
 	}
 
-
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -59,6 +58,7 @@ ControleRobot::ControleRobot()
 			flagCapteur[i][j] = false;
 
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+    controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -166,9 +166,11 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::inverserModeControle(){
 	if (manuel){
+	    controleurLumiere_->assignerLumiereSpotGyro(false);
 		passerAModeAutomatique();
 	}
 	else{
+	    controleurLumiere_->assignerLumiereSpotGyro(true);
 		passerAModeManuel();
 	}
 }
@@ -184,7 +186,6 @@ void ControleRobot::inverserModeControle(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
-	FacadeModele::obtenirInstance()->obtenirControleurLumiere()->assignerLumiereSpotGyro(false);
 	assignerComportement(DEFAUT, L"Passage au mode automatique");
 	initialiserBoucleRobot();
 }
@@ -200,7 +201,6 @@ void ControleRobot::passerAModeAutomatique() {
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeManuel(){
 	manuel = true;
-	FacadeModele::obtenirInstance()->obtenirControleurLumiere()->assignerLumiereSpotGyro(true);
 	terminerBoucleRobot();
 }
 

@@ -44,7 +44,7 @@ namespace opengl {
 	public:
 		VBO() = default;
 		/// Constructeur à partir d'un modèle 3D
-		VBO(modele::Modele3D const* modele, Programme const* programme);
+		VBO(modele::Modele3D const* modele);
 
 		/// Destructeur
 		virtual ~VBO();
@@ -73,9 +73,6 @@ namespace opengl {
 
 		/// Modèle à dessiner
 		modele::Modele3D const* modele_{ nullptr };
-
-        /// Une référence sur le programme du modele.
-        Programme const* programme_{ nullptr };
 
 		/// Les identifiants OpenGL.
 		std::vector<unsigned int> handles_;

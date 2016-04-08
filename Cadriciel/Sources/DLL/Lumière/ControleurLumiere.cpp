@@ -200,7 +200,7 @@ void ControleurLumiere::animer(const glm::dvec3& positionRobot, float dt)
 	positionSpotGyro_[3] = 1.0;
 
 	//cout << dt << endl;
-	compteur_ += dt *720;
+	compteur_ += dt * 720;
 	compteur_ = compteur_ % 360;
 	orientationSpotGyro_[0] = glm::cos(utilitaire::DEG_TO_RAD(compteur_));
 	orientationSpotGyro_[1] = glm::sin(utilitaire::DEG_TO_RAD(compteur_));

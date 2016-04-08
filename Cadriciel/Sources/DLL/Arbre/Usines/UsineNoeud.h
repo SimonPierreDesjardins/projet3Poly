@@ -85,9 +85,8 @@ public:
 	UsineNoeud(const std::string& nomUsine, const std::string& nomModele) 
 		: UsineAbstraite{ nomUsine }
 	{
-        
 		modele_.charger(nomModele);
-		vbo_ = opengl::VBO{ &modele_, nullptr };
+		vbo_ = opengl::VBO{ &modele_ };
 		vbo_.charger();
 	}
 

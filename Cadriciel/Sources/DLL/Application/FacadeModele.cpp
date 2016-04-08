@@ -101,6 +101,8 @@ FacadeModele::~FacadeModele()
 	mode_.reset(nullptr);
 	arbre_.reset(nullptr);
 	vue_.reset(nullptr);
+    affichageTexte_.reset(nullptr);
+    controleurLumiere_.reset(nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -188,23 +190,6 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 }
 
 
-void FacadeModele::chargerNuanceurs()
-{
-    programme_.initialiser();
-
-    nuanceurSommets_.initialiser(opengl::Nuanceur::Type::NUANCEUR_VERTEX, "Nuanceurs/NuanceurSommets.glsl");
-    assert(nuanceurSommets_.sourceEstCharge());
-
-    nuanceurFragments_.initialiser(opengl::Nuanceur::Type::NUANCEUR_FRAGMENT, "Nuanceurs/NuanceurFragments.glsl");
-    assert(nuanceurFragments_.sourceEstCharge());
-
-    programme_.attacherNuanceur(nuanceurSommets_);
-    programme_.attacherNuanceur(nuanceurFragments_);
-
-    opengl::Programme::Start(programme_);
-}
-
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void FacadeModele::chargerConfiguration() const
@@ -279,8 +264,6 @@ void FacadeModele::libererOpenGL()
 	assert(succes && "Le contexte OpenGL n'a pu être détruit.");
 
 	FreeImage_DeInitialise();
-
-    opengl::Programme::Stop(programme_);
 }
 
 

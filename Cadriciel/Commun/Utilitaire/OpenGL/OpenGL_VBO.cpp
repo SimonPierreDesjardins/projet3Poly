@@ -30,7 +30,7 @@ namespace opengl{
 	/// @return Aucune.
 	///
 	////////////////////////////////////////////////////////////////////////
-	VBO::VBO(modele::Modele3D const* modele, Programme const* programme)
+	VBO::VBO(modele::Modele3D const* modele)
 		: modele_{ modele }
 	{
     }

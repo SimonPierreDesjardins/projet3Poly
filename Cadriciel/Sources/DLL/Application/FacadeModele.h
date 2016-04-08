@@ -96,8 +96,6 @@ public:
    inline AffichageTexte* obtenirAffichageTexte() const;
    // Retourne le controleur de lumière.
    inline ControleurLumiere* obtenirControleurLumiere() const;
-   // Retourne le programme.
-   inline const opengl::Programme& obtenirProgramme();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -131,13 +129,6 @@ private:
    HGLRC hGLRC_{ nullptr };
    /// Poignée ("handle") vers le "device context".
    HDC   hDC_{ nullptr };
-
-   /// Le programme qui permet de lancer les nuanceurs.
-   opengl::Programme programme_;
-   /// Le nuanceur le sommets.
-   opengl::Nuanceur nuanceurSommets_;
-   /// Le nuanceur de fragments.
-   opengl::Nuanceur nuanceurFragments_;
     
    /// Vue courante de la scène.
    std::unique_ptr<vue::Vue> vue_{ nullptr };
@@ -154,8 +145,6 @@ private:
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
    /// Le controle de l'affichage des lumières.
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
-
-   void chargerNuanceurs();
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -259,21 +248,6 @@ inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
 inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
 {
 	return controleurLumiere_.get();
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline opengl::Programme* FacadeModele::obtenirProgramme()
-///
-/// Cette fonction retourne le programme des nuanceurs.
-///
-/// @return le programme opengl.
-///
-////////////////////////////////////////////////////////////////////////
-inline const opengl::Programme& FacadeModele::obtenirProgramme()
-{
-    return programme_;
 }
 
 
