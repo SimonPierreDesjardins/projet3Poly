@@ -18,7 +18,6 @@
 
 const double CapteurOptique::RAYON_CERCLE_ENGLOBANT = 0.4;
 
-
 ////////////////////////////////////////////////////////////////////////////////
 ///
 /// @fn CapteurOptique::CapteurOptique()
