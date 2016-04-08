@@ -977,6 +977,21 @@ namespace InterfaceGraphique
 
             return Double.Parse(aConvertir.Replace(',','.'), culture);
         }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void Configure_Load(object sender, EventArgs e)
+        ///
+        /// Gestion de l'évènement d'ouverture du formulaire de configuration.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du formulaire qui s'ouvre
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void Configure_Load(object sender, EventArgs e)
+        {
+            assignerHandles();
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////

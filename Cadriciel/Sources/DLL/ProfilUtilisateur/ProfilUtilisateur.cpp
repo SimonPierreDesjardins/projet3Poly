@@ -540,7 +540,7 @@ char ProfilUtilisateur::obtenirToucheCommande(int commande){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::assignerConfigureHandles(HWND handle, ConfigureControl ctrl){
-	configureHandles.insert(std::make_pair(ctrl, handle));
+	configureHandles.at(ctrl) = handle;
 }
 
 ////////////////////////////////////////////////////////////////////////
