@@ -60,7 +60,7 @@ ModeSimulation::ModeSimulation()
 
 	FacadeModele::obtenirInstance()->assignerEnvironnement(0);
 
-	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 }
 
