@@ -130,6 +130,9 @@
     <Filter Include="Header Files\Lumière">
       <UniqueIdentifier>{caed3dd1-592e-4710-823d-6bc213e2a142}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Nuanceurs">
+      <UniqueIdentifier>{1193fc88-759c-48cf-8070-104f02186ab7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application\FacadeModele.cpp">
@@ -588,5 +591,14 @@
     <ClInclude Include="Lumiere\ControleurLumiere.h">
       <Filter>Header Files\Lumière</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Exe\Nuanceurs\NuanceurFragments.glsl">
+      <Filter>Resource Files\Nuanceurs</Filter>
+    </None>
+    <None Include="..\..\Exe\Nuanceurs\NuanceurSommets.glsl">
+      <Filter>Resource Files\Nuanceurs</Filter>
+    </None>
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

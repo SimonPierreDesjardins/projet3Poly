@@ -20,8 +20,10 @@
 #include <unordered_map>
 #include <array>
 
+
 class ProfilUtilisateur;
 class AffichageTexte;
+class ControleurLumiere;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeTest
@@ -47,6 +49,8 @@ private:
 	bool lumiereAmbiante{ true };
 	bool lumiereDirectionnelle{ true };
 	bool lumiereSpot{ true };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
 
 public:
 

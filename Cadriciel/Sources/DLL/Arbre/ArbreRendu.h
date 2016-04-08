@@ -116,8 +116,6 @@ private:
 
 	/// Association du nom d'un type vers l'usine correspondante.
 	RegistreUsines usines_;   
-
-	
 };
 
 

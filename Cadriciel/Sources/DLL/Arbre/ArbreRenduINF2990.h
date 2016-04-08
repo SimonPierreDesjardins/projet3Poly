@@ -78,11 +78,10 @@ private:
 	void chargerZone(FILE* fp);
 
 	/// Fonction récursive pour créer tous les noeuds selon l'arbre Json qui se trouve dans le fichier de sauvegarde
-	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent);
+	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, std::shared_ptr<NoeudAbstrait> parent);
 
 	/// Charge le fichier zone_par_defaut.json qui contient la structure de base de l'arbre de rendu
 	void chargerZoneDefaut();
-
 };
 
 #endif // __ARBRE_ARBRERENDUINF2990_H__

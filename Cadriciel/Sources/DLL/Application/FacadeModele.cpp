@@ -103,6 +103,8 @@ FacadeModele::~FacadeModele()
 	mode_.reset(nullptr);
 	arbre_.reset(nullptr);
 	vue_.reset(nullptr);
+    affichageTexte_.reset(nullptr);
+    controleurLumiere_.reset(nullptr);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -135,6 +137,8 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 
 	// FreeImage, utilisée par le chargeur, doit être initialisée
 	FreeImage_Initialise();
+
+   // chargerNuanceurs();
 
 	// La couleur de fond
 	glClearColor(0.32f, 0.32f, 0.32f, 1.0f);
@@ -186,6 +190,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
     affichageTexte_ = std::make_unique<AffichageTexte>();
 	
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -263,6 +268,9 @@ void FacadeModele::libererOpenGL()
 	FreeImage_DeInitialise();
 }
 
+
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void FacadeModele::afficher() const
@@ -280,10 +288,12 @@ void FacadeModele::afficher() const
 	// Efface l'ancien rendu
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
+
     glInitNames();
 
 	// Ne devrait pas être nécessaire
 	vue_->appliquerProjection();
+
 
 	// Positionne la caméra
 	glMatrixMode(GL_MODELVIEW);
@@ -330,7 +340,8 @@ void FacadeModele::afficherBase() const
 	EnginSon::obtenirInstance()->obtenirSystemeSon()->update();
 	//Affiche la lumière directionnelle
 	controleurLumiere_->afficherLumiereDirectionnelle();
-	controleurLumiere_->afficherLumiereSpotGyro(glm::dvec3(0.0,0.0,0.0));
+	controleurLumiere_->afficherLumiereSpotGyro();
+	controleurLumiere_->afficherLumiereSpotRobot();
 
 	// Afficher la scène.
 	arbre_->afficher(-1);

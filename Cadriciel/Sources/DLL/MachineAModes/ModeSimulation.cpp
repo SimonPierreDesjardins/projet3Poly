@@ -57,6 +57,8 @@ ModeSimulation::ModeSimulation()
     affichageTexte_->demarrerChrono();
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
+	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotRobot(true);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -75,6 +77,11 @@ ModeSimulation::~ModeSimulation()
     affichageTexte_->assignerTempsEstAffiche(false);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->pauseChrono();
+	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
+	controleurLumiere_->assignerLumiereDirectionnelle(true);
+	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotRobot(false);
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -141,8 +148,6 @@ void ModeSimulation::inverserLumiereDirectionnelle()
 void ModeSimulation::inverserLumiereSpot()
 {
 	lumiereSpot = !lumiereSpot;
-	glm::dvec3 positionRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_ROBOT)->obtenirPositionCourante();
-	controleurLumiere_->assignerLumiereSpotGyro(lumiereSpot);
 	controleurLumiere_->assignerLumiereSpotRobot(lumiereSpot);
 
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
