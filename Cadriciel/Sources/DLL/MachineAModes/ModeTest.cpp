@@ -42,6 +42,8 @@ ModeTest::ModeTest()
     affichageTexte_->assignerTempsEstAffiche(true);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
+
+	FacadeModele::obtenirInstance()->assignerEnvironnement(1);
 }
 
 

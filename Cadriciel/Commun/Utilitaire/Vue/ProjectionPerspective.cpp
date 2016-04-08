@@ -398,6 +398,19 @@ namespace vue {
 			yMaxFenetre_ += ajout;
 		}
 	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn glm::ivec2 ProjectionPerspective::obtenirCentreVue()
+	///
+	/// Permet d'obtenir les coordonées d'où la vue est centrée en x et y.
+	///
+	/// @return Aucune.
+	///
+	////////////////////////////////////////////////////////////////////////
+	glm::ivec2 ProjectionPerspective::obtenirCentreVue(){
+		return glm::vec2(0.0);
+	}
 }; // Fin du namespace vue.
 
 

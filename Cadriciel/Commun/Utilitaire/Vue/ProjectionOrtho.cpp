@@ -87,7 +87,7 @@ namespace vue {
 			yMinFenetre_ -= ajoutY;
 			yMaxFenetre_ += ajoutY;
 
-			currentZoom_ -= 1 / incrementZoom_;
+			currentZoom_ -= incrementZoom_;
 		}
 	}
 
@@ -271,6 +271,7 @@ namespace vue {
 
 		//ratio fenetre
 		double R = W / H;
+
 		//ratio rectangle
 		double r = w / h;
 
@@ -411,6 +412,10 @@ namespace vue {
 			yMinFenetre_ -= ajout;
 			yMaxFenetre_ += ajout;
 		}
+	}
+
+	glm::ivec2 ProjectionOrtho::obtenirCentreVue(){
+		return glm::ivec2((xMaxFenetre_ + xMinFenetre_) / 2, (yMaxFenetre_ + yMinFenetre_) / 2);
 	}
 
 }; // Fin du namespace vue.

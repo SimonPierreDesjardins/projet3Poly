@@ -17,6 +17,8 @@
 
 #include <windows.h>
 #include <cassert>
+#include "wtypes.h"
+#include <iostream>
 
 #include "GL/glew.h"
 #include "FreeImage.h"
@@ -176,15 +178,15 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// On crée une vue par défaut. 
 	vue_ = std::make_unique<vue::VueOrtho>(vue::Camera(
 		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
-	vue::ProjectionOrtho{
+		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
+		vue::ProjectionOrtho{
 		0, 500, 0, 500,
 		1, 1000, 1, 10000, 1.25,
 		-50, 50, -50, 50, false });
 
-    // Création du module qui gère l'affichage du texte avec OpenGL.
-    affichageTexte_ = std::make_unique<AffichageTexte>();
-	
+	// Création du module qui gère l'affichage du texte avec OpenGL.
+	affichageTexte_ = std::make_unique<AffichageTexte>();
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -290,6 +292,33 @@ void FacadeModele::afficher() const
 	glLoadIdentity();
 	vue_->appliquerCamera();
 
+	// obtenir la cloture pour ajuster la taille de l'environnement en fonction
+	int xmin;
+	int xmax;
+	int ymin;
+	int ymax;
+	vue_->obtenirProjection().obtenirCoordonneesCloture(xmin, xmax, ymin, ymax);
+
+	
+	// AfficherEnvironnement
+	if (environnement_ != nullptr){
+		int horizontal = 0;
+		int vertical = 0;
+		glm::dvec3 centre(0.0);
+
+		//Si nous sommes en vue orthogonale, ajustons le centre
+		if (!FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()){
+			glm::ivec2 centreProj = FacadeModele::obtenirInstance()->obtenirVue()->obtenirCentreVue();
+			centre.x += centreProj.x;
+			centre.y += centreProj.y;
+		}
+			
+
+		FacadeModele::obtenirInstance()->getDesktopResolution(horizontal, vertical);
+		environnement_->afficher(centre, horizontal / 4);
+	}
+		
+
 	// Afficher la scène
 	afficherBase();
 
@@ -338,9 +367,9 @@ void FacadeModele::afficherBase() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::reinitialiser()
+/// @fn void FacadeModele::assignerVueOrtho()
 ///
-/// Cette fonction réinitialise la scène à un état "vide".
+/// Cette fonction assigne une vue ortho à la scène
 ///
 /// @return Aucune.
 ///
@@ -353,15 +382,15 @@ void FacadeModele::assignerVueOrtho()
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionOrtho{
 			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
+			1, 1000, 80, 105, 1.25,
 			-50, 50, -50, 50, false });
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::reinitialiser()
+/// @fn void FacadeModele::assignerVueOrbite()
 ///
-/// Cette fonction réinitialise la scène à un état "vide".
+/// Cette fonction assigne une vue orbite à la scène
 ///
 /// @return Aucune.
 ///
@@ -374,15 +403,15 @@ void FacadeModele::assignerVueOrbite()
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionPerspective{
 			0, 500, 0, 500,
-			1, 1000, 1, 10000, 1.25,
+			1, 10000, 1, 100000, 1.25,
 			-50, 50, -50, 50, true }, false);
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void FacadeModele::reinitialiser()
+/// @fn void FacadeModele::assignerVuePremierePersonne()
 ///
-/// Cette fonction réinitialise la scène à un état "vide".
+/// Cette fonction assigne une vue première personne à la scène
 ///
 /// @return Aucune.
 ///
@@ -398,7 +427,7 @@ void FacadeModele::assignerVuePremierePersonne()
 			glm::dvec3(0, 0, 1), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionPerspective{
 			0, 500, 0, 500,
-			1, 1000, 10, 1000, 1.25,
+			1, 10000, 10, 10000, 1.25,
 			-50, 50, -50, 50, true }, true);
 }
 
@@ -483,6 +512,50 @@ void FacadeModele::assignerMode(Mode mode)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void FacadeModele::assignerEnvironnement(int noEnviro)
+///
+/// Cette fonction change la boite d'environnement de travaille à celui spécifié par le paramètre
+/// 0: Lac
+/// 1: Salle d'essai
+///
+/// @param[in] noEnviro : Numéro correspondant à l'environnement à afficher
+///
+/// @return aucun
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerEnvironnement(int noEnviro){
+	// Création de l'environnement
+	/*
+	fichierXpos, fichierXneg,
+	fichierYpos, fichierYneg,
+	fichierZpos, fichierZneg
+	);
+	*/
+	switch (noEnviro){
+
+	case 0:
+		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
+			".\\media\\textures\\Skybox1\\posz.jpg", ".\\media\\textures\\Skybox1\\negz.jpg",
+			".\\media\\textures\\Skybox1\\posx.jpg", ".\\media\\textures\\Skybox1\\negx.jpg",
+			".\\media\\textures\\Skybox1\\negy.jpg", ".\\media\\textures\\Skybox1\\posy.jpg");
+		break;
+
+	case 1:
+		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
+			".\\media\\textures\\Skybox2\\posz.jpg", ".\\media\\textures\\Skybox2\\negz.jpg",
+			".\\media\\textures\\Skybox2\\posx.jpg", ".\\media\\textures\\Skybox2\\negx.jpg",
+			".\\media\\textures\\Skybox2\\negy.jpg", ".\\media\\textures\\Skybox2\\posy.jpg");
+		break;
+
+	default:
+		environnement_ = nullptr;
+		break;
+
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn void FacadeModele::continuerAffichage()
 ///
 /// Cette fonction assigne la valeur d'un booléan à vrai si l'on veut
@@ -507,6 +580,26 @@ void FacadeModele::stopAffichage()
 	peutAfficher_ = false;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
+///
+/// Cette fonction retourne la largeur et la hauteur de l'écran
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
+{
+	RECT desktop;
+	// Get a handle to the desktop window
+	const HWND hDesktop = GetDesktopWindow();
+	// Get the size of screen to the variable desktop
+	GetWindowRect(hDesktop, &desktop);
+	// The top left corner will have coordinates (0,0)
+	// and the bottom right corner will have coordinates
+	// (horizontal, vertical)
+	horizontal = desktop.right;
+	vertical = desktop.bottom;
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

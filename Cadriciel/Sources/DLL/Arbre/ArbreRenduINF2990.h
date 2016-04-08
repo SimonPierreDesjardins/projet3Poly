@@ -73,6 +73,9 @@ public:
 	/// La chaîne représentant le type du point de départ. 
 	static const std::string NOM_DEPART;   
 
+	/// La chaine représentant le type du skybox.
+	static const std::string NOM_SKYBOX;
+
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre
 	void chargerZone(FILE* fp);

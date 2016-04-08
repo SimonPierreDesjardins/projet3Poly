@@ -69,7 +69,7 @@ namespace vue {
 		/// Obtenir les coordonnées de la fenêtre virtuelle.
 		inline void obtenirCoordonneesFenetreVirtuelle(double& xMin, double& xMax, double& yMin, double& yMax) const;
 
-
+		glm::ivec2 obtenirCentreVue();
 	private:
 		/// Ajuste la fenêtre virtuelle pour respecter le rapport d'aspect.
 		void ajusterRapportAspect();

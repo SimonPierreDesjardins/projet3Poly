@@ -311,7 +311,9 @@ namespace vue {
 	{
 	}
 
-
+	glm::vec2 VueOrtho::obtenirCentreVue(){
+		return projection_.obtenirCentreVue();
+	}
 
 }; // Fin du namespace vue.
 

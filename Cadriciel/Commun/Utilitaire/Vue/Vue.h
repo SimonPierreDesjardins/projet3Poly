@@ -94,6 +94,8 @@ namespace vue {
 		/// Animation de la vue en fonction du temps
 		virtual void animer(double temps);
 
+		/// Retourne le centre de la vue en xy
+		virtual glm::vec2 obtenirCentreVue() = 0;
 
 	protected:
 		/// Caméra utilisée pour cette vue

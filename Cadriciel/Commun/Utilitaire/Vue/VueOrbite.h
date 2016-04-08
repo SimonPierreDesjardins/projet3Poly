@@ -68,6 +68,8 @@ namespace vue {
 		double verifierPhi(double changement);
 		double verifierRho(double changement);
 
+		glm::vec2 obtenirCentreVue();
+
 	private:
 		/// Projection utilisée pour cette vue.
 		ProjectionPerspective projection_;

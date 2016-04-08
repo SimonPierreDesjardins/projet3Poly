@@ -221,12 +221,6 @@ void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
 {
 	writer->StartObject();
 	noeud->toJson(*writer);
-	if (noeud->obtenirNombreEnfants() > 0) {
-		writer->Key("noeudsEnfants");
-		writer->StartArray();
-		visiterEnfants(noeud);
-		writer->EndArray();
-	}
 	writer->EndObject();
 }
 

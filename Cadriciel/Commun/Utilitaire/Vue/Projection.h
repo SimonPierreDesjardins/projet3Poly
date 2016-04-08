@@ -65,6 +65,9 @@ namespace vue {
 		/// Vérification de si la projection est perspective.
 		inline bool estPerspective() const;
 
+		/// Retourne le centre de la vue
+		virtual glm::ivec2 obtenirCentreVue() = 0;
+
 
 	protected:
 		/// Coordonnée inférieur de la clôture en X.

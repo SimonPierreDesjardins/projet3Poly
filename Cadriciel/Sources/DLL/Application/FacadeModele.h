@@ -20,6 +20,7 @@
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
+#include "BoiteEnvironnement.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
@@ -100,6 +101,12 @@ public:
    void stopAffichage();
    void continuerAffichage();
 
+   /// Assigne un skybox à rendre
+   void assignerEnvironnement(int noEnviro);
+
+   /// Retourne la dimension de l'écran
+   void getDesktopResolution(int& horizontal, int& vertical);
+
 private:
    /// Constructeur par défaut.
    FacadeModele() = default;
@@ -136,6 +143,10 @@ private:
 
    /// Le profil utilisateur.
    std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
+
+   /// La boite qui donne un environnement
+   std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
+
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
 
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
