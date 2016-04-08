@@ -46,7 +46,7 @@ ModeSimulation::ModeSimulation()
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode automatique
-	controleRobot_->passerAModeAutomatique();
+	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
 
