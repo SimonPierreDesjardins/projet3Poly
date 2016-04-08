@@ -49,7 +49,6 @@ ControleRobot::ControleRobot()
 		}
 	}
 
-
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -59,6 +58,7 @@ ControleRobot::ControleRobot()
 			flagCapteur[i][j] = false;
 
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+    controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -160,7 +160,7 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 	
 	if ((profil_ != nullptr) && profil_->obtenirOptionDebogage(DEBOGAGE_COMPORTEMENTS)){
 		utilitaire::time_in_HH_MM_SS_MMM();
-		std::wcout << L" - " << declencheur << L" - " << comportement_->obtenirNomComportement() << endl;
+		std::wcout << L" - " << declencheur << L" - " << comportement_->obtenirNomComportement() << std::endl;
 	}
 
 	// Assignation du controleur au comportement et initialisation
@@ -182,9 +182,11 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::inverserModeControle(){
 	if (manuel){
+	    controleurLumiere_->assignerLumiereSpotGyro(false);
 		passerAModeAutomatique();
 	}
 	else{
+	    controleurLumiere_->assignerLumiereSpotGyro(true);
 		passerAModeManuel();
 	}
 }
@@ -447,6 +449,10 @@ bool ControleRobot::getEnPause()
 	return enPause;
 }
 
+bool ControleRobot::getManuel()
+{
+	return manuel;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

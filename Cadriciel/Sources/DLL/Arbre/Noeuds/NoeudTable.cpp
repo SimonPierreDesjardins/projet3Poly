@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 #include "NoeudTable.h"
 #include "VisiteurAbstrait.h"
-
+#include "FacadeModele.h"
 #include "Utilitaire.h"
 
 #include "GL/glew.h"

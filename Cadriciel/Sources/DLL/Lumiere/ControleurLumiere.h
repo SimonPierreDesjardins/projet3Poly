@@ -11,7 +11,8 @@
 #define CONTROLEUR_LUMIERE_H
 
 #include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
+#include "glm/gtc/type_ptr.hpp" 
+#include "GL/glew.h"
 
 class ModeAbstrait;
 ///////////////////////////////////////////////////////////////////////////
@@ -32,8 +33,10 @@ public:
 
 	void afficherLumiereAmbianteGlobale();
 	void afficherLumiereDirectionnelle();
-	void afficherLumiereSpotGyro(glm::dvec3 positionRobot);
-	void afficherLumiereSpotRobot(glm::dvec3 positionRobot);
+	void afficherLumiereSpotGyro();
+	void afficherLumiereSpotRobot();
+
+	void animer(const glm::dvec3& positionRobot, float dt);
 
 	void assignerLumiereAmbianteGlobale(bool estIllumine);
 	void assignerLumiereDirectionnelle(bool estIllumine);
@@ -48,6 +51,14 @@ private:
 	bool lumiereAmbiante_{ true };
 	bool lumiereSpotGyro_{ true };
 	bool lumiereSpotRobot_{ true };
+
+	glm::dvec4 spotGyro_{0.0, 0.0, 0.0, 0.0};
+
+	GLfloat positionSpotGyro_[4];
+	GLfloat positionSpotRobot_[4];
+	GLfloat orientationSpotGyro_[3];
+
+	int compteur_{0};
 };
 
 

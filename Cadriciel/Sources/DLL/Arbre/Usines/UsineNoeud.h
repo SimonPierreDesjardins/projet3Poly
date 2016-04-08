@@ -17,8 +17,7 @@
 #include "Modele3D.h"
 #include "OpenGL_VBO.h"
 
-//TODO: à enlever.
-using namespace std;
+//#include "FacadeModele.h"
 
 class NoeudAbstrait;
 

@@ -48,7 +48,7 @@ const std::string ArbreRenduINF2990::NOM_SKYBOX{ "skybox" };
 /// @fn ArbreRenduINF2990::ArbreRenduINF2990()
 ///
 /// Ce constructeur crée toutes les usines qui seront utilisées par le
-/// projet de INF2990et les enregistre auprès de la classe de base.
+/// projet de INF2990 et les enregistre auprès de la classe de base.
 /// Il crée également la structure de base de l'arbre de rendu, c'est-à-dire
 /// avec les noeuds structurants.
 ///
@@ -120,12 +120,12 @@ void ArbreRenduINF2990::chargerZoneDefaut(){
 			std::wstring wideString = converter.from_bytes(cheminDossierZone);
 			CreateDirectory(wideString.c_str(), NULL);
 		}
-		shared_ptr<NoeudAbstrait> table = { creerNoeud(NOM_TABLE) };
+		std::shared_ptr<NoeudAbstrait> table = { creerNoeud(NOM_TABLE) };
 		ajouter(table);
-		shared_ptr<NoeudAbstrait> pointDepart = { creerNoeud(NOM_DEPART) };
+		std::shared_ptr<NoeudAbstrait> pointDepart = { creerNoeud(NOM_DEPART) };
 		table->ajouter(pointDepart);
 		cheminFichierZone = cheminFichierZoneDefaut;
-		unique_ptr<VisiteurSauvegarde> visiteur = make_unique<VisiteurSauvegarde>();
+		std::unique_ptr<VisiteurSauvegarde> visiteur = std::make_unique<VisiteurSauvegarde>();
 		accepterVisiteur(visiteur.get());
 		return;
 	}
@@ -168,7 +168,7 @@ void ArbreRenduINF2990::chargerZone(FILE* fp)
 	doc.ParseStream(is);
 	fclose(fp);
 
-	shared_ptr<NoeudAbstrait> noeudTable = { creerNoeud(NOM_TABLE) };
+	std::shared_ptr<NoeudAbstrait> noeudTable = { creerNoeud(NOM_TABLE) };
 	ajouter(noeudTable);
 	if (!doc["table"].HasMember("noeudsEnfants")) {
 		return;
@@ -194,8 +194,8 @@ void ArbreRenduINF2990::chargerZone(FILE* fp)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent){
-	shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
+void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, std::shared_ptr<NoeudAbstrait> parent){
+	std::shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
 	noeud->fromJson(noeudJSON);
 	parent->ajouter(noeud);
 	if (!noeudJSON->HasMember("noeudsEnfants")) {

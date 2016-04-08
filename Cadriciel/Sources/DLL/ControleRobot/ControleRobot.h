@@ -22,6 +22,7 @@ class NoeudAbstrait;
 class NoeudRobot;
 class ArbreRendu;
 class ProfilUtilisateur;
+class ControleurLumiere;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -70,6 +71,8 @@ public:
 	void setEnPause(bool pause);
 	bool getEnPause();
 
+	bool getManuel();
+
 private:
 	// Fonctions pour gérer multithreading robot
 	void initialiserBoucleRobot();
@@ -90,8 +93,11 @@ private:
 
 	// pointeur vers le noeud du robot
 	NoeudRobot* robot_;
-	//Pointeur sur un profil
+	// Pointeur sur un profil
 	ProfilUtilisateur* profil_{ nullptr };
+    // Pointeur sur le controleur de lumière.
+    ControleurLumiere* controleurLumiere_{ nullptr };
+
 
 	std::vector<std::unique_ptr<ComportementAbstrait>>* vecteurComportements_;
 

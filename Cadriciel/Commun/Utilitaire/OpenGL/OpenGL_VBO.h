@@ -16,13 +16,16 @@
 #include <vector>
 #include <type_traits>
 
-namespace modele{
+
+namespace modele {
 	class  Modele3D;
 	class  Noeud;
 	struct Materiau;
 }
 
-namespace opengl{
+namespace opengl {
+    class Programme;
+
 	///////////////////////////////////////////////////////////////////////////
 	/// @class VBO
 	/// @brief Classe permettant le dessin d'un modèle 3D par VBO.
@@ -70,6 +73,7 @@ namespace opengl{
 
 		/// Modèle à dessiner
 		modele::Modele3D const* modele_{ nullptr };
+
 		/// Les identifiants OpenGL.
 		std::vector<unsigned int> handles_;
 	};

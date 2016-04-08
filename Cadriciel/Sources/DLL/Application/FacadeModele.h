@@ -16,6 +16,9 @@
 
 #include "Vue.h"
 #include "Camera.h"
+#include "OpenGL_Programme.h"
+#include "OpenGL_Nuanceur.h"
+
 #include "ArbreRenduINF2990.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
@@ -47,6 +50,7 @@ public:
 
    /// Crée un contexte OpenGL et initialise celui-ci.
    void initialiserOpenGL(HWND hWnd);
+
    /// Charge la configuration à partir d'un fichier XML.
    void chargerConfiguration() const;
    /// Enregistre la configuration courante dans un fichier XML.
@@ -89,10 +93,11 @@ public:
    inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
    /// Retourne le profil de l'utilisateur.
    inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
-   // Retoune l'affichage du texte.
+   // Retourne l'affichage du texte.
    inline AffichageTexte* obtenirAffichageTexte() const;
-
+   // Retourne le controleur de lumière.
    inline ControleurLumiere* obtenirControleurLumiere() const;
+
    /// Réinitialise la scène.
    void reinitialiser();
 
@@ -131,7 +136,7 @@ private:
    HGLRC hGLRC_{ nullptr };
    /// Poignée ("handle") vers le "device context".
    HDC   hDC_{ nullptr };
-
+    
    /// Vue courante de la scène.
    std::unique_ptr<vue::Vue> vue_{ nullptr };
 
@@ -147,8 +152,9 @@ private:
    /// La boite qui donne un environnement
    std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
 
+   /// Le controle de l'affichage du texte.
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
-
+   /// Le controle de l'affichage des lumières.
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
 };
 
@@ -254,6 +260,7 @@ inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
 {
 	return controleurLumiere_.get();
 }
+
 
 ////////////////////////////////////////////////////////////////////////
 ///

@@ -71,7 +71,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
     capteursDistance_ = profil_->obtenirCapteursDistance();
 
     // À modifier avec le merge du profile.
-    visiteur_ = make_unique<VisiteurDetectionRobot>(this);
+    visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
 
 	positionRelative_ = depart_->obtenirPositionRelative();
 	angleRotation_ = depart_->obtenirAngleRotation();
@@ -213,9 +213,7 @@ void NoeudRobot::animer(float dt)
 	
 	positionnerRoues();
 	suivreCamera();
-
-	controleurLumiere_->afficherLumiereSpotGyro(positionCourante_);
-	//controleurLumiere_->afficherLumiereSpotRobot(positionCourante_);
+	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(),dt);
     mutexControleRobot_->unlock();
 }
 

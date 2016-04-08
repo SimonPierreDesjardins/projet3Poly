@@ -14,6 +14,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Modele3D.h"
 #include "AideGL.h"
+#include "OpenGL_Programme.h"
 #include "Utilitaire.h"
 #include "Mesh.h"
 
@@ -31,7 +32,8 @@ namespace opengl{
 	////////////////////////////////////////////////////////////////////////
 	VBO::VBO(modele::Modele3D const* modele)
 		: modele_{ modele }
-	{}
+	{
+    }
 
 	////////////////////////////////////////////////////////////////////////
 	///

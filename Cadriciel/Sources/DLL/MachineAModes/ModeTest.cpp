@@ -20,6 +20,8 @@
 
 std::array<char, 11> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
 
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeTest::ModeTest()
@@ -44,6 +46,10 @@ ModeTest::ModeTest()
     affichageTexte_->demarrerChrono();
 
 	FacadeModele::obtenirInstance()->assignerEnvironnement(1);
+
+	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
+	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotRobot(true);
 }
 
 
@@ -61,6 +67,10 @@ ModeTest::~ModeTest()
     affichageTexte_->assignerTempsEstAffiche(false);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->pauseChrono();
+	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
+	controleurLumiere_->assignerLumiereDirectionnelle(true);
+	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotRobot(false);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -103,6 +113,10 @@ void ModeTest::postChangementDeProfil(){
 void ModeTest::inverserLumiereAmbiante()
 {
 	lumiereAmbiante = !lumiereAmbiante;
+
+	controleurLumiere_->assignerLumiereAmbianteGlobale(lumiereAmbiante);
+	controleurLumiere_->afficherLumiereAmbianteGlobale();
+
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();
@@ -125,6 +139,10 @@ void ModeTest::inverserLumiereAmbiante()
 void ModeTest::inverserLumiereDirectionnelle()
 {
 	lumiereDirectionnelle = !lumiereDirectionnelle;
+
+	controleurLumiere_->assignerLumiereDirectionnelle(lumiereDirectionnelle);
+	controleurLumiere_->afficherLumiereDirectionnelle();
+
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();
@@ -147,6 +165,8 @@ void ModeTest::inverserLumiereDirectionnelle()
 void ModeTest::inverserLumiereSpot()
 {
 	lumiereSpot = !lumiereSpot;
+	controleurLumiere_->assignerLumiereSpotRobot(lumiereSpot);
+
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_ECLAIRAGE))
 	{
 		utilitaire::time_in_HH_MM_SS_MMM();
