@@ -369,8 +369,8 @@ void FacadeModele::afficherBase() const
 	EnginSon::obtenirInstance()->obtenirSystemeSon()->update();
 	//Affiche la lumière directionnelle
 	controleurLumiere_->afficherLumiereDirectionnelle();
-	controleurLumiere_->afficherLumiereSpotGyro();
-	controleurLumiere_->afficherLumiereSpotRobot();
+	//controleurLumiere_->afficherLumiereSpotGyro();
+	//controleurLumiere_->afficherLumiereSpotRobot();
 
 	// Afficher la scène.
 	arbre_->afficher(-1);

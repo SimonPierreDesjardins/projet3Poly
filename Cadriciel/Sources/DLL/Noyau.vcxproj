@@ -292,11 +292,6 @@
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Exe\Nuanceurs\NuanceurFragments.glsl" />
-    <None Include="..\..\Exe\Nuanceurs\NuanceurSommets.glsl" />
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
