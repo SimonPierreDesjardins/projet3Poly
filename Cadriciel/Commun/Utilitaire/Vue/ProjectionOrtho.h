@@ -73,6 +73,7 @@ namespace vue {
 			double& xMin, double& xMax, double& yMin, double& yMax
 			) const;
 
+		glm::ivec2 obtenirCentreVue();
 
 	private:
 		/// Ajuste la fenêtre virtuelle pour respecter le rapport d'aspect.

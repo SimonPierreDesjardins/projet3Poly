@@ -183,7 +183,6 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Création du module qui gère l'affichage du texte avec OpenGL.
 	affichageTexte_ = std::make_unique<AffichageTexte>();
 
-	//assignerEnvironnement(1);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -296,13 +295,25 @@ void FacadeModele::afficher() const
 	int ymax;
 	vue_->obtenirProjection().obtenirCoordonneesCloture(xmin, xmax, ymin, ymax);
 
-	int horizontal = 0;
-	int vertical = 0;
-	FacadeModele::obtenirInstance()->getDesktopResolution(horizontal, vertical);
-
+	
 	// AfficherEnvironnement
-	if (environnement_ != nullptr)
-		environnement_->afficher(glm::dvec3(0.0, 0.0, 0.0), horizontal / 2);
+	if (environnement_ != nullptr){
+		int horizontal = 0;
+		int vertical = 0;
+		glm::dvec3 centre(0.0);
+
+		//Si nous sommes en vue orthogonale, ajustons le centre
+		if (!FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()){
+			glm::ivec2 centreProj = FacadeModele::obtenirInstance()->obtenirVue()->obtenirCentreVue();
+			centre.x += centreProj.x;
+			centre.y += centreProj.y;
+		}
+			
+
+		FacadeModele::obtenirInstance()->getDesktopResolution(horizontal, vertical);
+		environnement_->afficher(centre, horizontal / 4);
+	}
+		
 
 	// Afficher la scène
 	afficherBase();

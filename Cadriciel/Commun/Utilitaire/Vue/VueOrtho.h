@@ -68,6 +68,7 @@ namespace vue {
 		/// Rotation selon l'axe des Z par rapport à la vue.
 		virtual void rotaterZ(double rotation);
 
+		glm::vec2 obtenirCentreVue();
 
 	private:
 		/// Projection utilisée pour cette vue.

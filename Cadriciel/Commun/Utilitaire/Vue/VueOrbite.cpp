@@ -364,6 +364,10 @@ namespace vue {
 	{
 	}
 
+	glm::vec2 VueOrbite::obtenirCentreVue(){
+		return glm::vec2(0.0);
+	}
+
 }; // Fin du namespace vue.
 
 
