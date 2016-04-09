@@ -109,6 +109,7 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	if (autoriserInput) {
 		if (msg == WM_KEYDOWN) {
 			switch (wParam) {
+
 			case VK_LEFT:
 				gererFlecheGauche();
 				break;

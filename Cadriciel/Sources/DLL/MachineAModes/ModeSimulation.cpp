@@ -248,15 +248,6 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			inverserLumiereSpot();
 			break;
 
-		case '1':
-			break;
-
-		case '2':
-			break;
-
-		case '3':
-			break;
-
 		case 'B':
 			break;
 
@@ -264,7 +255,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			controleRobot_->terminerBoucleRobot();
 			controleRobot_->robot_->positionDepart();
 			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-			controleRobot_->passerAModeAutomatique();
+			controleRobot_->passerAModeManuel();
             affichageTexte_->reinitialiserChrono();
 			break;
 
