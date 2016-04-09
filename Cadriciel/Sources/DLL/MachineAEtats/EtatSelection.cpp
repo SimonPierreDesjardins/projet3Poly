@@ -267,6 +267,7 @@ void EtatSelection::analyserTamponSelection(GLuint tampon[GL_BUFFER_SIZE], GLint
     
     const int REGISTRE_ENFANT_TABLE = 5;
     int iRecord = 0;
+	unsigned int maxProfondeur = tampon[2];
     for (int i = 0; i < nRecords; i++)
     {
         // S'il s'agit d'un record d'un enfant de la table, le registre compte au moins 3 noms.
@@ -274,12 +275,26 @@ void EtatSelection::analyserTamponSelection(GLuint tampon[GL_BUFFER_SIZE], GLint
         if (nNoms > 2)
         {
             int iNom = iRecord + REGISTRE_ENFANT_TABLE;
+			unsigned int profondeur = tampon[iNom - 3];
             int iSelection = tampon[iNom];
             // On ne veut pas traiter plusieurs fois le même enfant.
             if (!indicateursTraitement_[iSelection])
             {
-                selection_.push_back(iSelection);
-                indicateursTraitement_.at(iSelection) = true;
+				if (!estClickDrag())
+				{
+					if (profondeur <= maxProfondeur)
+					{
+						selection_.clear();
+						selection_.push_back(iSelection);
+						maxProfondeur = profondeur;
+					}	
+				}
+				else
+					selection_.push_back(iSelection);
+
+				indicateursTraitement_.at(iSelection) = true;
+				
+				
             }
         }
         // L'index du prochain record.
