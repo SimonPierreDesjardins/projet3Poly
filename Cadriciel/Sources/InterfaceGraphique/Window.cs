@@ -801,7 +801,7 @@ namespace InterfaceGraphique
                     donnee = FonctionsNatives.obtenirPositionRelativeY();
                 }
 
-                if (!(donnee < -24 || donnee > 24))
+                if (!(donnee < -23 || donnee > 23))
                     FonctionsNatives.assignerPositionRelativeY(donnee);
                 else
                     textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
@@ -834,7 +834,7 @@ namespace InterfaceGraphique
                     donnee = FonctionsNatives.obtenirPositionRelativeX();
                 }
 
-                if (!(donnee < -48 || donnee > 48))
+                if (!(donnee < -47 || donnee > 47))
                     FonctionsNatives.assignerPositionRelativeX(donnee);
                 else
                     textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
