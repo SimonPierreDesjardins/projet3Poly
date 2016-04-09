@@ -91,6 +91,8 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerVueOrtho();
 	__declspec(dllexport) void __cdecl assignerVueOrbite();
 	__declspec(dllexport) void __cdecl assignerVuePremierePersonne();
+
+	__declspec(dllexport) int __cdecl obtenirTypeVue();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

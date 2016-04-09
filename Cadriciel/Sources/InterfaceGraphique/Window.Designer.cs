@@ -188,6 +188,7 @@
             this.menuEdition_.TabIndex = 5;
             this.menuEdition_.Text = "menuStrip1";
             this.menuEdition_.Visible = false;
+            this.menuEdition_.VisibleChanged += new System.EventHandler(this.menuEdition__VisibleChanged);
             // 
             // fichierMenuEdition_
             // 
@@ -615,6 +616,7 @@
             this.menuSimTest.TabIndex = 9;
             this.menuSimTest.Text = "menuStrip1";
             this.menuSimTest.Visible = false;
+            this.menuSimTest.VisibleChanged += new System.EventHandler(this.menuSimTest_VisibleChanged);
             // 
             // fichierMenuSimTest
             // 

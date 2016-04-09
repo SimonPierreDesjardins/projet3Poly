@@ -23,6 +23,7 @@
 #include "ComportementAbstrait.h"
 #include "CommandeRobot.h"
 #include "EnginSon.h"
+#include "Projection.h"
 
 extern "C"
 {
@@ -810,6 +811,26 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerVuePremierePersonne()
 	{
 		FacadeModele::obtenirInstance()->assignerVuePremierePersonne();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) int __cdecl obtenirTypeVue()
+	///
+	///	Fonction renvoyant un integer représentant la vue courante.
+	///
+	/// @return Int
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) int __cdecl obtenirTypeVue()
+	{
+		vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
+		if (vue->estPremierePersonne())
+			return 2;
+		else if (vue->obtenirProjection().estPerspective() && !vue->estPremierePersonne())
+			return 1;
+		else
+			return 0;
 	}
 }
 

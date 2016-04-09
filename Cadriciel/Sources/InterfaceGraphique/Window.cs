@@ -155,12 +155,14 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
-            afficherMenuPrincipal(false);
-            afficherMenuEdition(true);
-            panneauOperation_.Visible = false;
+            
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            afficherMenuPrincipal(false);
+            afficherMenuEdition(true);
+            panneauOperation_.Visible = false;
 
             FonctionsNatives.assignerMode(Mode.EDITION);
             verificationDuNombreElementChoisi();
@@ -717,12 +719,12 @@ namespace InterfaceGraphique
 
             if (PasserEnSimulation)
             {
+                FonctionsNatives.assignerVueOrtho();
+                FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
                 afficherMenuPrincipal(false);
                 afficherMenuEdition(false);
                 afficherMenuSimulation(true);
-
-                FonctionsNatives.assignerVueOrtho();
-                FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
 
                 FonctionsNatives.assignerMode(Mode.SIMULATION);
             }
@@ -1118,11 +1120,13 @@ namespace InterfaceGraphique
                     if (e.Control)
                     {
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-                        afficherMenuEdition(false);
-                        afficherMenuPrincipal(true);
+                        
 
                         FonctionsNatives.assignerVueOrtho();
                         FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+                        afficherMenuEdition(false);
+                        afficherMenuPrincipal(true);
                     }
                     break;
 
@@ -1206,16 +1210,18 @@ namespace InterfaceGraphique
                 case Keys.Q:
                     if (e.Control)
                     {
-                        afficherMenuSimulation(false);
-                        afficherMenuTest(false);
-                        afficherMenuEdition(false);
-                        afficherMenuPrincipal(true);
+                        
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         estEnPause = false;
                         picturePause.Visible = estEnPause;
 
                         FonctionsNatives.assignerVueOrtho();
                         FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+                        afficherMenuSimulation(false);
+                        afficherMenuTest(false);
+                        afficherMenuEdition(false);
+                        afficherMenuPrincipal(true);
                     }
                     break;
 
@@ -1251,11 +1257,12 @@ namespace InterfaceGraphique
                         picturePause.Visible = estEnPause;
 
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-                        afficherMenuTest(false);
-                        afficherMenuPrincipal(true);
 
                         FonctionsNatives.assignerVueOrtho();
                         FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+                        afficherMenuTest(false);
+                        afficherMenuPrincipal(true);
                     }
                     break;
 
@@ -1615,6 +1622,65 @@ namespace InterfaceGraphique
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void menuEdition__VisibleChanged(object sender, EventArgs e)
+        ///
+        /// Gère l'évènement de changement de visibilité de la barre de menu édition.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void menuEdition__VisibleChanged(object sender, EventArgs e)
+        {
+            switch (FonctionsNatives.obtenirTypeVue())
+            {
+                case 1:
+                    orbiteMenuEdition_.Checked = true;
+                    orthographiqueMenuEdition_.Checked = false;
+                    break;
+                case 0:
+                default:
+                    orbiteMenuEdition_.Checked = false;
+                    orthographiqueMenuEdition_.Checked = true;
+                    break;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void menuSimTest_VisibleChanged(object sender, EventArgs e)
+        ///
+        /// Gère l'évènement de changement de visibilité de la barre de menu de simulation ou test.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void menuSimTest_VisibleChanged(object sender, EventArgs e)
+        {
+            switch (FonctionsNatives.obtenirTypeVue())
+            {
+                case 0:
+                default:
+                    premierePersonneMenuSimTest.Checked = false;
+                    orbiteMenuSimTest.Checked = false;
+                    orthographiqueMenuSimTest.Checked = true;
+                    break;
+                case 1:
+                    premierePersonneMenuSimTest.Checked = false;
+                    orbiteMenuSimTest.Checked = true;
+                    orthographiqueMenuSimTest.Checked = false;
+                    break;
+                case 2:
+                    premierePersonneMenuSimTest.Checked = true;
+                    orbiteMenuSimTest.Checked = false;
+                    orthographiqueMenuSimTest.Checked = false;
+                    break;
+            }
+        }
+
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -1718,5 +1784,8 @@ namespace InterfaceGraphique
 
         [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerVuePremierePersonne();
+
+        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int obtenirTypeVue();
     }
 }
