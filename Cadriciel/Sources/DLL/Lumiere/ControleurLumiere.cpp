@@ -190,9 +190,12 @@ void ControleurLumiere::animer(const glm::dvec3& positionRobot, float dt)
 	positionSpotGyro_[2] = positionRobot.z + 5.0;
 	positionSpotGyro_[3] = 1.0;
 
-	//cout << dt << endl;
-	compteur_ += dt * 720;
-	compteur_ = compteur_ % 360;
+	if (!estEnPause_)
+	{
+		compteur_ += dt * 720;
+		compteur_ = compteur_ % 360;
+	}
+	
 	orientationSpotGyro_[0] = glm::cos(utilitaire::DEG_TO_RAD(compteur_));
 	orientationSpotGyro_[1] = glm::sin(utilitaire::DEG_TO_RAD(compteur_));
 }
@@ -257,6 +260,21 @@ void ControleurLumiere::assignerLumiereSpotGyro(bool estIllumine)
 void ControleurLumiere::assignerLumiereSpotRobot(bool estIllumine)
 {
 	lumiereSpotRobot_ = estIllumine;
+}
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ControleurLumiere::setEnPause(bool estEnPause)
+///
+/// Fonction qui assigne une valeur de vrai ou faux si le programme est en pause
+///
+/// @param[in] estEnPause : Si vrai, le programme est en pause
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleurLumiere::setEnPause(bool estEnPause)
+{
+	estEnPause_ = estEnPause;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
