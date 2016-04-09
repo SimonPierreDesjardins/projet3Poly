@@ -27,7 +27,7 @@ std::unique_ptr<EnginSon> EnginSon::instance_{ nullptr };
 ////////////////////////////////////////////////////////////////////////
 EnginSon::EnginSon(){
 	FMOD::System_Create(&systeme_);
-	systeme_->init(4, FMOD_INIT_NORMAL, NULL);
+	systeme_->init(10, FMOD_INIT_NORMAL, NULL);
 	nomsSons_ = { { "musique_simulation.wav", "avancer_reculer.wav", "tourner.wav",
 					"deviation.wav", "changement_manuel.wav", "changement_automatique.wav",
 					"collision_poteau.wav", "collision_mur.wav", "collision_table.wav" } };

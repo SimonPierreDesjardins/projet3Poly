@@ -45,7 +45,7 @@ ModeSimulation::ModeSimulation()
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-	// On fait démarrer le robot en mode automatique
+	// On fait démarrer le robot en mode manuel
 	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
@@ -60,8 +60,9 @@ ModeSimulation::ModeSimulation()
 
 	FacadeModele::obtenirInstance()->assignerEnvironnement(0);
 
-	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
+	controleurLumiere_->setEnPause(false);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -84,6 +85,7 @@ ModeSimulation::~ModeSimulation()
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+
 
 }
 
@@ -270,13 +272,16 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         {
             bool estEnPause = controleRobot_->getEnPause();
             controleRobot_->setEnPause(!estEnPause);
+			controleurLumiere_->setEnPause(!estEnPause);
             if (estEnPause)
             {
-                affichageTexte_->demarrerChrono();
+                affichageTexte_->demarrerChrono();      
             }
             else
             {
                 affichageTexte_->pauseChrono();
+                std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
+                controleRobot_->traiterCommande(commandeArreter.get(), true);
             }
         }
         break;

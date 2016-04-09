@@ -117,7 +117,8 @@ void ControleurLumiere::afficherLumiereSpotGyro()
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
 	glm::vec4 contributionMaximale{ 1.0, 0.0, 0.0, 1.0 };
 
-	glLightfv(GL_LIGHT2, GL_POSITION, positionSpotGyro_);
+	glm::vec4 position{0.0, 0.0, 5.0, 1.0};
+	glLightfv(GL_LIGHT2, GL_POSITION, glm::value_ptr(position));
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
 	glLightfv(GL_LIGHT2, GL_AMBIENT, glm::value_ptr(zeroContribution));
 	// On sature les objets de lumière
@@ -147,16 +148,13 @@ void ControleurLumiere::afficherLumiereSpotGyro()
 void ControleurLumiere::afficherLumiereSpotRobot()
 {
 	// Positionner la lumière.
-
-	//glm::vec4 position{ 0.0, 0.0, 5.0, 1.0 };
+	glm::vec3 direction = { 0.2, 0, -1.0 };
+	glm::vec4 position{0.0, 0.0, 15.0, 1.0};
+	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, glm::value_ptr(direction));
+    glLightfv(GL_LIGHT1, GL_POSITION, glm::value_ptr(position));
 
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
 	glm::vec4 contributionMaximale{ 0.5, 0.5, 0.5, 1.0 };
-	GLfloat direction[] = { 0, 0, -1.0 };
-	//glm::vec4 position{0.0, 0.0, 15.0, 1.0};
-	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, direction);
-	glLightfv(GL_LIGHT1, GL_POSITION, positionSpotRobot_);
-
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
 	glLightfv(GL_LIGHT1, GL_AMBIENT, glm::value_ptr(zeroContribution));
 
@@ -168,12 +166,10 @@ void ControleurLumiere::afficherLumiereSpotRobot()
 	// Pas de composante spéculaire.
 	glLightfv(GL_LIGHT1, GL_SPECULAR, glm::value_ptr(zeroContribution));
 
-	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 45.0);
+	glLightf(GL_LIGHT1, GL_SPOT_CUTOFF, 55.0);
 	glLightf(GL_LIGHT1, GL_SPOT_EXPONENT, 12.0);
 
     glLightf(GL_LIGHT1, GL_CONSTANT_ATTENUATION, 1.0);
-    glLightf(GL_LIGHT1, GL_LINEAR_ATTENUATION, 0.00);
-    glLightf(GL_LIGHT1, GL_QUADRATIC_ATTENUATION, 0.00);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -189,19 +185,17 @@ void ControleurLumiere::afficherLumiereSpotRobot()
 ////////////////////////////////////////////////////////////////////////
 void ControleurLumiere::animer(const glm::dvec3& positionRobot, float dt)
 {
-	positionSpotRobot_[0] = positionRobot.x;
-	positionSpotRobot_[1] = positionRobot.y;
-	positionSpotRobot_[2] = positionRobot.z + 20;
-	positionSpotRobot_[3] = 1.0;
-
 	positionSpotGyro_[0] = positionRobot.x;
 	positionSpotGyro_[1] = positionRobot.y;
 	positionSpotGyro_[2] = positionRobot.z + 5.0;
 	positionSpotGyro_[3] = 1.0;
 
-	//cout << dt << endl;
-	compteur_ += dt * 720;
-	compteur_ = compteur_ % 360;
+	if (!estEnPause_)
+	{
+		compteur_ += dt * 720;
+		compteur_ = compteur_ % 360;
+	}
+	
 	orientationSpotGyro_[0] = glm::cos(utilitaire::DEG_TO_RAD(compteur_));
 	orientationSpotGyro_[1] = glm::sin(utilitaire::DEG_TO_RAD(compteur_));
 }
@@ -266,6 +260,21 @@ void ControleurLumiere::assignerLumiereSpotGyro(bool estIllumine)
 void ControleurLumiere::assignerLumiereSpotRobot(bool estIllumine)
 {
 	lumiereSpotRobot_ = estIllumine;
+}
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ControleurLumiere::setEnPause(bool estEnPause)
+///
+/// Fonction qui assigne une valeur de vrai ou faux si le programme est en pause
+///
+/// @param[in] estEnPause : Si vrai, le programme est en pause
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void ControleurLumiere::setEnPause(bool estEnPause)
+{
+	estEnPause_ = estEnPause;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

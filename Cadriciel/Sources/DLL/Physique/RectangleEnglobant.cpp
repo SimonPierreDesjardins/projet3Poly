@@ -196,7 +196,7 @@ bool RectangleEnglobant::calculerIntersection(const RectangleEnglobant& rectangl
         {
             double min, max;
             rectangles[i]->calculerIntervalleProjection(distances, orientations[j], min, max);
-            enIntersection = !rectangles[i]->calculerDisjonctionSurIntervalle(min, max,
+            enIntersection = !rectangles[i]->calculerDisjointureSurIntervalle(min, max,
                 -dimensions[j] / 2.0, dimensions[j] / 2.0);
         }
     }
@@ -327,31 +327,31 @@ void RectangleEnglobant::calculerIntervalleProjection(glm::dvec3 distances[4],
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn RectangleEnglobant::calculerDisjonctionSurIntervalle(	const double& min1, const double& max1,
+/// @fn RectangleEnglobant::calculerDisjointureSurIntervalle(	const double& min1, const double& max1,
 ///																const double& min2, const double& max2) const
 ///
-/// Détermine si les deux intervalles passés en paramètre sont en disjonction.
+/// Détermine si les deux intervalles passés en paramètre sont en disjointure.
 ///
 /// @param[in]	min1 : valeur minimum du premier intervalle.
 ///				max1 : valeur maximum du premier intervalle.
 ///				min2 : valeur minimum du deuxième intervalle.
 ///				max2 : valeur maximum du deuxième intervalle.
 ///
-/// @return bool : indique si oui ou non les intervalles sont en disjonction (séparés).
+/// @return bool : indique si oui ou non les intervalles sont en disjointure (séparés).
 ///
 ////////////////////////////////////////////////////////////////////////
-bool RectangleEnglobant::calculerDisjonctionSurIntervalle(const double& min1, const double& max1,
+bool RectangleEnglobant::calculerDisjointureSurIntervalle(const double& min1, const double& max1,
     const double& min2, const double& max2) const
 {
-    // Il y a une disjonction si les deux extrémités ne se trouvent pas dans le même intervalle
+    // Il y a une disjointure si les deux extrémités ne se trouvent pas dans le même intervalle
     // que les deux autres extrémités.
 
     // min1 --- max1 ---------- min2 --- max2
-    bool disjonction12 = max1 < min2;
+    bool disjointure12 = max1 < min2;
     // min2 --- max2 ---------- min1 --- max1
-    bool disjonction21 = max2 < min1;
+    bool disjointure21 = max2 < min1;
 
-    return disjonction12 || disjonction21;
+    return disjointure12 || disjointure21;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -409,7 +409,7 @@ bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) con
     double min = 0.0;
     double max = 0.0;
     calculerIntervalleProjection(distances, orientationDistanceCentre, min, max);
-    bool intersection = !calculerDisjonctionSurIntervalle(-rayon, rayon, min, max);
+    bool intersection = !calculerDisjointureSurIntervalle(-rayon, rayon, min, max);
 
     for (int i = 0; i < N_ORIENTATIONS && intersection; i++)
     {
@@ -417,7 +417,7 @@ bool RectangleEnglobant::calculerIntersection(const CercleEnglobant& cercle) con
         max = 0.0;
 
         calculerIntervalleProjection(distances, orientations[i], min, max);
-        intersection = !calculerDisjonctionSurIntervalle(-rayon, rayon, min, max);
+        intersection = !calculerDisjointureSurIntervalle(-rayon, rayon, min, max);
     }
     return intersection;
 }

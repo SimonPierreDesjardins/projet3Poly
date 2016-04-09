@@ -153,7 +153,7 @@ class ProfilUtilisateur
 		const int ANGLE_MIN_COMPORTEMENT = 0;
 
 		/// Map contenant contenant les handles des contrôles d'interface de la fenêtre Configure
-		std::unordered_map<ConfigureControl, HWND> configureHandles;
+		std::array<HWND, 38> configureHandles;
 
 		/// Tableau contenant les touches utilisées pour contrôler le robot.
 		std::array<char, 5> touches_;

@@ -103,6 +103,9 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot::~NoeudRobot()
 {
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, glm::value_ptr(glm::vec4(0.0, 0.0, 0.0, 0.0)));
+    glLightfv(GL_LIGHT2, GL_DIFFUSE, glm::value_ptr(glm::vec4(0.0, 0.0, 0.0, 0.0)));
+
 	if ((table_ != nullptr) && (roueGauche_ != nullptr))
 		table_->effacer(roueGauche_);
 	if ((table_ != nullptr) && (roueDroite_ != nullptr))
@@ -147,8 +150,8 @@ void NoeudRobot::afficherConcret() const
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
-	// TODO: Figurer pourquoi plateforme est transparente sans cette ligne.
-	//glColor3f(0.0, 0.0, 0.0);
+    controleurLumiere_->afficherLumiereSpotRobot();
+    controleurLumiere_->afficherLumiereSpotGyro();
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -156,7 +159,6 @@ void NoeudRobot::afficherConcret() const
     // Débugage des capteurs de distance.
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 	{
-        //suiveurLigne_->afficher();
 		// Débugage des capteurs de distance.
 		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
 		{
@@ -165,8 +167,6 @@ void NoeudRobot::afficherConcret() const
 	}        
 	// Restauration de la matrice.
 	glPopMatrix();
-
-	//rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

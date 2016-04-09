@@ -48,8 +48,9 @@ ModeTest::ModeTest()
 	FacadeModele::obtenirInstance()->assignerEnvironnement(1);
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
-	controleurLumiere_->assignerLumiereSpotGyro(false);
+	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
+	controleurLumiere_->setEnPause(false);
 }
 
 
@@ -63,6 +64,7 @@ ModeTest::ModeTest()
 ////////////////////////////////////////////////////////////////////////
 ModeTest::~ModeTest()
 {
+	controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
     affichageTexte_->reinitialiserChrono();
@@ -249,6 +251,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         {
             bool estEnPause = controleRobot_->getEnPause();
             controleRobot_->setEnPause(!estEnPause);
+			controleurLumiere_->setEnPause(!estEnPause);
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();
@@ -256,6 +259,8 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             else 
             {
                 affichageTexte_->pauseChrono();
+                std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
+                controleRobot_->traiterCommande(commandeArreter.get(), true);
             }
 			break;
         }
