@@ -62,6 +62,7 @@ ModeSimulation::ModeSimulation()
 
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
+	controleurLumiere_->setEnPause(false);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -84,6 +85,7 @@ ModeSimulation::~ModeSimulation()
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+
 
 }
 
