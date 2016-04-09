@@ -250,6 +250,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         {
             bool estEnPause = controleRobot_->getEnPause();
             controleRobot_->setEnPause(!estEnPause);
+			controleurLumiere_->setEnPause(!estEnPause);
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();

@@ -43,6 +43,8 @@ public:
 	void assignerLumiereSpotGyro(bool estIllumine);
 	void assignerLumiereSpotRobot(bool estIllumine);
 
+	void setEnPause(bool estEnPause);
+
 private:
 
 	ModeAbstrait* mode_{ nullptr };
@@ -52,13 +54,14 @@ private:
 	bool lumiereSpotGyro_{ true };
 	bool lumiereSpotRobot_{ true };
 
-	glm::dvec4 spotGyro_{0.0, 0.0, 0.0, 0.0};
+	glm::dvec4 spotGyro_{ 0.0, 0.0, 0.0, 0.0 };
 
 	GLfloat positionSpotGyro_[4];
 	GLfloat positionSpotRobot_[4];
 	GLfloat orientationSpotGyro_[3];
 
-	int compteur_{0};
+	int compteur_{ 0 };
+	bool estEnPause_{false};
 };
 
 

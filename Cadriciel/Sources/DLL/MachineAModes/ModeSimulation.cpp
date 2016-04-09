@@ -45,7 +45,7 @@ ModeSimulation::ModeSimulation()
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-	// On fait démarrer le robot en mode automatique
+	// On fait démarrer le robot en mode manuel
 	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
@@ -270,6 +270,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
         {
             bool estEnPause = controleRobot_->getEnPause();
             controleRobot_->setEnPause(!estEnPause);
+			controleurLumiere_->setEnPause(!estEnPause);
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();
