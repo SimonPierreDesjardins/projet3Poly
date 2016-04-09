@@ -170,7 +170,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
-            
+            outilsZoom_.Enabled = true;
+            zoomToolStripMenuItem.Enabled = true;
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
@@ -1129,12 +1130,16 @@ namespace InterfaceGraphique
                     FonctionsNatives.assignerVueOrtho();
                     FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     crochetPourVueEdition();
+                    outilsZoom_.Enabled = true;
+                    zoomToolStripMenuItem.Enabled = true;
                     break;
 
                 case Keys.D2:
                     FonctionsNatives.assignerVueOrbite();
                     FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     crochetPourVueEdition();
+                    outilsZoom_.Enabled = false;
+                    zoomToolStripMenuItem.Enabled = false;
                     break;
 
                 case Keys.Delete:
@@ -1310,12 +1315,16 @@ namespace InterfaceGraphique
                     FonctionsNatives.assignerVueOrtho();
                     FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     crochetPourVueSimTest();
+                    outilsZoom_.Enabled = true;
+                    zoomToolStripMenuItem.Enabled = true;
                     break;
 
                 case Keys.D2:
                     FonctionsNatives.assignerVueOrbite();
                     FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
                     crochetPourVueSimTest();
+                    outilsZoom_.Enabled = false;
+                    zoomToolStripMenuItem.Enabled = false;
                     break;
 
                 case Keys.Q:
@@ -1592,6 +1601,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = true;
+            zoomToolStripMenuItem.Enabled = true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1616,6 +1628,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrbite();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = false;
+            zoomToolStripMenuItem.Enabled = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1638,6 +1653,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = true;
+            zoomToolStripMenuItem.Enabled = true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1663,6 +1681,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrbite();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = false;
+            zoomToolStripMenuItem.Enabled = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
