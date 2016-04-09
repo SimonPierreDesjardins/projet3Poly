@@ -258,6 +258,8 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             else 
             {
                 affichageTexte_->pauseChrono();
+                std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
+                controleRobot_->traiterCommande(commandeArreter.get(), true);
             }
 			break;
         }

@@ -85,7 +85,7 @@ private:
     void calculerIntervalleProjection(glm::dvec3 distances[4], const glm::dvec3& orientation,
         double& min, double& max) const;
 
-    bool calculerDisjonctionSurIntervalle(const double& min1, const double& max1, 
+    bool calculerDisjointureSurIntervalle(const double& min1, const double& max1, 
         const double& min2, const double& max2) const;
 
     double angle_{ 0.0 };

@@ -273,11 +273,13 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			controleurLumiere_->setEnPause(!estEnPause);
             if (estEnPause)
             {
-                affichageTexte_->demarrerChrono();
+                affichageTexte_->demarrerChrono();      
             }
             else
             {
                 affichageTexte_->pauseChrono();
+                std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
+                controleRobot_->traiterCommande(commandeArreter.get(), true);
             }
         }
         break;
