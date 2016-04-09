@@ -1488,32 +1488,129 @@ namespace InterfaceGraphique
             viewPort_.Focus();
         }
 
+        /// <summary>
+        /// Dernier bouton vue sélectionné dans le mode édition
+        /// </summary>
+        private ToolStripMenuItem tempItemEdition = null;
+
+        /// <summary>
+        /// Dernier bouton vue sélectionné dans les modes simulation ou test
+        /// </summary>
+        private ToolStripMenuItem tempItemSimTest = null;
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void orthographiqueMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void orthographiqueMenuEdition__Click(object sender, EventArgs e)
         {
+            if (tempItemEdition != null) 
+                tempItemEdition.Checked = false;
+
+            orthographiqueMenuEdition_.Checked = true;
+            tempItemEdition = orthographiqueMenuEdition_;
+
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void orbiteMenuEdition__Click(object sender, EventArgs e)
+        ///
+        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void orbiteMenuEdition__Click(object sender, EventArgs e)
         {
+            if (tempItemEdition != null)
+                tempItemEdition.Checked = false;
+            else
+                orthographiqueMenuEdition_.Checked = false;
+
+            orbiteMenuEdition_.Checked = true;
+            tempItemEdition = orbiteMenuEdition_;
+
             FonctionsNatives.assignerVueOrbite();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void orthographiqueMenuSimTest_Click(object sender, EventArgs e)
+        ///
+        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void orthographiqueMenuSimTest_Click(object sender, EventArgs e)
         {
+            if (tempItemSimTest != null)
+                tempItemSimTest.Checked = false;
+                
+            orthographiqueMenuSimTest.Checked = true;
+            tempItemSimTest = orthographiqueMenuSimTest;
+
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
+        ///
+        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void orbiteMenuSimTest_Click(object sender, EventArgs e)
         {
+            if (tempItemSimTest != null)
+                tempItemSimTest.Checked = false;
+            else
+                orthographiqueMenuSimTest.Checked = false;
+
+
+            orbiteMenuSimTest.Checked = true;
+            tempItemSimTest = orbiteMenuSimTest;
+
             FonctionsNatives.assignerVueOrbite();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
+        ///
+        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement de la souris
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
         {
+            if (tempItemSimTest != null)
+                tempItemSimTest.Checked = false;
+            else
+                orthographiqueMenuSimTest.Checked = false;
+
+            premierePersonneMenuSimTest.Checked = true;
+            tempItemSimTest = premierePersonneMenuSimTest;
+
             FonctionsNatives.assignerVuePremierePersonne();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
         }

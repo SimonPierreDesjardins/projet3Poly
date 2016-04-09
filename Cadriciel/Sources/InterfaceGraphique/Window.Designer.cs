@@ -98,8 +98,8 @@
             // 
             // viewPort_
             // 
-            this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort_.AutoSize = true;
             this.viewPort_.Controls.Add(this.picturePause);
@@ -360,6 +360,8 @@
             // 
             // orthographiqueMenuEdition_
             // 
+            this.orthographiqueMenuEdition_.Checked = true;
+            this.orthographiqueMenuEdition_.CheckState = System.Windows.Forms.CheckState.Checked;
             this.orthographiqueMenuEdition_.Name = "orthographiqueMenuEdition_";
             this.orthographiqueMenuEdition_.Size = new System.Drawing.Size(159, 22);
             this.orthographiqueMenuEdition_.Text = "Orthographique";
@@ -649,6 +651,8 @@
             // 
             // orthographiqueMenuSimTest
             // 
+            this.orthographiqueMenuSimTest.Checked = true;
+            this.orthographiqueMenuSimTest.CheckState = System.Windows.Forms.CheckState.Checked;
             this.orthographiqueMenuSimTest.Name = "orthographiqueMenuSimTest";
             this.orthographiqueMenuSimTest.Size = new System.Drawing.Size(173, 22);
             this.orthographiqueMenuSimTest.Text = "Orthographique";
@@ -678,7 +682,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 461);
+            this.ClientSize = new System.Drawing.Size(623, 462);
             this.Controls.Add(this.panneauOperation_);
             this.Controls.Add(this.menuEdition_);
             this.Controls.Add(this.menuSimTest);
