@@ -257,6 +257,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 			controleRobot_->passerAModeManuel();
+			controleurLumiere_->assignerLumiereSpotGyro(true);
 			affichageTexte_->reinitialiserChrono();
 			controleRobot_->robot_->positionDepart();
 			break;
