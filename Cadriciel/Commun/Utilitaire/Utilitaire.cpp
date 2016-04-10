@@ -623,7 +623,7 @@ namespace utilitaire {
 	/// Fonction qui permet de calculer la position d'un point après une rotation.
 	///
 	/// @param[in] positionInitiale : Un dvec3 représentant le point initiale avant la rotation.
-	/// @param[in] positionFinale : Un dvec3 représentant le point finale après la rotation.
+	/// @param[out] positionFinale : Un dvec3 représentant le point finale après la rotation.
 	/// @param[in] theta : Un double représentant l'angle de rotation.
 	///
 	/// @return Aucune.
@@ -643,7 +643,7 @@ namespace utilitaire {
 	/// @param[in] point : Un dvec3 représentant le point désiré.
 	/// @param[in] quad : Un QuadEnglobant représentant le quadrilatère
 	///
-	/// @return bool pointEstDansQuad.
+	/// @return si le point est dans le quad. 
 	///
 	////////////////////////////////////////////////////////////////////////
 	bool calculerPointEstDansQuad(const glm::dvec3& point, const QuadEnglobant& quad)
@@ -676,8 +676,22 @@ namespace utilitaire {
 		return pointEstDansQuad;
 	}
 
+	////////////////////////////////////////////////////////////////////////////
+	///
+    /// @fn void calculerIntervalleProjection(math::Droite3D& droite, 
+    ///          const QuadEnglobant& quad, double& min, double& max)
+	///
+	/// Fonction qui permet de calculer un intervalle de la projection d'un quad
+    /// sur une droite.
+	///
+	/// @param[in] droite : la droite sur laquelle on fait la projection.
+	/// @param[in] quad : Un QuadEnglobant projeté sur la droite.
+	/// @param[out] min : La valeur minimale de la projection.
+	/// @param[out] max : La  valeur maximale de la projection.
+	///
+	////////////////////////////////////////////////////////////////////////////
     void calculerIntervalleProjection(math::Droite3D& droite, const QuadEnglobant& quad,
-        double& min, double& max)
+                                      double& min, double& max)
     {
         double projection = droite.calculerProjectionPoint(quad.coins[0]);
         min = projection;
@@ -696,8 +710,23 @@ namespace utilitaire {
         }
     }
 
+	////////////////////////////////////////////////////////////////////////////
+	///
+    /// @fn bool calculerIntersectionProjection(math::Droite3D& droite, 
+    ///          const QuadEnglobant& quad1, const QuadEnglobant& quad2)
+	///
+	/// Fonction qui permet de calculer si la projection de deux quads sur une
+    /// droite est en intersection.
+	///
+	/// @param[in] droite : La droite sur laquelle on fait la projection.
+	/// @param[in] quad1 : Le premier quad sur lequel est fait la projection.
+	/// @param[in] quad2 : Le second quad sur lequel est fait la projection.
+    ///
+    /// @return bool : si la projection des deux quads est jointe.
+	///
+	////////////////////////////////////////////////////////////////////////////
     bool calculerIntersectionProjection(math::Droite3D& droite, 
-        const QuadEnglobant& quad1, const QuadEnglobant& quad2)
+         const QuadEnglobant& quad1, const QuadEnglobant& quad2)
     {
         double min1, max1; 
         calculerIntervalleProjection(droite, quad1, min1, max1);
@@ -712,14 +741,42 @@ namespace utilitaire {
         return !(disjonction12 || disjonction21);
     }
 
+	////////////////////////////////////////////////////////////////////////////
+	///
+    /// @fn glm::dvec3 calculerPointPerpendiculaire(const glm::dvec3& point1, 
+    ///                                             const glm::dvec3& point2)
+	///
+	/// Fonction qui permet de calculer le vecteur perpendiculaire de deux
+    /// segments.
+	///
+	/// @param[in] droite : la droite sur laquelle on fait la projection.
+	/// @param[in] quad : Un QuadEnglobant projeté sur la droite.
+    //
+	/// @return Le vecteur perpendiculaire de la projection.
+	///
+	////////////////////////////////////////////////////////////////////////////
     glm::dvec3 calculerPointPerpendiculaire(const glm::dvec3& point1, 
-                                             const glm::dvec3& point2)
+                                            const glm::dvec3& point2)
     {
         glm::dvec3 vecteur = point2 - point1;
         glm::dvec3 vecteurP =  {-vecteur.y, vecteur.x, 0.0};
         return point1 + vecteurP;
     }
 
+	////////////////////////////////////////////////////////////////////////////
+	///
+    /// @fn bool calculerIntersectionDeuxQuads(const QuadEnglobant& quad1, 
+    ///                                        const QuadEnglobant& quad2)
+	///
+	/// Fonction qui permet de calculer le vecteur perpendiculaire de deux
+    /// segments.
+	///
+	/// @param[in] droite : la droite sur laquelle on fait la projection.
+	/// @param[in] quad : Un QuadEnglobant projeté sur la droite.
+    //
+	/// @return Le vecteur perpendiculaire de la projection.
+	///
+	////////////////////////////////////////////////////////////////////////////
     bool calculerIntersectionDeuxQuads(const QuadEnglobant& quad1, 
                                        const QuadEnglobant& quad2)
     {
@@ -736,7 +793,7 @@ namespace utilitaire {
             if (estIntersection)
             {
                 glm::dvec3 perpendiculaire = calculerPointPerpendiculaire(quad2.coins[i], 
-                                                                           quad2.coins[j]);
+                                                                          quad2.coins[j]);
                 math::Droite3D droite(quad1.coins[i], perpendiculaire);
                 estIntersection = calculerIntersectionProjection(droite, quad2, quad1);       
             }
@@ -749,7 +806,6 @@ namespace utilitaire {
 	/// @fn void time_in_HH_MM_SS_MMM()
 	///
 	/// cout le temps dans le format HH:MM:SS:MMM
-	///
 	///
 	/// @return Aucune.
 	///
