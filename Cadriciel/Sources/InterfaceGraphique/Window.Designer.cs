@@ -263,7 +263,7 @@
             // 
             this.supprimerToolStripMenuItem.Enabled = false;
             this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
             this.supprimerToolStripMenuItem.Text = "Supprimer";
             this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
@@ -335,7 +335,7 @@
             // 
             this.poteauMenuEdition_.Name = "poteauMenuEdition_";
             this.poteauMenuEdition_.ShortcutKeyDisplayString = "P";
-            this.poteauMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.poteauMenuEdition_.Size = new System.Drawing.Size(146, 22);
             this.poteauMenuEdition_.Text = "Poteau";
             this.poteauMenuEdition_.Click += new System.EventHandler(this.poteauToolStripMenuItem_Click);
             // 
@@ -343,7 +343,7 @@
             // 
             this.murMenuEdition_.Name = "murMenuEdition_";
             this.murMenuEdition_.ShortcutKeyDisplayString = "M";
-            this.murMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.murMenuEdition_.Size = new System.Drawing.Size(146, 22);
             this.murMenuEdition_.Text = "Mur";
             this.murMenuEdition_.Click += new System.EventHandler(this.murToolStripMenuItem_Click);
             // 
@@ -351,7 +351,7 @@
             // 
             this.ligneNoireMenuEdition_.Name = "ligneNoireMenuEdition_";
             this.ligneNoireMenuEdition_.ShortcutKeyDisplayString = "L";
-            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(146, 22);
             this.ligneNoireMenuEdition_.Text = "Ligne noire";
             this.ligneNoireMenuEdition_.Click += new System.EventHandler(this.ligneNoireToolStripMenuItem_Click);
             // 
@@ -402,7 +402,7 @@
             // aideMenuEdition_
             // 
             this.aideMenuEdition_.Name = "aideMenuEdition_";
-            this.aideMenuEdition_.Size = new System.Drawing.Size(152, 22);
+            this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
             this.aideMenuEdition_.Text = "Aide";
             this.aideMenuEdition_.Click += new System.EventHandler(this.aideMenuEdition__Click);
             // 
@@ -553,6 +553,7 @@
             this.textBoxPositionY_.TabStop = false;
             this.textBoxPositionY_.Enter += new System.EventHandler(this.textBoxPositionY__Enter);
             this.textBoxPositionY_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionY__KeyDown);
+            this.textBoxPositionY_.Leave += new System.EventHandler(this.textBoxPositionY__Leave);
             // 
             // textBoxPositionX_
             // 
@@ -563,6 +564,7 @@
             this.textBoxPositionX_.TabStop = false;
             this.textBoxPositionX_.Enter += new System.EventHandler(this.textBoxPositionX__Enter);
             this.textBoxPositionX_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxPositionX__KeyDown);
+            this.textBoxPositionX_.Leave += new System.EventHandler(this.textBoxPositionX__Leave);
             // 
             // textBoxRotation_
             // 
@@ -573,6 +575,7 @@
             this.textBoxRotation_.TabStop = false;
             this.textBoxRotation_.Enter += new System.EventHandler(this.textBoxRotation__Enter);
             this.textBoxRotation_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxRotation__KeyDown);
+            this.textBoxRotation_.Leave += new System.EventHandler(this.textBoxRotation__Leave);
             // 
             // textboxDimension_
             // 
@@ -583,6 +586,7 @@
             this.textboxDimension_.TabStop = false;
             this.textboxDimension_.Enter += new System.EventHandler(this.textboxDimension__Enter);
             this.textboxDimension_.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textboxDimension__KeyDown);
+            this.textboxDimension_.Leave += new System.EventHandler(this.textboxDimension__Leave);
             // 
             // panneauPositionY_
             // 

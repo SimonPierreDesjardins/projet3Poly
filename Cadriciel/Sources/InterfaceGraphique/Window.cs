@@ -543,6 +543,7 @@ namespace InterfaceGraphique
         private void outilsSelection__Click(object sender, EventArgs e)
         {
             //Bouton S : sélection
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
             changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
@@ -562,6 +563,7 @@ namespace InterfaceGraphique
         private void outilsDéplacement__Click(object sender, EventArgs e)
         {
             //Bouton D : Déplacement
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
             changeIconColor();
             outilsDeplacement_.BackColor = Color.CadetBlue;
@@ -581,6 +583,7 @@ namespace InterfaceGraphique
         private void outilsRotation__Click(object sender, EventArgs e)
         {
             //Bouton R : Rotation
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
             changeIconColor();
             outilsRotation_.BackColor = Color.CadetBlue;
@@ -600,6 +603,7 @@ namespace InterfaceGraphique
         private void outilsMiseAEchelle__Click(object sender, EventArgs e)
         {
             //Bouton E : Mise a échelle
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
             changeIconColor();
             outilsMiseAEchelle_.BackColor = Color.CadetBlue;
@@ -619,6 +623,7 @@ namespace InterfaceGraphique
         private void outilsDuplication__Click(object sender, EventArgs e)
         {
             //Bouton C : Duplication
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
             changeIconColor();
             outilsDuplication_.BackColor = Color.CadetBlue;
@@ -638,6 +643,7 @@ namespace InterfaceGraphique
         private void outilsZoom__Click(object sender, EventArgs e)
         {
             //Bouton Z : Zoom
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
             changeIconColor();
             outilsZoom_.BackColor = Color.CadetBlue;
@@ -657,6 +663,7 @@ namespace InterfaceGraphique
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
         {
             //Bouton P : Creation poteau
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
             changeIconColor();
             outilsCreationPoteau_.BackColor = Color.CadetBlue;
@@ -676,6 +683,7 @@ namespace InterfaceGraphique
         private void outilsCreationMurs__Click(object sender, EventArgs e)
         {
             //Bouton M : Creation mur
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
             changeIconColor();
             outilsCreationMurs_.BackColor = Color.CadetBlue;
@@ -695,6 +703,7 @@ namespace InterfaceGraphique
         private void outilsCreationLigne__Click(object sender, EventArgs e)
         {
             //Bouton L : Creation ligne
+            viewPort_.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
             changeIconColor();
             outilsCreationLigne_.BackColor = Color.CadetBlue;
@@ -1793,6 +1802,66 @@ namespace InterfaceGraphique
                     orthographiqueMenuSimTest.Checked = false;
                     break;
             }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textboxDimension__Leave(object sender, EventArgs e)
+        ///
+        /// Permet les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void textboxDimension__Leave(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxRotation__Leave(object sender, EventArgs e)
+        ///
+        /// Permet les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void textBoxRotation__Leave(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionX__Leave(object sender, EventArgs e)
+        ///
+        /// Permet les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void textBoxPositionX__Leave(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBoxPositionY__Leave(object sender, EventArgs e)
+        ///
+        /// Permet les inputs dans le code du c++
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void textBoxPositionY__Leave(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
     }

@@ -744,6 +744,16 @@ namespace utilitaire {
         return estIntersection;
     }
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn void time_in_HH_MM_SS_MMM()
+	///
+	/// cout le temps dans le format HH:MM:SS:MMM
+	///
+	///
+	/// @return Aucune.
+	///
+	////////////////////////////////////////////////////////////////////////
 	void time_in_HH_MM_SS_MMM()
 	{
 		SYSTEMTIME localTime;
