@@ -64,7 +64,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));
 	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/mur.obj" }));
 	ajouterUsine(NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/segment.obj" }));
-	ajouterUsine(NOM_DUPLICATION, std::make_unique<UsineNoeud<NoeudDuplication>>(NOM_DUPLICATION, std::string{ "media/modeles/table.obj" }));
+	ajouterUsine(NOM_DUPLICATION, std::make_unique<UsineNoeud<NoeudDuplication>>(NOM_DUPLICATION, std::string{ "media/modeles/Fleche.obj" }));
 	ajouterUsine(NOM_DEPART, std::make_unique<UsineNoeud<NoeudDepart>>(NOM_DEPART, std::string{ "media/modeles/Fleche.obj" }));
 	ajouterUsine(NOM_JONCTION, std::make_unique<UsineNoeud<NoeudJonction>>(NOM_JONCTION, std::string{ "media/modeles/jonction.obj" }));
 	ajouterUsine(NOM_ROUES, std::make_unique<UsineNoeud<NoeudRoues>>(NOM_ROUES, std::string{ "media/modeles/roue.obj" }));

@@ -148,19 +148,20 @@ void VisiteurRotation::visiter(NoeudDepart* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurRotation::visiter(NoeudLigne* noeud)
+void VisiteurRotation::visiter(NoeudLigne* ligne)
 {
-	assignerNouvellePositionRelative(noeud);
-	NoeudAbstrait* enfant = nullptr;
-	double angle = 0.0;
+	assignerNouvellePositionRelative(ligne);
 	glm::dvec3 nouvellePositionRelative = { 0.0, 0.0, 0.0 };
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
-		enfant = noeud->chercher(i);
+	for (unsigned int i = 0; i < ligne->obtenirNombreEnfants(); i++) 
+    {
+		NoeudAbstrait* enfant = ligne->chercher(i);
 		utilitaire::calculerPositionApresRotation(enfant->obtenirPositionRelative(), nouvellePositionRelative, angleRotation_);
 		enfant->assignerPositionRelative(nouvellePositionRelative);
-		angle = enfant->obtenirAngleRotation() + angleRotation_;
+		double angle = enfant->obtenirAngleRotation() + angleRotation_;
 		enfant->assignerAngleRotation(angle);
 	}
+    double angleLigne = ligne->obtenirAngleRotation() + angleRotation_;
+    ligne->assignerAngleRotation(angleLigne);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -176,44 +177,56 @@ void VisiteurRotation::visiter(NoeudLigne* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 {
-	if (noeud->obtenirNombreEnfants() < 1) return;
+    if (!noeud) return;
+    unsigned int nEnfants = noeud->obtenirNombreEnfants();
+	if (!nEnfants) return;
+
 	// Initialiser les minimums et les maximums 
-	double minX = 0.0;
-	double maxX = 0.0;
-	double minY = 0.0;
-	double maxY = 0.0;
-	double x = 0.0;
-	double y = 0.0;
-	bool estPremierSelectionne = true;
-	NoeudAbstrait* enfant = nullptr;
+    NoeudAbstrait* enfant = noeud->chercher(0);
+    glm::dvec3 positionInitiale = enfant->obtenirPositionCourante();
+
+    double minX = 0;
+    double maxX = 0;
+	double minY = 0;
+    double maxY = 0;
+    
+    bool premierEnSelection = true;
 	// Trouver les min / max dans les positions des noeuds sur la table.
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	for (unsigned int i = 0; i < nEnfants; i++)
 	{
 		enfant = noeud->chercher(i);
 		if (enfant != nullptr && enfant->estSelectionne())
 		{
-			x = enfant->obtenirPositionRelative().x;
-			y = enfant->obtenirPositionRelative().y;
+            glm::dvec3 positionCourante = enfant->obtenirPositionCourante();
 
-			if (x > maxX || estPremierSelectionne) {
-				maxX = x;
+            // Trier en x.
+			if (positionCourante.x > maxX || premierEnSelection) 
+            {
+				maxX = positionCourante.x;
 			}
-			if (x < minX || estPremierSelectionne) {
-				minX = x;
+			if (positionCourante.x < minX || premierEnSelection) 
+            {
+				minX = positionCourante.x;
 			}
-			if (y > maxY || estPremierSelectionne) {
-				maxY = y; 
+            // Trier en y.
+			if (positionCourante.y > maxY || premierEnSelection)
+            {
+				maxY = positionCourante.y; 
 			}
-			if (y < minY || estPremierSelectionne) {
-				minY = y;
+			if (positionCourante.y < minY || premierEnSelection)
+            {
+				minY = positionCourante.y;
 			}
-			if (estPremierSelectionne) {
-				estPremierSelectionne = false;
-			}
+            
+            // Toggle l'initialisation du min / max.
+            if (premierEnSelection)
+            {
+                premierEnSelection = false;
+            }
 		}
 	}
-	// Calculer et assigner la position relative à la ligne
-	 centreSelection_= { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0.0 };
+	// Calculer et assigner le centre de selection.
+	centreSelection_= { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0.0 };
 }
 
 ////////////////////////////////////////////////////////////////////////

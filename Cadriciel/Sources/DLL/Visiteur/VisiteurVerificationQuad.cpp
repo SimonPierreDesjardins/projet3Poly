@@ -59,9 +59,11 @@ VisiteurVerificationQuad::~VisiteurVerificationQuad()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurVerificationQuad::visiter(ArbreRendu* noeud)
+void VisiteurVerificationQuad::visiter(ArbreRendu* arbre)
 {
-	noeud->chercher("table")->accepterVisiteur(this);
+    // Mettre à jour l'arbre de rendu avant de faire la vérification.
+    arbre->animer(0.0);
+	arbre->chercher("table")->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////

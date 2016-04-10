@@ -73,17 +73,6 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		// Ajout du poteau sur la table.
 		glm::dvec3 positionVirtuelle;
 		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
-
-		if (positionVirtuelle[0] >= 47)
-			positionVirtuelle[0] = 47;
-		else if (positionVirtuelle[0] <= -47)
-			positionVirtuelle[0] = -47;
-
-		if (positionVirtuelle[1] >= 23)
-			positionVirtuelle[1] = 23;
-		else if (positionVirtuelle[1] <= -23)
-			positionVirtuelle[1] = -23;
-
 		visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);
 		arbre_->accepterVisiteur(visiteurCreationPoteau_.get());
 		NoeudAbstrait* poteau = visiteurCreationPoteau_->obtenirReferenceNoeud();

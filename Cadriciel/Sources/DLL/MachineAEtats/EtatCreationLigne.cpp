@@ -206,10 +206,10 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 		if (positionsClic_[i].x < minX) {
 			minX = positionsClic_[i].x;
 		}
-		if (positionsClic_[i].x > maxY) {
+		if (positionsClic_[i].y > maxY) {
 			maxY = positionsClic_[i].y;
 		}
-		if (positionsClic_[i].x < minY) {
+		if (positionsClic_[i].y < minY) {
 			minY = positionsClic_[i].y;
 		}
 	}

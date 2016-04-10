@@ -63,7 +63,6 @@ void NoeudLigne::afficherConcret() const
 {
 	glPushMatrix();
 
-
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
