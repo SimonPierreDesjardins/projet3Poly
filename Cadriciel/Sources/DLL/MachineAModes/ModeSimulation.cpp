@@ -252,11 +252,13 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case '\b':
-			controleRobot_->terminerBoucleRobot();
-			controleRobot_->robot_->positionDepart();
+			controleRobot_ = nullptr;
+			controleRobot_ = std::make_unique<ControleRobot>();
+			profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 			controleRobot_->passerAModeManuel();
-            affichageTexte_->reinitialiserChrono();
+			affichageTexte_->reinitialiserChrono();
+			controleRobot_->robot_->positionDepart();
 			break;
 
         case VK_ESCAPE:
