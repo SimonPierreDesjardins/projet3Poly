@@ -287,7 +287,7 @@ double ArbreRendu::obtenirAngleRotation()
 			}
 		}
 	}
-	return angle;
+	return (double)((int)angle % 360);
 }
 
 ////////////////////////////////////////////////////////////////////////
