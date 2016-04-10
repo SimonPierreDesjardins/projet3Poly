@@ -123,6 +123,22 @@ namespace utilitaire {
 	   glm::dvec3& yMin, glm::dvec3& yMax, 
 	   glm::dvec3& zMin, glm::dvec3& zMax);
 
+   
+	double calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux);
+
+	double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux);
+
+	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux);
+
+	void calculerPositionApresRotation(glm::dvec3 positionInitiale, 
+                                       glm::dvec3&       positionFinale, 
+                                       const double&     theta);
+
+	bool calculerPointEstDansQuad(const glm::dvec3& point, 
+                                  const QuadEnglobant& quad);
+
+    bool calculerIntersectionDeuxQuads(const QuadEnglobant& quad1, 
+                                       const QuadEnglobant& quad2);
 
 
    ////////////////////////////////////////////////////////////////////////
@@ -265,21 +281,6 @@ namespace utilitaire {
       return succes;
    }
 
-	double calculerAngleRotation(glm::dvec3& pointUn, glm::dvec3& pointDeux);
-
-	double calculerDistanceHypothenuse(glm::dvec3& pointUn, glm::dvec3& pointDeux);
-
-	glm::dvec3 calculerPositionEntreDeuxPoints(glm::dvec3& pointUn, glm::dvec3& pointDeux);
-
-	void calculerPositionApresRotation(glm::dvec3 positionInitiale, 
-                                       glm::dvec3&       positionFinale, 
-                                       const double&     theta);
-
-	bool calculerPointEstDansQuad(const glm::dvec3& point, 
-                                  const QuadEnglobant& quad);
-
-    bool calculerIntersectionDeuxQuads(const QuadEnglobant& quad1, 
-                                       const QuadEnglobant& quad2);
 } // Fin du namespace utilitaire.
 
 
