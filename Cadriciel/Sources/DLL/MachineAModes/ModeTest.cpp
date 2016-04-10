@@ -235,10 +235,10 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case '\b':
 			controleRobot_->terminerBoucleRobot();
-			controleRobot_->robot_->positionDepart();
 			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 			controleRobot_->passerAModeManuel();
             affichageTexte_->reinitialiserChrono();
+			controleRobot_->robot_->positionDepart();
 			break;
 
         case VK_ESCAPE:
