@@ -206,7 +206,7 @@
             // nouveauMenuEdition_
             // 
             this.nouveauMenuEdition_.Name = "nouveauMenuEdition_";
-            this.nouveauMenuEdition_.Size = new System.Drawing.Size(201, 22);
+            this.nouveauMenuEdition_.Size = new System.Drawing.Size(203, 22);
             this.nouveauMenuEdition_.Text = "Nouveau";
             this.nouveauMenuEdition_.Click += new System.EventHandler(this.nouveauMenuEdition__Click);
             // 
@@ -214,7 +214,7 @@
             // 
             this.ouvrirMenuEdition_.Name = "ouvrirMenuEdition_";
             this.ouvrirMenuEdition_.ShortcutKeyDisplayString = "CTRL-O";
-            this.ouvrirMenuEdition_.Size = new System.Drawing.Size(201, 22);
+            this.ouvrirMenuEdition_.Size = new System.Drawing.Size(203, 22);
             this.ouvrirMenuEdition_.Text = "Ouvrir";
             this.ouvrirMenuEdition_.Click += new System.EventHandler(this.ouvrirMenuEdition__Click);
             // 
@@ -223,14 +223,14 @@
             this.enregistrerMenuEdition_.Enabled = false;
             this.enregistrerMenuEdition_.Name = "enregistrerMenuEdition_";
             this.enregistrerMenuEdition_.ShortcutKeyDisplayString = "CTRL-S";
-            this.enregistrerMenuEdition_.Size = new System.Drawing.Size(201, 22);
+            this.enregistrerMenuEdition_.Size = new System.Drawing.Size(203, 22);
             this.enregistrerMenuEdition_.Text = "Enregistrer";
             this.enregistrerMenuEdition_.Click += new System.EventHandler(this.enregistrerMenuEdition__Click);
             // 
             // enregistrerSousMenuEdition_
             // 
             this.enregistrerSousMenuEdition_.Name = "enregistrerSousMenuEdition_";
-            this.enregistrerSousMenuEdition_.Size = new System.Drawing.Size(201, 22);
+            this.enregistrerSousMenuEdition_.Size = new System.Drawing.Size(203, 22);
             this.enregistrerSousMenuEdition_.Text = "Enregistrer Sous";
             this.enregistrerSousMenuEdition_.Click += new System.EventHandler(this.enregistrerSousMenuEdition__Click);
             // 
@@ -239,15 +239,15 @@
             this.modeTestModeEdition_.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.modeTestModeEdition_.Name = "modeTestModeEdition_";
             this.modeTestModeEdition_.ShortcutKeyDisplayString = "T";
-            this.modeTestModeEdition_.Size = new System.Drawing.Size(201, 22);
+            this.modeTestModeEdition_.Size = new System.Drawing.Size(203, 22);
             this.modeTestModeEdition_.Text = "Mode test";
             this.modeTestModeEdition_.Click += new System.EventHandler(this.modeTestModeEdition__Click);
             // 
             // menuPrincipalMenuEdition
             // 
             this.menuPrincipalMenuEdition.Name = "menuPrincipalMenuEdition";
-            this.menuPrincipalMenuEdition.ShortcutKeyDisplayString = "CTRL-P";
-            this.menuPrincipalMenuEdition.Size = new System.Drawing.Size(201, 22);
+            this.menuPrincipalMenuEdition.ShortcutKeyDisplayString = "CTRL-Q";
+            this.menuPrincipalMenuEdition.Size = new System.Drawing.Size(203, 22);
             this.menuPrincipalMenuEdition.Text = "Menu Principal";
             this.menuPrincipalMenuEdition.Click += new System.EventHandler(this.menuPrincipalToolStripMenuItem_Click);
             // 
@@ -263,7 +263,7 @@
             // 
             this.supprimerToolStripMenuItem.Enabled = false;
             this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.supprimerToolStripMenuItem.Text = "Supprimer";
             this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
@@ -335,7 +335,7 @@
             // 
             this.poteauMenuEdition_.Name = "poteauMenuEdition_";
             this.poteauMenuEdition_.ShortcutKeyDisplayString = "P";
-            this.poteauMenuEdition_.Size = new System.Drawing.Size(146, 22);
+            this.poteauMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.poteauMenuEdition_.Text = "Poteau";
             this.poteauMenuEdition_.Click += new System.EventHandler(this.poteauToolStripMenuItem_Click);
             // 
@@ -343,7 +343,7 @@
             // 
             this.murMenuEdition_.Name = "murMenuEdition_";
             this.murMenuEdition_.ShortcutKeyDisplayString = "M";
-            this.murMenuEdition_.Size = new System.Drawing.Size(146, 22);
+            this.murMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.murMenuEdition_.Text = "Mur";
             this.murMenuEdition_.Click += new System.EventHandler(this.murToolStripMenuItem_Click);
             // 
@@ -351,7 +351,7 @@
             // 
             this.ligneNoireMenuEdition_.Name = "ligneNoireMenuEdition_";
             this.ligneNoireMenuEdition_.ShortcutKeyDisplayString = "L";
-            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(146, 22);
+            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.ligneNoireMenuEdition_.Text = "Ligne noire";
             this.ligneNoireMenuEdition_.Click += new System.EventHandler(this.ligneNoireToolStripMenuItem_Click);
             // 
@@ -369,6 +369,7 @@
             this.orthographiqueMenuEdition_,
             this.orbiteMenuEdition_});
             this.vuesMenuEdition_.Name = "vuesMenuEdition_";
+            this.vuesMenuEdition_.ShortcutKeyDisplayString = "1";
             this.vuesMenuEdition_.Size = new System.Drawing.Size(44, 20);
             this.vuesMenuEdition_.Text = "Vues";
             // 
@@ -377,14 +378,16 @@
             this.orthographiqueMenuEdition_.Checked = true;
             this.orthographiqueMenuEdition_.CheckState = System.Windows.Forms.CheckState.Checked;
             this.orthographiqueMenuEdition_.Name = "orthographiqueMenuEdition_";
-            this.orthographiqueMenuEdition_.Size = new System.Drawing.Size(159, 22);
+            this.orthographiqueMenuEdition_.ShortcutKeyDisplayString = "1";
+            this.orthographiqueMenuEdition_.Size = new System.Drawing.Size(172, 22);
             this.orthographiqueMenuEdition_.Text = "Orthographique";
             this.orthographiqueMenuEdition_.Click += new System.EventHandler(this.orthographiqueMenuEdition__Click);
             // 
             // orbiteMenuEdition_
             // 
             this.orbiteMenuEdition_.Name = "orbiteMenuEdition_";
-            this.orbiteMenuEdition_.Size = new System.Drawing.Size(159, 22);
+            this.orbiteMenuEdition_.ShortcutKeyDisplayString = "2";
+            this.orbiteMenuEdition_.Size = new System.Drawing.Size(172, 22);
             this.orbiteMenuEdition_.Text = "Orbite";
             this.orbiteMenuEdition_.Click += new System.EventHandler(this.orbiteMenuEdition__Click);
             // 
@@ -399,7 +402,7 @@
             // aideMenuEdition_
             // 
             this.aideMenuEdition_.Name = "aideMenuEdition_";
-            this.aideMenuEdition_.Size = new System.Drawing.Size(98, 22);
+            this.aideMenuEdition_.Size = new System.Drawing.Size(152, 22);
             this.aideMenuEdition_.Text = "Aide";
             this.aideMenuEdition_.Click += new System.EventHandler(this.aideMenuEdition__Click);
             // 
@@ -637,14 +640,15 @@
             this.menuPrincipalMenuSimTest,
             this.modeEditionMenuSimTest});
             this.fichierMenuSimTest.Name = "fichierMenuSimTest";
+            this.fichierMenuSimTest.ShortcutKeyDisplayString = "CTRL-Q";
             this.fichierMenuSimTest.Size = new System.Drawing.Size(54, 20);
             this.fichierMenuSimTest.Text = "Fichier";
             // 
             // menuPrincipalMenuSimTest
             // 
             this.menuPrincipalMenuSimTest.Name = "menuPrincipalMenuSimTest";
-            this.menuPrincipalMenuSimTest.ShortcutKeyDisplayString = "CTRL-P";
-            this.menuPrincipalMenuSimTest.Size = new System.Drawing.Size(204, 22);
+            this.menuPrincipalMenuSimTest.ShortcutKeyDisplayString = "CTRL-Q";
+            this.menuPrincipalMenuSimTest.Size = new System.Drawing.Size(206, 22);
             this.menuPrincipalMenuSimTest.Text = "Menu principal ";
             this.menuPrincipalMenuSimTest.Click += new System.EventHandler(this.menuPrincipalMenuSimTest_Click);
             // 
@@ -652,7 +656,7 @@
             // 
             this.modeEditionMenuSimTest.Name = "modeEditionMenuSimTest";
             this.modeEditionMenuSimTest.ShortcutKeyDisplayString = "CTRL-E";
-            this.modeEditionMenuSimTest.Size = new System.Drawing.Size(204, 22);
+            this.modeEditionMenuSimTest.Size = new System.Drawing.Size(206, 22);
             this.modeEditionMenuSimTest.Text = "Mode Édition ";
             this.modeEditionMenuSimTest.Click += new System.EventHandler(this.modeEditionMenuSimTest_Click);
             // 
@@ -663,6 +667,7 @@
             this.orbiteMenuSimTest,
             this.premierePersonneMenuSimTest});
             this.vuesMenuSimTest.Name = "vuesMenuSimTest";
+            this.vuesMenuSimTest.ShortcutKeyDisplayString = "1";
             this.vuesMenuSimTest.Size = new System.Drawing.Size(44, 20);
             this.vuesMenuSimTest.Text = "Vues";
             // 
@@ -671,21 +676,24 @@
             this.orthographiqueMenuSimTest.Checked = true;
             this.orthographiqueMenuSimTest.CheckState = System.Windows.Forms.CheckState.Checked;
             this.orthographiqueMenuSimTest.Name = "orthographiqueMenuSimTest";
-            this.orthographiqueMenuSimTest.Size = new System.Drawing.Size(173, 22);
+            this.orthographiqueMenuSimTest.ShortcutKeyDisplayString = "1";
+            this.orthographiqueMenuSimTest.Size = new System.Drawing.Size(186, 22);
             this.orthographiqueMenuSimTest.Text = "Orthographique";
             this.orthographiqueMenuSimTest.Click += new System.EventHandler(this.orthographiqueMenuSimTest_Click);
             // 
             // orbiteMenuSimTest
             // 
             this.orbiteMenuSimTest.Name = "orbiteMenuSimTest";
-            this.orbiteMenuSimTest.Size = new System.Drawing.Size(173, 22);
+            this.orbiteMenuSimTest.ShortcutKeyDisplayString = "2";
+            this.orbiteMenuSimTest.Size = new System.Drawing.Size(186, 22);
             this.orbiteMenuSimTest.Text = "Orbite";
             this.orbiteMenuSimTest.Click += new System.EventHandler(this.orbiteMenuSimTest_Click);
             // 
             // premierePersonneMenuSimTest
             // 
             this.premierePersonneMenuSimTest.Name = "premierePersonneMenuSimTest";
-            this.premierePersonneMenuSimTest.Size = new System.Drawing.Size(173, 22);
+            this.premierePersonneMenuSimTest.ShortcutKeyDisplayString = "3";
+            this.premierePersonneMenuSimTest.Size = new System.Drawing.Size(186, 22);
             this.premierePersonneMenuSimTest.Text = "Première personne";
             this.premierePersonneMenuSimTest.Click += new System.EventHandler(this.premierePersonneMenuSimTest_Click);
             // 

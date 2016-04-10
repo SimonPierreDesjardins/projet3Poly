@@ -315,7 +315,10 @@ double ArbreRendu::obtenirFacteurMiseAEchelle()
 				if (enfant->obtenirType() == "ligneNoire" || enfant->obtenirType() == "depart") {
 					facteurMiseAEchelle = 1;
 				}
-				facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
+				else{
+					facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
+				}
+					
 				trouve = true;
 			}
 		}
