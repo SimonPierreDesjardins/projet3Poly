@@ -40,7 +40,17 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 };
 
-//TODO: documentation
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(const int& indice)
+///
+/// Cette fonction permet de retourner l'enfant d'un noeud duplication.
+///
+/// @param[in] indice : l'indice correspondant à l'enfant de la duplication.
+///
+/// @return un shared_ptr sur l'enfant.
+///
+////////////////////////////////////////////////////////////////////////
 inline std::shared_ptr<NoeudAbstrait> NoeudDuplication::obtenirDuplication(const int& indice)
 {
 	if ((indice >= 0) && (indice < enfants_.size())) 	
