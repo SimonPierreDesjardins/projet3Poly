@@ -206,14 +206,15 @@
             // nouveauMenuEdition_
             // 
             this.nouveauMenuEdition_.Name = "nouveauMenuEdition_";
-            this.nouveauMenuEdition_.Size = new System.Drawing.Size(158, 22);
+            this.nouveauMenuEdition_.Size = new System.Drawing.Size(201, 22);
             this.nouveauMenuEdition_.Text = "Nouveau";
             this.nouveauMenuEdition_.Click += new System.EventHandler(this.nouveauMenuEdition__Click);
             // 
             // ouvrirMenuEdition_
             // 
             this.ouvrirMenuEdition_.Name = "ouvrirMenuEdition_";
-            this.ouvrirMenuEdition_.Size = new System.Drawing.Size(158, 22);
+            this.ouvrirMenuEdition_.ShortcutKeyDisplayString = "CTRL-O";
+            this.ouvrirMenuEdition_.Size = new System.Drawing.Size(201, 22);
             this.ouvrirMenuEdition_.Text = "Ouvrir";
             this.ouvrirMenuEdition_.Click += new System.EventHandler(this.ouvrirMenuEdition__Click);
             // 
@@ -221,14 +222,15 @@
             // 
             this.enregistrerMenuEdition_.Enabled = false;
             this.enregistrerMenuEdition_.Name = "enregistrerMenuEdition_";
-            this.enregistrerMenuEdition_.Size = new System.Drawing.Size(158, 22);
+            this.enregistrerMenuEdition_.ShortcutKeyDisplayString = "CTRL-S";
+            this.enregistrerMenuEdition_.Size = new System.Drawing.Size(201, 22);
             this.enregistrerMenuEdition_.Text = "Enregistrer";
             this.enregistrerMenuEdition_.Click += new System.EventHandler(this.enregistrerMenuEdition__Click);
             // 
             // enregistrerSousMenuEdition_
             // 
             this.enregistrerSousMenuEdition_.Name = "enregistrerSousMenuEdition_";
-            this.enregistrerSousMenuEdition_.Size = new System.Drawing.Size(158, 22);
+            this.enregistrerSousMenuEdition_.Size = new System.Drawing.Size(201, 22);
             this.enregistrerSousMenuEdition_.Text = "Enregistrer Sous";
             this.enregistrerSousMenuEdition_.Click += new System.EventHandler(this.enregistrerSousMenuEdition__Click);
             // 
@@ -236,14 +238,16 @@
             // 
             this.modeTestModeEdition_.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.modeTestModeEdition_.Name = "modeTestModeEdition_";
-            this.modeTestModeEdition_.Size = new System.Drawing.Size(158, 22);
+            this.modeTestModeEdition_.ShortcutKeyDisplayString = "T";
+            this.modeTestModeEdition_.Size = new System.Drawing.Size(201, 22);
             this.modeTestModeEdition_.Text = "Mode test";
             this.modeTestModeEdition_.Click += new System.EventHandler(this.modeTestModeEdition__Click);
             // 
             // menuPrincipalMenuEdition
             // 
             this.menuPrincipalMenuEdition.Name = "menuPrincipalMenuEdition";
-            this.menuPrincipalMenuEdition.Size = new System.Drawing.Size(158, 22);
+            this.menuPrincipalMenuEdition.ShortcutKeyDisplayString = "CTRL-P";
+            this.menuPrincipalMenuEdition.Size = new System.Drawing.Size(201, 22);
             this.menuPrincipalMenuEdition.Text = "Menu Principal";
             this.menuPrincipalMenuEdition.Click += new System.EventHandler(this.menuPrincipalToolStripMenuItem_Click);
             // 
@@ -280,6 +284,7 @@
             // selectionMenuEdition_
             // 
             this.selectionMenuEdition_.Name = "selectionMenuEdition_";
+            this.selectionMenuEdition_.ShortcutKeyDisplayString = "S";
             this.selectionMenuEdition_.Size = new System.Drawing.Size(164, 22);
             this.selectionMenuEdition_.Text = "Sélection";
             this.selectionMenuEdition_.Click += new System.EventHandler(this.sToolStripMenuItem_Click);
@@ -287,6 +292,7 @@
             // deplacementMenuEdition_
             // 
             this.deplacementMenuEdition_.Name = "deplacementMenuEdition_";
+            this.deplacementMenuEdition_.ShortcutKeyDisplayString = "D";
             this.deplacementMenuEdition_.Size = new System.Drawing.Size(164, 22);
             this.deplacementMenuEdition_.Text = "Déplacement";
             this.deplacementMenuEdition_.Click += new System.EventHandler(this.déplacementToolStripMenuItem_Click);
@@ -294,6 +300,7 @@
             // rotationMenuEdition_
             // 
             this.rotationMenuEdition_.Name = "rotationMenuEdition_";
+            this.rotationMenuEdition_.ShortcutKeyDisplayString = "R";
             this.rotationMenuEdition_.Size = new System.Drawing.Size(164, 22);
             this.rotationMenuEdition_.Text = "Rotation";
             this.rotationMenuEdition_.Click += new System.EventHandler(this.rotationToolStripMenuItem_Click);
@@ -301,6 +308,7 @@
             // miseAEchelleMenuEdition_
             // 
             this.miseAEchelleMenuEdition_.Name = "miseAEchelleMenuEdition_";
+            this.miseAEchelleMenuEdition_.ShortcutKeyDisplayString = "E";
             this.miseAEchelleMenuEdition_.Size = new System.Drawing.Size(164, 22);
             this.miseAEchelleMenuEdition_.Text = "Mise à échelle";
             this.miseAEchelleMenuEdition_.Click += new System.EventHandler(this.miseAEchelleToolStripMenuItem_Click);
@@ -308,6 +316,7 @@
             // duplicationMenuEdition_
             // 
             this.duplicationMenuEdition_.Name = "duplicationMenuEdition_";
+            this.duplicationMenuEdition_.ShortcutKeyDisplayString = "C";
             this.duplicationMenuEdition_.Size = new System.Drawing.Size(164, 22);
             this.duplicationMenuEdition_.Text = "Duplication";
             this.duplicationMenuEdition_.Click += new System.EventHandler(this.duplicationToolStripMenuItem_Click);
@@ -325,27 +334,31 @@
             // poteauMenuEdition_
             // 
             this.poteauMenuEdition_.Name = "poteauMenuEdition_";
-            this.poteauMenuEdition_.Size = new System.Drawing.Size(133, 22);
+            this.poteauMenuEdition_.ShortcutKeyDisplayString = "P";
+            this.poteauMenuEdition_.Size = new System.Drawing.Size(146, 22);
             this.poteauMenuEdition_.Text = "Poteau";
             this.poteauMenuEdition_.Click += new System.EventHandler(this.poteauToolStripMenuItem_Click);
             // 
             // murMenuEdition_
             // 
             this.murMenuEdition_.Name = "murMenuEdition_";
-            this.murMenuEdition_.Size = new System.Drawing.Size(133, 22);
+            this.murMenuEdition_.ShortcutKeyDisplayString = "M";
+            this.murMenuEdition_.Size = new System.Drawing.Size(146, 22);
             this.murMenuEdition_.Text = "Mur";
             this.murMenuEdition_.Click += new System.EventHandler(this.murToolStripMenuItem_Click);
             // 
             // ligneNoireMenuEdition_
             // 
             this.ligneNoireMenuEdition_.Name = "ligneNoireMenuEdition_";
-            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(133, 22);
+            this.ligneNoireMenuEdition_.ShortcutKeyDisplayString = "L";
+            this.ligneNoireMenuEdition_.Size = new System.Drawing.Size(146, 22);
             this.ligneNoireMenuEdition_.Text = "Ligne noire";
             this.ligneNoireMenuEdition_.Click += new System.EventHandler(this.ligneNoireToolStripMenuItem_Click);
             // 
             // zoomToolStripMenuItem
             // 
             this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
+            this.zoomToolStripMenuItem.ShortcutKeyDisplayString = "Z";
             this.zoomToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.zoomToolStripMenuItem.Text = "Zoom";
             this.zoomToolStripMenuItem.Click += new System.EventHandler(this.zoomToolStripMenuItem_Click);
@@ -630,15 +643,17 @@
             // menuPrincipalMenuSimTest
             // 
             this.menuPrincipalMenuSimTest.Name = "menuPrincipalMenuSimTest";
-            this.menuPrincipalMenuSimTest.Size = new System.Drawing.Size(154, 22);
-            this.menuPrincipalMenuSimTest.Text = "Menu principal";
+            this.menuPrincipalMenuSimTest.ShortcutKeyDisplayString = "CTRL-P";
+            this.menuPrincipalMenuSimTest.Size = new System.Drawing.Size(204, 22);
+            this.menuPrincipalMenuSimTest.Text = "Menu principal ";
             this.menuPrincipalMenuSimTest.Click += new System.EventHandler(this.menuPrincipalMenuSimTest_Click);
             // 
             // modeEditionMenuSimTest
             // 
             this.modeEditionMenuSimTest.Name = "modeEditionMenuSimTest";
-            this.modeEditionMenuSimTest.Size = new System.Drawing.Size(154, 22);
-            this.modeEditionMenuSimTest.Text = "Mode Édition";
+            this.modeEditionMenuSimTest.ShortcutKeyDisplayString = "CTRL-E";
+            this.modeEditionMenuSimTest.Size = new System.Drawing.Size(204, 22);
+            this.modeEditionMenuSimTest.Text = "Mode Édition ";
             this.modeEditionMenuSimTest.Click += new System.EventHandler(this.modeEditionMenuSimTest_Click);
             // 
             // vuesMenuSimTest
@@ -686,9 +701,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 462);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.menuEdition_);
-            this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.barreOutils_);
+            this.Controls.Add(this.menuSimTest);
+            this.Controls.Add(this.menuEdition_);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);
             this.Controls.Add(this.bouttonEditeur_);

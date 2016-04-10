@@ -57,6 +57,21 @@ namespace InterfaceGraphique
                     m.Msg == WM_MOUSEWHEEL)
                 {
                     FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
+
+                    if (m.Msg == WM_KEYDOWN)
+                    {
+                        int mode = FonctionsNatives.obtenirMode();
+                        if (mode == 1 || mode == 4)
+                        {
+                            if (m.WParam == (System.IntPtr)27)
+                            {
+                                estEnPause = !estEnPause;
+                                menuSimTest.Visible = estEnPause;
+                                picturePause.Visible = estEnPause;
+                            }
+                        } 
+                    }
+                    
                 }
                 return false;
             }
@@ -155,7 +170,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void buttonEditeur_Click(object sender, EventArgs e)
         {
-            
+            outilsZoom_.Enabled = true;
+            zoomToolStripMenuItem.Enabled = true;
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
@@ -1049,6 +1065,21 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
+            gererMessage(sender, e);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void gererMessage(object sender, PreviewKeyDownEventArgs e)
+        ///
+        /// Gère les touches lorsque le viewPort_ panel à le focus selon le mode
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void gererMessage(object sender, PreviewKeyDownEventArgs e)
+        {
             int mode = FonctionsNatives.obtenirMode();
 
             switch (mode)
@@ -1079,8 +1110,6 @@ namespace InterfaceGraphique
                 default:
                     break;
             }
-
-
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1097,6 +1126,22 @@ namespace InterfaceGraphique
         {
             switch (e.KeyCode)
             {
+                case Keys.D1:
+                    FonctionsNatives.assignerVueOrtho();
+                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    crochetPourVueEdition();
+                    outilsZoom_.Enabled = true;
+                    zoomToolStripMenuItem.Enabled = true;
+                    break;
+
+                case Keys.D2:
+                    FonctionsNatives.assignerVueOrbite();
+                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    crochetPourVueEdition();
+                    outilsZoom_.Enabled = false;
+                    zoomToolStripMenuItem.Enabled = false;
+                    break;
+
                 case Keys.Delete:
                     verificationDuNombreElementChoisi();
                     break;
@@ -1203,10 +1248,26 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(object sender, PreviewKeyDownEventArgs e)
         {
-
-
             switch (e.KeyCode)
             {
+                case Keys.D1:
+                    FonctionsNatives.assignerVueOrtho();
+                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    crochetPourVueSimTest();
+                    break;
+
+                case Keys.D2:
+                    FonctionsNatives.assignerVueOrbite();
+                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    crochetPourVueSimTest();
+                    break;
+
+                case Keys.D3:
+                    FonctionsNatives.assignerVuePremierePersonne();
+                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    crochetPourVueSimTest();
+                    break;
+
                 case Keys.Q:
                     if (e.Control)
                     {
@@ -1225,11 +1286,11 @@ namespace InterfaceGraphique
                     }
                     break;
 
-                case Keys.Escape:
+               /* case Keys.Escape:
                     estEnPause = !estEnPause;
                     picturePause.Visible = estEnPause;
                     menuSimTest.Visible = estEnPause;
-                    break;
+                    break;*/
 
                 default:
                     break;
@@ -1250,6 +1311,22 @@ namespace InterfaceGraphique
         {
             switch (e.KeyCode)
             {
+                case Keys.D1:
+                    FonctionsNatives.assignerVueOrtho();
+                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    crochetPourVueSimTest();
+                    outilsZoom_.Enabled = true;
+                    zoomToolStripMenuItem.Enabled = true;
+                    break;
+
+                case Keys.D2:
+                    FonctionsNatives.assignerVueOrbite();
+                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    crochetPourVueSimTest();
+                    outilsZoom_.Enabled = false;
+                    zoomToolStripMenuItem.Enabled = false;
+                    break;
+
                 case Keys.Q:
                     if (e.Control)
                     {
@@ -1266,12 +1343,11 @@ namespace InterfaceGraphique
                     }
                     break;
 
-                case Keys.Escape:
+                /*case Keys.Escape:
                     estEnPause = !estEnPause;
                     menuSimTest.Visible = estEnPause;
                     picturePause.Visible = estEnPause;
-                    menuSimTest.Visible = estEnPause;
-                    break;
+                    break;*/
 
                 case Keys.E:
                     if (e.Control)
@@ -1525,6 +1601,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = true;
+            zoomToolStripMenuItem.Enabled = true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1549,6 +1628,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrbite();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = false;
+            zoomToolStripMenuItem.Enabled = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1571,6 +1653,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = true;
+            zoomToolStripMenuItem.Enabled = true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1596,6 +1681,9 @@ namespace InterfaceGraphique
 
             FonctionsNatives.assignerVueOrbite();
             FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+
+            outilsZoom_.Enabled = false;
+            zoomToolStripMenuItem.Enabled = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1634,12 +1722,25 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void menuEdition__VisibleChanged(object sender, EventArgs e)
         {
+            crochetPourVueEdition();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void crochetPourVueEdition()
+        ///
+        /// Gère l'évènement de changement de visibilité de la barre de menu édition.
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void crochetPourVueEdition()
+        {
             switch (FonctionsNatives.obtenirTypeVue())
             {
                 case 1:
                     orbiteMenuEdition_.Checked = true;
                     orthographiqueMenuEdition_.Checked = false;
                     break;
+
                 case 0:
                 default:
                     orbiteMenuEdition_.Checked = false;
@@ -1659,6 +1760,19 @@ namespace InterfaceGraphique
         /// 
         ////////////////////////////////////////////////////////////////////////
         private void menuSimTest_VisibleChanged(object sender, EventArgs e)
+        {
+            crochetPourVueSimTest();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void crochetPourVueSimTest()
+        ///
+        /// Gère l'évènement de changement de visibilité de la barre de menu de simulation ou test.
+        ///
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void crochetPourVueSimTest()
         {
             switch (FonctionsNatives.obtenirTypeVue())
             {
