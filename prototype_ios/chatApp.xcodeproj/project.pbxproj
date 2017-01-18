@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C08445C1E2F180F0049DD84 /* ChatViewControllerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C08445B1E2F180F0049DD84 /* ChatViewControllerTableViewController.swift */; };
 		5C08445E1E2F1B820049DD84 /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C08445D1E2F1B820049DD84 /* ChatCell.swift */; };
 		5C1041431E2F08240093782A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C1041421E2F08240093782A /* Main.storyboard */; };
 		5CE0209F1E2EC8F2001D696B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE0209E1E2EC8F2001D696B /* AppDelegate.swift */; };
-		5CE020A11E2EC8F2001D696B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE020A01E2EC8F2001D696B /* ViewController.swift */; };
+		5CE020A11E2EC8F2001D696B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE020A01E2EC8F2001D696B /* ChatViewController.swift */; };
 		5CE020A61E2EC8F2001D696B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5CE020A51E2EC8F2001D696B /* Assets.xcassets */; };
 		5CE020A91E2EC8F2001D696B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CE020A71E2EC8F2001D696B /* LaunchScreen.storyboard */; };
 		5CE020B41E2EC8F2001D696B /* chatAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE020B31E2EC8F2001D696B /* chatAppTests.swift */; };
@@ -60,12 +59,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5C08445B1E2F180F0049DD84 /* ChatViewControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewControllerTableViewController.swift; sourceTree = "<group>"; };
 		5C08445D1E2F1B820049DD84 /* ChatCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
 		5C1041421E2F08240093782A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5CE0209B1E2EC8F2001D696B /* chatApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CE0209E1E2EC8F2001D696B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		5CE020A01E2EC8F2001D696B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		5CE020A01E2EC8F2001D696B /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		5CE020A51E2EC8F2001D696B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CE020A81E2EC8F2001D696B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5CE020AA1E2EC8F2001D696B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -151,9 +149,8 @@
 			isa = PBXGroup;
 			children = (
 				5C1041421E2F08240093782A /* Main.storyboard */,
-				5C08445B1E2F180F0049DD84 /* ChatViewControllerTableViewController.swift */,
 				5CE0209E1E2EC8F2001D696B /* AppDelegate.swift */,
-				5CE020A01E2EC8F2001D696B /* ViewController.swift */,
+				5CE020A01E2EC8F2001D696B /* ChatViewController.swift */,
 				5CE020A51E2EC8F2001D696B /* Assets.xcassets */,
 				5CE020A71E2EC8F2001D696B /* LaunchScreen.storyboard */,
 				5CE020AA1E2EC8F2001D696B /* Info.plist */,
@@ -362,14 +359,13 @@
 				5CE3601D1E2ED6ED000527FE /* SocketParsable.swift in Sources */,
 				5CE3601F1E2ED6ED000527FE /* SocketTypes.swift in Sources */,
 				5CE360141E2ED6ED000527FE /* SocketEventHandler.swift in Sources */,
-				5C08445C1E2F180F0049DD84 /* ChatViewControllerTableViewController.swift in Sources */,
 				5CE3600F1E2ED6ED000527FE /* SocketEngineClient.swift in Sources */,
 				5CE3601C1E2ED6ED000527FE /* SocketPacket.swift in Sources */,
 				5CE3600B1E2ED6ED000527FE /* SocketAckManager.swift in Sources */,
 				5CE360121E2ED6ED000527FE /* SocketEngineSpec.swift in Sources */,
 				5CE3600A1E2ED6ED000527FE /* SocketAckEmitter.swift in Sources */,
 				5CE3600E1E2ED6ED000527FE /* SocketEngine.swift in Sources */,
-				5CE020A11E2EC8F2001D696B /* ViewController.swift in Sources */,
+				5CE020A11E2EC8F2001D696B /* ChatViewController.swift in Sources */,
 				5CE0209F1E2EC8F2001D696B /* AppDelegate.swift in Sources */,
 				5CE360171E2ED6ED000527FE /* SocketIOClientConfiguration.swift in Sources */,
 				5CE360201E2ED6ED000527FE /* SSLSecurity.swift in Sources */,
