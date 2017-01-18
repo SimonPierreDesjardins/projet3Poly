@@ -102,10 +102,10 @@ namespace modele{
 
 		/// Le flag aiProcess_Triangulate, inclus dans aiProcessPreset_TargetRealtime_Quality,
 		/// fera en sorte que les mesh ne comporteront que des triangles.
-		const aiScene* scene{ importer.ReadFile(cheminFichier_, aiProcessPreset_TargetRealtime_Quality) };
+		const aiScene* scene{ importer.ReadFile(cheminFichier_.string(), aiProcessPreset_TargetRealtime_Quality) };
 
 		if (scene == nullptr) {
-			utilitaire::afficherErreur(std::string{ "Impossible de charger l'objet 3d : " } +cheminFichier.filename() + std::string{ "." });
+			utilitaire::afficherErreur(std::string{ "Impossible de charger l'objet 3d : " } + cheminFichier.filename().string() + std::string{ "." });
 			return;
 		}
 

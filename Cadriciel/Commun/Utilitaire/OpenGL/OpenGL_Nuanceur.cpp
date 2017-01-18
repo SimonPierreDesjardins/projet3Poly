@@ -122,7 +122,7 @@ namespace opengl{
 		/// Si la compilation réussie, on conserve le nom du fichier
 		if (flags.estCompile)
 		{
-			nom_ = Path{ code_filename }.filename();
+			nom_ = Path{ code_filename }.filename().string();
 		}
 	}
 

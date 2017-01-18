@@ -150,15 +150,6 @@
     <ClCompile Include="Arbre\Noeuds\NoeudComposite.cpp">
       <Filter>Source Files\Arbre\Noeuds</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\ConfigSceneTest.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\NoeudAbstraitTest.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\BancTests.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="Interface\FacadeInterfaceNative.cpp">
       <Filter>Source Files\Interface</Filter>
     </ClCompile>
@@ -307,9 +298,6 @@
     <ClCompile Include="Capteur\CapteurOptique.cpp">
       <Filter>Source Files\Capteur</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\PhysiqueTest.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="Physique\RectangleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
     </ClCompile>
@@ -327,15 +315,6 @@
     </ClCompile>
     <ClCompile Include="Physique\CercleEnglobant.cpp">
       <Filter>Source Files\Physique</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\ProfilUtilisateurTest.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\CapteurTest.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\ControleRobotTest.cpp">
-      <Filter>Source Files\Tests</Filter>
     </ClCompile>
     <ClCompile Include="EnginSon\EnginSon.cpp">
       <Filter>Source Files\EnginSon</Filter>
@@ -368,15 +347,6 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudComposite.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
-    </ClInclude>
-    <ClInclude Include="Tests\ConfigSceneTest.h">
-      <Filter>Header Files\Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="Tests\NoeudAbstraitTest.h">
-      <Filter>Header Files\Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="Tests\BancTests.h">
-      <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="Interface\FacadeInterfaceNative.h">
       <Filter>Header Files\Interface</Filter>
@@ -552,9 +522,6 @@
     <ClInclude Include="Capteur\CapteurOptique.h">
       <Filter>Header Files\Capteur</Filter>
     </ClInclude>
-    <ClInclude Include="Tests\PhysiqueTest.h">
-      <Filter>Header Files\Tests</Filter>
-    </ClInclude>
     <ClInclude Include="Physique\RectangleEnglobant.h">
       <Filter>Header Files\Physique</Filter>
     </ClInclude>
@@ -569,15 +536,6 @@
     </ClInclude>
     <ClInclude Include="Arbre\Noeuds\NoeudRoues.h">
       <Filter>Header Files\Arbre\Noeuds</Filter>
-    </ClInclude>
-    <ClInclude Include="Tests\ControleRobotTest.h">
-      <Filter>Header Files\Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="Tests\ProfilUtilisateurTest.h">
-      <Filter>Header Files\Tests</Filter>
-    </ClInclude>
-    <ClInclude Include="Tests\CapteurTest.h">
-      <Filter>Header Files\Tests</Filter>
     </ClInclude>
     <ClInclude Include="EnginSon\EnginSon.h">
       <Filter>Header Files\EnginSon</Filter>

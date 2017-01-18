@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
@@ -21,12 +21,12 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v120</PlatformToolset>
+    <PlatformToolset>v140</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -75,7 +75,7 @@
       <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>opengl32.lib;glu32.lib;freetype246_D_x64.lib;glew32s.lib;tinyxml_D_x64.lib;assimp.lib;cppunit_D_x64.lib;ftgl.lib;fmodexL64_vc.lib;FreeImage.lib;Box2D_D_x64.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;freetype246_D_x64.lib;glew32s.lib;tinyxml_D_x64.lib;assimp.lib;ftgl.lib;fmodexL64_vc.lib;FreeImage.lib;Box2D_D_x64.lib;Winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>../../Exe/$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>../../Commun/Externe/Box2D/lib;../../Commun/Externe/assimp/lib;../../Commun/Externe/cppunit/lib;../../Commun/Externe/FMOD/lib;../../Commun/Externe/FreeImage/lib;../../Commun/Externe/FreeType/lib;../../Commun/Externe/FTGL/lib;../../Commun/Externe/GLEW/lib;../../Commun/Externe/tinyxml2/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -186,13 +186,6 @@
     <ClCompile Include="Physique\FormeEnglobanteAbstraite.cpp" />
     <ClCompile Include="Physique\RectangleEnglobant.cpp" />
     <ClCompile Include="ProfilUtilisateur\ProfilUtilisateur.cpp" />
-    <ClCompile Include="Tests\BancTests.cpp" />
-    <ClCompile Include="Tests\CapteurTest.cpp" />
-    <ClCompile Include="Tests\ConfigSceneTest.cpp" />
-    <ClCompile Include="Tests\ControleRobotTest.cpp" />
-    <ClCompile Include="Tests\NoeudAbstraitTest.cpp" />
-    <ClCompile Include="Tests\PhysiqueTest.cpp" />
-    <ClCompile Include="Tests\ProfilUtilisateurTest.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationLigne.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationMur.cpp" />
     <ClCompile Include="Visiteur\VisiteurCreationPoteau.cpp" />
@@ -264,13 +257,6 @@
     <ClInclude Include="Physique\FormeEnglobanteAbstraite.h" />
     <ClInclude Include="Physique\RectangleEnglobant.h" />
     <ClInclude Include="ProfilUtilisateur\ProfilUtilisateur.h" />
-    <ClInclude Include="Tests\BancTests.h" />
-    <ClInclude Include="Tests\CapteurTest.h" />
-    <ClInclude Include="Tests\ConfigSceneTest.h" />
-    <ClInclude Include="Tests\ControleRobotTest.h" />
-    <ClInclude Include="Tests\NoeudAbstraitTest.h" />
-    <ClInclude Include="Tests\PhysiqueTest.h" />
-    <ClInclude Include="Tests\ProfilUtilisateurTest.h" />
     <ClInclude Include="Visiteur\VisiteurAbstrait.h" />
     <ClInclude Include="Visiteur\VisiteurCreationLigne.h" />
     <ClInclude Include="Visiteur\VisiteurCreationMur.h" />
