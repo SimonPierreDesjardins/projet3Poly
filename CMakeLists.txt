@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.7.0)
+cmake_minimum_required(VERSION 3.5.0)
 project(log3900-03)
 
 # Use C++11 with visual studio warnings level 4

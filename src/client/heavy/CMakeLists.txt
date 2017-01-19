@@ -112,3 +112,7 @@ add_library(util
     ${OPENGL_SRC}
     ${VUE_SRC}
     ${UTIL_SRC})
+
+include_external_msproject(InterfaceGraphique 
+    ${CMAKE_SOURCE_DIR}/src/client/heavy/ui/InterfaceGraphique.csproj)
+
