@@ -10,7 +10,7 @@ import UIKit
 
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
 
-    let swiftBlogs = ["Ray Wenderlich", "NSHipster", "iOS Developer Tips", "Jameson Quave", "Natasha The Robot", "Coding Explorer", "That Thing In Swift", "Andrew Bancroft", "iAchieved.it", "Airspeed Velocity"]
+    var chatHistoric = [String]()
     
     let textCellIdentifier = "ChatCell"
     
@@ -33,6 +33,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         
+        chatSendButt.addTarget(self, action: #selector(self.sendButtonPress(button:)), for: .touchUpInside)
+        
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -40,14 +42,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ chatTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return swiftBlogs.count
+        return chatHistoric.count
     }
     
     func tableView(_ chatTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = chatTableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
         
         let row = indexPath.row
-        cell.textLabel?.text = swiftBlogs[row]
+        cell.textLabel?.text = chatHistoric[row]
         
         return cell
     }
@@ -56,7 +58,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
         
         let row = indexPath.row
-        print(swiftBlogs[row])
+        print(chatHistoric[row])
     }
     
     deinit {
@@ -87,6 +89,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
+    }
+    
+    func sendButtonPress(button: UIButton)
+    {
+        chatHistoric.append(chatBoxView.text)
+        chatBoxView.text = ""
+        
+        chatTableView.reloadData()
     }
 }
 
