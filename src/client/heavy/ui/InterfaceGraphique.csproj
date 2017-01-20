@@ -34,7 +34,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Exe\</OutputPath>
+    <OutputPath>..\..\..\..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -191,7 +191,7 @@
     <None Include="Resources\law2.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Enum\Enum.csproj">
+    <ProjectReference Include="Enum\Enum.csproj">
       <Project>{c6fb0f99-403a-43a9-86b5-c8ca99ac438a}</Project>
       <Name>Enum</Name>
     </ProjectReference>

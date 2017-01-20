@@ -15,7 +15,7 @@
 #include "glm\glm.hpp"
 #include <Windows.h>
 #include <Windowsx.h>
-#include "./../../Enum/ModeEnum.cs"
+#include "ModeEnum.cs"
 
 
 

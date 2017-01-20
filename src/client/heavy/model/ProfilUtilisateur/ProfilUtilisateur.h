@@ -15,7 +15,7 @@
 #include <unordered_map>
 #include "CommandeRobot.h"
 #include "ComportementAbstrait.h"
-#include "./../../Enum/ConfigureControlEnum.cs"
+#include "ConfigureControlEnum.cs"
 #include "rapidjson\filereadstream.h"
 #include <deque>
 #include <Windows.h>

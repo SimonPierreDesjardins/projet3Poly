@@ -1,5 +1,48 @@
+# Permettre d'inclure des fichiers d'entêtes des librairies externes sans spécifier le path complet
+
+find_library(tinyxml_LIB
+    tinyxml_D_x64
+    "${CMAKE_SOURCE_DIR}/ext/tinyxml2/lib"
+)
+
+find_library(glew_LIB
+    glew32
+    "${CMAKE_SOURCE_DIR}/ext/GLEW/lib"
+)
+
+find_library(ftgl_LIB
+    ftgl
+    "${CMAKE_SOURCE_DIR}/ext/FTGL/lib"
+)
+
+find_library(freeType_LIB
+    freetype246_R_x64 
+    "${CMAKE_SOURCE_DIR}/ext/FreeType/lib"
+)
+
+find_library(freeImage_LIB
+    freeImage    
+    "${CMAKE_SOURCE_DIR}/ext/FreeImage/lib"
+)
+
+find_library(fmod_LIB
+    fmodexL64_vc
+    "${CMAKE_SOURCE_DIR}/ext/FMOD/lib"
+)
+
+find_library(box2d_LIB
+    Box2D_D_x64
+    "${CMAKE_SOURCE_DIR}/ext/Box2D/lib"
+)
+
+find_library(assimp_LIB
+    assimp
+    "${CMAKE_SOURCE_DIR}/ext/assimp/lib"
+)
+
+find_package(OpenGL REQUIRED)
+
 include_directories(
-    ${CMAKE_SOURCE_DIR}/ext/tinyxml2/include
     ${CMAKE_SOURCE_DIR}/ext/RapidJSON/include
     ${CMAKE_SOURCE_DIR}/ext/glm/include
     ${CMAKE_SOURCE_DIR}/ext/GLEW/include
@@ -8,111 +51,39 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/ext/FMOD/include
     ${CMAKE_SOURCE_DIR}/ext/Box2D/include
     ${CMAKE_SOURCE_DIR}/ext/assimp/include
+    ${CMAKE_SOURCE_DIR}/ext/FTGL/include
+    ${CMAKE_SOURCE_DIR}/ext/tinyxml2/include
+    ${OpenGL_INCLUDE_DIRS}
 )
 
-find_library(EXTERNAL_LIBRARIES
-    NAMES
-    tinyxml_D_x64
-    glew32
-    glew32s
-    ftgl
-    freetype246_R_x64 
-    FreeImage
-    fmodexL64_vc
-    Box2D_D_x64
-    assimp
-
-    PATHS 
-    "${CMAKE_SOURCE_DIR/ext/tinyxml2/lib}"
-    "${CMAKE_SOURCE_DIR/ext/GLEW/lib}"
-    "${CMAKE_SOURCE_DIR/ext/FTGL/lib}"
-    "${CMAKE_SOURCE_DIR/ext/FreeType/lib}"
-    "${CMAKE_SOURCE_DIR/ext/FreeImage/lib}"
-    "${CMAKE_SOURCE_DIR/ext/FMOD/lib}"
-    "${CMAKE_SOURCE_DIR/ext/Box2D/lib}"
-    "${CMAKE_SOURCE_DIR/ext/assimp/lib}"
-    NO_DEFAULT_PATH
+set(EXTERNAL_LIBRARIES
+    ${tinyxml_LIB}
+    ${glew_LIB}
+    ${ftgl_LIB}
+    ${freeType_LIB}
+    ${freeImage_LIB}
+    ${fmod_LIB}
+    ${box2d_LIB}
+    ${assimp_LIB}
+    ${OPENGL_gl_LIBRARY}
+    ${OPENGL_glu_LIBRARY}
 )
 
 include_directories(
-    model/Commun/Utilitaire
-    model/Commun/Utilitaire/Modele
-    model/Commun/Utilitaire/OpenGL
-    model/Commun/Utilitaire/Vue)
+    util/
+    util/Modele
+    util/OpenGL
+    util/Vue
+    ui/Enum)
 
-set(MODEL_SRC
-    model/Commun/Utilitaire/Modele/Materiau.h
-    model/Commun/Utilitaire/Modele/Materiau.cpp
-    model/Commun/Utilitaire/Modele/Mesh.h
-    model/Commun/Utilitaire/Modele/Mesh.cpp
-    model/Commun/Utilitaire/Modele/Modele3D.h
-    model/Commun/Utilitaire/Modele/Modele3D.cpp
-    model/Commun/Utilitaire/Modele/Modele3D.h
-    model/Commun/Utilitaire/Modele/Modele3D.cpp
-)
+add_subdirectory(util)
+add_subdirectory(model)
 
-set(OPENGL_SRC
-    model/Commun/Utilitaire/OpenGL/AideGL.h
-    model/Commun/Utilitaire/OpenGL/AideGL.cpp
-    model/Commun/Utilitaire/OpenGL/BoiteEnvironnement.h
-    model/Commun/Utilitaire/OpenGL/BoiteEnvironnement.cpp
-    model/Commun/Utilitaire/OpenGL/EtatOpenGL.h
-    model/Commun/Utilitaire/OpenGL/EtatOpenGL.cpp
-    model/Commun/Utilitaire/OpenGL/OpenGL_Debug.h
-    model/Commun/Utilitaire/OpenGL/OpenGL_Debug.cpp
-    model/Commun/Utilitaire/OpenGL/OpenGL_Nuanceur.h
-    model/Commun/Utilitaire/OpenGL/OpenGL_Nuanceur.cpp
-    model/Commun/Utilitaire/OpenGL/OpenGL_Programme.h
-    model/Commun/Utilitaire/OpenGL/OpenGL_Programme.cpp
-    model/Commun/Utilitaire/OpenGL/OpenGL_VBO.h
-    model/Commun/Utilitaire/OpenGL/OpenGL_VBO.cpp
-)
-
-set(VUE_SRC
-    model/Commun/Utilitaire/Vue/Camera.h
-    model/Commun/Utilitaire/Vue/Camera.cpp
-    model/Commun/Utilitaire/Vue/Projection.h
-    model/Commun/Utilitaire/Vue/Projection.cpp
-    model/Commun/Utilitaire/Vue/ProjectionOrtho.h
-    model/Commun/Utilitaire/Vue/ProjectionOrtho.cpp
-    model/Commun/Utilitaire/Vue/Vue.h
-    model/Commun/Utilitaire/Vue/Vue.cpp
-    model/Commun/Utilitaire/Vue/VueOrbite.h
-    model/Commun/Utilitaire/Vue/VueOrbite.cpp
-    model/Commun/Utilitaire/Vue/VueOrtho.h
-    model/Commun/Utilitaire/Vue/VueOrtho.cpp
-)
-
-set(UTIL_SRC
-    model/Commun/Utilitaire/AideCollision.h
-    model/Commun/Utilitaire/AideCollision.cpp
-    model/Commun/Utilitaire/CEcritureFichierBinaire.h
-    model/Commun/Utilitaire/CEcritureFichierBinaire.cpp
-    model/Commun/Utilitaire/CLectureFichierBinaire.h
-    model/Commun/Utilitaire/CLectureFichierBinaire.cpp
-    model/Commun/Utilitaire/CompteurAffichage.h
-    model/Commun/Utilitaire/CompteurAffichage.cpp
-    model/Commun/Utilitaire/Droite3D.h
-    model/Commun/Utilitaire/Droite3D.cpp
-    model/Commun/Utilitaire/LignePointillee.h
-    model/Commun/Utilitaire/Plan3D.h
-    model/Commun/Utilitaire/Plan3D.cpp
-    model/Commun/Utilitaire/Singleton.h
-    model/Commun/Utilitaire/Utilitaire.h
-    model/Commun/Utilitaire/Utilitaire.cpp
-)
-
-source_group("opengl" FILES ${OPENGL_SRC})
-source_group("model" FILES ${MODEL_SRC})
-source_group("vue" FILES ${VUE_SRC})
-source_group("" FILES ${UTIL_SRC})
-
-add_library(util
-    ${MODEL_SRC}
-    ${OPENGL_SRC}
-    ${VUE_SRC}
-    ${UTIL_SRC})
-
+# Ajout du projet C# pour l'interface graphique
 include_external_msproject(InterfaceGraphique 
     ${CMAKE_SOURCE_DIR}/src/client/heavy/ui/InterfaceGraphique.csproj)
+
+# Ajout du projet C# pour les Enum
+include_external_msproject(Enum 
+    ${CMAKE_SOURCE_DIR}/src/client/heavy/ui/Enum/Enum.csproj)
 

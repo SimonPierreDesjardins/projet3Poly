@@ -12,7 +12,7 @@
 #define COMMANDE_ROBOT_H
 
 #include "ControleRobot.h"
-#include "./../../Enum/TypeCommandeEnum.cs"
+#include "TypeCommandeEnum.cs"
 #include "EnginSon.h"
 
 ///////////////////////////////////////////////////////////////////////////

@@ -118,7 +118,7 @@ void ArbreRenduINF2990::chargerZoneDefaut(){
 		if (stat(cheminDossierZone.c_str(), &buffer) != 0){
 			std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 			std::wstring wideString = converter.from_bytes(cheminDossierZone);
-			CreateDirectory(wideString.c_str(), NULL);
+			CreateDirectory(cheminDossierZone.c_str(), NULL);
 		}
 		std::shared_ptr<NoeudAbstrait> table = { creerNoeud(NOM_TABLE) };
 		ajouter(table);

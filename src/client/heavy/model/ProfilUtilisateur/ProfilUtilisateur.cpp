@@ -89,7 +89,7 @@ bool ProfilUtilisateur::creationDossierDonnees(){
 	if (!dossierDonneesExiste){
 		std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
 		std::wstring wideString = converter.from_bytes(CHEMIN_PROFIL);
-		CreateDirectory(wideString.c_str(), NULL);
+		CreateDirectory(CHEMIN_PROFIL.c_str(), NULL);
 	}
 	return dossierDonneesExiste;
 }

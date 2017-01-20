@@ -17,7 +17,7 @@
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
 
-#include "./../../Enum/TypeComportementEnum.cs"
+#include "TypeComportementEnum.cs"
 
 class ControleRobot;
 
