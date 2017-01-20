@@ -6,14 +6,33 @@
         xmlns:local="clr-namespace:InterfaceGraphique_ClientLourd"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button x:Name="ConnectButton" Content="Connection" HorizontalAlignment="Left" Margin="34,230,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-        <PasswordBox x:Name="passwordBox" HorizontalAlignment="Left" Margin="34,158,0,0" VerticalAlignment="Top" Width="176"/>
-        <Image x:Name="image" HorizontalAlignment="Left" Height="244" Margin="263,32,-20,0" VerticalAlignment="Top" Width="274" OpacityMask="#FFC12525" Source="koala.jpg"/>
-        <TextBox x:Name="textBox" HorizontalAlignment="Left" Height="23" Margin="34,72,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="176"/>
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="34,100,0,0" VerticalAlignment="Top" Width="176"/>
-        <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="34,176,0,0" VerticalAlignment="Top" Width="176"/>
-        <Label x:Name="label2" Content="Username" HorizontalAlignment="Left" Margin="34,46,0,0" VerticalAlignment="Top" Width="176"/>
-        <Label x:Name="label3" Content="Password" HorizontalAlignment="Left" Margin="34,132,0,0" VerticalAlignment="Top" Width="176"/>
+    <Grid x:Name="Grid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="68*"/>
+            <ColumnDefinition Width="449*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Start of Login Screen components -->
+        <Button x:Name="ConnectButton" Content="Connection" HorizontalAlignment="Left" Margin="34,230,0,0" VerticalAlignment="Top" Width="75" Click="connectButton_Click" Grid.ColumnSpan="2"/>
+        <PasswordBox x:Name="password_textbox" HorizontalAlignment="Left" Margin="34,158,0,0" VerticalAlignment="Top" Width="176" ToolTip="Enter password here" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <Image x:Name="login_image" HorizontalAlignment="Left" Height="244" Margin="194.907,32,-20,0" VerticalAlignment="Top" Width="274" OpacityMask="#FFC12525" Source="koala.jpg" Visibility="Hidden" Grid.Column="1"/>
+        <TextBox x:Name="username_textbox" HorizontalAlignment="Left" Height="23" Margin="34,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" ToolTip="Enter username here" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <Label x:Name="username_label_warning" Content="" HorizontalAlignment="Left" Margin="34,100,0,0" VerticalAlignment="Top" Width="176" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <Label x:Name="password_label_warning" Content="" HorizontalAlignment="Left" Margin="34,176,0,0" VerticalAlignment="Top" Width="176" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <Label x:Name="username_label" Content="Username" HorizontalAlignment="Left" Margin="34,46,0,0" VerticalAlignment="Top" Width="176" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <Label x:Name="password_label" Content="Password" HorizontalAlignment="Left" Margin="34,132,0,0" VerticalAlignment="Top" Width="176" Visibility="Hidden" Grid.ColumnSpan="2"/>
+        <!-- End of Login Screen Components -->
+        <!-- Start of Chat Screen components -->
+        <ListBox x:Name="chat_listBox" HorizontalAlignment="Left" Height="218" Margin="128.907,32,0,0" VerticalAlignment="Top" Width="310" Grid.Column="1"/>
+        <ListBox x:Name="users_listBox" HorizontalAlignment="Left" Height="264" Margin="10,32,0,0" VerticalAlignment="Top" Width="182" Grid.ColumnSpan="2"/>
+        <Button x:Name="send_button" Content="Send" HorizontalAlignment="Left" Margin="381.907,263,0,0" VerticalAlignment="Top" Width="57" Height="33" Grid.Column="1"/>
+        <TextBox x:Name="chat_textBox" Grid.Column="1" HorizontalAlignment="Left" Height="34" Margin="129,262,0,0" TextWrapping="Wrap" Text="Enter your message here" VerticalAlignment="Top" Width="248"/>
+        <Menu x:Name="chat_menu" HorizontalAlignment="Left" Height="18" VerticalAlignment="Top" Width="517" Grid.ColumnSpan="2">
+            <MenuItem Header="Chat options">
+                <MenuItem x:Name="leaveChatMenuItem" Header="Leave Chat" Click="leaveChatMenuItem_Click"/>
+                <MenuItem x:Name="displayUserListChatMenuItem" Header="Hide user list" Click="displayUserListChatMenuItem_Click"/>
+            </MenuItem>
+        </Menu>
+
+
     </Grid>
 </Window>
