@@ -67,8 +67,8 @@ set(CONTROLE_ROBOT_SRC
 )
 
 set(COMMANDE_SRC
-    ControleRobot/ControleRobot.h
-    ControleRobot/ControleRobot.cpp
+    ControleRobot/Commande/CommandeRobot.h
+    ControleRobot/Commande/CommandeRobot.cpp
 )
 
 set(COMPORTEMENT_SRC
@@ -221,6 +221,7 @@ add_library(model SHARED
     ${INTEFACE_SRC}
     ${LUMIERE_SRC}
     ${MACHINE_A_ETATS_SRC}
+    ${MACHINE_A_MODES_SRC}
     ${PHYSIQUE_SRC}
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}

@@ -5,8 +5,8 @@ set(MODEL_SRC
     Modele/Mesh.cpp
     Modele/Modele3D.h
     Modele/Modele3D.cpp
-    Modele/Modele3D.h
-    Modele/Modele3D.cpp
+    Modele/Noeud.h
+    Modele/Noeud.cpp
 )
 
 set(OPENGL_SRC
@@ -33,6 +33,8 @@ set(VUE_SRC
     Vue/Projection.cpp
     Vue/ProjectionOrtho.h
     Vue/ProjectionOrtho.cpp
+    Vue/ProjectionPerspective.h
+    Vue/ProjectionPerspective.cpp
     Vue/Vue.h
     Vue/Vue.cpp
     Vue/VueOrbite.h
