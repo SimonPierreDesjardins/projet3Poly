@@ -24,7 +24,7 @@ namespace InterfaceGraphique_ClientLourd
         {
             InitializeComponent();
             switchScreen(this);
-            showLoginScreen();
+            showChatScreen();
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -68,6 +68,13 @@ namespace InterfaceGraphique_ClientLourd
             chat_listBox.Visibility = Visibility.Visible;
             chat_textBox.Visibility = Visibility.Visible;
             send_button.Visibility = Visibility.Visible;
+
+            //Make sure every component is at the right place
+            Grid.SetColumnSpan(chat_listBox, 2);
+            Grid.SetColumn(chat_listBox, 3);
+
+            Grid.SetColumn(chat_textBox, 3);
+            Grid.SetColumnSpan(chat_textBox, 1);
         }
 
         private void leaveChatMenuItem_Click(object sender, RoutedEventArgs e)
@@ -80,30 +87,45 @@ namespace InterfaceGraphique_ClientLourd
         {
             if (users_listBox.Visibility.Equals(Visibility.Visible))
             {
+                displayUserListChatMenuItem.Header = "Show user list";
                 users_listBox.Visibility = Visibility.Collapsed;
-                //chat_listBox.Width =  ActualWidth;
-                //chat_listBox.HorizontalAlignment
-                chat_listBox.Width = Width - 100;
-                chat_listBox.Margin = new Thickness(0, 30, 0, 1);
-                double i = this.ActualWidth;
-                i = 0;
+               
+                Grid.SetColumn(chat_listBox, 2);
+                Grid.SetColumnSpan(chat_listBox, 3);
+
+                Grid.SetColumn(chat_textBox, 2);
+                Grid.SetColumnSpan(chat_textBox, 2);
+
             }
             else
             {
+                displayUserListChatMenuItem.Header = "Hide user list";
                 users_listBox.Visibility = Visibility.Visible;
-                chat_listBox.Width = 2/3 * Grid.ActualWidth;
+                
+                Grid.SetColumnSpan(chat_listBox, 2);
+                Grid.SetColumn(chat_listBox, 3);
+
+                Grid.SetColumn(chat_textBox, 3);
+                Grid.SetColumnSpan(chat_textBox, 1);
             }
-
-
         }
 
-        /*
-         * DoubleAnimation doubleAnimation = new DoubleAnimation();
-            doubleAnimation.From = -tbmarquee.ActualWidth;
-            doubleAnimation.To = canMain.ActualWidth;
-            doubleAnimation.RepeatBehavior = RepeatBehavior.Forever;
-            doubleAnimation.Duration = new Duration(TimeSpan.Parse("0 : 0 : 10"));
-            tbmarquee.BeginAnimation(Canvas.LeftProperty, doubleAnimation);
-            */
+        private void chat_textBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (chat_textBox.Text == "Enter your message here")
+            {
+                chat_textBox.Text = "";
+            }
+            chat_textBox.Foreground = Brushes.Black;
+        }
+
+        private void chat_textBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (chat_textBox.Text.Length == 0)
+            {
+                chat_textBox.Foreground = Brushes.Gray;
+                chat_textBox.Text = "Enter your message here";
+            }
+        }
     }
 }
