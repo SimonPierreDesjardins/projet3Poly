@@ -11,9 +11,8 @@ import JSQMessagesViewController
 
 
 class ChatViewController: JSQMessagesViewController {
-    
-    
-    var chatHistoric = [String]()
+
+    var chatHistoric = [JSQMessage]()
     
     let textCellIdentifier = "chatCell"
     
@@ -21,11 +20,8 @@ class ChatViewController: JSQMessagesViewController {
     
     let calendar = Calendar.current
     
-    @IBOutlet weak var chatSendButtonHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var chatBoxHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var chatTableView: UITableView!
-    @IBOutlet weak var chatBoxView: UITextView!
-    @IBOutlet weak var chatSendButt: UIButton!
+    lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
+    lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -37,11 +33,71 @@ class ChatViewController: JSQMessagesViewController {
         
         self.senderId = "Moi"
         
-        self.senderDisplayName = "Philippe"
+        // No avatars
+        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
+        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
-        
+        self.incomingMediaCellIdentifier = MessageViewIncoming.mediaCellReuseIdentifier();
+        self.collectionView.register(MessageViewIncoming.nib(), forCellWithReuseIdentifier: self.incomingMediaCellIdentifier)
+        self.outgoingMediaCellIdentifier = MessageViewOutgoing.mediaCellReuseIdentifier();
+        self.collectionView.register(MessageViewOutgoing.nib(), forCellWithReuseIdentifier: self.outgoingMediaCellIdentifier)
     }
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
+        return chatHistoric[indexPath.item]
+    }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return chatHistoric.count
+    }
+    
+    private func setupOutgoingBubble() -> JSQMessagesBubbleImage {
+        let bubbleImageFactory = JSQMessagesBubbleImageFactory()
+        return bubbleImageFactory!.outgoingMessagesBubbleImage(with: UIColor.jsq_messageBubbleBlue())
+    }
+    
+    private func setupIncomingBubble() -> JSQMessagesBubbleImage {
+        let bubbleImageFactory = JSQMessagesBubbleImageFactory()
+        return bubbleImageFactory!.incomingMessagesBubbleImage(with: UIColor.jsq_messageBubbleLightGray())
+    }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource! {
+        let message = chatHistoric[indexPath.item] // 1
+        if message.senderId == senderId { // 2
+            return outgoingBubbleImageView
+        } else { // 3
+            return incomingBubbleImageView
+        }
+    }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAt indexPath: IndexPath!) -> JSQMessageAvatarImageDataSource! {
+        return nil
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        let message = chatHistoric[indexPath.item]
+        
+        if message.senderId == self.senderId {
+            
+            let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! MessageViewOutgoing
+            
+            cell.timeLabel.text = DateFormatter().string(from: message.date)
+            
+        } else {
+            
+            let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! MessageViewIncoming
+            
+            cell.timeLabel.text = DateFormatter().string(from: message.date)
+        }
+        
+        return cell
+    }
+    
+    override func textViewDidChange(_ textView: UITextView) {
+        super.textViewDidChange(textView)
+        // If the text is not empty, the user is typing
+        print(textView.text != "")
+    }
 }
 

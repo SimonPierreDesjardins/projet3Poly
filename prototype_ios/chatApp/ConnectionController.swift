@@ -68,11 +68,6 @@ class ConnectionController: UIViewController
         }
     }
     
-    @IBAction func connectionButtonClicked(_ sender: Any)
-    {
-        performSegue(withIdentifier: "connectionController", sender: sender)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         let chatViewController = segue.destination as! ChatViewController
