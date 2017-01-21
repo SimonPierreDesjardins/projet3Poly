@@ -11,5 +11,7 @@ import UIKit
 class ChatCell: UITableViewCell
 {
     @IBOutlet weak var myView: UIView!
-    @IBOutlet weak var myCellLabbel: UILabel!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var authorLabel: UILabel!
+    @IBOutlet weak var dateTimeLabel: UILabel!
 }

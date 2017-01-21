@@ -7,12 +7,19 @@
 //
 
 import UIKit
+import JSQMessagesViewController
 
-class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
 
+class ChatViewController: JSQMessagesViewController {
+    
+    
     var chatHistoric = [String]()
     
-    let textCellIdentifier = "ChatCell"
+    let textCellIdentifier = "chatCell"
+    
+    let date = Date()
+    
+    let calendar = Calendar.current
     
     @IBOutlet weak var chatSendButtonHeightConstraint: NSLayoutConstraint!
     @IBOutlet weak var chatBoxHeightConstraint: NSLayoutConstraint!
@@ -28,75 +35,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        chatTableView.delegate = self
-        chatTableView.dataSource = self
+        self.senderId = "Moi"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        self.senderDisplayName = "Philippe"
         
-        chatSendButt.addTarget(self, action: #selector(self.sendButtonPress(button:)), for: .touchUpInside)
         
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
-    }
     
-    func tableView(_ chatTableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return chatHistoric.count
-    }
-    
-    func tableView(_ chatTableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = chatTableView.dequeueReusableCell(withIdentifier: textCellIdentifier, for: indexPath as IndexPath)
-        
-        let row = indexPath.row
-        cell.textLabel?.text = chatHistoric[row]
-        
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
-        
-        let row = indexPath.row
-        print(chatHistoric[row])
-    }
-    
-    deinit {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    func keyboardNotification(notification: NSNotification) {
-        if let userInfo = notification.userInfo {
-            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
-            let duration:TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
-            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
-            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
-            let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
-            if (endFrame?.origin.y)! >= UIScreen.main.bounds.size.height {
-                self.chatSendButtonHeightConstraint?.constant = 0.0
-                self.chatBoxHeightConstraint?.constant = 0.0
-            } else {
-                self.chatSendButtonHeightConstraint?.constant = endFrame?.size.height ?? 0.0
-                self.chatBoxHeightConstraint?.constant = endFrame?.size.height ?? 0.0
-            }
-            UIView.animate(withDuration: duration,
-                           delay: TimeInterval(0),
-                           options: animationCurve,
-                           animations: { self.view.layoutIfNeeded() },
-                           completion: nil)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
-    
-    func sendButtonPress(button: UIButton)
-    {
-        chatHistoric.append(chatBoxView.text)
-        chatBoxView.text = ""
-        
-        chatTableView.reloadData()
-    }
 }
 

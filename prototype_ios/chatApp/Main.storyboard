@@ -6,13 +6,14 @@
     <dependencies>
         <deployment version="4128" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--ChatView Controller-->
+        <!--Connection Controller-->
         <scene sceneID="seM-uK-tlN">
             <objects>
-                <viewController storyboardIdentifier="ChatViewController" id="ZPh-yA-EoL" userLabel="ChatView Controller" customClass="ChatViewController" customModule="chatApp" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChatViewController" id="ZPh-yA-EoL" userLabel="Connection Controller" customClass="ConnectionController" customModule="chatApp" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="T0c-s6-zg7"/>
                         <viewControllerLayoutGuide type="bottom" id="0Wh-ec-4Px"/>
@@ -21,65 +22,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="18" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0Ks-Fj-SXW" userLabel="ChatTableView">
-                                <rect key="frame" x="0.0" y="28" width="755" height="930"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYQ-zv-ysu" userLabel="Connect">
+                                <rect key="frame" x="322" y="520" width="125" height="58"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="755" id="KIa-6n-qDN"/>
-                                    <constraint firstAttribute="height" constant="930" id="Lk0-4s-NCO"/>
+                                    <constraint firstAttribute="height" constant="58" id="TDC-PL-6Ga"/>
                                 </constraints>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatCell" rowHeight="18" id="MzB-0s-iy4" userLabel="ChatCell">
-                                        <rect key="frame" x="0.0" y="28" width="755" height="18"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MzB-0s-iy4" id="NIi-Gn-8fh">
-                                            <rect key="frame" x="0.0" y="0.0" width="755" height="18"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYQ-zv-ysu" userLabel="ChatSend">
-                                <rect key="frame" x="643" y="958" width="125" height="58"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="58" id="Kk0-h2-TAC"/>
-                                    <constraint firstAttribute="width" constant="125" id="uW9-c8-eLC"/>
-                                </constraints>
-                                <state key="normal" title="Send"/>
+                                <state key="normal" title="Connexion"/>
+                                <connections>
+                                    <action selector="connectionButtonClicked:" destination="ZPh-yA-EoL" eventType="touchDragInside" id="7L4-CA-KGo"/>
+                                </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="h6c-HA-YSP" userLabel="ChatBoxView">
-                                <rect key="frame" x="0.0" y="958" width="635" height="58"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un nom d'utilisateur" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pxG-l5-mrr">
+                                <rect key="frame" x="290" y="446" width="188" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="635" id="6FI-lk-nrP"/>
-                                    <constraint firstAttribute="height" constant="58" id="qH8-cb-F3H"/>
+                                    <constraint firstAttribute="height" constant="30" id="EhK-AW-gHw"/>
                                 </constraints>
+                                <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="XYQ-zv-ysu" secondAttribute="trailing" id="5rr-eE-QyU"/>
-                            <constraint firstItem="h6c-HA-YSP" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leading" id="Dae-CM-6sl"/>
-                            <constraint firstItem="0Wh-ec-4Px" firstAttribute="top" secondItem="h6c-HA-YSP" secondAttribute="bottom" constant="8" id="Gbp-E8-dbW" userLabel="Chat Box Height Constraint"/>
-                            <constraint firstItem="0Ks-Fj-SXW" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leading" id="LtT-it-UvX"/>
-                            <constraint firstItem="XYQ-zv-ysu" firstAttribute="top" secondItem="0Ks-Fj-SXW" secondAttribute="bottom" id="cPz-Yc-Gwc"/>
-                            <constraint firstItem="0Wh-ec-4Px" firstAttribute="top" secondItem="XYQ-zv-ysu" secondAttribute="bottom" constant="8" id="o4J-ig-TAb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XYQ-zv-ysu" secondAttribute="trailing" constant="301" id="2EE-Ud-g1S"/>
+                            <constraint firstItem="0Wh-ec-4Px" firstAttribute="top" secondItem="XYQ-zv-ysu" secondAttribute="bottom" constant="446" id="4rB-6B-wjL"/>
+                            <constraint firstItem="pxG-l5-mrr" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="270" id="ANi-MG-zlg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pxG-l5-mrr" secondAttribute="trailing" constant="270" id="Ikg-VH-An0"/>
+                            <constraint firstItem="XYQ-zv-ysu" firstAttribute="top" secondItem="pxG-l5-mrr" secondAttribute="bottom" constant="44" id="f7t-Eo-CV6"/>
+                            <constraint firstItem="XYQ-zv-ysu" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="302" id="gxK-zh-RLk"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="chatBoxHeightConstraint" destination="Gbp-E8-dbW" id="Ghq-Gx-k9r"/>
-                        <outlet property="chatBoxView" destination="h6c-HA-YSP" id="NrM-7V-j4f"/>
-                        <outlet property="chatSendButt" destination="XYQ-zv-ysu" id="M7w-jV-gyu"/>
-                        <outlet property="chatSendButtonHeightConstraint" destination="o4J-ig-TAb" id="Csk-mp-2wI"/>
-                        <outlet property="chatTableView" destination="0Ks-Fj-SXW" id="cIV-0X-a1G"/>
+                        <outlet property="connectButton" destination="XYQ-zv-ysu" id="J5H-pn-mHj"/>
+                        <outlet property="usernameTextBox" destination="pxG-l5-mrr" id="GfP-ff-sxt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AtU-gc-yXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="314.84375" y="-281.25"/>
+            <point key="canvasLocation" x="-287.5" y="-431.25"/>
         </scene>
     </scenes>
 </document>
