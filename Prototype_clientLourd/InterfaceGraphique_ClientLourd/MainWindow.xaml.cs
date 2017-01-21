@@ -1,34 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-//TODO: Enlever les users quand leave chat
-//TODO: Faire leave chat un bouton séparé
-//TODO: Remplacer "user" dans le timestamp
+//TODO: Finish color options
 
 namespace InterfaceGraphique_ClientLourd
 {
     public partial class MainWindow : Window
     {
+        String username = "";
         const string chatTextBoxLabel = "Enter your message here";
 
         public MainWindow()
         {
             InitializeComponent();
             switchScreen(this);
-            showLoginScreen();
+            //showLoginScreen();
+            showChatScreen();
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -47,9 +38,10 @@ namespace InterfaceGraphique_ClientLourd
             {
                 //TODO: Verify the user is unique
                 //TODO: Add connection to server here
-               
+                username = username_textbox.Text;
+
                 switchScreen(this);
-                showChatScreen(username_textbox.Text);
+                showChatScreen();
 
                 username_textbox.Text = "";
                 password_textbox.Password = "";
@@ -82,7 +74,7 @@ namespace InterfaceGraphique_ClientLourd
             login_image.Visibility = Visibility.Visible;
         }
 
-        private void showChatScreen(String username)
+        private void showChatScreen()
         {
             chat_menu.Visibility = Visibility.Visible;
 
@@ -105,6 +97,9 @@ namespace InterfaceGraphique_ClientLourd
 
         private void leaveChatMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            users_listBox.Items.Remove(username);
+            chat_listBox.Items.Clear();
+
             switchScreen(this);
             showLoginScreen();
 
@@ -123,7 +118,6 @@ namespace InterfaceGraphique_ClientLourd
 
                 Grid.SetColumn(chat_textBox, 2);
                 Grid.SetColumnSpan(chat_textBox, 2);
-
             }
             else
             {
@@ -158,11 +152,13 @@ namespace InterfaceGraphique_ClientLourd
 
         private void send_button_Click(object sender, RoutedEventArgs e)
         {
+            //TODO: Build and Send paquet
+
             bool isToolTip = chat_textBox.Text == chatTextBoxLabel;
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
-                string time = "User sent message at " + DateTime.Now.ToString();
+                string time = username + " sent a message at " + DateTime.Now.ToString();
                 chat_listBox.Items.Add(time + "\r" + chat_textBox.Text);
 
                 //Make scroll bar move to the bottom
@@ -187,6 +183,16 @@ namespace InterfaceGraphique_ClientLourd
             {
                 (selector as ListBox).ScrollIntoView(selector.SelectedItem);
             }
+        }
+
+        private void ApplicationColor_MenuTab_Click(object sender, RoutedEventArgs e)
+        {
+            //TODO: fix spawning position. Check screen max pixels
+            ApplicationColorWindow applicationColorOptionWindow = new ApplicationColorWindow(this);
+            var location = this.PointToScreen(new Point(0, 0));
+            applicationColorOptionWindow.Left = location.X + this.Width;
+            applicationColorOptionWindow.Top = location.Y;
+            applicationColorOptionWindow.ShowDialog();
         }
     }
 }
