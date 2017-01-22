@@ -18,8 +18,7 @@ namespace InterfaceGraphique_ClientLourd
         {
             InitializeComponent();
             switchScreen(this);
-            //showLoginScreen();
-            showChatScreen();
+            showLoginScreen();
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -190,8 +189,8 @@ namespace InterfaceGraphique_ClientLourd
             //TODO: fix spawning position. Check screen max pixels
             ApplicationColorWindow applicationColorOptionWindow = new ApplicationColorWindow(this);
             var location = this.PointToScreen(new Point(0, 0));
-            applicationColorOptionWindow.Left = location.X + this.Width;
-            applicationColorOptionWindow.Top = location.Y;
+            applicationColorOptionWindow.Left = location.X + this.Width - 20;
+            applicationColorOptionWindow.Top = location.Y - 30;
             applicationColorOptionWindow.ShowDialog();
         }
     }

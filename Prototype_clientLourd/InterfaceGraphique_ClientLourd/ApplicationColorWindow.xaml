@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:InterfaceGraphique_ClientLourd"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Name="ApplicationColorWindow1" x:Class="InterfaceGraphique_ClientLourd.ApplicationColorWindow"
         mc:Ignorable="d"
-        Title="ApplicationColorWindow" Height="350" Width="250" MinWidth="250" MinHeight="370" MaxWidth="250" Closing="ApplicationColorWindow1_Closing">
+        Title="ApplicationColorWindow" Height="350" Width="250" MinWidth="250" MinHeight="350" MaxWidth="250" Closing="ApplicationColorWindow1_Closing">
     <Grid Margin="0,0,0,0">
         <xctk:ColorCanvas x:Name="applicationColorCanvas" Margin="0,0,0,0" MouseMove="applicationColorCanvas_MouseMove" Height="289" VerticalAlignment="Top" BorderBrush="Transparent">
             <xctk:ColorCanvas.Background>

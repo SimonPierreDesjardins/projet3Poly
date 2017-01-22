@@ -42,6 +42,13 @@ namespace InterfaceGraphique_ClientLourd
         {
             this.Background = parentColor_;
             parentWindow_.Background = parentColor_;
+
+            byte a = ((Color)parentColor_.GetValue(SolidColorBrush.ColorProperty)).A;
+            byte g = ((Color)parentColor_.GetValue(SolidColorBrush.ColorProperty)).G;
+            byte r = ((Color)parentColor_.GetValue(SolidColorBrush.ColorProperty)).R;
+            byte b = ((Color)parentColor_.GetValue(SolidColorBrush.ColorProperty)).B;
+
+            applicationColorCanvas.SelectedColor = Color.FromArgb(a, r, g, b);
         }
 
         private void ApplicationColorWindow1_Closing(object sender, System.ComponentModel.CancelEventArgs e)
