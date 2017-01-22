@@ -127,7 +127,7 @@ namespace InterfaceGraphique
 
         static partial class FonctionNative
         {
-            [System.Runtime.InteropServices.DllImport(@"Noyau.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+            [System.Runtime.InteropServices.DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
             public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
         }
     }

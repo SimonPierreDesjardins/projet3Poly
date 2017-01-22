@@ -1002,34 +1002,34 @@ namespace InterfaceGraphique
     ///
     ////////////////////////////////////////////////////////////////////////
     static partial class FonctionsNatives{
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementSuivreLigne(TypeComportement comportementSuivant);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementBalayage(TypeComportement comportementSuivant);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementDeviation(TypeComportement comportementSuivant, double angle, TypeComportement typeDeviation);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerComportementEvitement(TypeComportement comportementSuivant, double angle, double duree, TypeComportement typeEvitement);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void sauvegarderProfil(string nomProfil);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerCapteurDistance(bool estActif, TypeComportement comportementDanger, double distanceDanger, TypeComportement comportementSecuritaire, double distanceSecuritaire, int indexCapteur);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerSuiveurLigne(bool estActif);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerOptionsDebogages(bool debogageActif, bool debogageComportements, bool debogageEclairage, bool debogageCapteurs);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void modifierToucheCommande(char touche, TypeCommande commande);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void obtenirNomProfilDefaut(StringBuilder str, int longueur);
         public static string obtenirNomProfilDefaut()
         {
@@ -1038,7 +1038,7 @@ namespace InterfaceGraphique
             return str.ToString();
         }
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void obtenirNomDernierProfil(StringBuilder str, int longueur);
         public static string obtenirNomDernierProfil()
         {
@@ -1047,16 +1047,16 @@ namespace InterfaceGraphique
             return str.ToString();
         }
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void chargerDernierProfil();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern char obtenirToucheCommande(TypeCommande commande);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerConfigureHandles(IntPtr handle, int ctrl);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void obtenirExtensionProfils(StringBuilder str, int longueur);
         public static string obtenirExtensionProfils()
         {
@@ -1065,7 +1065,7 @@ namespace InterfaceGraphique
             return str.ToString();
         }
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void obtenirCheminProfils(StringBuilder str, int longueur);
         public static string obtenirCheminProfils()
         {
@@ -1074,13 +1074,13 @@ namespace InterfaceGraphique
             return str.ToString();
         }
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void supprimerProfil(string nomProfil);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void changerProfil(string nomProfil);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern IntPtr obtenirLimitesParametres();
         public static int[] obtenirLimitesParametres(int taille)
         {

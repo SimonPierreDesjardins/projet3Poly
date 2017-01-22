@@ -17,7 +17,6 @@
 #include "ArbreRenduINF2990.h"
 #include "CompteurAffichage.h"
 #include "EtatTypes.h"
-#include "BancTests.h"
 #include "ComportementTypes.h"
 #include "CommandeRobot.h"
 #include "ComportementAbstrait.h"
@@ -203,21 +202,6 @@ extern "C"
 	__declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
 	{
 		return utilitaire::CompteurAffichage::obtenirInstance()->obtenirAffichagesSeconde();
-	}
-
-	////////////////////////////////////////////////////////////////////////
-	///
-	/// @fn __declspec(dllexport) bool __cdecl executerTests()
-	///
-	/// Cette fonction permet d'exécuter l'ensemble des tests unitaires
-	///
-	/// @return 0 si tous les tests ont réussi, 1 si au moins un test a échoué
-	///
-	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) bool __cdecl executerTests()
-	{
-		bool reussite = BancTests::obtenirInstance()->executer();
-		return reussite ? 0 : 1;
 	}
 
 	////////////////////////////////////////////////////////////////////////

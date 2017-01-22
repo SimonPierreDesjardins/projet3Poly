@@ -135,7 +135,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	glewInit();
 
 	// Initialisation de la configuration
-	chargerConfiguration();
+	//chargerConfiguration();
 
 	// FreeImage, utilisée par le chargeur, doit être initialisée
 	FreeImage_Initialise();

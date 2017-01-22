@@ -220,6 +220,7 @@ source_group("controle-robot" FILES ${CONTROLE_ROBOT_SRC})
 source_group("controle-robot/commande" FILES ${COMMANDE_SRC})
 source_group("controle-robot/comportement" FILES ${COMPORTEMENT_SRC})
 source_group("engin-son" FILES ${ENGIN_SON_SRC})
+source_group("interface" FILES ${INTERFACE_SRC})
 source_group("lumiere" FILES ${LUMIERE_SRC})
 source_group("etats" FILES ${MACHINE_A_ETATS_SRC})
 source_group("modes" FILES ${MACHINE_A_MODES_SRC})
@@ -240,7 +241,7 @@ add_library(model SHARED
     ${COMMANDE_SRC}
     ${COMPORTEMENT_SRC}
     ${ENGIN_SON_SRC}
-    ${INTEFACE_SRC}
+    ${INTERFACE_SRC}
     ${LUMIERE_SRC}
     ${MACHINE_A_ETATS_SRC}
     ${MACHINE_A_MODES_SRC}
@@ -251,3 +252,5 @@ add_library(model SHARED
 
 # Linker les librairies externes avec la dll
 target_link_libraries(model util ${EXTERNAL_LIBRARIES})
+
+target_compile_definitions(model PRIVATE GLEW_BUILD _USRDLL FTGL_LIBRARY_STATIC)

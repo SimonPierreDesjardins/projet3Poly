@@ -67,6 +67,7 @@ set(EXTERNAL_LIBRARIES
     ${assimp_LIB}
     ${OPENGL_gl_LIBRARY}
     ${OPENGL_glu_LIBRARY}
+    Winmm.lib
 )
 
 include_directories(

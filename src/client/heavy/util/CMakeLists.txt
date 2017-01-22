@@ -74,3 +74,5 @@ add_library(util
     ${UTIL_SRC})
 
 target_link_libraries(util ${EXTERNAL_LIBRARIES})
+
+target_compile_definitions(util PRIVATE GLEW_BUILD _LIB)
