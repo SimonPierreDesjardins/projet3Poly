@@ -70,9 +70,9 @@ class ConnectionController: UIViewController
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        let chatViewController = segue.destination as! ChatViewController
+        let chatContainerViewController = segue.destination as! ChatContainerViewController
         
-        chatViewController.senderDisplayName = usernameTextBox.text
+        chatContainerViewController.senderDisplayName = usernameTextBox.text!
     }
 }
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16A201w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="Ptd-3N-nM9" customClass="CustomMessagesCollectionViewCell" customModule="chatApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="579" height="169"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="579" height="169"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="authorLabel" text="John Doe" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wsh-vM-udj" customClass="Mess">
+                        <rect key="frame" x="8" y="8" width="73" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="6f5-ze-853"/>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="21" id="ecP-Zt-bwt"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="iWM-6J-cFQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="dateTimeLabel" text="88:88 8888-88-88" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FTh-Cw-WY7">
+                        <rect key="frame" x="421" y="8" width="150" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="LUp-0i-g6H"/>
+                            <constraint firstAttribute="height" constant="21" id="kIv-Jl-yF1"/>
+                            <constraint firstAttribute="width" constant="150" id="lQD-uG-D5l"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="t6i-9L-7el"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="messagesLabel" text="Messages" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nP-yx-wLe">
+                        <rect key="frame" x="8" y="29" width="563" height="132"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+            </view>
+            <constraints>
+                <constraint firstItem="wsh-vM-udj" firstAttribute="leading" secondItem="Ptd-3N-nM9" secondAttribute="leading" constant="8" id="7U1-JK-98q"/>
+                <constraint firstItem="FTh-Cw-WY7" firstAttribute="top" secondItem="Ptd-3N-nM9" secondAttribute="top" constant="8" id="BsH-iH-ogJ"/>
+                <constraint firstItem="wsh-vM-udj" firstAttribute="top" secondItem="Ptd-3N-nM9" secondAttribute="top" constant="8" id="MV5-bf-Ufg"/>
+                <constraint firstAttribute="bottom" secondItem="7nP-yx-wLe" secondAttribute="bottom" constant="8" id="Ojy-sm-PVl"/>
+                <constraint firstItem="7nP-yx-wLe" firstAttribute="top" secondItem="FTh-Cw-WY7" secondAttribute="bottom" id="Tw2-Ah-vv0"/>
+                <constraint firstItem="7nP-yx-wLe" firstAttribute="leading" secondItem="Ptd-3N-nM9" secondAttribute="leading" constant="8" id="c0G-Ky-cSe"/>
+                <constraint firstAttribute="trailing" secondItem="FTh-Cw-WY7" secondAttribute="trailing" constant="8" id="rST-HG-zvh"/>
+                <constraint firstAttribute="trailing" secondItem="7nP-yx-wLe" secondAttribute="trailing" constant="8" id="tEg-EO-fJ7"/>
+            </constraints>
+            <size key="customSize" width="579" height="169"/>
+            <connections>
+                <outlet property="authorLabel" destination="wsh-vM-udj" id="aGA-Z6-jIi"/>
+                <outlet property="timeLabel" destination="FTh-Cw-WY7" id="PUi-rL-drf"/>
+            </connections>
+            <point key="canvasLocation" x="-265" y="-151"/>
+        </collectionViewCell>
+    </objects>
+</document>
