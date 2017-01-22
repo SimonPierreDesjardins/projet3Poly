@@ -1,5 +1,5 @@
-# Permettre d'inclure des fichiers d'entêtes des librairies externes sans spécifier le path complet
 
+# Trouver le path des .lib des librairies externes
 find_library(tinyxml_LIB
     tinyxml_D_x64
     "${CMAKE_SOURCE_DIR}/ext/tinyxml2/lib"
@@ -42,6 +42,7 @@ find_library(assimp_LIB
 
 find_package(OpenGL REQUIRED)
 
+# Permettre d'inclure des fichiers d'entêtes des librairies externes sans spécifier le path complet
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/RapidJSON/include
     ${CMAKE_SOURCE_DIR}/ext/glm/include
@@ -77,7 +78,10 @@ include_directories(
     util/Vue
     ui/Enum)
 
+# Ajout de la librairie utilitaire
 add_subdirectory(util)
+
+# Ajout de la librairie model
 add_subdirectory(model)
 
 # Ajout du projet C# pour l'interface graphique

@@ -75,4 +75,5 @@ add_library(util
 
 target_link_libraries(util ${EXTERNAL_LIBRARIES})
 
+# Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew)
 target_compile_definitions(util PRIVATE GLEW_BUILD _LIB)

@@ -253,4 +253,5 @@ add_library(model SHARED
 # Linker les librairies externes avec la dll
 target_link_libraries(model util ${EXTERNAL_LIBRARIES})
 
+# Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew et ftgl)
 target_compile_definitions(model PRIVATE GLEW_BUILD _USRDLL FTGL_LIBRARY_STATIC)
