@@ -1875,100 +1875,100 @@ namespace InterfaceGraphique
     ////////////////////////////////////////////////////////////////////////
     static partial class FonctionsNatives
     {
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void initialiserOpenGL(IntPtr handle);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void libererOpenGL();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void dessinerOpenGL();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void animer(double temps);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerMode(Mode mode);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirMode();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void redimensionnerFenetre(int largeur, int hauteur);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirAffichagesParSeconde();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void repartirMessage(int msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern double obtenirAngleRotation();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern double obtenirFacteurGrandeur();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern double obtenirPositionRelativeX();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern double obtenirPositionRelativeY();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAngleRotation(double angle);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerFacteurGrandeur(double facteurMiseAEchelle);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerPositionRelativeX(double positionRelativeX);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerPositionRelativeY(double positionRelativeY);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void sauvegarder();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void charger();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirNombreSelection();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void nouvelleTable();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerCheminFichierZone(string chemin);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAutorisationInputClavier(bool autorisation);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool obtenirAutorisationInputClavier();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAutorisationInputSouris(bool autorisation);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool obtenirAutorisationInputSouris();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern string obtenirCheminFichierZoneDefaut();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void mettreEnPause(bool estEnPause);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerVueOrtho();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerVueOrbite();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerVuePremierePersonne();
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirTypeVue();
     }
 }

@@ -185,6 +185,7 @@ set(VISITEUR_SRC
     Visiteur/VisiteurTypes.h
 )
 
+# Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
     AffichageTexte
     Application
@@ -206,6 +207,27 @@ include_directories(
     Visiteur
 )
 
+# Ajouter les filtres dans le projet visual studio
+source_group("")
+source_group("affichage-texte" FILES ${AFFICHAGE_TEXTE_SRC})
+source_group("application" FILES ${APPLICATION_SRC})
+source_group("arbre" FILES ${ARBRE_SRC})
+source_group("arbre/noeuds" FILES ${NOEUDS_SRC})
+source_group("arbre/usines" FILES ${USINES_SRC})
+source_group("capteur" FILES ${CAPTEUR_SRC})
+source_group("config" FILES ${CONFIGURATION_SRC})
+source_group("controle-robot" FILES ${CONTROLE_ROBOT_SRC})
+source_group("controle-robot/commande" FILES ${COMMANDE_SRC})
+source_group("controle-robot/comportement" FILES ${COMPORTEMENT_SRC})
+source_group("engin-son" FILES ${ENGIN_SON_SRC})
+source_group("lumiere" FILES ${LUMIERE_SRC})
+source_group("etats" FILES ${MACHINE_A_ETATS_SRC})
+source_group("modes" FILES ${MACHINE_A_MODES_SRC})
+source_group("physique" FILES ${PHYSIQUE_SRC})
+source_group("profil-utilisateur" FILES ${PROFIL_UTILISATEUR_SRC})
+source_group("visiteur" FILES ${VISITEUR_SRC})
+
+# Compiler les fichiers sources dans une dll
 add_library(model SHARED
     ${AFFICHAGE_TEXTE_SRC}
     ${APPLICATION_SRC}
@@ -227,4 +249,5 @@ add_library(model SHARED
     ${VISITEUR_SRC}
 )
 
+# Linker les librairies externes avec la dll
 target_link_libraries(model util ${EXTERNAL_LIBRARIES})

@@ -6,7 +6,7 @@ find_library(tinyxml_LIB
 )
 
 find_library(glew_LIB
-    glew32
+    glew32s
     "${CMAKE_SOURCE_DIR}/ext/GLEW/lib"
 )
 
@@ -16,12 +16,12 @@ find_library(ftgl_LIB
 )
 
 find_library(freeType_LIB
-    freetype246_R_x64 
+    freetype246_D_x64 
     "${CMAKE_SOURCE_DIR}/ext/FreeType/lib"
 )
 
 find_library(freeImage_LIB
-    freeImage    
+    FreeImage    
     "${CMAKE_SOURCE_DIR}/ext/FreeImage/lib"
 )
 

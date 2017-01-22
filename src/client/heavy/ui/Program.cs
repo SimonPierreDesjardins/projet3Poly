@@ -90,7 +90,7 @@ namespace InterfaceGraphique
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool PeekMessage(out Message message, IntPtr hWnd, uint filterMin, uint filterMax, uint flags);
 
-        [DllImport(@"Noyau.dll", CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool executerTests();
     }
 }
