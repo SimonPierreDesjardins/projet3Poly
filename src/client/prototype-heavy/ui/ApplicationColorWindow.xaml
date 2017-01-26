@@ -1,0 +1,23 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        
+        xmlns:local="clr-namespace:InterfaceGraphique_ClientLourd"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" x:Name="ApplicationColorWindow1" x:Class="InterfaceGraphique_ClientLourd.ApplicationColorWindow"
+        mc:Ignorable="d"
+        Title="ApplicationColorWindow" Height="350" Width="250" MinWidth="250" MinHeight="350" MaxWidth="250" Closing="ApplicationColorWindow1_Closing">
+    <Grid Margin="0,0,0,0">
+        <xctk:ColorCanvas x:Name="applicationColorCanvas" Margin="0,0,0,0" MouseMove="applicationColorCanvas_MouseMove" Height="289" VerticalAlignment="Top" BorderBrush="Transparent">
+            <xctk:ColorCanvas.Background>
+                <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                    <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                    <GradientStop Offset="1"/>
+                </LinearGradientBrush>
+            </xctk:ColorCanvas.Background>
+        </xctk:ColorCanvas>
+        <Button x:Name="cancelButton_ApplicationColor" Content="Cancel" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="100" Click="cancelButton_ApplicationColor_Click"/>
+        <Button x:Name="applyButton_ApplicationColor" Content="Apply" Margin="132,289,10,0" VerticalAlignment="Top" Click="applyButton_ApplicationColor_Click"/>
+    </Grid>
+</Window>

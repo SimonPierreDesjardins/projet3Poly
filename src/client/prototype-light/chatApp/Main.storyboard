@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16A201w" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="ZPh-yA-EoL">
+    <device id="ipad9_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment version="4128" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Connection Controller-->
+        <scene sceneID="seM-uK-tlN">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" id="ZPh-yA-EoL" userLabel="Connection Controller" customClass="ConnectionController" customModule="chatApp" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="T0c-s6-zg7"/>
+                        <viewControllerLayoutGuide type="bottom" id="0Wh-ec-4Px"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="veF-Ic-QXX" userLabel="Connection View">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XYQ-zv-ysu" userLabel="Connect">
+                                <rect key="frame" x="322" y="520" width="125" height="58"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="58" id="TDC-PL-6Ga"/>
+                                </constraints>
+                                <state key="normal" title="Connexion"/>
+                                <connections>
+                                    <action selector="connectionButtonClicked:" destination="ZPh-yA-EoL" eventType="touchDragInside" id="7L4-CA-KGo"/>
+                                    <segue destination="VKe-Sr-Ukh" kind="show" id="zxl-v7-wqt"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un nom d'utilisateur" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pxG-l5-mrr">
+                                <rect key="frame" x="290" y="446" width="188" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="EhK-AW-gHw"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="XYQ-zv-ysu" secondAttribute="trailing" constant="301" id="2EE-Ud-g1S"/>
+                            <constraint firstItem="0Wh-ec-4Px" firstAttribute="top" secondItem="XYQ-zv-ysu" secondAttribute="bottom" constant="446" id="4rB-6B-wjL"/>
+                            <constraint firstItem="pxG-l5-mrr" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="270" id="ANi-MG-zlg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pxG-l5-mrr" secondAttribute="trailing" constant="270" id="Ikg-VH-An0"/>
+                            <constraint firstItem="XYQ-zv-ysu" firstAttribute="top" secondItem="pxG-l5-mrr" secondAttribute="bottom" constant="44" id="f7t-Eo-CV6"/>
+                            <constraint firstItem="XYQ-zv-ysu" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="302" id="gxK-zh-RLk"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="connectButton" destination="XYQ-zv-ysu" id="J5H-pn-mHj"/>
+                        <outlet property="usernameTextBox" destination="pxG-l5-mrr" id="GfP-ff-sxt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AtU-gc-yXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-287.5" y="-431.25"/>
+        </scene>
+        <!--Chat Container View Controller-->
+        <scene sceneID="OIF-uP-Ql5">
+            <objects>
+                <viewController id="VKe-Sr-Ukh" customClass="ChatContainerViewController" customModule="chatApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Kn5-Xj-7Wa"/>
+                        <viewControllerLayoutGuide type="bottom" id="kbG-Tq-Fbb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="GK7-Ba-vm2" userLabel="Chat View">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nu7-rr-UFM">
+                                <rect key="frame" x="0.0" y="20" width="768" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Title" id="v8S-HR-u4Z">
+                                        <barButtonItem key="leftBarButtonItem" title="Back" id="rr8-kR-va9"/>
+                                        <barButtonItem key="rightBarButtonItem" title="Item" id="i5l-qr-cuQ"/>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gx1-J4-lWo">
+                                <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="4hP-lD-9Pq" kind="embed" id="f6k-qw-Pat"/>
+                                </connections>
+                            </containerView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Cxh-qT-qp6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="529.6875" y="-431.25"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="egF-Fb-pyu">
+            <objects>
+                <viewController id="4hP-lD-9Pq" customClass="ChatViewController" customModule="chatApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1ca-YP-bfT"/>
+                        <viewControllerLayoutGuide type="bottom" id="ApQ-qq-ZXF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dIz-6I-We3">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Yca-I9-a9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1416" y="-431"/>
+        </scene>
+    </scenes>
+</document>

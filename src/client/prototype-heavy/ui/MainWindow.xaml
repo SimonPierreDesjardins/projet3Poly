@@ -1,0 +1,67 @@
+﻿<Window x:Class="InterfaceGraphique_ClientLourd.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InterfaceGraphique_ClientLourd"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="525" MinWidth="525" MinHeight="350">
+    <Grid x:Name="Grid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="27*"/>
+            <RowDefinition Height="224*"/>
+            <RowDefinition Height="8*"/>
+            <RowDefinition Height="37*"/>
+            <RowDefinition Height="23*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="9*"/>
+            <ColumnDefinition Width="182*"/>
+            <ColumnDefinition Width="257*"/>
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <!-- Start of Login Screen components -->
+        <Button x:Name="ConnectButton" Content="Connection" HorizontalAlignment="Left" Margin="10,195,0,0" Width="75" Click="connectButton_Click" Grid.Row="1" Grid.Column="2" Height="20" VerticalAlignment="Top"/>
+        <PasswordBox x:Name="password_textbox" HorizontalAlignment="Left" Margin="12,135,0,0" VerticalAlignment="Top" Width="176" ToolTip="Enter password here" Height="18" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
+        <Image x:Name="login_image" HorizontalAlignment="Left" Height="244" Margin="79,1,-27,0" VerticalAlignment="Top" Width="274" OpacityMask="#FFC12525" Source="koala.jpg" Grid.RowSpan="3" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="3" Visibility="Collapsed"/>
+        <TextBox x:Name="username_textbox" HorizontalAlignment="Left" Height="23" Margin="12,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" ToolTip="Enter username here" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2"/>
+        <Label x:Name="username_label_warning" Content="" HorizontalAlignment="Left" Margin="12,75,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red" Visibility="Collapsed"/>
+        <Label x:Name="password_label_warning" Content="" HorizontalAlignment="Left" Margin="12,158,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red"/>
+        <Label x:Name="username_label" Content="Username" HorizontalAlignment="Left" Margin="12,23,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
+        <Label x:Name="password_label" Content="Password" HorizontalAlignment="Left" Margin="12,109,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2"/>
+        <!-- End of Login Screen Components -->
+        <!-- Start of Chat Screen Components -->
+        <ListBox x:Name="chat_listBox" Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=Tweets}" Visibility="Collapsed">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap" Grid.Column="1" Grid.Row="1" />
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox x:Name="users_listBox" Grid.RowSpan="3" Grid.Row="1" Grid.Column="2" Visibility="Collapsed" />
+        <Button x:Name="send_button" Content="Send" Grid.Row="3" Grid.Column="4" Margin="0,0,0,0" Click="send_button_Click" Visibility="Collapsed" />
+        <TextBox x:Name="chat_textBox" Margin="5,0,3,0" TextWrapping="Wrap" Grid.Row="3" Grid.Column="3" ToolTip="" GotFocus="chat_textBox_GotFocus" LostFocus="chat_textBox_LostFocus" Text="Enter your message here" Foreground="Gray" KeyDown="chat_textBox_KeyDown" Visibility="Collapsed" />
+        <TextBlock Margin="5,2,4,2" Text="Enter your message here" Foreground="Gray" x:Name="chatHint_textBox" Grid.ColumnSpan="2"/>
+        <Menu x:Name="chat_menu" Grid.ColumnSpan="6" Height="18" VerticalAlignment="Top">
+            <MenuItem x:Name="leaveChatMenuItem" Header="Leave Chat" Click="leaveChatMenuItem_Click"/>
+            <MenuItem Header="Application options" >
+                <MenuItem x:Name="displayUserListChatMenuItem" Header="Hide user list" Click="displayUserListChatMenuItem_Click"/>
+                <MenuItem Header="Chat color"/>
+                <MenuItem x:Name="ApplicationColor_MenuTab"  Header="Application Color" Click="ApplicationColor_MenuTab_Click" />
+            </MenuItem>
+        </Menu>
+        <!-- End of Chat Screen Components -->
+    </Grid>
+</Window>
