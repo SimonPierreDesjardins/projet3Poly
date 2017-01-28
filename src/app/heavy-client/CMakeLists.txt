@@ -85,10 +85,13 @@ add_subdirectory(util)
 add_subdirectory(model)
 
 # Ajout du projet C# pour l'interface graphique
-include_external_msproject(InterfaceGraphique 
-    ${CMAKE_SOURCE_DIR}/src/client/heavy/ui/InterfaceGraphique.csproj)
+include_external_msproject(ui 
+    ${CMAKE_SOURCE_DIR}/src/app/heavy-client/ui/ui.csproj)
+
+set_property(TARGET ui PROPERTY FOLDER "app/heavy-client")
 
 # Ajout du projet C# pour les Enum
-include_external_msproject(Enum 
-    ${CMAKE_SOURCE_DIR}/src/client/heavy/ui/Enum/Enum.csproj)
+include_external_msproject(enum 
+    ${CMAKE_SOURCE_DIR}/src/app/heavy-client/ui/enum/enum.csproj)
 
+set_property(TARGET enum PROPERTY FOLDER "app/heavy-client")

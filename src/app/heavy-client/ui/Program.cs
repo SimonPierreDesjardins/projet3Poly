@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace InterfaceGraphique
+namespace ui
 { 
     static class Program
     {

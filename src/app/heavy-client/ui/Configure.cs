@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 using TypeCommandeEnum;
 using TypeComportementEnum;
 
-namespace InterfaceGraphique
+namespace ui
 {
     public partial class Configure : Form
     {

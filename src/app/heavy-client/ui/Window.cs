@@ -18,7 +18,7 @@ using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
 
-namespace InterfaceGraphique
+namespace ui
 {
     public partial class Window : Form, IMessageFilter
     {

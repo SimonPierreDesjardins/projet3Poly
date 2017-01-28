@@ -17,7 +17,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace InterfaceGraphique
+namespace ui
 {
     public partial class PopOutInterface : Form
     {

@@ -1,6 +1,6 @@
-﻿namespace InterfaceGraphique
+﻿namespace ui
 {
-    partial class ExplorateurOuverture
+    partial class ExplorateurSauvegarde
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExplorateurOuverture));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ExplorateurSauvegarde));
             this.folderImageList = new System.Windows.Forms.ImageList(this.components);
             this.folderTreeView = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -38,8 +38,9 @@
             this.nomCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.typeCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.dateCol = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.nouveauButt = new System.Windows.Forms.Button();
             this.annulerButt = new System.Windows.Forms.Button();
-            this.ouvrirButt = new System.Windows.Forms.Button();
+            this.enregistrerButt = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -104,8 +105,9 @@
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.nouveauButt);
             this.splitContainer2.Panel2.Controls.Add(this.annulerButt);
-            this.splitContainer2.Panel2.Controls.Add(this.ouvrirButt);
+            this.splitContainer2.Panel2.Controls.Add(this.enregistrerButt);
             this.splitContainer2.Size = new System.Drawing.Size(393, 451);
             this.splitContainer2.SplitterDistance = 394;
             this.splitContainer2.TabIndex = 0;
@@ -141,36 +143,44 @@
             this.dateCol.Text = "Dernière modification";
             this.dateCol.Width = 269;
             // 
+            // nouveauButt
+            // 
+            this.nouveauButt.Location = new System.Drawing.Point(164, 18);
+            this.nouveauButt.Name = "nouveauButt";
+            this.nouveauButt.Size = new System.Drawing.Size(75, 23);
+            this.nouveauButt.TabIndex = 2;
+            this.nouveauButt.Text = "Nouveau";
+            this.nouveauButt.UseVisualStyleBackColor = true;
+            this.nouveauButt.Click += new System.EventHandler(this.nouveauButt_Click);
+            // 
             // annulerButt
             // 
-            this.annulerButt.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.annulerButt.Location = new System.Drawing.Point(284, 18);
             this.annulerButt.Name = "annulerButt";
-            this.annulerButt.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.annulerButt.Size = new System.Drawing.Size(75, 23);
             this.annulerButt.TabIndex = 1;
             this.annulerButt.Text = "Annuler";
             this.annulerButt.UseVisualStyleBackColor = true;
             this.annulerButt.Click += new System.EventHandler(this.annulerButt_Click);
             // 
-            // ouvrirButt
+            // enregistrerButt
             // 
-            this.ouvrirButt.Location = new System.Drawing.Point(44, 18);
-            this.ouvrirButt.Name = "ouvrirButt";
-            this.ouvrirButt.Size = new System.Drawing.Size(75, 23);
-            this.ouvrirButt.TabIndex = 0;
-            this.ouvrirButt.Text = "Ouvrir";
-            this.ouvrirButt.UseVisualStyleBackColor = true;
-            this.ouvrirButt.Click += new System.EventHandler(this.ouvrirButt_Click);
+            this.enregistrerButt.Location = new System.Drawing.Point(44, 18);
+            this.enregistrerButt.Name = "enregistrerButt";
+            this.enregistrerButt.Size = new System.Drawing.Size(75, 23);
+            this.enregistrerButt.TabIndex = 0;
+            this.enregistrerButt.Text = "Enregistrer";
+            this.enregistrerButt.UseVisualStyleBackColor = true;
+            this.enregistrerButt.Click += new System.EventHandler(this.enregistrerButt_Click);
             // 
-            // ExplorateurOuverture
+            // ExplorateurSauvegarde
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(593, 451);
             this.Controls.Add(this.splitContainer1);
-            this.Name = "ExplorateurOuverture";
-            this.Text = "Ouvrir une zone";
+            this.Name = "ExplorateurSauvegarde";
+            this.Text = "Sauvegarder une zone";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -191,9 +201,10 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button annulerButt;
-        private System.Windows.Forms.Button ouvrirButt;
+        private System.Windows.Forms.Button enregistrerButt;
         private System.Windows.Forms.ColumnHeader nomCol;
         private System.Windows.Forms.ColumnHeader typeCol;
         private System.Windows.Forms.ColumnHeader dateCol;
+        private System.Windows.Forms.Button nouveauButt;
     }
 }

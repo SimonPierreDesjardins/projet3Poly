@@ -7,8 +7,8 @@
     <ProjectGuid>{C6FB0F99-403A-43A9-86B5-C8CA99AC438A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Enum</RootNamespace>
-    <AssemblyName>Enum</AssemblyName>
+    <RootNamespace>enum</RootNamespace>
+    <AssemblyName>enum</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

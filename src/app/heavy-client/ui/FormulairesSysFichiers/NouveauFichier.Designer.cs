@@ -1,4 +1,4 @@
-﻿namespace InterfaceGraphique
+﻿namespace ui
 {
     partial class NouveauFichier
     {

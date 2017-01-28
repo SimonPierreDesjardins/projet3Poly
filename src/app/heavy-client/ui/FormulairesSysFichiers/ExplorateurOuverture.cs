@@ -1,13 +1,4 @@
-﻿///////////////////////////////////////////////////////////////////////////////
-/// @file ExplorateurSauvegarde.cs
-/// @author Philippe Marcotte
-/// @date 2016-02-13
-/// @version 1.0
-///
-/// @addtogroup inf2990 INF2990
-/// @{
-///////////////////////////////////////////////////////////////////////////////
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,45 +8,16 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
-using System.Runtime.InteropServices;
 
-namespace InterfaceGraphique
+namespace ui
 {
-    ///////////////////////////////////////////////////////////////////////////
-    /// @class ExplorateurSauvegarde
-    /// @brief Formulaire permettant à l'utilisateur de choisir ou créer dans quel fichier sauvegarder la zone qu'il a créée.
-    ///
-    /// @author Philippe Marcotte
-    /// @date 2016-2-13
-    ///////////////////////////////////////////////////////////////////////////
-    public partial class ExplorateurSauvegarde : Form
-    {
-        /// <summary>
-        /// Dossier racine contenant les zones
-        /// </summary>
-        private TreeNode rootNode;
 
+    public partial class ExplorateurOuverture : Form
+    {
         /// <summary>
         /// Chemin vers le fichier que l'utilisateur a sélectionné
         /// </summary>
-        private String cheminFichier;
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn public String CheminFichier
-        ///
-        /// Retourne le chemin vers le fichier à sauvegarder.
-        ///
-        /// @return String
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public String CheminFichier
-        {
-            get
-            {
-                return cheminFichier;
-            }
-        }
+        public String cheminFichier;
 
         /// <summary>
         /// Chemin vers le fichier contenant la zone par defaut
@@ -77,9 +39,11 @@ namespace InterfaceGraphique
         /// </summary>
         private String extensionFichierZone;
 
+        bool afficherZoneDefaut = false;
+
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public ExplorateurSauvegarde()
+        /// @fn public ExplorateurOuverture()
         ///
         /// Constructeur par défaut
         /// Initialise les composantes du formulaires et popule l'arbre de dossiers.
@@ -87,15 +51,16 @@ namespace InterfaceGraphique
         /// @return Aucune
         ///
         ////////////////////////////////////////////////////////////////////////
-        public ExplorateurSauvegarde()
+        public ExplorateurOuverture(bool afficher)
         {
             StringBuilder str = new StringBuilder(100);
             FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
             cheminFichierZoneDefaut = str.ToString();
-            cheminDossierZone = cheminFichierZoneDefaut.Substring(0,cheminFichierZoneDefaut.LastIndexOf("/") + 1);
+            cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             extensionFichierZone = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("."));
             InitializeComponent();
+            afficherZoneDefaut = afficher;
             PopulateTreeView();
         }
 
@@ -110,6 +75,8 @@ namespace InterfaceGraphique
         ////////////////////////////////////////////////////////////////////////
         private void PopulateTreeView()
         {
+            TreeNode rootNode;
+
             DirectoryInfo info = new DirectoryInfo(@cheminDossierZone);
             if (info.Exists)
             {
@@ -198,16 +165,18 @@ namespace InterfaceGraphique
             }
             foreach (FileInfo file in nodeDirInfo.GetFiles("*" + extensionFichierZone))
             {
-                if (file.Name == nomFichierZoneDefaut)
-                    continue;
-                item = new ListViewItem(file.Name, 1);
-                subItems = new ListViewItem.ListViewSubItem[]
-                  { new ListViewItem.ListViewSubItem(item, "Fichier zone"), 
-                   new ListViewItem.ListViewSubItem(item, 
-				file.LastAccessTime.ToShortDateString())};
-                item.Tag = file;
-                item.SubItems.AddRange(subItems);
-                listView1.Items.Add(item);
+
+                if (file.Length > 0 && (file.Name != nomFichierZoneDefaut || afficherZoneDefaut))
+                {
+                    item = new ListViewItem(file.Name, 1);
+                    subItems = new ListViewItem.ListViewSubItem[] { 
+                        new ListViewItem.ListViewSubItem(item, "Fichier zone"), 
+                        new ListViewItem.ListViewSubItem(item, 
+				        file.LastAccessTime.ToShortDateString())};
+                        item.Tag = file;
+                        item.SubItems.AddRange(subItems);
+                        listView1.Items.Add(item);
+                    }
             }
 
             listView1.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
@@ -217,7 +186,7 @@ namespace InterfaceGraphique
         ///
         /// @fn private void ouvrirButt_Click(object sender, EventArgs e)
         ///
-        /// Fonction appelée lorsque l'évènement de click du bouton "Enregistrer" est déclenché.
+        /// Fonction appelée lorsque l'évènement de click du bouton "Ouvrir" est déclenché.
         /// Celle-ci assigne le chemin du fichier sélectionné par l'utilisateur à la variable cheminFichier.
         ///
         /// @param[in] senders : Objet ayant déclenché l'évenement
@@ -226,7 +195,7 @@ namespace InterfaceGraphique
         /// @return Aucune
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void enregistrerButt_Click(object sender, EventArgs e)
+        private void ouvrirButt_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
             {
@@ -258,38 +227,9 @@ namespace InterfaceGraphique
             Close();
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void nouveauButt_Click(object sender, EventArgs e)
-        ///
-        /// Fonction appelée lorsque l'évènement de click du bouton "Nouveau" est déclenché.
-        /// Celle-ci ouvre un deuxième formulaire permettant à l'utilisateur de nommer le nouveau fichier. Puis, elle crée ce dit fichier.
-        ///
-        /// @param[in] senders : Objet ayant déclenché l'évenement
-        /// @param[in] e : Paramèetre en lien avec l'évènement
-        /// 
-        /// @return Aucune
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void nouveauButt_Click(object sender, EventArgs e)
-        {
-
-            NouveauFichier fenetre = new NouveauFichier();
-
-            if (fenetre.ShowDialog() == DialogResult.OK)
-            {
-                cheminFichier = Path.GetFullPath(cheminDossierZone + fenetre.NomFichier + extensionFichierZone);
-                fenetre.Dispose();
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            else
-                fenetre.Dispose();
-        }
-
         static partial class FonctionNative
         {
-            [System.Runtime.InteropServices.DllImport(@"Noyau.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+            [System.Runtime.InteropServices.DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
             public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
         }
 
@@ -305,6 +245,3 @@ namespace InterfaceGraphique
 
     }
 }
-///////////////////////////////////////////////////////////////////////////////
-/// @}
-///////////////////////////////////////////////////////////////////////////////

@@ -17,7 +17,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace InterfaceGraphique
+namespace ui
 {
     public partial class NouveauFichier : Form
     {
