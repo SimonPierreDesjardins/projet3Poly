@@ -10,15 +10,17 @@ import UIKit
 import JSQMessagesViewController
 
 
-class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextViewPasteDelegate
+class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCellDelegate
 {
 
-    var chatHistory = [JSQMessage]()
+    var chatHistory: Array = [JSQMessage]()
     
-    let textCellIdentifier = "chatCell"
+    let textCellIdentifier: NSString = "chatCell"
     
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
+    
+    private var cellsThatHaveBeenTapped = Set<NSInteger>()
 
     override func didReceiveMemoryWarning()
     {
@@ -32,11 +34,11 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
      
         self.title = "HEYO";
         
-        self.inputToolbar.contentView.textView.pasteDelegate = self;
-        
         self.showLoadEarlierMessagesHeader = true;
         
         self.senderId = "Moi"
+        
+        self.senderDisplayName = "P"
         
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
@@ -44,7 +46,40 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
         
         self.inputToolbar.contentView.leftBarButtonItem = nil
         
+        setupNavigationBarButton()
+        
         receiveMessagePressed()
+        
+        
+        automaticallyScrollsToMostRecentMessage = true
+        
+        self.collectionView?.reloadData()
+        self.collectionView?.layoutIfNeeded()
+    }
+    
+    func setupNavigationBarButton() {
+        let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backButtonTapped))
+        navigationItem.leftBarButtonItem = backButton
+        
+        //create a new button
+        let button: UIButton = UIButton(type: UIButtonType.custom)
+        //set image for button
+        button.setImage(UIImage(named: "./icons/ic_people_outline.png"), for: UIControlState.normal)
+        //add function for button
+        button.addTarget(self, action: #selector (backButtonTapped), for: UIControlEvents.touchUpInside)
+        //set frame
+        button.frame = CGRect(x: 0, y: 0, width: 53, height: 31)
+        
+        let barButton = UIBarButtonItem(customView: button)
+        //assign button to navigationbar
+        self.navigationItem.rightBarButtonItem = barButton
+        //let infoButton = UIBarButtonItem(image: UIImage(named: "./icons/ic_people_outline.png"), style: UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
+        //navigationItem.rightBarButtonItem = infoButton
+        
+    }
+    
+    func backButtonTapped() {
+        dismiss(animated: true, completion: nil)
     }
     
     func receiveMessagePressed() {
@@ -88,10 +123,13 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource!
     {
-        let message = chatHistory[indexPath.item] // 1
-        if message.senderId == senderId { // 2
+        let message = chatHistory[indexPath.item]
+        if message.senderId == senderId
+        {
             return outgoingBubbleImageView
-        } else { // 3
+        }
+        else
+        {
             return incomingBubbleImageView
         }
     }
@@ -144,16 +182,20 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
         return NSAttributedString(string: message.senderDisplayName)
     }
     
-    override func collectionView(_ collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForMessageBubbleTopLabelAt indexPath: IndexPath) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForMessageBubbleTopLabelAt indexPath: IndexPath) -> CGFloat
+    {
         let currentMessage = self.chatHistory[indexPath.item]
         
-        if currentMessage.senderId == self.senderId {
+        if currentMessage.senderId == self.senderId
+        {
             return 0.0
         }
         
-        if indexPath.item - 1 > 0 {
+        if indexPath.item - 1 > 0
+        {
             let previousMessage = self.chatHistory[indexPath.item - 1]
-            if previousMessage.senderId == currentMessage.senderId {
+            if previousMessage.senderId == currentMessage.senderId
+            {
                 return 0.0
             }
         }
@@ -170,23 +212,39 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForCellTopLabelAt indexPath: IndexPath) -> CGFloat
     {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault
-    }
-    
-    func composerTextView(_ textView: JSQMessagesComposerTextView!, shouldPasteWithSender sender: Any!) -> Bool {
-        if (UIPasteboard.general.image != nil) {
-            // If there's an image in the pasteboard, construct a media item with that image and `send` it.
-            
-            let item = JSQPhotoMediaItem(image: UIPasteboard.general.image)
-            
-            let message = JSQMessage(senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: NSDate() as Date!, media: item)
-            self.chatHistory.append(message!)
-            self.finishSendingMessage()
-            
-            return false
+        if cellsThatHaveBeenTapped.contains(indexPath.row)
+        {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
         }
         
-        return true
+        return 0.0
     }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!)
+    {
+        if cellsThatHaveBeenTapped.remove(indexPath.row) == nil
+        {
+            cellsThatHaveBeenTapped.insert(indexPath.row)
+        }
+        
+        collectionView.reloadData()
+    }
+    
+    func messagesCollectionViewCellDidTapMessageBubble(_ cell: JSQMessagesCollectionViewCell!) {
+        
+    }
+    
+    func messagesCollectionViewCellDidTap(_ cell: JSQMessagesCollectionViewCell!, atPosition position: CGPoint) {
+        
+    }
+    
+    func messagesCollectionViewCell(_ cell: JSQMessagesCollectionViewCell!, didPerformAction action: Selector!, withSender sender: Any!) {
+        
+    }
+    
+    func messagesCollectionViewCellDidTapAvatar(_ cell: JSQMessagesCollectionViewCell!) {
+        
+    }
+
 }
 
