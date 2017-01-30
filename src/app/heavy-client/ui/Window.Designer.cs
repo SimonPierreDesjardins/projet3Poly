@@ -117,7 +117,7 @@
             // picturePause
             // 
             this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picturePause.Image = global::InterfaceGraphique.Properties.Resources.pauseNoire;
+            this.picturePause.Image = global::ui.Properties.Resources.pauseNoire;
             this.picturePause.Location = new System.Drawing.Point(267, 171);
             this.picturePause.Name = "picturePause";
             this.picturePause.Size = new System.Drawing.Size(96, 96);
@@ -438,7 +438,7 @@
             // outilsSelection_
             // 
             this.outilsSelection_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsSelection_.Image = global::InterfaceGraphique.Properties.Resources.ic_near_me_white_48dp_2x;
+            this.outilsSelection_.Image = global::ui.Properties.Resources.ic_near_me_white_48dp_2x;
             this.outilsSelection_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsSelection_.Name = "outilsSelection_";
             this.outilsSelection_.Size = new System.Drawing.Size(23, 20);
@@ -448,7 +448,7 @@
             // outilsDeplacement_
             // 
             this.outilsDeplacement_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsDeplacement_.Image = global::InterfaceGraphique.Properties.Resources.ic_open_with;
+            this.outilsDeplacement_.Image = global::ui.Properties.Resources.ic_open_with;
             this.outilsDeplacement_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsDeplacement_.Name = "outilsDeplacement_";
             this.outilsDeplacement_.Size = new System.Drawing.Size(23, 20);
@@ -458,7 +458,7 @@
             // outilsRotation_
             // 
             this.outilsRotation_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsRotation_.Image = global::InterfaceGraphique.Properties.Resources.ic_loop_white_48dp_2x;
+            this.outilsRotation_.Image = global::ui.Properties.Resources.ic_loop_white_48dp_2x;
             this.outilsRotation_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsRotation_.Name = "outilsRotation_";
             this.outilsRotation_.Size = new System.Drawing.Size(23, 20);
@@ -468,7 +468,7 @@
             // outilsMiseAEchelle_
             // 
             this.outilsMiseAEchelle_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsMiseAEchelle_.Image = global::InterfaceGraphique.Properties.Resources.ic_settings_overscan_white_48dp_2x;
+            this.outilsMiseAEchelle_.Image = global::ui.Properties.Resources.ic_settings_overscan_white_48dp_2x;
             this.outilsMiseAEchelle_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsMiseAEchelle_.Name = "outilsMiseAEchelle_";
             this.outilsMiseAEchelle_.Size = new System.Drawing.Size(23, 20);
@@ -478,7 +478,7 @@
             // outilsDuplication_
             // 
             this.outilsDuplication_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsDuplication_.Image = global::InterfaceGraphique.Properties.Resources.editcopy;
+            this.outilsDuplication_.Image = global::ui.Properties.Resources.editcopy;
             this.outilsDuplication_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsDuplication_.Name = "outilsDuplication_";
             this.outilsDuplication_.Size = new System.Drawing.Size(23, 20);
@@ -488,7 +488,7 @@
             // outilsZoom_
             // 
             this.outilsZoom_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsZoom_.Image = global::InterfaceGraphique.Properties.Resources.ic_search_white_48dp_2x;
+            this.outilsZoom_.Image = global::ui.Properties.Resources.ic_search_white_48dp_2x;
             this.outilsZoom_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsZoom_.Name = "outilsZoom_";
             this.outilsZoom_.Size = new System.Drawing.Size(23, 20);
@@ -498,7 +498,7 @@
             // outilsCreationPoteau_
             // 
             this.outilsCreationPoteau_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsCreationPoteau_.Image = global::InterfaceGraphique.Properties.Resources.law2;
+            this.outilsCreationPoteau_.Image = global::ui.Properties.Resources.law2;
             this.outilsCreationPoteau_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsCreationPoteau_.Name = "outilsCreationPoteau_";
             this.outilsCreationPoteau_.Size = new System.Drawing.Size(23, 20);
@@ -508,7 +508,7 @@
             // outilsCreationMurs_
             // 
             this.outilsCreationMurs_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsCreationMurs_.Image = global::InterfaceGraphique.Properties.Resources.walls1;
+            this.outilsCreationMurs_.Image = global::ui.Properties.Resources.walls1;
             this.outilsCreationMurs_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsCreationMurs_.Name = "outilsCreationMurs_";
             this.outilsCreationMurs_.Size = new System.Drawing.Size(23, 20);
@@ -518,7 +518,7 @@
             // outilsCreationLigne_
             // 
             this.outilsCreationLigne_.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.outilsCreationLigne_.Image = global::InterfaceGraphique.Properties.Resources.line2;
+            this.outilsCreationLigne_.Image = global::ui.Properties.Resources.line2;
             this.outilsCreationLigne_.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.outilsCreationLigne_.Name = "outilsCreationLigne_";
             this.outilsCreationLigne_.Size = new System.Drawing.Size(23, 20);
