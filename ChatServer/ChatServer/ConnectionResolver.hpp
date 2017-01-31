@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Libraries\asio-1.10.8\include\asio.hpp"
+#include "Connection.h"
 
 using asio::ip::tcp;
 
@@ -38,7 +39,7 @@ namespace ServerPrototype{
 
 		static void SetDebugLevel(DebugLevel level);
 
-		__event void OnConnectionResolved();
+		__event void OnConnectionResolved(Connection connection);
 
 		//__event void OnReceivedData();
 

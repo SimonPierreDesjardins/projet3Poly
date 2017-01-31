@@ -17,6 +17,7 @@ void ServerListener::StartAccepting()
 		if (!errorCode)
 		{
 			OnOtherConnected(Connection(&_socket));
+			_socket.close();
 			StartAccepting(); // Keep the listener going
 		}
 		else

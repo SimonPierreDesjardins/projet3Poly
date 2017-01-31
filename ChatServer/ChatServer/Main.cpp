@@ -21,7 +21,7 @@ class Receiver{
 		_receivedEvent = true;
 	}
 
-	void OnConnectionResolved() {
+	void OnConnectionResolved(Connection connection) {
 		std::cout << "Connected!" << std::endl;
 		_receivedEvent = true;
 	}
@@ -67,6 +67,12 @@ int main(int argc, char* argv[])
 	io_service.run();
 
 	while (!receiver.ReceivedEvent());
+
+	std::string message = "";
+
+	while (message != "exit") {
+		std::cin >> message;
+	}
 
 	return 0;
 }
