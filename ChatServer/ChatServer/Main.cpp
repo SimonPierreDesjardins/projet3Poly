@@ -8,27 +8,37 @@ typedef ServerPrototype::ServerListener ServerListener;
 class Receiver{
 	public:
 		Receiver(ConnectionResolver &connection, ServerListener &listener) {
-			__hook(&ServerListener::OnOtherConnected, &listener, &Receiver::OnConnectionReceived);
-			__hook(&ConnectionResolver::OnConnectionResolved, &connection, &Receiver::OnConnectionResolved);
+			__hook(&ServerListener::OnOtherConnected, &listener, &Receiver::OnConnectionEstablished);
+			__hook(&ConnectionResolver::OnConnectionResolved, &connection, &Receiver::OnConnectionEstablished);
 		}
 	
 		bool ReceivedEvent() {
 			return _receivedEvent;
 		}
 
-	void OnConnectionReceived(Connection connection) {
+	void OnConnectionEstablished(Connection connection) {
 		std::cout << "Someone connected!" << std::endl;
+		__hook(&Connection::OnReceivedData, &connection, &Receiver::ReceivedMessage);
+		_connections.push_back(connection);
+		connection.Start();
 		_receivedEvent = true;
 	}
 
-	void OnConnectionResolved(Connection connection) {
-		std::cout << "Connected!" << std::endl;
-		_receivedEvent = true;
+	void Message(std::string message) {
+		for each (auto connection in _connections)
+		{
+			connection.SendData(message);
+		}
+	}
+
+	void ReceivedMessage(const char* data, size_t length) {
+		std::cout << std::string(data, length) << std::endl;
 	}
 
 private:
 	bool _receivedEvent = false;
 
+	std::vector<Connection> _connections;
 };
 
 int main(int argc, char* argv[]) 
@@ -72,6 +82,7 @@ int main(int argc, char* argv[])
 
 	while (message != "exit") {
 		std::cin >> message;
+		receiver.Message(message);
 	}
 
 	return 0;
