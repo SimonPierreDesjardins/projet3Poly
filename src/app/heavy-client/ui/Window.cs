@@ -22,6 +22,11 @@ namespace ui
 {
     public partial class Window : Form, IMessageFilter
     {
+        public MainMenu mainMenu;
+        public SimulationMenuStrip simulationMenuStrip;
+        public EditionSideMenu editionSideMenu;
+        public EditionMenuStrip editionMenuStrip;
+
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
         private const int WM_SYSKEYDOWN = 0x0104;
@@ -33,7 +38,7 @@ namespace ui
         private const int WM_MOUSEMOVE = 0x0200;
         private const int WM_MOUSEWHEEL = 0x020A;
 
-        private Configure configuration;
+        public Configure configuration;
 
         bool arreterToutMessage_;
 
@@ -49,7 +54,7 @@ namespace ui
             if (!arreterToutMessage_)
             {
                 // On veut seulement traiter les inputs sur le view_port.
-                if (m.HWnd == viewPort_.Handle ||
+                if (m.HWnd == viewPort.Handle ||
                     m.Msg == WM_KEYUP ||
                     m.Msg == WM_KEYDOWN ||
                     m.Msg == WM_SYSKEYUP ||
@@ -90,6 +95,13 @@ namespace ui
         {
             arreterToutMessage_ = false;
             InitializeComponent();
+
+            mainMenu = new MainMenu(this);
+            viewPort.Controls.Add(mainMenu);
+            mainMenu.Dock = DockStyle.Left;
+
+            Program.peutAfficher = false;
+
             InitialiserAnimation();
             menuEdition_.Visible = false;
             barreOutils_.Visible = false;
@@ -108,7 +120,7 @@ namespace ui
         public void InitialiserAnimation()
         {
             this.DoubleBuffered = false;
-            FonctionsNatives.initialiserOpenGL(viewPort_.Handle);
+            FonctionsNatives.initialiserOpenGL(viewPort.Handle);
             FonctionsNatives.dessinerOpenGL();
         }
 
@@ -174,7 +186,7 @@ namespace ui
             zoomToolStripMenuItem.Enabled = true;
 
             FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             afficherMenuPrincipal(false);
             afficherMenuEdition(true);
@@ -184,7 +196,7 @@ namespace ui
             verificationDuNombreElementChoisi();
             changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -220,7 +232,7 @@ namespace ui
             bouttonEditeur_.Visible = afficherMenu;
             bouttonQuitter_.Visible = afficherMenu;
             bouttonSimulation_.Visible = afficherMenu;
-            viewPort_.Visible = !afficherMenu;
+            viewPort.Visible = !afficherMenu;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -235,7 +247,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void afficherMenuEdition(bool afficherMenu)
         {
-            viewPort_.Visible = afficherMenu;
+            viewPort.Visible = afficherMenu;
             menuEdition_.Visible = afficherMenu;
             barreOutils_.Visible = afficherMenu;
             panneauOperation_.Visible = false;
@@ -256,7 +268,7 @@ namespace ui
             menuSimTest.Visible = false;
             modeEditionMenuSimTest.Visible = !afficherMenu;
             premierePersonneMenuSimTest.Visible = afficherMenu;
-            viewPort_.Visible = afficherMenu;
+            viewPort.Visible = afficherMenu;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -274,7 +286,7 @@ namespace ui
             menuSimTest.Visible = false;
             modeEditionMenuSimTest.Visible = afficherMenu;
             premierePersonneMenuSimTest.Visible = !afficherMenu;
-            viewPort_.Visible = afficherMenu;
+            viewPort.Visible = afficherMenu;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -331,7 +343,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
             changeIconColor();
             outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -351,7 +363,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
             changeIconColor();
             outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -371,7 +383,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
             changeIconColor();
             outilsDeplacement_.BackColor = Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -391,7 +403,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
             changeIconColor();
             outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -411,7 +423,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
             changeIconColor();
             outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -431,7 +443,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
             changeIconColor();
             outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -451,7 +463,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
             changeIconColor();
             outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -471,7 +483,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
             changeIconColor();
             outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -491,7 +503,7 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
             changeIconColor();
             outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -508,7 +520,7 @@ namespace ui
         private void Window_Resize(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
             FonctionsNatives.dessinerOpenGL();
         }
 
@@ -526,7 +538,7 @@ namespace ui
         private void Window_Load(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -543,7 +555,7 @@ namespace ui
         private void outilsSelection__Click(object sender, EventArgs e)
         {
             //Bouton S : sélection
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
             changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
@@ -563,7 +575,7 @@ namespace ui
         private void outilsDéplacement__Click(object sender, EventArgs e)
         {
             //Bouton D : Déplacement
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
             changeIconColor();
             outilsDeplacement_.BackColor = Color.CadetBlue;
@@ -583,7 +595,7 @@ namespace ui
         private void outilsRotation__Click(object sender, EventArgs e)
         {
             //Bouton R : Rotation
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
             changeIconColor();
             outilsRotation_.BackColor = Color.CadetBlue;
@@ -603,7 +615,7 @@ namespace ui
         private void outilsMiseAEchelle__Click(object sender, EventArgs e)
         {
             //Bouton E : Mise a échelle
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
             changeIconColor();
             outilsMiseAEchelle_.BackColor = Color.CadetBlue;
@@ -623,7 +635,7 @@ namespace ui
         private void outilsDuplication__Click(object sender, EventArgs e)
         {
             //Bouton C : Duplication
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
             changeIconColor();
             outilsDuplication_.BackColor = Color.CadetBlue;
@@ -643,7 +655,7 @@ namespace ui
         private void outilsZoom__Click(object sender, EventArgs e)
         {
             //Bouton Z : Zoom
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
             changeIconColor();
             outilsZoom_.BackColor = Color.CadetBlue;
@@ -663,7 +675,7 @@ namespace ui
         private void outilsCreationPoteau__Click(object sender, EventArgs e)
         {
             //Bouton P : Creation poteau
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
             changeIconColor();
             outilsCreationPoteau_.BackColor = Color.CadetBlue;
@@ -683,7 +695,7 @@ namespace ui
         private void outilsCreationMurs__Click(object sender, EventArgs e)
         {
             //Bouton M : Creation mur
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
             changeIconColor();
             outilsCreationMurs_.BackColor = Color.CadetBlue;
@@ -703,7 +715,7 @@ namespace ui
         private void outilsCreationLigne__Click(object sender, EventArgs e)
         {
             //Bouton L : Creation ligne
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
             changeIconColor();
             outilsCreationLigne_.BackColor = Color.CadetBlue;
@@ -725,7 +737,7 @@ namespace ui
             afficherMenuPrincipal(false);
             afficherMenuEdition(false);
             afficherMenuTest(true);
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -745,7 +757,7 @@ namespace ui
             if (PasserEnSimulation)
             {
                 FonctionsNatives.assignerVueOrtho();
-                FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
                 afficherMenuPrincipal(false);
                 afficherMenuEdition(false);
@@ -753,7 +765,7 @@ namespace ui
 
                 FonctionsNatives.assignerMode(Mode.SIMULATION);
             }
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -772,7 +784,7 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
             configuration.ShowDialog();
-            viewPort_.Focus();
+            viewPort.Focus();
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
@@ -797,7 +809,7 @@ namespace ui
             if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
             {
                 popup.Dispose();
-                viewPort_.Focus();
+                viewPort.Focus();
             }
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
@@ -939,7 +951,7 @@ namespace ui
         {
             supprimerToolStripMenuItem.Enabled = false;
             verificationDuNombreElementChoisi();
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1137,7 +1149,7 @@ namespace ui
             {
                 case Keys.D1:
                     FonctionsNatives.assignerVueOrtho();
-                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     crochetPourVueEdition();
                     outilsZoom_.Enabled = true;
                     zoomToolStripMenuItem.Enabled = true;
@@ -1145,7 +1157,7 @@ namespace ui
 
                 case Keys.D2:
                     FonctionsNatives.assignerVueOrbite();
-                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     crochetPourVueEdition();
                     outilsZoom_.Enabled = false;
                     zoomToolStripMenuItem.Enabled = false;
@@ -1177,7 +1189,7 @@ namespace ui
                         
 
                         FonctionsNatives.assignerVueOrtho();
-                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                        FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
                         afficherMenuEdition(false);
                         afficherMenuPrincipal(true);
@@ -1261,19 +1273,19 @@ namespace ui
             {
                 case Keys.D1:
                     FonctionsNatives.assignerVueOrtho();
-                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     crochetPourVueSimTest();
                     break;
 
                 case Keys.D2:
                     FonctionsNatives.assignerVueOrbite();
-                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     crochetPourVueSimTest();
                     break;
 
                 case Keys.D3:
                     FonctionsNatives.assignerVuePremierePersonne();
-                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     crochetPourVueSimTest();
                     break;
 
@@ -1286,7 +1298,7 @@ namespace ui
                         picturePause.Visible = estEnPause;
 
                         FonctionsNatives.assignerVueOrtho();
-                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                        FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
                         afficherMenuSimulation(false);
                         afficherMenuTest(false);
@@ -1322,7 +1334,7 @@ namespace ui
             {
                 case Keys.D1:
                     FonctionsNatives.assignerVueOrtho();
-                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     crochetPourVueSimTest();
                     outilsZoom_.Enabled = true;
                     zoomToolStripMenuItem.Enabled = true;
@@ -1330,7 +1342,7 @@ namespace ui
 
                 case Keys.D2:
                     FonctionsNatives.assignerVueOrbite();
-                    FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     crochetPourVueSimTest();
                     outilsZoom_.Enabled = false;
                     zoomToolStripMenuItem.Enabled = false;
@@ -1345,7 +1357,7 @@ namespace ui
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
 
                         FonctionsNatives.assignerVueOrtho();
-                        FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+                        FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
                         afficherMenuTest(false);
                         afficherMenuPrincipal(true);
@@ -1371,7 +1383,7 @@ namespace ui
                         changeIconColor();
                         outilsSelection_.BackColor = Color.CadetBlue;
                         FonctionsNatives.assignerMode(Mode.EDITION);
-                        viewPort_.Focus();
+                        viewPort.Focus();
                     }
                     break;
             }
@@ -1460,7 +1472,7 @@ namespace ui
         /// des opérations si un objet est sélectionné
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void verificationDuNombreElementChoisi()
+        public void verificationDuNombreElementChoisi()
         {
             FonctionsNatives.assignerAutorisationInputClavier(true);
 
@@ -1468,7 +1480,7 @@ namespace ui
             if (nbEnfant == 1)
             {
                 mettreAJourInformation();
-                viewPort_.Focus();
+                viewPort.Focus();
                 panneauOperation_.Visible = true;
                 supprimerToolStripMenuItem.Enabled = true;
             }
@@ -1497,7 +1509,7 @@ namespace ui
         private void viewPort__MouseUp(object sender, MouseEventArgs e)
         {
             verificationDuNombreElementChoisi();
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1577,7 +1589,7 @@ namespace ui
             changeIconColor();
             outilsSelection_.BackColor = Color.CadetBlue;
             FonctionsNatives.assignerMode(Mode.EDITION);
-            viewPort_.Focus();
+            viewPort.Focus();
         }
 
         /// <summary>
@@ -1609,7 +1621,7 @@ namespace ui
             tempItemEdition = orthographiqueMenuEdition_;
 
             FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             outilsZoom_.Enabled = true;
             zoomToolStripMenuItem.Enabled = true;
@@ -1636,7 +1648,7 @@ namespace ui
             tempItemEdition = orbiteMenuEdition_;
 
             FonctionsNatives.assignerVueOrbite();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             outilsZoom_.Enabled = false;
             zoomToolStripMenuItem.Enabled = false;
@@ -1661,7 +1673,7 @@ namespace ui
             tempItemSimTest = orthographiqueMenuSimTest;
 
             FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             outilsZoom_.Enabled = true;
             zoomToolStripMenuItem.Enabled = true;
@@ -1689,7 +1701,7 @@ namespace ui
             tempItemSimTest = orbiteMenuSimTest;
 
             FonctionsNatives.assignerVueOrbite();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             outilsZoom_.Enabled = false;
             zoomToolStripMenuItem.Enabled = false;
@@ -1716,7 +1728,7 @@ namespace ui
             tempItemSimTest = premierePersonneMenuSimTest;
 
             FonctionsNatives.assignerVuePremierePersonne();
-            FonctionsNatives.redimensionnerFenetre(viewPort_.Width, viewPort_.Height);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////

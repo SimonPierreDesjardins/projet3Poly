@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.viewPort_ = new System.Windows.Forms.Panel();
+            this.viewPort = new System.Windows.Forms.Panel();
             this.picturePause = new System.Windows.Forms.PictureBox();
             this.bouttonSimulation_ = new System.Windows.Forms.Button();
             this.bouttonEditeur_ = new System.Windows.Forms.Button();
@@ -88,7 +88,7 @@
             this.orbiteMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.premierePersonneMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.profilsMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewPort_.SuspendLayout();
+            this.viewPort.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picturePause)).BeginInit();
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
@@ -96,23 +96,22 @@
             this.menuSimTest.SuspendLayout();
             this.SuspendLayout();
             // 
-            // viewPort_
+            // viewPort
             // 
-            this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.viewPort.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.viewPort_.AutoSize = true;
-            this.viewPort_.Controls.Add(this.picturePause);
-            this.viewPort_.Location = new System.Drawing.Point(0, 0);
-            this.viewPort_.MinimumSize = new System.Drawing.Size(100, 100);
-            this.viewPort_.Name = "viewPort_";
-            this.viewPort_.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort_.Size = new System.Drawing.Size(623, 462);
-            this.viewPort_.TabIndex = 0;
-            this.viewPort_.Visible = false;
-            this.viewPort_.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
-            this.viewPort_.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
-            this.viewPort_.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
+            this.viewPort.AutoSize = true;
+            this.viewPort.Controls.Add(this.picturePause);
+            this.viewPort.Location = new System.Drawing.Point(0, 0);
+            this.viewPort.MinimumSize = new System.Drawing.Size(100, 100);
+            this.viewPort.Name = "viewPort";
+            this.viewPort.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.viewPort.Size = new System.Drawing.Size(623, 462);
+            this.viewPort.TabIndex = 0;
+            this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
+            this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
+            this.viewPort.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
             // 
             // picturePause
             // 
@@ -714,13 +713,13 @@
             this.ClientSize = new System.Drawing.Size(623, 462);
             this.Controls.Add(this.panneauOperation_);
             this.Controls.Add(this.barreOutils_);
-            this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.menuEdition_);
+            this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);
             this.Controls.Add(this.bouttonEditeur_);
             this.Controls.Add(this.bouttonConfiguration_);
-            this.Controls.Add(this.viewPort_);
+            this.Controls.Add(this.viewPort);
             this.MainMenuStrip = this.menuSimTest;
             this.MinimumSize = new System.Drawing.Size(500, 500);
             this.Name = "Window";
@@ -729,7 +728,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
             this.Resize += new System.EventHandler(this.Window_Resize);
-            this.viewPort_.ResumeLayout(false);
+            this.viewPort.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picturePause)).EndInit();
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
@@ -747,7 +746,7 @@
         #endregion
 
 
-        private System.Windows.Forms.Panel viewPort_;
+        public System.Windows.Forms.Panel viewPort;
         private System.Windows.Forms.Button bouttonSimulation_;
         private System.Windows.Forms.Button bouttonEditeur_;
         private System.Windows.Forms.Button bouttonConfiguration_;

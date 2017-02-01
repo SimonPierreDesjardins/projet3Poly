@@ -30,7 +30,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -76,6 +76,19 @@
     <Compile Include="Configure.Designer.cs">
       <DependentUpon>Configure.cs</DependentUpon>
     </Compile>
+    <Compile Include="CustomClass.cs" />
+    <Compile Include="EditionMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionMenuStrip.Designer.cs">
+      <DependentUpon>EditionMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditionSideMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionSideMenu.Designer.cs">
+      <DependentUpon>EditionSideMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormulairesSysFichiers\ExplorateurOuverture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -94,11 +107,23 @@
     <Compile Include="FormulairesSysFichiers\NouveauFichier.Designer.cs">
       <DependentUpon>NouveauFichier.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="PopOutInterface.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="PopOutInterface.Designer.cs">
       <DependentUpon>PopOutInterface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SimulationMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SimulationMenuStrip.Designer.cs">
+      <DependentUpon>SimulationMenuStrip.cs</DependentUpon>
     </Compile>
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
@@ -112,6 +137,12 @@
       <DependentUpon>Configure.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditionMenuStrip.resx">
+      <DependentUpon>EditionMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionSideMenu.resx">
+      <DependentUpon>EditionSideMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurOuverture.resx">
       <DependentUpon>ExplorateurOuverture.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -123,9 +154,15 @@
     <EmbeddedResource Include="FormulairesSysFichiers\NouveauFichier.resx">
       <DependentUpon>NouveauFichier.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PopOutInterface.resx">
       <DependentUpon>PopOutInterface.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SimulationMenuStrip.resx">
+      <DependentUpon>SimulationMenuStrip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window.resx">
       <DependentUpon>Window.cs</DependentUpon>
@@ -219,6 +256,30 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\back.png" />
+    <Content Include="Resources\Bridge.png" />
+    <Content Include="Resources\car-change.png" />
+    <Content Include="Resources\car.png" />
+    <Content Include="Resources\Create.png" />
+    <Content Include="Resources\delete.png" />
+    <Content Include="Resources\Duplicate.png" />
+    <Content Include="Resources\Green_Line.png" />
+    <Content Include="Resources\Ligne.png" />
+    <Content Include="Resources\menu.png" />
+    <Content Include="Resources\move.png" />
+    <Content Include="Resources\music.png" />
+    <Content Include="Resources\Red_Line.png" />
+    <Content Include="Resources\Rotate.png" />
+    <Content Include="Resources\save.png" />
+    <Content Include="Resources\Scale.png" />
+    <Content Include="Resources\Selection.png" />
+    <Content Include="Resources\table.png" />
+    <Content Include="Resources\Teleporteur.png" />
+    <Content Include="Resources\wall.png" />
+    <Content Include="Resources\wheel.png" />
+    <Content Include="Resources\Zoom.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
