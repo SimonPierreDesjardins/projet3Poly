@@ -1,6 +1,7 @@
 #include "ConnectionResolver.hpp"
 #include "ServerListener.hpp"
 #include <iostream>
+#include <thread>
 
 typedef NetworkPrototype::ConnectionResolver ConnectionResolver;
 typedef NetworkPrototype::ServerListener ServerListener;
@@ -20,15 +21,14 @@ class Receiver{
 	void OnConnectionEstablished(Connection& connection) {
 		std::cout << "Connection Established" << std::endl;
 		__hook(&Connection::OnReceivedData, &connection, &Receiver::ReceivedMessage);
-		_connections.push_back(connection);
+		_connections.push_back(std::make_unique<Connection>(connection));
 		connection.Start();
 		_receivedEvent = true;
 	}
 
 	void Message(std::string message) {
-		for each (auto connection in _connections)
-		{
-			connection.SendData(message);
+		for each (auto connection in _connections) {
+			connection -> SendData(message);
 		}
 	}
 
@@ -39,7 +39,7 @@ class Receiver{
 private:
 	bool _receivedEvent = false;
 
-	std::vector<Connection> _connections;
+	std::vector<std::shared_ptr<Connection>> _connections;
 };
 
 int main(int argc, char* argv[]) 
@@ -63,19 +63,21 @@ int main(int argc, char* argv[])
 
 	asio::io_service io_service;
 
-	ConnectionResolver connection(io_service);
+	ConnectionResolver resolver(io_service);
 	ServerListener listener(io_service, port);
 
-	Receiver receiver(connection, listener);
+	Receiver receiver(resolver, listener);
 
 	if (strcmp(argv[1], "listen") == 0) {
 		listener.StartAccepting();
 	}
 	else {
-		connection.Resolve(hostName, std::to_string(port));
+		resolver.Resolve(hostName, std::to_string(port));
 	}
 
-	io_service.run();
+	asio::io_service* aios = &io_service;
+
+	std::thread thread([aios](){aios -> run();});
 
 	while (!receiver.ReceivedEvent());
 

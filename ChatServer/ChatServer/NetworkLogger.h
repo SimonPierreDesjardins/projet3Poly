@@ -3,7 +3,7 @@
 
 namespace NetworkPrototype {
 
-	static class Logger {
+	class Logger {
 
 	public:
 		static void Log(std::string message);
