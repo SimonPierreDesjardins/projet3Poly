@@ -4,7 +4,7 @@
 
 using asio::ip::tcp;
 
-namespace  ServerPrototype {
+namespace  NetworkPrototype {
 
 	class ServerListener
 	{
@@ -13,11 +13,10 @@ namespace  ServerPrototype {
 
 		void StartAccepting();
 
-		__event void OnOtherConnected(Connection connectionToOther);
+		__event void OnOtherConnected(Connection& connectionToOther);
 
 	private:
 		tcp::acceptor _acceptor;
-		tcp::socket _socket;
 
 		void LogError(std::string errorMessage);
 	};

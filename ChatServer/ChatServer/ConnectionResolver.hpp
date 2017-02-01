@@ -5,7 +5,7 @@
 
 using asio::ip::tcp;
 
-namespace ServerPrototype{
+namespace NetworkPrototype{
 
 	class ConnectionResolver {
 
@@ -39,7 +39,7 @@ namespace ServerPrototype{
 
 		static void SetDebugLevel(DebugLevel level);
 
-		__event void OnConnectionResolved(Connection connection);
+		__event void OnConnectionResolved(Connection& connection);
 
 		//__event void OnReceivedData();
 

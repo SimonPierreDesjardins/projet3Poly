@@ -2,7 +2,7 @@
 #include "Libraries\asio-1.10.8\include\asio.hpp"
 #include <iostream>
 
-using namespace ServerPrototype;
+using namespace NetworkPrototype;
 
 ConnectionResolver::ConnectionResolver(asio::io_service& ioService):
 	_socket(ioService),
@@ -30,7 +30,7 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 	}
 	else {
 		// build a connection object and callback
-		OnConnectionResolved(Connection(&_socket));
+		OnConnectionResolved(Connection(std::shared_ptr<tcp::socket>(&_socket)));
 	}
 }
 

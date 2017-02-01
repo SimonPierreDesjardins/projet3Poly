@@ -1,39 +1,44 @@
 #pragma once
 #include "Libraries\asio-1.10.8\include\asio.hpp"
+#include <queue>
+#include <memory>
 
-class Connection {
+namespace NetworkPrototype 
+{
+	class Connection {
 
-public:
-	// Constructor taking a functionnal socket
-	Connection(asio::ip::tcp::socket* socket);
+	public:
+		// Constructor taking a functionnal socket
+		Connection(std::shared_ptr<asio::ip::tcp::socket> socket);
 
-	//Starts the connection process to send data to eachother
-	void Start();
+		//Starts the connection process to send data to eachother
+		void Start();
 
-	// Send data method
-	void SendData(std::string data);
-	
-	// Connection closer
-	void CloseConnection();
+		// Send data method
+		void SendData(std::string data);
 
-	//On received data event
-	__event void OnReceivedData(const char* data, std::size_t length);
+		// Connection closer
+		void CloseConnection();
+
+		//On received data event
+		__event void OnReceivedData(const char* data, std::size_t length);
 
 
-	// ping?
+		// ping?
 
-	// On lost connection?
+		// On lost connection?
 
-private:
+	private:
 
-	void ReadData();
+		void ReadData();
 
-	void WriteData(std::size_t length);
+		void WriteData(std::string message);
 
-	asio::ip::tcp::socket* _socket; // A reference to the currently used network socket
+		std::shared_ptr<asio::ip::tcp::socket> _socket; // A reference to the currently used network socket
 
-	asio::ip::tcp::endpoint _remoteEndpoint; // Where the connection leads to remotely.
+												 // Buffer used to store data received from the client.
+		std::array<char, 1024> _buffer;
 
-	// Buffer used to store data received from the client.
-	std::array<char, 1024> _buffer;
-};
+		std::queue<std::string> _sendQueue;
+	};
+}

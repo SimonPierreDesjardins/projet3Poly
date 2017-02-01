@@ -2,8 +2,9 @@
 #include "ServerListener.hpp"
 #include <iostream>
 
-typedef ServerPrototype::ConnectionResolver ConnectionResolver;
-typedef ServerPrototype::ServerListener ServerListener;
+typedef NetworkPrototype::ConnectionResolver ConnectionResolver;
+typedef NetworkPrototype::ServerListener ServerListener;
+typedef NetworkPrototype::Connection Connection;
 
 class Receiver{
 	public:
@@ -16,8 +17,8 @@ class Receiver{
 			return _receivedEvent;
 		}
 
-	void OnConnectionEstablished(Connection connection) {
-		std::cout << "Someone connected!" << std::endl;
+	void OnConnectionEstablished(Connection& connection) {
+		std::cout << "Connection Established" << std::endl;
 		__hook(&Connection::OnReceivedData, &connection, &Receiver::ReceivedMessage);
 		_connections.push_back(connection);
 		connection.Start();

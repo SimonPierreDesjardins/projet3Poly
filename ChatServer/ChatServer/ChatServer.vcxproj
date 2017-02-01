@@ -23,9 +23,11 @@
     <ClCompile Include="ServerListener.cpp" />
     <ClCompile Include="ConnectionResolver.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="NetworkLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Connection.h" />
+    <ClInclude Include="NetworkLogger.h" />
     <ClInclude Include="ServerListener.hpp" />
     <ClInclude Include="ConnectionResolver.hpp" />
   </ItemGroup>
