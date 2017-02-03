@@ -520,8 +520,8 @@ namespace ui
         private void Window_Resize(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-            FonctionsNatives.dessinerOpenGL();
+            //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+            //FonctionsNatives.dessinerOpenGL();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -538,7 +538,7 @@ namespace ui
         private void Window_Load(object sender, EventArgs e)
         {
             // On gère cette redimension dans openGL
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+            //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1879,6 +1879,7 @@ namespace ui
         private void viewPort_Resize(object sender, EventArgs e)
         {
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+            FonctionsNatives.dessinerOpenGL();
         }
     }
     ////////////////////////////////////////////////////////////////////////

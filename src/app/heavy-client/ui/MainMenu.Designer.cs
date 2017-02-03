@@ -53,6 +53,7 @@
             // 
             // mainMenu_QuitButton
             // 
+            this.mainMenu_QuitButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_QuitButton.BackColor = System.Drawing.Color.Transparent;
             this.mainMenu_QuitButton.Controls.Add(this.customLabel5);
             this.mainMenu_QuitButton.Location = new System.Drawing.Point(0, 365);
@@ -74,6 +75,7 @@
             // 
             // mainMenu_ConfigurationButton
             // 
+            this.mainMenu_ConfigurationButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_ConfigurationButton.BackColor = System.Drawing.Color.Transparent;
             this.mainMenu_ConfigurationButton.Controls.Add(this.customLabel4);
             this.mainMenu_ConfigurationButton.Location = new System.Drawing.Point(0, 309);
@@ -95,6 +97,7 @@
             // 
             // mainMenu_PersoButton
             // 
+            this.mainMenu_PersoButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_PersoButton.BackColor = System.Drawing.Color.Transparent;
             this.mainMenu_PersoButton.Controls.Add(this.customLabel3);
             this.mainMenu_PersoButton.Location = new System.Drawing.Point(0, 253);
@@ -116,6 +119,7 @@
             // 
             // mainMenu_JeuxButton
             // 
+            this.mainMenu_JeuxButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_JeuxButton.BackColor = System.Drawing.Color.Transparent;
             this.mainMenu_JeuxButton.Controls.Add(this.customLabel2);
             this.mainMenu_JeuxButton.Location = new System.Drawing.Point(0, 197);
@@ -137,6 +141,7 @@
             // 
             // mainMenu_EditionButton
             // 
+            this.mainMenu_EditionButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_EditionButton.BackColor = System.Drawing.Color.Transparent;
             this.mainMenu_EditionButton.Controls.Add(this.customLabel1);
             this.mainMenu_EditionButton.Location = new System.Drawing.Point(0, 141);
@@ -158,6 +163,7 @@
             // 
             // mainMenu_SimulationButton
             // 
+            this.mainMenu_SimulationButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_SimulationButton.BackColor = System.Drawing.Color.Transparent;
             this.mainMenu_SimulationButton.Controls.Add(this.label1);
             this.mainMenu_SimulationButton.Location = new System.Drawing.Point(0, 85);

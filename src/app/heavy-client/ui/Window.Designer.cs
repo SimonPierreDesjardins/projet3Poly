@@ -101,7 +101,7 @@
             // bouttonSimulation_
             // 
             this.bouttonSimulation_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonSimulation_.Location = new System.Drawing.Point(288, 145);
+            this.bouttonSimulation_.Location = new System.Drawing.Point(288, 162);
             this.bouttonSimulation_.Name = "bouttonSimulation_";
             this.bouttonSimulation_.Size = new System.Drawing.Size(175, 23);
             this.bouttonSimulation_.TabIndex = 1;
@@ -113,7 +113,7 @@
             // bouttonEditeur_
             // 
             this.bouttonEditeur_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonEditeur_.Location = new System.Drawing.Point(288, 189);
+            this.bouttonEditeur_.Location = new System.Drawing.Point(288, 206);
             this.bouttonEditeur_.Name = "bouttonEditeur_";
             this.bouttonEditeur_.Size = new System.Drawing.Size(175, 23);
             this.bouttonEditeur_.TabIndex = 2;
@@ -125,7 +125,7 @@
             // bouttonConfiguration_
             // 
             this.bouttonConfiguration_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonConfiguration_.Location = new System.Drawing.Point(288, 237);
+            this.bouttonConfiguration_.Location = new System.Drawing.Point(288, 254);
             this.bouttonConfiguration_.Name = "bouttonConfiguration_";
             this.bouttonConfiguration_.Size = new System.Drawing.Size(175, 23);
             this.bouttonConfiguration_.TabIndex = 3;
@@ -137,7 +137,7 @@
             // bouttonQuitter_
             // 
             this.bouttonQuitter_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonQuitter_.Location = new System.Drawing.Point(288, 283);
+            this.bouttonQuitter_.Location = new System.Drawing.Point(288, 300);
             this.bouttonQuitter_.Name = "bouttonQuitter_";
             this.bouttonQuitter_.Size = new System.Drawing.Size(175, 23);
             this.bouttonQuitter_.TabIndex = 4;
@@ -156,7 +156,7 @@
             this.informationsMenuEdition_});
             this.menuEdition_.Location = new System.Drawing.Point(0, 0);
             this.menuEdition_.Name = "menuEdition_";
-            this.menuEdition_.Size = new System.Drawing.Size(623, 24);
+            this.menuEdition_.Size = new System.Drawing.Size(749, 24);
             this.menuEdition_.TabIndex = 5;
             this.menuEdition_.Text = "menuStrip1";
             this.menuEdition_.Visible = false;
@@ -235,7 +235,7 @@
             // 
             this.supprimerToolStripMenuItem.Enabled = false;
             this.supprimerToolStripMenuItem.Name = "supprimerToolStripMenuItem";
-            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(129, 22);
+            this.supprimerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.supprimerToolStripMenuItem.Text = "Supprimer";
             this.supprimerToolStripMenuItem.Click += new System.EventHandler(this.supprimerToolStripMenuItem_Click);
             // 
@@ -397,7 +397,7 @@
             this.outilsCreationMurs_,
             this.outilsCreationLigne_});
             this.barreOutils_.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.barreOutils_.Location = new System.Drawing.Point(264, 468);
+            this.barreOutils_.Location = new System.Drawing.Point(264, 501);
             this.barreOutils_.Name = "barreOutils_";
             this.barreOutils_.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.barreOutils_.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -688,7 +688,7 @@
             this.viewPort.MinimumSize = new System.Drawing.Size(100, 100);
             this.viewPort.Name = "viewPort";
             this.viewPort.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort.Size = new System.Drawing.Size(749, 503);
+            this.viewPort.Size = new System.Drawing.Size(749, 536);
             this.viewPort.TabIndex = 0;
             this.viewPort.Visible = false;
             this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
@@ -700,7 +700,7 @@
             // 
             this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picturePause.Image = global::ui.Properties.Resources.pauseNoire;
-            this.picturePause.Location = new System.Drawing.Point(330, 191);
+            this.picturePause.Location = new System.Drawing.Point(330, 208);
             this.picturePause.Name = "picturePause";
             this.picturePause.Size = new System.Drawing.Size(96, 96);
             this.picturePause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -714,25 +714,25 @@
             this.mainScreen.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainScreen.Location = new System.Drawing.Point(0, 0);
             this.mainScreen.Name = "mainScreen";
-            this.mainScreen.Size = new System.Drawing.Size(749, 503);
+            this.mainScreen.Size = new System.Drawing.Size(749, 536);
             this.mainScreen.TabIndex = 10;
             // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(749, 503);
+            this.ClientSize = new System.Drawing.Size(749, 536);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.menuEdition_);
-            this.Controls.Add(this.barreOutils_);
-            this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);
             this.Controls.Add(this.bouttonEditeur_);
             this.Controls.Add(this.bouttonConfiguration_);
+            this.Controls.Add(this.barreOutils_);
+            this.Controls.Add(this.menuEdition_);
+            this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.mainScreen);
             this.MainMenuStrip = this.menuSimTest;
-            this.MinimumSize = new System.Drawing.Size(765, 542);
+            this.MinimumSize = new System.Drawing.Size(765, 575);
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulateur de robot";

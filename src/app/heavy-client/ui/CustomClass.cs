@@ -8,10 +8,6 @@ using System.Windows.Forms;
 
 namespace ui
 {
-    class CustomClass
-    {
-    }
-
     class CustomLabel : Label
     {
         protected override void WndProc(ref Message m)
@@ -33,33 +29,36 @@ namespace ui
 
     class PanelButton : Panel
     {
+
         protected override void OnMouseEnter(EventArgs e)
         {
-            BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(42)))), ((int)(((byte)(49)))));
-            foreach (Control c in this.Controls)
+            if (this.BackColor != Color.FromArgb(0, 102, 204))
             {
-                if (c.GetType() == typeof(CustomLabel))
+                BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(42)))), ((int)(((byte)(49)))));
+                foreach (Control c in this.Controls)
                 {
-                    c.ForeColor = Color.FromArgb(0, 102, 204);
+                    if (c.GetType() == typeof(CustomLabel))
+                    {
+                        c.ForeColor = Color.FromArgb(0, 102, 204);
+                    }
                 }
             }
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
-            BackColor = Color.Transparent;
-            foreach (Control c in this.Controls)
+            if (this.BackColor != Color.FromArgb(0, 102, 204))
             {
-                if (c.GetType() == typeof(CustomLabel))
+                BackColor = Color.Transparent;
+                foreach (Control c in this.Controls)
                 {
-                    c.ForeColor = Color.Silver;
+                    if (c.GetType() == typeof(CustomLabel))
+                    {
+                        c.ForeColor = Color.Silver;
+                    }
                 }
             }
         }
-    }
-
-    class myStripMenu : MenuStrip
-    {
     }
 
     class myRenderer : ToolStripProfessionalRenderer

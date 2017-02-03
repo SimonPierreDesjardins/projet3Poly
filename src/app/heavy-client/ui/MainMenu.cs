@@ -33,7 +33,7 @@ namespace ui
             {
                 animationChangingMenu();
                 parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-                parent_.mainScreen.Controls.Add(parent_.simulationMenuStrip);
+                parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
                 parent_.simulationMenuStrip.Dock = DockStyle.Top;
 
                 parent_.viewPort.Visible = true;
@@ -84,9 +84,9 @@ namespace ui
             parent_.editionMenuStrip = new EditionMenuStrip(parent_);
             parent_.editionSideMenu = new EditionSideMenu(parent_);
 
-            parent_.mainScreen.Controls.Add(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
             parent_.editionSideMenu.Dock = DockStyle.Left;
-            parent_.mainScreen.Controls.Add(parent_.editionMenuStrip);
+            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
             parent_.editionMenuStrip.Dock = DockStyle.Top;
 
             parent_.viewPort.Visible = true;
