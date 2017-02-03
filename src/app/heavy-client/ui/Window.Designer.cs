@@ -28,8 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.viewPort = new System.Windows.Forms.Panel();
-            this.picturePause = new System.Windows.Forms.PictureBox();
             this.bouttonSimulation_ = new System.Windows.Forms.Button();
             this.bouttonEditeur_ = new System.Windows.Forms.Button();
             this.bouttonConfiguration_ = new System.Windows.Forms.Button();
@@ -88,47 +86,22 @@
             this.orbiteMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.premierePersonneMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.profilsMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
-            this.viewPort.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).BeginInit();
+            this.viewPort = new System.Windows.Forms.Panel();
+            this.picturePause = new System.Windows.Forms.PictureBox();
+            this.mainScreen = new System.Windows.Forms.Panel();
             this.menuEdition_.SuspendLayout();
             this.barreOutils_.SuspendLayout();
             this.panneauOperation_.SuspendLayout();
             this.menuSimTest.SuspendLayout();
+            this.viewPort.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).BeginInit();
+            this.mainScreen.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // viewPort
-            // 
-            this.viewPort.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.viewPort.AutoSize = true;
-            this.viewPort.Controls.Add(this.picturePause);
-            this.viewPort.Location = new System.Drawing.Point(0, 0);
-            this.viewPort.MinimumSize = new System.Drawing.Size(100, 100);
-            this.viewPort.Name = "viewPort";
-            this.viewPort.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort.Size = new System.Drawing.Size(623, 462);
-            this.viewPort.TabIndex = 0;
-            this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
-            this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
-            this.viewPort.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
-            // 
-            // picturePause
-            // 
-            this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picturePause.Image = global::ui.Properties.Resources.pauseNoire;
-            this.picturePause.Location = new System.Drawing.Point(267, 171);
-            this.picturePause.Name = "picturePause";
-            this.picturePause.Size = new System.Drawing.Size(96, 96);
-            this.picturePause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picturePause.TabIndex = 0;
-            this.picturePause.TabStop = false;
-            this.picturePause.Visible = false;
             // 
             // bouttonSimulation_
             // 
             this.bouttonSimulation_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonSimulation_.Location = new System.Drawing.Point(225, 125);
+            this.bouttonSimulation_.Location = new System.Drawing.Point(288, 145);
             this.bouttonSimulation_.Name = "bouttonSimulation_";
             this.bouttonSimulation_.Size = new System.Drawing.Size(175, 23);
             this.bouttonSimulation_.TabIndex = 1;
@@ -140,7 +113,7 @@
             // bouttonEditeur_
             // 
             this.bouttonEditeur_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonEditeur_.Location = new System.Drawing.Point(225, 169);
+            this.bouttonEditeur_.Location = new System.Drawing.Point(288, 189);
             this.bouttonEditeur_.Name = "bouttonEditeur_";
             this.bouttonEditeur_.Size = new System.Drawing.Size(175, 23);
             this.bouttonEditeur_.TabIndex = 2;
@@ -152,7 +125,7 @@
             // bouttonConfiguration_
             // 
             this.bouttonConfiguration_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonConfiguration_.Location = new System.Drawing.Point(225, 217);
+            this.bouttonConfiguration_.Location = new System.Drawing.Point(288, 237);
             this.bouttonConfiguration_.Name = "bouttonConfiguration_";
             this.bouttonConfiguration_.Size = new System.Drawing.Size(175, 23);
             this.bouttonConfiguration_.TabIndex = 3;
@@ -164,7 +137,7 @@
             // bouttonQuitter_
             // 
             this.bouttonQuitter_.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.bouttonQuitter_.Location = new System.Drawing.Point(225, 263);
+            this.bouttonQuitter_.Location = new System.Drawing.Point(288, 283);
             this.bouttonQuitter_.Name = "bouttonQuitter_";
             this.bouttonQuitter_.Size = new System.Drawing.Size(175, 23);
             this.bouttonQuitter_.TabIndex = 4;
@@ -424,7 +397,7 @@
             this.outilsCreationMurs_,
             this.outilsCreationLigne_});
             this.barreOutils_.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.barreOutils_.Location = new System.Drawing.Point(201, 427);
+            this.barreOutils_.Location = new System.Drawing.Point(264, 468);
             this.barreOutils_.Name = "barreOutils_";
             this.barreOutils_.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.barreOutils_.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -537,7 +510,7 @@
             this.panneauOperation_.Controls.Add(this.panneauPositionX_);
             this.panneauOperation_.Controls.Add(this.panneauDimension_);
             this.panneauOperation_.Controls.Add(this.panneauRotation_);
-            this.panneauOperation_.Location = new System.Drawing.Point(495, 27);
+            this.panneauOperation_.Location = new System.Drawing.Point(621, 27);
             this.panneauOperation_.Name = "panneauOperation_";
             this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
             this.panneauOperation_.TabIndex = 8;
@@ -706,30 +679,66 @@
             this.profilsMenuSimTest.Size = new System.Drawing.Size(52, 20);
             this.profilsMenuSimTest.Text = "Profils";
             // 
+            // viewPort
+            // 
+            this.viewPort.AutoSize = true;
+            this.viewPort.Controls.Add(this.picturePause);
+            this.viewPort.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.viewPort.Location = new System.Drawing.Point(0, 0);
+            this.viewPort.MinimumSize = new System.Drawing.Size(100, 100);
+            this.viewPort.Name = "viewPort";
+            this.viewPort.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.viewPort.Size = new System.Drawing.Size(749, 503);
+            this.viewPort.TabIndex = 0;
+            this.viewPort.Visible = false;
+            this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
+            this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
+            this.viewPort.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.viewPort__PreviewKeyDown);
+            this.viewPort.Resize += new System.EventHandler(this.viewPort_Resize);
+            // 
+            // picturePause
+            // 
+            this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.picturePause.Image = global::ui.Properties.Resources.pauseNoire;
+            this.picturePause.Location = new System.Drawing.Point(330, 191);
+            this.picturePause.Name = "picturePause";
+            this.picturePause.Size = new System.Drawing.Size(96, 96);
+            this.picturePause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.picturePause.TabIndex = 0;
+            this.picturePause.TabStop = false;
+            this.picturePause.Visible = false;
+            // 
+            // mainScreen
+            // 
+            this.mainScreen.Controls.Add(this.viewPort);
+            this.mainScreen.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mainScreen.Location = new System.Drawing.Point(0, 0);
+            this.mainScreen.Name = "mainScreen";
+            this.mainScreen.Size = new System.Drawing.Size(749, 503);
+            this.mainScreen.TabIndex = 10;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(623, 462);
+            this.ClientSize = new System.Drawing.Size(749, 503);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuEdition_);
+            this.Controls.Add(this.barreOutils_);
             this.Controls.Add(this.menuSimTest);
             this.Controls.Add(this.bouttonSimulation_);
             this.Controls.Add(this.bouttonQuitter_);
             this.Controls.Add(this.bouttonEditeur_);
             this.Controls.Add(this.bouttonConfiguration_);
-            this.Controls.Add(this.viewPort);
+            this.Controls.Add(this.mainScreen);
             this.MainMenuStrip = this.menuSimTest;
-            this.MinimumSize = new System.Drawing.Size(500, 500);
+            this.MinimumSize = new System.Drawing.Size(765, 542);
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulateur de robot";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Window_FormClosing);
             this.Load += new System.EventHandler(this.Window_Load);
             this.Resize += new System.EventHandler(this.Window_Resize);
-            this.viewPort.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).EndInit();
             this.menuEdition_.ResumeLayout(false);
             this.menuEdition_.PerformLayout();
             this.barreOutils_.ResumeLayout(false);
@@ -738,15 +747,16 @@
             this.panneauOperation_.PerformLayout();
             this.menuSimTest.ResumeLayout(false);
             this.menuSimTest.PerformLayout();
+            this.viewPort.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picturePause)).EndInit();
+            this.mainScreen.ResumeLayout(false);
+            this.mainScreen.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-
-        public System.Windows.Forms.Panel viewPort;
         private System.Windows.Forms.Button bouttonSimulation_;
         private System.Windows.Forms.Button bouttonEditeur_;
         private System.Windows.Forms.Button bouttonConfiguration_;
@@ -805,7 +815,9 @@
         private System.Windows.Forms.ToolStripMenuItem orbiteMenuSimTest;
         private System.Windows.Forms.ToolStripMenuItem premierePersonneMenuSimTest;
         private System.Windows.Forms.ToolStripMenuItem profilsMenuSimTest;
+        public System.Windows.Forms.Panel viewPort;
         private System.Windows.Forms.PictureBox picturePause;
+        public System.Windows.Forms.Panel mainScreen;
     }
 }
 

@@ -113,6 +113,12 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="PersonnalisationSideMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PersonnalisationSideMenu.Designer.cs">
+      <DependentUpon>PersonnalisationSideMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="PopOutInterface.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,12 @@
     </Compile>
     <Compile Include="SimulationMenuStrip.Designer.cs">
       <DependentUpon>SimulationMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TestMenuStrip.Designer.cs">
+      <DependentUpon>TestMenuStrip.cs</DependentUpon>
     </Compile>
     <Compile Include="Window.cs">
       <SubType>Form</SubType>

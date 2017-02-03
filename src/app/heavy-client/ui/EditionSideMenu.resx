@@ -310,4 +310,16 @@
         pwN4af95kooAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="ShowFullTools.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>236, 13</value>
+  </metadata>
+  <metadata name="HideFullMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>583, 14</value>
+  </metadata>
+  <metadata name="ShowSideToolMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 53</value>
+  </metadata>
+  <metadata name="ShowObjetMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>23, 10</value>
+  </metadata>
 </root>

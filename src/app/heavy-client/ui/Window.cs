@@ -74,9 +74,9 @@ namespace ui
                                 menuSimTest.Visible = estEnPause;
                                 picturePause.Visible = estEnPause;
                             }
-                        } 
+                        }
                     }
-                    
+
                 }
                 return false;
             }
@@ -97,7 +97,7 @@ namespace ui
             InitializeComponent();
 
             mainMenu = new MainMenu(this);
-            viewPort.Controls.Add(mainMenu);
+            mainScreen.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
 
             Program.peutAfficher = false;
@@ -1186,7 +1186,7 @@ namespace ui
                     if (e.Control)
                     {
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-                        
+
 
                         FonctionsNatives.assignerVueOrtho();
                         FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
@@ -1292,7 +1292,7 @@ namespace ui
                 case Keys.Q:
                     if (e.Control)
                     {
-                        
+
                         FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         estEnPause = false;
                         picturePause.Visible = estEnPause;
@@ -1307,11 +1307,11 @@ namespace ui
                     }
                     break;
 
-               /* case Keys.Escape:
-                    estEnPause = !estEnPause;
-                    picturePause.Visible = estEnPause;
-                    menuSimTest.Visible = estEnPause;
-                    break;*/
+                /* case Keys.Escape:
+                     estEnPause = !estEnPause;
+                     picturePause.Visible = estEnPause;
+                     menuSimTest.Visible = estEnPause;
+                     break;*/
 
                 default:
                     break;
@@ -1614,7 +1614,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void orthographiqueMenuEdition__Click(object sender, EventArgs e)
         {
-            if (tempItemEdition != null) 
+            if (tempItemEdition != null)
                 tempItemEdition.Checked = false;
 
             orthographiqueMenuEdition_.Checked = true;
@@ -1668,7 +1668,7 @@ namespace ui
         {
             if (tempItemSimTest != null)
                 tempItemSimTest.Checked = false;
-                
+
             orthographiqueMenuSimTest.Checked = true;
             tempItemSimTest = orthographiqueMenuSimTest;
 
@@ -1876,8 +1876,11 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
+        private void viewPort_Resize(object sender, EventArgs e)
+        {
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+        }
     }
-
     ////////////////////////////////////////////////////////////////////////
     ///
     /// @fn  static partial class FonctionsNatives

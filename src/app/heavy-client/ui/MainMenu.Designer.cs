@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.mainMenu_QuitButton = new ui.PanelButton();
             this.customLabel5 = new ui.CustomLabel();
             this.mainMenu_ConfigurationButton = new ui.PanelButton();
@@ -40,6 +41,8 @@
             this.customLabel1 = new ui.CustomLabel();
             this.mainMenu_SimulationButton = new ui.PanelButton();
             this.label1 = new ui.CustomLabel();
+            this.HideMenuTimer = new System.Windows.Forms.Timer(this.components);
+            this.ShowMenuTimer = new System.Windows.Forms.Timer(this.components);
             this.mainMenu_QuitButton.SuspendLayout();
             this.mainMenu_ConfigurationButton.SuspendLayout();
             this.mainMenu_PersoButton.SuspendLayout();
@@ -174,6 +177,16 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Simulation";
             // 
+            // HideMenuTimer
+            // 
+            this.HideMenuTimer.Interval = 1;
+            this.HideMenuTimer.Tick += new System.EventHandler(this.HideMenuTimer_Tick);
+            // 
+            // ShowMenuTimer
+            // 
+            this.ShowMenuTimer.Interval = 1;
+            this.ShowMenuTimer.Tick += new System.EventHandler(this.ShowMenuTimer_Tick);
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -217,5 +230,7 @@
         private CustomLabel customLabel4;
         private PanelButton mainMenu_QuitButton;
         private CustomLabel customLabel5;
+        private System.Windows.Forms.Timer HideMenuTimer;
+        private System.Windows.Forms.Timer ShowMenuTimer;
     }
 }

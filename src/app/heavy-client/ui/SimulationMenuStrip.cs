@@ -19,15 +19,22 @@ namespace ui
         {
             InitializeComponent();
             parent_ = parent;
+
+            menuStrip1.Renderer = new myRenderer();
         }
 
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             parent_.mainMenu = new MainMenu(parent_);
-            parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
-            parent_.viewPort.Controls.Add(parent_.mainMenu);
+            parent_.mainScreen.Controls.Remove(parent_.simulationMenuStrip);
+            parent_.mainScreen.Controls.Add(parent_.mainMenu);
+            parent_.mainMenu.Dock = DockStyle.Left;
+
+            parent_.viewPort.Visible = false;
 
             Program.peutAfficher = false;
+
+
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 

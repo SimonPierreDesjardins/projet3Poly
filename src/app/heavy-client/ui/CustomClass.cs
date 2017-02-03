@@ -57,4 +57,37 @@ namespace ui
             }
         }
     }
+
+    class myStripMenu : MenuStrip
+    {
+    }
+
+    class myRenderer : ToolStripProfessionalRenderer
+    {
+        protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs myMenu)
+        {
+            if (!myMenu.Item.Selected)
+                base.OnRenderMenuItemBackground(myMenu);
+            else
+            {
+                Rectangle menuRectangle = new Rectangle(Point.Empty, myMenu.Item.Size);
+                //Fill Color
+                myMenu.Graphics.FillRectangle(Brushes.LightBlue, menuRectangle);
+                myMenu.Item.ForeColor = Color.FromArgb(26, 32, 40);
+                // Border Color
+                //myMenu.Graphics.DrawRectangle(Pens.Lime, 1, 0, menuRectangle.Width - 2, menuRectangle.Height - 1);
+            }
+        }
+
+        protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+        {
+            base.OnRenderItemText(e);
+            if (e.Item.Pressed)
+                e.Item.ForeColor = Color.FromArgb(26, 32, 40);
+            else if (e.Item.OwnerItem != null && e.Item.OwnerItem.Pressed)
+                e.Item.ForeColor = Color.FromArgb(26, 32, 40);
+            else
+                e.Item.ForeColor = Color.FromArgb(178, 216, 255);
+        }
+    }
 }

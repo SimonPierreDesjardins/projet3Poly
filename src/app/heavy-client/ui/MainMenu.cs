@@ -20,6 +20,9 @@ namespace ui
         {
             InitializeComponent();
             parent_ = parent;
+
+            this.Width = 0;
+            ShowMenuTimer.Start();
         }
 
         private void mainMenu_SimulationButton_Click(object sender, EventArgs e)
@@ -28,13 +31,17 @@ namespace ui
 
             if (PasserEnSimulation)
             {
-                parent_.viewPort.Controls.Remove(parent_.mainMenu);
+                animationChangingMenu();
                 parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-                parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
+                parent_.mainScreen.Controls.Add(parent_.simulationMenuStrip);
+                parent_.simulationMenuStrip.Dock = DockStyle.Top;
+
+                parent_.viewPort.Visible = true;
 
                 FonctionsNatives.assignerVueOrtho();
                 FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
                 FonctionsNatives.assignerMode(Mode.SIMULATION);
+                
                 Program.peutAfficher = true;
             }
             parent_.viewPort.Focus();
@@ -73,13 +80,16 @@ namespace ui
 
         private void mainMenu_EditionButton_Click(object sender, EventArgs e)
         {
+            animationChangingMenu();
             parent_.editionMenuStrip = new EditionMenuStrip(parent_);
             parent_.editionSideMenu = new EditionSideMenu(parent_);
 
-            parent_.viewPort.Controls.Remove(parent_.mainMenu);
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
+            parent_.mainScreen.Controls.Add(parent_.editionSideMenu);
             parent_.editionSideMenu.Dock = DockStyle.Left;
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
+            parent_.mainScreen.Controls.Add(parent_.editionMenuStrip);
+            parent_.editionMenuStrip.Dock = DockStyle.Top;
+
+            parent_.viewPort.Visible = true;
             Program.peutAfficher = true;
             //outilsZoom_.Enabled = true;
             //zoomToolStripMenuItem.Enabled = true;
@@ -124,6 +134,32 @@ namespace ui
         {
             parent_.configuration.Dispose();
             Application.Exit();
+        }
+
+        private void animationChangingMenu()
+        {
+            HideMenuTimer.Start();
+            while (HideMenuTimer.Enabled)
+            {
+                Application.DoEvents();
+            }
+            parent_.mainScreen.Controls.Remove(parent_.mainMenu);
+        }
+
+        private void ShowMenuTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.Width >= 200)
+                ShowMenuTimer.Stop();
+            else
+                this.Width += 5;
+        }
+
+        private void HideMenuTimer_Tick(object sender, EventArgs e)
+        {
+            if (this.Width > 0)
+                this.Width -= 5;
+            else
+                HideMenuTimer.Stop();
         }
     }
 }
