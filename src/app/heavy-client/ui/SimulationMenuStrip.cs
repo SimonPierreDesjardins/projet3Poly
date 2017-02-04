@@ -81,7 +81,7 @@ namespace ui
             //orbiteMenuSimTest.Checked = true;
             //tempItemSimTest = orbiteMenuSimTest;
 
-            FonctionsNatives.assignerVueOrbite();
+            FonctionsNatives.assignerVuePremierePersonne();
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
 
             //outilsZoom_.Enabled = false;

@@ -36,12 +36,11 @@ namespace ui
                 parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
                 parent_.simulationMenuStrip.Dock = DockStyle.Top;
 
-                parent_.viewPort.Visible = true;
-
                 FonctionsNatives.assignerVueOrtho();
                 FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
                 FonctionsNatives.assignerMode(Mode.SIMULATION);
-                
+
+                parent_.viewPort.Visible = true;
                 Program.peutAfficher = true;
             }
             parent_.viewPort.Focus();
@@ -89,14 +88,14 @@ namespace ui
             parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
             parent_.editionMenuStrip.Dock = DockStyle.Top;
 
-            parent_.viewPort.Visible = true;
-            Program.peutAfficher = true;
-            //outilsZoom_.Enabled = true;
-            //zoomToolStripMenuItem.Enabled = true;
-
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
 
+            parent_.viewPort.Visible = true;
+            Program.peutAfficher = true;
+
+            //outilsZoom_.Enabled = true;
+            //zoomToolStripMenuItem.Enabled = true;
             //afficherMenuPrincipal(false);
             //afficherMenuEdition(true);
             //panneauOperation_.Visible = false;

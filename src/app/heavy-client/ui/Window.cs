@@ -24,6 +24,7 @@ namespace ui
     {
         public MainMenu mainMenu;
         public SimulationMenuStrip simulationMenuStrip;
+        public TestMenuStrip testMenuStrip;
         public EditionSideMenu editionSideMenu;
         public EditionMenuStrip editionMenuStrip;
 
@@ -1148,23 +1149,26 @@ namespace ui
             switch (e.KeyCode)
             {
                 case Keys.D1:
-                    FonctionsNatives.assignerVueOrtho();
-                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    crochetPourVueEdition();
-                    outilsZoom_.Enabled = true;
-                    zoomToolStripMenuItem.Enabled = true;
+                    //FonctionsNatives.assignerVueOrtho();
+                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                    //crochetPourVueEdition();
+                    //outilsZoom_.Enabled = true;
+                    //zoomToolStripMenuItem.Enabled = true;
+                    editionMenuStrip.orthoView();
                     break;
 
                 case Keys.D2:
-                    FonctionsNatives.assignerVueOrbite();
-                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    crochetPourVueEdition();
-                    outilsZoom_.Enabled = false;
-                    zoomToolStripMenuItem.Enabled = false;
+                    //FonctionsNatives.assignerVueOrbite();
+                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                    //crochetPourVueEdition();
+                    //outilsZoom_.Enabled = false;
+                    //zoomToolStripMenuItem.Enabled = false;
+                    editionMenuStrip.orbiteView();
                     break;
 
                 case Keys.Delete:
-                    verificationDuNombreElementChoisi();
+                    //verificationDuNombreElementChoisi();
+                    editionSideMenu.deleteTool();
                     break;
 
                 case Keys.S:
@@ -1177,22 +1181,21 @@ namespace ui
                     }
                     else
                     {
-                        changeIconColor();
-                        outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
+                        //changeIconColor();
+                        //outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
+                        editionSideMenu.selectTool();
                     }
                     break;
 
                 case Keys.Q:
                     if (e.Control)
                     {
-                        FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-
-
-                        FonctionsNatives.assignerVueOrtho();
-                        FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-                        afficherMenuEdition(false);
-                        afficherMenuPrincipal(true);
+                        //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+                        //FonctionsNatives.assignerVueOrtho();
+                        //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                        //afficherMenuEdition(false);
+                        //afficherMenuPrincipal(true);
+                        editionMenuStrip.goMenuPrincipal();
                     }
                     break;
 
@@ -1207,49 +1210,58 @@ namespace ui
                     break;
 
                 case Keys.D:
-                    changeIconColor();
-                    outilsDeplacement_.BackColor = Color.CadetBlue;
+                    //changeIconColor();
+                    // outilsDeplacement_.BackColor = Color.CadetBlue;
+                    editionSideMenu.moveTool();
                     break;
 
                 case Keys.R:
-                    changeIconColor();
-                    outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+                    //changeIconColor();
+                    //outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
+                    editionSideMenu.rotateTool();
                     break;
 
                 case Keys.E:
-                    changeIconColor();
-                    outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+                    //changeIconColor();
+                    //outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
+                    editionSideMenu.scaleTool();
                     break;
 
                 case Keys.C:
-                    changeIconColor();
-                    outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+                    //changeIconColor();
+                    //outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
+                    editionSideMenu.duplicateTool();
                     break;
 
                 case Keys.Z:
-                    changeIconColor();
-                    outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+                    //changeIconColor();
+                    //outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
+                    editionSideMenu.zoomTool();
                     break;
 
                 case Keys.P:
-                    changeIconColor();
-                    outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
+                    //changeIconColor();
+                    //outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
+                    editionSideMenu.postObject();
                     break;
 
                 case Keys.M:
-                    changeIconColor();
-                    outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
+                    //changeIconColor();
+                    //outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
+                    editionSideMenu.wallObject();
                     break;
 
                 case Keys.L:
-                    changeIconColor();
-                    outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
+                    //changeIconColor();
+                    //outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
+                    editionSideMenu.lineObject();
                     break;
 
                 case Keys.T:
-                    afficherMenuEdition(false);
-                    afficherMenuTest(true);
-                    FonctionsNatives.assignerMode(Mode.TEST);
+                    //afficherMenuEdition(false);
+                    //afficherMenuTest(true);
+                    //FonctionsNatives.assignerMode(Mode.TEST);
+                    editionMenuStrip.goTestMode();
                     break;
 
                 default:
@@ -1743,32 +1755,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void menuEdition__VisibleChanged(object sender, EventArgs e)
         {
-            crochetPourVueEdition();
+            //crochetPourVueEdition();
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void crochetPourVueEdition()
-        ///
-        /// Gère l'évènement de changement de visibilité de la barre de menu édition.
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void crochetPourVueEdition()
-        {
-            switch (FonctionsNatives.obtenirTypeVue())
-            {
-                case 1:
-                    orbiteMenuEdition_.Checked = true;
-                    orthographiqueMenuEdition_.Checked = false;
-                    break;
-
-                case 0:
-                default:
-                    orbiteMenuEdition_.Checked = false;
-                    orthographiqueMenuEdition_.Checked = true;
-                    break;
-            }
-        }
 
         ////////////////////////////////////////////////////////////////////////
         ///

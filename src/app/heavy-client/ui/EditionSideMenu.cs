@@ -102,6 +102,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectToolButton_Click(object sender, EventArgs e)
         {
+            selectTool();
+        }
+
+        public void selectTool()
+        {
             setDefaultUnselectedColors();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
             selectionLabel.ForeColor = Color.FromArgb(178, 216, 255);
@@ -122,6 +127,11 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         private void MoveToolButton_Click(object sender, EventArgs e)
+        {
+            moveTool();
+        }
+
+        public void moveTool()
         {
             setDefaultUnselectedColors();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
@@ -144,6 +154,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void RotateToolButton_Click(object sender, EventArgs e)
         {
+            rotateTool();
+        }
+
+        public void rotateTool()
+        {
             setDefaultUnselectedColors();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             rotationLabel.ForeColor = Color.FromArgb(178, 216, 255);
@@ -165,6 +180,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void ScaleToolButton_Click(object sender, EventArgs e)
         {
+            scaleTool();
+        }
+
+        public void scaleTool()
+        {
             setDefaultUnselectedColors();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
             scaleLabel.ForeColor = Color.FromArgb(178, 216, 255);
@@ -185,6 +205,11 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         private void DuplicateToolButton_Click(object sender, EventArgs e)
+        {
+            duplicateTool();
+        }
+
+        public void duplicateTool()
         {
             setDefaultUnselectedColors();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
@@ -213,6 +238,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void zoomToolButton_Click(object sender, EventArgs e)
         {
+            zoomTool();
+        }
+
+        public void zoomTool()
+        {
             setDefaultUnselectedColors();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
             zoomLabel.ForeColor = Color.FromArgb(178, 216, 255);
@@ -232,6 +262,11 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         private void deleteToolButton_Click(object sender, EventArgs e)
+        {
+            deleteTool();
+        }
+
+        public void deleteTool()
         {
             //Button Del : Delete
             parent_.viewPort.Focus();
@@ -258,6 +293,11 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         private void lineObjectButton_Click(object sender, EventArgs e)
+        {
+            lineObject();
+        }
+
+        public void lineObject()
         {
             setDefaultUnselectedColors();
             lineObjectButton.BackColor = Color.FromArgb(0, 102, 204);
@@ -291,6 +331,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void postObjectButton_Click(object sender, EventArgs e)
         {
+            postObject();
+        }
+
+        public void postObject()
+        {
             setDefaultUnselectedColors();
             postObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             postLabel.ForeColor = Color.FromArgb(178, 216, 255);
@@ -312,6 +357,11 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         private void wallObjectButton_Click(object sender, EventArgs e)
+        {
+            wallObject();
+        }
+
+        public void wallObject()
         {
             setDefaultUnselectedColors();
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);

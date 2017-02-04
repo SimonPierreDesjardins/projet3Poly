@@ -32,10 +32,10 @@
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.profilsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orbiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.premierePersonneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.profilsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,14 +81,6 @@
             this.vuesToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
             this.vuesToolStripMenuItem.Text = "Vues";
             // 
-            // profilsToolStripMenuItem
-            // 
-            this.profilsToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profilsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.profilsToolStripMenuItem.Name = "profilsToolStripMenuItem";
-            this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
-            this.profilsToolStripMenuItem.Text = "Profils";
-            // 
             // orthoToolStripMenuItem
             // 
             this.orthoToolStripMenuItem.Name = "orthoToolStripMenuItem";
@@ -109,6 +101,14 @@
             this.premierePersonneToolStripMenuItem.Size = new System.Drawing.Size(221, 26);
             this.premierePersonneToolStripMenuItem.Text = "Premiere Personne";
             this.premierePersonneToolStripMenuItem.Click += new System.EventHandler(this.premierePersonneToolStripMenuItem_Click);
+            // 
+            // profilsToolStripMenuItem
+            // 
+            this.profilsToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.profilsToolStripMenuItem.Name = "profilsToolStripMenuItem";
+            this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
+            this.profilsToolStripMenuItem.Text = "Profils";
             // 
             // SimulationMenuStrip
             // 

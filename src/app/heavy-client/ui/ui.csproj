@@ -76,7 +76,9 @@
     <Compile Include="Configure.Designer.cs">
       <DependentUpon>Configure.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomClass.cs" />
+    <Compile Include="CustomClass.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EditionMenuStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -175,6 +177,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SimulationMenuStrip.resx">
       <DependentUpon>SimulationMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TestMenuStrip.resx">
+      <DependentUpon>TestMenuStrip.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window.resx">
       <DependentUpon>Window.cs</DependentUpon>

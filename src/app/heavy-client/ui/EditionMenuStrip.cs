@@ -21,6 +21,7 @@ namespace ui
             parent_ = parent;
 
             menuStrip1.Renderer = new myRenderer();
+            crochetPourVue();
         }
 
         private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,7 +37,7 @@ namespace ui
         /// sinon ne fait rien
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void nouvelleZone()
+        public void nouvelleZone()
         {
             DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -115,21 +116,40 @@ namespace ui
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
-
         }
 
         private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            goTestMode();
+        }
 
+        public void goTestMode()
+        {
+            parent_.editionSideMenu.animationHidingMenu();
+
+            parent_.testMenuStrip = new TestMenuStrip(parent_);
+            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
+            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Add(parent_.testMenuStrip);
+            parent_.testMenuStrip.Dock = DockStyle.Top;
+
+            FonctionsNatives.assignerMode(Mode.TEST);
+
+            parent_.viewPort.Focus();
         }
 
         private void menuprincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            goMenuPrincipal();
+        }
+
+        public void goMenuPrincipal()
+        {
             parent_.editionSideMenu.animationHidingMenu();
 
             parent_.mainMenu = new MainMenu(parent_);
-            parent_.mainScreen.Controls.Remove(parent_.editionMenuStrip);
-            parent_.mainScreen.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
+            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.mainScreen.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
 
@@ -147,11 +167,17 @@ namespace ui
             //orthographiqueMenuEdition_.Checked = true;
             //tempItemEdition = orthographiqueMenuEdition_;
 
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            orthoView();
 
             //outilsZoom_.Enabled = true;
             //zoomToolStripMenuItem.Enabled = true;
+        }
+
+        public void orthoView()
+        {
+            FonctionsNatives.assignerVueOrtho();
+            crochetPourVue();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
         private void orbiteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -164,11 +190,41 @@ namespace ui
             //orbiteMenuEdition_.Checked = true;
             //tempItemEdition = orbiteMenuEdition_;
 
-            FonctionsNatives.assignerVueOrbite();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            orbiteView();
 
             //outilsZoom_.Enabled = false;
             //zoomToolStripMenuItem.Enabled = false;
+        }
+
+        public void orbiteView()
+        {
+            FonctionsNatives.assignerVueOrbite();
+            crochetPourVue();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void crochetPourVueEdition()
+        ///
+        /// Gère l'évènement de changement de visibilité de la barre de menu édition.
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void crochetPourVue()
+        {
+            switch (FonctionsNatives.obtenirTypeVue())
+            {
+                case 1:
+                    orbiteToolStripMenuItem.Checked = true;
+                    orthoToolStripMenuItem.Checked = false;
+                    break;
+
+                case 0:
+                default:
+                    orbiteToolStripMenuItem.Checked = false;
+                    orthoToolStripMenuItem.Checked = true;
+                    break;
+            }
         }
 
         private void aideToolStripMenuItem_Click(object sender, EventArgs e)
