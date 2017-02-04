@@ -10,7 +10,7 @@ namespace NetworkPrototype
 
 	public:
 		// Constructor taking a functionnal socket
-		Connection(std::shared_ptr<asio::ip::tcp::socket> socket);
+		Connection(asio::ip::tcp::socket* socket);
 
 		Connection(Connection& connection);
 
@@ -24,7 +24,7 @@ namespace NetworkPrototype
 		void CloseConnection();
 
 		//On received data event
-		__event void OnReceivedData(const char* data, std::size_t length);
+		__event void OnReceivedData(std::string& data);
 
 
 		// ping?
@@ -37,13 +37,15 @@ namespace NetworkPrototype
 
 		void WriteData();
 
-		std::shared_ptr<asio::ip::tcp::socket> _socket; // A reference to the currently used network socket
+		asio::ip::tcp::socket* _socket; // A reference to the currently used network socket
 
 		// Buffer used to store data received from the client.
 		char _buffer[1024];
 		//std::shared_ptr<std::array<char, 1024>> _buffer;
 
-		std::shared_ptr<std::queue<std::string>> _sendQueue;
+		std::queue<std::string> _sendQueue;
+
+		static std::mutex _connectionLock;
 
 	};
 }

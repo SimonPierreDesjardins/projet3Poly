@@ -30,7 +30,7 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 	}
 	else {
 		// build a connection object and callback
-		OnConnectionResolved(Connection(std::shared_ptr<tcp::socket>(&_socket)));
+		OnConnectionResolved(new Connection(&_socket));
 	}
 }
 

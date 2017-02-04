@@ -16,7 +16,7 @@ void ServerListener::StartAccepting()
 	{
 		if (!errorCode)
 		{
-			OnOtherConnected(Connection(std::shared_ptr<tcp::socket>(socket)));
+			OnOtherConnected(new Connection(socket));
 			StartAccepting(); // Keep the listener going
 		}
 		else

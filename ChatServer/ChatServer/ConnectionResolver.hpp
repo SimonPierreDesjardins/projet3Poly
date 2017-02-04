@@ -39,7 +39,7 @@ namespace NetworkPrototype{
 
 		static void SetDebugLevel(DebugLevel level);
 
-		__event void OnConnectionResolved(Connection& connection);
+		__event void OnConnectionResolved(Connection* connection);
 
 		//__event void OnReceivedData();
 

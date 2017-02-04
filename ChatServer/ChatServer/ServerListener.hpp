@@ -13,7 +13,7 @@ namespace  NetworkPrototype {
 
 		void StartAccepting();
 
-		__event void OnOtherConnected(Connection& connectionToOther);
+		__event void OnOtherConnected(Connection* connectionToOther);
 
 	private:
 		tcp::acceptor _acceptor;

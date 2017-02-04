@@ -18,11 +18,11 @@ class Receiver{
 			return _receivedEvent;
 		}
 
-	void OnConnectionEstablished(Connection& connection) {
+	void OnConnectionEstablished(Connection* connection) {
 		std::cout << "Connection Established" << std::endl;
-		__hook(&Connection::OnReceivedData, &connection, &Receiver::ReceivedMessage);
-		_connections.push_back(std::make_unique<Connection>(connection));
-		connection.Start();
+		_connections.push_back(connection);
+		__hook(&Connection::OnReceivedData, connection, &Receiver::ReceivedMessage);
+		connection -> Start();
 		_receivedEvent = true;
 	}
 
@@ -32,14 +32,14 @@ class Receiver{
 		}
 	}
 
-	void ReceivedMessage(const char* data, size_t length) {
-		std::cout << std::string(data, length) << std::endl;
+	void ReceivedMessage(std::string& message) {
+		std::cout << std::string(message) << std::endl;
 	}
 
 private:
 	bool _receivedEvent = false;
 
-	std::vector<std::shared_ptr<Connection>> _connections;
+	std::vector<Connection*> _connections;
 };
 
 int main(int argc, char* argv[]) 

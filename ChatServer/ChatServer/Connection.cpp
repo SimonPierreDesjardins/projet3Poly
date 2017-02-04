@@ -6,16 +6,14 @@
 using asio::ip::tcp;
 using namespace NetworkPrototype;
 
-Connection::Connection(std::shared_ptr<asio::ip::tcp::socket> socket) {
+Connection::Connection(asio::ip::tcp::socket* socket) {
 	_socket = socket;
-	_sendQueue = std::make_shared<std::queue<std::string>>();
-//	_buffer = std::make_shared<std::array<char, 1024>>();
+	_sendQueue = std::queue<std::string>();
 }
 
 Connection::Connection(Connection& connection) {
 	_socket = connection._socket;
-//	_buffer = connection._buffer;
-	_sendQueue = connection._sendQueue;
+	_sendQueue = std::queue<std::string>();
 }
 
 void Connection::Start() {
@@ -24,13 +22,14 @@ void Connection::Start() {
 
 void Connection::ReadData()
 {
+	_connectionLock.lock();
 	_socket -> async_receive(asio::buffer(_buffer),
 	[this](std::error_code ec, std::size_t length)
 	{
 		if (!ec)
 		{
-			std::cout << std::string(_buffer, length) << std::endl;
-			//this -> OnReceivedData(this -> _buffer, length);
+			auto data = std::string(_buffer, length);
+			OnReceivedData(data);
 			ReadData();
 		}
 		else 
@@ -38,21 +37,22 @@ void Connection::ReadData()
 			Logger::Log(ec.message());
 		}
 	});
+	_connectionLock.unlock();
 }
 
 void Connection::SendData(std::string data) {
-
-	_sendQueue -> push(std::move(data));
+	_sendQueue.push(std::move(data));
 
 	// if this new message is alone in the queue, start writing
-	if (_sendQueue -> size() == 1) {
+	if (_sendQueue.size() == 1) {
 		WriteData();
 	}
 }
 
 void Connection::WriteData()
 {
-	std::string data = std::move(_sendQueue -> front());
+	std::string data = std::move(_sendQueue.front());
+	_sendQueue.pop();
 	strncpy_s(_buffer, 1024, data.c_str(), data.size());
 
 	_socket->async_write_some(asio::buffer(_buffer, data.size()),
@@ -61,7 +61,7 @@ void Connection::WriteData()
 	{
 		if (!ec)
 		{
-			if (_sendQueue -> size() > 1) {
+			if (_sendQueue.size() >= 1) {
 				WriteData();
 			}
 			else {
@@ -73,3 +73,5 @@ void Connection::WriteData()
 		}
 	});
 }
+
+std::mutex Connection::_connectionLock;
