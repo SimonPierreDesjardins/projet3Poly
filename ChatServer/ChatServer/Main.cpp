@@ -84,7 +84,7 @@ int main(int argc, char* argv[])
 	std::string message = "";
 
 	while (message != "exit") {
-		std::cin >> message;
+		std::getline(std::cin, message);
 		receiver.Message(message);
 	}
 
