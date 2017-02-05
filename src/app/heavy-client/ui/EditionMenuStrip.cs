@@ -61,7 +61,7 @@ namespace ui
         /// le bouton ouvrir est appuyer sur le menu
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void ouvrirZone(bool afficherZoneDefaut)
+        public void ouvrirZone(bool afficherZoneDefaut)
         {
             ExplorateurOuverture explorateur = new ExplorateurOuverture(afficherZoneDefaut);
             FonctionsNatives.assignerAutorisationInputClavier(false);
@@ -86,6 +86,11 @@ namespace ui
 
         private void enregistrerToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            enregistrer();
+        }
+
+        public void enregistrer()
+        {
             FonctionsNatives.sauvegarder();
         }
 
@@ -102,7 +107,7 @@ namespace ui
         /// l'utilisateur de sauvegarder dans zones
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void enregistrerSousZone()
+        public void enregistrerSousZone()
         {
             ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
             FonctionsNatives.assignerAutorisationInputClavier(false);

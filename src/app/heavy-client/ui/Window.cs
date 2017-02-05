@@ -28,6 +28,8 @@ namespace ui
         public EditionSideMenu editionSideMenu;
         public EditionMenuStrip editionMenuStrip;
 
+        public object _timerLock = new object();
+
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
         private const int WM_SYSKEYDOWN = 0x0104;
@@ -42,7 +44,6 @@ namespace ui
         public Configure configuration;
 
         bool arreterToutMessage_;
-
 
         public void arreterToutMessage()
         { arreterToutMessage_ = true; }
@@ -97,6 +98,7 @@ namespace ui
             arreterToutMessage_ = false;
             InitializeComponent();
 
+            //Init all menus
             mainMenu = new MainMenu(this);
             mainScreen.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
@@ -1175,9 +1177,10 @@ namespace ui
                     if (e.Control)
                     {
                         if (enregistrerMenuEdition_.Enabled)
-                            FonctionsNatives.sauvegarder();
+                            editionMenuStrip.enregistrer();
                         else
-                            enregistrerSousZone();
+                            editionMenuStrip.enregistrerSousZone();
+                            //enregistrerSousZone();
                     }
                     else
                     {
@@ -1201,12 +1204,14 @@ namespace ui
 
                 case Keys.O:
                     if (e.Control)
-                        ouvrirZone(false);
+                        editionMenuStrip.ouvrirZone(false);
+                        //ouvrirZone(false);
                     break;
 
                 case Keys.N:
                     if (e.Control)
-                        nouvelleZone();
+                        editionMenuStrip.nouvelleZone();
+                        //nouvelleZone();
                     break;
 
                 case Keys.D:
@@ -1284,38 +1289,41 @@ namespace ui
             switch (e.KeyCode)
             {
                 case Keys.D1:
-                    FonctionsNatives.assignerVueOrtho();
-                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    crochetPourVueSimTest();
+                    //FonctionsNatives.assignerVueOrtho();
+                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                    //crochetPourVueSimTest();
+                    simulationMenuStrip.orthoView();
                     break;
 
                 case Keys.D2:
-                    FonctionsNatives.assignerVueOrbite();
-                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    crochetPourVueSimTest();
+                    //FonctionsNatives.assignerVueOrbite();
+                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                    //crochetPourVueSimTest();
+                    simulationMenuStrip.orbiteView();
                     break;
 
                 case Keys.D3:
-                    FonctionsNatives.assignerVuePremierePersonne();
-                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    crochetPourVueSimTest();
+                    //FonctionsNatives.assignerVuePremierePersonne();
+                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                    //crochetPourVueSimTest();
+                    simulationMenuStrip.firstPersonView();
                     break;
 
                 case Keys.Q:
                     if (e.Control)
                     {
+                        simulationMenuStrip.goMenuPrincipal();
+                        //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+                        //estEnPause = false;
+                        //picturePause.Visible = estEnPause;
 
-                        FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-                        estEnPause = false;
-                        picturePause.Visible = estEnPause;
+                        //FonctionsNatives.assignerVueOrtho();
+                        //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
-                        FonctionsNatives.assignerVueOrtho();
-                        FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-                        afficherMenuSimulation(false);
-                        afficherMenuTest(false);
-                        afficherMenuEdition(false);
-                        afficherMenuPrincipal(true);
+                        //afficherMenuSimulation(false);
+                        //afficherMenuTest(false);
+                        //afficherMenuEdition(false);
+                        //afficherMenuPrincipal(true);
                     }
                     break;
 
@@ -1345,34 +1353,38 @@ namespace ui
             switch (e.KeyCode)
             {
                 case Keys.D1:
-                    FonctionsNatives.assignerVueOrtho();
-                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    crochetPourVueSimTest();
-                    outilsZoom_.Enabled = true;
-                    zoomToolStripMenuItem.Enabled = true;
+                    //FonctionsNatives.assignerVueOrtho();
+                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                    //crochetPourVueSimTest();
+                    //outilsZoom_.Enabled = true;
+                    //zoomToolStripMenuItem.Enabled = true;
+                    testMenuStrip.orthoView();
                     break;
 
                 case Keys.D2:
-                    FonctionsNatives.assignerVueOrbite();
-                    FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    crochetPourVueSimTest();
-                    outilsZoom_.Enabled = false;
-                    zoomToolStripMenuItem.Enabled = false;
+                    //FonctionsNatives.assignerVueOrbite();
+                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                    //crochetPourVueSimTest();
+                    //outilsZoom_.Enabled = false;
+                    //zoomToolStripMenuItem.Enabled = false;
+                    testMenuStrip.orbiteView();
                     break;
 
                 case Keys.Q:
                     if (e.Control)
                     {
-                        estEnPause = false;
-                        picturePause.Visible = estEnPause;
+                        //estEnPause = false;
+                        //picturePause.Visible = estEnPause;
 
-                        FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+                        //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
 
-                        FonctionsNatives.assignerVueOrtho();
-                        FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                        //FonctionsNatives.assignerVueOrtho();
+                        //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
-                        afficherMenuTest(false);
-                        afficherMenuPrincipal(true);
+                        //afficherMenuTest(false);
+                        //afficherMenuPrincipal(true);
+
+                        testMenuStrip.goMenuPrincipal();
                     }
                     break;
 
@@ -1385,17 +1397,19 @@ namespace ui
                 case Keys.E:
                     if (e.Control)
                     {
-                        estEnPause = false;
-                        picturePause.Visible = estEnPause;
+                        //estEnPause = false;
+                        //picturePause.Visible = estEnPause;
 
-                        afficherMenuSimulation(false);
-                        afficherMenuTest(false);
-                        afficherMenuPrincipal(false);
-                        afficherMenuEdition(true);
-                        changeIconColor();
-                        outilsSelection_.BackColor = Color.CadetBlue;
-                        FonctionsNatives.assignerMode(Mode.EDITION);
-                        viewPort.Focus();
+                        //afficherMenuSimulation(false);
+                        //afficherMenuTest(false);
+                        //afficherMenuPrincipal(false);
+                        //afficherMenuEdition(true);
+                        //changeIconColor();
+                        //outilsSelection_.BackColor = Color.CadetBlue;
+                        //FonctionsNatives.assignerMode(Mode.EDITION);
+                        //viewPort.Focus();
+
+                        testMenuStrip.goModeEdition();
                     }
                     break;
             }

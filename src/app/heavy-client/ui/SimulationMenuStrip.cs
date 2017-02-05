@@ -21,19 +21,23 @@ namespace ui
             parent_ = parent;
 
             menuStrip1.Renderer = new myRenderer();
+            crochetPourVue();
         }
 
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            goMenuPrincipal();
+        }
+
+        public void goMenuPrincipal()
+        {
             parent_.mainMenu = new MainMenu(parent_);
-            parent_.mainScreen.Controls.Remove(parent_.simulationMenuStrip);
+            parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
             parent_.mainScreen.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
 
             parent_.viewPort.Visible = false;
-
             Program.peutAfficher = false;
-
 
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
@@ -46,11 +50,17 @@ namespace ui
             //orthographiqueMenuEdition_.Checked = true;
             //tempItemEdition = orthographiqueMenuEdition_;
 
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            orthoView();
 
             //outilsZoom_.Enabled = true;
             //zoomToolStripMenuItem.Enabled = true;
+        }
+
+        public void orthoView()
+        {
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            crochetPourVue();
         }
 
         private void orbiteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,11 +73,17 @@ namespace ui
             orbiteMenuEdition_.Checked = true;
             tempItemEdition = orbiteMenuEdition_;*/
 
-            FonctionsNatives.assignerVueOrbite();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            orbiteView();
 
             //outilsZoom_.Enabled = false;
             //zoomToolStripMenuItem.Enabled = false;
+        }
+
+        public void orbiteView()
+        {
+            FonctionsNatives.assignerVueOrbite();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            crochetPourVue();
         }
 
         private void premierePersonneToolStripMenuItem_Click(object sender, EventArgs e)
@@ -81,11 +97,48 @@ namespace ui
             //orbiteMenuSimTest.Checked = true;
             //tempItemSimTest = orbiteMenuSimTest;
 
-            FonctionsNatives.assignerVuePremierePersonne();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            firstPersonView();
 
             //outilsZoom_.Enabled = false;
             //zoomToolStripMenuItem.Enabled = false;
+        }
+
+        public void firstPersonView()
+        {
+            FonctionsNatives.assignerVuePremierePersonne();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            crochetPourVue();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void crochetPourVueEdition()
+        ///
+        /// Gère l'évènement de changement de visibilité de la barre de menu édition.
+        /// 
+        ////////////////////////////////////////////////////////////////////////
+        private void crochetPourVue()
+        {
+            switch (FonctionsNatives.obtenirTypeVue())
+            {
+                case 2:
+                    orbiteToolStripMenuItem.Checked = false;
+                    orthoToolStripMenuItem.Checked = false;
+                    premierePersonneToolStripMenuItem.Checked = true;
+                    break;
+                case 1:
+                    orbiteToolStripMenuItem.Checked = true;
+                    orthoToolStripMenuItem.Checked = false;
+                    premierePersonneToolStripMenuItem.Checked = false;
+                    break;
+
+                case 0:
+                default:
+                    orbiteToolStripMenuItem.Checked = false;
+                    orthoToolStripMenuItem.Checked = true;
+                    premierePersonneToolStripMenuItem.Checked = false;
+                    break;
+            }
         }
     }
 }

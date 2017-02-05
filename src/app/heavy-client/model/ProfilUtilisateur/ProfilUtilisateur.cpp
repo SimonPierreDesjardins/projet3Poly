@@ -22,7 +22,7 @@
 #include <string>
 #include <CommCtrl.h>
 #include <windowsx.h>
-#include <atlstr.h>
+//#include <atlstr.h>
 #include <fstream>
 #include <sstream>
 #include "NoeudRobot.h"
@@ -41,8 +41,6 @@ ProfilUtilisateur::ProfilUtilisateur(){
 		creationDossierDonnees();
 		changerDernierProfil(PROFIL_DEFAUT + EXTENSION_PROFIL);
 	}
-	
-	
 	
 	std::ifstream fichierDernierProfilR(CHEMIN_PROFIL + DERNIER_PROFIL);
 	std::getline(fichierDernierProfilR, nomProfil_);
@@ -70,9 +68,7 @@ ProfilUtilisateur::ProfilUtilisateur(){
 /// Destructeur
 ///
 ////////////////////////////////////////////////////////////////////////
-ProfilUtilisateur::~ProfilUtilisateur(){
-
-}
+ProfilUtilisateur::~ProfilUtilisateur(){}
 
 ////////////////////////////////////////////////////////////////////////
 ///

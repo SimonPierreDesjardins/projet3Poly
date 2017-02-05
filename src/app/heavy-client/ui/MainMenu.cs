@@ -85,6 +85,7 @@ namespace ui
 
             parent_.viewPort.Controls.Add(parent_.editionSideMenu);
             parent_.editionSideMenu.Dock = DockStyle.Left;
+
             parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
             parent_.editionMenuStrip.Dock = DockStyle.Top;
 

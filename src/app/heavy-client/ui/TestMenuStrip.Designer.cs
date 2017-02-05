@@ -30,12 +30,12 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.profilsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuEditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.orthographiqueToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orbiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.profilsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -63,25 +63,6 @@
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(71, 25);
             this.fichierToolStripMenuItem.Text = "Fichier";
             // 
-            // vuesToolStripMenuItem
-            // 
-            this.vuesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.orthographiqueToolStripMenuItem,
-            this.orbiteToolStripMenuItem});
-            this.vuesToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vuesToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.vuesToolStripMenuItem.Name = "vuesToolStripMenuItem";
-            this.vuesToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
-            this.vuesToolStripMenuItem.Text = "Vues";
-            // 
-            // profilsToolStripMenuItem
-            // 
-            this.profilsToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.profilsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.profilsToolStripMenuItem.Name = "profilsToolStripMenuItem";
-            this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
-            this.profilsToolStripMenuItem.Text = "Profils";
-            // 
             // menuEditionToolStripMenuItem
             // 
             this.menuEditionToolStripMenuItem.Name = "menuEditionToolStripMenuItem";
@@ -96,12 +77,23 @@
             this.menuPrincipalToolStripMenuItem.Text = "Menu principal";
             this.menuPrincipalToolStripMenuItem.Click += new System.EventHandler(this.menuPrincipalToolStripMenuItem_Click);
             // 
-            // orthographiqueToolStripMenuItem
+            // vuesToolStripMenuItem
             // 
-            this.orthographiqueToolStripMenuItem.Name = "orthographiqueToolStripMenuItem";
-            this.orthographiqueToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.orthographiqueToolStripMenuItem.Text = "Orthographique";
-            this.orthographiqueToolStripMenuItem.Click += new System.EventHandler(this.orthographiqueToolStripMenuItem_Click);
+            this.vuesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.orthoToolStripMenuItem,
+            this.orbiteToolStripMenuItem});
+            this.vuesToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vuesToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.vuesToolStripMenuItem.Name = "vuesToolStripMenuItem";
+            this.vuesToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
+            this.vuesToolStripMenuItem.Text = "Vues";
+            // 
+            // orthoToolStripMenuItem
+            // 
+            this.orthoToolStripMenuItem.Name = "orthoToolStripMenuItem";
+            this.orthoToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
+            this.orthoToolStripMenuItem.Text = "Orthographique";
+            this.orthoToolStripMenuItem.Click += new System.EventHandler(this.orthographiqueToolStripMenuItem_Click);
             // 
             // orbiteToolStripMenuItem
             // 
@@ -109,6 +101,14 @@
             this.orbiteToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
             this.orbiteToolStripMenuItem.Text = "Orbite";
             this.orbiteToolStripMenuItem.Click += new System.EventHandler(this.orbiteToolStripMenuItem_Click);
+            // 
+            // profilsToolStripMenuItem
+            // 
+            this.profilsToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.profilsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.profilsToolStripMenuItem.Name = "profilsToolStripMenuItem";
+            this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
+            this.profilsToolStripMenuItem.Text = "Profils";
             // 
             // TestMenuStrip
             // 
@@ -132,7 +132,7 @@
         private System.Windows.Forms.ToolStripMenuItem profilsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuEditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuPrincipalToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem orthographiqueToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem orthoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
     }
 }
