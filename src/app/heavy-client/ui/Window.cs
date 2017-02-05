@@ -7,13 +7,7 @@
 /// @{
 ////////////////////////////////////////////////
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
@@ -28,7 +22,8 @@ namespace ui
         public EditionSideMenu editionSideMenu;
         public EditionMenuStrip editionMenuStrip;
 
-        public object _timerLock = new object();
+        public object timerLock_ = new object();
+        public bool lockWasTaken = false;
 
         private const int WM_KEYDOWN = 0x0100;
         private const int WM_KEYUP = 0x0101;
@@ -66,18 +61,17 @@ namespace ui
                     FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
 
                     if (m.Msg == WM_KEYDOWN)
-                    {
-                        int mode = FonctionsNatives.obtenirMode();
-                        if (mode == 1 || mode == 4)
-                        {
-                            if (m.WParam == (System.IntPtr)27)
-                            {
-                                estEnPause = !estEnPause;
-                                menuSimTest.Visible = estEnPause;
-                                picturePause.Visible = estEnPause;
-                            }
-                        }
-                    }
+                        gererMessage(m.WParam);
+                        //int mode = FonctionsNatives.obtenirMode();
+                        //if (mode == 1 || mode == 4)
+                        //{
+                        //    if (m.WParam == (System.IntPtr)27)
+                        //    {
+                        //        estEnPause = !estEnPause;
+                        //        menuSimTest.Visible = estEnPause;
+                        //        picturePause.Visible = estEnPause;
+                        //    }
+                        //}
 
                 }
                 return false;
@@ -1089,7 +1083,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            gererMessage(sender, e);
+            //gererMessage(sender, e);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1102,7 +1096,7 @@ namespace ui
         /// @param PreviewKeyDownEventArgs e: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void gererMessage(object sender, PreviewKeyDownEventArgs e)
+        private void gererMessage(IntPtr keyDown)
         {
             int mode = FonctionsNatives.obtenirMode();
 
@@ -1114,12 +1108,12 @@ namespace ui
 
                 //Mode Simulation
                 case 1:
-                    gererToucheSimulation(sender, e);
+                    gererToucheSimulation(keyDown);
                     break;
 
                 //Mode Edition
                 case 2:
-                    gererToucheEdition(sender, e);
+                    gererToucheEdition(keyDown);
                     break;
 
                 //Mode Configure
@@ -1128,7 +1122,7 @@ namespace ui
 
                 //Mode Test
                 case 4:
-                    gererToucheTest(sender, e);
+                    gererToucheTest(keyDown);
                     break;
 
                 default:
@@ -1146,11 +1140,11 @@ namespace ui
         /// @param PreviewKeyDownEventArgs e: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void gererToucheEdition(object sender, PreviewKeyDownEventArgs e)
+        private void gererToucheEdition(IntPtr keyDown)
         {
-            switch (e.KeyCode)
+            switch ((int)keyDown)
             {
-                case Keys.D1:
+                case Constants.Key_1:
                     //FonctionsNatives.assignerVueOrtho();
                     //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     //crochetPourVueEdition();
@@ -1159,7 +1153,7 @@ namespace ui
                     editionMenuStrip.orthoView();
                     break;
 
-                case Keys.D2:
+                case Constants.Key_2:
                     //FonctionsNatives.assignerVueOrbite();
                     //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     //crochetPourVueEdition();
@@ -1168,13 +1162,13 @@ namespace ui
                     editionMenuStrip.orbiteView();
                     break;
 
-                case Keys.Delete:
+                case Constants.Key_Del:
                     //verificationDuNombreElementChoisi();
                     editionSideMenu.deleteTool();
                     break;
 
-                case Keys.S:
-                    if (e.Control)
+                case Constants.Key_S:
+                    if (ModifierKeys.HasFlag(Keys.Control))
                     {
                         if (enregistrerMenuEdition_.Enabled)
                             editionMenuStrip.enregistrer();
@@ -1190,8 +1184,8 @@ namespace ui
                     }
                     break;
 
-                case Keys.Q:
-                    if (e.Control)
+                case Constants.Key_Q:
+                    if (ModifierKeys.HasFlag(Keys.Control))
                     {
                         //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
                         //FonctionsNatives.assignerVueOrtho();
@@ -1202,67 +1196,67 @@ namespace ui
                     }
                     break;
 
-                case Keys.O:
-                    if (e.Control)
+                case Constants.Key_O:
+                    if (ModifierKeys.HasFlag(Keys.Control))
                         editionMenuStrip.ouvrirZone(false);
                         //ouvrirZone(false);
                     break;
 
-                case Keys.N:
-                    if (e.Control)
+                case Constants.Key_N:
+                    if (ModifierKeys.HasFlag(Keys.Control))
                         editionMenuStrip.nouvelleZone();
                         //nouvelleZone();
                     break;
 
-                case Keys.D:
+                case Constants.Key_D:
                     //changeIconColor();
                     // outilsDeplacement_.BackColor = Color.CadetBlue;
                     editionSideMenu.moveTool();
                     break;
 
-                case Keys.R:
+                case Constants.Key_R:
                     //changeIconColor();
                     //outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.rotateTool();
                     break;
 
-                case Keys.E:
+                case Constants.Key_E:
                     //changeIconColor();
                     //outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.scaleTool();
                     break;
 
-                case Keys.C:
+                case Constants.Key_C:
                     //changeIconColor();
                     //outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.duplicateTool();
                     break;
 
-                case Keys.Z:
+                case Constants.Key_Z:
                     //changeIconColor();
                     //outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.zoomTool();
                     break;
 
-                case Keys.P:
+                case Constants.Key_P:
                     //changeIconColor();
                     //outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.postObject();
                     break;
 
-                case Keys.M:
+                case Constants.Key_M:
                     //changeIconColor();
                     //outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.wallObject();
                     break;
 
-                case Keys.L:
+                case Constants.Key_L:
                     //changeIconColor();
                     //outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.lineObject();
                     break;
 
-                case Keys.T:
+                case Constants.Key_T:
                     //afficherMenuEdition(false);
                     //afficherMenuTest(true);
                     //FonctionsNatives.assignerMode(Mode.TEST);
@@ -1284,33 +1278,33 @@ namespace ui
         /// @param PreviewKeyDownEventArgs e: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void gererToucheSimulation(object sender, PreviewKeyDownEventArgs e)
+        private void gererToucheSimulation(IntPtr keyDown)
         {
-            switch (e.KeyCode)
+            switch ((int)keyDown)
             {
-                case Keys.D1:
+                case Constants.Key_1:
                     //FonctionsNatives.assignerVueOrtho();
                     //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     //crochetPourVueSimTest();
                     simulationMenuStrip.orthoView();
                     break;
 
-                case Keys.D2:
+                case Constants.Key_2:
                     //FonctionsNatives.assignerVueOrbite();
                     //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     //crochetPourVueSimTest();
                     simulationMenuStrip.orbiteView();
                     break;
 
-                case Keys.D3:
+                case Constants.Key_3:
                     //FonctionsNatives.assignerVuePremierePersonne();
                     //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     //crochetPourVueSimTest();
                     simulationMenuStrip.firstPersonView();
                     break;
 
-                case Keys.Q:
-                    if (e.Control)
+                case Constants.Key_Q:
+                    if (ModifierKeys.HasFlag(Keys.Control))
                     {
                         simulationMenuStrip.goMenuPrincipal();
                         //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
@@ -1327,11 +1321,11 @@ namespace ui
                     }
                     break;
 
-                /* case Keys.Escape:
+                 case Constants.Key_Esc:
                      estEnPause = !estEnPause;
                      picturePause.Visible = estEnPause;
                      menuSimTest.Visible = estEnPause;
-                     break;*/
+                     break;
 
                 default:
                     break;
@@ -1348,11 +1342,11 @@ namespace ui
         /// @param PreviewKeyDownEventArgs e: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void gererToucheTest(object sender, PreviewKeyDownEventArgs e)
+        private void gererToucheTest(IntPtr keyDown)
         {
-            switch (e.KeyCode)
+            switch ((int)keyDown)
             {
-                case Keys.D1:
+                case Constants.Key_1:
                     //FonctionsNatives.assignerVueOrtho();
                     //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     //crochetPourVueSimTest();
@@ -1361,7 +1355,7 @@ namespace ui
                     testMenuStrip.orthoView();
                     break;
 
-                case Keys.D2:
+                case Constants.Key_2:
                     //FonctionsNatives.assignerVueOrbite();
                     //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
                     //crochetPourVueSimTest();
@@ -1370,8 +1364,8 @@ namespace ui
                     testMenuStrip.orbiteView();
                     break;
 
-                case Keys.Q:
-                    if (e.Control)
+                case Constants.Key_Q:
+                    if (ModifierKeys.HasFlag(Keys.Control))
                     {
                         //estEnPause = false;
                         //picturePause.Visible = estEnPause;
@@ -1388,14 +1382,14 @@ namespace ui
                     }
                     break;
 
-                /*case Keys.Escape:
+                case Constants.Key_Esc:
                     estEnPause = !estEnPause;
                     menuSimTest.Visible = estEnPause;
                     picturePause.Visible = estEnPause;
-                    break;*/
+                    break;
 
-                case Keys.E:
-                    if (e.Control)
+                case Constants.Key_E:
+                    if (ModifierKeys.HasFlag(Keys.Control))
                     {
                         //estEnPause = false;
                         //picturePause.Visible = estEnPause;

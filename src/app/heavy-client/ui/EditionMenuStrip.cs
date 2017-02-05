@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ModeEnum;
+using System.Threading;
 
 namespace ui
 {
@@ -130,14 +131,15 @@ namespace ui
 
         public void goTestMode()
         {
-            parent_.editionSideMenu.animationHidingMenu();
-
             parent_.testMenuStrip = new TestMenuStrip(parent_);
+            //parent_.editionSideMenu.animationHidingMenu();
+
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Add(parent_.testMenuStrip);
             parent_.testMenuStrip.Dock = DockStyle.Top;
 
+            FonctionsNatives.dessinerOpenGL();
             FonctionsNatives.assignerMode(Mode.TEST);
 
             parent_.viewPort.Focus();
@@ -150,9 +152,9 @@ namespace ui
 
         public void goMenuPrincipal()
         {
-            parent_.editionSideMenu.animationHidingMenu();
-
             parent_.mainMenu = new MainMenu(parent_);
+            //parent_.editionSideMenu.animationHidingMenu();
+
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.mainScreen.Controls.Add(parent_.mainMenu);
