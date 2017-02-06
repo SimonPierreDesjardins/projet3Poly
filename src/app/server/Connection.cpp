@@ -1,5 +1,5 @@
 #include "Connection.h"
-#include "Libraries\asio-1.10.8\include\asio.hpp"
+#include "asio.hpp"
 #include "NetworkLogger.h"
 #include <iostream>
 

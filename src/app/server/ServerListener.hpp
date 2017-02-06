@@ -1,5 +1,5 @@
 #pragma once
-#include "Libraries\asio-1.10.8\include\asio.hpp"
+#include "asio.hpp"
 #include "Connection.h"
 
 using asio::ip::tcp;

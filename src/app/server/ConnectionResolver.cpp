@@ -1,5 +1,5 @@
 #include "ConnectionResolver.hpp"
-#include "Libraries\asio-1.10.8\include\asio.hpp"
+#include "asio.hpp"
 #include <iostream>
 
 using namespace NetworkPrototype;
