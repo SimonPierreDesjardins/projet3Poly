@@ -21,6 +21,7 @@ namespace ui
             parent_ = parent;
 
             menuStrip1.Renderer = new myRenderer();
+            menuStrip1.Visible = false;
             crochetPourVue();
         }
 

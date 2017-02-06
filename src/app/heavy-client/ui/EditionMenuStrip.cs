@@ -136,10 +136,10 @@ namespace ui
 
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Refresh();
             parent_.viewPort.Controls.Add(parent_.testMenuStrip);
             parent_.testMenuStrip.Dock = DockStyle.Top;
-
-            FonctionsNatives.dessinerOpenGL();
+            
             FonctionsNatives.assignerMode(Mode.TEST);
 
             parent_.viewPort.Focus();
