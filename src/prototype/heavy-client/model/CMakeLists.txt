@@ -1,6 +1,7 @@
 set(TEST_SRC
-	rgw/Test.cpp
-	rgw/Test.h)
+	rgw/InterfaceNative.cpp
+	rgw/InterfaceNative.h
+	rgw/Client.h)
 
 source_group("test" FILES ${TEST_SRC})
 

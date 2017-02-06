@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:InterfaceGraphique_ClientLourd"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525" MinWidth="525" MinHeight="350">
-    <Grid x:Name="Grid">
+    <Grid x:Name="Grid" Margin="0,0,0,-6">
         <Grid.RowDefinitions>
             <RowDefinition Height="27*"/>
             <RowDefinition Height="224*"/>
@@ -23,14 +23,17 @@
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <!-- Start of Login Screen components -->
-        <Button x:Name="ConnectButton" Content="Connection" HorizontalAlignment="Left" Margin="10,195,0,0" Width="75" Click="connectButton_Click" Grid.Row="1" Grid.Column="2" Height="20" VerticalAlignment="Top"/>
-        <PasswordBox x:Name="password_textbox" HorizontalAlignment="Left" Margin="12,135,0,0" VerticalAlignment="Top" Width="176" ToolTip="Enter password here" Height="18" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
-        <Image x:Name="login_image" HorizontalAlignment="Left" Height="244" Margin="79,1,-27,0" VerticalAlignment="Top" Width="274" OpacityMask="#FFC12525" Source="koala.jpg" Grid.RowSpan="3" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="3" Visibility="Collapsed"/>
-        <TextBox x:Name="username_textbox" HorizontalAlignment="Left" Height="23" Margin="12,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" ToolTip="Enter username here" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2"/>
-        <Label x:Name="username_label_warning" Content="" HorizontalAlignment="Left" Margin="12,75,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red" Visibility="Collapsed"/>
-        <Label x:Name="password_label_warning" Content="" HorizontalAlignment="Left" Margin="12,158,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red"/>
-        <Label x:Name="username_label" Content="Username" HorizontalAlignment="Left" Margin="12,23,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
-        <Label x:Name="password_label" Content="Password" HorizontalAlignment="Left" Margin="12,109,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2"/>
+        <Button x:Name="ConnectButton" Content="Connection" HorizontalAlignment="Left" Margin="12,10,0,0" Width="75" Click="connectButton_Click" Grid.Row="3" Grid.Column="2" Height="20" VerticalAlignment="Top"/>
+        <Image x:Name="login_image" HorizontalAlignment="Left" Height="244" Margin="79,1,-27,0" VerticalAlignment="Top" Width="274" OpacityMask="#FFC12525" Source="koala.jpg" Grid.RowSpan="3" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="3" />
+        <TextBox x:Name="username_textbox" HorizontalAlignment="Left" Height="23" Margin="10,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" ToolTip="Enter username here" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2"/>
+        <Label x:Name="username_label_warning" Content="" HorizontalAlignment="Left" Margin="12,49,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red" />
+        <Label x:Name="ipAdresse_label_warning" Content="" HorizontalAlignment="Left" Margin="14,124,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red"/>
+        <Label x:Name="username_label" Content="Username" HorizontalAlignment="Left" Margin="12,0,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" />
+        <Label x:Name="ipAdresse_label" Content="Ip adresse" HorizontalAlignment="Left" Margin="12,75,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2"/>
+        <Label x:Name="port_label" Content="Port" Grid.Column="2" HorizontalAlignment="Left" Margin="12,150,0,0" Grid.Row="1" VerticalAlignment="Top" Width="175" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="ipAdresse_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,101,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" Grid.ColumnSpan="2" SpellCheck.IsEnabled="True"/>
+        <TextBox x:Name="port_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,176,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Grid.ColumnSpan="2"/>
+        <Label x:Name="port_Label_Warning" Content="" Grid.Column="2" HorizontalAlignment="Left" Margin="14,199,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="174" Foreground="Red"/>
         <!-- End of Login Screen Components -->
         <!-- Start of Chat Screen Components -->
         <ListBox x:Name="chat_listBox" Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=Tweets}" Visibility="Collapsed">
