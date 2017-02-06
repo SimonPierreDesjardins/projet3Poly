@@ -20,73 +20,16 @@ namespace ui
             parent_ = parent;
 
             editionObjectMenu.Width = 0;
-            editionToolsMenu.Width = 0;
-
-            ShowFullTools.Start();
         }
 
-        private void ShowObjetMenu_Tick(object sender, EventArgs e)
-        {
-            FonctionsNatives.dessinerOpenGL();
-            if (editionObjectMenu.Width >= 200)
-                ShowObjetMenu.Stop();
-            else
-                editionObjectMenu.Width += 5; 
-        }
-
-        private void ShowFullToolsTimer_Tick(object sender, EventArgs e)
-        {
-            FonctionsNatives.dessinerOpenGL();
-            if (editionToolsMenu.Width >= 200)
-                ShowFullTools.Stop();
-            else
-                editionToolsMenu.Width += 5;                
-        }
-
-        private void HideFullMenu_Tick(object sender, EventArgs e)
-        {
-            FonctionsNatives.dessinerOpenGL();
-            if (editionObjectMenu.Width != 0)
-            {
-                if (editionObjectMenu.Width > 0)
-                    editionObjectMenu.Width -= 5;
-                else
-                    HideFullMenu.Stop();
-            }
-            else
-            {
-                if (editionToolsMenu.Width > 0)
-                    editionToolsMenu.Width -= 5; 
-                else
-                    HideFullMenu.Stop();
-            }
-        }
-
-        private void ShowSideToolMenu_Tick(object sender, EventArgs e)
-        {
-            FonctionsNatives.dessinerOpenGL();
-            if (editionToolsMenu.Width > 35)
-                editionToolsMenu.Width -= 5;
-            else
-                ShowSideToolMenu.Stop();
-        }
-
-        public void animationHidingMenu()
-        {
-            HideFullMenu.Start();
-            while (HideFullMenu.Enabled)
-            {
-                Application.DoEvents();
-            }
-        }
 
         private void menuToolButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.dessinerOpenGL();
+            /*FonctionsNatives.dessinerOpenGL();
             if (editionToolsMenu.Width >= 200)
                 ShowSideToolMenu.Start();
             else
-                ShowFullTools.Start();
+                ShowFullTools.Start();*/
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -109,7 +52,6 @@ namespace ui
         {
             setDefaultUnselectedColors();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            selectionLabel.ForeColor = Color.FromArgb(178, 216, 255);
             //Bouton S : sélection
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
@@ -135,7 +77,6 @@ namespace ui
         {
             setDefaultUnselectedColors();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            deplacementLabel.ForeColor = Color.FromArgb(178, 216, 255);
             //Bouton D : Déplacement
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
@@ -161,7 +102,6 @@ namespace ui
         {
             setDefaultUnselectedColors();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            rotationLabel.ForeColor = Color.FromArgb(178, 216, 255);
             //Bouton R : Rotation
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
@@ -187,7 +127,6 @@ namespace ui
         {
             setDefaultUnselectedColors();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            scaleLabel.ForeColor = Color.FromArgb(178, 216, 255);
             //Bouton E : Mise a échelle
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
@@ -213,7 +152,6 @@ namespace ui
         {
             setDefaultUnselectedColors();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            duplicateLabel.ForeColor = Color.FromArgb(178, 216, 255);
             //Bouton C : Duplication
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
@@ -221,8 +159,8 @@ namespace ui
 
         private void createToolButton_Click(object sender, EventArgs e)
         {
-            animationHidingMenu();
-            ShowObjetMenu.Start();
+            //animationHidingMenu();
+            //ShowObjetMenu.Start();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -245,7 +183,6 @@ namespace ui
         {
             setDefaultUnselectedColors();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            zoomLabel.ForeColor = Color.FromArgb(178, 216, 255);
             //Bouton Z : Zoom
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
@@ -277,8 +214,8 @@ namespace ui
 
         private void returnObjetButton_Click(object sender, EventArgs e)
         {
-            animationHidingMenu();
-            ShowFullTools.Start();
+            //animationHidingMenu();
+            //ShowFullTools.Start();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -301,8 +238,7 @@ namespace ui
         {
             setDefaultUnselectedColors();
             lineObjectButton.BackColor = Color.FromArgb(0, 102, 204);
-            lineLabel.ForeColor = Color.FromArgb(178, 216, 255);
-            setCurrentObjet(lineObjectPicture, "Ligne noire");
+            setCurrentObjet(lineObjectPicture);
             //Bouton L : Creation ligne
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
@@ -338,8 +274,7 @@ namespace ui
         {
             setDefaultUnselectedColors();
             postObjectButton.BackColor = Color.FromArgb(0, 102, 204);
-            postLabel.ForeColor = Color.FromArgb(178, 216, 255);
-            setCurrentObjet(postObjectPicture, "Poteau");
+            setCurrentObjet(postObjectPicture);
             //Bouton P : Creation poteau
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
@@ -365,8 +300,7 @@ namespace ui
         {
             setDefaultUnselectedColors();
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
-            wallLabel.ForeColor = Color.FromArgb(178, 216, 255);
-            setCurrentObjet(wallObjectPicture, "Mur");
+            setCurrentObjet(wallObjectPicture);
             //Bouton M : Creation mur
             parent_.viewPort.Focus();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
@@ -390,14 +324,6 @@ namespace ui
             DuplicateToolButton.BackColor = Color.Transparent;
             zoomToolButton.BackColor = Color.Transparent;
 
-            selectionLabel.ForeColor = Color.Silver;
-            deplacementLabel.ForeColor = Color.Silver;
-            rotationLabel.ForeColor = Color.Silver;
-            scaleLabel.ForeColor = Color.Silver;
-            duplicateLabel.ForeColor = Color.Silver;
-            zoomLabel.ForeColor = Color.Silver;
-            currentObjectName.ForeColor = Color.Silver;
-
             //Objects
             lineObjectButton.BackColor = Color.Transparent;
             greenLineObjectButton.BackColor = Color.Transparent;
@@ -407,23 +333,13 @@ namespace ui
             teleportObjectButton.BackColor = Color.Transparent;
             bridgeObjectButton.BackColor = Color.Transparent;
 
-            lineLabel.ForeColor = Color.Silver;
-            greenLigneLabel.ForeColor = Color.Silver;
-            redLineLabel.ForeColor = Color.Silver;
-            postLabel.ForeColor = Color.Silver;
-            wallLabel.ForeColor = Color.Silver;
-            teleportorLabel.ForeColor = Color.Silver;
-            bridgeLabel.ForeColor = Color.Silver;
-
             currentToolButton.BackColor = Color.Transparent;
             currentToolButton.Visible = false;
         }
 
-        private void setCurrentObjet(PictureBox objectPicture, String objectname)
+        private void setCurrentObjet(PictureBox objectPicture)
         {
             currentToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            currentObjectName.ForeColor = Color.FromArgb(178, 216, 255);
-            currentObjectName.Text = objectname;
             currentObjectPicture.Image = objectPicture.Image;
             currentToolButton.Visible = true;
         }
