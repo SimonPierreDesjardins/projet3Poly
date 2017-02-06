@@ -2,7 +2,7 @@
 #include <string>
 #include "NetworkLogger.h"
 
-using namespace NetworkPrototype;
+using namespace Networking;
 
 
 void Logger::Log(std::string message) {

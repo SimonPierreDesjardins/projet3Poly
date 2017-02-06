@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-namespace NetworkPrototype {
+namespace Networking {
 
 	class Logger {
 

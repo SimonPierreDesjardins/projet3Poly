@@ -2,7 +2,7 @@
 #include <iostream>
 
 using asio::ip::tcp;
-using namespace NetworkPrototype;
+using namespace Networking;
 
 ServerListener::ServerListener(asio::io_service & ioService, short port) : _acceptor(ioService, tcp::endpoint(tcp::v4(), port))
 {

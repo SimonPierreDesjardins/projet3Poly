@@ -1,8 +1,7 @@
-#include "ConnectionResolver.hpp"
-#include "asio.hpp"
+#include "Networking.h"
 #include <iostream>
 
-using namespace NetworkPrototype;
+using namespace Networking;
 
 ConnectionResolver::ConnectionResolver(asio::io_service& ioService):
 	_socket(ioService),

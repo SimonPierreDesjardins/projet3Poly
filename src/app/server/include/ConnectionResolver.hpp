@@ -5,7 +5,7 @@
 
 using asio::ip::tcp;
 
-namespace NetworkPrototype{
+namespace Networking{
 
 	class ConnectionResolver {
 

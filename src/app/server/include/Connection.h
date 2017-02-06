@@ -4,7 +4,7 @@
 #include <memory>
 #include <mutex>
 
-namespace NetworkPrototype 
+namespace Networking 
 {
 	class Connection{
 

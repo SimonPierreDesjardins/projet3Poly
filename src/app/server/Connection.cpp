@@ -1,10 +1,8 @@
-#include "Connection.h"
-#include "asio.hpp"
-#include "NetworkLogger.h"
+#include "Networking.h"
 #include <iostream>
 
 using asio::ip::tcp;
-using namespace NetworkPrototype;
+using namespace Networking;
 
 Connection::Connection(asio::ip::tcp::socket* socket) {
 	_socket = socket;

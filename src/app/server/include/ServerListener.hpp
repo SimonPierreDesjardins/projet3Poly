@@ -1,10 +1,10 @@
 #pragma once
 #include "asio.hpp"
-#include "Connection.h"
+#include "Networking.h"
 
 using asio::ip::tcp;
 
-namespace  NetworkPrototype {
+namespace  Networking {
 
 	class ServerListener
 	{
