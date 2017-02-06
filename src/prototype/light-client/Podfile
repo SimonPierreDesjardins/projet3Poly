@@ -9,6 +9,7 @@ target 'chatApp' do
   pod 'JSQMessagesViewController'
   pod 'SideMenu'
   pod 'Socket.IO-Client-Swift'
+  pod 'SwiftSocket'
   
   target 'chatAppTests' do
     inherit! :search_paths

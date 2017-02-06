@@ -25,8 +25,8 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
             super.init(coder: aDecoder)
         }
     }
-
-    var chatHistory: Array = [JSQMessage]()
+    
+    var chatHistory = [JSQMessage]()
     
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()

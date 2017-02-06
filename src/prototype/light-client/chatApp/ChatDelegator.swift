@@ -10,10 +10,10 @@ import UIKit
 
 class ChatDelegator : NSObject
 {
-    var chatManager: ChatManager
+    //var chatManager: ChatManager
     override init()
     {
-        chatManager = ChatManager()
+        //chatManager = ChatManager()
     }
 
 
@@ -24,7 +24,7 @@ class ChatDelegator : NSObject
     
     func onSendButtonTapped(_ notification: NSNotification)
     {
-        
+        //chatManager.appendMessage(notification.userInfo["text"])
     }
     
 }
