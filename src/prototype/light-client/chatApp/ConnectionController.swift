@@ -21,6 +21,11 @@ class ConnectionController: UIViewController
         super.viewWillAppear(animated)
         
         registerForKeyboardNotifications()
+        
+    }
+    
+    override func viewDidLoad() {
+        connectButton.addTarget(self, action: #selector(self.connectButtonTapped), for: .touchUpInside)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -68,11 +73,18 @@ class ConnectionController: UIViewController
         }
     }
     
+    func connectButtonTapped()
+    {
+        let chatViewController = ChatViewController()
+        chatViewController.senderDisplayName = usernameTextBox.text
+        present(chatViewController, animated: true, completion: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
-        //let chatContainerViewController = segue.destination as! ChatContainerViewController
+        let chatViewController = segue.destination as! ChatViewController
         
-        //chatContainerViewController.senderDisplayName = usernameTextBox.text!
+        chatViewController.senderDisplayName = usernameTextBox.text!
     }
 }
 

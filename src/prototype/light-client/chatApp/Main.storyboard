@@ -31,7 +31,6 @@
                                 <state key="normal" title="Connexion"/>
                                 <connections>
                                     <action selector="connectionButtonClicked:" destination="ZPh-yA-EoL" eventType="touchDragInside" id="7L4-CA-KGo"/>
-                                    <segue destination="gqE-fP-aRG" kind="show" id="vPr-pD-ub9"/>
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un nom d'utilisateur" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pxG-l5-mrr">
@@ -55,51 +54,13 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="connectButton" destination="XYQ-zv-ysu" id="J5H-pn-mHj"/>
+                        <outlet property="connectButton" destination="XYQ-zv-ysu" id="c9B-r8-qTv"/>
                         <outlet property="usernameTextBox" destination="pxG-l5-mrr" id="GfP-ff-sxt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AtU-gc-yXd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="621" y="-431"/>
-        </scene>
-        <!--Chat View Controller-->
-        <scene sceneID="egF-Fb-pyu">
-            <objects>
-                <viewController id="4hP-lD-9Pq" customClass="ChatViewController" customModule="chatApp" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="1ca-YP-bfT"/>
-                        <viewControllerLayoutGuide type="bottom" id="ApQ-qq-ZXF"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="dIz-6I-We3">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="m5F-2s-8f2"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Yca-I9-a9Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2181.25" y="-431.25"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="qF0-gn-nH3">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gqE-fP-aRG" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="1Yo-0K-CXl"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2Z0-1a-hJi">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="4hP-lD-9Pq" kind="relationship" relationship="rootViewController" id="DA5-bd-8A1"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x9m-os-Ew0" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1415.625" y="-431.25"/>
+            <point key="canvasLocation" x="957" y="-431"/>
         </scene>
     </scenes>
 </document>

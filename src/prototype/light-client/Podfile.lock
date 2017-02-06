@@ -3,16 +3,19 @@ PODS:
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
   - SideMenu (2.1.5)
+  - Socket.IO-Client-Swift (8.2.0)
 
 DEPENDENCIES:
   - JSQMessagesViewController
   - SideMenu
+  - Socket.IO-Client-Swift
 
 SPEC CHECKSUMS:
   JSQMessagesViewController: 39fed975e3c9f8eba7292071e29eeb541d105e66
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   SideMenu: bcd2d7b7d4395af088e213cebd11c3ac7d958f5a
+  Socket.IO-Client-Swift: 900cf511777045c80d1ce1f11f71261e87765dd1
 
-PODFILE CHECKSUM: 1e9606d0d82725f4a33652aaa34ea451baf6e8e4
+PODFILE CHECKSUM: 8787de9673be4406f5d1f55f668d14b8ab975284
 
 COCOAPODS: 1.1.1

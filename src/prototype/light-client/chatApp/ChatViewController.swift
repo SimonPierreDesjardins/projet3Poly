@@ -8,19 +8,32 @@
 
 import UIKit
 import JSQMessagesViewController
+import SideMenu
 
-
-class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCellDelegate
+class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
 {
+    class ChatCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout
+    {
+        override init()
+        {
+            super.init()
+            self.messageBubbleLeftRightMargin = 0.0
+        }
+        
+        required init?(coder aDecoder: NSCoder)
+        {
+            super.init(coder: aDecoder)
+        }
+    }
 
     var chatHistory: Array = [JSQMessage]()
-    
-    let textCellIdentifier: NSString = "chatCell"
     
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
     private var cellsThatHaveBeenTapped = Set<NSInteger>()
+    
+    private let controller: ChatDelegator = ChatDelegator()
 
     override func didReceiveMemoryWarning()
     {
@@ -31,14 +44,14 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCe
     override func viewDidLoad()
     {
         super.viewDidLoad()
+        
+        self.collectionView.collectionViewLayout = ChatCollectionViewFlowLayout()
      
-        self.title = "HEYO";
+        self.title = "HEYO"
         
         self.showLoadEarlierMessagesHeader = true;
         
         self.senderId = "Moi"
-        
-        self.senderDisplayName = "P"
         
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
@@ -48,41 +61,67 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCe
         
         setupNavigationBarButton()
         
+        setupSideMenu()
+        
         receiveMessagePressed()
         
-        
         automaticallyScrollsToMostRecentMessage = true
+        
         
         self.collectionView?.reloadData()
         self.collectionView?.layoutIfNeeded()
     }
     
-    func setupNavigationBarButton() {
-        let backButton = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backButtonTapped))
-        navigationItem.leftBarButtonItem = backButton
-        
-        //create a new button
-        let button: UIButton = UIButton(type: UIButtonType.custom)
-        //set image for button
-        button.setImage(UIImage(named: "./icons/ic_people_outline.png"), for: UIControlState.normal)
-        //add function for button
-        button.addTarget(self, action: #selector (backButtonTapped), for: UIControlEvents.touchUpInside)
-        //set frame
-        button.frame = CGRect(x: 0, y: 0, width: 53, height: 31)
-        
-        let barButton = UIBarButtonItem(customView: button)
-        //assign button to navigationbar
-        self.navigationItem.rightBarButtonItem = barButton
-        //let infoButton = UIBarButtonItem(image: UIImage(named: "./icons/ic_people_outline.png"), style: UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
-        //navigationItem.rightBarButtonItem = infoButton
-        
+    func setupSideMenu()
+    {
+        // Define the menus
+        let menuRightNavigationController = UISideMenuNavigationController(rootViewController: UIViewController())
+        // UISideMenuNavigationController is a subclass of UINavigationController, so do any additional configuration
+        // of it here like setting its viewControllers. If you're using storyboards, you'll want to do something like:
+        // let menuRightNavigationController = storyboard!.instantiateViewController(withIdentifier: "RightMenuNavigationController") as! UISideMenuNavigationController
+        SideMenuManager.menuRightNavigationController = menuRightNavigationController
+
     }
     
-    func backButtonTapped() {
+    func setupNavigationBarButton()
+    {
+        // Create the navigation bar
+        let navigationBar = UINavigationBar(frame: CGRect(x:0, y:0, width:UIScreen.main.bounds.width, height:64)) // Offset by 20 pixels vertically to take the status bar into account
+        
+        navigationBar.backgroundColor = UIColor.white
+        navigationBar.delegate = self;
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        navigationItem.title = "HEYO"
+        
+        // Create left and right button for navigation item
+        let leftButton =  UIBarButtonItem(title: "Back", style:   UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
+        let rightButton = UIBarButtonItem(title: "Details", style: UIBarButtonItemStyle.plain, target: self, action: #selector (socialButtonTapped))
+        
+        // Create two buttons for the navigation item
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
+        
+        // Assign the navigation item to the navigation bar
+        navigationBar.items = [navigationItem]
+        
+        // Make the navigation bar a subview of the current view controller
+        self.view.addSubview(navigationBar)
+    }
+    
+    func backButtonTapped()
+    {
         dismiss(animated: true, completion: nil)
     }
     
-    func receiveMessagePressed() {
+    func socialButtonTapped()
+    {
+        present(SideMenuManager.menuRightNavigationController!, animated: true, completion: nil)
+    }
+    
+    func receiveMessagePressed()
+    {
         let conversation = [JSQMessage(senderId: AvatarIdCook, displayName: getName(User.Cook), text: "What is this Black Majic?"),
         JSQMessage(senderId: AvatarIDSquires, displayName: getName(User.Squires), text: "It is simple, elegant, and easy to use. There are super sweet default settings, but you can customize like crazy"),
         JSQMessage(senderId: AvatarIdWoz, displayName: getName(User.Wozniak), text: "It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com."),
@@ -144,12 +183,13 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCe
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         
         let msg = self.chatHistory[indexPath.item]
-
             
-        if msg.senderId == self.senderId {
+        if msg.senderId == self.senderId
+        {
             cell.textView.textColor = UIColor.white
         }
-        else {
+        else
+        {
             cell.textView.textColor = UIColor.black
         }
         
@@ -157,7 +197,6 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCe
         cell.textView.linkTextAttributes = attributes
         
         return cell
-
     }
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!)
@@ -169,6 +208,8 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCe
         self.chatHistory.append(message!)
         
         self.finishSendingMessage(animated: true)
+        
+        NotificationCenter.default.post(name: .Chat_onSendButtonTapped, object: nil, userInfo: ["text":text])
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath) -> NSAttributedString?
@@ -230,21 +271,5 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesCollectionViewCe
         collectionView.reloadData()
     }
     
-    func messagesCollectionViewCellDidTapMessageBubble(_ cell: JSQMessagesCollectionViewCell!) {
-        
-    }
-    
-    func messagesCollectionViewCellDidTap(_ cell: JSQMessagesCollectionViewCell!, atPosition position: CGPoint) {
-        
-    }
-    
-    func messagesCollectionViewCell(_ cell: JSQMessagesCollectionViewCell!, didPerformAction action: Selector!, withSender sender: Any!) {
-        
-    }
-    
-    func messagesCollectionViewCellDidTapAvatar(_ cell: JSQMessagesCollectionViewCell!) {
-        
-    }
-
 }
 
