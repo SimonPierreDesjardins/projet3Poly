@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ModeEnum;
 
@@ -21,6 +14,7 @@ namespace ui
             parent_ = parent;
 
             menuStrip1.Renderer = new myRenderer();
+            menuStrip1.Visible = false;
             crochetPourVue();
         }
 
@@ -31,6 +25,9 @@ namespace ui
 
         public void goMenuPrincipal()
         {
+            parent_.estEnPause = false;
+            parent_.picturePause.Visible = false;
+
             parent_.mainMenu = new MainMenu(parent_);
             parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
             parent_.mainScreen.Controls.Add(parent_.mainMenu);
@@ -139,6 +136,13 @@ namespace ui
                     premierePersonneToolStripMenuItem.Checked = false;
                     break;
             }
+        }
+
+        public void goIntoPause()
+        {
+            parent_.estEnPause = !parent_.estEnPause;
+            parent_.picturePause.Visible = parent_.estEnPause;
+            menuStrip1.Visible = parent_.estEnPause;
         }
     }
 }

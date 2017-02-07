@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ui
@@ -19,17 +13,8 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
+            //setToolTips();
             editionObjectMenu.Width = 0;
-        }
-
-
-        private void menuToolButton_Click(object sender, EventArgs e)
-        {
-            /*FonctionsNatives.dessinerOpenGL();
-            if (editionToolsMenu.Width >= 200)
-                ShowSideToolMenu.Start();
-            else
-                ShowFullTools.Start();*/
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -159,8 +144,11 @@ namespace ui
 
         private void createToolButton_Click(object sender, EventArgs e)
         {
-            //animationHidingMenu();
-            //ShowObjetMenu.Start();
+            if (editionObjectMenu.Width == 0)
+                ShowObjectMenu.Start();
+
+            setDefaultUnselectedColors();
+            createToolButton.BackColor = Color.FromArgb(0, 102, 204);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -210,12 +198,6 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)46, (IntPtr)22216705);
             //supprimerToolStripMenuItem.Enabled = false;
             parent_.verificationDuNombreElementChoisi();
-        }
-
-        private void returnObjetButton_Click(object sender, EventArgs e)
-        {
-            //animationHidingMenu();
-            //ShowFullTools.Start();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -316,6 +298,9 @@ namespace ui
 
         private void setDefaultUnselectedColors()
         {
+            if (editionObjectMenu.Width > 0)
+                HideObjectMenu.Start();
+
             //Tools
             selectToolButton.BackColor = Color.Transparent;
             MoveToolButton.BackColor = Color.Transparent;
@@ -323,6 +308,7 @@ namespace ui
             ScaleToolButton.BackColor = Color.Transparent;
             DuplicateToolButton.BackColor = Color.Transparent;
             zoomToolButton.BackColor = Color.Transparent;
+            createToolButton.BackColor = Color.Transparent;
 
             //Objects
             lineObjectButton.BackColor = Color.Transparent;
@@ -343,5 +329,106 @@ namespace ui
             currentObjectPicture.Image = objectPicture.Image;
             currentToolButton.Visible = true;
         }
+
+        private void HideObjectsMenu_Tick(object sender, EventArgs e)
+        {
+            FonctionsNatives.dessinerOpenGL();
+            if (editionObjectMenu.Width > 0)
+                editionObjectMenu.Width -= 5;
+            else
+                HideObjectMenu.Stop();
+        }
+
+        private void ShowObjectsMenu_Tick(object sender, EventArgs e)
+        {
+            FonctionsNatives.dessinerOpenGL();
+            if (editionObjectMenu.Width < 35)
+                editionObjectMenu.Width += 5;
+            else
+                ShowObjectMenu.Stop();
+        }
+
+        /*private void setToolTips()
+        {
+            ToolTip selectToolTip = new ToolTip();
+            selectToolTip.AutoPopDelay = 5000;
+            selectToolTip.InitialDelay = 1000;
+            selectToolTip.ReshowDelay = 500;
+            selectToolTip.ShowAlways = true;
+            selectToolTip.SetToolTip(selectToolButton, "Select tool");
+            selectToolTip.SetToolTip(selectPictureBox, "Select tool");
+
+            ToolTip deplacementToolTip = new ToolTip();
+            deplacementToolTip.SetToolTip(MoveToolButton, "move tool");
+            deplacementToolTip.SetToolTip(movePictureBox, "move tool");
+
+            ToolTip rotateToolTip = new ToolTip();
+            rotateToolTip.SetToolTip(RotateToolButton, "Rotate tool");
+            rotateToolTip.SetToolTip(RotateToolButton, "Rotate tool");
+
+            ToolTip scaleToolTip = new ToolTip();
+            scaleToolTip.SetToolTip(ScaleToolButton, "Scale tool");
+            scaleToolTip.SetToolTip(scalePictureBox, "Scale tool");
+
+            ToolTip duplicateToolTip = new ToolTip();
+            duplicateToolTip.SetToolTip(DuplicateToolButton, "Duplicate tool");
+            duplicateToolTip.SetToolTip(duplicatePictureBox, "Duplicate tool");
+
+            ToolTip createToolTip = new ToolTip();
+            createToolTip.SetToolTip(createToolButton, "Create objects tool");
+            createToolTip.SetToolTip(createPictureBox, "Create objects tool");
+
+            ToolTip zoomToolTip = new ToolTip();
+            zoomToolTip.SetToolTip(zoomToolButton, "Zoom tool");
+            zoomToolTip.SetToolTip(zoomPictureBox, "Zoom tool");
+
+            ToolTip deleteToolTip = new ToolTip();
+            deleteToolTip.SetToolTip(deleteToolButton, "Delete tool");
+            deleteToolTip.SetToolTip(deletePictureBox, "Delete tool");
+
+            ToolTip currentObjectToolTip = new ToolTip();
+            currentObjectToolTip.SetToolTip(currentToolButton, "Current object");
+            currentObjectToolTip.SetToolTip(currentObjectPicture, "Current object");
+
+            ToolTip lineToolTip = new ToolTip();
+            lineToolTip.SetToolTip(lineObjectButton, "Line object");
+            lineToolTip.SetToolTip(lineObjectPicture, "Line object");
+
+            ToolTip greenLineToolTip = new ToolTip();
+            greenLineToolTip.SetToolTip(greenLineObjectButton, "Green line object");
+            greenLineToolTip.SetToolTip(greenLinePictureBox, "Green line object");
+
+            ToolTip redLineToolTip = new ToolTip();
+            redLineToolTip.SetToolTip(redLineObjectButton, "Red line object");
+            redLineToolTip.SetToolTip(redLinePictureBox, "Red line object");
+
+            ToolTip postToolTip = new ToolTip();
+            postToolTip.SetToolTip(postObjectButton, "Post object");
+            ToolTip postToolTip1 = new ToolTip();
+            postToolTip1.SetToolTip(postObjectPicture, "Post object");
+
+            ToolTip wallToolTip = new ToolTip();
+            wallToolTip.SetToolTip(wallObjectButton, "Wall object");
+            wallToolTip.SetToolTip(wallObjectPicture, "Wall object");
+
+            ToolTip teleportorToolTip = new ToolTip();
+            teleportorToolTip.SetToolTip(teleportObjectButton, "Teleportor object");
+            teleportorToolTip.SetToolTip(teleportorPictureBox, "Teleportor object");
+
+            ToolTip bridgeToolTip = new ToolTip();
+            bridgeToolTip.SetToolTip(bridgeObjectButton, "Bridge object");
+            bridgeToolTip.SetToolTip(bridgePictureBox, "Bridge object");
+        }*/
+
+        /*private void movePictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            ToolTip toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1;
+            toolTip.ReshowDelay = 500;
+            toolTip.ShowAlways = true;
+
+            toolTip.SetToolTip(movePictureBox, "Move Tool");
+        }*/
     }
 }

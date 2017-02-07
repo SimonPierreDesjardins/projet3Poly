@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
 namespace ui
-{ 
+{
     static class Program
     {
         private const int NB_IMAGES_PAR_SECONDE = 60;

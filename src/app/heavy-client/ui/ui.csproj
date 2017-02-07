@@ -128,6 +128,11 @@
     <Compile Include="PopOutInterface.Designer.cs">
       <DependentUpon>PopOutInterface.cs</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="SimulationMenuStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -188,14 +193,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -210,50 +210,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\ic_search_white_48dp_2x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_loop_white_48dp_2x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_near_me_white_48dp_2x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_settings_overscan_white_48dp_2x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\editcopy.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ionic.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\ic_open_with.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\walls1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\line2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\poteau.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\greek6.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\law2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="Enum\Enum.csproj">
       <Project>{c6fb0f99-403a-43a9-86b5-c8ca99ac438a}</Project>
       <Name>Enum</Name>
     </ProjectReference>
-    <None Include="Resources\player_pause.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\pause.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pauseNoire.png" />
@@ -276,7 +236,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\back.png" />
     <Content Include="Resources\Bridge.png" />
     <Content Include="Resources\car-change.png" />
     <Content Include="Resources\car.png" />

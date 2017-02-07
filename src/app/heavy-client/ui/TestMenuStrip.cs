@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ModeEnum;
 
@@ -27,20 +20,14 @@ namespace ui
 
         private void menuEditionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            goModeEdition();
-
-            //outilsZoom_.Enabled = true;
-            //zoomToolStripMenuItem.Enabled = true;
-
-            //afficherMenuPrincipal(false);
-            //afficherMenuEdition(true);
-            //panneauOperation_.Visible = false;
-
-            
+            goModeEdition();            
         }
 
         public void goModeEdition()
         {
+            parent_.estEnPause = false;
+            parent_.picturePause.Visible = false;
+
             parent_.editionMenuStrip = new EditionMenuStrip(parent_);
             parent_.editionSideMenu = new EditionSideMenu(parent_);
 
@@ -62,6 +49,9 @@ namespace ui
 
         public void goMenuPrincipal()
         {
+            parent_.estEnPause = false;
+            parent_.picturePause.Visible = false;
+
             parent_.mainMenu = new MainMenu(parent_);
             parent_.viewPort.Controls.Remove(parent_.testMenuStrip);
             parent_.mainScreen.Controls.Add(parent_.mainMenu);
@@ -119,6 +109,13 @@ namespace ui
                     orthoToolStripMenuItem.Checked = true;
                     break;
             }
+        }
+
+        public void goIntoPause()
+        {
+            parent_.estEnPause = !parent_.estEnPause;
+            parent_.picturePause.Visible = parent_.estEnPause;
+            menuStrip1.Visible = parent_.estEnPause;
         }
     }
 }

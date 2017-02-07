@@ -43,7 +43,7 @@ namespace ui
         public void arreterToutMessage()
         { arreterToutMessage_ = true; }
 
-        private bool estEnPause = false;
+        public bool estEnPause = false;
         private bool PasserEnSimulation = false;
 
         public bool PreFilterMessage(ref Message m)
@@ -59,20 +59,8 @@ namespace ui
                     m.Msg == WM_MOUSEWHEEL)
                 {
                     FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
-
                     if (m.Msg == WM_KEYDOWN)
                         gererMessage(m.WParam);
-                        //int mode = FonctionsNatives.obtenirMode();
-                        //if (mode == 1 || mode == 4)
-                        //{
-                        //    if (m.WParam == (System.IntPtr)27)
-                        //    {
-                        //        estEnPause = !estEnPause;
-                        //        menuSimTest.Visible = estEnPause;
-                        //        picturePause.Visible = estEnPause;
-                        //    }
-                        //}
-
                 }
                 return false;
             }
@@ -101,7 +89,6 @@ namespace ui
 
             InitialiserAnimation();
             menuEdition_.Visible = false;
-            barreOutils_.Visible = false;
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
             configuration = new Configure(profilsMenuSimTest);
@@ -164,652 +151,6 @@ namespace ui
                 Program.peutAfficher = false;
 
             }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void buttonEditeur_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change la visibilité des composant pour être en mode édition
-        /// et assigne le mode à édition et etat à sélection
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void buttonEditeur_Click(object sender, EventArgs e)
-        {
-            outilsZoom_.Enabled = true;
-            zoomToolStripMenuItem.Enabled = true;
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-            afficherMenuPrincipal(false);
-            afficherMenuEdition(true);
-            panneauOperation_.Visible = false;
-
-            FonctionsNatives.assignerMode(Mode.EDITION);
-            verificationDuNombreElementChoisi();
-            changeIconColor();
-            outilsSelection_.BackColor = Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void quitterToolStripMenuItem1_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction ferme l'application lorsque l'utilisation appuie sur Quitter
-        /// du menu principal
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void buttonQuitter_Click(object sender, EventArgs e)
-        {
-            configuration.Dispose();
-            Application.Exit();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void afficherMenuPrincipal(bool afficherMenu)
-        ///
-        /// Cette fonction ajuste la visibilité des composants de la fenêtre
-        /// pour le menu principal
-        /// 
-        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void afficherMenuPrincipal(bool afficherMenu)
-        {
-            bouttonConfiguration_.Visible = afficherMenu;
-            bouttonEditeur_.Visible = afficherMenu;
-            bouttonQuitter_.Visible = afficherMenu;
-            bouttonSimulation_.Visible = afficherMenu;
-            viewPort.Visible = !afficherMenu;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void afficherMenuEdition(bool afficherMenu)
-        ///
-        /// Cette fonction ajuste la visibilité des composants de la fenêtre
-        /// pour le menu édition
-        /// 
-        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void afficherMenuEdition(bool afficherMenu)
-        {
-            viewPort.Visible = afficherMenu;
-            menuEdition_.Visible = afficherMenu;
-            barreOutils_.Visible = afficherMenu;
-            panneauOperation_.Visible = false;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void afficherMenuSimulation(bool afficherMenu)
-        ///
-        /// Cette fonction ajuste la visibilité des composants de la fenêtre
-        /// pour le menu de simulation
-        /// 
-        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void afficherMenuSimulation(bool afficherMenu)
-        {
-            menuSimTest.Visible = false;
-            modeEditionMenuSimTest.Visible = !afficherMenu;
-            premierePersonneMenuSimTest.Visible = afficherMenu;
-            viewPort.Visible = afficherMenu;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void afficherMenuTest(bool afficherMenu)
-        ///
-        /// Cette fonction ajuste la visibilité des composants de la fenêtre
-        /// pour le menu de test
-        /// 
-        /// @param bool afficherMenu: true si on veut afficher Menu sinon false
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void afficherMenuTest(bool afficherMenu)
-        {
-            menuSimTest.Visible = false;
-            modeEditionMenuSimTest.Visible = afficherMenu;
-            premierePersonneMenuSimTest.Visible = !afficherMenu;
-            viewPort.Visible = afficherMenu;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void changeIconColor()
-        ///
-        /// Cette fonction met la couleur des icons a gris
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void changeIconColor()
-        {
-            outilsDeplacement_.BackColor = System.Drawing.Color.Gray;
-            outilsSelection_.BackColor = System.Drawing.Color.Gray;
-            outilsRotation_.BackColor = System.Drawing.Color.Gray;
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.Gray;
-            outilsDuplication_.BackColor = System.Drawing.Color.Gray;
-            outilsZoom_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationMurs_.BackColor = System.Drawing.Color.Gray;
-            outilsCreationLigne_.BackColor = System.Drawing.Color.Gray;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction affiche le menu principal et change le mode à menu principal
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            afficherMenuPrincipal(true);
-            afficherMenuEdition(false);
-            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void miseAÉchelleToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, mise à échelle
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void miseAEchelleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton E : Mise a échelle
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
-            changeIconColor();
-            outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void sToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, sélection
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void sToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton S : sélection
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
-            changeIconColor();
-            outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, déplacement
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void déplacementToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton D : Déplacement
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
-            changeIconColor();
-            outilsDeplacement_.BackColor = Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, rotation
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void rotationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton R : Rotation
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
-            changeIconColor();
-            outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, duplication
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void duplicationToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton C : Duplication
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
-            changeIconColor();
-            outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation poteau
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void poteauToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton P : Creation poteau
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
-            changeIconColor();
-            outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void murToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation mur
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void murToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton M : Creation mur
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
-            changeIconColor();
-            outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation ligne noire
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void ligneNoireToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton L : Creation ligne
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
-            changeIconColor();
-            outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, zoom
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //Bouton Z : Zoom
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
-            changeIconColor();
-            outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Fonction appelant les fonctions servant à redimenssionner la fenetre virtuelle selon la cloture pour garder le rapport d'aspect.
-        /// Celle-ci est appelée lorsqu'on redimenssionne la fenetre.
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void Window_Resize(object sender, EventArgs e)
-        {
-            // On gère cette redimension dans openGL
-            //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-            //FonctionsNatives.dessinerOpenGL();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void zoomToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Fonction appelant les fonctions servant à redimenssionner la fenetre virtuelle selon la cloture pour garder le rapport d'aspect.
-        /// Celle-ci est appelée lors du chargement de la fenetre.
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void Window_Load(object sender, EventArgs e)
-        {
-            // On gère cette redimension dans openGL
-            //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsSelection__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, sélection
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsSelection__Click(object sender, EventArgs e)
-        {
-            //Bouton S : sélection
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
-            changeIconColor();
-            outilsSelection_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsDéplacement__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, déplacement
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsDéplacement__Click(object sender, EventArgs e)
-        {
-            //Bouton D : Déplacement
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
-            changeIconColor();
-            outilsDeplacement_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsRotation__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, rotation
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsRotation__Click(object sender, EventArgs e)
-        {
-            //Bouton R : Rotation
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
-            changeIconColor();
-            outilsRotation_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsMiseAEchelle__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, mise à échelle
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsMiseAEchelle__Click(object sender, EventArgs e)
-        {
-            //Bouton E : Mise a échelle
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
-            changeIconColor();
-            outilsMiseAEchelle_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsDuplication__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, duplication
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsDuplication__Click(object sender, EventArgs e)
-        {
-            //Bouton C : Duplication
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
-            changeIconColor();
-            outilsDuplication_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsZoom__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, zoom
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsZoom__Click(object sender, EventArgs e)
-        {
-            //Bouton Z : Zoom
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
-            changeIconColor();
-            outilsZoom_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsCreationPoteau__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation poteau
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsCreationPoteau__Click(object sender, EventArgs e)
-        {
-            //Bouton P : Creation poteau
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
-            changeIconColor();
-            outilsCreationPoteau_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsCreationMurs__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation mur
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsCreationMurs__Click(object sender, EventArgs e)
-        {
-            //Bouton M : Creation mur
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
-            changeIconColor();
-            outilsCreationMurs_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void outilsCreationLigne__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation ligne noire
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void outilsCreationLigne__Click(object sender, EventArgs e)
-        {
-            //Bouton L : Creation ligne
-            viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
-            changeIconColor();
-            outilsCreationLigne_.BackColor = Color.CadetBlue;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void modeTestModeEdition__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change le mode pour test lorsque le mode test est appuyé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void modeTestModeEdition__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerMode(Mode.TEST);
-            afficherMenuPrincipal(false);
-            afficherMenuEdition(false);
-            afficherMenuTest(true);
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void bouttonSimulation__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change le mode pour simulation lorsque le mode simulation est appuyé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void bouttonSimulation__Click(object sender, EventArgs e)
-        {
-            ouvrirZone(true);
-
-            if (PasserEnSimulation)
-            {
-                FonctionsNatives.assignerVueOrtho();
-                FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-                afficherMenuPrincipal(false);
-                afficherMenuEdition(false);
-                afficherMenuSimulation(true);
-
-                FonctionsNatives.assignerMode(Mode.SIMULATION);
-            }
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void bouttonConfiguration__Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction change le mode pour configuration lorsque le mode configuration est appuyé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void bouttonConfiguration__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerMode(Mode.CONFIGURE);
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            configuration.ShowDialog();
-            viewPort.Focus();
-            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void aideMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Affiche une nouvelle fenêtre indiquant des informations d'aide
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void aideMenuEdition__Click(object sender, EventArgs e)
-        {
-            PopOutInterface popup = new PopOutInterface();
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            DialogResult dialogresult = popup.ShowDialog();
-            if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
-            {
-                popup.Dispose();
-                viewPort.Focus();
-            }
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -936,158 +277,6 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Supprime tous les objets sélectionnés
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            supprimerToolStripMenuItem.Enabled = false;
-            verificationDuNombreElementChoisi();
-            viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Crée une nouvelle zone de céation lorsque nouveau est appuyé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void nouveauMenuEdition__Click(object sender, EventArgs e)
-        {
-            nouvelleZone();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Crée une nouvelle zone de céation si l'utilisateur appuie sur oui, 
-        /// sinon ne fait rien
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void nouvelleZone()
-        {
-            DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                FonctionsNatives.nouvelleTable();
-                panneauOperation_.Visible = false;
-                enregistrerMenuEdition_.Enabled = false;
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Sauvegarde la zone lorsque enregistrer sous est appuyé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void enregistrerSousMenuEdition__Click(object sender, EventArgs e)
-        {
-            enregistrerSousZone();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enregistrerSousZone()
-        ///
-        /// Ouvre un explorateur de fichier qui permet de sauvegarde la zone, permet uniquement à 
-        /// l'utilisateur de sauvegarder dans zones
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void enregistrerSousZone()
-        {
-            ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            if (explorateur.ShowDialog() == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.CheminFichier);
-                FonctionsNatives.sauvegarder();
-                enregistrerMenuEdition_.Enabled = true;
-            }
-            explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
-
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void ouvrirMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Charge une zone sauvegardée
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void ouvrirMenuEdition__Click(object sender, EventArgs e)
-        {
-            ouvrirZone(false);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void ouvrirZone()
-        ///
-        /// Ouvre un explorateur de ficher pour charger la zone sauvegarder lorsque 
-        /// le bouton ouvrir est appuyer sur le menu
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void ouvrirZone(bool afficherZoneDefaut)
-        {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture(afficherZoneDefaut);
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            DialogResult dialogresult = explorateur.ShowDialog();
-            if (dialogresult == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
-                FonctionsNatives.charger();
-                enregistrerMenuEdition_.Enabled = true;
-                PasserEnSimulation = true;
-            }
-            if (dialogresult == DialogResult.Cancel)
-                PasserEnSimulation = false;
-
-            explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
-            panneauOperation_.Visible = false;
-
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        ///
-        /// Gère les touches lorsque le viewPort_ panel à le focus selon le mode
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param PreviewKeyDownEventArgs e: evenement du clavier
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void viewPort__PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-            //gererMessage(sender, e);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private void gererMessage(object sender, PreviewKeyDownEventArgs e)
         ///
         /// Gère les touches lorsque le viewPort_ panel à le focus selon le mode
@@ -1145,25 +334,16 @@ namespace ui
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    //FonctionsNatives.assignerVueOrtho();
-                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    //crochetPourVueEdition();
                     //outilsZoom_.Enabled = true;
-                    //zoomToolStripMenuItem.Enabled = true;
                     editionMenuStrip.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    //FonctionsNatives.assignerVueOrbite();
-                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    //crochetPourVueEdition();
                     //outilsZoom_.Enabled = false;
-                    //zoomToolStripMenuItem.Enabled = false;
                     editionMenuStrip.orbiteView();
                     break;
 
                 case Constants.Key_Del:
-                    //verificationDuNombreElementChoisi();
                     editionSideMenu.deleteTool();
                     break;
 
@@ -1174,92 +354,59 @@ namespace ui
                             editionMenuStrip.enregistrer();
                         else
                             editionMenuStrip.enregistrerSousZone();
-                            //enregistrerSousZone();
                     }
                     else
-                    {
-                        //changeIconColor();
-                        //outilsSelection_.BackColor = System.Drawing.Color.CadetBlue;
                         editionSideMenu.selectTool();
-                    }
                     break;
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                    {
-                        //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-                        //FonctionsNatives.assignerVueOrtho();
-                        //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                        //afficherMenuEdition(false);
-                        //afficherMenuPrincipal(true);
                         editionMenuStrip.goMenuPrincipal();
-                    }
                     break;
 
                 case Constants.Key_O:
                     if (ModifierKeys.HasFlag(Keys.Control))
                         editionMenuStrip.ouvrirZone(false);
-                        //ouvrirZone(false);
                     break;
 
                 case Constants.Key_N:
                     if (ModifierKeys.HasFlag(Keys.Control))
                         editionMenuStrip.nouvelleZone();
-                        //nouvelleZone();
                     break;
 
                 case Constants.Key_D:
-                    //changeIconColor();
-                    // outilsDeplacement_.BackColor = Color.CadetBlue;
                     editionSideMenu.moveTool();
                     break;
 
                 case Constants.Key_R:
-                    //changeIconColor();
-                    //outilsRotation_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.rotateTool();
                     break;
 
                 case Constants.Key_E:
-                    //changeIconColor();
-                    //outilsMiseAEchelle_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.scaleTool();
                     break;
 
                 case Constants.Key_C:
-                    //changeIconColor();
-                    //outilsDuplication_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.duplicateTool();
                     break;
 
                 case Constants.Key_Z:
-                    //changeIconColor();
-                    //outilsZoom_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.zoomTool();
                     break;
 
                 case Constants.Key_P:
-                    //changeIconColor();
-                    //outilsCreationPoteau_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.postObject();
                     break;
 
                 case Constants.Key_M:
-                    //changeIconColor();
-                    //outilsCreationMurs_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.wallObject();
                     break;
 
                 case Constants.Key_L:
-                    //changeIconColor();
-                    //outilsCreationLigne_.BackColor = System.Drawing.Color.CadetBlue;
                     editionSideMenu.lineObject();
                     break;
 
                 case Constants.Key_T:
-                    //afficherMenuEdition(false);
-                    //afficherMenuTest(true);
-                    //FonctionsNatives.assignerMode(Mode.TEST);
                     editionMenuStrip.goTestMode();
                     break;
 
@@ -1283,48 +430,24 @@ namespace ui
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    //FonctionsNatives.assignerVueOrtho();
-                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    //crochetPourVueSimTest();
                     simulationMenuStrip.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    //FonctionsNatives.assignerVueOrbite();
-                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    //crochetPourVueSimTest();
                     simulationMenuStrip.orbiteView();
                     break;
 
                 case Constants.Key_3:
-                    //FonctionsNatives.assignerVuePremierePersonne();
-                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    //crochetPourVueSimTest();
                     simulationMenuStrip.firstPersonView();
                     break;
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                    {
                         simulationMenuStrip.goMenuPrincipal();
-                        //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-                        //estEnPause = false;
-                        //picturePause.Visible = estEnPause;
-
-                        //FonctionsNatives.assignerVueOrtho();
-                        //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-                        //afficherMenuSimulation(false);
-                        //afficherMenuTest(false);
-                        //afficherMenuEdition(false);
-                        //afficherMenuPrincipal(true);
-                    }
                     break;
 
                  case Constants.Key_Esc:
-                     estEnPause = !estEnPause;
-                     picturePause.Visible = estEnPause;
-                     menuSimTest.Visible = estEnPause;
+                    simulationMenuStrip.goIntoPause();
                      break;
 
                 default:
@@ -1347,64 +470,26 @@ namespace ui
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    //FonctionsNatives.assignerVueOrtho();
-                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    //crochetPourVueSimTest();
                     //outilsZoom_.Enabled = true;
-                    //zoomToolStripMenuItem.Enabled = true;
                     testMenuStrip.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    //FonctionsNatives.assignerVueOrbite();
-                    //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-                    //crochetPourVueSimTest();
-                    //outilsZoom_.Enabled = false;
-                    //zoomToolStripMenuItem.Enabled = false;
                     testMenuStrip.orbiteView();
                     break;
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                    {
-                        //estEnPause = false;
-                        //picturePause.Visible = estEnPause;
-
-                        //FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-
-                        //FonctionsNatives.assignerVueOrtho();
-                        //FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-                        //afficherMenuTest(false);
-                        //afficherMenuPrincipal(true);
-
                         testMenuStrip.goMenuPrincipal();
-                    }
                     break;
 
                 case Constants.Key_Esc:
-                    estEnPause = !estEnPause;
-                    menuSimTest.Visible = estEnPause;
-                    picturePause.Visible = estEnPause;
+                    testMenuStrip.goIntoPause();
                     break;
 
                 case Constants.Key_E:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                    {
-                        //estEnPause = false;
-                        //picturePause.Visible = estEnPause;
-
-                        //afficherMenuSimulation(false);
-                        //afficherMenuTest(false);
-                        //afficherMenuPrincipal(false);
-                        //afficherMenuEdition(true);
-                        //changeIconColor();
-                        //outilsSelection_.BackColor = Color.CadetBlue;
-                        //FonctionsNatives.assignerMode(Mode.EDITION);
-                        //viewPort.Focus();
-
                         testMenuStrip.goModeEdition();
-                    }
                     break;
             }
         }
@@ -1467,21 +552,6 @@ namespace ui
         private void textBoxPositionY__Enter(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInputClavier(false);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enregistrerMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Permet de sauvegarder un ficher lorsque le bouton sauvegarder est cliqué
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void enregistrerMenuEdition__Click(object sender, EventArgs e)
-        {
-            FonctionsNatives.sauvegarder();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -1564,54 +634,6 @@ namespace ui
                 verificationDuNombreElementChoisi();
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void menuPrincipalMenuSimTest_Click(object sender, MouseEventArgs e)
-        ///
-        /// Affiche le menu principal lorsque le bouton Menu Principal est appuyé à partir
-        /// du menu de Simulation ou du menu de Test
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void menuPrincipalMenuSimTest_Click(object sender, EventArgs e)
-        {
-            afficherMenuSimulation(false);
-            afficherMenuTest(false);
-            afficherMenuEdition(false);
-            afficherMenuPrincipal(true);
-            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-            estEnPause = false;
-            picturePause.Visible = estEnPause;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void modeEditionMenuSimTest_Click(object sender, MouseEventArgs e)
-        ///
-        /// Affiche le menu Edition lorsque le bouton Mode Edition est appuyé à partir
-        /// du menu de Test
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void modeEditionMenuSimTest_Click(object sender, EventArgs e)
-        {
-            estEnPause = false;
-            picturePause.Visible = estEnPause;
-
-            afficherMenuSimulation(false);
-            afficherMenuTest(false);
-            afficherMenuPrincipal(false);
-            afficherMenuEdition(true);
-            changeIconColor();
-            outilsSelection_.BackColor = Color.CadetBlue;
-            FonctionsNatives.assignerMode(Mode.EDITION);
-            viewPort.Focus();
-        }
-
         /// <summary>
         /// Dernier bouton vue sélectionné dans le mode édition
         /// </summary>
@@ -1621,197 +643,6 @@ namespace ui
         /// Dernier bouton vue sélectionné dans les modes simulation ou test
         /// </summary>
         private ToolStripMenuItem tempItemSimTest = null;
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void orthographiqueMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void orthographiqueMenuEdition__Click(object sender, EventArgs e)
-        {
-            if (tempItemEdition != null)
-                tempItemEdition.Checked = false;
-
-            orthographiqueMenuEdition_.Checked = true;
-            tempItemEdition = orthographiqueMenuEdition_;
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-            outilsZoom_.Enabled = true;
-            zoomToolStripMenuItem.Enabled = true;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void orbiteMenuEdition__Click(object sender, EventArgs e)
-        ///
-        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void orbiteMenuEdition__Click(object sender, EventArgs e)
-        {
-            if (tempItemEdition != null)
-                tempItemEdition.Checked = false;
-            else
-                orthographiqueMenuEdition_.Checked = false;
-
-            orbiteMenuEdition_.Checked = true;
-            tempItemEdition = orbiteMenuEdition_;
-
-            FonctionsNatives.assignerVueOrbite();
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-            outilsZoom_.Enabled = false;
-            zoomToolStripMenuItem.Enabled = false;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void orthographiqueMenuSimTest_Click(object sender, EventArgs e)
-        ///
-        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void orthographiqueMenuSimTest_Click(object sender, EventArgs e)
-        {
-            if (tempItemSimTest != null)
-                tempItemSimTest.Checked = false;
-
-            orthographiqueMenuSimTest.Checked = true;
-            tempItemSimTest = orthographiqueMenuSimTest;
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-            outilsZoom_.Enabled = true;
-            zoomToolStripMenuItem.Enabled = true;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
-        ///
-        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void orbiteMenuSimTest_Click(object sender, EventArgs e)
-        {
-            if (tempItemSimTest != null)
-                tempItemSimTest.Checked = false;
-            else
-                orthographiqueMenuSimTest.Checked = false;
-
-
-            orbiteMenuSimTest.Checked = true;
-            tempItemSimTest = orbiteMenuSimTest;
-
-            FonctionsNatives.assignerVueOrbite();
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-            outilsZoom_.Enabled = false;
-            zoomToolStripMenuItem.Enabled = false;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
-        ///
-        /// Gère l'évènement d'un click sur un des boutons du menu déroulant vue. Change la vue sélectionnée.
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void premierePersonneMenuSimTest_Click(object sender, EventArgs e)
-        {
-            if (tempItemSimTest != null)
-                tempItemSimTest.Checked = false;
-            else
-                orthographiqueMenuSimTest.Checked = false;
-
-            premierePersonneMenuSimTest.Checked = true;
-            tempItemSimTest = premierePersonneMenuSimTest;
-
-            FonctionsNatives.assignerVuePremierePersonne();
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void menuEdition__VisibleChanged(object sender, EventArgs e)
-        ///
-        /// Gère l'évènement de changement de visibilité de la barre de menu édition.
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void menuEdition__VisibleChanged(object sender, EventArgs e)
-        {
-            //crochetPourVueEdition();
-        }
-
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void menuSimTest_VisibleChanged(object sender, EventArgs e)
-        ///
-        /// Gère l'évènement de changement de visibilité de la barre de menu de simulation ou test.
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void menuSimTest_VisibleChanged(object sender, EventArgs e)
-        {
-            crochetPourVueSimTest();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void crochetPourVueSimTest()
-        ///
-        /// Gère l'évènement de changement de visibilité de la barre de menu de simulation ou test.
-        ///
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void crochetPourVueSimTest()
-        {
-            switch (FonctionsNatives.obtenirTypeVue())
-            {
-                case 0:
-                default:
-                    premierePersonneMenuSimTest.Checked = false;
-                    orbiteMenuSimTest.Checked = false;
-                    orthographiqueMenuSimTest.Checked = true;
-                    break;
-                case 1:
-                    premierePersonneMenuSimTest.Checked = false;
-                    orbiteMenuSimTest.Checked = true;
-                    orthographiqueMenuSimTest.Checked = false;
-                    break;
-                case 2:
-                    premierePersonneMenuSimTest.Checked = true;
-                    orbiteMenuSimTest.Checked = false;
-                    orthographiqueMenuSimTest.Checked = false;
-                    break;
-            }
-        }
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -1879,6 +710,7 @@ namespace ui
             FonctionsNatives.dessinerOpenGL();
         }
     }
+
     ////////////////////////////////////////////////////////////////////////
     ///
     /// @fn  static partial class FonctionsNatives
