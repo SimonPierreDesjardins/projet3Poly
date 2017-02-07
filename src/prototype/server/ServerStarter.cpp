@@ -1,53 +1,57 @@
 #include "Networking.h"
+#include "User.hpp"
+#include "ChatSession.hpp"
 #include <iostream>
-#include <vector>
+#include <map>
 #include <thread>
 
 using namespace Networking;
 
-class ConnectionListener{
+// Class that takes care of creating or deleting users as they come in and adding them to the chat session
+class UserReceiver{
 public : 
 
-	ConnectionListener(ServerListener& listener) {
+	UserReceiver(ServerListener& listener) {
 		HookListenerEvents(listener);
-	}
-
-	void MessageConnections(std::string message) {
-		for each(auto connection in _connections) {
-			connection->SendData(message);
-		}
 	}
 
 private:
 
-	/*class ConnectionHandler {
-	public:
-		ConnectionHandler(Connection* connection) {
-
-		}
-	};*/
-
 	void HookListenerEvents(ServerListener& listener) {
-		__hook(&ServerListener::OnOtherConnected, &listener, &ConnectionListener::OnNewConnection);
+		__hook(&ServerListener::OnOtherConnected, &listener, &UserReceiver::OnNewConnection);
+	}
+
+	void HookUserEvents(User* user) {
+		__hook(&User::UserNameReceived, user, &UserReceiver::OnReceivedUsername);
+		__hook(&User::UserDisconnected, user, &UserReceiver::OnUserDisconnected);
 	}
 
 	void OnNewConnection(Connection* connection) {
 		std::cout << "New Connection!" << std::endl;
-		HookConnectionEvents(connection);
-		_connections.push_back(connection);
+		User* user = new User(connection);
+		HookUserEvents(user);
 		connection->Start();
 	}
 
-	void HookConnectionEvents(Connection* connection) {
-		__hook(&Connection::OnReceivedData, connection, &ConnectionListener::OnReceivedMessage);
+	void OnReceivedUsername(User* user, std::string& username) {
+		// user does not exist
+		if (!chatSession.DoesUsernameExist(username)) {
+			user->SetAuthenticated(true);
+			chatSession.Join(user);
+		}
+		// user already exists
+		else {
+			user->SetAuthenticated(false);
+		}
 	}
 
-	void OnReceivedMessage(std::string& message) {
-		std::cout << message << std::endl;
-		MessageConnections(message);
+	void OnUserDisconnected(User* user) {
+		chatSession.Leave(user);
+		delete user;
 	}
 
-	std::vector<Connection*> _connections = std::vector<Connection*>();
+	std::vector<User*> _connectedUsers = std::vector<User*>();
+	ChatSession chatSession = ChatSession();
 };
 
 int main(int argc, char* argv[]) {
@@ -59,7 +63,7 @@ int main(int argc, char* argv[]) {
 	ServerListener serverListener(*aios, portNumber);
 	ConnectionResolver resolver(*aios);
 
-	ConnectionListener connector(serverListener);
+	UserReceiver connector(serverListener);
 
 	std::cout << "Starting listener" << std::endl;;
 	serverListener.StartAccepting();
