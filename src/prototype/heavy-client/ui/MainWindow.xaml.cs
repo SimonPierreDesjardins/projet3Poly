@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -23,27 +24,39 @@ namespace InterfaceGraphique_ClientLourd
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
         {
+            username_label_warning.Visibility = Visibility.Collapsed;
+            ipAdresse_label_warning.Visibility = Visibility.Collapsed;
+            port_Label_Warning.Visibility = Visibility.Collapsed;
+
+
             if (username_textbox.Text.Equals(""))
             {
                 username_label_warning.Visibility = Visibility.Visible;
                 username_label_warning.Content = "Please enter your username.";
             }
-            else if (password_textbox.Password.Equals(""))
+            else if (ipAdresse_textBox.Text.Equals(""))
             {
-                password_label_warning.Visibility = Visibility.Visible;
-                password_label_warning.Content = "Please enter your username.";
+                ipAdresse_label_warning.Visibility = Visibility.Visible;
+                ipAdresse_label_warning.Content = "Please enter an ipAdresse.";
+            }
+            else if (port_textBox.Text.Equals(""))
+            {
+                port_Label_Warning.Visibility = Visibility.Visible;
+                port_Label_Warning.Content = "Please enter a port number.";
             }
             else
             {
                 //TODO: Verify the user is unique
                 //TODO: Add connection to server here
                 username = username_textbox.Text;
+                FonctionNative.print_line(username_textbox.Text);
 
                 switchScreen(this);
                 showChatScreen();
 
                 username_textbox.Text = "";
-                password_textbox.Password = "";
+                ipAdresse_textBox.Text = "";
+                port_textBox.Text = "";
             }
         }
 
@@ -64,9 +77,13 @@ namespace InterfaceGraphique_ClientLourd
             username_textbox.Visibility = Visibility.Visible;
             username_label_warning.Visibility = Visibility.Collapsed;
 
-            password_label.Visibility = Visibility.Visible;
-            password_textbox.Visibility = Visibility.Visible;
-            password_label_warning.Visibility = Visibility.Collapsed;
+            ipAdresse_label.Visibility = Visibility.Visible;
+            ipAdresse_textBox.Visibility = Visibility.Visible;
+            ipAdresse_label_warning.Visibility = Visibility.Collapsed;
+
+            port_label.Visibility = Visibility.Visible;
+            port_textBox.Visibility = Visibility.Visible;
+            port_Label_Warning.Visibility = Visibility.Visible;
 
             ConnectButton.Visibility = Visibility.Visible;
 
@@ -193,5 +210,11 @@ namespace InterfaceGraphique_ClientLourd
             applicationColorOptionWindow.Top = location.Y - 30;
             applicationColorOptionWindow.ShowDialog();
         }
+    }
+
+    class FonctionNative
+    {
+        [DllImport("prototype-model.dll")]
+        public static extern void print_line(string str);
     }
 }
