@@ -14,7 +14,7 @@
 		5C08445E1E2F1B820049DD84 /* CustomMessagesCollectionViewCellIncoming.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C08445D1E2F1B820049DD84 /* CustomMessagesCollectionViewCellIncoming.swift */; };
 		5C1041431E2F08240093782A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5C1041421E2F08240093782A /* Main.storyboard */; };
 		5C3B17881E332BC3004D92EB /* CustomMessagesCollectionViewCellOutgoing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C3B17871E332BC3004D92EB /* CustomMessagesCollectionViewCellOutgoing.swift */; };
-		5C79FD0E1E4252F800339C25 /* PacketSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79FD0D1E4252F800339C25 /* PacketSender.swift */; };
+		5C79FD0E1E4252F800339C25 /* DatagramSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79FD0D1E4252F800339C25 /* DatagramSender.swift */; };
 		5C79FD101E42576200339C25 /* ChatManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79FD0F1E42576200339C25 /* ChatManager.swift */; };
 		5C79FD121E4258A900339C25 /* ChatDelegator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79FD111E4258A900339C25 /* ChatDelegator.swift */; };
 		5C79FD141E42702900339C25 /* NotificationsNames.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C79FD131E42702900339C25 /* NotificationsNames.swift */; };
@@ -25,6 +25,7 @@
 		5CE020A91E2EC8F2001D696B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5CE020A71E2EC8F2001D696B /* LaunchScreen.storyboard */; };
 		5CE020B41E2EC8F2001D696B /* chatAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE020B31E2EC8F2001D696B /* chatAppTests.swift */; };
 		5CE020BF1E2EC8F2001D696B /* chatAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE020BE1E2EC8F2001D696B /* chatAppUITests.swift */; };
+		5CE1BEC21E496948006DB6C0 /* lock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE1BEC11E496948006DB6C0 /* lock.swift */; };
 		5CE591491E3404E4004158F4 /* CustomMessageView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5CE591481E3404E4004158F4 /* CustomMessageView.xib */; };
 		5CE5914B1E3408B8004158F4 /* CustomMessagesCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CE5914A1E3408B8004158F4 /* CustomMessagesCollectionViewCell.swift */; };
 		5CEC55891E3FE42C00A42F47 /* icons in Resources */ = {isa = PBXBuildFile; fileRef = 5CEC55881E3FE42C00A42F47 /* icons */; };
@@ -59,7 +60,7 @@
 		5C08445D1E2F1B820049DD84 /* CustomMessagesCollectionViewCellIncoming.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMessagesCollectionViewCellIncoming.swift; sourceTree = "<group>"; };
 		5C1041421E2F08240093782A /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		5C3B17871E332BC3004D92EB /* CustomMessagesCollectionViewCellOutgoing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMessagesCollectionViewCellOutgoing.swift; sourceTree = "<group>"; };
-		5C79FD0D1E4252F800339C25 /* PacketSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PacketSender.swift; sourceTree = "<group>"; };
+		5C79FD0D1E4252F800339C25 /* DatagramSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatagramSender.swift; sourceTree = "<group>"; };
 		5C79FD0F1E42576200339C25 /* ChatManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatManager.swift; sourceTree = "<group>"; };
 		5C79FD111E4258A900339C25 /* ChatDelegator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatDelegator.swift; sourceTree = "<group>"; };
 		5C79FD131E42702900339C25 /* NotificationsNames.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsNames.swift; sourceTree = "<group>"; };
@@ -76,6 +77,7 @@
 		5CE020BA1E2EC8F2001D696B /* chatAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = chatAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CE020BE1E2EC8F2001D696B /* chatAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatAppUITests.swift; sourceTree = "<group>"; };
 		5CE020C01E2EC8F2001D696B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5CE1BEC11E496948006DB6C0 /* lock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = lock.swift; sourceTree = "<group>"; };
 		5CE591481E3404E4004158F4 /* CustomMessageView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomMessageView.xib; sourceTree = "<group>"; };
 		5CE5914A1E3408B8004158F4 /* CustomMessagesCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMessagesCollectionViewCell.swift; sourceTree = "<group>"; };
 		5CEC55881E3FE42C00A42F47 /* icons */ = {isa = PBXFileReference; lastKnownFileType = folder; path = icons; sourceTree = "<group>"; };
@@ -187,7 +189,8 @@
 				5CE020A51E2EC8F2001D696B /* Assets.xcassets */,
 				5CE020AA1E2EC8F2001D696B /* Info.plist */,
 				5C80BB6E1E32F7B900E0C3FA /* ConnectionController.swift */,
-				5C79FD0D1E4252F800339C25 /* PacketSender.swift */,
+				5C79FD0D1E4252F800339C25 /* DatagramSender.swift */,
+				5CE1BEC11E496948006DB6C0 /* lock.swift */,
 			);
 			path = chatApp;
 			sourceTree = "<group>";
@@ -512,8 +515,9 @@
 				5CE5914B1E3408B8004158F4 /* CustomMessagesCollectionViewCell.swift in Sources */,
 				5C3B17881E332BC3004D92EB /* CustomMessagesCollectionViewCellOutgoing.swift in Sources */,
 				5C79FD121E4258A900339C25 /* ChatDelegator.swift in Sources */,
-				5C79FD0E1E4252F800339C25 /* PacketSender.swift in Sources */,
+				5C79FD0E1E4252F800339C25 /* DatagramSender.swift in Sources */,
 				5C79FD101E42576200339C25 /* ChatManager.swift in Sources */,
+				5CE1BEC21E496948006DB6C0 /* lock.swift in Sources */,
 				5C032B881E34485A00C2416B /* DemoConversation.swift in Sources */,
 				5CE020A11E2EC8F2001D696B /* ChatViewController.swift in Sources */,
 				5C79FD141E42702900339C25 /* NotificationsNames.swift in Sources */,

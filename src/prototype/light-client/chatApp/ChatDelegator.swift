@@ -8,23 +8,26 @@
 
 import UIKit
 
-class ChatDelegator : NSObject
+class ChatDelegator
 {
-    //var chatManager: ChatManager
-    override init()
+    var chatManager: ChatManager
+    var chatViewController: ChatViewController?
+    
+    init()
     {
-        //chatManager = ChatManager()
-    }
-
-
-    func setUpObserver()
-    {
+        chatManager = ChatManager()
         NotificationCenter.default.addObserver(self, selector: #selector (ChatDelegator.onSendButtonTapped), name: .Chat_onSendButtonTapped, object: nil)
     }
     
-    func onSendButtonTapped(_ notification: NSNotification)
+    func getView() -> ChatViewController
     {
-        //chatManager.appendMessage(notification.userInfo["text"])
+        chatViewController = chatViewController ?? ChatViewController()
+        return chatViewController!
+    }
+    
+    @objc func onSendButtonTapped(_ notification: NSNotification)
+    {
+        chatManager.appendMessage(notification.userInfo?["text"] as! String)
     }
     
 }

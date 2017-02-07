@@ -11,4 +11,5 @@ import NotificationCenter
 extension Notification.Name
 {
     static let Chat_onSendButtonTapped: Notification.Name = Notification.Name("SendButtonClicked")
+    static let Datagram_chatDatagramReceived: Notification.Name = Notification.Name("ChatDatagramReceived")
 }

@@ -10,15 +10,16 @@ import JSQMessagesViewController
 
 class ChatManager
 {
-    let packetSender: PacketSender
+    let packetSender: DatagramSender
     
-    //var chatHistory: NSMutableArray = [String]
+    var chatHistory : [String]
     
     init()
     {
-        packetSender = PacketSender()
+        packetSender = DatagramSender()
         packetSender.establishConnection()
-        
+        chatHistory = [String]()
+        NotificationCenter.default.addObserver(self, selector: #selector (onChatDatagramReception), name: .Datagram_chatDatagramReceived, object: nil)
     }
     
     deinit
@@ -28,12 +29,17 @@ class ChatManager
     
     func appendMessage(_ message: String)
     {
-        //chatHistory.adding(message)
+        lock(lock: chatHistory as AnyObject, execute:{ chatHistory.append(message) })
     }
     
-    //func getChatHistory() -> NSMutableArray
-    //{
-      //  return chatHistory
-    //}
+    @objc func onChatDatagramReception(_ notification: NSNotification)
+    {
+        appendMessage(notification.userInfo?["Datagram"] as! String)
+    }
+    
+    func getChatHistory() -> [String]
+    {
+        return chatHistory
+    }
     
 }

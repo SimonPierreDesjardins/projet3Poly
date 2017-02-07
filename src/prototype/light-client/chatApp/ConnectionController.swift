@@ -17,9 +17,6 @@ class ConnectionController: UIViewController
     var isKeyboardHidingComponent = false
     var keyboardHeight = CGFloat()
     
-    let sender : PacketSender = PacketSender()
-
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -29,13 +26,11 @@ class ConnectionController: UIViewController
     
     override func viewDidLoad() {
         connectButton.addTarget(self, action: #selector(self.connectButtonTapped), for: .touchUpInside)
-        sender.establishConnection()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         deregisterFromKeyboardNotifications()
-        sender.closeConnection()
     }
     
     func registerForKeyboardNotifications()
@@ -80,13 +75,9 @@ class ConnectionController: UIViewController
     
     func connectButtonTapped()
     {
-        /*let chatViewController = ChatViewController()
+        let chatViewController = AppDelegate.chatDelegator.getView()
         chatViewController.senderDisplayName = usernameTextBox.text
-        present(chatViewController, animated: true, completion: nil)*/
-        
-        sender.sendMessage(usernameTextBox.text!)
-        usernameTextBox.text = ""
-        
+        present(chatViewController, animated: true, completion: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

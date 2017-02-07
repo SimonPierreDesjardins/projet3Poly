@@ -67,7 +67,6 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         automaticallyScrollsToMostRecentMessage = true
         
-        
         self.collectionView?.reloadData()
         self.collectionView?.layoutIfNeeded()
     }
@@ -97,7 +96,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         // Create left and right button for navigation item
         let leftButton =  UIBarButtonItem(title: "Back", style:   UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
-        let rightButton = UIBarButtonItem(title: "Details", style: UIBarButtonItemStyle.plain, target: self, action: #selector (socialButtonTapped))
+        let rightButton = UIBarButtonItem(image: UIImage(named: "./icons/ic_people_outline.png"), style: UIBarButtonItemStyle.plain, target: self, action: #selector (socialButtonTapped))
         
         // Create two buttons for the navigation item
         navigationItem.leftBarButtonItem = leftButton
