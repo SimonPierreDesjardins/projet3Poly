@@ -7,7 +7,6 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Text;
-using System.Collections.Specialized;
 
 //TODO: Finish color options
 
@@ -24,7 +23,6 @@ namespace InterfaceGraphique_ClientLourd
             InitializeComponent();
             switchScreen(this);
             showLoginScreen();
-            
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -63,11 +61,6 @@ namespace InterfaceGraphique_ClientLourd
                 dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
                 dispatcherTimer.Start();
 
-                //Create thread to update chat
-                //Worker workerObject = new Worker(_items);
-                //Thread workerThread = new Thread(workerObject.DoWork);
-                //workerThread.Start();
-
                 switchScreen(this);
                 showChatScreen();
 
@@ -81,12 +74,12 @@ namespace InterfaceGraphique_ClientLourd
         {
             string message = FonctionNative.verifyForMessage();
             if (!message.Equals(""))
+            {
                 chat_listBox.Items.Add(message);
-        }
-
-        private void ListCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            
+                Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
+                ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+                scrollViewer.ScrollToBottom();
+            }
         }
 
         private void switchScreen(UIElement parent)
@@ -261,7 +254,7 @@ namespace InterfaceGraphique_ClientLourd
         private static extern void verifyForMessage(StringBuilder str, int len);
         public static string verifyForMessage()
         {
-            StringBuilder str = new StringBuilder(500);
+            StringBuilder str = new StringBuilder(1024);
             verifyForMessage(str, str.Capacity);
             return str.ToString();
         }

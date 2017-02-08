@@ -39,7 +39,7 @@
         <ListBox x:Name="chat_listBox" Tag="1" 
                  Grid.Row="1" Grid.Column="3" 
                  Margin="5,0,0,0" Grid.ColumnSpan="2" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontFamily="Century" FontSize="14" 
                  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
