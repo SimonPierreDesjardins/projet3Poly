@@ -120,7 +120,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         navigationItem.title = self.senderDisplayName + " Chat"
         
         // Create left and right button for navigation item
-        let leftButton =  UIBarButtonItem(title: "Back", style:   UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
+        let leftButton =  UIBarButtonItem(title: "Retour", style:   UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
         let rightButton = UIBarButtonItem(image: UIImage(named: "./icons/ic_people_outline.png"), style: UIBarButtonItemStyle.plain, target: self, action: #selector (socialButtonTapped))
         
         // Create two buttons for the navigation item
@@ -219,6 +219,8 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         let attributes : [String:AnyObject] = [NSForegroundColorAttributeName:cell.textView.textColor!, NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject]
         cell.textView.linkTextAttributes = attributes
+        
+        self.scroll(to: indexPath, animated: false)
         
         return cell
     }

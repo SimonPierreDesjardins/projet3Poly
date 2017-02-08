@@ -75,10 +75,23 @@ class ChatManager
             case "m":
                 messageDatagramReader(datagramContent)
                 break
+            case "r":
+                usersListDatagramdReader(datagramContent)
+                break
             default:
                 print("Unknown type of datagram")
                 break
         }
+    }
+    
+    func usersListDatagramdReader(_ datagramContent: String)
+    {
+        let usersList = datagramContent.characters.split(separator: ";").map(String.init)
+        for name in usersList
+        {
+            self.chatUsersList.insert(name)
+        }
+        NotificationCenter.default.post(name: .Chat_onNewUser, object: nil)
     }
     
     func usernameDatagramReader(_ datagramContent: String)
