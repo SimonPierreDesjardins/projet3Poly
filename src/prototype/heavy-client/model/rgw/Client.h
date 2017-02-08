@@ -9,12 +9,11 @@
 ////////////////////////////////////////////////
 
 #include <string>
-
+#include "Networking.h"
 
 class Client 
 {
 public:
-	Client();
 
 	void startConnection(std::string ipAdresse, std::string port);
 	void stopConnection();
@@ -24,7 +23,13 @@ public:
 private:
 	void onMessageReceived(std::string& data);
 
+	void onConnectionEstablished(Networking::Connection* connection);
 
+	bool _connected = false;
+
+	std::thread ioServiceThread;
+
+	Networking::Connection* _connection;
 	
 	std::string someRandomShit;
 };
