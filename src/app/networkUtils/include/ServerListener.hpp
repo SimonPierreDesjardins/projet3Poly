@@ -1,4 +1,7 @@
 #pragma once
+#ifndef __SERVER_LISTENER_HPP__
+#define __SERVER_LISTENER_HPP__
+
 #include "asio.hpp"
 #include "Networking.h"
 
@@ -23,3 +26,5 @@ namespace  Networking {
 		void LogError(std::string errorMessage);
 	};
 }
+
+#endif

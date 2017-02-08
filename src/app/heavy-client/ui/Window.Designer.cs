@@ -88,6 +88,7 @@
             this.orbiteMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.premierePersonneMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
             this.profilsMenuSimTest = new System.Windows.Forms.ToolStripMenuItem();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.viewPort_.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picturePause)).BeginInit();
             this.menuEdition_.SuspendLayout();
@@ -98,10 +99,11 @@
             // 
             // viewPort_
             // 
-            this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.viewPort_.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort_.AutoSize = true;
+            this.viewPort_.Controls.Add(this.listBox1);
             this.viewPort_.Controls.Add(this.picturePause);
             this.viewPort_.Location = new System.Drawing.Point(0, 0);
             this.viewPort_.MinimumSize = new System.Drawing.Size(100, 100);
@@ -707,6 +709,14 @@
             this.profilsMenuSimTest.Size = new System.Drawing.Size(52, 20);
             this.profilsMenuSimTest.Text = "Profils";
             // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(115, 109);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 95);
+            this.listBox1.TabIndex = 1;
+            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -807,6 +817,7 @@
         private System.Windows.Forms.ToolStripMenuItem premierePersonneMenuSimTest;
         private System.Windows.Forms.ToolStripMenuItem profilsMenuSimTest;
         private System.Windows.Forms.PictureBox picturePause;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

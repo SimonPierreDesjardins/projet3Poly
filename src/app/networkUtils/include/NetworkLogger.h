@@ -1,4 +1,7 @@
 #pragma once
+#ifndef __NETWORKLOGGER_H__
+#define __NETWORKLOGGER_H__
+
 #include <string>
 
 namespace Networking {
@@ -13,3 +16,5 @@ namespace Networking {
 	};
 
 }
+
+#endif

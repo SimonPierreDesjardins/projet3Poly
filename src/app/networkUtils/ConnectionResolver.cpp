@@ -4,7 +4,6 @@
 using namespace Networking;
 
 ConnectionResolver::ConnectionResolver(asio::io_service& ioService):
-	_socket(ioService),
 	_resolver(ioService)
 {
 }
@@ -19,23 +18,24 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 	auto endPointIterator = _resolver.resolve(query);
 	tcp::resolver::iterator end;
 
+	tcp::socket* socket = new tcp::socket(_resolver.get_io_service());
+
 	asio::error_code error = asio::error::host_not_found;
 	while (error && endPointIterator != end) {
-		_socket.close();
-		_socket.connect(*endPointIterator++, error);
+		socket -> close();
+		socket -> connect(*endPointIterator++, error);
 	}
 	if (error) {
 		LogError(error.message());
 	}
 	else {
 		// build a connection object and callback
-		OnConnectionResolved(new Connection(&_socket));
+		OnConnectionResolved(new Connection(socket));
 	}
 }
 
 void ConnectionResolver::Close() {
 	_resolver.cancel();
-	_socket.close();
 	//ClearBuffers();
 }
 

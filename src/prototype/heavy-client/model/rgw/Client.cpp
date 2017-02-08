@@ -1,16 +1,24 @@
 #include "Client.h"
 
+Client* Client::getClient()
+{
+	if (client == NULL)
+		client = new Client();
+
+	return client;
+};
+
 void Client::startConnection(std::string ipAdresse, std::string port)
 {
 	asio::io_service* aios = new asio::io_service();
 
-	Networking::ConnectionResolver resolver(*aios);
+	_resolver = new Networking::ConnectionResolver(*aios);
 
-	__hook(&Networking::ConnectionResolver::OnConnectionResolved, &resolver, &Client::onConnectionEstablished);
+	__hook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
 
-	resolver.Resolve(ipAdresse, port);
+	_resolver -> Resolve(ipAdresse, port);
 
-	ioServiceThread = std::thread([aios]() {aios->run(); });
+	ioServiceThread = new std::thread([aios]() {aios->run(); });
 }
 
 void Client::stopConnection()
@@ -20,7 +28,9 @@ void Client::stopConnection()
 
 	delete _connection;
 
-	ioServiceThread.join();
+	ioServiceThread -> join();
+	delete _resolver;
+	delete ioServiceThread;
 }
 
 void Client::sendMessage(std::string data)
@@ -31,9 +41,24 @@ void Client::sendMessage(std::string data)
 	_connection->SendData(data);
 }
 
-void Client::onMessageReceived(std::string & data)
+bool Client::getConnectionState()
 {
-	// Call your mom
+	return _connected;
+}
+
+void Client::setChatWindow(HWND chat)
+{
+	chatWindow = chat;
+}
+
+void Client::setUserWindow(HWND user)
+{
+	userWindow = user;
+}
+
+void Client::onMessageReceived(std::string& data)
+{
+	ListBox_AddString(chatWindow, (LPCTSTR)data.c_str());
 }
 
 void Client::onConnectionEstablished(Networking::Connection * connection)
@@ -42,3 +67,5 @@ void Client::onConnectionEstablished(Networking::Connection * connection)
 	__hook(&Networking::Connection::OnReceivedData, connection, &Client::onMessageReceived);
 	_connected = true;
 }
+
+Client* Client::client;

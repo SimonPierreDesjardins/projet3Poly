@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef __CONNECTION_RESOLVER_HPP__
+#define __CONNECTION_RESOLVER_HPP__
+
 #include "asio.hpp"
 #include "Connection.h"
 
@@ -45,9 +48,6 @@ namespace Networking{
 
 	private:
 
-		/*Private variables*/
-		tcp::socket _socket;
-
 		///<param>The OS' io service used for socket interfacing</param>
 		tcp::resolver _resolver;
 
@@ -72,6 +72,8 @@ namespace Networking{
 		
 	};
 }
+
+#endif
 
 
 
