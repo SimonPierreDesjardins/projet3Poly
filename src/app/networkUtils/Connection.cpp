@@ -34,12 +34,19 @@ void Connection::ReadData()
 		if (!ec)
 		{
 			auto data = std::string(_buffer, length);
+
 			OnReceivedData(data);
 			ReadData();
 		}
 		else 
 		{
-			Logger::Log(ec.message());
+			// End of connection
+			if (ec.value() == asio::error::eof) {
+				OnConnectionLost();
+			}
+			else {
+				Logger::LogError(ec);
+			}
 		}
 	});
 	_connectionLock.unlock();

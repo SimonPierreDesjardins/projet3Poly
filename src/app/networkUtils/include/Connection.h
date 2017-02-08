@@ -29,7 +29,7 @@ namespace Networking
 
 		// ping? <-- yagni
 
-		// On lost connection? <-- yagni
+		__event void OnConnectionLost();
 
 	private:
 		// Connection closer
