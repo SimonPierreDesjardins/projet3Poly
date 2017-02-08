@@ -29,6 +29,8 @@ private:
 
 	void OnUserSentData(std::string& message);
 
+	void OnConnectionLost();
+
 	bool _userAuthenticated = false;
 
 	std::string _name;

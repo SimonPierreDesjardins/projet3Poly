@@ -57,3 +57,8 @@
 		}
 	}
 
+	void User::OnConnectionLost()
+	{
+		UserDisconnected(this);
+	}
+
