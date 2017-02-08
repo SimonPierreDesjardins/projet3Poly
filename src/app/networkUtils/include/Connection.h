@@ -12,7 +12,10 @@ namespace Networking
 		// Constructor taking a functionnal socket
 		Connection(asio::ip::tcp::socket* socket);
 
-		Connection(Connection& connection);
+		// Destructor that also cleans and closes the connection if necessary
+		~Connection();
+
+		//Connection(Connection& connection);
 
 		//Starts the connection process to send data to eachother
 		void Start();
@@ -20,18 +23,17 @@ namespace Networking
 		// Send data method
 		void SendData(std::string data);
 
-		// Connection closer
-		void CloseConnection();
 
 		//On received data event
 		__event void OnReceivedData(std::string& data);
 
+		// ping? <-- yagni
 
-		// ping?
-
-		// On lost connection?
+		// On lost connection? <-- yagni
 
 	private:
+		// Connection closer
+		void CloseConnection();
 
 		void ReadData();
 
@@ -41,7 +43,6 @@ namespace Networking
 
 		// Buffer used to store data received from the client.
 		char _buffer[1024];
-		//std::shared_ptr<std::array<char, 1024>> _buffer;
 
 		std::queue<std::string> _sendQueue;
 

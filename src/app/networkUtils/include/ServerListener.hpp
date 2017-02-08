@@ -15,6 +15,8 @@ namespace  Networking {
 
 		__event void OnOtherConnected(Connection* connectionToOther);
 
+		void StopAccepting();
+
 	private:
 		tcp::acceptor _acceptor;
 

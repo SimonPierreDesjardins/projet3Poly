@@ -15,6 +15,13 @@ public :
 		HookListenerEvents(listener);
 	}
 
+	void ShutdownServer() {
+		for (int i = 0; i < _connectedUsers.size(); ++i) {
+			delete _connectedUsers[i];
+		}
+		_connectedUsers.clear();
+	}
+
 private:
 
 	void HookListenerEvents(ServerListener& listener) {
@@ -63,7 +70,7 @@ int main(int argc, char* argv[]) {
 	ServerListener serverListener(*aios, portNumber);
 	ConnectionResolver resolver(*aios);
 
-	UserReceiver connector(serverListener);
+	UserReceiver receiver(serverListener);
 
 	std::cout << "Starting listener" << std::endl;;
 	serverListener.StartAccepting();
@@ -77,4 +84,10 @@ int main(int argc, char* argv[]) {
 	while (command != "exit") {
 		std::getline(std::cin, command);
 	}
+
+	//close everything
+	serverListener.StopAccepting();
+	receiver.ShutdownServer();
+
+	aiosThread.join();
 }

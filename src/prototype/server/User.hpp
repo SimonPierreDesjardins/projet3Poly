@@ -8,6 +8,8 @@ class User {
 public:
 	User(Connection* connection);
 
+	~User();
+
 	void SetAuthenticated(bool authenticated);
 
 	void Message(std::string& message);
@@ -22,6 +24,8 @@ public:
 
 private:
 	void HookConnectionEvents(Connection* connection);
+
+	void UnhookConnectionEvents(Connection* connection);
 
 	void OnUserSentData(std::string& message);
 

@@ -9,10 +9,17 @@ Connection::Connection(asio::ip::tcp::socket* socket) {
 	_sendQueue = std::queue<std::string>();
 }
 
+Networking::Connection::~Connection()
+{
+	CloseConnection();
+}
+
+/*
 Connection::Connection(Connection& connection) {
 	_socket = connection._socket;
 	_sendQueue = std::queue<std::string>();
 }
+*/
 
 void Connection::Start() {
 	ReadData();
@@ -45,6 +52,12 @@ void Connection::SendData(std::string data) {
 	if (_sendQueue.size() == 1) {
 		WriteData();
 	}
+}
+
+void Networking::Connection::CloseConnection()
+{
+	_socket->close();
+	delete _socket;
 }
 
 void Connection::WriteData()

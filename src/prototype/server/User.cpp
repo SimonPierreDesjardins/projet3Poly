@@ -5,6 +5,12 @@
 		HookConnectionEvents(connection);
 	}
 
+	User::~User()
+	{
+		UnhookConnectionEvents(_connection);
+		delete _connection;
+	}
+
 	void User::SetAuthenticated(bool authenticated) {
 		if (authenticated && !_userAuthenticated) {
 			// User has been newly authenticated, do stuff according to that
@@ -31,6 +37,11 @@
 
 	void User::HookConnectionEvents(Connection* connection) {
 		__hook(&Connection::OnReceivedData, connection, &User::OnUserSentData);
+	}
+
+	void User::UnhookConnectionEvents(Connection * connection)
+	{
+		__unhook(&Connection::OnReceivedData, connection, &User::OnUserSentData);
 	}
 
 	void User::OnUserSentData(std::string & message)

@@ -8,6 +8,8 @@ namespace Networking {
 	public:
 		static void Log(std::string message);
 
+		static void LogError(std::error_code errorCode);
+
 	};
 
 }

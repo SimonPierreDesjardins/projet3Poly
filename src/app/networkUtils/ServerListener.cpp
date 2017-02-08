@@ -21,11 +21,13 @@ void ServerListener::StartAccepting()
 		}
 		else
 		{
-			LogError(errorCode.message());
+			if (errorCode.value() != asio::error::operation_aborted) {
+				Logger::LogError(errorCode);
+			}
 		}
 	});
 }
 
-void ServerListener::LogError(std::string errorMessage) {
-		std::cout << "Connection Error : " << errorMessage << std::endl;
+void ServerListener::StopAccepting() {
+	_acceptor.close();
 }
