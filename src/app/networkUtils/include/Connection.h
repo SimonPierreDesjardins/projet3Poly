@@ -35,6 +35,8 @@ namespace Networking
 		// Connection closer
 		void CloseConnection();
 
+		void CheckIfDisconnect(std::error_code error);
+
 		void ReadData();
 
 		void WriteData();

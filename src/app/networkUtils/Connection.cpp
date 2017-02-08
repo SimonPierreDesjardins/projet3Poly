@@ -34,19 +34,14 @@ void Connection::ReadData()
 		if (!ec)
 		{
 			auto data = std::string(_buffer, length);
-
 			OnReceivedData(data);
 			ReadData();
 		}
 		else 
 		{
+			Logger::LogError(ec);
 			// End of connection
-			if (ec.value() == asio::error::eof) {
-				OnConnectionLost();
-			}
-			else {
-				Logger::LogError(ec);
-			}
+			CheckIfDisconnect(ec);
 		}
 	});
 	_connectionLock.unlock();
@@ -65,6 +60,16 @@ void Networking::Connection::CloseConnection()
 {
 	_socket->close();
 	delete _socket;
+}
+
+void Networking::Connection::CheckIfDisconnect(std::error_code error)
+{
+	switch (error.value()) {
+	case asio::error::eof:
+	case asio::error::connection_aborted:
+		OnConnectionLost();
+		break;
+	}
 }
 
 void Connection::WriteData()

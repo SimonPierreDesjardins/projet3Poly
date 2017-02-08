@@ -53,16 +53,17 @@ private:
 	}
 
 	void OnUserDisconnected(User* user) {
+		std::cout << "User Disconnected!" << std::endl;
 		chatSession.Leave(user);
-		delete user;
+		_connectedUsers.erase(std::remove(_connectedUsers.begin(), _connectedUsers.end(), user), _connectedUsers.end());
+		//delete user;
 	}
 
 	std::vector<User*> _connectedUsers = std::vector<User*>();
 	ChatSession chatSession = ChatSession();
 };
 
-int main(int argc, char* argv[]) {
-
+void RunServer() {
 	short portNumber = 5000;
 
 	asio::io_service* aios = new asio::io_service();
@@ -72,7 +73,7 @@ int main(int argc, char* argv[]) {
 
 	UserReceiver receiver(serverListener);
 
-	std::cout << "Starting listener" << std::endl;;
+	std::cout << "Starting listener" << std::endl;
 	serverListener.StartAccepting();
 
 	std::thread aiosThread([aios]() {aios->run(); });
@@ -90,4 +91,69 @@ int main(int argc, char* argv[]) {
 	receiver.ShutdownServer();
 
 	aiosThread.join();
+}
+
+class sender {
+public:
+	sender(ConnectionResolver& resolver) {
+		__hook(&ConnectionResolver::OnConnectionResolved, &resolver, &sender::OnConnectionEstablished);
+	}
+
+	~sender() {
+		if (!_connection) {
+			delete _connection;
+		}
+	}
+
+	void OnConnectionEstablished(Connection* connection) {
+		_connection = connection;
+	}
+
+	void Send(std::string message) {
+		if (_connection) {
+			_connection->SendData(message);
+		}
+	}
+
+	bool IsConnected() {
+		return _connection != NULL;
+	}
+
+	Connection* _connection;
+};
+
+void StartLocalListener() {
+
+	asio::io_service* aios = new asio::io_service();
+
+	ConnectionResolver resolver(*aios);
+
+	sender _sender(resolver);
+
+	resolver.Resolve("localhost", "5000");
+
+	std::thread aiosThread([aios]() {aios->run(); });
+
+	while (!_sender.IsConnected());
+
+	std::string command = "";
+
+	while (command != "exit") {
+		std::getline(std::cin, command);
+		_sender.Send(command);
+	}
+
+	delete &_sender;
+
+	aiosThread.join();
+}
+
+int main(int argc, char* argv[]) {
+
+	if (argc > 1) {
+		StartLocalListener();
+	}
+	else {
+		RunServer();
+	}
 }

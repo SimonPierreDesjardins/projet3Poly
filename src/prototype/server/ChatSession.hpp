@@ -21,6 +21,8 @@ private:
 
 	void HookUserEvents(User* user);
 
+	void UnhookUserEvents(User* user);
+
 	void OnReceivedMessage(std::string& message);
 
 	void DistributeMessages();

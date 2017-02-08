@@ -37,10 +37,12 @@
 
 	void User::HookConnectionEvents(Connection* connection) {
 		__hook(&Connection::OnReceivedData, connection, &User::OnUserSentData);
+		__hook(&Connection::OnConnectionLost, connection, &User::OnConnectionLost);
 	}
 
 	void User::UnhookConnectionEvents(Connection * connection)
 	{
+		__unhook(&Connection::OnConnectionLost, connection, &User::OnConnectionLost);
 		__unhook(&Connection::OnReceivedData, connection, &User::OnUserSentData);
 	}
 
@@ -53,7 +55,7 @@
 		}
 		else if (message[0] == 'm' && _userAuthenticated) {
 			// user sent a message
-			UserSentMessage(message.substr(1));
+			UserSentMessage(message);
 		}
 	}
 
