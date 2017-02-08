@@ -61,6 +61,7 @@
 
 	void User::OnConnectionLost()
 	{
+		//UnhookConnectionEvents(_connection);
 		UserDisconnected(this);
 	}
 

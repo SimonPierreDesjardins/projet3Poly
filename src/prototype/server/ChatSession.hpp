@@ -27,6 +27,8 @@ private:
 
 	void DistributeMessages();
 
+	std::string SerializeUserList();
+
 	std::queue<std::string> _messageQueue = std::queue<std::string>();
 
 	std::map<std::string, User*> _users = std::map<std::string, User*>();
