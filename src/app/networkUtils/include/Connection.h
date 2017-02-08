@@ -1,4 +1,7 @@
 #pragma once
+#ifndef __CONNECTION_H__
+#define __CONNECTION_H__
+
 #include "asio.hpp"
 #include <queue>
 #include <memory>
@@ -50,3 +53,4 @@ namespace Networking
 
 	};
 }
+#endif

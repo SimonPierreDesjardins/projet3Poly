@@ -7,36 +7,45 @@
 /// @addtogroup 
 /// @{
 ////////////////////////////////////////////////
+#ifndef __CLIENT__
+#define __CLIENT__
 
-#include <string>
 #include "Networking.h"
+#include <string>
+#include <windowsx.h>
+#include "InterfaceNative.h"
+
 
 class Client 
 {
 public:
+	static Client* getClient();
 
 	void startConnection(std::string ipAdresse, std::string port);
 	void stopConnection();
 	void sendMessage(std::string data);
 
-	void setString(std::string data);
+	bool getConnectionState();
+	void setChatWindow(HWND chat);
+	void setUserWindow(HWND user);
+
 private:
 	void onMessageReceived(std::string& data);
-
 	void onConnectionEstablished(Networking::Connection* connection);
-
 	bool _connected = false;
-
-	std::thread ioServiceThread;
-
+	std::string lastMessage;
+	std::thread* ioServiceThread;
 	Networking::Connection* _connection;
-	
-	std::string someRandomShit;
+	Networking::ConnectionResolver* _resolver;
+	static Client* client;
+
+	HWND chatWindow;
+	HWND userWindow;
 };
 
+#endif
 
-void Client::setString(std::string data)
-{
-	someRandomShit = data;
-}
+
+
+
 

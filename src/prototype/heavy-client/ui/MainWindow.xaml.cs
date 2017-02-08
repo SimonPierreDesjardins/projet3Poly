@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Interop;
+using System.Threading;
 
 //TODO: Finish color options
 
@@ -49,7 +52,14 @@ namespace InterfaceGraphique_ClientLourd
                 //TODO: Verify the user is unique
                 //TODO: Add connection to server here
                 username = username_textbox.Text;
-                FonctionNative.print_line(username_textbox.Text);
+                FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
+                while(!FonctionNative.verifyConnection()) {}
+                FonctionNative.sendMessage("u" + username_textbox.Text);
+
+                //Create thread to update chat
+                Worker workerObject = new Worker();
+                Thread workerThread = new Thread(workerObject.DoWork);
+                workerThread.Start();
 
                 switchScreen(this);
                 showChatScreen();
@@ -113,6 +123,8 @@ namespace InterfaceGraphique_ClientLourd
 
         private void leaveChatMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            FonctionNative.stopConnection();
+
             users_listBox.Items.Remove(username);
             chat_listBox.Items.Clear();
 
@@ -174,8 +186,8 @@ namespace InterfaceGraphique_ClientLourd
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
-                string time = username + " sent a message at " + DateTime.Now.ToString();
-                chat_listBox.Items.Add(time + "\r" + chat_textBox.Text);
+                string message = username + ";" + DateTime.Now.ToString() + "; ";
+                FonctionNative.sendMessage("m" + message + chat_textBox.Text);
 
                 //Make scroll bar move to the bottom
                 Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
@@ -210,11 +222,53 @@ namespace InterfaceGraphique_ClientLourd
             applicationColorOptionWindow.Top = location.Y - 30;
             applicationColorOptionWindow.ShowDialog();
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            FonctionNative.stopConnection();
+        }
+    }
+
+    public class Worker
+    {
+        // This method will be called when the thread is started.
+        public void DoWork()
+        {
+            while (!_shouldStop)
+            {
+                Console.WriteLine("worker thread: working...");
+
+            }
+            Console.WriteLine("worker thread: terminating gracefully.");
+        }
+        public void RequestStop()
+        {
+            _shouldStop = true;
+        }
+        // Volatile is used as hint to the compiler that this data
+        // member will be accessed by multiple threads.
+        private volatile bool _shouldStop;
     }
 
     class FonctionNative
     {
-        [DllImport("prototype-model.dll")]
-        public static extern void print_line(string str);
+        [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
+        public static extern void startConnection(string ipAdresse, string port);
+
+        [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
+        public static extern void stopConnection();
+
+        [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
+        public static extern void sendMessage(string data);
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerHandleChat(IntPtr handle);
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void assignerHandleUser(IntPtr handle);
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool verifyConnection();
+
     }
 }
