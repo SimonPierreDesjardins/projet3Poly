@@ -36,7 +36,11 @@
         <Label x:Name="port_Label_Warning" Content="" Grid.Column="2" HorizontalAlignment="Left" Margin="14,199,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="174" Foreground="Red" Visibility="Collapsed"/>
         <!-- End of Login Screen Components -->
         <!-- Start of Chat Screen Components -->
-        <ListBox x:Name="chat_listBox" Tag="1" Grid.Row="1" Grid.Column="3" Margin="5,0,0,0" Grid.ColumnSpan="2" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ItemsSource="{Binding Path=Tweets}">
+        <ListBox x:Name="chat_listBox" Tag="1" 
+                 Grid.Row="1" Grid.Column="3" 
+                 Margin="5,0,0,0" Grid.ColumnSpan="2" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                 >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid>

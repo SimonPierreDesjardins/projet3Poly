@@ -6,8 +6,8 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Interop;
-using System.Threading;
+using System.Text;
+using System.Collections.Specialized;
 
 //TODO: Finish color options
 
@@ -18,11 +18,13 @@ namespace InterfaceGraphique_ClientLourd
         String username = "";
         const string chatTextBoxLabel = "Enter your message here";
 
+
         public MainWindow()
         {
             InitializeComponent();
             switchScreen(this);
             showLoginScreen();
+            
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -55,11 +57,16 @@ namespace InterfaceGraphique_ClientLourd
                 FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
                 while(!FonctionNative.verifyConnection()) {}
                 FonctionNative.sendMessage("u" + username_textbox.Text);
+            
+                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                dispatcherTimer.Start();
 
                 //Create thread to update chat
-                Worker workerObject = new Worker();
-                Thread workerThread = new Thread(workerObject.DoWork);
-                workerThread.Start();
+                //Worker workerObject = new Worker(_items);
+                //Thread workerThread = new Thread(workerObject.DoWork);
+                //workerThread.Start();
 
                 switchScreen(this);
                 showChatScreen();
@@ -68,6 +75,18 @@ namespace InterfaceGraphique_ClientLourd
                 ipAdresse_textBox.Text = "";
                 port_textBox.Text = "";
             }
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            string message = FonctionNative.verifyForMessage();
+            if (!message.Equals(""))
+                chat_listBox.Items.Add(message);
+        }
+
+        private void ListCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            
         }
 
         private void switchScreen(UIElement parent)
@@ -186,13 +205,8 @@ namespace InterfaceGraphique_ClientLourd
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
-                string message = username + ";" + DateTime.Now.ToString() + "; ";
+                string message = username + ";" + DateTime.Now.ToString() + ";";
                 FonctionNative.sendMessage("m" + message + chat_textBox.Text);
-
-                //Make scroll bar move to the bottom
-                Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
-                ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
-                scrollViewer.ScrollToBottom();
 
                 chat_textBox.Text = "";
             }
@@ -229,27 +243,6 @@ namespace InterfaceGraphique_ClientLourd
         }
     }
 
-    public class Worker
-    {
-        // This method will be called when the thread is started.
-        public void DoWork()
-        {
-            while (!_shouldStop)
-            {
-                Console.WriteLine("worker thread: working...");
-
-            }
-            Console.WriteLine("worker thread: terminating gracefully.");
-        }
-        public void RequestStop()
-        {
-            _shouldStop = true;
-        }
-        // Volatile is used as hint to the compiler that this data
-        // member will be accessed by multiple threads.
-        private volatile bool _shouldStop;
-    }
-
     class FonctionNative
     {
         [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
@@ -262,13 +255,15 @@ namespace InterfaceGraphique_ClientLourd
         public static extern void sendMessage(string data);
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerHandleChat(IntPtr handle);
-
-        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerHandleUser(IntPtr handle);
-
-        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool verifyConnection();
 
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void verifyForMessage(StringBuilder str, int len);
+        public static string verifyForMessage()
+        {
+            StringBuilder str = new StringBuilder(500);
+            verifyForMessage(str, str.Capacity);
+            return str.ToString();
+        }
     }
 }
