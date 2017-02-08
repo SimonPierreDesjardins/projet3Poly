@@ -33,8 +33,10 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
     
     private var cellsThatHaveBeenTapped = Set<NSInteger>()
     
-    private let controller: ChatDelegator = ChatDelegator()
-
+    private var navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 69))
+    
+    private var usersListViewController = ChatUsersListViewController()
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -45,13 +47,14 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
     {
         super.viewDidLoad()
         
+        //let statusOpaqueBar: UINavigationBar = UINavigationBar(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height))
+            
+        //self.view.addSubview(statusOpaqueBar)
+        
         self.collectionView.collectionViewLayout = ChatCollectionViewFlowLayout()
      
-        self.title = "HEYO"
+        self.title = self.senderDisplayName + " Chat"
         
-        self.showLoadEarlierMessagesHeader = true;
-        
-        self.senderId = "Moi"
         
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
@@ -59,40 +62,62 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         self.inputToolbar.contentView.leftBarButtonItem = nil
         
-        setupNavigationBarButton()
-        
         setupSideMenu()
         
-        receiveMessagePressed()
+        setupNavigationBarButton()
+        
+        //receiveMessagePressed()
         
         automaticallyScrollsToMostRecentMessage = true
+        
+        self.topContentAdditionalInset = navigationBar.frame.size.height - UIApplication.shared.statusBarFrame.height
         
         self.collectionView?.reloadData()
         self.collectionView?.layoutIfNeeded()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.shared.statusBarStyle = .default
+        
+    }
+    
+    func updateUsersList(_ usersList: [String])
+    {
+        usersListViewController.chatUsersList = usersList
+        if usersListViewController.usersListTableView != nil
+        {
+            usersListViewController.usersListTableView.reloadData()
+        }
+    }
+    
+    func updateChatHistory(_ chatHistory: [JSQMessage])
+    {
+        self.chatHistory = chatHistory
+        if self.collectionView != nil
+        {
+            self.collectionView.reloadData()
+        }
+    }
+    
     func setupSideMenu()
     {
-        // Define the menus
-        let menuRightNavigationController = UISideMenuNavigationController(rootViewController: UIViewController())
+        let menuRightNavigationController = UISideMenuNavigationController(rootViewController: usersListViewController)
         // UISideMenuNavigationController is a subclass of UINavigationController, so do any additional configuration
         // of it here like setting its viewControllers. If you're using storyboards, you'll want to do something like:
         // let menuRightNavigationController = storyboard!.instantiateViewController(withIdentifier: "RightMenuNavigationController") as! UISideMenuNavigationController
         SideMenuManager.menuRightNavigationController = menuRightNavigationController
-
+        SideMenuManager.menuFadeStatusBar = false
     }
     
     func setupNavigationBarButton()
     {
-        // Create the navigation bar
-        let navigationBar = UINavigationBar(frame: CGRect(x:0, y:0, width:UIScreen.main.bounds.width, height:64)) // Offset by 20 pixels vertically to take the status bar into account
-        
-        navigationBar.backgroundColor = UIColor.white
         navigationBar.delegate = self;
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = "HEYO"
+        navigationItem.title = self.senderDisplayName + " Chat"
         
         // Create left and right button for navigation item
         let leftButton =  UIBarButtonItem(title: "Back", style:   UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
@@ -133,7 +158,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         for message in conversation
         {
-            chatHistory.append(message!)
+            NotificationCenter.default.post(name: .Chat_onSendButtonTapped, object: nil, userInfo: ["message":message!])
         }
     }
     
@@ -204,11 +229,9 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         let message = JSQMessage(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
         
-        self.chatHistory.append(message!)
-        
         self.finishSendingMessage(animated: true)
         
-        NotificationCenter.default.post(name: .Chat_onSendButtonTapped, object: nil, userInfo: ["text":text])
+        NotificationCenter.default.post(name: .Chat_onSendButtonTapped, object: nil, userInfo: ["message":message!])
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath) -> NSAttributedString?
