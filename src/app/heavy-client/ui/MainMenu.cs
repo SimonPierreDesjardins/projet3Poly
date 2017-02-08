@@ -73,8 +73,6 @@ namespace ui
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
-            //panneauOperation_.Visible = false;
-
         }
 
         private void mainMenu_EditionButton_Click(object sender, EventArgs e)
@@ -97,8 +95,6 @@ namespace ui
 
             //outilsZoom_.Enabled = true;
             //zoomToolStripMenuItem.Enabled = true;
-            //afficherMenuPrincipal(false);
-            //afficherMenuEdition(true);
             //panneauOperation_.Visible = false;
 
             FonctionsNatives.assignerMode(Mode.EDITION);
@@ -110,12 +106,10 @@ namespace ui
 
         private void mainMenu_JeuxButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void mainMenu_PersoButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)

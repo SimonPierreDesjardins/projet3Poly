@@ -44,7 +44,6 @@ namespace ui
         { arreterToutMessage_ = true; }
 
         public bool estEnPause = false;
-        private bool PasserEnSimulation = false;
 
         public bool PreFilterMessage(ref Message m)
         {

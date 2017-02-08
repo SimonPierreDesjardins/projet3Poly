@@ -13,7 +13,7 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            //setToolTips();
+            setToolTips();
             editionObjectMenu.Width = 0;
         }
 
@@ -35,11 +35,10 @@ namespace ui
 
         public void selectTool()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            //Bouton S : sélection
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)83, (IntPtr)2031617);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -60,11 +59,10 @@ namespace ui
 
         public void moveTool()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            //Bouton D : Déplacement
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)68, (IntPtr)2097153);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -85,11 +83,10 @@ namespace ui
 
         public void rotateTool()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            //Bouton R : Rotation
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)82, (IntPtr)1245185);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -110,11 +107,10 @@ namespace ui
 
         public void scaleTool()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            //Bouton E : Mise a échelle
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)69, (IntPtr)1179649);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -135,17 +131,16 @@ namespace ui
 
         public void duplicateTool()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            //Bouton C : Duplication
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)67, (IntPtr)3014657);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
         }
 
         private void createToolButton_Click(object sender, EventArgs e)
         {
-            if (editionObjectMenu.Width == 0)
-                ShowObjectMenu.Start();
+            HideObjectMenu.Stop();
+            ShowObjectMenu.Start();
 
             setDefaultUnselectedColors();
             createToolButton.BackColor = Color.FromArgb(0, 102, 204);
@@ -169,11 +164,10 @@ namespace ui
 
         public void zoomTool()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
-            //Bouton Z : Zoom
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)90, (IntPtr)2883585);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -193,9 +187,7 @@ namespace ui
 
         public void deleteTool()
         {
-            //Button Del : Delete
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)46, (IntPtr)22216705);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
             //supprimerToolStripMenuItem.Enabled = false;
             parent_.verificationDuNombreElementChoisi();
         }
@@ -218,22 +210,19 @@ namespace ui
 
         public void lineObject()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             lineObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(lineObjectPicture);
-            //Bouton L : Creation ligne
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)76, (IntPtr)2490368);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
         }
 
         private void greenLineObjectButton_Click(object sender, EventArgs e)
         {
-
         }
 
         private void redLineObjectButton_Click(object sender, EventArgs e)
         {
-
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -254,12 +243,11 @@ namespace ui
 
         public void postObject()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             postObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(postObjectPicture);
-            //Bouton P : Creation poteau
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)80, (IntPtr)1638401);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_P, (IntPtr)1638401);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -280,12 +268,11 @@ namespace ui
 
         public void wallObject()
         {
+            hideObjectMenu();
             setDefaultUnselectedColors();
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(wallObjectPicture);
-            //Bouton M : Creation mur
-            parent_.viewPort.Focus();
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)77, (IntPtr)3276801);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
         }
 
         private void teleportObjectButton_Click(object sender, EventArgs e)
@@ -296,11 +283,17 @@ namespace ui
         {
         }
 
-        private void setDefaultUnselectedColors()
+        private void hideObjectMenu()
         {
             if (editionObjectMenu.Width > 0)
+            {
+                ShowObjectMenu.Stop();
                 HideObjectMenu.Start();
+            }
+        }
 
+        private void setDefaultUnselectedColors()
+        {
             //Tools
             selectToolButton.BackColor = Color.Transparent;
             MoveToolButton.BackColor = Color.Transparent;
@@ -348,87 +341,26 @@ namespace ui
                 ShowObjectMenu.Stop();
         }
 
-        /*private void setToolTips()
+        private void setToolTips()
         {
-            ToolTip selectToolTip = new ToolTip();
-            selectToolTip.AutoPopDelay = 5000;
-            selectToolTip.InitialDelay = 1000;
-            selectToolTip.ReshowDelay = 500;
-            selectToolTip.ShowAlways = true;
-            selectToolTip.SetToolTip(selectToolButton, "Select tool");
-            selectToolTip.SetToolTip(selectPictureBox, "Select tool");
+            //Tools
+            selectToolButton.toolTip.SetToolTip(selectPictureBox, "Outil de sélection [S]");
+            MoveToolButton.toolTip.SetToolTip(movePictureBox, "Outil de déplacement [D]");
+            RotateToolButton.toolTip.SetToolTip(rotatePictureBox, "Outil de rotation [R]");
+            ScaleToolButton.toolTip.SetToolTip(scalePictureBox, "Outil de redimmensionnement [E]");
+            DuplicateToolButton.toolTip.SetToolTip(duplicatePictureBox, "Outil de duplication [C]");
+            createToolButton.toolTip.SetToolTip(createPictureBox, "Créer objet");
+            zoomToolButton.toolTip.SetToolTip(zoomPictureBox, "Outil de zoom [Z]");
+            deleteToolButton.toolTip.SetToolTip(deletePictureBox, "Outil de supresion [DEL]");
 
-            ToolTip deplacementToolTip = new ToolTip();
-            deplacementToolTip.SetToolTip(MoveToolButton, "move tool");
-            deplacementToolTip.SetToolTip(movePictureBox, "move tool");
-
-            ToolTip rotateToolTip = new ToolTip();
-            rotateToolTip.SetToolTip(RotateToolButton, "Rotate tool");
-            rotateToolTip.SetToolTip(RotateToolButton, "Rotate tool");
-
-            ToolTip scaleToolTip = new ToolTip();
-            scaleToolTip.SetToolTip(ScaleToolButton, "Scale tool");
-            scaleToolTip.SetToolTip(scalePictureBox, "Scale tool");
-
-            ToolTip duplicateToolTip = new ToolTip();
-            duplicateToolTip.SetToolTip(DuplicateToolButton, "Duplicate tool");
-            duplicateToolTip.SetToolTip(duplicatePictureBox, "Duplicate tool");
-
-            ToolTip createToolTip = new ToolTip();
-            createToolTip.SetToolTip(createToolButton, "Create objects tool");
-            createToolTip.SetToolTip(createPictureBox, "Create objects tool");
-
-            ToolTip zoomToolTip = new ToolTip();
-            zoomToolTip.SetToolTip(zoomToolButton, "Zoom tool");
-            zoomToolTip.SetToolTip(zoomPictureBox, "Zoom tool");
-
-            ToolTip deleteToolTip = new ToolTip();
-            deleteToolTip.SetToolTip(deleteToolButton, "Delete tool");
-            deleteToolTip.SetToolTip(deletePictureBox, "Delete tool");
-
-            ToolTip currentObjectToolTip = new ToolTip();
-            currentObjectToolTip.SetToolTip(currentToolButton, "Current object");
-            currentObjectToolTip.SetToolTip(currentObjectPicture, "Current object");
-
-            ToolTip lineToolTip = new ToolTip();
-            lineToolTip.SetToolTip(lineObjectButton, "Line object");
-            lineToolTip.SetToolTip(lineObjectPicture, "Line object");
-
-            ToolTip greenLineToolTip = new ToolTip();
-            greenLineToolTip.SetToolTip(greenLineObjectButton, "Green line object");
-            greenLineToolTip.SetToolTip(greenLinePictureBox, "Green line object");
-
-            ToolTip redLineToolTip = new ToolTip();
-            redLineToolTip.SetToolTip(redLineObjectButton, "Red line object");
-            redLineToolTip.SetToolTip(redLinePictureBox, "Red line object");
-
-            ToolTip postToolTip = new ToolTip();
-            postToolTip.SetToolTip(postObjectButton, "Post object");
-            ToolTip postToolTip1 = new ToolTip();
-            postToolTip1.SetToolTip(postObjectPicture, "Post object");
-
-            ToolTip wallToolTip = new ToolTip();
-            wallToolTip.SetToolTip(wallObjectButton, "Wall object");
-            wallToolTip.SetToolTip(wallObjectPicture, "Wall object");
-
-            ToolTip teleportorToolTip = new ToolTip();
-            teleportorToolTip.SetToolTip(teleportObjectButton, "Teleportor object");
-            teleportorToolTip.SetToolTip(teleportorPictureBox, "Teleportor object");
-
-            ToolTip bridgeToolTip = new ToolTip();
-            bridgeToolTip.SetToolTip(bridgeObjectButton, "Bridge object");
-            bridgeToolTip.SetToolTip(bridgePictureBox, "Bridge object");
-        }*/
-
-        /*private void movePictureBox_MouseMove(object sender, MouseEventArgs e)
-        {
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutoPopDelay = 5000;
-            toolTip.InitialDelay = 1;
-            toolTip.ReshowDelay = 500;
-            toolTip.ShowAlways = true;
-
-            toolTip.SetToolTip(movePictureBox, "Move Tool");
-        }*/
+            //Objects
+            lineObjectButton.toolTip.SetToolTip(lineObjectPicture, "Objet ligne [L]");
+            greenLineObjectButton.toolTip.SetToolTip(greenLinePictureBox, "Objet ligne verte []");
+            redLineObjectButton.toolTip.SetToolTip(redLinePictureBox, "Objet ligne rouge []");
+            postObjectButton.toolTip.SetToolTip(postObjectPicture, "Objet poteau [P]");
+            wallObjectButton.toolTip.SetToolTip(wallObjectPicture, "Objet mur [M]");
+            teleportObjectButton.toolTip.SetToolTip(teleportorPictureBox, "Objet téléporteur []");
+            bridgeObjectButton.toolTip.SetToolTip(bridgePictureBox, "Objet viaduc []");
+        }
     }
 }

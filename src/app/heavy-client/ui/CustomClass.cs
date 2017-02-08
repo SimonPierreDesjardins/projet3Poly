@@ -8,29 +8,6 @@ using System.Windows.Forms;
 
 namespace ui
 {
-    class CustomPictureBox : PictureBox
-    {
-        String toolTipInfo_;
-
-        public CustomPictureBox(String toolTipInfo)
-        {
-            toolTipInfo_ = toolTipInfo;
-        }
-
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
-
-            ToolTip toolTip = new ToolTip();
-            toolTip.AutoPopDelay = 5000;
-            toolTip.InitialDelay = 1;
-            toolTip.ReshowDelay = 500;
-            toolTip.ShowAlways = true;
-
-            toolTip.SetToolTip(this, toolTipInfo_);
-        }
-    }
-
     class CustomLabel : Label
     {
         protected override void WndProc(ref Message m)
@@ -52,9 +29,16 @@ namespace ui
 
     class PanelButton : Panel
     {
+        public ToolTip toolTip;
+
+        public PanelButton()
+        {
+            toolTip = new ToolTip();
+        }
 
         protected override void OnMouseEnter(EventArgs e)
         {
+            //When not selected
             if (this.BackColor != Color.FromArgb(0, 102, 204))
             {
                 BackColor = System.Drawing.Color.FromArgb(36, 42, 49);
@@ -66,10 +50,27 @@ namespace ui
                     }
                 }
             }
+
+            foreach (Control c in this.Controls)
+            {
+                if (c.GetType() == typeof(PictureBox))
+                {
+                    var tipstring = toolTip.GetToolTip(c);
+                    toolTip.Show(tipstring, c, this.Width, c.Height / 2);
+                    toolTip.Tag = c;
+                }
+            }
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
+            Control ctrl = toolTip.Tag as Control;
+            if (ctrl != null)
+            {
+                toolTip.Hide(ctrl);
+                toolTip.Tag = null;
+            }
+
             if (this.BackColor != Color.FromArgb(0, 102, 204))
             {
                 BackColor = Color.Transparent;
