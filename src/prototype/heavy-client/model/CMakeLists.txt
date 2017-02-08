@@ -19,3 +19,8 @@ add_library(prototype-model
 
 target_link_libraries(prototype-model
 		networkUtils)
+
+target_compile_definitions(prototype-model
+PRIVATE
+WIN32_LEAN_AND_MEAN
+)
