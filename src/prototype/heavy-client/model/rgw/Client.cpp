@@ -46,25 +46,26 @@ bool Client::getConnectionState()
 	return _connected;
 }
 
-void Client::setChatWindow(HWND chat)
+std::string Client::getMessage()
 {
-	chatWindow = chat;
+	return message;
 }
 
-void Client::setUserWindow(HWND user)
+void Client::clearMessage()
 {
-	userWindow = user;
+	message = "";
 }
 
 void Client::onMessageReceived(std::string& data)
 {
-	ListBox_AddString(chatWindow, (LPCTSTR)data.c_str());
+	message = data;
 }
 
 void Client::onConnectionEstablished(Networking::Connection * connection)
 {
 	_connection = connection;
 	__hook(&Networking::Connection::OnReceivedData, connection, &Client::onMessageReceived);
+	connection->Start();
 	_connected = true;
 }
 

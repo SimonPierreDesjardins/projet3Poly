@@ -10,31 +10,36 @@ import SwiftSocket
 
 class DatagramSender
 {
-    let client = TCPClient(address: "132.207.241.132", port: 5000)
+    private var client: TCPClient?
+    var isListening: Bool
     
-    func establishConnection()
+    init()
     {
-        switch client.connect(timeout: 1) {
+        isListening = false
+    }
+    
+    func establishConnection(ipAdress: String, port: String) -> Bool
+    {
+        client = TCPClient(address: "132.207.246.177", port: 5000)
+        switch client!.connect(timeout: 20000) {
             case .success:
                 print("yay")
-                break
+                listenToMessages()
+                return true
             case .failure(let error):
                 print(error)
+                return false
         }
-    }
+        }
     
     func sendMessage(_ message: String)
     {
-        switch client.send(string: message) {
-        case .success:
-            guard let data = client.read(1024*10) else { return }
-            
-            if let response = String(bytes: data, encoding: .utf8)
-            {
-                print(response)
-            }
-        case .failure(let error):
-            print(error)
+        switch client!.send(string: message) {
+            case .success:
+                break
+
+            case .failure(let error):
+                print(error)
         }
     }
     
@@ -42,20 +47,29 @@ class DatagramSender
     {
         DispatchQueue.global(qos: .utility).async
         {
-            while true
+            lock(lock: self.isListening as AnyObject, execute: { self.isListening = true })
+            while self.isListening
             {
-                guard let data = self.client.read(1024*10) else { return }
+                guard let data = self.client!.read(1024*10) else { return }
                 let datagram = String(bytes: data, encoding: .utf8)
                 if datagram != nil
                 {
-                    NotificationCenter.default.post(name: .Datagram_chatDatagramReceived, object: nil, userInfo: ["Datagram" : datagram!])
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: .Datagram_chatDatagramReceived, object: nil, userInfo: ["Datagram" : datagram!])
+                    }
                 }
             }
         }
     }
     
+    func stopListeningToMessages()
+    {
+        lock(lock: self.isListening as AnyObject, execute: { self.isListening = false })
+    }
+    
     func closeConnection()
     {
-        client.close()
+        stopListeningToMessages()
+        client!.close()
     }
 }

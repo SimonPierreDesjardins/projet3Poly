@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>chatApp-iOS.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
 		<key>chatApp.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>5CCE09111E4B5E3F007A121E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>5CE0209A1E2EC8F2001D696B</key>
 		<dict>
 			<key>primary</key>

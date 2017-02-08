@@ -26,8 +26,9 @@ public:
 	void sendMessage(std::string data);
 
 	bool getConnectionState();
-	void setChatWindow(HWND chat);
-	void setUserWindow(HWND user);
+	std::string getMessage();
+
+	void clearMessage();
 
 private:
 	void onMessageReceived(std::string& data);
@@ -39,8 +40,7 @@ private:
 	Networking::ConnectionResolver* _resolver;
 	static Client* client;
 
-	HWND chatWindow;
-	HWND userWindow;
+	std::string message = "banane";
 };
 
 #endif
