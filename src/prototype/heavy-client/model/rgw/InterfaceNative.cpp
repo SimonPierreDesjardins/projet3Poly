@@ -21,14 +21,6 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl print_line(const char* str)
 	{
-		Client client = Client();
-		wchar_t* txt = L"Hello World";
-		//std::wstring ws(str);
-		//std::string data(ws.begin(), ws.end());
-		std::string data(str);
-		client.setString(data);
-
-		int i = 0;
 	}
 
 }
