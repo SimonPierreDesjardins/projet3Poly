@@ -3,10 +3,13 @@
 
 bool ChatSession::Join(User * user)
 {
+	std::string username = user->GetName();
 	// try to add user
-	if (_users.count(user->GetName()) == 0){
-		_users.insert({ user->GetName(), user });
+	if (_users.count(username) == 0){
+		_users.insert({ username, user });
 		HookUserEvents(user);
+		user->Message(SerializeUserList());
+		std::cout << "Added user " << username << " to chat." << std::endl;
 		return true;
 	}
 	return false;
@@ -14,8 +17,11 @@ bool ChatSession::Join(User * user)
 
 void ChatSession::Leave(User * user)
 {
-	if (_users.count(user->GetName()) > 0) {
-		_users.erase(user->GetName());
+	std::string username = user->GetName();
+
+	if (_users.count(username) > 0) {
+		_users.erase(username);
+		std::cout << "User " << username << " left chat." << std::endl;
 	}
 }
 
@@ -54,4 +60,14 @@ void ChatSession::DistributeMessages()
 
 		_messageQueue.pop();
 	}
+}
+
+std::string ChatSession::SerializeUserList()
+{
+	std::string userList = "r";
+	for each (auto user in _users) {
+		userList += user.first + ";";
+	}
+	userList.erase(userList.size() - 1);
+	return userList;
 }
