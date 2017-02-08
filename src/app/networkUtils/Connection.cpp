@@ -67,6 +67,8 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 	switch (error.value()) {
 	case asio::error::eof:
 	case asio::error::connection_aborted:
+	case asio::error::connection_reset:
+		//_socket -> close();
 		OnConnectionLost();
 		break;
 	}
