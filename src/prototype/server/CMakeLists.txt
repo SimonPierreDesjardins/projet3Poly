@@ -5,7 +5,10 @@ include_directories(
 )
 
 add_executable(server
-ChatClientContainer.cpp
+User.hpp
+User.cpp
+ChatSession.hpp
+ChatSession.cpp
 ServerStarter.cpp
 )
 

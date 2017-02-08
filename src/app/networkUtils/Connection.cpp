@@ -9,10 +9,17 @@ Connection::Connection(asio::ip::tcp::socket* socket) {
 	_sendQueue = std::queue<std::string>();
 }
 
+Networking::Connection::~Connection()
+{
+	CloseConnection();
+}
+
+/*
 Connection::Connection(Connection& connection) {
 	_socket = connection._socket;
 	_sendQueue = std::queue<std::string>();
 }
+*/
 
 void Connection::Start() {
 	ReadData();
@@ -32,7 +39,9 @@ void Connection::ReadData()
 		}
 		else 
 		{
-			Logger::Log(ec.message());
+			Logger::LogError(ec);
+			// End of connection
+			CheckIfDisconnect(ec);
 		}
 	});
 	_connectionLock.unlock();
@@ -44,6 +53,22 @@ void Connection::SendData(std::string data) {
 	// if this new message is alone in the queue, start writing
 	if (_sendQueue.size() == 1) {
 		WriteData();
+	}
+}
+
+void Networking::Connection::CloseConnection()
+{
+	_socket->close();
+	delete _socket;
+}
+
+void Networking::Connection::CheckIfDisconnect(std::error_code error)
+{
+	switch (error.value()) {
+	case asio::error::eof:
+	case asio::error::connection_aborted:
+		OnConnectionLost();
+		break;
 	}
 }
 

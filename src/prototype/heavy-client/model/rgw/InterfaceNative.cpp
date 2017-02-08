@@ -11,26 +11,50 @@
 #include "InterfaceNative.h"
 #include "Client.h"
 
-
-
 extern "C"
 {
 	////////////////////////////////////////////////////////////////////////
 	///
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) void __cdecl print_line(const char* str)
+	__declspec(dllexport) void verifyForMessage(char *str, int len)
 	{
-		Client client = Client();
-		wchar_t* txt = L"Hello World";
-		//std::wstring ws(str);
-		//std::string data(ws.begin(), ws.end());
-		std::string data(str);
-		client.setString(data);
-
-		int i = 0;
+		std::string data = Client::getClient()->getMessage();
+		strcpy_s(str, len, data.c_str());
+		if (data != "")
+		{
+			Client::getClient()->clearMessage();
+		}
 	}
 
+	__declspec(dllexport) void startConnection(const wchar_t* ipAdresse, const wchar_t* port)
+	{
+		std::wstring ws(ipAdresse);
+		std::wstring wc(port);
+
+		std::string arg0(ws.begin(), ws.end());
+		std::string arg1(wc.begin(), wc.end());
+
+		Client::getClient()->startConnection(arg0, arg1);
+	}
+
+	__declspec(dllexport) void stopConnection()
+	{
+		Client::getClient()->stopConnection();
+	}
+
+	__declspec(dllexport) void sendMessage(const wchar_t* data)
+	{
+		std::wstring ws(data);
+		std::string arg0(ws.begin(), ws.end());
+
+		Client::getClient()->sendMessage(arg0);
+	}
+
+	__declspec(dllexport) bool verifyConnection()
+	{
+		return Client::getClient()->getConnectionState();
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

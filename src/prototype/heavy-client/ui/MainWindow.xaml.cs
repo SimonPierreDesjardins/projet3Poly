@@ -1,10 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Text;
+using System.Collections.Specialized;
 
 //TODO: Finish color options
 
@@ -15,11 +18,13 @@ namespace InterfaceGraphique_ClientLourd
         String username = "";
         const string chatTextBoxLabel = "Enter your message here";
 
+
         public MainWindow()
         {
             InitializeComponent();
             switchScreen(this);
             showLoginScreen();
+            
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -49,7 +54,19 @@ namespace InterfaceGraphique_ClientLourd
                 //TODO: Verify the user is unique
                 //TODO: Add connection to server here
                 username = username_textbox.Text;
-                FonctionNative.print_line(username_textbox.Text);
+                FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
+                while(!FonctionNative.verifyConnection()) {}
+                FonctionNative.sendMessage("u" + username_textbox.Text);
+            
+                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+                dispatcherTimer.Start();
+
+                //Create thread to update chat
+                //Worker workerObject = new Worker(_items);
+                //Thread workerThread = new Thread(workerObject.DoWork);
+                //workerThread.Start();
 
                 switchScreen(this);
                 showChatScreen();
@@ -58,6 +75,18 @@ namespace InterfaceGraphique_ClientLourd
                 ipAdresse_textBox.Text = "";
                 port_textBox.Text = "";
             }
+        }
+
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            string message = FonctionNative.verifyForMessage();
+            if (!message.Equals(""))
+                chat_listBox.Items.Add(message);
+        }
+
+        private void ListCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            
         }
 
         private void switchScreen(UIElement parent)
@@ -113,6 +142,8 @@ namespace InterfaceGraphique_ClientLourd
 
         private void leaveChatMenuItem_Click(object sender, RoutedEventArgs e)
         {
+            FonctionNative.stopConnection();
+
             users_listBox.Items.Remove(username);
             chat_listBox.Items.Clear();
 
@@ -174,13 +205,8 @@ namespace InterfaceGraphique_ClientLourd
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
-                string time = username + " sent a message at " + DateTime.Now.ToString();
-                chat_listBox.Items.Add(time + "\r" + chat_textBox.Text);
-
-                //Make scroll bar move to the bottom
-                Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
-                ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
-                scrollViewer.ScrollToBottom();
+                string message = username + ";" + DateTime.Now.ToString() + ";";
+                FonctionNative.sendMessage("m" + message + chat_textBox.Text);
 
                 chat_textBox.Text = "";
             }
@@ -210,11 +236,34 @@ namespace InterfaceGraphique_ClientLourd
             applicationColorOptionWindow.Top = location.Y - 30;
             applicationColorOptionWindow.ShowDialog();
         }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            FonctionNative.stopConnection();
+        }
     }
 
     class FonctionNative
     {
-        [DllImport("prototype-model.dll")]
-        public static extern void print_line(string str);
+        [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
+        public static extern void startConnection(string ipAdresse, string port);
+
+        [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
+        public static extern void stopConnection();
+
+        [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
+        public static extern void sendMessage(string data);
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool verifyConnection();
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void verifyForMessage(StringBuilder str, int len);
+        public static string verifyForMessage()
+        {
+            StringBuilder str = new StringBuilder(500);
+            verifyForMessage(str, str.Capacity);
+            return str.ToString();
+        }
     }
 }
