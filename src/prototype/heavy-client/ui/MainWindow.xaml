@@ -46,7 +46,7 @@
         <ListBox x:Name="chat_listBox" Tag="1" 
                  Grid.Row="1" Grid.Column="3" 
                  Margin="5,0,0,0" Grid.ColumnSpan="2" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontFamily="Century" FontSize="14" Foreground="#FFE4D113" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontFamily="Century" FontSize="14" Foreground="Black" 
                  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -64,19 +64,19 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ListBox x:Name="users_listBox" Tag="2" Grid.RowSpan="3" Grid.Row="1" Grid.Column="2"/>
-        <Button x:Name="send_button" Content="Envoyer" Grid.Row="3" Grid.Column="4" Margin="0,0,0,0" Click="send_button_Click"/>
-        <TextBox x:Name="chat_textBox" Margin="5,0,3,0" TextWrapping="Wrap" Grid.Row="3" Grid.Column="3" ToolTip="" GotFocus="chat_textBox_GotFocus" LostFocus="chat_textBox_LostFocus" Text="Entrez votre message ici" Foreground="Gray" KeyDown="chat_textBox_KeyDown"/>
+        <ListBox x:Name="users_listBox" Tag="2" Grid.RowSpan="3" Grid.Row="1" Grid.Column="2" FontFamily="Century" FontSize="14"/>
+        <Button x:Name="send_button" Content="Envoyer" Grid.Row="3" Grid.Column="4" Margin="0,0,0,0" Click="send_button_Click" FontFamily="Century" FontSize="14"/>
+        <TextBox x:Name="chat_textBox" Margin="5,0,3,0" TextWrapping="Wrap" Grid.Row="3" Grid.Column="3" ToolTip="" GotFocus="chat_textBox_GotFocus" LostFocus="chat_textBox_LostFocus" Text="Entrez votre message ici" Foreground="Gray" KeyDown="chat_textBox_KeyDown" FontFamily="Century" FontSize="14"/>
         <TextBlock Margin="5,2,4,2" Text="Enter your message here" Foreground="Gray" x:Name="chatHint_textBox" Grid.ColumnSpan="2"/>
         <Menu x:Name="chat_menu" Grid.ColumnSpan="6" Height="18" VerticalAlignment="Top">
-            <MenuItem x:Name="leaveChatMenuItem" Header="Quitter la discussion" Click="leaveChatMenuItem_Click"/>
-            <MenuItem Header="Options">
-                <MenuItem x:Name="displayUserListChatMenuItem" Header="Montrer les utilisateurs" Click="displayUserListChatMenuItem_Click"/>
+            <MenuItem x:Name="leaveChatMenuItem" Header="Quitter la discussion" Click="leaveChatMenuItem_Click" FontFamily="Century" FontSize="14"/>
+            <MenuItem Header="Option" FontFamily="Century" FontSize="14">
+                <MenuItem x:Name="displayUserListChatMenuItem" Header="Montrer les utilisateurs" Click="displayUserListChatMenuItem_Click" FontFamily="Century" FontSize="14"/>
             </MenuItem>
-            <MenuItem Header="Choix de couleur" >
-                <MenuItem Header="Couleurs du texte" Click="TexteColor_MenuTab_Click"/>
-                <MenuItem Header="Couleurs des tableaux" Click="BackgroundColor_MenuTab_Click"/>
-                <MenuItem x:Name="ApplicationColor_MenuTab"  Header="Couleur de l'application" Click="ApplicationColor_MenuTab_Click" />
+            <MenuItem Header="Choix de couleur" FontFamily="Century" FontSize="14" >
+                <MenuItem Header="Couleurs du texte" Click="TexteColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
+                <MenuItem Header="Couleurs des tableaux" Click="BackgroundColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
+                <MenuItem x:Name="ApplicationColor_MenuTab"  Header="Couleur de l'application" Click="ApplicationColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
             </MenuItem>
         </Menu>
         <!-- End of Chat Screen Components -->

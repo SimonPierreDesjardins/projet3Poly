@@ -53,26 +53,24 @@ namespace InterfaceGraphique_ClientLourd
             }
             else
             {
-                username_label_warning.Visibility = Visibility.Collapsed;
-                ipAdresse_label_warning.Visibility = Visibility.Collapsed;
-                port_Label_Warning.Visibility = Visibility.Collapsed;
+                if (!isIPAdressePossible())
+                    return;
+                if (!isPortPossible())
+                    return;
 
                 FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
+                startTimer(1000);
                 while (!FonctionNative.verifyConnection() && !timerEnded)
-                {
-                    startTimer(5000);
-                }
-                timerEnded = false;
+                { }
                 if (FonctionNative.verifyConnection())
                 {
                     //Connection
                     FonctionNative.sendMessage("u" + username_textbox.Text);
-                    startTimer(5000);
+                    startTimer(1000);
                     while (!uniqueUser && !timerEnded)
                     {
                         checkForMessage();
                     }
-                    timerEnded = false;
                     if (uniqueUser)
                     {
                         dispatcherTimer.Start();
@@ -86,6 +84,7 @@ namespace InterfaceGraphique_ClientLourd
                     }
                     else
                     {
+                        hideWarning();
                         FonctionNative.stopConnection();
                         username_textbox.Text = "";
                         username_label_warning.Visibility = Visibility.Visible;
@@ -93,11 +92,42 @@ namespace InterfaceGraphique_ClientLourd
                     }
                 } else
                 {
+                    hideWarning();
                     //N'est pas connecter
                     ipAdresse_label_warning.Visibility = Visibility.Visible;
                     ipAdresse_label_warning.Content = "Échec de la connexion";
                 }
             }
+        }
+
+        private void hideWarning()
+        {
+            username_label_warning.Visibility = Visibility.Collapsed;
+            ipAdresse_label_warning.Visibility = Visibility.Collapsed;
+            port_Label_Warning.Visibility = Visibility.Collapsed;
+        }
+        private bool isIPAdressePossible()
+        {
+            Regex ipAdresse = new Regex("^([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])\\.([01]?[0-9]?[0-9]|2[0-4][0-9]|25[0-5])$");
+            bool validIpAdresse = ipAdresse.IsMatch(ipAdresse_textBox.Text);
+            if (!validIpAdresse)
+            {
+                ipAdresse_label_warning.Visibility = Visibility.Visible;
+                ipAdresse_label_warning.Content = "Adresse IP invalide.";
+            }
+            return validIpAdresse;
+        }
+
+        private bool isPortPossible()
+        {
+            Regex port = new Regex("^((6553[0-5])|(655[0-2][0-9])|(65[0-4][0-9]{2})|(6[0-4][0-9]{3})|([1-5][0-9]{4})|([0-5]{0,5})|([0-9]{1,4}))$");
+            bool validPort = port.IsMatch(port_textBox.Text);
+            if (!validPort)
+            {
+                port_Label_Warning.Visibility = Visibility.Visible;
+                port_Label_Warning.Content = "Port invalide.";
+            }
+            return validPort;
         }
 
         //Verify pour des nouveau message
@@ -134,7 +164,6 @@ namespace InterfaceGraphique_ClientLourd
                     addToChat(message);
                     break;
             }
-                
         }
 
         private void modifyUserList(string message)
@@ -167,6 +196,7 @@ namespace InterfaceGraphique_ClientLourd
 
         private void startTimer(int durationInMS)
         {
+            timerEnded = false;
             Timer t = new Timer();
             t.Interval = durationInMS; //In milliseconds here
             t.AutoReset = true; //Stops it from repeating
@@ -303,6 +333,7 @@ namespace InterfaceGraphique_ClientLourd
                 FonctionNative.sendMessage("m" + message + chat_textBox.Text);
 
                 chat_textBox.Text = "";
+                chat_textBox.Focus();
             }
         }
 
@@ -324,6 +355,7 @@ namespace InterfaceGraphique_ClientLourd
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             FonctionNative.stopConnection();
+            dispatcherTimer.Stop();
         }
 
         private void username_textbox_PreviewTextInput(object sender, TextCompositionEventArgs e)

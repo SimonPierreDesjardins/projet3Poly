@@ -37,6 +37,7 @@ namespace InterfaceGraphique_ClientLourd
                 parentWindow_.users_listBox.Foreground = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
                 parentWindow_.chat_menu.Foreground = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
                 parentWindow_.chat_textBox.Foreground = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
+                parentWindow_.send_button.Foreground = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
             }  
         }
 
@@ -46,6 +47,7 @@ namespace InterfaceGraphique_ClientLourd
             parentWindow_.users_listBox.Foreground = parentTextColor_;
             parentWindow_.chat_menu.Foreground = parentTextColor_;
             parentWindow_.chat_textBox.Foreground = parentTextColor_;
+            parentWindow_.send_button.Foreground = parentTextColor_;
         }
 
         private void TextForeColorWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -54,6 +56,7 @@ namespace InterfaceGraphique_ClientLourd
             parentWindow_.users_listBox.Foreground = parentTextColor_;
             parentWindow_.chat_menu.Foreground = parentTextColor_;
             parentWindow_.chat_textBox.Foreground = parentTextColor_;
+            parentWindow_.send_button.Foreground = parentTextColor_;
         }
 
         private void applyButton_ApplicationColor_Click(object sender, RoutedEventArgs e)
