@@ -187,7 +187,7 @@ namespace InterfaceGraphique_ClientLourd
             string dateTime = message.Substring(0, endOfDate);
             //Rebuild Message
             message = message.Substring(endOfDate + 1);
-            message = user + " a envoyé a " + dateTime + "\r\n" + message;
+            message = user + " a envoyé à " + dateTime + "\r\n" + message;
 
             chat_listBox.Items.Add(message);
             Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
@@ -255,7 +255,7 @@ namespace InterfaceGraphique_ClientLourd
             send_button.Visibility = Visibility.Visible;
 
             //Make sure every component is at the right place
-            displayUserListChatMenuItem.Header = "Montrer les utilisateurs connecté";
+            displayUserListChatMenuItem.Header = "Montrer les utilisateurs";
             users_listBox.Visibility = Visibility.Collapsed;
 
             Grid.SetColumn(chat_listBox, 2);
@@ -284,7 +284,7 @@ namespace InterfaceGraphique_ClientLourd
         {
             if (users_listBox.Visibility.Equals(Visibility.Visible))
             {
-                displayUserListChatMenuItem.Header = "Montrer les utilisateurs connecté";
+                displayUserListChatMenuItem.Header = "Montrer les utilisateurs";
                 users_listBox.Visibility = Visibility.Collapsed;
                
                 Grid.SetColumn(chat_listBox, 2);
@@ -295,7 +295,7 @@ namespace InterfaceGraphique_ClientLourd
             }
             else
             {
-                displayUserListChatMenuItem.Header = "Cacher les utilisateur connecté";
+                displayUserListChatMenuItem.Header = "Cacher les utilisateurs";
                 users_listBox.Visibility = Visibility.Visible;
                 
                 Grid.SetColumnSpan(chat_listBox, 2);

@@ -17,7 +17,7 @@
                 </LinearGradientBrush>
             </xctk:ColorCanvas.Background>
         </xctk:ColorCanvas>
-        <Button x:Name="cancelButton_ApplicationColor" Content="Cancel" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="100" Click="cancelButton_ApplicationColor_Click"/>
-        <Button x:Name="applyButton_ApplicationColor" Content="Apply" Margin="132,289,10,0" VerticalAlignment="Top" Click="applyButton_ApplicationColor_Click"/>
+        <Button x:Name="cancelButton_ApplicationColor" Content="Annuler" HorizontalAlignment="Left" Margin="10,289,0,0" VerticalAlignment="Top" Width="100" Click="cancelButton_ApplicationColor_Click"/>
+        <Button x:Name="applyButton_ApplicationColor" Content="Appliquer" Margin="132,289,10,0" VerticalAlignment="Top" Click="applyButton_ApplicationColor_Click"/>
     </Grid>
 </Window>

@@ -73,9 +73,9 @@
             <MenuItem Header="Option" FontFamily="Century" FontSize="14">
                 <MenuItem x:Name="displayUserListChatMenuItem" Header="Montrer les utilisateurs" Click="displayUserListChatMenuItem_Click" FontFamily="Century" FontSize="14"/>
             </MenuItem>
-            <MenuItem Header="Choix de couleur" FontFamily="Century" FontSize="14" >
-                <MenuItem Header="Couleurs du texte" Click="TexteColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
-                <MenuItem Header="Couleurs des tableaux" Click="BackgroundColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
+            <MenuItem Header="Choix de couleurs" FontFamily="Century" FontSize="14" >
+                <MenuItem Header="Couleur du texte" Click="TexteColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
+                <MenuItem Header="Couleur des tableaux" Click="BackgroundColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
                 <MenuItem x:Name="ApplicationColor_MenuTab"  Header="Couleur de l'application" Click="ApplicationColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
             </MenuItem>
         </Menu>
