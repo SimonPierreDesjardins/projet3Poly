@@ -48,6 +48,8 @@ void Connection::ReadData()
 }
 
 void Connection::SendData(std::string data) {
+	data = std::to_string(data.length()) + ";" + data;
+
 	_sendQueue.push(std::move(data));
 
 	// if this new message is alone in the queue, start writing
