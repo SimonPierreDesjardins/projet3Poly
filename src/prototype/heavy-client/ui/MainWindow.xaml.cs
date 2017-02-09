@@ -17,6 +17,7 @@ namespace InterfaceGraphique_ClientLourd
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
         bool timerEnded = false;
         bool uniqueUser = false;
+        bool failConnection = false;
         string username;
 
         public MainWindow()
@@ -60,9 +61,11 @@ namespace InterfaceGraphique_ClientLourd
 
                 FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
                 startTimer(1000);
-                while (!FonctionNative.verifyConnection() && !timerEnded)
-                { }
-                if (FonctionNative.verifyConnection())
+                while (!failConnection && !timerEnded)
+                {
+                    checkForFailConnection();
+                }
+                if (!FonctionNative.verifyConnectionFailure())
                 {
                     //Connection
                     FonctionNative.sendMessage("u" + username_textbox.Text);
@@ -134,6 +137,11 @@ namespace InterfaceGraphique_ClientLourd
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             checkForMessage();
+        }
+
+        private void checkForFailConnection()
+        {
+            failConnection = FonctionNative.verifyConnectionFailure();
         }
 
         private void checkForMessage()
@@ -270,6 +278,7 @@ namespace InterfaceGraphique_ClientLourd
             FonctionNative.stopConnection();
             dispatcherTimer.Stop();
 
+            failConnection = false;
             uniqueUser = false;
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             username = "";
@@ -350,7 +359,7 @@ namespace InterfaceGraphique_ClientLourd
             var location = this.PointToScreen(new Point(0, 0));
             applicationColorOptionWindow.Left = location.X + this.Width - 20;
             applicationColorOptionWindow.Top = location.Y - 30;
-            applicationColorOptionWindow.ShowDialog();
+            applicationColorOptionWindow.Show();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -371,7 +380,7 @@ namespace InterfaceGraphique_ClientLourd
             var location = this.PointToScreen(new Point(0, 0));
             applicationColorOptionWindow.Left = location.X + this.Width - 20;
             applicationColorOptionWindow.Top = location.Y - 30;
-            applicationColorOptionWindow.ShowDialog();
+            applicationColorOptionWindow.Show();
         }
 
         private void BackgroundColor_MenuTab_Click(object sender, RoutedEventArgs e)
@@ -380,7 +389,7 @@ namespace InterfaceGraphique_ClientLourd
             var location = this.PointToScreen(new Point(0, 0));
             applicationColorOptionWindow.Left = location.X + this.Width - 20;
             applicationColorOptionWindow.Top = location.Y - 30;
-            applicationColorOptionWindow.ShowDialog();
+            applicationColorOptionWindow.Show();
         }
     }
 
@@ -397,6 +406,9 @@ namespace InterfaceGraphique_ClientLourd
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool verifyConnection();
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool verifyConnectionFailure();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int getQueueSize();

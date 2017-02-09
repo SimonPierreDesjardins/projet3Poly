@@ -34,6 +34,9 @@ namespace Networking{
 		///<param>the port to connect to </param>
 		void Resolve(std::string ipAdress, std::string port);
 
+
+		__event void OnConnectionFailed();
+
 		///<summary>Closes the connection and clears it for further use later</summary>
 		void Close();
 

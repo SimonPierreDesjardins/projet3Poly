@@ -26,6 +26,7 @@ public:
 	void stopConnection();
 	void sendMessage(std::string data);
 
+	bool getConnectionFailureState();
 	bool getConnectionState();
 	int getMessagesQueued();
 	std::string getMessage();
@@ -33,7 +34,9 @@ public:
 private:
 	void onMessageReceived(std::string& data);
 	void onConnectionEstablished(Networking::Connection* connection);
+	void onConnectionFailed();
 	bool _connected = false;
+	bool failedConnection = false;
 	std::string lastMessage;
 	std::thread* ioServiceThread;
 	Networking::Connection* _connection;
@@ -41,7 +44,6 @@ private:
 	static Client* client;
 
 	std::queue<std::string> message = std::queue<std::string>();
-
 };
 
 #endif

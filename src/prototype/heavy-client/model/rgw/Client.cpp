@@ -16,20 +16,27 @@ void Client::startConnection(std::string ipAdresse, std::string port)
 	_resolver = new Networking::ConnectionResolver(*aios);
 
 	__hook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
+	__hook(&Networking::ConnectionResolver::OnConnectionFailed, _resolver, &Client::onConnectionFailed);
 
 	_resolver -> Resolve(ipAdresse, port);
 
 	ioServiceThread = new std::thread([aios]() {aios->run(); });
 }
 
+// Calling this 
 void Client::stopConnection()
 {
 	if (!_connected)
 		return;
 
+	__unhook(&Networking::Connection::OnReceivedData, _connection, &Client::onMessageReceived);
 	delete _connection;
-	ioServiceThread -> join();
+
+	__unhook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
+	__unhook(&Networking::ConnectionResolver::OnConnectionFailed, _resolver, &Client::onConnectionFailed);
 	delete _resolver;
+
+	ioServiceThread -> join();
 	delete ioServiceThread;
 }
 
@@ -39,6 +46,11 @@ void Client::sendMessage(std::string data)
 		return;
 
 	_connection->SendData(data);
+}
+
+bool Client::getConnectionFailureState()
+{
+	return failedConnection;
 }
 
 bool Client::getConnectionState()
@@ -79,5 +91,13 @@ void Client::onConnectionEstablished(Networking::Connection * connection)
 	connection->Start();
 	_connected = true;
 }
+
+void Client::onConnectionFailed()
+{
+	// do whatever when connection fails
+	failedConnection = true;
+}
+
+
 
 Client* Client::client;
