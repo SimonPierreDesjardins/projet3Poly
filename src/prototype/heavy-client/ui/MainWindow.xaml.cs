@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Timers;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace InterfaceGraphique_ClientLourd
 {
@@ -17,6 +19,7 @@ namespace InterfaceGraphique_ClientLourd
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
         bool timerEnded = false;
         bool uniqueUser = false;
+        bool failConnection = false;
         string username;
 
         public MainWindow()
@@ -28,6 +31,10 @@ namespace InterfaceGraphique_ClientLourd
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+        }
+        public static void DoEvents()
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -59,9 +66,7 @@ namespace InterfaceGraphique_ClientLourd
                     return;
 
                 FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
-                startTimer(1000);
-                while (!FonctionNative.verifyConnection() && !timerEnded)
-                { }
+
                 if (FonctionNative.verifyConnection())
                 {
                     //Connection
@@ -85,6 +90,9 @@ namespace InterfaceGraphique_ClientLourd
                     else
                     {
                         hideWarning();
+                        failConnection = false;
+                        uniqueUser = false;
+                        FonctionNative.resetConnectionFailure();
                         FonctionNative.stopConnection();
                         username_textbox.Text = "";
                         username_label_warning.Visibility = Visibility.Visible;
@@ -94,6 +102,9 @@ namespace InterfaceGraphique_ClientLourd
                 {
                     hideWarning();
                     //N'est pas connecter
+                    failConnection = false;
+                    uniqueUser = false;
+                    FonctionNative.resetConnectionFailure();
                     ipAdresse_label_warning.Visibility = Visibility.Visible;
                     ipAdresse_label_warning.Content = "Échec de la connexion";
                 }
@@ -136,6 +147,12 @@ namespace InterfaceGraphique_ClientLourd
             checkForMessage();
         }
 
+        private void checkForFailConnection()
+        {
+            if (!failConnection)
+                failConnection = FonctionNative.verifyConnectionFailure();
+        }
+
         private void checkForMessage()
         {
             string message = FonctionNative.verifyForMessage();
@@ -145,6 +162,8 @@ namespace InterfaceGraphique_ClientLourd
 
         private void dealWithMessage(string message)
         {
+            message = message.Substring(message.IndexOf(";") + 1);
+
             switch(message[0])
             {
                 case 'r':
@@ -168,6 +187,7 @@ namespace InterfaceGraphique_ClientLourd
 
         private void modifyUserList(string message)
         {
+			users_listBox.Items.Clear();
             message = message.Substring(1);
             string[] users = message.Split(';');
             for (int i = 0; i < users.Length; i++)
@@ -186,7 +206,7 @@ namespace InterfaceGraphique_ClientLourd
             string dateTime = message.Substring(0, endOfDate);
             //Rebuild Message
             message = message.Substring(endOfDate + 1);
-            message = user + " a envoyé a " + dateTime + "\r\n" + message;
+            message = user + " a envoyé à " + dateTime + "\r\n" + message;
 
             chat_listBox.Items.Add(message);
             Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
@@ -197,7 +217,7 @@ namespace InterfaceGraphique_ClientLourd
         private void startTimer(int durationInMS)
         {
             timerEnded = false;
-            Timer t = new Timer();
+            System.Timers.Timer t = new System.Timers.Timer();
             t.Interval = durationInMS; //In milliseconds here
             t.AutoReset = true; //Stops it from repeating
             t.Elapsed += new ElapsedEventHandler(TimerElapsed);
@@ -254,7 +274,7 @@ namespace InterfaceGraphique_ClientLourd
             send_button.Visibility = Visibility.Visible;
 
             //Make sure every component is at the right place
-            displayUserListChatMenuItem.Header = "Montrer les utilisateurs connecté";
+            displayUserListChatMenuItem.Header = "Montrer les utilisateurs";
             users_listBox.Visibility = Visibility.Collapsed;
 
             Grid.SetColumn(chat_listBox, 2);
@@ -269,7 +289,9 @@ namespace InterfaceGraphique_ClientLourd
             FonctionNative.stopConnection();
             dispatcherTimer.Stop();
 
+            failConnection = false;
             uniqueUser = false;
+            FonctionNative.resetConnectionFailure();
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             username = "";
             users_listBox.Items.Clear();
@@ -283,7 +305,7 @@ namespace InterfaceGraphique_ClientLourd
         {
             if (users_listBox.Visibility.Equals(Visibility.Visible))
             {
-                displayUserListChatMenuItem.Header = "Montrer les utilisateurs connecté";
+                displayUserListChatMenuItem.Header = "Montrer les utilisateurs";
                 users_listBox.Visibility = Visibility.Collapsed;
                
                 Grid.SetColumn(chat_listBox, 2);
@@ -294,7 +316,7 @@ namespace InterfaceGraphique_ClientLourd
             }
             else
             {
-                displayUserListChatMenuItem.Header = "Cacher les utilisateur connecté";
+                displayUserListChatMenuItem.Header = "Cacher les utilisateurs";
                 users_listBox.Visibility = Visibility.Visible;
                 
                 Grid.SetColumnSpan(chat_listBox, 2);
@@ -329,7 +351,8 @@ namespace InterfaceGraphique_ClientLourd
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
-                string message = username + ";" + DateTime.Now.ToString() + ";";
+                string message = username + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ";";
+
                 FonctionNative.sendMessage("m" + message + chat_textBox.Text);
 
                 chat_textBox.Text = "";
@@ -349,7 +372,7 @@ namespace InterfaceGraphique_ClientLourd
             var location = this.PointToScreen(new Point(0, 0));
             applicationColorOptionWindow.Left = location.X + this.Width - 20;
             applicationColorOptionWindow.Top = location.Y - 30;
-            applicationColorOptionWindow.ShowDialog();
+            applicationColorOptionWindow.Show();
         }
 
         private void Window_Closing(object sender, CancelEventArgs e)
@@ -370,7 +393,7 @@ namespace InterfaceGraphique_ClientLourd
             var location = this.PointToScreen(new Point(0, 0));
             applicationColorOptionWindow.Left = location.X + this.Width - 20;
             applicationColorOptionWindow.Top = location.Y - 30;
-            applicationColorOptionWindow.ShowDialog();
+            applicationColorOptionWindow.Show();
         }
 
         private void BackgroundColor_MenuTab_Click(object sender, RoutedEventArgs e)
@@ -379,7 +402,7 @@ namespace InterfaceGraphique_ClientLourd
             var location = this.PointToScreen(new Point(0, 0));
             applicationColorOptionWindow.Left = location.X + this.Width - 20;
             applicationColorOptionWindow.Top = location.Y - 30;
-            applicationColorOptionWindow.ShowDialog();
+            applicationColorOptionWindow.Show();
         }
     }
 
@@ -396,6 +419,12 @@ namespace InterfaceGraphique_ClientLourd
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool verifyConnection();
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool verifyConnectionFailure();
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void resetConnectionFailure();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int getQueueSize();

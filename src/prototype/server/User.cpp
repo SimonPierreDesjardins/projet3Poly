@@ -53,6 +53,10 @@
 
 	void User::OnUserSentData(std::string & message)
 	{
+		int sizeIndex = message.find_first_of(';');
+
+		message = message.substr(sizeIndex + 1, message.size() - 1);
+
 		if (message[0] == 'u') {
 			// user sent their username
 			_name = message.substr(1);
