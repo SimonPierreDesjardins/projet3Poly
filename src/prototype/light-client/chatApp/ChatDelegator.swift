@@ -46,7 +46,6 @@ class ChatDelegator
     @objc func onSendButtonTapped(_ notification: NSNotification)
     {
         chatManager.sendMessage(notification.userInfo?["message"] as! JSQMessage)
-        updateViewControllerChatHistory()
     }
     
     @objc func updateViewControllerChatHistory()

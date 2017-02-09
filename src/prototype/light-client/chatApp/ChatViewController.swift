@@ -37,6 +37,8 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
     
     private var usersListViewController = ChatUsersListViewController()
     
+    let dateFormatter = DateFormatter()
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -51,7 +53,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
             
         //self.view.addSubview(statusOpaqueBar)
         
-        self.collectionView.collectionViewLayout = ChatCollectionViewFlowLayout()
+        //self.collectionView.collectionViewLayout = ChatCollectionViewFlowLayout()
                
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
@@ -65,19 +67,12 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         //receiveMessagePressed()
         
-        automaticallyScrollsToMostRecentMessage = true
-        
-        self.topContentAdditionalInset = navigationBar.frame.size.height
+        self.topContentAdditionalInset = 50
         
         self.collectionView?.reloadData()
         self.collectionView?.layoutIfNeeded()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
         
-        UIApplication.shared.statusBarStyle = .default
-        
+        dateFormatter.dateFormat = ("yyyy-MM-dd HH:mm:ss")
     }
     
     func updateUsersList(_ usersList: [String])
@@ -114,7 +109,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         // Create a navigation item with a title
         let navigationItem = UINavigationItem()
-        navigationItem.title = self.senderDisplayName + " Chat"
+        //navigationItem.title = self.senderDisplayName + " Chat"
         
         // Create left and right button for navigation item
         let leftButton =  UIBarButtonItem(title: "Retour", style:   UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
@@ -204,8 +199,6 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
     {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         
-        cell.messageBubbleContainerView.frame.size.height = 5
-        
         let msg = self.chatHistory[indexPath.item]
             
         if msg.senderId == self.senderId
@@ -219,8 +212,6 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         let attributes : [String:AnyObject] = [NSForegroundColorAttributeName:cell.textView.textColor!, NSUnderlineStyleAttributeName: NSUnderlineStyle.styleSingle.rawValue as AnyObject]
         cell.textView.linkTextAttributes = attributes
-        
-        self.scroll(to: indexPath, animated: false)
         
         return cell
     }
@@ -272,7 +263,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
     {
         let message = self.chatHistory[indexPath.item]
         
-        return JSQMessagesTimestampFormatter.shared().attributedTimestamp(for: message.date)
+        return NSAttributedString(string: dateFormatter.string(from: message.date), attributes: JSQMessagesTimestampFormatter.shared().dateTextAttributes as! [String : Any]?)
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForCellTopLabelAt indexPath: IndexPath) -> CGFloat
