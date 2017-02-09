@@ -88,6 +88,7 @@ namespace InterfaceGraphique_ClientLourd
                     else
                     {
                         hideWarning();
+                        failConnection = false;
                         FonctionNative.stopConnection();
                         username_textbox.Text = "";
                         username_label_warning.Visibility = Visibility.Visible;
