@@ -54,7 +54,9 @@ private:
 
 	void OnUserDisconnected(User* user) {
 		std::cout << "User Disconnected!" << std::endl;
-		chatSession.Leave(user);
+		if (user->GetAuthenticated()) {
+			chatSession.Leave(user);
+		}
 		_connectedUsers.erase(std::remove(_connectedUsers.begin(), _connectedUsers.end(), user), _connectedUsers.end());
 		//delete user;
 	}
