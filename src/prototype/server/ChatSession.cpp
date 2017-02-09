@@ -58,7 +58,6 @@ void ChatSession::DistributeMessages()
 		for each (auto user in _users) {
 			user.second->Message(message);
 		}
-
 		_messageQueue.pop();
 	}
 }
