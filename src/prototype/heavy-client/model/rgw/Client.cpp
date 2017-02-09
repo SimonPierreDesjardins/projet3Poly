@@ -1,4 +1,5 @@
 #include "Client.h"
+#include <iostream>
 
 Client* Client::getClient()
 {
@@ -27,7 +28,6 @@ void Client::stopConnection()
 		return;
 
 	delete _connection;
-
 	ioServiceThread -> join();
 	delete _resolver;
 	delete ioServiceThread;
@@ -46,19 +46,30 @@ bool Client::getConnectionState()
 	return _connected;
 }
 
-std::string Client::getMessage()
+int Client::getMessagesQueued()
 {
-	return message;
+	return message.size();
 }
 
-void Client::clearMessage()
+std::string Client::getMessage()
 {
-	message = "";
+	std::string data;
+	if (message.empty())
+	{
+		 data = "";
+	}
+	else
+	{
+		data = message.front();
+		message.pop();
+	}
+	return data;
 }
+
 
 void Client::onMessageReceived(std::string& data)
 {
-	message = data;
+	message.push(data);
 }
 
 void Client::onConnectionEstablished(Networking::Connection * connection)

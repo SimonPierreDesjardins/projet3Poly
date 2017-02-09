@@ -14,7 +14,8 @@
 #include <string>
 #include <windowsx.h>
 #include "InterfaceNative.h"
-
+#include <iostream>
+#include <queue>
 
 class Client 
 {
@@ -26,9 +27,8 @@ public:
 	void sendMessage(std::string data);
 
 	bool getConnectionState();
+	int getMessagesQueued();
 	std::string getMessage();
-
-	void clearMessage();
 
 private:
 	void onMessageReceived(std::string& data);
@@ -40,7 +40,8 @@ private:
 	Networking::ConnectionResolver* _resolver;
 	static Client* client;
 
-	std::string message = "banane";
+	std::queue<std::string> message = std::queue<std::string>();
+
 };
 
 #endif

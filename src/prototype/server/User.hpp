@@ -12,6 +12,8 @@ public:
 
 	void SetAuthenticated(bool authenticated);
 
+	bool GetAuthenticated();
+
 	void Message(std::string& message);
 
 	__event void UserSentMessage(std::string& message);

@@ -24,6 +24,11 @@
 		_userAuthenticated = authenticated;
 	}
 
+	bool User::GetAuthenticated()
+	{
+		return _userAuthenticated;
+	}
+
 	void User::Message(std::string & message)
 	{
 		_connection->SendData(message);

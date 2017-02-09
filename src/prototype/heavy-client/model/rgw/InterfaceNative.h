@@ -13,6 +13,7 @@
 
 extern "C"
 {
+	__declspec(dllexport) int __cdecl getQueueSize();
 	__declspec(dllexport) void __cdecl verifyForMessage(char *str, int len);
 	__declspec(dllexport) void __cdecl startConnection(const wchar_t* ipAdresse, const wchar_t* port);
 	__declspec(dllexport) void __cdecl stopConnection();

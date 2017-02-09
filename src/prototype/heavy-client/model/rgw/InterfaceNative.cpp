@@ -17,14 +17,15 @@ extern "C"
 	///
 	///
 	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) int __cdecl verifyQueueSize()
+	{
+		return Client::getClient()->getMessagesQueued();
+	}
+
 	__declspec(dllexport) void verifyForMessage(char *str, int len)
 	{
 		std::string data = Client::getClient()->getMessage();
 		strcpy_s(str, len, data.c_str());
-		if (data != "")
-		{
-			Client::getClient()->clearMessage();
-		}
 	}
 
 	__declspec(dllexport) void startConnection(const wchar_t* ipAdresse, const wchar_t* port)
