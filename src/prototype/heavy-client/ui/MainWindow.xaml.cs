@@ -330,7 +330,7 @@ namespace InterfaceGraphique_ClientLourd
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
-                string message = username + ";" + DateTime.Now.ToString() + ";";
+                string message = username + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ";";
                 FonctionNative.sendMessage("m" + message + chat_textBox.Text);
 
                 chat_textBox.Text = "";
