@@ -20,6 +20,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl sendMessage(const wchar_t* data);
 	__declspec(dllexport) bool __cdecl verifyConnection();
 	__declspec(dllexport) bool verifyConnectionFailure();
+	__declspec(dllexport) void __cdecl resetConnectionFailure();
 }
 
 #endif // __INTERFACE_NATIVE_H__

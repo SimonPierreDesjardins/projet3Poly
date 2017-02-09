@@ -30,6 +30,7 @@ public:
 	bool getConnectionState();
 	int getMessagesQueued();
 	std::string getMessage();
+	void resetConnectionFailure();
 
 private:
 	void onMessageReceived(std::string& data);

@@ -61,6 +61,11 @@ extern "C"
 	{
 		return Client::getClient()->getConnectionFailureState();
 	}
+
+	__declspec(dllexport) void __cdecl resetConnectionFailure()
+	{
+		Client::getClient()->resetConnectionFailure();
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -45,12 +45,21 @@ void Client::sendMessage(std::string data)
 	if (!_connected)
 		return;
 
+	int size = data.size();
+	std::string s = std::to_string(size);
+	data = s + ";" + data;
+
 	_connection->SendData(data);
 }
 
 bool Client::getConnectionFailureState()
 {
 	return failedConnection;
+}
+
+void Client::resetConnectionFailure()
+{
+	failedConnection = false;
 }
 
 bool Client::getConnectionState()

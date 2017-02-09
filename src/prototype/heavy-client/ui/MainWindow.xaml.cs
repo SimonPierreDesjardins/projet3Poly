@@ -89,6 +89,8 @@ namespace InterfaceGraphique_ClientLourd
                     {
                         hideWarning();
                         failConnection = false;
+                        uniqueUser = false;
+                        FonctionNative.resetConnectionFailure();
                         FonctionNative.stopConnection();
                         username_textbox.Text = "";
                         username_label_warning.Visibility = Visibility.Visible;
@@ -98,6 +100,9 @@ namespace InterfaceGraphique_ClientLourd
                 {
                     hideWarning();
                     //N'est pas connecter
+                    failConnection = false;
+                    uniqueUser = false;
+                    FonctionNative.resetConnectionFailure();
                     ipAdresse_label_warning.Visibility = Visibility.Visible;
                     ipAdresse_label_warning.Content = "Échec de la connexion";
                 }
@@ -142,7 +147,8 @@ namespace InterfaceGraphique_ClientLourd
 
         private void checkForFailConnection()
         {
-            failConnection = FonctionNative.verifyConnectionFailure();
+            if (!failConnection)
+                failConnection = FonctionNative.verifyConnectionFailure();
         }
 
         private void checkForMessage()
@@ -154,6 +160,8 @@ namespace InterfaceGraphique_ClientLourd
 
         private void dealWithMessage(string message)
         {
+            message = message.Substring(message.IndexOf(";") + 1);
+
             switch(message[0])
             {
                 case 'r':
@@ -281,6 +289,7 @@ namespace InterfaceGraphique_ClientLourd
 
             failConnection = false;
             uniqueUser = false;
+            FonctionNative.resetConnectionFailure();
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             username = "";
             users_listBox.Items.Clear();
@@ -341,6 +350,7 @@ namespace InterfaceGraphique_ClientLourd
             if (!isToolTip && !noContentInText)
             {
                 string message = username + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ";";
+
                 FonctionNative.sendMessage("m" + message + chat_textBox.Text);
 
                 chat_textBox.Text = "";
@@ -410,6 +420,9 @@ namespace InterfaceGraphique_ClientLourd
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool verifyConnectionFailure();
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void resetConnectionFailure();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int getQueueSize();
