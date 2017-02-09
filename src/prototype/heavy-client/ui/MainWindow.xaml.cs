@@ -8,6 +8,8 @@ using System.Windows.Media;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Timers;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace InterfaceGraphique_ClientLourd
 {
@@ -29,6 +31,10 @@ namespace InterfaceGraphique_ClientLourd
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+        }
+        public static void DoEvents()
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -60,12 +66,8 @@ namespace InterfaceGraphique_ClientLourd
                     return;
 
                 FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
-                startTimer(1000);
-                while (!failConnection && !timerEnded)
-                {
-                    checkForFailConnection();
-                }
-                if (!FonctionNative.verifyConnectionFailure())
+
+                if (FonctionNative.verifyConnection())
                 {
                     //Connection
                     FonctionNative.sendMessage("u" + username_textbox.Text);
@@ -215,7 +217,7 @@ namespace InterfaceGraphique_ClientLourd
         private void startTimer(int durationInMS)
         {
             timerEnded = false;
-            Timer t = new Timer();
+            System.Timers.Timer t = new System.Timers.Timer();
             t.Interval = durationInMS; //In milliseconds here
             t.AutoReset = true; //Stops it from repeating
             t.Elapsed += new ElapsedEventHandler(TimerElapsed);
