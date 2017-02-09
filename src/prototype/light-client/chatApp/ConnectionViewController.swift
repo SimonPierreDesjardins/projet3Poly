@@ -143,7 +143,8 @@ class ConnectionViewController: UIViewController, UITextFieldDelegate
         self.connectButton.isEnabled = true
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
         super.prepare(for: segue, sender: sender)
         let chatViewController = segue.destination as! ChatViewController
         

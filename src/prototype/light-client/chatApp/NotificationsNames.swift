@@ -18,5 +18,6 @@ extension Notification.Name
     static let Chat_onUsernameTooLong: Notification.Name = Notification.Name("UsernameTooLong")
     static let Chat_onUsernameInvalid: Notification.Name = Notification.Name("UsernameInvalid")
     static let Chat_onNewMessageReceived: Notification.Name = Notification.Name("NewMessageReceived")
-    static let Chat_onNewUser: Notification.Name = Notification.Name("NewUser")
+    static let Chat_onUpdateUsers: Notification.Name = Notification.Name("UpdateUsers")
+    static let Chat_onExitChat: Notification.Name = Notification.Name("ExitChat")
 }
