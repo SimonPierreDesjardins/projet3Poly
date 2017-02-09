@@ -27,6 +27,7 @@ public:
 
 	bool getConnectionState();
 	std::string getMessage();
+	bool getUsernameUnique();
 
 	void clearMessage();
 
@@ -40,7 +41,8 @@ private:
 	Networking::ConnectionResolver* _resolver;
 	static Client* client;
 
-	std::string message = "banane";
+	std::string message = "";
+	bool usernameUnique = false;
 };
 
 #endif

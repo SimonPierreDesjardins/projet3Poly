@@ -23,15 +23,22 @@
             <ColumnDefinition Width="10*"/>
         </Grid.ColumnDefinitions>
         <!-- Start of Login Screen components -->
-        <Button x:Name="ConnectButton" Content="Connection" HorizontalAlignment="Left" Margin="12,10,0,0" Width="75" Click="connectButton_Click" Grid.Row="3" Grid.Column="2" Height="20" VerticalAlignment="Top" Visibility="Collapsed"/>
+        <Button x:Name="ConnectButton" Content="Connexion" HorizontalAlignment="Left" Margin="12,10,0,0" Width="75" Click="connectButton_Click" Grid.Row="3" Grid.Column="2" Height="20" VerticalAlignment="Top" Visibility="Collapsed"/>
         <Image x:Name="login_image" HorizontalAlignment="Left" Height="244" Margin="79,1,-27,0" VerticalAlignment="Top" Width="274" OpacityMask="#FFC12525" Source="koala.jpg" Grid.RowSpan="3" Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="3" Visibility="Collapsed"/>
-        <TextBox x:Name="username_textbox" HorizontalAlignment="Left" Height="23" Margin="10,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" ToolTip="Enter username here" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
-        <Label x:Name="username_label_warning" Content="" HorizontalAlignment="Left" Margin="12,49,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red" Visibility="Collapsed"/>
-        <Label x:Name="ipAdresse_label_warning" Content="" HorizontalAlignment="Left" Margin="14,124,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red" Visibility="Collapsed"/>
-        <Label x:Name="username_label" Content="Username" HorizontalAlignment="Left" Margin="12,0,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
-        <Label x:Name="ipAdresse_label" Content="Ip adresse" HorizontalAlignment="Left" Margin="12,75,0,0" VerticalAlignment="Top" Width="176" Height="26"  Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
-        <Label x:Name="port_label" Content="Port" Grid.Column="2" HorizontalAlignment="Left" Margin="12,150,0,0" Grid.Row="1" VerticalAlignment="Top" Width="175" Grid.ColumnSpan="2" Visibility="Collapsed"/>
-        <TextBox x:Name="ipAdresse_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,101,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="175" Grid.ColumnSpan="2" SpellCheck.IsEnabled="True" Visibility="Collapsed"/>
+        <TextBox x:Name="username_textbox" HorizontalAlignment="Left" Height="23" Margin="10,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" 
+                 Width="176" ToolTip="Enter username here" Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed" MaxLength="10" PreviewTextInput="username_textbox_PreviewTextInput"/>
+        <Label x:Name="username_label_warning" Content="" HorizontalAlignment="Left" Margin="12,49,0,0" VerticalAlignment="Top" Width="176" Height="26"  
+               Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red" Visibility="Collapsed"/>
+        <Label x:Name="ipAdresse_label_warning" Content="" HorizontalAlignment="Left" Margin="14,124,0,0" VerticalAlignment="Top" Width="176" Height="26"  
+               Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Foreground="Red" Visibility="Collapsed"/>
+        <Label x:Name="username_label" Content="Nom d'utilisateur" HorizontalAlignment="Left" Margin="12,0,0,0" VerticalAlignment="Top" Width="176" Height="26"  
+               Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
+        <Label x:Name="ipAdresse_label" Content="Adresse IP" HorizontalAlignment="Left" Margin="12,75,0,0" VerticalAlignment="Top" Width="176" Height="26" 
+               Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="2" Visibility="Collapsed"/>
+        <Label x:Name="port_label" Content="Numéro de port" Grid.Column="2" HorizontalAlignment="Left" Margin="12,150,0,0" Grid.Row="1" VerticalAlignment="Top" 
+               Width="175" Grid.ColumnSpan="2" Visibility="Collapsed"/>
+        <TextBox x:Name="ipAdresse_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,101,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" 
+                 Width="175" Grid.ColumnSpan="2" SpellCheck.IsEnabled="True" Visibility="Collapsed" MaxLength="15"/>
         <TextBox x:Name="port_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,176,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Grid.ColumnSpan="2" Visibility="Collapsed"/>
         <Label x:Name="port_Label_Warning" Content="" Grid.Column="2" HorizontalAlignment="Left" Margin="14,199,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="174" Foreground="Red" Visibility="Collapsed"/>
         <!-- End of Login Screen Components -->
@@ -39,7 +46,7 @@
         <ListBox x:Name="chat_listBox" Tag="1" 
                  Grid.Row="1" Grid.Column="3" 
                  Margin="5,0,0,0" Grid.ColumnSpan="2" 
-                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontFamily="Century" FontSize="14" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled" FontFamily="Century" FontSize="14" Foreground="#FFE4D113" 
                  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -58,15 +65,18 @@
             </ListBox.ItemTemplate>
         </ListBox>
         <ListBox x:Name="users_listBox" Tag="2" Grid.RowSpan="3" Grid.Row="1" Grid.Column="2"/>
-        <Button x:Name="send_button" Content="Send" Grid.Row="3" Grid.Column="4" Margin="0,0,0,0" Click="send_button_Click"/>
-        <TextBox x:Name="chat_textBox" Margin="5,0,3,0" TextWrapping="Wrap" Grid.Row="3" Grid.Column="3" ToolTip="" GotFocus="chat_textBox_GotFocus" LostFocus="chat_textBox_LostFocus" Text="Enter your message here" Foreground="Gray" KeyDown="chat_textBox_KeyDown"/>
+        <Button x:Name="send_button" Content="Envoyer" Grid.Row="3" Grid.Column="4" Margin="0,0,0,0" Click="send_button_Click"/>
+        <TextBox x:Name="chat_textBox" Margin="5,0,3,0" TextWrapping="Wrap" Grid.Row="3" Grid.Column="3" ToolTip="" GotFocus="chat_textBox_GotFocus" LostFocus="chat_textBox_LostFocus" Text="Entrez votre message ici" Foreground="Gray" KeyDown="chat_textBox_KeyDown"/>
         <TextBlock Margin="5,2,4,2" Text="Enter your message here" Foreground="Gray" x:Name="chatHint_textBox" Grid.ColumnSpan="2"/>
         <Menu x:Name="chat_menu" Grid.ColumnSpan="6" Height="18" VerticalAlignment="Top">
-            <MenuItem x:Name="leaveChatMenuItem" Header="Leave Chat" Click="leaveChatMenuItem_Click"/>
-            <MenuItem Header="Application options" >
-                <MenuItem x:Name="displayUserListChatMenuItem" Header="Hide user list" Click="displayUserListChatMenuItem_Click"/>
-                <MenuItem Header="Chat color"/>
-                <MenuItem x:Name="ApplicationColor_MenuTab"  Header="Application Color" Click="ApplicationColor_MenuTab_Click" />
+            <MenuItem x:Name="leaveChatMenuItem" Header="Quitter la discussion" Click="leaveChatMenuItem_Click"/>
+            <MenuItem Header="Options">
+                <MenuItem x:Name="displayUserListChatMenuItem" Header="Montrer les utilisateurs" Click="displayUserListChatMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Choix de couleur" >
+                <MenuItem Header="Couleurs du texte" Click="TexteColor_MenuTab_Click"/>
+                <MenuItem Header="Couleurs des tableaux" Click="BackgroundColor_MenuTab_Click"/>
+                <MenuItem x:Name="ApplicationColor_MenuTab"  Header="Couleur de l'application" Click="ApplicationColor_MenuTab_Click" />
             </MenuItem>
         </Menu>
         <!-- End of Chat Screen Components -->

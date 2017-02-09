@@ -1,4 +1,5 @@
 #include "Client.h"
+#include <iostream>
 
 Client* Client::getClient()
 {
@@ -26,8 +27,8 @@ void Client::stopConnection()
 	if (!_connected)
 		return;
 
+	usernameUnique = false;
 	delete _connection;
-
 	ioServiceThread -> join();
 	delete _resolver;
 	delete ioServiceThread;
@@ -51,6 +52,11 @@ std::string Client::getMessage()
 	return message;
 }
 
+bool Client::getUsernameUnique()
+{
+	return usernameUnique;
+}
+
 void Client::clearMessage()
 {
 	message = "";
@@ -59,6 +65,9 @@ void Client::clearMessage()
 void Client::onMessageReceived(std::string& data)
 {
 	message = data;
+
+	if (!usernameUnique)
+		usernameUnique = (message == "asuc");
 }
 
 void Client::onConnectionEstablished(Networking::Connection * connection)

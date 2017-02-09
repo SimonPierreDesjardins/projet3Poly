@@ -60,6 +60,7 @@ namespace InterfaceGraphique_ClientLourd
         private void applyButton_ApplicationColor_Click(object sender, RoutedEventArgs e)
         {
             parentColor_ = this.Background;
+            this.Close();
         }
     }
 }

@@ -55,6 +55,11 @@ extern "C"
 	{
 		return Client::getClient()->getConnectionState();
 	}
+
+	__declspec(dllexport) bool verifyUsername()
+	{
+		return Client::getClient()->getUsernameUnique();
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

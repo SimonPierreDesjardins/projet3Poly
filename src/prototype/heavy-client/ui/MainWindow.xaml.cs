@@ -7,6 +7,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using System.Timers;
 
 //TODO: Finish color options
 
@@ -14,15 +17,20 @@ namespace InterfaceGraphique_ClientLourd
 {
     public partial class MainWindow : Window
     {
-        String username = "";
-        const string chatTextBoxLabel = "Enter your message here";
-
+        const string chatTextBoxLabel = "Entrez votre message ici";
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        bool timerEnded = false;
+        string username;
 
         public MainWindow()
         {
             InitializeComponent();
             switchScreen(this);
             showLoginScreen();
+
+            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -35,51 +43,143 @@ namespace InterfaceGraphique_ClientLourd
             if (username_textbox.Text.Equals(""))
             {
                 username_label_warning.Visibility = Visibility.Visible;
-                username_label_warning.Content = "Please enter your username.";
+                username_label_warning.Content = "Veuillez entrer votre nom d'utilisateur.";
             }
             else if (ipAdresse_textBox.Text.Equals(""))
             {
                 ipAdresse_label_warning.Visibility = Visibility.Visible;
-                ipAdresse_label_warning.Content = "Please enter an ipAdresse.";
+                ipAdresse_label_warning.Content = "Veuillez entrer un adresse IP.";
             }
             else if (port_textBox.Text.Equals(""))
             {
                 port_Label_Warning.Visibility = Visibility.Visible;
-                port_Label_Warning.Content = "Please enter a port number.";
+                port_Label_Warning.Content = "Veuillez entrer un numéro de port.";
             }
             else
             {
-                //TODO: Verify the user is unique
-                //TODO: Add connection to server here
-                username = username_textbox.Text;
+                username_label_warning.Visibility = Visibility.Collapsed;
+                ipAdresse_label_warning.Visibility = Visibility.Collapsed;
+                port_Label_Warning.Visibility = Visibility.Collapsed;
+
                 FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
-                while(!FonctionNative.verifyConnection()) {}
-                FonctionNative.sendMessage("u" + username_textbox.Text);
-            
-                System.Windows.Threading.DispatcherTimer dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-                dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
-                dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
-                dispatcherTimer.Start();
+                while (!FonctionNative.verifyConnection() && !timerEnded)
+                {
+                    startTimer(5000);
+                }
+                timerEnded = false;
+                if (FonctionNative.verifyConnection())
+                {
+                    //Connection
+                    dispatcherTimer.Start();
+                    FonctionNative.sendMessage("u" + username_textbox.Text);
+                    while (!FonctionNative.verifyUsername() && !timerEnded)
+                    {
+                        startTimer(5000);
+                    }
+                    timerEnded = false;
+                    if (FonctionNative.verifyUsername())
+                    {
+                        username = username_textbox.Text;
+                        switchScreen(this);
+                        showChatScreen();
 
-                switchScreen(this);
-                showChatScreen();
-
-                username_textbox.Text = "";
-                ipAdresse_textBox.Text = "";
-                port_textBox.Text = "";
+                        username_textbox.Text = "";
+                        ipAdresse_textBox.Text = "";
+                        port_textBox.Text = "";
+                    }
+                    else
+                    {
+                        FonctionNative.stopConnection();
+                        username_textbox.Text = "";
+                        username_label_warning.Visibility = Visibility.Visible;
+                        username_label_warning.Content = "Nom d'utilisateur déjà utilisé";
+                    }
+                } else
+                {
+                    //N'est pas connecter
+                    ipAdresse_label_warning.Visibility = Visibility.Visible;
+                    ipAdresse_label_warning.Content = "Échec de la connexion";
+                }
             }
         }
 
+        //Verify pour des nouveau message
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
             string message = FonctionNative.verifyForMessage();
             if (!message.Equals(""))
+                dealWithMessage(message);
+        }
+
+        private void dealWithMessage(string message)
+        {
+            switch(message[0])
             {
-                chat_listBox.Items.Add(message);
-                Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
-                ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
-                scrollViewer.ScrollToBottom();
+                case 'r':
+                    modifyUserList(message);
+                    break;
+
+                case 'm':
+                    addToChat(message);
+                    break;
+
+                case 'a':
+                    validateUser(message);
+                    break;
+
+                    //To cout erreur and check
+                default:
+                    addToChat(message);
+                    break;
             }
+                
+        }
+
+        private void modifyUserList(string message)
+        {
+            message = message.Substring(1);
+            string[] users = message.Split(';');
+            for (int i = 0; i < users.Length; i++)
+                users_listBox.Items.Add(users[i]);
+        }
+
+        private void addToChat(string message)
+        {
+            message = message.Substring(1);
+            //Get username
+            int endOfUser = message.IndexOf(';');
+            string user = message.Substring(0, endOfUser);
+            //Get Date and Time
+            message = message.Substring(endOfUser + 1);
+            int endOfDate = message.IndexOf(';');
+            string dateTime = message.Substring(0, endOfDate);
+            //Rebuild Message
+            message = message.Substring(endOfDate + 1);
+            message = user + " a envoyé a " + dateTime + "\r\n" + message;
+
+            chat_listBox.Items.Add(message);
+            Border border = (Border)VisualTreeHelper.GetChild(chat_listBox, 0);
+            ScrollViewer scrollViewer = (ScrollViewer)VisualTreeHelper.GetChild(border, 0);
+            scrollViewer.ScrollToBottom();
+        }
+
+        private void startTimer(int durationInMS)
+        {
+            Timer t = new Timer();
+            t.Interval = durationInMS; //In milliseconds here
+            t.AutoReset = true; //Stops it from repeating
+            t.Elapsed += new ElapsedEventHandler(TimerElapsed);
+            t.Start();
+        }
+
+        private void TimerElapsed(object sender, ElapsedEventArgs e)
+        {
+            timerEnded = true;
+        }
+
+        private void validateUser(string message)
+        {
+
         }
 
         private void switchScreen(UIElement parent)
@@ -116,41 +216,40 @@ namespace InterfaceGraphique_ClientLourd
         {
             chat_menu.Visibility = Visibility.Visible;
 
-            users_listBox.Visibility = Visibility.Visible;
-
             chat_listBox.Visibility = Visibility.Visible;
             chat_textBox.Visibility = Visibility.Visible;
             send_button.Visibility = Visibility.Visible;
 
             //Make sure every component is at the right place
-            Grid.SetColumnSpan(chat_listBox, 2);
-            Grid.SetColumn(chat_listBox, 3);
+            displayUserListChatMenuItem.Header = "Montrer les utilisateurs connecté";
+            users_listBox.Visibility = Visibility.Collapsed;
 
-            Grid.SetColumn(chat_textBox, 3);
-            Grid.SetColumnSpan(chat_textBox, 1);
+            Grid.SetColumn(chat_listBox, 2);
+            Grid.SetColumnSpan(chat_listBox, 3);
 
-            //Add user
-            users_listBox.Items.Add(username);
+            Grid.SetColumn(chat_textBox, 2);
+            Grid.SetColumnSpan(chat_textBox, 2);
         }
 
         private void leaveChatMenuItem_Click(object sender, RoutedEventArgs e)
         {
             FonctionNative.stopConnection();
+            dispatcherTimer.Stop();
 
-            users_listBox.Items.Remove(username);
+            Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
+            username = "";
+            users_listBox.Items.Clear();
             chat_listBox.Items.Clear();
 
             switchScreen(this);
             showLoginScreen();
-
-            //TODO: Disconnect from server here
         }
 
         private void displayUserListChatMenuItem_Click(object sender, RoutedEventArgs e)
         {
             if (users_listBox.Visibility.Equals(Visibility.Visible))
             {
-                displayUserListChatMenuItem.Header = "Show user list";
+                displayUserListChatMenuItem.Header = "Montrer les utilisateurs connecté";
                 users_listBox.Visibility = Visibility.Collapsed;
                
                 Grid.SetColumn(chat_listBox, 2);
@@ -161,7 +260,7 @@ namespace InterfaceGraphique_ClientLourd
             }
             else
             {
-                displayUserListChatMenuItem.Header = "Hide user list";
+                displayUserListChatMenuItem.Header = "Cacher les utilisateur connecté";
                 users_listBox.Visibility = Visibility.Visible;
                 
                 Grid.SetColumnSpan(chat_listBox, 2);
@@ -192,8 +291,6 @@ namespace InterfaceGraphique_ClientLourd
 
         private void send_button_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: Build and Send paquet
-
             bool isToolTip = chat_textBox.Text == chatTextBoxLabel;
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
@@ -211,18 +308,8 @@ namespace InterfaceGraphique_ClientLourd
                 send_button_Click(sender, e);
         }
 
-        private void chat_listBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            Selector selector = sender as Selector;
-            if (selector is ListBox)
-            {
-                (selector as ListBox).ScrollIntoView(selector.SelectedItem);
-            }
-        }
-
         private void ApplicationColor_MenuTab_Click(object sender, RoutedEventArgs e)
         {
-            //TODO: fix spawning position. Check screen max pixels
             ApplicationColorWindow applicationColorOptionWindow = new ApplicationColorWindow(this);
             var location = this.PointToScreen(new Point(0, 0));
             applicationColorOptionWindow.Left = location.X + this.Width - 20;
@@ -233,6 +320,30 @@ namespace InterfaceGraphique_ClientLourd
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             FonctionNative.stopConnection();
+        }
+
+        private void username_textbox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[A-zÀ-ÿ0-9._]+");
+            e.Handled = !regex.IsMatch(e.Text);
+        }
+
+        private void TexteColor_MenuTab_Click(object sender, RoutedEventArgs e)
+        {
+            TextForeColorWindow applicationColorOptionWindow = new TextForeColorWindow(this);
+            var location = this.PointToScreen(new Point(0, 0));
+            applicationColorOptionWindow.Left = location.X + this.Width - 20;
+            applicationColorOptionWindow.Top = location.Y - 30;
+            applicationColorOptionWindow.ShowDialog();
+        }
+
+        private void BackgroundColor_MenuTab_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundColorWindow applicationColorOptionWindow = new BackgroundColorWindow(this);
+            var location = this.PointToScreen(new Point(0, 0));
+            applicationColorOptionWindow.Left = location.X + this.Width - 20;
+            applicationColorOptionWindow.Top = location.Y - 30;
+            applicationColorOptionWindow.ShowDialog();
         }
     }
 
@@ -249,6 +360,9 @@ namespace InterfaceGraphique_ClientLourd
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool verifyConnection();
+
+        [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool verifyUsername();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void verifyForMessage(StringBuilder str, int len);
