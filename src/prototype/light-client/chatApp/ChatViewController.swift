@@ -52,10 +52,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         //self.view.addSubview(statusOpaqueBar)
         
         self.collectionView.collectionViewLayout = ChatCollectionViewFlowLayout()
-     
-        self.title = self.senderDisplayName + " Chat"
-        
-        
+               
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
@@ -70,7 +67,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         automaticallyScrollsToMostRecentMessage = true
         
-        self.topContentAdditionalInset = navigationBar.frame.size.height - UIApplication.shared.statusBarFrame.height
+        self.topContentAdditionalInset = navigationBar.frame.size.height
         
         self.collectionView?.reloadData()
         self.collectionView?.layoutIfNeeded()
@@ -137,6 +134,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
     func backButtonTapped()
     {
         dismiss(animated: true, completion: nil)
+        NotificationCenter.default.post(name: .Chat_onExitChat, object: nil)
     }
     
     func socialButtonTapped()
@@ -205,6 +203,8 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
+        
+        cell.messageBubbleContainerView.frame.size.height = 5
         
         let msg = self.chatHistory[indexPath.item]
             
@@ -294,6 +294,5 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         collectionView.reloadData()
     }
-    
 }
 

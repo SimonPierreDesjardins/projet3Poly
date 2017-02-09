@@ -18,10 +18,10 @@ class DatagramSender
         isListening = false
     }
     
-    func establishConnection(ipAdress: String, port: String) -> Bool
+    func establishConnection(ipAdress: String, port: Int) -> Bool
     {
-        client = TCPClient(address: "132.207.246.177", port: 5000)
-        switch client!.connect(timeout: 20000) {
+        client = TCPClient(address: ipAdress, port: Int32(port))
+        switch client!.connect(timeout: 5) {
             case .success:
                 print("yay")
                 listenToMessages()
@@ -30,7 +30,7 @@ class DatagramSender
                 print(error)
                 return false
         }
-        }
+    }
     
     func sendMessage(_ message: String)
     {

@@ -24,7 +24,9 @@ class ChatDelegator
         NotificationCenter.default.addObserver(self, selector: #selector (self.onUsernameNeedVerification(_:)), name: .Chat_onUsernameNeedVerification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (self.onUsernameInvalid), name: .Chat_onUsernameInvalid, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (self.updateViewControllerChatHistory), name: .Chat_onNewMessageReceived, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector (self.updateViewControllerUsersList), name: .Chat_onNewUser, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector (self.updateViewControllerUsersList), name: .Chat_onUpdateUsers, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector (self.onExitChat), name: .Chat_onExitChat, object: nil)
+
     }
     
     func getChatViewController() -> ChatViewController
@@ -85,6 +87,11 @@ class ChatDelegator
     @objc func onUsernameInvalid()
     {
         connectionViewController!.showUsernameInvalidError()
+    }
+    
+    @objc func onExitChat()
+    {
+        chatManager.closeConnection()
     }
     
 }

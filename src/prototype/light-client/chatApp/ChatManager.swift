@@ -53,9 +53,7 @@ class ChatManager
     
     func appendExternalMessage( username: String, date: Date, text: String)
     {
-        chatUsersList.insert(username)
         appendMessage(JSQMessage(senderId: username, senderDisplayName: username, date: date, text: text))
-        NotificationCenter.default.post(name: .Chat_onNewUser, object: nil)
     }
     
     @objc func onChatDatagramReception(_ notification: NSNotification)
@@ -76,22 +74,32 @@ class ChatManager
                 messageDatagramReader(datagramContent)
                 break
             case "r":
-                usersListDatagramdReader(datagramContent)
+                addUsersListDatagramReader(datagramContent)
                 break
+            case "d":
+                deleteUsersFromListDatagramReader(datagramContent)
+                break
+            
             default:
                 print("Unknown type of datagram")
                 break
         }
     }
     
-    func usersListDatagramdReader(_ datagramContent: String)
+    func deleteUsersFromListDatagramReader(_ datagramContent: String)
+    {
+        self.chatUsersList.remove(datagramContent)
+        NotificationCenter.default.post(name: .Chat_onUpdateUsers, object: nil)
+    }
+    
+    func addUsersListDatagramReader(_ datagramContent: String)
     {
         let usersList = datagramContent.characters.split(separator: ";").map(String.init)
         for name in usersList
         {
             self.chatUsersList.insert(name)
         }
-        NotificationCenter.default.post(name: .Chat_onNewUser, object: nil)
+        NotificationCenter.default.post(name: .Chat_onUpdateUsers, object: nil)
     }
     
     func usernameDatagramReader(_ datagramContent: String)
@@ -102,6 +110,7 @@ class ChatManager
         }
         else if datagramContent == "err"
         {
+            datagramSender.closeConnection()
             NotificationCenter.default.post(name: .Chat_onUsernameAuthentificationError, object: nil, userInfo: nil)
         }
     }
@@ -161,6 +170,11 @@ class ChatManager
         self.ipAdress = ipAdress
         guard let intPort = Int(port) else { return false }
         self.port = intPort
-        return datagramSender.establishConnection(ipAdress: ipAdress, port: port)
+        return datagramSender.establishConnection(ipAdress: ipAdress, port: self.port!)
+    }
+    
+    func closeConnection()
+    {
+        datagramSender.closeConnection()
     }
 }
