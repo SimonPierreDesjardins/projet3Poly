@@ -39,7 +39,7 @@
                Width="175" Grid.ColumnSpan="2" Visibility="Collapsed"/>
         <TextBox x:Name="ipAdresse_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,101,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" 
                  Width="175" Grid.ColumnSpan="2" SpellCheck.IsEnabled="True" Visibility="Collapsed" MaxLength="15"/>
-        <TextBox x:Name="port_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,176,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Grid.ColumnSpan="2" Visibility="Collapsed"/>
+        <TextBox x:Name="port_textBox" MaxLength="5" Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="14,176,0,0" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Top" Width="176" Grid.ColumnSpan="2" Visibility="Collapsed"/>
         <Label x:Name="port_Label_Warning" Content="" Grid.Column="2" HorizontalAlignment="Left" Margin="14,199,0,0" Grid.Row="1" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="174" Foreground="Red" Visibility="Collapsed"/>
         <!-- End of Login Screen Components -->
         <!-- Start of Chat Screen Components -->
