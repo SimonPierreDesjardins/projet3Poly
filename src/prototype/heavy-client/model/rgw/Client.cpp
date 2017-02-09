@@ -27,7 +27,6 @@ void Client::stopConnection()
 	if (!_connected)
 		return;
 
-	usernameUnique = false;
 	delete _connection;
 	ioServiceThread -> join();
 	delete _resolver;
@@ -47,27 +46,30 @@ bool Client::getConnectionState()
 	return _connected;
 }
 
+int Client::getMessagesQueued()
+{
+	return message.size();
+}
+
 std::string Client::getMessage()
 {
-	return message;
+	std::string data;
+	if (message.empty())
+	{
+		 data = "";
+	}
+	else
+	{
+		data = message.front();
+		message.pop();
+	}
+	return data;
 }
 
-bool Client::getUsernameUnique()
-{
-	return usernameUnique;
-}
-
-void Client::clearMessage()
-{
-	message = "";
-}
 
 void Client::onMessageReceived(std::string& data)
 {
-	message = data;
-
-	if (!usernameUnique)
-		usernameUnique = (message == "asuc");
+	message.push(data);
 }
 
 void Client::onConnectionEstablished(Networking::Connection * connection)

@@ -3,15 +3,11 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Text;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Timers;
-
-//TODO: Finish color options
 
 namespace InterfaceGraphique_ClientLourd
 {
@@ -20,6 +16,7 @@ namespace InterfaceGraphique_ClientLourd
         const string chatTextBoxLabel = "Entrez votre message ici";
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
         bool timerEnded = false;
+        bool uniqueUser = false;
         string username;
 
         public MainWindow()
@@ -38,7 +35,6 @@ namespace InterfaceGraphique_ClientLourd
             username_label_warning.Visibility = Visibility.Collapsed;
             ipAdresse_label_warning.Visibility = Visibility.Collapsed;
             port_Label_Warning.Visibility = Visibility.Collapsed;
-
 
             if (username_textbox.Text.Equals(""))
             {
@@ -70,15 +66,16 @@ namespace InterfaceGraphique_ClientLourd
                 if (FonctionNative.verifyConnection())
                 {
                     //Connection
-                    dispatcherTimer.Start();
                     FonctionNative.sendMessage("u" + username_textbox.Text);
-                    while (!FonctionNative.verifyUsername() && !timerEnded)
+                    startTimer(5000);
+                    while (!uniqueUser && !timerEnded)
                     {
-                        startTimer(5000);
+                        checkForMessage();
                     }
                     timerEnded = false;
-                    if (FonctionNative.verifyUsername())
+                    if (uniqueUser)
                     {
+                        dispatcherTimer.Start();
                         username = username_textbox.Text;
                         switchScreen(this);
                         showChatScreen();
@@ -105,6 +102,11 @@ namespace InterfaceGraphique_ClientLourd
 
         //Verify pour des nouveau message
         private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            checkForMessage();
+        }
+
+        private void checkForMessage()
         {
             string message = FonctionNative.verifyForMessage();
             if (!message.Equals(""))
@@ -179,7 +181,8 @@ namespace InterfaceGraphique_ClientLourd
 
         private void validateUser(string message)
         {
-
+            if (message.Equals("asuc"))
+                uniqueUser = true;
         }
 
         private void switchScreen(UIElement parent)
@@ -236,6 +239,7 @@ namespace InterfaceGraphique_ClientLourd
             FonctionNative.stopConnection();
             dispatcherTimer.Stop();
 
+            uniqueUser = false;
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             username = "";
             users_listBox.Items.Clear();
@@ -362,7 +366,7 @@ namespace InterfaceGraphique_ClientLourd
         public static extern bool verifyConnection();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool verifyUsername();
+        public static extern int getQueueSize();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         private static extern void verifyForMessage(StringBuilder str, int len);
