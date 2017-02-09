@@ -168,6 +168,7 @@ namespace InterfaceGraphique_ClientLourd
 
         private void modifyUserList(string message)
         {
+			users_listBox.Items.Clear();
             message = message.Substring(1);
             string[] users = message.Split(';');
             for (int i = 0; i < users.Length; i++)

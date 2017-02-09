@@ -8,8 +8,8 @@ bool ChatSession::Join(User * user)
 	if (_users.count(username) == 0){
 		_users.insert({ username, user });
 		HookUserEvents(user);
-		user->Message(SerializeUserList());
 		std::cout << "Added user " << username << " to chat." << std::endl;
+		OnReceivedMessage(SerializeUserList());
 		return true;
 	}
 	return false;
@@ -21,6 +21,7 @@ void ChatSession::Leave(User * user)
 
 	if (_users.count(username) > 0) {
 		_users.erase(username);
+		OnReceivedMessage(SerializeUserList());
 		std::cout << "User " << username << " left chat." << std::endl;
 	}
 }
