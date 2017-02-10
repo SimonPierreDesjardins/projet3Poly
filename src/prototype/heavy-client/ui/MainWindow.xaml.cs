@@ -303,6 +303,7 @@ namespace InterfaceGraphique_ClientLourd
             chatColor = Background;
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             username = "";
+            chat_textBox.Text = "";
 
             switchScreen(this);
             showLoginScreen();
