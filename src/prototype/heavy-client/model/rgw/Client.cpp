@@ -33,6 +33,7 @@ void Client::stopConnection()
 
 	//__unhook(&Networking::Connection::OnReceivedData, _connection, &Client::onMessageReceived);
 	delete _connection;
+	_connection = NULL;
 
 	//__unhook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
 	//__unhook(&Networking::ConnectionResolver::OnConnectionFailed, _resolver, &Client::onConnectionFailed);
@@ -64,7 +65,7 @@ void Client::resetConnectionFailure()
 
 bool Client::getConnectionState()
 {
-	return connectorRunning;
+	return _connection != NULL;
 }
 
 int Client::getMessagesQueued()
