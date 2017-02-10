@@ -64,7 +64,7 @@ void Client::resetConnectionFailure()
 
 bool Client::getConnectionState()
 {
-	return connectorRunning;
+	return _connection != NULL;
 }
 
 int Client::getMessagesQueued()
