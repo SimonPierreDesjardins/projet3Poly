@@ -22,10 +22,10 @@ extern "C"
 		return Client::getClient()->getMessagesQueued();
 	}
 
-	__declspec(dllexport) void verifyForMessage(char *str, int len)
+	__declspec(dllexport) void verifyForMessage(char dataUtf8[1024])
 	{
 		std::string data = Client::getClient()->getMessage();
-		strcpy_s(str, len, data.c_str());
+		std::strcpy(dataUtf8, data.data());
 	}
 
 	__declspec(dllexport) void startConnection(const wchar_t* ipAdresse, const wchar_t* port)
@@ -44,12 +44,10 @@ extern "C"
 		Client::getClient()->stopConnection();
 	}
 
-	__declspec(dllexport) void sendMessage(const wchar_t* data)
+	__declspec(dllexport) void sendMessage(char* dataUtf8)
 	{
-		std::wstring ws(data);
-		std::string arg0(ws.begin(), ws.end());
-
-		Client::getClient()->sendMessage(arg0);
+		std::string data(dataUtf8);
+		Client::getClient()->sendMessage(data);
 	}
 
 	__declspec(dllexport) bool verifyConnection()

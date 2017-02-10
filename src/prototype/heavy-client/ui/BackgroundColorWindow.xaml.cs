@@ -36,6 +36,10 @@ namespace InterfaceGraphique_ClientLourd
                 parentWindow_.chat_listBox.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
                 parentWindow_.users_listBox.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
                 parentWindow_.chat_menu.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
+                parentWindow_.displayUserListChatMenuItem.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
+                parentWindow_.a.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
+                parentWindow_.b.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
+                parentWindow_.ApplicationColor_MenuTab.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
                 parentWindow_.chat_textBox.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
                 parentWindow_.send_button.Background = new SolidColorBrush(applicationColorCanvas.SelectedColor.Value);
             }  
@@ -48,6 +52,12 @@ namespace InterfaceGraphique_ClientLourd
             parentWindow_.chat_menu.Background = parentTextColor_;
             parentWindow_.chat_textBox.Background = parentTextColor_;
             parentWindow_.send_button.Background = parentTextColor_;
+            parentWindow_.displayUserListChatMenuItem.Background = parentTextColor_;
+            parentWindow_.a.Background = parentTextColor_;
+            parentWindow_.b.Background = parentTextColor_;
+            parentWindow_.ApplicationColor_MenuTab.Background = parentTextColor_;
+
+            applicationColorCanvas.SelectedColor = null;
         }
 
         private void BackgroundColorWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -57,6 +67,10 @@ namespace InterfaceGraphique_ClientLourd
             parentWindow_.chat_menu.Background = parentTextColor_;
             parentWindow_.chat_textBox.Background = parentTextColor_;
             parentWindow_.send_button.Background = parentTextColor_;
+            parentWindow_.displayUserListChatMenuItem.Background = parentTextColor_;
+            parentWindow_.a.Background = parentTextColor_;
+            parentWindow_.b.Background = parentTextColor_;
+            parentWindow_.ApplicationColor_MenuTab.Background = parentTextColor_;
         }
 
         private void applyButton_ApplicationColor_Click(object sender, RoutedEventArgs e)

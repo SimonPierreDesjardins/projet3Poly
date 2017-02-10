@@ -16,11 +16,13 @@ namespace InterfaceGraphique_ClientLourd
     public partial class MainWindow : Window
     {
         const string chatTextBoxLabel = "Entrez votre message ici";
-        System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        DispatcherTimer dispatcherTimer;
         bool timerEnded = false;
         bool uniqueUser = false;
         bool failConnection = false;
         string username;
+        Brush chatColor;
+        public Brush textColor = Brushes.Black;
 
         public MainWindow()
         {
@@ -28,6 +30,7 @@ namespace InterfaceGraphique_ClientLourd
             switchScreen(this);
             showLoginScreen();
 
+            chatColor = Background;
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
@@ -78,14 +81,10 @@ namespace InterfaceGraphique_ClientLourd
                     }
                     if (uniqueUser)
                     {
-                        dispatcherTimer.Start();
                         username = username_textbox.Text;
                         switchScreen(this);
                         showChatScreen();
-
-                        username_textbox.Text = "";
-                        ipAdresse_textBox.Text = "";
-                        port_textBox.Text = "";
+                        dispatcherTimer.Start();
                     }
                     else
                     {
@@ -180,7 +179,6 @@ namespace InterfaceGraphique_ClientLourd
 
                     //To cout erreur and check
                 default:
-                    addToChat(message);
                     break;
             }
         }
@@ -248,6 +246,10 @@ namespace InterfaceGraphique_ClientLourd
 
         private void showLoginScreen()
         {
+            username_textbox.Text = "";
+            ipAdresse_textBox.Text = "";
+            port_textBox.Text = "";
+
             username_label.Visibility = Visibility.Visible;
             username_textbox.Visibility = Visibility.Visible;
             username_label_warning.Visibility = Visibility.Collapsed;
@@ -273,6 +275,11 @@ namespace InterfaceGraphique_ClientLourd
             chat_textBox.Visibility = Visibility.Visible;
             send_button.Visibility = Visibility.Visible;
 
+            Background = chatColor;
+            username_textbox.Text = "";
+            users_listBox.Items.Clear();
+            chat_listBox.Items.Clear();
+
             //Make sure every component is at the right place
             displayUserListChatMenuItem.Header = "Montrer les utilisateurs";
             users_listBox.Visibility = Visibility.Collapsed;
@@ -292,10 +299,10 @@ namespace InterfaceGraphique_ClientLourd
             failConnection = false;
             uniqueUser = false;
             FonctionNative.resetConnectionFailure();
+
+            chatColor = Background;
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             username = "";
-            users_listBox.Items.Clear();
-            chat_listBox.Items.Clear();
 
             switchScreen(this);
             showLoginScreen();
@@ -333,7 +340,7 @@ namespace InterfaceGraphique_ClientLourd
             {
                 chat_textBox.Text = "";
             }
-            chat_textBox.Foreground = Brushes.Black;
+            chat_textBox.Foreground = textColor;
         }
 
         private void chat_textBox_LostFocus(object sender, RoutedEventArgs e)
@@ -351,6 +358,8 @@ namespace InterfaceGraphique_ClientLourd
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
+                Brush color = chat_textBox.Foreground;
+
                 string message = username + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ";";
 
                 FonctionNative.sendMessage("m" + message + chat_textBox.Text);
@@ -415,7 +424,12 @@ namespace InterfaceGraphique_ClientLourd
         public static extern void stopConnection();
 
         [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
-        public static extern void sendMessage(string data);
+        public static extern void sendMessage(byte[] dataUtf8);
+        public static void sendMessage(string data)
+        {
+            byte[] dataUtf8 = Encoding.UTF8.GetBytes(data);
+            sendMessage(dataUtf8);
+        }
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool verifyConnection();
@@ -430,12 +444,15 @@ namespace InterfaceGraphique_ClientLourd
         public static extern int getQueueSize();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void verifyForMessage(StringBuilder str, int len);
+        private static extern void verifyForMessage(byte[] dataUtf8);
         public static string verifyForMessage()
         {
-            StringBuilder str = new StringBuilder(1024);
-            verifyForMessage(str, str.Capacity);
-            return str.ToString();
+            byte[] dataUtf8 = new byte[1024];
+            verifyForMessage(dataUtf8);
+            string data = System.Text.Encoding.UTF8.GetString(dataUtf8);
+            if (data.IndexOf("\0") != 0)
+                return data.Substring(0, data.IndexOf("\0"));
+            return "";
         }
     }
 }

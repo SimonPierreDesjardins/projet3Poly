@@ -48,6 +48,9 @@ namespace InterfaceGraphique_ClientLourd
             parentWindow_.chat_menu.Foreground = parentTextColor_;
             parentWindow_.chat_textBox.Foreground = parentTextColor_;
             parentWindow_.send_button.Foreground = parentTextColor_;
+            parentWindow_.textColor = parentTextColor_;
+
+            applicationColorCanvas.SelectedColor = null;
         }
 
         private void TextForeColorWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -57,6 +60,7 @@ namespace InterfaceGraphique_ClientLourd
             parentWindow_.chat_menu.Foreground = parentTextColor_;
             parentWindow_.chat_textBox.Foreground = parentTextColor_;
             parentWindow_.send_button.Foreground = parentTextColor_;
+            parentWindow_.textColor = parentTextColor_;
         }
 
         private void applyButton_ApplicationColor_Click(object sender, RoutedEventArgs e)
