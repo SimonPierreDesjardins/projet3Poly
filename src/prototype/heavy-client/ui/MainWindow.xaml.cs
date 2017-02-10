@@ -74,7 +74,7 @@ namespace InterfaceGraphique_ClientLourd
                 {
                     //Connection
                     FonctionNative.sendMessage("u" + username_textbox.Text);
-                    startTimer(100000);
+                    startTimer(1000);
                     while (!uniqueUser && !timerEnded)
                     {
                         checkForMessage();

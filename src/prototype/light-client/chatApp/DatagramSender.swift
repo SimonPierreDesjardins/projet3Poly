@@ -34,13 +34,14 @@ class DatagramSender
     
     func sendMessage(_ message: String)
     {
-        let datagram = String(message.characters.count) + ";" + message
+        let bytesSize = [UInt8](message.utf8).count
+        let datagram = String(bytesSize) + ";" + message
         switch client!.send(string: datagram) {
             case .success:
                 break
 
-            case .failure(let error):
-                print(error)
+            case .failure:
+                NotificationCenter.default.post(name: .Datagram_onServerDoesNotRespond, object: nil)
         }
     }
     
@@ -50,6 +51,24 @@ class DatagramSender
         concurrentQueue.async {
             
         }
+        DispatchQueue.global(qos: .utility).async
+        {
+            lock(lock: self.isListening as AnyObject, execute: { self.isListening = true })
+            while self.isListening
+            {
+                guard let data = self.client!.read(1024*10) else { return }
+                if !data.isEmpty
+                {
+                    DispatchQueue.main.async {
+                        NotificationCenter.default.post(name: .Datagram_chatDatagramReceived, object: nil, userInfo: ["data" : data])
+                    }
+                }
+            }
+        }
+    }
+    
+    func poll()
+    {
         DispatchQueue.global(qos: .utility).async
         {
             lock(lock: self.isListening as AnyObject, execute: { self.isListening = true })

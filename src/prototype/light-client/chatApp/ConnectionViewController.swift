@@ -137,9 +137,12 @@ class ConnectionViewController: UIViewController, UITextFieldDelegate
         NotificationCenter.default.post(name: .Chat_onUsernameNeedVerification, object: nil, userInfo: ["username":usernameTextBox.text!, "ipAdress":ipAdressTextBox.text!, "port":portTextBox.text!])
     }
     
-    func transitionView(viewToTransitionTo: UIViewController)
+    func transitionViewToChatViewController(username: String)
     {
-        present(viewToTransitionTo, animated: true, completion: nil)
+        let chatViewController = ChatViewController()
+        chatViewController.senderId = username
+        chatViewController.senderDisplayName = username
+        present(chatViewController, animated: true, completion: nil)
         self.connectButton.isEnabled = true
     }
     
