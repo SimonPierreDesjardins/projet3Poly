@@ -34,7 +34,8 @@ class DatagramSender
     
     func sendMessage(_ message: String)
     {
-        switch client!.send(string: message) {
+        let datagram = String(message.characters.count) + ";" + message
+        switch client!.send(string: datagram) {
             case .success:
                 break
 
@@ -45,6 +46,10 @@ class DatagramSender
     
     func listenToMessages()
     {
+        let concurrentQueue = DispatchQueue(label: "queuename", qos: .utility, attributes: .concurrent)
+        concurrentQueue.async {
+            
+        }
         DispatchQueue.global(qos: .utility).async
         {
             lock(lock: self.isListening as AnyObject, execute: { self.isListening = true })
@@ -55,7 +60,7 @@ class DatagramSender
                 if datagram != nil
                 {
                     DispatchQueue.main.async {
-                        NotificationCenter.default.post(name: .Datagram_chatDatagramReceived, object: nil, userInfo: ["Datagram" : datagram!])
+                        NotificationCenter.default.post(name: .Datagram_chatDatagramReceived, object: nil, userInfo: ["datagram" : datagram!])
                     }
                 }
             }

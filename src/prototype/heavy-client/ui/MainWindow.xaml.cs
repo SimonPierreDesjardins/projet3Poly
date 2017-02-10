@@ -8,17 +8,21 @@ using System.Windows.Media;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Timers;
+using System.Windows.Threading;
+using System.Threading;
 
 namespace InterfaceGraphique_ClientLourd
 {
     public partial class MainWindow : Window
     {
         const string chatTextBoxLabel = "Entrez votre message ici";
-        System.Windows.Threading.DispatcherTimer dispatcherTimer;
+        DispatcherTimer dispatcherTimer;
         bool timerEnded = false;
         bool uniqueUser = false;
         bool failConnection = false;
         string username;
+        Brush chatColor;
+        public Brush textColor = Brushes.Black;
 
         public MainWindow()
         {
@@ -26,9 +30,14 @@ namespace InterfaceGraphique_ClientLourd
             switchScreen(this);
             showLoginScreen();
 
+            chatColor = Background;
             dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+        }
+        public static void DoEvents()
+        {
+            Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, new ThreadStart(delegate { }));
         }
 
         private void connectButton_Click(object sender, RoutedEventArgs e)
@@ -60,12 +69,8 @@ namespace InterfaceGraphique_ClientLourd
                     return;
 
                 FonctionNative.startConnection(ipAdresse_textBox.Text, port_textBox.Text);
-                startTimer(1000);
-                while (!failConnection && !timerEnded)
-                {
-                    checkForFailConnection();
-                }
-                if (!FonctionNative.verifyConnectionFailure())
+
+                if (FonctionNative.verifyConnection())
                 {
                     //Connection
                     FonctionNative.sendMessage("u" + username_textbox.Text);
@@ -76,14 +81,10 @@ namespace InterfaceGraphique_ClientLourd
                     }
                     if (uniqueUser)
                     {
-                        dispatcherTimer.Start();
                         username = username_textbox.Text;
                         switchScreen(this);
                         showChatScreen();
-
-                        username_textbox.Text = "";
-                        ipAdresse_textBox.Text = "";
-                        port_textBox.Text = "";
+                        dispatcherTimer.Start();
                     }
                     else
                     {
@@ -215,7 +216,7 @@ namespace InterfaceGraphique_ClientLourd
         private void startTimer(int durationInMS)
         {
             timerEnded = false;
-            Timer t = new Timer();
+            System.Timers.Timer t = new System.Timers.Timer();
             t.Interval = durationInMS; //In milliseconds here
             t.AutoReset = true; //Stops it from repeating
             t.Elapsed += new ElapsedEventHandler(TimerElapsed);
@@ -246,6 +247,10 @@ namespace InterfaceGraphique_ClientLourd
 
         private void showLoginScreen()
         {
+            username_textbox.Text = "";
+            ipAdresse_textBox.Text = "";
+            port_textBox.Text = "";
+
             username_label.Visibility = Visibility.Visible;
             username_textbox.Visibility = Visibility.Visible;
             username_label_warning.Visibility = Visibility.Collapsed;
@@ -271,6 +276,11 @@ namespace InterfaceGraphique_ClientLourd
             chat_textBox.Visibility = Visibility.Visible;
             send_button.Visibility = Visibility.Visible;
 
+            Background = chatColor;
+            username_textbox.Text = "";
+            users_listBox.Items.Clear();
+            chat_listBox.Items.Clear();
+
             //Make sure every component is at the right place
             displayUserListChatMenuItem.Header = "Montrer les utilisateurs";
             users_listBox.Visibility = Visibility.Collapsed;
@@ -290,10 +300,10 @@ namespace InterfaceGraphique_ClientLourd
             failConnection = false;
             uniqueUser = false;
             FonctionNative.resetConnectionFailure();
+
+            chatColor = Background;
             Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFFFFF"));
             username = "";
-            users_listBox.Items.Clear();
-            chat_listBox.Items.Clear();
 
             switchScreen(this);
             showLoginScreen();
@@ -331,7 +341,7 @@ namespace InterfaceGraphique_ClientLourd
             {
                 chat_textBox.Text = "";
             }
-            chat_textBox.Foreground = Brushes.Black;
+            chat_textBox.Foreground = textColor;
         }
 
         private void chat_textBox_LostFocus(object sender, RoutedEventArgs e)
@@ -349,6 +359,8 @@ namespace InterfaceGraphique_ClientLourd
             bool noContentInText = (chat_textBox.Text == "" || chat_textBox.Text.Replace(" ", "") == "");
             if (!isToolTip && !noContentInText)
             {
+                Brush color = chat_textBox.Foreground;
+
                 string message = username + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ";";
 
                 FonctionNative.sendMessage("m" + message + chat_textBox.Text);

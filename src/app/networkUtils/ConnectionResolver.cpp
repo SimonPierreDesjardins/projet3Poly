@@ -40,7 +40,6 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 		socket -> connect(*endPointIterator++, error);
 	}
 	if (error) {
-		OnConnectionFailed();
 		LogError(error.message());
 	}
 	else {

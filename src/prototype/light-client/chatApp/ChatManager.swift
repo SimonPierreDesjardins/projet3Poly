@@ -17,7 +17,7 @@ class ChatManager
     
     var username: String?
     
-    var chatUsersList : Set<String>
+    var chatUsersList : [String]
     
     var ipAdress: String?
     
@@ -29,7 +29,7 @@ class ChatManager
     {
         datagramSender = DatagramSender()
         chatHistory = [JSQMessage]()
-        chatUsersList = Set<String>()
+        chatUsersList = [String]()
         dateFormatter.dateFormat = ("yyyy-MM-dd HH:mm:ss")
         NotificationCenter.default.addObserver(self, selector: #selector (onChatDatagramReception), name: .Datagram_chatDatagramReceived, object: nil)
     }
@@ -58,47 +58,58 @@ class ChatManager
     
     @objc func onChatDatagramReception(_ notification: NSNotification)
     {
-        let datagram : String = notification.userInfo?["Datagram"] as! String
+        var datagrams : String = notification.userInfo?["datagram"] as! String
         
-        let datagramHeader = datagram[datagram.startIndex]
-        
-        let contentIndex = datagram.index(after: datagram.startIndex)..<datagram.endIndex
-        let datagramContent = datagram[contentIndex]
-        
-        switch datagramHeader
+        while !datagrams.isEmpty
         {
-            case "a":
-                usernameDatagramReader(datagramContent)
-                break
-            case "m":
-                messageDatagramReader(datagramContent)
-                break
-            case "r":
-                addUsersListDatagramReader(datagramContent)
-                break
-            case "d":
-                deleteUsersFromListDatagramReader(datagramContent)
-                break
+            let datagramSizeRange = datagrams.range(of: ";")
             
-            default:
-                print("Unknown type of datagram")
-                break
+            let sizeSeparatorPos = (datagramSizeRange?.lowerBound)!
+            
+            let datagramSizeIndex = datagrams.index(before: sizeSeparatorPos)
+            
+            let datagramSize = Int(datagrams[datagrams.startIndex...datagramSizeIndex])
+            
+            let afterSizeSeperatorPos = (datagramSizeRange?.upperBound)!
+            
+            let datagram: String = datagrams[afterSizeSeperatorPos..<datagrams.index(afterSizeSeperatorPos, offsetBy: datagramSize!)]
+            
+            let datagramHeader = datagram[datagram.startIndex]
+            
+            let contentIndex = datagram.index(after: datagram.startIndex)..<datagram.endIndex
+            let datagramContent = datagram[contentIndex]
+            
+            switch datagramHeader
+            {
+                case "a":
+                    usernameDatagramReader(datagramContent)
+                    break
+                case "m":
+                    messageDatagramReader(datagramContent)
+                    break
+                case "r":
+                    addUsersListDatagramReader(datagramContent)
+                    break
+                
+                default:
+                    print("Unknown type of datagram")
+                    break
+            }
+            
+            datagrams = datagrams[datagrams.index(afterSizeSeperatorPos, offsetBy: datagramSize!)..<datagrams.endIndex]
         }
     }
     
     func deleteUsersFromListDatagramReader(_ datagramContent: String)
     {
-        self.chatUsersList.remove(datagramContent)
+        //self.chatUsersList.remove(at: datagramContent)
         NotificationCenter.default.post(name: .Chat_onUpdateUsers, object: nil)
     }
     
     func addUsersListDatagramReader(_ datagramContent: String)
     {
-        let usersList = datagramContent.characters.split(separator: ";").map(String.init)
-        for name in usersList
-        {
-            self.chatUsersList.insert(name)
-        }
+        chatUsersList = datagramContent.characters.split(separator: ";").map(String.init)
+        
         NotificationCenter.default.post(name: .Chat_onUpdateUsers, object: nil)
     }
     
@@ -162,7 +173,7 @@ class ChatManager
     
     func getUsersList() -> [String]
     {
-        return Array(chatUsersList)
+        return chatUsersList
     }
     
     func establishConnection(ipAdress: String, port: String) -> Bool
