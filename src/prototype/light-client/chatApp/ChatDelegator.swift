@@ -12,7 +12,7 @@ import JSQMessagesViewController
 class ChatDelegator
 {
     var chatManager: ChatManager
-    var chatViewController: ChatViewController?
+    weak var chatViewController: ChatViewController?
     var connectionViewController: ConnectionViewController?
     
     init()
@@ -26,15 +26,12 @@ class ChatDelegator
         NotificationCenter.default.addObserver(self, selector: #selector (self.updateViewControllerChatHistory), name: .Chat_onNewMessageReceived, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (self.updateViewControllerUsersList), name: .Chat_onUpdateUsers, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector (self.onExitChat), name: .Chat_onExitChat, object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector (self.onServerDoesNotRespond), name: .Datagram_onServerDoesNotRespond, object: nil)
     }
     
-    func getChatViewController() -> ChatViewController
+    func setChatViewController(_ chatViewController: ChatViewController)
     {
-        chatViewController = chatViewController ?? ChatViewController()
-        updateViewControllerChatHistory()
-        updateViewControllerUsersList()
-        return chatViewController!
+        self.chatViewController = chatViewController
     }
     
     func setConnectionViewController(_ connectionViewController: ConnectionViewController)
@@ -50,12 +47,12 @@ class ChatDelegator
     
     @objc func updateViewControllerChatHistory()
     {
-        chatViewController!.updateChatHistory(chatManager.getChatHistory())
+        chatViewController?.updateChatHistory(chatManager.getChatHistory())
     }
     
     @objc func updateViewControllerUsersList()
     {
-        chatViewController!.updateUsersList(chatManager.getUsersList())
+        chatViewController?.updateUsersList(chatManager.getUsersList())
     }
     
     @objc func onUsernameAuthentificationError()
@@ -65,10 +62,7 @@ class ChatDelegator
     
     @objc func onUsernameAuthentificationSuccess(_ notification: NSNotification)
     {
-        self.chatViewController = getChatViewController()
-        chatViewController!.senderDisplayName = notification.userInfo?["username"] as! String
-        chatViewController!.senderId = notification.userInfo?["username"] as! String
-        connectionViewController!.transitionView(viewToTransitionTo: chatViewController!)
+        connectionViewController!.transitionViewToChatViewController(username: notification.userInfo?["username"] as! String)
     }
     
     @objc func onUsernameNeedVerification(_ notification: NSNotification)
@@ -91,6 +85,13 @@ class ChatDelegator
     @objc func onExitChat()
     {
         chatManager.closeConnection()
+        chatViewController = nil
+    }
+    
+    @objc func onServerDoesNotRespond()
+    {
+        chatViewController?.dismiss(animated: true, completion: nil)
+        onExitChat()
     }
     
 }

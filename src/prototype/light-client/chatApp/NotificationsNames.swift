@@ -20,4 +20,5 @@ extension Notification.Name
     static let Chat_onNewMessageReceived: Notification.Name = Notification.Name("NewMessageReceived")
     static let Chat_onUpdateUsers: Notification.Name = Notification.Name("UpdateUsers")
     static let Chat_onExitChat: Notification.Name = Notification.Name("ExitChat")
+    static let Datagram_onServerDoesNotRespond: Notification.Name = Notification.Name("ServerDoesNotRespond")
 }

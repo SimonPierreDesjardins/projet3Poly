@@ -33,7 +33,7 @@
                                     <action selector="connectionButtonClicked:" destination="ZPh-yA-EoL" eventType="touchDragInside" id="7L4-CA-KGo"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Philippe" borderStyle="roundedRect" placeholder="Entrez un nom d'utilisateur" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pxG-l5-mrr">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Entrez un nom d'utilisateur" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pxG-l5-mrr">
                                 <rect key="frame" x="290" y="446" width="188" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="EhK-AW-gHw"/>
@@ -48,17 +48,17 @@
                                 <color key="textColor" red="0.80000000000000004" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="5000" borderStyle="roundedRect" placeholder="Port" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ai8-y4-8wu">
-                                <rect key="frame" x="449" y="317" width="50" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Port" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ai8-y4-8wu">
+                                <rect key="frame" x="449" y="317" width="60" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="cvt-Ft-sC1"/>
-                                    <constraint firstAttribute="width" constant="50" id="mss-e4-OAr"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="ftO-ez-Oao"/>
                                 </constraints>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="132.207.29.99" borderStyle="roundedRect" placeholder="Adresse IP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eso-SB-W63">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Adresse IP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eso-SB-W63">
                                 <rect key="frame" x="265" y="317" width="130" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="130" id="LWM-tZ-ykS"/>
@@ -76,12 +76,12 @@
                             <constraint firstItem="XYQ-zv-ysu" firstAttribute="top" secondItem="yLX-rO-VPr" secondAttribute="bottom" constant="8" id="67P-rY-g4i"/>
                             <constraint firstItem="pxG-l5-mrr" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="270" id="ANi-MG-zlg"/>
                             <constraint firstItem="eso-SB-W63" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="245" id="H4b-hH-HpT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ai8-y4-8wu" secondAttribute="trailing" constant="239" id="HGW-a5-xfa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yLX-rO-VPr" secondAttribute="trailing" constant="161" id="IAl-WS-IKl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="pxG-l5-mrr" secondAttribute="trailing" constant="270" id="Ikg-VH-An0"/>
                             <constraint firstItem="eso-SB-W63" firstAttribute="top" secondItem="T0c-s6-zg7" secondAttribute="bottom" constant="297" id="d5k-In-sGX"/>
                             <constraint firstItem="XYQ-zv-ysu" firstAttribute="top" secondItem="pxG-l5-mrr" secondAttribute="bottom" constant="44" id="f7t-Eo-CV6"/>
                             <constraint firstItem="XYQ-zv-ysu" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="302" id="gxK-zh-RLk"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Ai8-y4-8wu" secondAttribute="trailing" constant="249" id="iuh-2A-QBJ"/>
                             <constraint firstItem="yLX-rO-VPr" firstAttribute="top" secondItem="pxG-l5-mrr" secondAttribute="bottom" constant="15" id="jdD-du-v1C"/>
                             <constraint firstItem="Ai8-y4-8wu" firstAttribute="top" secondItem="T0c-s6-zg7" secondAttribute="bottom" constant="297" id="pBP-fV-RCW"/>
                             <constraint firstItem="yLX-rO-VPr" firstAttribute="leading" secondItem="veF-Ic-QXX" secondAttribute="leadingMargin" constant="161" id="qYX-kV-Boj"/>

@@ -67,12 +67,14 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         
         //receiveMessagePressed()
         
-        self.topContentAdditionalInset = 50
+        self.topContentAdditionalInset = navigationBar.frame.size.height
         
-        self.collectionView?.reloadData()
-        self.collectionView?.layoutIfNeeded()
+        //qself.collectionView?.reloadData()
+        //self.collectionView?.layoutIfNeeded()
         
         dateFormatter.dateFormat = ("yyyy-MM-dd HH:mm:ss")
+        
+        AppDelegate.chatDelegator.setChatViewController(self)
     }
     
     func updateUsersList(_ usersList: [String])
@@ -90,6 +92,7 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         if self.collectionView != nil
         {
             self.collectionView.reloadData()
+            self.scrollToBottom(animated: true)
         }
     }
     
@@ -225,6 +228,8 @@ class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
         self.finishSendingMessage(animated: true)
         
         NotificationCenter.default.post(name: .Chat_onSendButtonTapped, object: nil, userInfo: ["message":message!])
+        
+        self.collectionView.reloadData()
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath) -> NSAttributedString?

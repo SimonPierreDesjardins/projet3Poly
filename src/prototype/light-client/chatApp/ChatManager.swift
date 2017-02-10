@@ -25,12 +25,17 @@ class ChatManager
     
     let dateFormatter = DateFormatter()
     
+    let sizeSeparator = ";"
+    
+    let sizeSeparatorUTF8 : UInt8
+    
     init()
     {
         datagramSender = DatagramSender()
         chatHistory = [JSQMessage]()
         chatUsersList = [String]()
         dateFormatter.dateFormat = ("yyyy-MM-dd HH:mm:ss")
+        sizeSeparatorUTF8 = sizeSeparator.utf8[sizeSeparator.utf8.startIndex]
         NotificationCenter.default.addObserver(self, selector: #selector (onChatDatagramReception), name: .Datagram_chatDatagramReceived, object: nil)
     }
     
@@ -58,21 +63,19 @@ class ChatManager
     
     @objc func onChatDatagramReception(_ notification: NSNotification)
     {
-        var datagrams : String = notification.userInfo?["datagram"] as! String
+        var data = notification.userInfo?["data"] as! [UInt8]
         
-        while !datagrams.isEmpty
+        while !data.isEmpty
         {
-            let datagramSizeRange = datagrams.range(of: ";")
+            let sizeEndPos: Int = data.index(of: sizeSeparatorUTF8)!
             
-            let sizeSeparatorPos = (datagramSizeRange?.lowerBound)!
+            let datagramSize: Int = Int(String(bytes: data[0..<sizeEndPos], encoding: .utf8)!)!
             
-            let datagramSizeIndex = datagrams.index(before: sizeSeparatorPos)
+            let sizeEndAfterPos = sizeEndPos + 1
             
-            let datagramSize = Int(datagrams[datagrams.startIndex...datagramSizeIndex])
+            let datagram: String = String(bytes: data[sizeEndAfterPos..<sizeEndAfterPos + datagramSize], encoding: .utf8)!
             
-            let afterSizeSeperatorPos = (datagramSizeRange?.upperBound)!
-            
-            let datagram: String = datagrams[afterSizeSeperatorPos..<datagrams.index(afterSizeSeperatorPos, offsetBy: datagramSize!)]
+            data = [UInt8](data[(sizeEndAfterPos + datagramSize)..<data.count])
             
             let datagramHeader = datagram[datagram.startIndex]
             
@@ -95,8 +98,6 @@ class ChatManager
                     print("Unknown type of datagram")
                     break
             }
-            
-            datagrams = datagrams[datagrams.index(afterSizeSeperatorPos, offsetBy: datagramSize!)..<datagrams.endIndex]
         }
     }
     
@@ -186,6 +187,8 @@ class ChatManager
     
     func closeConnection()
     {
+        chatUsersList = [String]()
+        chatHistory = [JSQMessage]()
         datagramSender.closeConnection()
     }
 }
