@@ -48,6 +48,8 @@ namespace InterfaceGraphique_ClientLourd
             parentWindow_.chat_menu.Background = parentTextColor_;
             parentWindow_.chat_textBox.Background = parentTextColor_;
             parentWindow_.send_button.Background = parentTextColor_;
+
+            applicationColorCanvas.SelectedColor = null;
         }
 
         private void BackgroundColorWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
