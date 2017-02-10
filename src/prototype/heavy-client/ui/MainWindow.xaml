@@ -77,15 +77,15 @@
                  GotFocus="chat_textBox_GotFocus" LostFocus="chat_textBox_LostFocus" Text="Entrez votre message ici" Foreground="Gray" 
                  KeyDown="chat_textBox_KeyDown" FontFamily="Century" FontSize="14" Visibility="Collapsed"/>
         <TextBlock Margin="5,2,4,2" Text="Enter your message here" Foreground="Gray" x:Name="chatHint_textBox" Grid.ColumnSpan="2" Visibility="Collapsed"/>
-        <Menu x:Name="chat_menu" Grid.ColumnSpan="6" Height="18" VerticalAlignment="Top" Visibility="Collapsed">
+        <Menu x:Name="chat_menu" Grid.ColumnSpan="6" Height="18" VerticalAlignment="Top">
             <MenuItem x:Name="leaveChatMenuItem" Header="Quitter la discussion" Click="leaveChatMenuItem_Click" FontFamily="Century" FontSize="14"/>
             <MenuItem Header="Option" FontFamily="Century" FontSize="14">
                 <MenuItem x:Name="displayUserListChatMenuItem" Header="Montrer les utilisateurs" Click="displayUserListChatMenuItem_Click" 
                           FontFamily="Century" FontSize="14"/>
             </MenuItem>
             <MenuItem Header="Choix de couleurs" FontFamily="Century" FontSize="14" >
-                <MenuItem Header="Couleur du texte" Click="TexteColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
-                <MenuItem Header="Couleur des tableaux" Click="BackgroundColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
+                <MenuItem x:Name="a" Header="Couleur du texte" Click="TexteColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
+                <MenuItem x:Name="b" Header="Couleur des tableaux" Click="BackgroundColor_MenuTab_Click" FontFamily="Century" FontSize="14"/>
                 <MenuItem x:Name="ApplicationColor_MenuTab"  Header="Couleur de l'application" Click="ApplicationColor_MenuTab_Click" 
                           FontFamily="Century" FontSize="14"/>
             </MenuItem>
