@@ -74,7 +74,7 @@ namespace InterfaceGraphique_ClientLourd
                 {
                     //Connection
                     FonctionNative.sendMessage("u" + username_textbox.Text);
-                    startTimer(1000);
+                    startTimer(100000);
                     while (!uniqueUser && !timerEnded)
                     {
                         checkForMessage();
@@ -179,7 +179,6 @@ namespace InterfaceGraphique_ClientLourd
 
                     //To cout erreur and check
                 default:
-                    addToChat(message);
                     break;
             }
         }
@@ -445,12 +444,15 @@ namespace InterfaceGraphique_ClientLourd
         public static extern int getQueueSize();
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
-        private static extern void verifyForMessage(StringBuilder str, int len);
+        private static extern void verifyForMessage(byte[] dataUtf8);
         public static string verifyForMessage()
         {
-            StringBuilder str = new StringBuilder(1024);
-            verifyForMessage(str, str.Capacity);
-            return str.ToString();
+            byte[] dataUtf8 = new byte[1024];
+            verifyForMessage(dataUtf8);
+            string data = System.Text.Encoding.UTF8.GetString(dataUtf8);
+            if (data.IndexOf("\0") != 0)
+                return data.Substring(0, data.IndexOf("\0"));
+            return "";
         }
     }
 }
