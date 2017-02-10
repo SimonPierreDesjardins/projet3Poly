@@ -425,7 +425,12 @@ namespace InterfaceGraphique_ClientLourd
         public static extern void stopConnection();
 
         [DllImport("prototype-model.dll", CharSet = CharSet.Unicode)]
-        public static extern void sendMessage(string data);
+        public static extern void sendMessage(byte[] dataUtf8);
+        public static void sendMessage(string data)
+        {
+            byte[] dataUtf8 = Encoding.UTF8.GetBytes(data);
+            sendMessage(dataUtf8);
+        }
 
         [DllImport("prototype-model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool verifyConnection();

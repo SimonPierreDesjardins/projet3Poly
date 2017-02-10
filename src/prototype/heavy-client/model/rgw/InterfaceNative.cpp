@@ -44,12 +44,10 @@ extern "C"
 		Client::getClient()->stopConnection();
 	}
 
-	__declspec(dllexport) void sendMessage(const wchar_t* data)
+	__declspec(dllexport) void sendMessage(char* dataUtf8)
 	{
-		std::wstring ws(data);
-		std::string arg0(ws.begin(), ws.end());
-
-		Client::getClient()->sendMessage(arg0);
+		std::string data(dataUtf8);
+		Client::getClient()->sendMessage(data);
 	}
 
 	__declspec(dllexport) bool verifyConnection()
