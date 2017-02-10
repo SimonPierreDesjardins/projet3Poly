@@ -36,7 +36,7 @@ private:
 	void onMessageReceived(std::string& data);
 	void onConnectionEstablished(Networking::Connection* connection);
 	void onConnectionFailed();
-	bool _connected = false;
+	bool connectorRunning = false;
 	bool failedConnection = false;
 	std::string lastMessage;
 	std::thread* ioServiceThread;

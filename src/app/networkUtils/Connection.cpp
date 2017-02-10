@@ -60,8 +60,11 @@ void Connection::SendData(std::string data) {
 
 void Networking::Connection::CloseConnection()
 {
-	_socket->close();
-	delete _socket;
+	if (_socket != NULL) {
+		_socket->cancel();
+		_socket->close();
+		delete _socket;
+	}
 }
 
 void Networking::Connection::CheckIfDisconnect(std::error_code error)

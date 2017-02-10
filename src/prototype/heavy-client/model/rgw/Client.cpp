@@ -21,28 +21,32 @@ void Client::startConnection(std::string ipAdresse, std::string port)
 	_resolver -> Resolve(ipAdresse, port);
 
 	ioServiceThread = new std::thread([aios]() {aios->run(); });
+
+	connectorRunning = true;
 }
 
 // Calling this 
 void Client::stopConnection()
 {
-	if (!_connected)
+	if (!connectorRunning)
 		return;
 
-	__unhook(&Networking::Connection::OnReceivedData, _connection, &Client::onMessageReceived);
+	//__unhook(&Networking::Connection::OnReceivedData, _connection, &Client::onMessageReceived);
 	delete _connection;
 
-	__unhook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
-	__unhook(&Networking::ConnectionResolver::OnConnectionFailed, _resolver, &Client::onConnectionFailed);
+	//__unhook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
+	//__unhook(&Networking::ConnectionResolver::OnConnectionFailed, _resolver, &Client::onConnectionFailed);
 	delete _resolver;
 
 	ioServiceThread -> join();
 	delete ioServiceThread;
+
+	connectorRunning = false;
 }
 
 void Client::sendMessage(std::string data)
 {
-	if (!_connected)
+	if (!connectorRunning)
 		return;
 
 	_connection->SendData(data);
@@ -60,7 +64,7 @@ void Client::resetConnectionFailure()
 
 bool Client::getConnectionState()
 {
-	return _connected;
+	return connectorRunning;
 }
 
 int Client::getMessagesQueued()
@@ -94,7 +98,6 @@ void Client::onConnectionEstablished(Networking::Connection * connection)
 	_connection = connection;
 	__hook(&Networking::Connection::OnReceivedData, connection, &Client::onMessageReceived);
 	connection->Start();
-	_connected = true;
 }
 
 void Client::onConnectionFailed()
