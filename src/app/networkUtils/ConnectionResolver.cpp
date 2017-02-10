@@ -15,20 +15,6 @@ ConnectionResolver::~ConnectionResolver() {
 void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 
 	tcp::resolver::query query(ipAddress, port);
-
-	_resolver.async_resolve(query, [this](std::error_code error, tcp::resolver::iterator iterator) {
-		if (!error) {
-			AttemptConnect(iterator);
-			//OnConnectionResolved(new Connection(socket));
-		}
-		else {
-			OnConnectionFailed();
-			Logger::LogError(error);
-		}
-	});
-
-	/*
-	tcp::resolver::query query(ipAddress, port);
 	auto endPointIterator = _resolver.resolve(query);
 	tcp::resolver::iterator end;
 
@@ -46,21 +32,6 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 		// build a connection object and callback
 		OnConnectionResolved(new Connection(socket));
 	}
-	*/
-}
-
-void Networking::ConnectionResolver::AttemptConnect(tcp::resolver::iterator iterator)
-{
-	_socket = new tcp::socket(_resolver.get_io_service());
-	_socket->async_connect(iterator -> endpoint(), [this](std::error_code error/*, tcp::resolver::iterator iterator*/) {
-		if (!error) {
-			OnConnectionResolved(new Connection(_socket));
-		}
-		else {
-			OnConnectionFailed();
-		}
-	});
-
 }
 
 void ConnectionResolver::Close() {

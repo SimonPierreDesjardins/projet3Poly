@@ -29,11 +29,11 @@ void Client::stopConnection()
 	if (!_connected)
 		return;
 
-	//__unhook(&Networking::Connection::OnReceivedData, _connection, &Client::onMessageReceived);
+	__unhook(&Networking::Connection::OnReceivedData, _connection, &Client::onMessageReceived);
 	delete _connection;
 
-	//__unhook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
-	//__unhook(&Networking::ConnectionResolver::OnConnectionFailed, _resolver, &Client::onConnectionFailed);
+	__unhook(&Networking::ConnectionResolver::OnConnectionResolved, _resolver, &Client::onConnectionEstablished);
+	__unhook(&Networking::ConnectionResolver::OnConnectionFailed, _resolver, &Client::onConnectionFailed);
 	delete _resolver;
 
 	ioServiceThread -> join();

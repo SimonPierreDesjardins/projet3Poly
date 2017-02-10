@@ -34,6 +34,7 @@ namespace Networking{
 		///<param>the port to connect to </param>
 		void Resolve(std::string ipAdress, std::string port);
 
+
 		__event void OnConnectionFailed();
 
 		///<summary>Closes the connection and clears it for further use later</summary>
@@ -50,12 +51,8 @@ namespace Networking{
 
 	private:
 
-		void AttemptConnect(tcp::resolver::iterator iterator);
-
 		///<param>The OS' io service used for socket interfacing</param>
 		tcp::resolver _resolver;
-
-		tcp::socket* _socket;
 
 		bool _connectionEstablished; // true if polling has revealed that the player is currently online
 
