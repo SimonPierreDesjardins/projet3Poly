@@ -7,7 +7,6 @@
 /// @{
 ////////////////////////////////////////////////
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
@@ -16,6 +15,8 @@ namespace ui
 {
     public partial class Window : Form, IMessageFilter
     {
+        public Configure configuration;
+
         public MainMenu mainMenu;
         public SimulationMenuStrip simulationMenuStrip;
         public TestMenuStrip testMenuStrip;
@@ -35,8 +36,6 @@ namespace ui
         private const int WM_RBUTTONUP = 0x0205;
         private const int WM_MOUSEMOVE = 0x0200;
         private const int WM_MOUSEWHEEL = 0x020A;
-
-        public Configure configuration;
 
         bool arreterToutMessage_;
 
@@ -90,7 +89,7 @@ namespace ui
             menuEdition_.Visible = false;
             panneauOperation_.Visible = false;
             supprimerToolStripMenuItem.Enabled = false;
-            configuration = new Configure(profilsMenuSimTest);
+            configuration = new Configure(this);
         }
 
         ////////////////////////////////////////////////////////////////////////

@@ -68,7 +68,6 @@
             this.lineObjectPicture = new System.Windows.Forms.PictureBox();
             this.panelButton3 = new ui.PanelButton();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.customLabel3 = new ui.CustomLabel();
             this.editionToolsMenu.SuspendLayout();
             this.deleteToolButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.deletePictureBox)).BeginInit();
@@ -487,7 +486,6 @@
             // 
             this.panelButton3.BackColor = System.Drawing.Color.Transparent;
             this.panelButton3.Controls.Add(this.pictureBox4);
-            this.panelButton3.Controls.Add(this.customLabel3);
             this.panelButton3.Location = new System.Drawing.Point(200, 198);
             this.panelButton3.Name = "panelButton3";
             this.panelButton3.Size = new System.Drawing.Size(200, 50);
@@ -500,17 +498,6 @@
             this.pictureBox4.Size = new System.Drawing.Size(25, 25);
             this.pictureBox4.TabIndex = 1;
             this.pictureBox4.TabStop = false;
-            // 
-            // customLabel3
-            // 
-            this.customLabel3.AutoSize = true;
-            this.customLabel3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel3.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel3.Location = new System.Drawing.Point(55, 10);
-            this.customLabel3.Name = "customLabel3";
-            this.customLabel3.Size = new System.Drawing.Size(90, 21);
-            this.customLabel3.TabIndex = 0;
-            this.customLabel3.Text = "Simulation";
             // 
             // EditionSideMenu
             // 
@@ -564,44 +551,43 @@
         }
 
         #endregion
-        private System.Windows.Forms.Panel editionToolsMenu;
-        private PanelButton deleteToolButton;
-        private System.Windows.Forms.PictureBox deletePictureBox;
-        private PanelButton currentToolButton;
-        private System.Windows.Forms.PictureBox currentObjectPicture;
-        private PanelButton zoomToolButton;
-        private System.Windows.Forms.PictureBox zoomPictureBox;
-        private PanelButton createToolButton;
-        private System.Windows.Forms.PictureBox createPictureBox;
-        private PanelButton DuplicateToolButton;
-        private System.Windows.Forms.PictureBox duplicatePictureBox;
-        private PanelButton ScaleToolButton;
-        private System.Windows.Forms.PictureBox scalePictureBox;
-        private PanelButton RotateToolButton;
-        private System.Windows.Forms.PictureBox rotatePictureBox;
-        private PanelButton MoveToolButton;
-        private System.Windows.Forms.PictureBox movePictureBox;
-        private PanelButton selectToolButton;
-        private System.Windows.Forms.PictureBox selectPictureBox;
-        private System.Windows.Forms.Timer ShowObjectMenu;
-        private System.Windows.Forms.Timer HideObjectMenu;
-        private System.Windows.Forms.Panel editionObjectMenu;
-        private PanelButton bridgeObjectButton;
-        private System.Windows.Forms.PictureBox bridgePictureBox;
-        private PanelButton teleportObjectButton;
-        private System.Windows.Forms.PictureBox teleportorPictureBox;
-        private PanelButton wallObjectButton;
-        private System.Windows.Forms.PictureBox wallObjectPicture;
-        private PanelButton postObjectButton;
-        private System.Windows.Forms.PictureBox postObjectPicture;
-        private PanelButton redLineObjectButton;
-        private System.Windows.Forms.PictureBox redLinePictureBox;
-        private PanelButton greenLineObjectButton;
-        private System.Windows.Forms.PictureBox greenLinePictureBox;
-        private PanelButton lineObjectButton;
-        private System.Windows.Forms.PictureBox lineObjectPicture;
-        private PanelButton panelButton3;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private CustomLabel customLabel3;
+        public System.Windows.Forms.Panel editionToolsMenu;
+        public PanelButton deleteToolButton;
+        public System.Windows.Forms.PictureBox deletePictureBox;
+        public PanelButton currentToolButton;
+        public System.Windows.Forms.PictureBox currentObjectPicture;
+        public PanelButton zoomToolButton;
+        public System.Windows.Forms.PictureBox zoomPictureBox;
+        public PanelButton createToolButton;
+        public System.Windows.Forms.PictureBox createPictureBox;
+        public PanelButton DuplicateToolButton;
+        public System.Windows.Forms.PictureBox duplicatePictureBox;
+        public PanelButton ScaleToolButton;
+        public System.Windows.Forms.PictureBox scalePictureBox;
+        public PanelButton RotateToolButton;
+        public System.Windows.Forms.PictureBox rotatePictureBox;
+        public PanelButton MoveToolButton;
+        public System.Windows.Forms.PictureBox movePictureBox;
+        public PanelButton selectToolButton;
+        public System.Windows.Forms.PictureBox selectPictureBox;
+        public System.Windows.Forms.Timer ShowObjectMenu;
+        public System.Windows.Forms.Timer HideObjectMenu;
+        public System.Windows.Forms.Panel editionObjectMenu;
+        public PanelButton bridgeObjectButton;
+        public System.Windows.Forms.PictureBox bridgePictureBox;
+        public PanelButton teleportObjectButton;
+        public System.Windows.Forms.PictureBox teleportorPictureBox;
+        public PanelButton wallObjectButton;
+        public System.Windows.Forms.PictureBox wallObjectPicture;
+        public PanelButton postObjectButton;
+        public System.Windows.Forms.PictureBox postObjectPicture;
+        public PanelButton redLineObjectButton;
+        public System.Windows.Forms.PictureBox redLinePictureBox;
+        public PanelButton greenLineObjectButton;
+        public System.Windows.Forms.PictureBox greenLinePictureBox;
+        public PanelButton lineObjectButton;
+        public System.Windows.Forms.PictureBox lineObjectPicture;
+        public PanelButton panelButton3;
+        public System.Windows.Forms.PictureBox pictureBox4;
     }
 }

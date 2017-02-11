@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace ui
 {
-    class CustomLabel : Label
+    public class CustomLabel : Label
     {
         protected override void WndProc(ref Message m)
         {
@@ -27,7 +27,7 @@ namespace ui
         }
     }
 
-    class PanelButton : Panel
+    public class PanelButton : Panel
     {
         public ToolTip toolTip;
 

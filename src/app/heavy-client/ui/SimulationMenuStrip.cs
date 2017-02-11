@@ -29,7 +29,10 @@ namespace ui
             parent_.picturePause.Visible = false;
 
             parent_.mainMenu = new MainMenu(parent_);
+
+            parent_.configuration.deallocateCurrentProfilToolStrip();
             parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
+
             parent_.mainScreen.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
 

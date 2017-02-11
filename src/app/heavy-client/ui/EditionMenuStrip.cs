@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using ModeEnum;
+using System.Drawing;
 
 namespace ui
 {
@@ -15,6 +16,7 @@ namespace ui
 
             menuStrip1.Renderer = new myRenderer();
             crochetPourVue();
+            enregistrerToolStripMenuItem.Enabled = false;
         }
 
         private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
@@ -36,8 +38,8 @@ namespace ui
             if (dialogResult == DialogResult.Yes)
             {
                 FonctionsNatives.nouvelleTable();
-                //panneauOperation_.Visible = false;
-                //enregistrerMenuEdition_.Enabled = false;
+                enregistrerToolStripMenuItem.Enabled = false;
+                parent_.verificationDuNombreElementChoisi();
             }
         }
 
@@ -59,22 +61,19 @@ namespace ui
             ExplorateurOuverture explorateur = new ExplorateurOuverture(afficherZoneDefaut);
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
+
             DialogResult dialogresult = explorateur.ShowDialog();
             if (dialogresult == DialogResult.OK)
             {
                 FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.charger();
-                //enregistrerMenuEdition_.Enabled = true;
-                //PasserEnSimulation = true;
+                enregistrerToolStripMenuItem.Enabled = true;
             }
-            if (dialogresult == DialogResult.Cancel)
-                //PasserEnSimulation = false;
 
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
-            //panneauOperation_.Visible = false;
-
+            parent_.verificationDuNombreElementChoisi();
         }
 
         private void enregistrerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -124,17 +123,16 @@ namespace ui
         public void goTestMode()
         {
             parent_.testMenuStrip = new TestMenuStrip(parent_);
-            //parent_.editionSideMenu.animationHidingMenu();
 
+            parent_.configuration.populerToolStripProfils(parent_.testMenuStrip.profilsToolStripMenuItem);
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Refresh();
+
             parent_.viewPort.Controls.Add(parent_.testMenuStrip);
             parent_.testMenuStrip.Dock = DockStyle.Top;
             
             FonctionsNatives.assignerMode(Mode.TEST);
-
-            parent_.viewPort.Focus();
         }
 
         private void menuprincipalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -145,7 +143,6 @@ namespace ui
         public void goMenuPrincipal()
         {
             parent_.mainMenu = new MainMenu(parent_);
-            //parent_.editionSideMenu.animationHidingMenu();
 
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
@@ -160,16 +157,7 @@ namespace ui
 
         private void orthoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (tempItemEdition != null)
-            //    tempItemEdition.Checked = false;
-
-            //orthographiqueMenuEdition_.Checked = true;
-            //tempItemEdition = orthographiqueMenuEdition_;
-
             orthoView();
-
-            //outilsZoom_.Enabled = true;
-            //zoomToolStripMenuItem.Enabled = true;
         }
 
         public void orthoView()
@@ -181,18 +169,7 @@ namespace ui
 
         private void orbiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //if (tempItemEdition != null)
-            //    tempItemEdition.Checked = false;
-            //else
-            //    orthographiqueMenuEdition_.Checked = false;
-
-            //orbiteMenuEdition_.Checked = true;
-            //tempItemEdition = orbiteMenuEdition_;
-
             orbiteView();
-
-            //outilsZoom_.Enabled = false;
-            //zoomToolStripMenuItem.Enabled = false;
         }
 
         public void orbiteView()
@@ -211,17 +188,28 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void crochetPourVue()
         {
+            Bitmap bmp;
             switch (FonctionsNatives.obtenirTypeVue())
             {
                 case 1:
                     orbiteToolStripMenuItem.Checked = true;
                     orthoToolStripMenuItem.Checked = false;
+
+                    bmp = (Bitmap)parent_.editionSideMenu.zoomPictureBox.Image;
+                    bmp = parent_.editionSideMenu.ChangeColor(bmp, Color.Gray);
+                    parent_.editionSideMenu.zoomPictureBox.Image = bmp;
+                    parent_.editionSideMenu.zoomToolButton.Enabled = false;
                     break;
 
                 case 0:
                 default:
                     orbiteToolStripMenuItem.Checked = false;
                     orthoToolStripMenuItem.Checked = true;
+
+                    bmp = (Bitmap)parent_.editionSideMenu.zoomPictureBox.Image;
+                    bmp = parent_.editionSideMenu.ChangeColor(bmp, Color.White);
+                    parent_.editionSideMenu.zoomPictureBox.Image = bmp;
+                    parent_.editionSideMenu.zoomToolButton.Enabled = true;
                     break;
             }
         }

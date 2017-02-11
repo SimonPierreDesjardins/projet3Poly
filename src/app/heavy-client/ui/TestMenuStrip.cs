@@ -28,10 +28,12 @@ namespace ui
             parent_.estEnPause = false;
             parent_.picturePause.Visible = false;
 
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
             parent_.editionSideMenu = new EditionSideMenu(parent_);
+            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
 
+            parent_.configuration.deallocateCurrentProfilToolStrip();
             parent_.viewPort.Controls.Remove(parent_.testMenuStrip);
+
             parent_.viewPort.Controls.Add(parent_.editionSideMenu);
             parent_.editionSideMenu.Dock = DockStyle.Left;
 
@@ -53,7 +55,10 @@ namespace ui
             parent_.picturePause.Visible = false;
 
             parent_.mainMenu = new MainMenu(parent_);
+
+            parent_.configuration.deallocateCurrentProfilToolStrip();
             parent_.viewPort.Controls.Remove(parent_.testMenuStrip);
+
             parent_.mainScreen.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
 

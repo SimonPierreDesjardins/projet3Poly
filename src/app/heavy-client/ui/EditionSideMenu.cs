@@ -15,6 +15,7 @@ namespace ui
 
             setToolTips();
             editionObjectMenu.Width = 0;
+            selectTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -361,6 +362,27 @@ namespace ui
             wallObjectButton.toolTip.SetToolTip(wallObjectPicture, "Objet mur [M]");
             teleportObjectButton.toolTip.SetToolTip(teleportorPictureBox, "Objet téléporteur []");
             bridgeObjectButton.toolTip.SetToolTip(bridgePictureBox, "Objet viaduc []");
+        }
+
+        public Bitmap ChangeColor(Bitmap scrBitmap, Color newColor)
+        {
+            Color actualColor;
+            //make an empty bitmap the same size as scrBitmap
+            Bitmap newBitmap = new Bitmap(scrBitmap.Width, scrBitmap.Height);
+            for (int i = 0; i < scrBitmap.Width; i++)
+            {
+                for (int j = 0; j < scrBitmap.Height; j++)
+                {
+                    //get the pixel from the scrBitmap image
+                    actualColor = scrBitmap.GetPixel(i, j);
+                    // > 150 because.. Images edges can be of low pixel colr. if we set all pixel color to new then there will be no smoothness left.
+                    if (actualColor.A > 175)
+                        newBitmap.SetPixel(i, j, newColor);
+                    //else
+                        //newBitmap.SetPixel(i, j, actualColor);
+                }
+            }
+            return newBitmap;
         }
     }
 }

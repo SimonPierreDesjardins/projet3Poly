@@ -8,17 +8,14 @@
 ////////////////////////////////////////////////
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using System.Runtime.InteropServices;
-using TypeCommandeEnum;
 using TypeComportementEnum;
+using TypeCommandeEnum;
 
 namespace ui
 {
@@ -67,7 +64,7 @@ namespace ui
         /// <summary>
         /// Référence vers le ToolStripMenuItem contenant les profils lors d'une simulation ou test
         /// </summary>
-        private ToolStripMenuItem profilsSimulationItem;
+        private ToolStripMenuItem currentProfilToolStrip;
 
         /// <summary>
         /// Enum représentant les types de paramètres associés aux comportements
@@ -108,6 +105,8 @@ namespace ui
         /// </summary>
         private bool initialisationParametres;
 
+        Window parent_;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public Configure(ToolStripMenuItem menuItem, ajouterProfilSimulationDelegue fonction)
@@ -118,11 +117,11 @@ namespace ui
         /// @param[in] fonction : Référence servant à ajouter un profil dans le ToolStripMenuItem contenant les profils lors d'une simulation ou test
         ///
         ////////////////////////////////////////////////////////////////////////
-        public Configure(ToolStripMenuItem menuItem)
+        public Configure(Window parent)
         {
             InitializeComponent();
 
-            profilsSimulationItem = menuItem;
+            parent_ = parent;
 
             comportementsList = Enum.GetValues(typeof(TypeComportement)).Cast<TypeComportement>().ToList();
 
@@ -152,9 +151,7 @@ namespace ui
 
             assignerProfilsCB();
 
-            initialisationParametres = false;
-
-            populerProfilsSimulation();           
+            initialisationParametres = false;       
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -164,13 +161,24 @@ namespace ui
         /// Fonction servant à ajoutant les profil dans le menu simulation et test
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void populerProfilsSimulation()
+        public void populerToolStripProfils(ToolStripMenuItem profilsToolStrip)
         {
-            foreach (string nomProfil in fichiersProfil)
+            Object selectedProfil = comboBoxProfil.SelectedItem;
+
+            for (int i = 0; i < comboBoxProfil.Items.Count; i++)
             {
-                ajouterProfilSimulation(nomProfil);
+                comboBoxProfil.SelectedItem = comboBoxProfil.Items[i];
+                ajouterProfilSimulation(profilsToolStrip, comboBoxProfil.SelectedItem.ToString());
             }
-            (profilsSimulationItem.DropDownItems.Find(FonctionsNatives.obtenirNomDernierProfil(), false)[0] as ToolStripMenuItem).Checked = true;
+
+            comboBoxProfil.SelectedItem = selectedProfil;
+            (profilsToolStrip.DropDownItems.Find(FonctionsNatives.obtenirNomDernierProfil(), false)[0] as ToolStripMenuItem).Checked = true;
+            currentProfilToolStrip = profilsToolStrip;
+        }
+
+        public void deallocateCurrentProfilToolStrip()
+        {
+            currentProfilToolStrip = null;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -182,12 +190,12 @@ namespace ui
         /// @param nomProfil : le nom du profil à ajouter
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void ajouterProfilSimulation(string nomProfil)
+        private void ajouterProfilSimulation(ToolStripMenuItem profilsToolStrip, string nomProfil)
         {
             ToolStripMenuItem item = new ToolStripMenuItem(nomProfil);
             item.Name = nomProfil;
             item.Click += new EventHandler(profilItem_Click);
-            profilsSimulationItem.DropDownItems.Add(item);
+            profilsToolStrip.DropDownItems.Add(item);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -724,8 +732,12 @@ namespace ui
             if (!comboBoxProfil.Items.Cast<string>().Any(cbi => cbi.Equals(nomProfil)))
                 return;
 
-            (profilsSimulationItem.DropDownItems.Find(FonctionsNatives.obtenirNomDernierProfil(), false)[0] as ToolStripMenuItem).Checked = false;
-            (profilsSimulationItem.DropDownItems.Find(nomProfil, false)[0] as ToolStripMenuItem).Checked = true;
+            if (currentProfilToolStrip != null)
+            {
+                (currentProfilToolStrip.DropDownItems.Find(FonctionsNatives.obtenirNomDernierProfil(), false)[0] as ToolStripMenuItem).Checked = false;
+                (currentProfilToolStrip.DropDownItems.Find(nomProfil, false)[0] as ToolStripMenuItem).Checked = true;
+            }
+            
 
             changerProfil(nomProfil);
         }
@@ -813,8 +825,6 @@ namespace ui
                     nomSiDoublon = nouvelItem + nombre++;
 
                 comboBoxProfil.Items.Add(nomSiDoublon);
-                ajouterProfilSimulation(nomSiDoublon);
-                (profilsSimulationItem.DropDownItems.Find(nomSiDoublon, false)[0] as ToolStripMenuItem).Checked = true;
                 comboBoxProfil.SelectedIndex = comboBoxProfil.Items.Count - 1;
                 comboBoxProfil.DropDownStyle = ComboBoxStyle.DropDownList;
                 etatCreationProfil = actionProfil.ATTENTE_ACTION;
@@ -842,8 +852,6 @@ namespace ui
                 return;
             FonctionsNatives.supprimerProfil(profilASupprimer + extensionProfils);
             comboBoxProfil.Items.Remove(profilASupprimer);
-            profilsSimulationItem.DropDownItems.Remove(profilsSimulationItem.DropDownItems.Find(profilASupprimer, false)[0]);
-            (profilsSimulationItem.DropDownItems.Find(nomProfilDefaut, false)[0] as ToolStripMenuItem).Checked = true;
             comboBoxProfil.SelectedIndexChanged -= comboBoxProfil_SelectedIndexChanged;
             comboBoxProfil.SelectedIndex = indexProfilDefaut;
             comboBoxProfil.SelectedIndexChanged += comboBoxProfil_SelectedIndexChanged;

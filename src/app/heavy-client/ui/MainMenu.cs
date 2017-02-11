@@ -33,6 +33,7 @@ namespace ui
             {
                 animationChangingMenu();
                 parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
+                parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
                 parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
                 parent_.simulationMenuStrip.Dock = DockStyle.Top;
 
@@ -78,8 +79,8 @@ namespace ui
         private void mainMenu_EditionButton_Click(object sender, EventArgs e)
         {
             animationChangingMenu();
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
             parent_.editionSideMenu = new EditionSideMenu(parent_);
+            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
 
             parent_.viewPort.Controls.Add(parent_.editionSideMenu);
             parent_.editionSideMenu.Dock = DockStyle.Left;

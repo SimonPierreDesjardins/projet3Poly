@@ -131,10 +131,10 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem vuesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem profilsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuEditionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuPrincipalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orthoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem profilsToolStripMenuItem;
     }
 }
