@@ -8,18 +8,37 @@
 
 import UIKit
 import JSQMessagesViewController
+import SideMenu
 
-
-class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextViewPasteDelegate
+class ChatViewController: JSQMessagesViewController, UINavigationBarDelegate
 {
-
-    var chatHistory = [JSQMessage]()
+    class ChatCollectionViewFlowLayout: JSQMessagesCollectionViewFlowLayout
+    {
+        override init()
+        {
+            super.init()
+            self.messageBubbleLeftRightMargin = 0.0
+        }
+        
+        required init?(coder aDecoder: NSCoder)
+        {
+            super.init(coder: aDecoder)
+        }
+    }
     
-    let textCellIdentifier = "chatCell"
+    var chatHistory = [JSQMessage]()
     
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
-
+    
+    private var cellsThatHaveBeenTapped = Set<NSInteger>()
+    
+    private var navigationBar: UINavigationBar = UINavigationBar(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 69))
+    
+    private var usersListViewController = ChatUsersListViewController()
+    
+    let dateFormatter = DateFormatter()
+    
     override func didReceiveMemoryWarning()
     {
         super.didReceiveMemoryWarning()
@@ -29,25 +48,100 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
     override func viewDidLoad()
     {
         super.viewDidLoad()
-     
-        self.title = "HEYO";
         
-        self.inputToolbar.contentView.textView.pasteDelegate = self;
+        //let statusOpaqueBar: UINavigationBar = UINavigationBar(frame: CGRect(x:0, y:0, width: UIScreen.main.bounds.width, height: UIApplication.shared.statusBarFrame.height))
+            
+        //self.view.addSubview(statusOpaqueBar)
         
-        self.showLoadEarlierMessagesHeader = true;
-        
-        self.senderId = "Moi"
-        
+        //self.collectionView.collectionViewLayout = ChatCollectionViewFlowLayout()
+               
         // No avatars
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSize.zero
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSize.zero
         
         self.inputToolbar.contentView.leftBarButtonItem = nil
         
-        receiveMessagePressed()
+        setupSideMenu()
+        
+        setupNavigationBarButton()
+        
+        //receiveMessagePressed()
+        
+        self.topContentAdditionalInset = navigationBar.frame.size.height
+        
+        //qself.collectionView?.reloadData()
+        //self.collectionView?.layoutIfNeeded()
+        
+        dateFormatter.dateFormat = ("yyyy-MM-dd HH:mm:ss")
+        
+        AppDelegate.chatDelegator.setChatViewController(self)
     }
     
-    func receiveMessagePressed() {
+    func updateUsersList(_ usersList: [String])
+    {
+        usersListViewController.chatUsersList = usersList
+        if usersListViewController.usersListTableView != nil
+        {
+            usersListViewController.usersListTableView.reloadData()
+        }
+    }
+    
+    func updateChatHistory(_ chatHistory: [JSQMessage])
+    {
+        self.chatHistory = chatHistory
+        if self.collectionView != nil
+        {
+            self.collectionView.reloadData()
+            self.scrollToBottom(animated: true)
+        }
+    }
+    
+    func setupSideMenu()
+    {
+        let menuRightNavigationController = UISideMenuNavigationController(rootViewController: usersListViewController)
+        // UISideMenuNavigationController is a subclass of UINavigationController, so do any additional configuration
+        // of it here like setting its viewControllers. If you're using storyboards, you'll want to do something like:
+        // let menuRightNavigationController = storyboard!.instantiateViewController(withIdentifier: "RightMenuNavigationController") as! UISideMenuNavigationController
+        SideMenuManager.menuRightNavigationController = menuRightNavigationController
+        SideMenuManager.menuFadeStatusBar = false
+    }
+    
+    func setupNavigationBarButton()
+    {
+        navigationBar.delegate = self;
+        
+        // Create a navigation item with a title
+        let navigationItem = UINavigationItem()
+        //navigationItem.title = self.senderDisplayName + " Chat"
+        
+        // Create left and right button for navigation item
+        let leftButton =  UIBarButtonItem(title: "Retour", style:   UIBarButtonItemStyle.plain, target: self, action: #selector (backButtonTapped))
+        let rightButton = UIBarButtonItem(image: UIImage(named: "./icons/ic_people_outline.png"), style: UIBarButtonItemStyle.plain, target: self, action: #selector (socialButtonTapped))
+        
+        // Create two buttons for the navigation item
+        navigationItem.leftBarButtonItem = leftButton
+        navigationItem.rightBarButtonItem = rightButton
+        
+        // Assign the navigation item to the navigation bar
+        navigationBar.items = [navigationItem]
+        
+        // Make the navigation bar a subview of the current view controller
+        self.view.addSubview(navigationBar)
+    }
+    
+    func backButtonTapped()
+    {
+        dismiss(animated: true, completion: nil)
+        NotificationCenter.default.post(name: .Chat_onExitChat, object: nil)
+    }
+    
+    func socialButtonTapped()
+    {
+        present(SideMenuManager.menuRightNavigationController!, animated: true, completion: nil)
+    }
+    
+    func receiveMessagePressed()
+    {
         let conversation = [JSQMessage(senderId: AvatarIdCook, displayName: getName(User.Cook), text: "What is this Black Majic?"),
         JSQMessage(senderId: AvatarIDSquires, displayName: getName(User.Squires), text: "It is simple, elegant, and easy to use. There are super sweet default settings, but you can customize like crazy"),
         JSQMessage(senderId: AvatarIdWoz, displayName: getName(User.Wozniak), text: "It even has data detectors. You can call me tonight. My cell number is 123-456-7890. My website is www.hexedbits.com."),
@@ -60,7 +154,7 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
         
         for message in conversation
         {
-            chatHistory.append(message!)
+            NotificationCenter.default.post(name: .Chat_onSendButtonTapped, object: nil, userInfo: ["message":message!])
         }
     }
     
@@ -88,10 +182,13 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAt indexPath: IndexPath!) -> JSQMessageBubbleImageDataSource!
     {
-        let message = chatHistory[indexPath.item] // 1
-        if message.senderId == senderId { // 2
+        let message = chatHistory[indexPath.item]
+        if message.senderId == senderId
+        {
             return outgoingBubbleImageView
-        } else { // 3
+        }
+        else
+        {
             return incomingBubbleImageView
         }
     }
@@ -106,12 +203,13 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
         let cell = super.collectionView(collectionView, cellForItemAt: indexPath) as! JSQMessagesCollectionViewCell
         
         let msg = self.chatHistory[indexPath.item]
-
             
-        if msg.senderId == self.senderId {
+        if msg.senderId == self.senderId
+        {
             cell.textView.textColor = UIColor.white
         }
-        else {
+        else
+        {
             cell.textView.textColor = UIColor.black
         }
         
@@ -119,7 +217,6 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
         cell.textView.linkTextAttributes = attributes
         
         return cell
-
     }
     
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!)
@@ -128,9 +225,11 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
         
         let message = JSQMessage(senderId: senderId, senderDisplayName: senderDisplayName, date: date, text: text)
         
-        self.chatHistory.append(message!)
-        
         self.finishSendingMessage(animated: true)
+        
+        NotificationCenter.default.post(name: .Chat_onSendButtonTapped, object: nil, userInfo: ["message":message!])
+        
+        self.collectionView.reloadData()
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView, attributedTextForMessageBubbleTopLabelAt indexPath: IndexPath) -> NSAttributedString?
@@ -144,16 +243,20 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
         return NSAttributedString(string: message.senderDisplayName)
     }
     
-    override func collectionView(_ collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForMessageBubbleTopLabelAt indexPath: IndexPath) -> CGFloat {
+    override func collectionView(_ collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForMessageBubbleTopLabelAt indexPath: IndexPath) -> CGFloat
+    {
         let currentMessage = self.chatHistory[indexPath.item]
         
-        if currentMessage.senderId == self.senderId {
+        if currentMessage.senderId == self.senderId
+        {
             return 0.0
         }
         
-        if indexPath.item - 1 > 0 {
+        if indexPath.item - 1 > 0
+        {
             let previousMessage = self.chatHistory[indexPath.item - 1]
-            if previousMessage.senderId == currentMessage.senderId {
+            if previousMessage.senderId == currentMessage.senderId
+            {
                 return 0.0
             }
         }
@@ -165,28 +268,27 @@ class ChatViewController: JSQMessagesViewController, JSQMessagesComposerTextView
     {
         let message = self.chatHistory[indexPath.item]
         
-        return JSQMessagesTimestampFormatter.shared().attributedTimestamp(for: message.date)
+        return NSAttributedString(string: dateFormatter.string(from: message.date), attributes: JSQMessagesTimestampFormatter.shared().dateTextAttributes as! [String : Any]?)
     }
     
     override func collectionView(_ collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForCellTopLabelAt indexPath: IndexPath) -> CGFloat
     {
-        return kJSQMessagesCollectionViewCellLabelHeightDefault
-    }
-    
-    func composerTextView(_ textView: JSQMessagesComposerTextView!, shouldPasteWithSender sender: Any!) -> Bool {
-        if (UIPasteboard.general.image != nil) {
-            // If there's an image in the pasteboard, construct a media item with that image and `send` it.
-            
-            let item = JSQPhotoMediaItem(image: UIPasteboard.general.image)
-            
-            let message = JSQMessage(senderId: self.senderId, senderDisplayName: self.senderDisplayName, date: NSDate() as Date!, media: item)
-            self.chatHistory.append(message!)
-            self.finishSendingMessage()
-            
-            return false
+        if cellsThatHaveBeenTapped.contains(indexPath.row)
+        {
+            return kJSQMessagesCollectionViewCellLabelHeightDefault
         }
         
-        return true
+        return 0.0
+    }
+    
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!)
+    {
+        if cellsThatHaveBeenTapped.remove(indexPath.row) == nil
+        {
+            cellsThatHaveBeenTapped.insert(indexPath.row)
+        }
+        
+        collectionView.reloadData()
     }
 }
 

@@ -86,9 +86,7 @@ namespace ui
             Program.peutAfficher = false;
 
             InitialiserAnimation();
-            menuEdition_.Visible = false;
             panneauOperation_.Visible = false;
-            supprimerToolStripMenuItem.Enabled = false;
             configuration = new Configure(this);
         }
 
@@ -348,7 +346,7 @@ namespace ui
                 case Constants.Key_S:
                     if (ModifierKeys.HasFlag(Keys.Control))
                     {
-                        if (enregistrerMenuEdition_.Enabled)
+                        if (editionMenuStrip.enregistrerToolStripMenuItem.Enabled)
                             editionMenuStrip.enregistrer();
                         else
                             editionMenuStrip.enregistrerSousZone();
@@ -570,18 +568,11 @@ namespace ui
                 mettreAJourInformation();
                 viewPort.Focus();
                 panneauOperation_.Visible = true;
-                supprimerToolStripMenuItem.Enabled = true;
             }
             else if (nbEnfant > 1)
-            {
-                supprimerToolStripMenuItem.Enabled = true;
                 panneauOperation_.Visible = false;
-            }
             else
-            {
                 panneauOperation_.Visible = false;
-                supprimerToolStripMenuItem.Enabled = false;
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -631,16 +622,6 @@ namespace ui
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
         }
-
-        /// <summary>
-        /// Dernier bouton vue sélectionné dans le mode édition
-        /// </summary>
-        private ToolStripMenuItem tempItemEdition = null;
-
-        /// <summary>
-        /// Dernier bouton vue sélectionné dans les modes simulation ou test
-        /// </summary>
-        private ToolStripMenuItem tempItemSimTest = null;
 
         ////////////////////////////////////////////////////////////////////////
         ///
