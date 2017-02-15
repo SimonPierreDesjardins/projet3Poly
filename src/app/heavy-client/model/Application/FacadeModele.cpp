@@ -516,6 +516,11 @@ void FacadeModele::assignerMode(Mode mode)
 			mode_ = std::make_unique<ModeTest>();
 			break;
 
+		case PERSONALIZE:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModePersonalize>();
+			break;
+
 		default:
 			break;
 	}

@@ -16,6 +16,7 @@
 #include "ModeMenuPrincipal.h"
 #include "ModeSimulation.h"
 #include "ModeTest.h"
+#include "ModePersonalize.h"
 
 #endif /// MODE_TYPES_H
 

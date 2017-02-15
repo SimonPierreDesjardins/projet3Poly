@@ -28,27 +28,26 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PersonnalisationSideMenu));
-            this.ShowMenuTimer = new System.Windows.Forms.Timer(this.components);
             this.returnMainMenu_Button = new ui.PanelButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.customLabel6 = new ui.CustomLabel();
+            this.returnLabel = new ui.CustomLabel();
             this.musicChange_Button = new ui.PanelButton();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.customLabel5 = new ui.CustomLabel();
+            this.musicChangeLabel = new ui.CustomLabel();
             this.tableChange_Button = new ui.PanelButton();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.customLabel4 = new ui.CustomLabel();
+            this.changeTableLabel = new ui.CustomLabel();
             this.carChange_Button = new ui.PanelButton();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.customLabel3 = new ui.CustomLabel();
+            this.robotChangeLabel = new ui.CustomLabel();
             this.carColor_Button = new ui.PanelButton();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.customLabel2 = new ui.CustomLabel();
+            this.robotColorLabel = new ui.CustomLabel();
             this.wheelColor_Button = new ui.PanelButton();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.customLabel1 = new ui.CustomLabel();
+            this.wheelColorLabel = new ui.CustomLabel();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.returnMainMenu_Button.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.musicChange_Button.SuspendLayout();
@@ -63,15 +62,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.SuspendLayout();
             // 
-            // ShowMenuTimer
-            // 
-            this.ShowMenuTimer.Interval = 1;
-            this.ShowMenuTimer.Tick += new System.EventHandler(this.ShowMenuTimer_Tick);
-            // 
             // returnMainMenu_Button
             // 
             this.returnMainMenu_Button.Controls.Add(this.pictureBox1);
-            this.returnMainMenu_Button.Controls.Add(this.customLabel6);
+            this.returnMainMenu_Button.Controls.Add(this.returnLabel);
             this.returnMainMenu_Button.Location = new System.Drawing.Point(0, 12);
             this.returnMainMenu_Button.Name = "returnMainMenu_Button";
             this.returnMainMenu_Button.Size = new System.Drawing.Size(200, 50);
@@ -88,22 +82,22 @@
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
-            // customLabel6
+            // returnLabel
             // 
-            this.customLabel6.AutoSize = true;
-            this.customLabel6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel6.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel6.Location = new System.Drawing.Point(45, 15);
-            this.customLabel6.Name = "customLabel6";
-            this.customLabel6.Size = new System.Drawing.Size(136, 21);
-            this.customLabel6.TabIndex = 0;
-            this.customLabel6.Text = "Retour au menu";
+            this.returnLabel.AutoSize = true;
+            this.returnLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.returnLabel.ForeColor = System.Drawing.Color.Silver;
+            this.returnLabel.Location = new System.Drawing.Point(45, 15);
+            this.returnLabel.Name = "returnLabel";
+            this.returnLabel.Size = new System.Drawing.Size(136, 21);
+            this.returnLabel.TabIndex = 0;
+            this.returnLabel.Text = "Retour au menu";
             // 
             // musicChange_Button
             // 
             this.musicChange_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.musicChange_Button.Controls.Add(this.pictureBox6);
-            this.musicChange_Button.Controls.Add(this.customLabel5);
+            this.musicChange_Button.Controls.Add(this.musicChangeLabel);
             this.musicChange_Button.Location = new System.Drawing.Point(0, 350);
             this.musicChange_Button.Name = "musicChange_Button";
             this.musicChange_Button.Size = new System.Drawing.Size(200, 50);
@@ -120,22 +114,22 @@
             this.pictureBox6.TabIndex = 6;
             this.pictureBox6.TabStop = false;
             // 
-            // customLabel5
+            // musicChangeLabel
             // 
-            this.customLabel5.AutoSize = true;
-            this.customLabel5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel5.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel5.Location = new System.Drawing.Point(45, 15);
-            this.customLabel5.Name = "customLabel5";
-            this.customLabel5.Size = new System.Drawing.Size(148, 21);
-            this.customLabel5.TabIndex = 0;
-            this.customLabel5.Text = "Choix de musique";
+            this.musicChangeLabel.AutoSize = true;
+            this.musicChangeLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.musicChangeLabel.ForeColor = System.Drawing.Color.Silver;
+            this.musicChangeLabel.Location = new System.Drawing.Point(45, 15);
+            this.musicChangeLabel.Name = "musicChangeLabel";
+            this.musicChangeLabel.Size = new System.Drawing.Size(148, 21);
+            this.musicChangeLabel.TabIndex = 0;
+            this.musicChangeLabel.Text = "Choix de musique";
             // 
             // tableChange_Button
             // 
             this.tableChange_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.tableChange_Button.Controls.Add(this.pictureBox5);
-            this.tableChange_Button.Controls.Add(this.customLabel4);
+            this.tableChange_Button.Controls.Add(this.changeTableLabel);
             this.tableChange_Button.Location = new System.Drawing.Point(0, 290);
             this.tableChange_Button.Name = "tableChange_Button";
             this.tableChange_Button.Size = new System.Drawing.Size(200, 50);
@@ -152,22 +146,22 @@
             this.pictureBox5.TabIndex = 5;
             this.pictureBox5.TabStop = false;
             // 
-            // customLabel4
+            // changeTableLabel
             // 
-            this.customLabel4.AutoSize = true;
-            this.customLabel4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel4.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel4.Location = new System.Drawing.Point(45, 15);
-            this.customLabel4.Name = "customLabel4";
-            this.customLabel4.Size = new System.Drawing.Size(125, 21);
-            this.customLabel4.TabIndex = 0;
-            this.customLabel4.Text = "Choix de table";
+            this.changeTableLabel.AutoSize = true;
+            this.changeTableLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.changeTableLabel.ForeColor = System.Drawing.Color.Silver;
+            this.changeTableLabel.Location = new System.Drawing.Point(45, 15);
+            this.changeTableLabel.Name = "changeTableLabel";
+            this.changeTableLabel.Size = new System.Drawing.Size(125, 21);
+            this.changeTableLabel.TabIndex = 0;
+            this.changeTableLabel.Text = "Choix de table";
             // 
             // carChange_Button
             // 
             this.carChange_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.carChange_Button.Controls.Add(this.pictureBox4);
-            this.carChange_Button.Controls.Add(this.customLabel3);
+            this.carChange_Button.Controls.Add(this.robotChangeLabel);
             this.carChange_Button.Location = new System.Drawing.Point(0, 230);
             this.carChange_Button.Name = "carChange_Button";
             this.carChange_Button.Size = new System.Drawing.Size(200, 50);
@@ -184,22 +178,22 @@
             this.pictureBox4.TabIndex = 4;
             this.pictureBox4.TabStop = false;
             // 
-            // customLabel3
+            // robotChangeLabel
             // 
-            this.customLabel3.AutoSize = true;
-            this.customLabel3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel3.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel3.Location = new System.Drawing.Point(45, 15);
-            this.customLabel3.Name = "customLabel3";
-            this.customLabel3.Size = new System.Drawing.Size(142, 21);
-            this.customLabel3.TabIndex = 0;
-            this.customLabel3.Text = "Choix du modèle";
+            this.robotChangeLabel.AutoSize = true;
+            this.robotChangeLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.robotChangeLabel.ForeColor = System.Drawing.Color.Silver;
+            this.robotChangeLabel.Location = new System.Drawing.Point(45, 15);
+            this.robotChangeLabel.Name = "robotChangeLabel";
+            this.robotChangeLabel.Size = new System.Drawing.Size(142, 21);
+            this.robotChangeLabel.TabIndex = 0;
+            this.robotChangeLabel.Text = "Choix du modèle";
             // 
             // carColor_Button
             // 
             this.carColor_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.carColor_Button.Controls.Add(this.pictureBox3);
-            this.carColor_Button.Controls.Add(this.customLabel2);
+            this.carColor_Button.Controls.Add(this.robotColorLabel);
             this.carColor_Button.Location = new System.Drawing.Point(0, 170);
             this.carColor_Button.Name = "carColor_Button";
             this.carColor_Button.Size = new System.Drawing.Size(200, 50);
@@ -216,22 +210,22 @@
             this.pictureBox3.TabIndex = 3;
             this.pictureBox3.TabStop = false;
             // 
-            // customLabel2
+            // robotColorLabel
             // 
-            this.customLabel2.AutoSize = true;
-            this.customLabel2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel2.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel2.Location = new System.Drawing.Point(45, 15);
-            this.customLabel2.Name = "customLabel2";
-            this.customLabel2.Size = new System.Drawing.Size(152, 21);
-            this.customLabel2.TabIndex = 0;
-            this.customLabel2.Text = "Couleur du châssis";
+            this.robotColorLabel.AutoSize = true;
+            this.robotColorLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.robotColorLabel.ForeColor = System.Drawing.Color.Silver;
+            this.robotColorLabel.Location = new System.Drawing.Point(45, 15);
+            this.robotColorLabel.Name = "robotColorLabel";
+            this.robotColorLabel.Size = new System.Drawing.Size(152, 21);
+            this.robotColorLabel.TabIndex = 0;
+            this.robotColorLabel.Text = "Couleur du châssis";
             // 
             // wheelColor_Button
             // 
             this.wheelColor_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.wheelColor_Button.Controls.Add(this.pictureBox2);
-            this.wheelColor_Button.Controls.Add(this.customLabel1);
+            this.wheelColor_Button.Controls.Add(this.wheelColorLabel);
             this.wheelColor_Button.Location = new System.Drawing.Point(0, 110);
             this.wheelColor_Button.Name = "wheelColor_Button";
             this.wheelColor_Button.Size = new System.Drawing.Size(200, 50);
@@ -248,16 +242,16 @@
             this.pictureBox2.TabIndex = 2;
             this.pictureBox2.TabStop = false;
             // 
-            // customLabel1
+            // wheelColorLabel
             // 
-            this.customLabel1.AutoSize = true;
-            this.customLabel1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel1.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel1.Location = new System.Drawing.Point(45, 15);
-            this.customLabel1.Name = "customLabel1";
-            this.customLabel1.Size = new System.Drawing.Size(147, 21);
-            this.customLabel1.TabIndex = 0;
-            this.customLabel1.Text = "Couleur des roues";
+            this.wheelColorLabel.AutoSize = true;
+            this.wheelColorLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.wheelColorLabel.ForeColor = System.Drawing.Color.Silver;
+            this.wheelColorLabel.Location = new System.Drawing.Point(45, 15);
+            this.wheelColorLabel.Name = "wheelColorLabel";
+            this.wheelColorLabel.Size = new System.Drawing.Size(147, 21);
+            this.wheelColorLabel.TabIndex = 0;
+            this.wheelColorLabel.Text = "Couleur des roues";
             // 
             // PersonnalisationSideMenu
             // 
@@ -298,23 +292,23 @@
         #endregion
 
         private PanelButton wheelColor_Button;
-        private CustomLabel customLabel1;
+        private CustomLabel wheelColorLabel;
         private System.Windows.Forms.PictureBox pictureBox2;
         private PanelButton carColor_Button;
-        private CustomLabel customLabel2;
+        private CustomLabel robotColorLabel;
         private PanelButton carChange_Button;
-        private CustomLabel customLabel3;
+        private CustomLabel robotChangeLabel;
         private PanelButton tableChange_Button;
-        private CustomLabel customLabel4;
+        private CustomLabel changeTableLabel;
         private PanelButton musicChange_Button;
-        private CustomLabel customLabel5;
+        private CustomLabel musicChangeLabel;
         private PanelButton returnMainMenu_Button;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private CustomLabel customLabel6;
+        private CustomLabel returnLabel;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.Timer ShowMenuTimer;
+        private System.Windows.Forms.ColorDialog colorDialog1;
     }
 }

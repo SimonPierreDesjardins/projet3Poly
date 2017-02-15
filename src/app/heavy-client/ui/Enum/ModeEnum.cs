@@ -22,7 +22,7 @@ enum Mode
         EDITION,
         CONFIGURE,
         TEST,
-        PERSONNALISATION
+        PERSONALIZE
     };
 
 #if !__LINE__

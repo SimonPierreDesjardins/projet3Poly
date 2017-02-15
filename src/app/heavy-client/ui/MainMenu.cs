@@ -112,7 +112,7 @@ namespace ui
             parent_.viewPort.Visible = true;
             Program.peutAfficher = true;
 
-            //FonctionsNatives.assignerMode(Mode.PERSONNALISATION);
+            FonctionsNatives.assignerMode(Mode.PERSONALIZE);
         }
 
         private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)

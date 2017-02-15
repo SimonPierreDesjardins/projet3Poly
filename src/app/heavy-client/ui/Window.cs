@@ -313,6 +313,10 @@ namespace ui
                     gererToucheTest(keyDown);
                     break;
 
+                //Mode Personalize
+                case 5:
+                    break;
+
                 default:
                     break;
             }
@@ -632,16 +636,6 @@ namespace ui
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
         }
-
-        /// <summary>
-        /// Dernier bouton vue sélectionné dans le mode édition
-        /// </summary>
-        private ToolStripMenuItem tempItemEdition = null;
-
-        /// <summary>
-        /// Dernier bouton vue sélectionné dans les modes simulation ou test
-        /// </summary>
-        private ToolStripMenuItem tempItemSimTest = null;
 
         ////////////////////////////////////////////////////////////////////////
         ///

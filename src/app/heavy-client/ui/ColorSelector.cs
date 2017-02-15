@@ -1,76 +1,56 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
+using System;
 
 namespace ui
 {
     public partial class ColorSelector : UserControl
     {
         Window parent_;
+        Color oldColor;
+        Color newColor;
 
         public ColorSelector(Window parent)
         {
             InitializeComponent();
             parent_ = parent;
-
-            DrawColorWheel(this.CreateGraphics(), Color.Black, 0, 0, this.Width, this.Height);
         }
 
-        // Draw a color wheel in the indicated area.
-        private void DrawColorWheel(Graphics gr, Color outline_color, int xmin, int ymin, int wid, int hgt)
+        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
         {
-            Rectangle rect = new Rectangle(xmin, ymin, wid, hgt);
-            GraphicsPath wheel_path = new GraphicsPath();
-            wheel_path.AddEllipse(rect);
-            wheel_path.Flatten();
-
-            float num_pts = (wheel_path.PointCount - 1) / 6;
-            Color[] surround_colors = new Color[wheel_path.PointCount];
-
-            int index = 0;
-            InterpolateColors(surround_colors, ref index, 1 * num_pts, 255, 255, 0, 0, 255, 255, 0, 255);
-            InterpolateColors(surround_colors, ref index, 2 * num_pts, 255, 255, 0, 255, 255, 0, 0, 255);
-            InterpolateColors(surround_colors, ref index, 3 * num_pts, 255, 0, 0, 255, 255, 0, 255, 255);
-            InterpolateColors(surround_colors, ref index, 4 * num_pts, 255, 0, 255, 255, 255, 0, 255, 0);
-            InterpolateColors(surround_colors, ref index, 5 * num_pts, 255, 0, 255, 0, 255, 255, 255, 0);
-            InterpolateColors(surround_colors, ref index, wheel_path.PointCount, 255, 255, 255, 0, 255, 255, 0, 0);
-
-            using (PathGradientBrush path_brush = new PathGradientBrush(wheel_path))
-            {
-                path_brush.CenterColor = Color.White;
-                path_brush.SurroundColors = surround_colors;
-
-                gr.FillPath(path_brush, wheel_path);
-
-                // It looks better if we outline the wheel.
-                using (Pen thick_pen = new Pen(outline_color, 2))
-                {
-                    gr.DrawPath(thick_pen, wheel_path);
-                }
-            }
+            Color newColor = GetPixelColor(e.X, e.Y);
         }
 
-        // Fill in colors interpolating between the from and to values.
-        private void InterpolateColors(Color[] surround_colors,
-            ref int index, float stop_pt,
-            int from_a, int from_r, int from_g, int from_b,
-            int to_a, int to_r, int to_g, int to_b)
+        static public System.Drawing.Color GetPixelColor(int x, int y)
         {
-            int num_pts = (int)stop_pt - index;
-            float a = from_a, r = from_r, g = from_g, b = from_b;
-            float da = (to_a - from_a) / (num_pts - 1);
-            float dr = (to_r - from_r) / (num_pts - 1);
-            float dg = (to_g - from_g) / (num_pts - 1);
-            float db = (to_b - from_b) / (num_pts - 1);
+            IntPtr hdc = GetDC(IntPtr.Zero);
+            uint pixel = GetPixel(hdc, x, y);
+            ReleaseDC(IntPtr.Zero, hdc);
+            Color color = Color.FromArgb((int)(pixel & 0x000000FF),
+                         (int)(pixel & 0x0000FF00) >> 8,
+                         (int)(pixel & 0x00FF0000) >> 16);
+            return color;
+        }
 
-            for (int i = 0; i < num_pts; i++)
-            {
-                surround_colors[index++] = Color.FromArgb((int)a, (int)r, (int)g, (int)b);
-                a += da;
-                r += dr;
-                g += dg;
-                b += db;
-            }
+        [DllImport("user32.dll")]
+        static extern IntPtr GetDC(IntPtr hwnd);
+
+        [DllImport("user32.dll")]
+        static extern Int32 ReleaseDC(IntPtr hwnd, IntPtr hdc);
+
+        [DllImport("gdi32.dll")]
+        static extern uint GetPixel(IntPtr hdc, int nXPos, int nYPos);
+
+        private void applyButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

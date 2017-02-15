@@ -1,4 +1,4 @@
-set(AFFICHAGE_TEXTE_SRC
+﻿set(AFFICHAGE_TEXTE_SRC
     AffichageTexte/AffichageTexte.h
     AffichageTexte/AffichageTexte.cpp
 )
@@ -139,6 +139,8 @@ set(MACHINE_A_MODES_SRC
     MachineAModes/ModeSimulation.cpp
     MachineAModes/ModeTest.cpp
     MachineAModes/ModeTypes.h
+    MachineAModes/ModePersonalize.cpp
+    MachineAModes/ModePersonalize.h
 )
 
 set(PHYSIQUE_SRC
