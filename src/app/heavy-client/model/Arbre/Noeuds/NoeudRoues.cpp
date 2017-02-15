@@ -39,7 +39,7 @@ NoeudRoues::NoeudRoues(const std::string& typeNoeud)
 	NoeudAbstrait* depart = table->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
-
+	//couleur = profil_->
 	parent_ = table->chercher(ArbreRenduINF2990::NOM_ROBOT);
 }
 
@@ -81,16 +81,48 @@ void NoeudRoues::afficherConcret() const
 	glPushMatrix();
 
 	//glColor3d(0.3, 0.3, 0.3);
-
+	//Faire tourner la roue droite de 180 degres
+	if(isRightWheel)
+	{ 
+		glTranslatef(-positionRelative_[0], -positionRelative_[1], -positionRelative_[2]);
+		glRotatef(180.0, 0.0, 0.0, 1.0);
+		glTranslatef(-positionRelative_[0], -positionRelative_[1], positionRelative_[2]);
+		
+	}
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+	//Ajuster la rotation des roues
+	if (isRightWheel)
+	{
+		glRotatef(-vitesseCourante_, 0.0, 1.0, 0.0);
+	}
+	else
+	{
+		glRotatef(vitesseCourante_, 0.0, 1.0, 0.0);
+	}
 
-	glRotatef(vitesseCourante_, 0.0, 1.0, 0.0);
+
 
 	// Affichage du modèle.
 	vbo_->dessiner();
 
 	// Restauration de la matrice.
 	glPopMatrix();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRoues::setRightWheel(bool wheel);
+///
+/// Permet de distinguer la roue gauche de la roue droite
+///
+/// @param[in] isRight : true, la roue est celle de droite, false, la roue est celle de gauche
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRoues::setRightWheel(bool isRight)
+{
+	isRightWheel = isRight;
 }
 
 ////////////////////////////////////////////////////////////////////////

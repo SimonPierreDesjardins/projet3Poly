@@ -42,7 +42,7 @@ const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE{ 0.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE{ 45.0 };
 
 const double FACTEUR_ATTENUATION = 0.7;
-const double MINIMUM_REBOND = 5;
+const double MINIMUM_REBOND = 5;\
 
 #define PI 3.14159265
 
@@ -83,6 +83,10 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 
 	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
 	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
+	roueGauche_->setRightWheel(false);
+	roueDroite_->setRightWheel(true);
+
+	//couleur = profil_->.....  pareil pour les roues , le mode perso ne fait que changer l<attribut couleur dans le profil
 
 	positionnerRoues();
 	table_->ajouter(roueGauche);
@@ -720,8 +724,8 @@ void NoeudRobot::positionnerRoues()
 	//Positionner la roue droite en fonction du robot
 	roueDroite_->assignerAngleRotation(angleRotation_);
 	position = positionRelative_;
-	position[0] = position[0] + sin(angleRotation_*PI / 180)*4.2;
-	position[1] = position[1] - cos(angleRotation_*PI / 180)*4.2;
+	position[0] = position[0] + sin(angleRotation_*PI / 180)*-0.2; //Correction afin de rendre la roue au bon endroit apres la rotation de 180 degre de celle ci.
+	position[1] = position[1] - cos(angleRotation_*PI / 180)*-0.2;
 	position[2] = 0.8;
 	roueDroite_->assignerPositionRelative(position);
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);

@@ -104,6 +104,8 @@ private:
 	float angle_{ 0.f };
 	float acceleration_{ 70.0 };
 
+	//attribut pour la couleur
+
 	bool optionDebug{ true };
 
 	// Les attributs du robot.

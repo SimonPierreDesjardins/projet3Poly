@@ -14,6 +14,7 @@
 #include "GL/glew.h"
 #include "SuiveurLigne.h"
 #include "CapteurDistance.h"
+#include "ProfilUtilisateur.h"
 
 
 class NoeudRobot;
@@ -37,9 +38,12 @@ public:
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+	void setRightWheel(bool isRight);
 
 private:
+	ProfilUtilisateur* profil_{ nullptr };
 	float vitesseCourante_{ 0.f };
+	bool isRightWheel{ false };
 };
 
 #endif // __ARBRE_NOEUD_ROUES_H__
