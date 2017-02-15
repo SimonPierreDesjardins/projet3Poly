@@ -15,8 +15,8 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            wheelColorSelector = new ColorSelector(parent_);
-            robotColorSelector = new ColorSelector(parent_);
+            wheelColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.Wheels);
+            robotColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.Body);
 
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
@@ -24,6 +24,8 @@ namespace ui
 
         private void returnMainMenu_Button_Click(object sender, System.EventArgs e)
         {
+            setDefaultUnselectedColors();
+
             parent_.viewPort.Controls.Remove(parent_.personnalisationSideMenu);
             parent_.mainMenu = new MainMenu(parent_);
 

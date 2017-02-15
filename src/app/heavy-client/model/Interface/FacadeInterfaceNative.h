@@ -93,6 +93,9 @@ extern "C"
 	__declspec(dllexport) void __cdecl assignerVuePremierePersonne();
 
 	__declspec(dllexport) int __cdecl obtenirTypeVue();
+
+	//Menu personalize
+	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

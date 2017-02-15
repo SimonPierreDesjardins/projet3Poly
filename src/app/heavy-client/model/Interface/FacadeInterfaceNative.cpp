@@ -816,6 +816,11 @@ extern "C"
 		else
 			return 0;
 	}
+
+	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
+	{
+
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
