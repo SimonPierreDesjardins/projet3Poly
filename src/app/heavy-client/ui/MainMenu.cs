@@ -65,7 +65,6 @@ namespace ui
             {
                 FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
                 FonctionsNatives.charger();
-                //enregistrerMenuEdition_.Enabled = true;
                 PasserEnSimulation = true;
             }
             if (dialogresult == DialogResult.Cancel)
@@ -94,15 +93,8 @@ namespace ui
             parent_.viewPort.Visible = true;
             Program.peutAfficher = true;
 
-            //outilsZoom_.Enabled = true;
-            //zoomToolStripMenuItem.Enabled = true;
-            //panneauOperation_.Visible = false;
-
             FonctionsNatives.assignerMode(Mode.EDITION);
             parent_.verificationDuNombreElementChoisi();
-            //changeIconColor();
-            //outilsSelection_.BackColor = Color.CadetBlue;
-            parent_.viewPort.Focus();
         }
 
         private void mainMenu_JeuxButton_Click(object sender, EventArgs e)
@@ -111,6 +103,16 @@ namespace ui
 
         private void mainMenu_PersoButton_Click(object sender, EventArgs e)
         {
+            animationChangingMenu();
+            parent_.personnalisationSideMenu = new PersonnalisationSideMenu(parent_);
+
+            parent_.viewPort.Controls.Add(parent_.personnalisationSideMenu);
+            parent_.personnalisationSideMenu.Dock = DockStyle.Left;
+
+            parent_.viewPort.Visible = true;
+            Program.peutAfficher = true;
+
+            //FonctionsNatives.assignerMode(Mode.PERSONNALISATION);
         }
 
         private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)
@@ -133,6 +135,7 @@ namespace ui
 
         private void animationChangingMenu()
         {
+            ShowMenuTimer.Stop();
             HideMenuTimer.Start();
             while (HideMenuTimer.Enabled)
             {

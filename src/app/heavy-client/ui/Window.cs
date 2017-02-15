@@ -18,6 +18,7 @@ namespace ui
         public Configure configuration;
 
         public MainMenu mainMenu;
+        public PersonnalisationSideMenu personnalisationSideMenu;
         public SimulationMenuStrip simulationMenuStrip;
         public TestMenuStrip testMenuStrip;
         public EditionSideMenu editionSideMenu;

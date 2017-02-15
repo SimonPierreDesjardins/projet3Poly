@@ -21,7 +21,8 @@ enum Mode
         SIMULATION,
         EDITION,
         CONFIGURE,
-        TEST
+        TEST,
+        PERSONNALISATION
     };
 
 #if !__LINE__
