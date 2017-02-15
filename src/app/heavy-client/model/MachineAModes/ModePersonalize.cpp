@@ -29,8 +29,10 @@ ModePersonalize::ModePersonalize()
 {
 	typeMode_ = PERSONALIZE;
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-
-	FacadeModele::obtenirInstance()->assignerEnvironnement(1);
+	FacadeModele::obtenirInstance()->assignerVueOrbite();
+	
+	controleRobot_ = std::make_unique<ControleRobot>();
+	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
@@ -49,11 +51,50 @@ ModePersonalize::ModePersonalize()
 ////////////////////////////////////////////////////////////////////////
 ModePersonalize::~ModePersonalize()
 {
+	controleRobot_ = nullptr;
 	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
 }
+/*
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
+///
+/// Cette fonction gère les mouvements de la souris. Si le clique droit est enfoncé
+/// on peux déplacer la caméra, sinon rien
+///
+/// @param const int& x: position en x du cursor
+/// @param const int& y: position en y du cursor
+///
+////////////////////////////////////////////////////////////////////////
+void ModePersonalize::gererMouvementSouris(const int & x, const int& y)
+{
+	if (clicDroitEnfonce_) {
+		if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
+			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
+		}
+	}
+	currentPosition_ = glm::ivec2(x, y);
+
+}*/
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeAbstrait::gererMoletteSouris(const int & delta)
+///
+/// Cette fonction gère la molette de la souris. Permet d'effecter un zoom
+/// avec la caméra
+///
+/// @param const int & delta: la valeur de la molette de la souris
+///
+////////////////////////////////////////////////////////////////////////
+void ModePersonalize::gererMoletteSouris(const int & delta) {
+	
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////
 ///

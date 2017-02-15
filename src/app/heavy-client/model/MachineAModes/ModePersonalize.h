@@ -43,7 +43,7 @@ private:
 	bool lumiereAmbiante{ true };
 	bool lumiereDirectionnelle{ true };
 	bool lumiereSpot{ true };
-
+	std::unique_ptr<ControleRobot> controleRobot_;
 	ControleurLumiere* controleurLumiere_{ nullptr };
 
 public:
@@ -52,6 +52,10 @@ public:
 	ModePersonalize();
 	//Destructeur
 	virtual ~ModePersonalize();
+	/*
+	void gererMouvementSouris(const int & x, const int & y);*/
+
+	void gererMoletteSouris(const int & delta);
 
 	void inverserLumiereAmbiante();
 	void inverserLumiereDirectionnelle();
