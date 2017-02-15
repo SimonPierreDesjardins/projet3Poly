@@ -189,7 +189,6 @@ namespace ui
         public void deleteTool()
         {
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
-            //supprimerToolStripMenuItem.Enabled = false;
             parent_.verificationDuNombreElementChoisi();
         }
 

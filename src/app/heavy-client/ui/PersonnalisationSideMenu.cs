@@ -55,7 +55,7 @@ namespace ui
             robotColorLabel.ForeColor = Color.Silver;
             carColor_Button.BackColor = Color.FromArgb(0, 102, 204);
 
-            parent_.viewPort.Controls.Add(wheelColorSelector);
+            parent_.viewPort.Controls.Add(robotColorSelector);
             robotColorSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             robotColorSelector.Location = new Point(parent_.viewPort.Width - robotColorSelector.Width, 0);
         }

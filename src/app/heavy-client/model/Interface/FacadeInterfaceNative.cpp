@@ -819,7 +819,7 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
 	{
-
+		int i = 0;
 	}
 }
 

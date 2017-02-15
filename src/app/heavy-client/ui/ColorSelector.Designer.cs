@@ -31,8 +31,8 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ColorSelector));
             this.colorPicture = new System.Windows.Forms.PictureBox();
             this.panelButton1 = new ui.PanelButton();
-            this.panelButton2 = new ui.PanelButton();
             this.customLabel1 = new ui.CustomLabel();
+            this.panelButton2 = new ui.PanelButton();
             this.customLabel2 = new ui.CustomLabel();
             ((System.ComponentModel.ISupportInitialize)(this.colorPicture)).BeginInit();
             this.panelButton1.SuspendLayout();
@@ -47,6 +47,7 @@
             this.colorPicture.Size = new System.Drawing.Size(258, 156);
             this.colorPicture.TabIndex = 0;
             this.colorPicture.TabStop = false;
+            this.colorPicture.MouseClick += new System.Windows.Forms.MouseEventHandler(this.colorPicture_MouseClick);
             // 
             // panelButton1
             // 
@@ -56,15 +57,6 @@
             this.panelButton1.Name = "panelButton1";
             this.panelButton1.Size = new System.Drawing.Size(129, 26);
             this.panelButton1.TabIndex = 1;
-            // 
-            // panelButton2
-            // 
-            this.panelButton2.BackColor = System.Drawing.Color.Transparent;
-            this.panelButton2.Controls.Add(this.customLabel2);
-            this.panelButton2.Location = new System.Drawing.Point(129, 156);
-            this.panelButton2.Name = "panelButton2";
-            this.panelButton2.Size = new System.Drawing.Size(129, 26);
-            this.panelButton2.TabIndex = 2;
             // 
             // customLabel1
             // 
@@ -76,6 +68,15 @@
             this.customLabel1.Size = new System.Drawing.Size(71, 21);
             this.customLabel1.TabIndex = 0;
             this.customLabel1.Text = "Annuler";
+            // 
+            // panelButton2
+            // 
+            this.panelButton2.BackColor = System.Drawing.Color.Transparent;
+            this.panelButton2.Controls.Add(this.customLabel2);
+            this.panelButton2.Location = new System.Drawing.Point(129, 156);
+            this.panelButton2.Name = "panelButton2";
+            this.panelButton2.Size = new System.Drawing.Size(129, 26);
+            this.panelButton2.TabIndex = 2;
             // 
             // customLabel2
             // 
