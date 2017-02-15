@@ -220,7 +220,7 @@
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nouveauToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ouvrirToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem enregistrerToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem enregistrerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enregistrerSousToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modeTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuprincipalToolStripMenuItem;

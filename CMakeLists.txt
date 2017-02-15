@@ -20,3 +20,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE "${PROJECT_SOURCE_DIR}/bin")
 # Adds heavy-client as a visual studio project
 add_subdirectory(src/app/heavy-client)
 add_subdirectory(src/prototype/heavy-client)
+
+# Adds server and networking as a visual studio projects
+add_subdirectory(src/app/networkUtils)
+add_subdirectory(src/prototype/server)

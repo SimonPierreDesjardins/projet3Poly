@@ -87,9 +87,7 @@ namespace ui
             Program.peutAfficher = false;
 
             InitialiserAnimation();
-            menuEdition_.Visible = false;
             panneauOperation_.Visible = false;
-            supprimerToolStripMenuItem.Enabled = false;
             configuration = new Configure(this);
         }
 
@@ -337,12 +335,10 @@ namespace ui
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    //outilsZoom_.Enabled = true;
                     editionMenuStrip.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    //outilsZoom_.Enabled = false;
                     editionMenuStrip.orbiteView();
                     break;
 
@@ -353,7 +349,7 @@ namespace ui
                 case Constants.Key_S:
                     if (ModifierKeys.HasFlag(Keys.Control))
                     {
-                        if (enregistrerMenuEdition_.Enabled)
+                        if (editionMenuStrip.enregistrerToolStripMenuItem.Enabled)
                             editionMenuStrip.enregistrer();
                         else
                             editionMenuStrip.enregistrerSousZone();
@@ -473,7 +469,6 @@ namespace ui
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    //outilsZoom_.Enabled = true;
                     testMenuStrip.orthoView();
                     break;
 
@@ -575,18 +570,11 @@ namespace ui
                 mettreAJourInformation();
                 viewPort.Focus();
                 panneauOperation_.Visible = true;
-                supprimerToolStripMenuItem.Enabled = true;
             }
             else if (nbEnfant > 1)
-            {
-                supprimerToolStripMenuItem.Enabled = true;
                 panneauOperation_.Visible = false;
-            }
             else
-            {
                 panneauOperation_.Visible = false;
-                supprimerToolStripMenuItem.Enabled = false;
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////
