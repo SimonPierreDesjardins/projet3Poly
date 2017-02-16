@@ -26,31 +26,19 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 		socket -> connect(*endPointIterator++, error);
 	}
 	if (error) {
-		LogError(error.message());
+		OnConnection(NULL, error);
+		Logger::LogError(error);
 	}
 	else {
+		Logger::Log("Connection established", Logger::DebugLevel::CONNECTION_EVENTS);
+
 		// build a connection object and callback
-		OnConnectionResolved(new Connection(socket));
+		Connection connection = NetworkFactory::BuildConnection(socket);
+		OnConnection(&connection, error);
+		connection.Start();
 	}
 }
 
 void ConnectionResolver::Close() {
 	_resolver.cancel();
-	//ClearBuffers();
 }
-
-void ConnectionResolver::SetDebugLevel(DebugLevel level) {
-	_debugLevel = level;
-}
-
-void ConnectionResolver::Log(std::string message, DebugLevel level) {
-	if (level <= _debugLevel)
-		std::cout << "Connection Log: " << message << std::endl;
-}
-
-void ConnectionResolver::LogError(std::string errorMessage) {
-	if (DebugLevel::ERROR_ONLY <= _debugLevel)
-		std::cout << "Connection Error : " << errorMessage << std::endl;
-}
-
-ConnectionResolver::DebugLevel ConnectionResolver::_debugLevel = DebugLevel::NONE;

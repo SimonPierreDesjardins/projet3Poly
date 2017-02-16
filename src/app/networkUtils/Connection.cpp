@@ -9,17 +9,10 @@ Connection::Connection(asio::ip::tcp::socket* socket) {
 	_sendQueue = std::queue<std::string>();
 }
 
-Networking::Connection::~Connection()
+Connection::~Connection()
 {
 	CloseConnection();
 }
-
-/*
-Connection::Connection(Connection& connection) {
-	_socket = connection._socket;
-	_sendQueue = std::queue<std::string>();
-}
-*/
 
 void Connection::Start() {
 	ReadData();
@@ -48,7 +41,7 @@ void Connection::ReadData()
 }
 
 void Connection::SendData(std::string data) {
-	data = std::to_string(data.length()) + ";" + data;
+	data = std::to_string(data.size()) + ";" + data;
 
 	_sendQueue.push(std::move(data));
 
@@ -87,7 +80,7 @@ void Connection::WriteData()
 
 	_socket->async_write_some(asio::buffer(_buffer, data.size()),
 	//_socket -> async_write_some(asio::buffer(_buffer, length),
-	[this](std::error_code ec, std::size_t /*length*/)
+	[this](asio::error_code ec, std::size_t /*length*/)
 	{
 		if (!ec)
 		{
@@ -99,7 +92,7 @@ void Connection::WriteData()
 			}
 		}
 		else {
-			Logger::Log(ec.message());
+			Logger::LogError(ec);
 		}
 	});
 }

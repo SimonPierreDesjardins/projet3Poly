@@ -11,16 +11,18 @@ namespace  Networking {
 
 	class ServerListener
 	{
-	public:
-		ServerListener(asio::io_service & ioService, short port);
+		friend class NetworkFactory;
 
-		void StartAccepting();
+	public:
+		void StartAccepting(short port);
 
 		__event void OnOtherConnected(Connection* connectionToOther);
 
 		void StopAccepting();
 
 	private:
+		ServerListener(asio::io_service & ioService);
+
 		tcp::acceptor _acceptor;
 
 		void LogError(std::string errorMessage);

@@ -4,20 +4,23 @@
 using asio::ip::tcp;
 using namespace Networking;
 
-ServerListener::ServerListener(asio::io_service & ioService, short port) : _acceptor(ioService, tcp::endpoint(tcp::v4(), port))
+ServerListener::ServerListener(asio::io_service & ioService) : _acceptor(ioService)
 {
 }
 
-void ServerListener::StartAccepting()
+void ServerListener::StartAccepting(short port)
 {
+	_acceptor.bind(tcp::endpoint(tcp::v4(), port));
 	tcp::socket* socket = new tcp::socket(_acceptor.get_io_service());
 	_acceptor.async_accept(*socket,
-	[this, socket](std::error_code errorCode)
+	[this, port, socket](std::error_code errorCode)
 	{
 		if (!errorCode)
 		{
-			OnOtherConnected(new Connection(socket));
-			StartAccepting(); // Keep the listener going
+			Connection* connection = new Connection(socket);
+			OnOtherConnected(connection);
+			connection->Start();
+			StartAccepting(port); // Keep the listener going
 		}
 		else
 		{

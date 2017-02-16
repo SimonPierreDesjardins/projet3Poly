@@ -3,6 +3,7 @@
 #define __CONNECTION_H__
 
 #include "asio.hpp"
+#include "Networking.h"
 #include <queue>
 #include <memory>
 #include <mutex>
@@ -10,31 +11,33 @@
 namespace Networking 
 {
 	class Connection{
+		friend class NetworkFactory;
+		friend class ConnectionResolver;
+		friend class ServerListener;
 
 	public:
+
+		///<summary>Sends the string of bytes through the connection</summary>
+		///<param name='data'>The string of bytes to send.</param>
+		void SendData(std::string data);
+
+		///<summary>Event called whenever data is received by this connection</summary>
+		///<param name='data'>The string of bytes recieved.</param>
+		__event void OnReceivedData(std::string& data);
+
+		///<summary>Event called whenever the connection is lost</summary>
+		__event void OnConnectionLost();
+
+	private:
+		//Starts the connection process to send data to eachother
+		void Start();
+
 		// Constructor taking a functionnal socket
 		Connection(asio::ip::tcp::socket* socket);
 
 		// Destructor that also cleans and closes the connection if necessary
 		~Connection();
 
-		//Connection(Connection& connection);
-
-		//Starts the connection process to send data to eachother
-		void Start();
-
-		// Send data method
-		void SendData(std::string data);
-
-
-		//On received data event
-		__event void OnReceivedData(std::string& data);
-
-		// ping? <-- yagni
-
-		__event void OnConnectionLost();
-
-	private:
 		// Connection closer
 		void CloseConnection();
 

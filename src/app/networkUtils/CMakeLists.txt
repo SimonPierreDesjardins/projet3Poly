@@ -10,6 +10,7 @@ include/Connection.h
 include/ConnectionResolver.hpp
 include/NetworkLogger.h
 include/ServerListener.hpp
+include/NetworkFactory.h
 Connection.cpp
 ConnectionResolver.cpp
 NetworkLogger.cpp
