@@ -1,4 +1,10 @@
-﻿using ModeEnum;
+﻿////////////////////////////////////////////////
+/// @file   PersonnalisationSideMenu.cs
+/// @author Frédéric Grégoire
+/// @date   2017-02-16
+///
+////////////////////////////////////////////////
+using ModeEnum;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -10,6 +16,15 @@ namespace ui
         public ColorSelector wheelColorSelector;
         public ColorSelector robotColorSelector;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public PersonnalisationSideMenu(Window parent)
+        ///
+        /// Cette fonction initialize les controles sur user control et assigne les attributs.
+        ///
+        /// @param Window parent: reference a la fenetre principal du programme
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public PersonnalisationSideMenu(Window parent)
         {
             InitializeComponent();
@@ -21,8 +36,30 @@ namespace ui
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void returnMainMenu_Button_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'action de retour vers le mode principal
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void returnMainMenu_Button_Click(object sender, System.EventArgs e)
+        {
+            goMenuPrincipal();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void goMenuPrincipal()
+        ///
+        /// Cette fonction enlève les composantes du mode personnalisation, ajoute ceux du
+        /// du mode principal et change de mode
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void goMenuPrincipal()
         {
             parent_.viewPort.Controls.Remove(parent_.personnalisationSideMenu);
             parent_.mainMenu = new MainMenu(parent_);

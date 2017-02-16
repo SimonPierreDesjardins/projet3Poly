@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   EditionSideMenu.cs
+/// @author Frédéric Grégoire
+/// @date   2017-02-16
+///
+////////////////////////////////////////////////
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,6 +14,15 @@ namespace ui
     {
         Window parent_;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public EditionSideMenu(Window parent)
+        ///
+        /// Cette fonction initialize les controles sur user control et assigne les attributs.
+        ///
+        /// @param Window parent: reference a la fenetre principal du programme
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public EditionSideMenu(Window parent)
         {
             InitializeComponent();
@@ -20,10 +35,9 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsSelection__Click(object sender, EventArgs e)
+        /// @fn private void selectToolButton_Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, sélection
+        /// Appel l'action de l'outil sélectioné
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -34,6 +48,14 @@ namespace ui
             selectTool();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void selectTool()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, sélection
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public void selectTool()
         {
             hideObjectMenu();
@@ -44,10 +66,9 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsDéplacement__Click(object sender, EventArgs e)
+        /// @fn private void MoveToolButton_Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, déplacement
+        /// Appel l'outil déplacment.
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -58,6 +79,14 @@ namespace ui
             moveTool();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void moveTool()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, déplacement.
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void moveTool()
         {
             hideObjectMenu();
@@ -68,10 +97,9 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsRotation__Click(object sender, EventArgs e)
+        /// @fn private void RotateToolButton_Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, rotation
+        ///  Appel l'outil de rotation
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -82,6 +110,14 @@ namespace ui
             rotateTool();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void rotateTool()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, rotation
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void rotateTool()
         {
             hideObjectMenu();
@@ -92,10 +128,9 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsMiseAEchelle__Click(object sender, EventArgs e)
+        /// @fn private void ScaleToolButton_Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, mise à échelle
+        /// Appel l'outil de redimensionnement
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -106,6 +141,14 @@ namespace ui
             scaleTool();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void scaleTool()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, mise à échelle
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void scaleTool()
         {
             hideObjectMenu();
@@ -116,10 +159,9 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsDuplication__Click(object sender, EventArgs e)
+        /// @fn private void DuplicateToolButton_Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, duplication
+        /// Appel l'outil de duplication
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -130,6 +172,14 @@ namespace ui
             duplicateTool();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void duplicateTool()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, duplication
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void duplicateTool()
         {
             hideObjectMenu();
@@ -138,6 +188,16 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void createToolButton_Click(object sender, EventArgs e)
+        ///
+        /// Fait apparaître le menu pour la création d'objet
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void createToolButton_Click(object sender, EventArgs e)
         {
             HideObjectMenu.Stop();
@@ -151,8 +211,7 @@ namespace ui
         ///
         /// @fn private void outilsZoom__Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, zoom
+        /// Appel l'outil zoom
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -163,6 +222,14 @@ namespace ui
             zoomTool();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void zoomTool()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, zoom
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void zoomTool()
         {
             hideObjectMenu();
@@ -173,9 +240,9 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void supprimerToolStripMenuItem_Click(object sender, EventArgs e)
+        /// @fn private void deleteToolButton_Click(object sender, EventArgs e)
         ///
-        /// Supprime tous les objets sélectionnés
+        /// Appel l'outil supprimer
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du clique
@@ -186,19 +253,24 @@ namespace ui
             deleteTool();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void deleteTool()
+        ///
+        /// Supprime tous les objets sélectionnés
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void deleteTool()
         {
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
-            //supprimerToolStripMenuItem.Enabled = false;
             parent_.verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsCreationLigne__Click(object sender, EventArgs e)
+        /// @fn private void lineObjectButton_Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation ligne noire
+        /// Appel l'outil création ligne
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -209,6 +281,14 @@ namespace ui
             lineObject();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void lineObject()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation ligne noire
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void lineObject()
         {
             hideObjectMenu();
@@ -218,20 +298,65 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void greenLineObjectButton_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'outil création ligne verte
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void greenLineObjectButton_Click(object sender, EventArgs e)
         {
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void greenLineObject()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation ligne verte
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void greenLineObject()
+        {
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void redLineObjectButton_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'outil création ligne rouge
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void redLineObjectButton_Click(object sender, EventArgs e)
         {
         }
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsCreationPoteau__Click(object sender, EventArgs e)
+        /// @fn public void redLineObject()
         ///
         /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation poteau
+        /// qui correspond à l'état, creation ligne rouge
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void redLineObject()
+        {
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void postObjectButton_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'outil création de poteau
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -242,6 +367,14 @@ namespace ui
             postObject();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void postObject()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation poteau
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void postObject()
         {
             hideObjectMenu();
@@ -253,10 +386,9 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void outilsCreationMurs__Click(object sender, EventArgs e)
+        /// @fn private void wallObjectButton_Click(object sender, EventArgs e)
         ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation mur
+        /// Appel l'outils création mur
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
@@ -267,6 +399,14 @@ namespace ui
             wallObject();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void wallObject()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation mur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void wallObject()
         {
             hideObjectMenu();
@@ -276,14 +416,41 @@ namespace ui
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void teleportObjectButton_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'outils création téléporteur
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void teleportObjectButton_Click(object sender, EventArgs e)
         {
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void bridgeObjectButton_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'outils création pont
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void bridgeObjectButton_Click(object sender, EventArgs e)
         {
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void hideObjectMenu()
+        ///
+        /// Cache le menu pour la création d'objet.
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void hideObjectMenu()
         {
             if (editionObjectMenu.Width > 0)
@@ -293,6 +460,14 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void setDefaultUnselectedColors()
+        ///
+        /// Remet la couleur par défaut à tous les controles présent dans le menu
+        /// d'outil et le menu de création d'objet.
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void setDefaultUnselectedColors()
         {
             //Tools
@@ -317,6 +492,15 @@ namespace ui
             currentToolButton.Visible = false;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void setCurrentObjet(PictureBox objectPicture)
+        ///
+        /// Met l'image de l'objet dans le menu d'outil
+        /// 
+        /// @param PictureBox objectPicture: L'image à insérer
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void setCurrentObjet(PictureBox objectPicture)
         {
             currentToolButton.BackColor = Color.FromArgb(0, 102, 204);
@@ -324,6 +508,16 @@ namespace ui
             currentToolButton.Visible = true;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void HideObjectsMenu_Tick(object sender, EventArgs e)
+        ///
+        /// Cache le menu de création d'objet lorsque le timer est activé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du timer
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void HideObjectsMenu_Tick(object sender, EventArgs e)
         {
             FonctionsNatives.dessinerOpenGL();
@@ -333,6 +527,16 @@ namespace ui
                 HideObjectMenu.Stop();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ShowObjectsMenu_Tick(object sender, EventArgs e)
+        ///
+        /// Montre le menu de création d'objet lorsque le timer est activé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du timer
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void ShowObjectsMenu_Tick(object sender, EventArgs e)
         {
             FonctionsNatives.dessinerOpenGL();
@@ -342,6 +546,13 @@ namespace ui
                 ShowObjectMenu.Stop();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void setToolTips()
+        ///
+        /// Initialise tous les tooltip pour les controles présents dans les menus
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void setToolTips()
         {
             //Tools
@@ -364,6 +575,16 @@ namespace ui
             bridgeObjectButton.toolTip.SetToolTip(bridgePictureBox, "Objet viaduc []");
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public Bitmap ChangeColor(Bitmap scrBitmap, Color newColor)
+        ///
+        /// Change la couleur d'un image par une nouvelle couleur.
+        /// 
+        /// @param Bitmap scrBitmap: le bitmap de l'image qui doit être modifié
+        /// @param Color newColor: La nouvelle couleur de l'image
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public Bitmap ChangeColor(Bitmap scrBitmap, Color newColor)
         {
             Color actualColor;

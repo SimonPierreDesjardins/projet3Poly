@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿////////////////////////////////////////////////
+/// @file   CustomClass.cs
+/// @author Frédéric Grégoire
+/// @date   2017-02-16
+///
+////////////////////////////////////////////////
+using System;
 using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace ui
