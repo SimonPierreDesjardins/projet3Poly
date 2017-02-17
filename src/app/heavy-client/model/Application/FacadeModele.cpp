@@ -431,7 +431,7 @@ void FacadeModele::assignerVueOrbitePerso()
 {
 	vue_ = std::make_unique<vue::VueOrbite>(
 		vue::Camera(
-			glm::dvec3(0, 0, 50), glm::dvec3(0, 0, 0),
+			glm::dvec3(0, 0, 25), glm::dvec3(0, 0, 0),
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
 		vue::ProjectionPerspective{
 		0, 500, 0, 500,

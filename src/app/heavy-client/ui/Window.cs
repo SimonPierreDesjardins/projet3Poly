@@ -1,10 +1,8 @@
 ﻿////////////////////////////////////////////////
 /// @file   Window.cs
-/// @author INF2990
-/// @date   2016-02-13
+/// @author Frédéric Grégoire
+/// @date   2017-02-16
 ///
-/// @addtogroup inf2990 INF2990
-/// @{
 ////////////////////////////////////////////////
 using System;
 using System.Windows.Forms;
@@ -274,12 +272,11 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void gererMessage(object sender, PreviewKeyDownEventArgs e)
+        /// @fn private void gererMessage(IntPtr keyDown)
         ///
         /// Gère les touches lorsque le viewPort_ panel à le focus selon le mode
         /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        /// @param IntPtr keyDown: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
         private void gererMessage(IntPtr keyDown)
@@ -322,12 +319,11 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void gererToucheEdition(object sender, PreviewKeyDownEventArgs e)
+        /// @fn private void gererToucheEdition(IntPtr keyDown)
         ///
         /// Gère les touches pour le mode édition
         /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        /// @param IntPtr keyDown: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheEdition(IntPtr keyDown)
@@ -416,12 +412,11 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void gererToucheSimulation(object sender, PreviewKeyDownEventArgs e)
+        /// @fn private void gererToucheSimulation(IntPtr keyDown)
         ///
         /// Gère les touches pour le mode Simulation
         /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        /// @param IntPtr keyDown: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(IntPtr keyDown)
@@ -456,12 +451,11 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void gererToucheTest(object sender, PreviewKeyDownEventArgs e)
+        /// @fn private void gererToucheTest(IntPtr keyDown)
         ///
         /// Gère les touches pour le mode Test
         /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param PreviewKeyDownEventArgs e: evenement du clavier
+        /// @param IntPtr keyDown: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheTest(IntPtr keyDown)
@@ -685,6 +679,16 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void viewPort_Resize(object sender, EventArgs e)
+        ///
+        /// Ajuste OpenGL lors du redimensionnement du control viewport
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du focus
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void viewPort_Resize(object sender, EventArgs e)
         {
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);

@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   EditionMenuStrip.cs
+/// @author Frédéric Grégoire
+/// @date   2017-02-16
+///
+////////////////////////////////////////////////
+using System;
 using System.Windows.Forms;
 using ModeEnum;
 using System.Drawing;
@@ -9,6 +15,15 @@ namespace ui
     {
         Window parent_;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public EditionMenuStrip(Window parent)
+        ///
+        /// Cette fonction initialize les controles sur user control et assigne les attributs.
+        ///
+        /// @param Window parent: reference a la fenetre principal du programme
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public EditionMenuStrip(Window parent)
         {
             InitializeComponent();
@@ -19,6 +34,16 @@ namespace ui
             enregistrerToolStripMenuItem.Enabled = false;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'action de nouvelleZone
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
         {
             nouvelleZone();
@@ -26,7 +51,7 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void nouveauMenuEdition__Click(object sender, EventArgs e)
+        /// @fn public void nouvelleZone()
         ///
         /// Crée une nouvelle zone de céation si l'utilisateur appuie sur oui, 
         /// sinon ne fait rien
@@ -43,6 +68,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ouvrirToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'action de ouvrirZone
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void ouvrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ouvrirZone(false);
@@ -76,16 +111,43 @@ namespace ui
             parent_.verificationDuNombreElementChoisi();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void enregistrerToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'action de enregistrer
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void enregistrerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             enregistrer();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void enregistrer()
+        ///
+        /// Permet de sauvegarde la zone dans la derniere zone ouverte ou enregistrer sous
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void enregistrer()
         {
             FonctionsNatives.sauvegarder();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void enregistrerSousToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'action de enregistrerSous
+        ///
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void enregistrerSousToolStripMenuItem_Click(object sender, EventArgs e)
         {
             enregistrerSousZone();
@@ -115,11 +177,29 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'action de retour vers le mode test
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             goTestMode();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void goTestMode()
+        ///
+        /// Cette fonction enlève les composantes du mode édition, ajoute ceux du
+        /// du mode test et change de mode
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void goTestMode()
         {
             parent_.testMenuStrip = new TestMenuStrip(parent_);
@@ -135,11 +215,29 @@ namespace ui
             FonctionsNatives.assignerMode(Mode.TEST);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void menuprincipalToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'action de retour vers le mode principal
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void menuprincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             goMenuPrincipal();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void goMenuPrincipal()
+        ///
+        /// Cette fonction enlève les composantes du mode édition, ajoute ceux du
+        /// du mode principal et change de mode
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void goMenuPrincipal()
         {
             parent_.mainMenu = new MainMenu(parent_);
@@ -155,11 +253,29 @@ namespace ui
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void orthoToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'outil pour la vue orthographique
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void orthoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orthoView();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void orthoView()
+        ///
+        /// Cette fonction assigne la vue orthographique et change les crochets
+        /// pour la vue dans le menuStrip
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void orthoView()
         {
             FonctionsNatives.assignerVueOrtho();
@@ -167,11 +283,29 @@ namespace ui
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void orbiteToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Appel l'outil pour la vue orbite
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void orbiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
             orbiteView();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void orbiteView()
+        ///
+        /// Cette fonction assigne la vue orbite et change les crochets
+        /// pour la vue dans le menuStrip
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void orbiteView()
         {
             FonctionsNatives.assignerVueOrbite();
@@ -214,6 +348,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void aideToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Affiche le fenêtre d'aide qui décrit les shortcuts pour chaque outil
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void aideToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PopOutInterface popup = new PopOutInterface();
