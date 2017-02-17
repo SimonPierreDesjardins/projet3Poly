@@ -29,7 +29,8 @@ ModePersonalize::ModePersonalize()
 {
 	typeMode_ = PERSONALIZE;
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	FacadeModele::obtenirInstance()->assignerVueOrbite();
+	FacadeModele::obtenirInstance()->assignerVueOrbitePerso();
+
 	
 	controleRobot_ = std::make_unique<ControleRobot>();
 	FacadeModele::obtenirInstance()->assignerEnvironnement(2);

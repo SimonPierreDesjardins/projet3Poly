@@ -84,6 +84,7 @@ public:
    void assignerVueOrtho();
    //Assigne les parametres pour la vue orbite
    void assignerVueOrbite();
+   void assignerVueOrbitePerso();
    //Assigne les parametres pour la vue à la première personne
    void assignerVuePremierePersonne();
    

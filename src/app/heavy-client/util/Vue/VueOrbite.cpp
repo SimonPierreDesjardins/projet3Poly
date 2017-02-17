@@ -51,7 +51,7 @@ namespace vue {
 		if (!estPremierePersonne_){
 			theta = 90;
 			phi = 0;
-			rho = 170;
+			rho = camera.obtenirPosition()[2];
 		}	
 	}
 
@@ -220,6 +220,7 @@ namespace vue {
 			rho*sin(utilitaire::DEG_TO_RAD(phi))*sin(utilitaire::DEG_TO_RAD(theta)),
 			rho*cos(utilitaire::DEG_TO_RAD(phi)))
 			);
+
 	}
 
 	////////////////////////////////////////////////////////////////////////

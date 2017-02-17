@@ -420,6 +420,28 @@ void FacadeModele::assignerVueOrbite()
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void FacadeModele::assignerVueOrbitePerso()
+///
+/// Cette fonction assigne une vue orbite à la scène pour le mode personnalisation
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerVueOrbitePerso()
+{
+	vue_ = std::make_unique<vue::VueOrbite>(
+		vue::Camera(
+			glm::dvec3(0, 0, 50), glm::dvec3(0, 0, 0),
+			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
+		vue::ProjectionPerspective{
+		0, 500, 0, 500,
+		1, 10000, 1, 100000, 1.25,
+		-50, 50, -50, 50, true }, false);
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn void FacadeModele::assignerVuePremierePersonne()
 ///
 /// Cette fonction assigne une vue première personne à la scène

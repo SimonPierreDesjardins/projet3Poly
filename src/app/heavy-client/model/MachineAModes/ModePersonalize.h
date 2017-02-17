@@ -55,6 +55,8 @@ public:
 	/*
 	void gererMouvementSouris(const int & x, const int & y);*/
 
+
+
 	void gererMoletteSouris(const int & delta);
 
 	void inverserLumiereAmbiante();
