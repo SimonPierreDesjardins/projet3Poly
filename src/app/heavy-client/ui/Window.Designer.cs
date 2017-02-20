@@ -47,18 +47,6 @@
             this.mainScreen.SuspendLayout();
             this.SuspendLayout();
             // 
-            // picturePause
-            // 
-            this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picturePause.Image = global::ui.Properties.Resources.pauseNoire;
-            this.picturePause.Location = new System.Drawing.Point(267, 171);
-            this.picturePause.Name = "picturePause";
-            this.picturePause.Size = new System.Drawing.Size(96, 96);
-            this.picturePause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picturePause.TabIndex = 0;
-            this.picturePause.TabStop = false;
-            this.picturePause.Visible = false;
-            // 
             // panneauOperation_
             // 
             this.panneauOperation_.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -214,7 +202,6 @@
             this.mainScreen.ResumeLayout(false);
             this.mainScreen.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

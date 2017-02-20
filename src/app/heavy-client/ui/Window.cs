@@ -8,12 +8,15 @@ using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
+using System.Drawing;
 
 namespace ui
 {
     public partial class Window : Form, IMessageFilter
     {
         public Configure configuration;
+
+        public UserChat userChat;
 
         public MainMenu mainMenu;
         public PersonnalisationSideMenu personnalisationSideMenu;
@@ -81,6 +84,11 @@ namespace ui
             mainMenu = new MainMenu(this);
             mainScreen.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
+
+            userChat = new UserChat(this);
+            mainScreen.Controls.Add(userChat);
+            userChat.Location = new Point(mainScreen.Width - userChat.Width, mainScreen.Height - userChat.Height);
+            userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
 
             Program.peutAfficher = false;
 

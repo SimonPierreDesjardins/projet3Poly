@@ -71,6 +71,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChatWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ChatWindow.Designer.cs">
+      <DependentUpon>ChatWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ColorSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,6 +157,12 @@
     <Compile Include="TestMenuStrip.Designer.cs">
       <DependentUpon>TestMenuStrip.cs</DependentUpon>
     </Compile>
+    <Compile Include="UserChat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserChat.Designer.cs">
+      <DependentUpon>UserChat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -159,6 +171,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ChatWindow.resx">
+      <DependentUpon>ChatWindow.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ColorSelector.resx">
       <DependentUpon>ColorSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -198,6 +213,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="TestMenuStrip.resx">
       <DependentUpon>TestMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserChat.resx">
+      <DependentUpon>UserChat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window.resx">
       <DependentUpon>Window.cs</DependentUpon>
