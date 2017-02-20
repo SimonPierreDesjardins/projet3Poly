@@ -415,7 +415,7 @@ void FacadeModele::assignerVueOrbite()
 		vue::ProjectionPerspective{
 			0, 500, 0, 500,
 			1, 10000, 1, 100000, 1.25,
-			-50, 50, -50, 50, true }, false);
+			-50, 50, -50, 50, true }, false,false);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -436,7 +436,9 @@ void FacadeModele::assignerVueOrbitePerso()
 		vue::ProjectionPerspective{
 		0, 500, 0, 500,
 		1, 10000, 1, 100000, 1.25,
-		-50, 50, -50, 50, true }, false);
+		-50, 50, -50, 50, true }, false,true);
+	//place la camera pour qu'elle est un bon angle sur le robot
+	vue_->deplacerXY(-375, 550);
 }
 
 
@@ -461,7 +463,7 @@ void FacadeModele::assignerVuePremierePersonne()
 		vue::ProjectionPerspective{
 			0, 500, 0, 500,
 			1, 10000, 10, 10000, 1.25,
-			-50, 50, -50, 50, true }, true);
+			-50, 50, -50, 50, true }, true,false);
 }
 
 ////////////////////////////////////////////////////////////////////////

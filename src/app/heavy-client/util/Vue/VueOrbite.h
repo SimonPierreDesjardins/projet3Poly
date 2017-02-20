@@ -31,7 +31,7 @@ namespace vue {
 	{
 	public:
 		// Constructeur.
-		VueOrbite(Camera const& camera, ProjectionPerspective const& projection, bool estPremierePersonne);
+		VueOrbite(Camera const& camera, ProjectionPerspective const& projection, bool estPremierePersonne, bool estPersonnalisation);
 
 		/// Obtention de la projection.
 		virtual const ProjectionPerspective& obtenirProjection() const;
@@ -78,6 +78,7 @@ namespace vue {
 		double theta;
 		double phi;
 		double rho;
+		bool estPersonnalisation_ = false;
 
 	};
 }; // Fin de l'espace de nom vue.

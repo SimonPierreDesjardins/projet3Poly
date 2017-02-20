@@ -43,7 +43,7 @@ namespace vue {
 	/// @return Aucune (constructeur).
 	///
 	////////////////////////////////////////////////////////////////////////
-	VueOrbite::VueOrbite(Camera const& camera, ProjectionPerspective const& projection, bool estPremierePersonne) :
+	VueOrbite::VueOrbite(Camera const& camera, ProjectionPerspective const& projection, bool estPremierePersonne, bool estPersonnalisation) :
 		Vue{ camera },
 		projection_{ projection }
 	{
@@ -53,6 +53,7 @@ namespace vue {
 			phi = 0;
 			rho = camera.obtenirPosition()[2];
 		}	
+		estPersonnalisation_ = estPersonnalisation;
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -239,6 +240,14 @@ namespace vue {
 	void VueOrbite::deplacerXY(const glm::ivec2& deplacement)
 	{
 		theta -= deplacement[0]*0.5;
+		if (estPersonnalisation_)
+		{
+			if (theta > 180)
+				theta = 180;
+			else if (theta < 0)
+				theta = 0;
+		}
+		
 		verifierPhi(-deplacement[1]*0.5);
 
 		glm::dvec3 position{ cos(utilitaire::DEG_TO_RAD(theta)), sin(utilitaire::DEG_TO_RAD(theta)), 0 };
