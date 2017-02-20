@@ -19,37 +19,6 @@ ServerListener& Networking::NetworkFactory::BuildListener()
 	return std::move(serverListener);
 }
 
-void Networking::NetworkFactory::Dispose(Connection * connection)
-{
-	if (connection == NULL)
-		return;
-
-	delete connection;
-	connection = NULL;
-	IOServiceHandler::DecrementUserCount();
-}
-
-
-void Networking::NetworkFactory::Dispose(ConnectionResolver * resolver)
-{
-	if (resolver == NULL)
-		return;
-
-	delete resolver;
-	resolver = NULL;
-	IOServiceHandler::DecrementUserCount();
-}
-
-void Networking::NetworkFactory::Dispose(ServerListener* listener)
-{
-	if (listener == NULL)
-		return;
-
-	delete listener;
-	listener = NULL;
-	IOServiceHandler::DecrementUserCount();
-}
-
 Connection& Networking::NetworkFactory::BuildConnection(tcp::socket* socket)
 {
 	IOServiceHandler::IncrementUserCount();

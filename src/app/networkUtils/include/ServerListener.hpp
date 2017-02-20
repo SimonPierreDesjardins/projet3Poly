@@ -12,6 +12,7 @@ namespace  Networking {
 	class ServerListener
 	{
 		friend class NetworkFactory;
+		friend class NetworkDisposal;
 
 	public:
 		void StartAccepting(short port);
@@ -22,6 +23,8 @@ namespace  Networking {
 
 	private:
 		ServerListener(asio::io_service & ioService);
+
+		~ServerListener();
 
 		tcp::acceptor _acceptor;
 

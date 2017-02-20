@@ -24,6 +24,7 @@ void Connection::ReadData()
 	_socket -> async_receive(asio::buffer(_buffer),
 	[this](std::error_code ec, std::size_t length)
 	{
+		_connectionLock.lock();
 		if (!ec)
 		{
 			auto data = std::string(_buffer, length);
@@ -74,6 +75,7 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 
 void Connection::WriteData()
 {
+	_connectionLock.lock();
 	std::string data = std::move(_sendQueue.front());
 	_sendQueue.pop();
 	strncpy_s(_buffer, 1024, data.c_str(), data.size());
@@ -82,6 +84,7 @@ void Connection::WriteData()
 	//_socket -> async_write_some(asio::buffer(_buffer, length),
 	[this](asio::error_code ec, std::size_t /*length*/)
 	{
+		_connectionLock.lock();
 		if (!ec)
 		{
 			if (_sendQueue.size() >= 1) {
@@ -94,7 +97,10 @@ void Connection::WriteData()
 		else {
 			Logger::LogError(ec);
 		}
+		_connectionLock.unlock();
 	});
+
+	_connectionLock.lock();
 }
 
 std::mutex Connection::_connectionLock;

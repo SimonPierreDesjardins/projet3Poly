@@ -33,9 +33,9 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 		Logger::Log("Connection established", Logger::DebugLevel::CONNECTION_EVENTS);
 
 		// build a connection object and callback
-		Connection connection = NetworkFactory::BuildConnection(socket);
-		OnConnection(&connection, error);
-		connection.Start();
+		Connection* connection = &(NetworkFactory::BuildConnection(socket));
+		OnConnection(connection, error);
+		connection -> Start();
 	}
 }
 

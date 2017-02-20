@@ -12,6 +12,7 @@ namespace Networking
 {
 	class Connection{
 		friend class NetworkFactory;
+		friend class NetworkDisposal;
 		friend class ConnectionResolver;
 		friend class ServerListener;
 

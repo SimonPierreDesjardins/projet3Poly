@@ -17,7 +17,7 @@ void ServerListener::StartAccepting(short port)
 	{
 		if (!errorCode)
 		{
-			Connection* connection = new Connection(socket);
+			Connection* connection = &(NetworkFactory::BuildConnection(socket));
 			OnOtherConnected(connection);
 			connection->Start();
 			StartAccepting(port); // Keep the listener going

@@ -6,11 +6,11 @@
 
 namespace Networking {
 
-
 	class NetworkFactory{
-		// Added Listener and resolver as friends so that they may create connection objects
+		// Added Listener and resolver as friends since they are responsible for creating connection objects
 		friend class ConnectionResolver;
 		friend class ServerListener;
+		friend class NetworkDisposal;
 
 	public:
 		///<summary>Builds a network resolver that can be used to connect to a given ip and port</summary>
@@ -20,18 +20,6 @@ namespace Networking {
 		///<summary>Builds a network listener that can listen for incomming connctions on a given port</summary>
 		///<returns>An instance of a Listener</returns>
 		static ServerListener& BuildListener();
-
-		///<summary>Cleanly closes and deletes a connection and updates the associated io_service accordingly</summary>
-		///<param>Pointer to the connection to be closed<param>
-		static void Dispose(Connection* connection);
-
-		///<summary>Cleanly closes and deletes a ConnectionResolver and updates the associated io_service accordingly</summary>
-		///<param>Pointer to the ConnectionResolver to be closed<param>
-		static void Dispose(ConnectionResolver* resolver);
-
-		///<summary>Cleanly closes and deletes a ServerListener and updates the associated io_service accordingly</summary>
-		///<param>Pointer to the ServerListener to be closed<param>
-		static void Dispose(ServerListener* listener);
 
 
 	private:

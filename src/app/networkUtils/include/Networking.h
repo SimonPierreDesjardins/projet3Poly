@@ -8,5 +8,6 @@
 #include "ServerListener.hpp"
 #include "NetworkLogger.h"
 #include "NetworkFactory.h"
+#include "NetworkDisposal.h"
 
 #endif // !NETWORKING_H

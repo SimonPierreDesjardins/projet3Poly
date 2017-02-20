@@ -12,6 +12,8 @@ namespace Networking{
 
 	class ConnectionResolver{
 		friend class NetworkFactory;
+		friend class NetworkDisposal;
+
 	public:
 
 		///<summary>Attempts to resolve connection to the given ip and port. Calls OnConnectionResolved when it does.</summary>
