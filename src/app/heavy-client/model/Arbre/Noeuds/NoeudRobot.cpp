@@ -67,6 +67,8 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	NoeudAbstrait* depart_ = table_->chercher(ArbreRenduINF2990::NOM_DEPART);
 
     profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	couleur_ = couleur_ = profil_->obtenirCouleurs(BODY);
+	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(BODY);
     suiveurLigne_ = profil_->obtenirSuiveurLigne();
     capteursDistance_ = profil_->obtenirCapteursDistance();
 
@@ -85,8 +87,6 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
 	roueGauche_->setRightWheel(false);
 	roueDroite_->setRightWheel(true);
-
-	//couleur = profil_->.....  pareil pour les roues , le mode perso ne fait que changer l<attribut couleur dans le profil
 
 	positionnerRoues();
 	table_->ajouter(roueGauche);
@@ -151,6 +151,12 @@ void NoeudRobot::afficherConcret() const
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
+	if (!estCouleurDefaut_)
+	{
+		glDisable(GL_COLOR_MATERIAL);
+		glColor4f(couleur_[1], couleur_[2], couleur_[3], couleur_[0]);
+		glEnable(GL_COLOR_MATERIAL);
+	}
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
@@ -212,12 +218,20 @@ void NoeudRobot::animer(float dt)
         effectuerCollision(dt);
     }
     mettreAJourFormeEnglobante();
-    mettreAJourCapteurs();
+
+	controleurLumiere_->assignerLumiereSpotGyro(false);
+	if (mode_ != PERSONALIZE)
+	{
+		mettreAJourCapteurs();
+		controleurLumiere_->assignerLumiereSpotGyro(true);
+	}
+	
+	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(), dt);
+	
     arbre_->accepterVisiteur(visiteur_.get());
 	
 	positionnerRoues();
 	suivreCamera();
-	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(),dt);
     mutexControleRobot_->unlock();
 }
 
@@ -730,6 +744,51 @@ void NoeudRobot::positionnerRoues()
 	roueDroite_->assignerPositionRelative(position);
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignColors()
+///
+/// Cette fonctione permet dassigner les couleurs au robot et aux roues
+///
+/// @param[in] modele , alpha, red, green and blue
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::assignerCouleurs(int modele, int a, int r, int g, int b)
+{
+	if (modele == WHEELS)
+	{
+		roueDroite_->assignerCouleurs(modele,a, r, g, b);
+		roueGauche_->assignerCouleurs(modele,a, r, g, b);
+	}
+	else if (modele == BODY)
+	{
+		couleur_[0] = (float)a / (float)255;
+		couleur_[1] = (float)r / (float)255;
+		couleur_[2] = (float)g / (float)255;
+		couleur_[3] = (float)b / (float)255;
+		estCouleurDefaut_ = false;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::assignerMode(int mode)
+///
+/// Cette fonction permet au noeudRobot de connaitre le mode afin dagir en consequence
+///
+/// @param[in] mode 
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::assignerMode(int mode)
+{
+	mode_ = mode;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

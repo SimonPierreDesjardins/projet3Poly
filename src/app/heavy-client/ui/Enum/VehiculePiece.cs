@@ -17,8 +17,8 @@ namespace VehiculePiece
 /// Enum représentant le mode dans lequel le programme se trouve
 enum VehiculePiece
     {
-        Wheels,
-        Body
+        WHEELS,
+        BODY
     };
 
 #if !__LINE__

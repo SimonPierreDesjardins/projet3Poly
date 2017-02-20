@@ -688,6 +688,74 @@ int* ProfilUtilisateur::obtenirLimiteParametres(){
 	return new int[6] {ANGLE_MIN_COMPORTEMENT, ANGLE_MAX_COMPORTEMENT, DUREE_MIN_COMPORTEMENT, DUREE_MAX_COMPORTEMENT, LARGEUR_MIN_DETECTION_DISTANCE, LARGEUR_TOTAL_DETECTION_DISTANCE};
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerCouleur(int modele, int a, int r, int g, int b)
+///
+///	Fonction qui assigne les couleurs du modele au tableau en attribut
+///
+/// @return void
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::assignerCouleur(int modele, int a, int r, int g, int b) {
+	if (modele == WHEELS)
+	{
+		couleurRoues_[0] = (float)a / (float)255;
+		couleurRoues_[1] = (float)r / (float)255;
+		couleurRoues_[2] = (float)g / (float)255;
+		couleurRoues_[3] = (float)b / (float)255;
+		estDefautRoues_ = false;
+	}
+	else
+	{
+		couleurRobot_[0] = (float)a / (float)255;
+		couleurRobot_[1] = (float)r / (float)255;
+		couleurRobot_[2] = (float)g / (float)255;
+		couleurRobot_[3] = (float)b / (float)255;
+		estDefautRobot_ = false;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn int* ProfilUtilisateur::obtenirCouleur(int modele, int index)
+///
+///	Fonction retournant la couleur du modele a lindex demandee
+///
+/// @return int* Pointeur sur le tableau des 
+///
+////////////////////////////////////////////////////////////////////////
+float* ProfilUtilisateur::obtenirCouleurs(int modele) {
+	if (modele == WHEELS)
+	{
+		return couleurRoues_;
+	}
+	else
+	{
+		return couleurRobot_;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::obtenirCouleurParDefaut(int modele)
+///
+///	Fonction retournant si le modele possede encore la couleur par defaut
+///
+/// @return true si la couleur du modele est toujours celle par defaut
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::obtenirCouleurParDefaut(int modele) {
+	if (modele == WHEELS)
+	{
+		return estDefautRoues_;
+	}
+	else
+	{
+		return estDefautRobot_;
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

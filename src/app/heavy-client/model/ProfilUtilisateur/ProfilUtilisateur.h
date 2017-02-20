@@ -23,6 +23,7 @@
 #include "SuiveurLigne.h"
 #include "NoeudRobot.h"
 #include <array>
+#include "VehiculePiece.cs"
 
 /// Représente chaque option de débogage et permet des obtenirs plus intuitivement
 enum optionsDebogagesEnum
@@ -100,6 +101,11 @@ class ProfilUtilisateur
 		bool obtenirOptionDebogage(optionsDebogagesEnum option);
 
 		int* obtenirLimiteParametres();
+
+		void assignerCouleur(int modele, int a, int r, int g, int b);
+		float* obtenirCouleurs(int modele);
+
+		bool obtenirCouleurParDefaut(int modele);
 
 	private:
 		bool creationDossierDonnees();
@@ -180,6 +186,13 @@ class ProfilUtilisateur
 
 		/// Tableau contenant si les options de débogages sont actives ou non et l'état de chacune des options
 		std::array<bool, 4> optionsDebogages_;
+
+		float couleurRobot_[4];
+		float couleurRoues_[4];
+
+		bool estDefautRoues_ = true;
+		bool estDefautRobot_ = true;
+		
 };
 
 ////////////////////////////////////////////////////////////////////////

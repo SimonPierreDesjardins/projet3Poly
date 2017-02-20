@@ -39,11 +39,14 @@ public:
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	void setRightWheel(bool isRight);
+	void assignerCouleurs(int modele, int a, int r, int g, int b);
 
 private:
 	ProfilUtilisateur* profil_{ nullptr };
 	float vitesseCourante_{ 0.f };
 	bool isRightWheel{ false };
+	float* couleur_;
+	bool estCouleurDefaut_ = true;
 };
 
 #endif // __ARBRE_NOEUD_ROUES_H__

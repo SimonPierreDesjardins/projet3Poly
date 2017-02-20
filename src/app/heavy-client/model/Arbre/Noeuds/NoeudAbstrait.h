@@ -177,6 +177,10 @@ public:
 	/// assigne les attributs d'un noeud à partir d'un JSON
 	void fromJson(rapidjson::Value::ConstValueIterator noeudJSON);
 
+	virtual void assignerCouleurs(int modele, int a, int r, int g, int b) {};
+
+	virtual void assignerMode(int mode) {};
+
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };

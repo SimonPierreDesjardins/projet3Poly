@@ -30,8 +30,8 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            wheelColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.Wheels);
-            robotColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.Body);
+            wheelColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.WHEELS);
+            robotColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.BODY);
 
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }

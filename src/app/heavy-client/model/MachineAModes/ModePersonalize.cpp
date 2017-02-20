@@ -31,9 +31,9 @@ ModePersonalize::ModePersonalize()
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	FacadeModele::obtenirInstance()->assignerVueOrbitePerso();
 
-	
 	controleRobot_ = std::make_unique<ControleRobot>();
 	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
+	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
@@ -58,28 +58,7 @@ ModePersonalize::~ModePersonalize()
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
 }
-/*
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void EtatAbstrait::gererMouvementSouris(const int & x, const int& y)
-///
-/// Cette fonction gère les mouvements de la souris. Si le clique droit est enfoncé
-/// on peux déplacer la caméra, sinon rien
-///
-/// @param const int& x: position en x du cursor
-/// @param const int& y: position en y du cursor
-///
-////////////////////////////////////////////////////////////////////////
-void ModePersonalize::gererMouvementSouris(const int & x, const int& y)
-{
-	if (clicDroitEnfonce_) {
-		if (!FacadeModele::obtenirInstance()->obtenirVue()->estPremierePersonne()) {
-			FacadeModele::obtenirInstance()->obtenirVue()->deplacerXY(glm::ivec2(-(x - currentPosition_.x), y - currentPosition_.y));
-		}
-	}
-	currentPosition_ = glm::ivec2(x, y);
 
-}*/
 
 ////////////////////////////////////////////////////////////////////////
 ///

@@ -39,7 +39,9 @@ NoeudRoues::NoeudRoues(const std::string& typeNoeud)
 	NoeudAbstrait* depart = table->chercher(0);
 	positionRelative_ = depart->obtenirPositionRelative();
 	angleRotation_ = depart->obtenirAngleRotation();
-	//couleur = profil_->
+	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	couleur_ = profil_->obtenirCouleurs(WHEELS);
+	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(WHEELS);
 	parent_ = table->chercher(ArbreRenduINF2990::NOM_ROBOT);
 }
 
@@ -80,7 +82,12 @@ void NoeudRoues::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 
-	//glColor3d(0.3, 0.3, 0.3);
+	if (!estCouleurDefaut_)
+	{
+		glDisable(GL_COLOR_MATERIAL);
+		glColor4f(couleur_[1], couleur_[2], couleur_[3], couleur_[0]);
+		glEnable(GL_COLOR_MATERIAL);
+	}
 	//Faire tourner la roue droite de 180 degres
 	if(isRightWheel)
 	{ 
@@ -140,6 +147,29 @@ void NoeudRoues::setRightWheel(bool isRight)
 void NoeudRoues::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
+}
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRoues::assignerCouleurs(int modele, int a, int r, int g, int b)
+///
+/// Cette fonctione permet dassigner les couleurs aux roues
+///
+/// @param[in] modele , alpha, red, green and blue
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRoues::assignerCouleurs(int modele, int a, int r, int g, int b)
+{
+	if (modele == WHEELS)
+	{
+		couleur_[0] = (float)a / (float)255;
+		couleur_[1] = (float)r / (float)255;
+		couleur_[2] = (float)g / (float)255;
+		couleur_[3] = (float)b / (float)255;
+		estCouleurDefaut_ = false;
+
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

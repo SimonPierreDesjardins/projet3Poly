@@ -75,6 +75,10 @@ public:
 	//Permet de positionner les roues
 	void positionnerRoues();
 
+	void assignerCouleurs(int modele, int a, int r, int g, int b);
+
+	void assignerMode(int mode);
+
 	//Permet de récupérer les paramètres du robot.
 	inline float obtenirVitesseDroite() const;
 	inline float obtenirVitesseGauche() const;
@@ -84,6 +88,7 @@ public:
 	// Retourne l'états des capeurs du robot.
     inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
+
 
 private:
 	//Vitesse des moteurs du robot
@@ -131,6 +136,9 @@ private:
 	NoeudAbstrait* table_;
 	NoeudRoues* roueGauche_;
 	NoeudRoues* roueDroite_;
+	float* couleur_;
+	bool estCouleurDefaut_ = true;
+	int mode_;
 	
 	ControleurLumiere* controleurLumiere_{ nullptr };
 };

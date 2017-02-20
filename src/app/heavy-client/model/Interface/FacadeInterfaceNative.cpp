@@ -818,8 +818,9 @@ extern "C"
 	}
 
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
-	{
-		int i = 0;
+	{	
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCouleur(piece, a, r, g, b);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_ROBOT)->assignerCouleurs(piece,a,r,g,b);
 	}
 }
 
