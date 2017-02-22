@@ -20,7 +20,17 @@ namespace ui
 
         }
 
+        private void onlineChatButton_Click(object sender, EventArgs e)
+        {
+            minizeOrMaximizeChat();
+        }
+
         private void minMaxButton_Click(object sender, EventArgs e)
+        {
+            minizeOrMaximizeChat();
+        }
+
+        private void minizeOrMaximizeChat()
         {
             //Minimize
             if (tabControl.Height != 0)
@@ -28,7 +38,7 @@ namespace ui
                 tabControl.Height = 0;
                 this.Height = 30;
 
-                this.Location = new Point(parent_.mainScreen.Width - this.Width, parent_.mainScreen.Height - this.Height);
+                this.Location = new Point(parent_.viewPort.Width - this.Width, parent_.viewPort.Height - this.Height);
                 minMaxPictureBox.Image = Properties.Resources.Maximize;
 
             }
@@ -38,10 +48,9 @@ namespace ui
                 this.Height = 280;
                 tabControl.Height = 249;
 
-                this.Location = new Point(parent_.mainScreen.Width - this.Width, parent_.mainScreen.Height - this.Height);
+                this.Location = new Point(parent_.viewPort.Width - this.Width, parent_.viewPort.Height - this.Height);
                 minMaxPictureBox.Image = Properties.Resources.Minimize;
             }
-            
         }
 
         private void outWindowButton_Click(object sender, EventArgs e)
@@ -57,8 +66,8 @@ namespace ui
                 tabControl.Height = 249;
                 minMaxPictureBox.Image = Properties.Resources.Minimize;
 
-                if (parent_.mainScreen.Controls.Contains(parent_.userChat))
-                    parent_.mainScreen.Controls.Remove(parent_.userChat);
+                if (parent_.viewPort.Controls.Contains(parent_.userChat))
+                    parent_.viewPort.Controls.Remove(parent_.userChat);
                 else if (parent_.viewPort.Controls.Contains(parent_.userChat))
                     parent_.viewPort.Controls.Remove(parent_.userChat);
 
@@ -76,9 +85,9 @@ namespace ui
                 chatWindow_.Dispose();
 
                 parent_.userChat.Size = new Size(265, 280);
-                parent_.userChat.Location = new Point(parent_.mainScreen.Width - parent_.userChat.Width,
-                                                      parent_.mainScreen.Height - parent_.userChat.Height);
-                parent_.mainScreen.Controls.Add(parent_.userChat);
+                parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width,
+                                                      parent_.viewPort.Height - parent_.userChat.Height);
+                parent_.viewPort.Controls.Add(parent_.userChat);
                 
                 parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
             }

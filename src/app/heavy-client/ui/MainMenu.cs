@@ -194,7 +194,7 @@ namespace ui
             {
                 Application.DoEvents();
             }
-            parent_.mainScreen.Controls.Remove(parent_.mainMenu);
+            parent_.viewPort.Controls.Remove(parent_.mainMenu);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -210,7 +210,9 @@ namespace ui
         private void ShowMenuTimer_Tick(object sender, EventArgs e)
         {
             if (this.Width >= 200)
+            {
                 ShowMenuTimer.Stop();
+            }
             else
                 this.Width += 5;
         }

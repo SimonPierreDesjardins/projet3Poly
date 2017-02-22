@@ -29,16 +29,39 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserTabChat));
+            this.onlineChatButton = new ui.PanelButton();
+            this.customLabel1 = new ui.CustomLabel();
             this.minMaxButton = new ui.PanelButton();
             this.minMaxPictureBox = new System.Windows.Forms.PictureBox();
             this.outWindowButton = new ui.PanelButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabControl = new ui.TabControlWithoutHeader();
+            this.onlineChatButton.SuspendLayout();
             this.minMaxButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.minMaxPictureBox)).BeginInit();
             this.outWindowButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
+            // 
+            // onlineChatButton
+            // 
+            this.onlineChatButton.Controls.Add(this.customLabel1);
+            this.onlineChatButton.Location = new System.Drawing.Point(3, 3);
+            this.onlineChatButton.Name = "onlineChatButton";
+            this.onlineChatButton.Size = new System.Drawing.Size(196, 26);
+            this.onlineChatButton.TabIndex = 4;
+            this.onlineChatButton.Click += new System.EventHandler(this.onlineChatButton_Click);
+            // 
+            // customLabel1
+            // 
+            this.customLabel1.AutoSize = true;
+            this.customLabel1.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel1.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel1.Location = new System.Drawing.Point(0, 5);
+            this.customLabel1.Name = "customLabel1";
+            this.customLabel1.Size = new System.Drawing.Size(142, 17);
+            this.customLabel1.TabIndex = 0;
+            this.customLabel1.Text = "Clavardage en ligne";
             // 
             // minMaxButton
             // 
@@ -103,11 +126,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.Controls.Add(this.onlineChatButton);
             this.Controls.Add(this.minMaxButton);
             this.Controls.Add(this.outWindowButton);
             this.Controls.Add(this.tabControl);
             this.Name = "UserTabChat";
             this.Size = new System.Drawing.Size(265, 280);
+            this.onlineChatButton.ResumeLayout(false);
+            this.onlineChatButton.PerformLayout();
             this.minMaxButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.minMaxPictureBox)).EndInit();
             this.outWindowButton.ResumeLayout(false);
@@ -122,5 +148,7 @@
         private PanelButton minMaxButton;
         private System.Windows.Forms.PictureBox minMaxPictureBox;
         private TabControlWithoutHeader tabControl;
+        private PanelButton onlineChatButton;
+        private CustomLabel customLabel1;
     }
 }
