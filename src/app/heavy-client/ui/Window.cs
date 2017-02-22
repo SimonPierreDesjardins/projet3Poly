@@ -699,8 +699,14 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void viewPort_Resize(object sender, EventArgs e)
         {
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-            FonctionsNatives.dessinerOpenGL();
+            if (Program.peutAfficher)
+            {
+                FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+                FonctionsNatives.dessinerOpenGL();
+
+                int w = viewPort.Width;
+                int h = viewPort.Height;
+            }
         }
     }
 

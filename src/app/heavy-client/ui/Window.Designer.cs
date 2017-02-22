@@ -146,9 +146,10 @@
             // 
             // viewPort
             // 
-            this.viewPort.AutoSize = true;
+            this.viewPort.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.viewPort.Controls.Add(this.picturePause);
-            this.viewPort.Dock = System.Windows.Forms.DockStyle.Fill;
             this.viewPort.Location = new System.Drawing.Point(0, 0);
             this.viewPort.MinimumSize = new System.Drawing.Size(100, 100);
             this.viewPort.Name = "viewPort";
@@ -188,7 +189,6 @@
             this.viewPort.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picturePause)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 

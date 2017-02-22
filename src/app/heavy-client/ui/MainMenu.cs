@@ -124,7 +124,6 @@ namespace ui
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
 
-            parent_.viewPort.Visible = true;
             Program.peutAfficher = true;
 
             FonctionsNatives.assignerMode(Mode.EDITION);
@@ -154,10 +153,10 @@ namespace ui
             parent_.viewPort.Controls.Add(parent_.personnalisationSideMenu);
             parent_.personnalisationSideMenu.Dock = DockStyle.Left;
 
-            parent_.viewPort.Visible = true;
             Program.peutAfficher = true;
 
             FonctionsNatives.assignerMode(Mode.PERSONALIZE);
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
         private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)

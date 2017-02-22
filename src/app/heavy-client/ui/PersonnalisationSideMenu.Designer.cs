@@ -267,6 +267,7 @@
             this.Controls.Add(this.wheelColor_Button);
             this.Name = "PersonnalisationSideMenu";
             this.Size = new System.Drawing.Size(200, 471);
+            this.Load += new System.EventHandler(this.PersonnalisationSideMenu_Load);
             this.returnMainMenu_Button.ResumeLayout(false);
             this.returnMainMenu_Button.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();

@@ -32,8 +32,6 @@ namespace ui
 
             wheelColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.WHEELS);
             robotColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.BODY);
-
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -138,6 +136,11 @@ namespace ui
                 parent_.viewPort.Controls.Remove(wheelColorSelector);
             if (parent_.viewPort.Controls.Contains(robotColorSelector))
                 parent_.viewPort.Controls.Remove(robotColorSelector);
+        }
+
+        private void PersonnalisationSideMenu_Load(object sender, System.EventArgs e)
+        {
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
     }
 }
