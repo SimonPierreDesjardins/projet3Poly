@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   UserChatChannel.cs
+/// @author Frédéric Grégoire
+/// @date   2017-02-22
+///
+////////////////////////////////////////////////
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,6 +14,15 @@ namespace ui
     {
         Window parent_;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public UserChatChannel(Window parent)
+        ///
+        /// Cette fonction initialize les controles sur user control et assigne les attributs.
+        ///
+        /// @param Window parent: reference a la fenetre principal du programme
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public UserChatChannel(Window parent)
         {
             InitializeComponent();
@@ -24,11 +39,32 @@ namespace ui
             chatListBox.DrawItem += chatBox_DrawItem;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void chatBox_MeasureItem(object sender, MeasureItemEventArgs e)
+        ///
+        /// Sert à calculer la longueur d'une chaine de string dans la liste box
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param MesureItemEventArgs e: evenement pour mesure la grandeur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void chatBox_MeasureItem(object sender, MeasureItemEventArgs e)
         {
             e.ItemHeight = (int)e.Graphics.MeasureString(chatListBox.Items[e.Index].ToString(), chatListBox.Font, chatListBox.Width).Height;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void chatBox_MeasureItem(object sender, MeasureItemEventArgs e)
+        ///
+        /// Sert à dessiner les strings dans la listebox et de faire un "wrap" sur celle-ci
+        /// quand elles sont trop longue pour une ligne
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param DrawItemEventArgs e: evenement pour dessiner le control
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void chatBox_DrawItem(object sender, DrawItemEventArgs e)
         {
             e.DrawBackground();
@@ -37,6 +73,16 @@ namespace ui
                 e.Graphics.DrawString(chatListBox.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void UserChatChannel_Resize(object sender, EventArgs e)
+        ///
+        /// Redimensionne les boutons a la droite du controle lorsqu'il est redimensionner
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void UserChatChannel_Resize(object sender, EventArgs e)
         {
             userButton.Height = this.Height / 2;
@@ -46,6 +92,20 @@ namespace ui
             channelButton.Location = new Point(0, this.Height / 2);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void userButton_Click(object sender, EventArgs e)
+        ///
+        /// Actions lorsque le boutton des usagers est appuyé.
+        /// Il fait les actions suivantes selon son état:
+        /// 1. Cache le chat et affiche les users
+        /// 2. Cache les users et affiche le chat
+        /// 3. Cache les channels et montre les users
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void userButton_Click(object sender, EventArgs e)
         {
             disableControls();
@@ -80,6 +140,20 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void userButton_Click(object sender, EventArgs e)
+        ///
+        /// Actions lorsque le boutton des channels est appuyé.
+        /// Il fait les actions suivantes selon son état:
+        /// 1. Cache le chat et affiche les channels
+        /// 2. Cache les users et affiche les channels
+        /// 3. Cache les channels et affiche le chat
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void channelButton_Click(object sender, EventArgs e)
         {
             disableControls();
@@ -114,18 +188,43 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void disableControls()
+        ///
+        /// Désactiver les bouttons sur le control
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void disableControls()
         {
             userButton.Enabled = false;
             channelButton.Enabled = false;
         }
 
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void enableControls()
+        ///
+        /// Active les bouttons sur le control
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void enableControls()
         {
             userButton.Enabled = true;
             channelButton.Enabled = true;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void hideChat_Tick(object sender, EventArgs e)
+        ///
+        /// Cache le chat lorsque le timer est activé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du timer
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void hideChat_Tick(object sender, EventArgs e)
         {
             if (panelChat.Width > 0)
@@ -140,6 +239,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void hideChat_Tick(object sender, EventArgs e)
+        ///
+        /// Montre le chat lorsque le timer est activé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du timer
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void showChat_Tick(object sender, EventArgs e)
         {
 
@@ -158,6 +267,17 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void userButton_Click(object sender, EventArgs e)
+        ///
+        /// Arrete d'envoyer des actions au modele. Si la touche est "enter"
+        /// le message est envoyé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param PreviewKeyDownEventArgs e: evenement d'une keydown
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void chatTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
             FonctionsNatives.assignerAutorisationInputClavier(false);
@@ -168,12 +288,30 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void sendButton_Click_1(object sender, EventArgs e)
+        ///
+        /// Envoie le message lorsque le boutton est appuyer
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void sendButton_Click_1(object sender, EventArgs e)
         {
             sendText();
             chatTextBox.Focus();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void sendText()
+        ///
+        /// Vérifie si le message est vide et l'ajoute au chat (chatListBox)
+        /// et vide la textbox
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void sendText()
         {
             if (!System.Text.RegularExpressions.Regex.Replace(chatTextBox.Text, "\n|\t| |\r", "").Equals(""))
@@ -185,6 +323,17 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void createButton_Click(object sender, EventArgs e)
+        ///
+        /// Crée un nouveau tab (channel) avec le nom dans la textbox si possible
+        /// Sinon un message d'erreur est retourné dans le label
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void createButton_Click(object sender, EventArgs e)
         {
             warningLabel.Visible = false;
@@ -213,6 +362,17 @@ namespace ui
 
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void joinButton_Click(object sender, EventArgs e)
+        ///
+        /// Crée un nouveau tab (channel) avec le nom sélectionné parmi les channels.
+        /// Si le channel est deja présent un message d'erreur est retourné dans le label
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void joinButton_Click(object sender, EventArgs e)
         {
             warningLabel.Visible = false;
@@ -237,6 +397,17 @@ namespace ui
                 
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void leaveButton_Click(object sender, EventArgs e)
+        ///
+        /// Enlève un tab (channel) avec le nom sélectionné parmi les channels.
+        /// Si le channel n'est pas présent un message d'erreur est retourné dans le label
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void leaveButton_Click(object sender, EventArgs e)
         {
             warningLabel.Visible = false;
@@ -258,6 +429,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void panelChannel_VisibleChanged(object sender, EventArgs e)
+        ///
+        /// Change la visibilité du warning label lorsque la visibilité est changé
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void panelChannel_VisibleChanged(object sender, EventArgs e)
         {
             warningLabel.Visible = false;

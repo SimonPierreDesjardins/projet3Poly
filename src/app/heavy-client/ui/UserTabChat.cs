@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   UserTabChat.cs
+/// @author Frédéric Grégoire
+/// @date   2017-02-22
+///
+////////////////////////////////////////////////
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -10,6 +16,15 @@ namespace ui
         ChatWindow chatWindow_;
         Boolean inMainWindow = true;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public UserTabChat(Window parent)
+        ///
+        /// Cette fonction initialize les controles sur user control et assigne les attributs.
+        ///
+        /// @param Window parent: reference a la fenetre principal du programme
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public UserTabChat(Window parent)
         {
             InitializeComponent();
@@ -20,16 +35,44 @@ namespace ui
 
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void onlineChatButton_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Appel la fonction pour minimiser ou maximiser le chat
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void onlineChatButton_Click(object sender, EventArgs e)
         {
             minizeOrMaximizeChat();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void minMaxButton_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Appel la fonction pour minimiser ou maximiser le chat
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void minMaxButton_Click(object sender, EventArgs e)
         {
             minizeOrMaximizeChat();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void minizeOrMaximizeChat()
+        ///
+        /// Replace le chat dans la fenetre principal lorsqu'il minimiser ou maximiser
+        /// et ajuste ses composantes en fonction
+        ///    
+        ////////////////////////////////////////////////////////////////////////
         private void minizeOrMaximizeChat()
         {
             //Minimize
@@ -53,6 +96,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void outWindowButton_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Sert à changer le chat entre le mode intégré et le mode fenêtré
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void outWindowButton_Click(object sender, EventArgs e)
         {
             if (inMainWindow)
@@ -75,6 +128,7 @@ namespace ui
                 chatWindow_.Controls.Add(parent_.userChat);
                 parent_.userChat.Dock = DockStyle.Fill;
                 chatWindow_.Show();
+
             } else
             {
                 inMainWindow = true;
@@ -93,6 +147,15 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void createNewChannel(string name)
+        ///
+        /// Ajoute un tab au chat (channel) avec le nom donné en argument
+        /// 
+        /// @param string name: nom de la tab à ajouter
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void createNewChannel(string name)
         {
             //Add a tab
@@ -110,6 +173,15 @@ namespace ui
             newChannel.Dock = DockStyle.Fill;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public bool leaveChannel(string name)
+        ///
+        /// Retire un tab au chat (channel) avec le nom donné en argument
+        /// 
+        /// @param string name: nom de la tab à ajouter
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public bool leaveChannel(String tabName)
         {
             bool leftChannel = false;
@@ -124,6 +196,17 @@ namespace ui
             return leftChannel;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public bool alreadyInChannel(string name)
+        ///
+        /// Indique si le nom (channel) est déjà présent dans le chat.
+        /// Retourne "true" si le channel est unique: pas présent
+        /// Retourne "false" si le nom est déjà présent.
+        /// 
+        /// @param string name: nom de la tab à vérifier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public bool alreadyInChannel(String tabName)
         {
             bool unique = true;
