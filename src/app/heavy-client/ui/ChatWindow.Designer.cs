@@ -34,8 +34,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(259, 241);
-            this.MinimumSize = new System.Drawing.Size(275, 280);
+            this.ClientSize = new System.Drawing.Size(284, 536);
+            this.MinimumSize = new System.Drawing.Size(300, 575);
             this.Name = "ChatWindow";
             this.Text = "ChatWindow";
             this.ResumeLayout(false);

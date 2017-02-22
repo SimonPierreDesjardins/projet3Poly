@@ -16,7 +16,7 @@ namespace ui
     {
         public Configure configuration;
 
-        public UserChat userChat;
+        public UserTabChat userChat;
 
         public MainMenu mainMenu;
         public PersonnalisationSideMenu personnalisationSideMenu;
@@ -85,7 +85,7 @@ namespace ui
             mainScreen.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
 
-            userChat = new UserChat(this);
+            userChat = new UserTabChat(this);
             mainScreen.Controls.Add(userChat);
             userChat.Location = new Point(mainScreen.Width - userChat.Width, mainScreen.Height - userChat.Height);
             userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);

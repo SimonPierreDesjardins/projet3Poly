@@ -58,6 +58,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -157,11 +158,17 @@
     <Compile Include="TestMenuStrip.Designer.cs">
       <DependentUpon>TestMenuStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserChat.cs">
+    <Compile Include="UserChatChannel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserChat.Designer.cs">
-      <DependentUpon>UserChat.cs</DependentUpon>
+    <Compile Include="UserChatChannel.Designer.cs">
+      <DependentUpon>UserChatChannel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UserTabChat.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UserTabChat.Designer.cs">
+      <DependentUpon>UserTabChat.cs</DependentUpon>
     </Compile>
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
@@ -214,8 +221,11 @@
     <EmbeddedResource Include="TestMenuStrip.resx">
       <DependentUpon>TestMenuStrip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserChat.resx">
-      <DependentUpon>UserChat.cs</DependentUpon>
+    <EmbeddedResource Include="UserChatChannel.resx">
+      <DependentUpon>UserChatChannel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserTabChat.resx">
+      <DependentUpon>UserTabChat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window.resx">
       <DependentUpon>Window.cs</DependentUpon>
@@ -270,12 +280,17 @@
     <Content Include="Resources\Bridge.png" />
     <Content Include="Resources\car-change.png" />
     <Content Include="Resources\car.png" />
+    <None Include="Resources\chat.bmp" />
+    <None Include="Resources\Chat.png" />
+    <None Include="Resources\Channels.png" />
     <Content Include="Resources\Create.png" />
     <Content Include="Resources\delete.png" />
     <Content Include="Resources\Duplicate.png" />
     <Content Include="Resources\Green_Line.png" />
     <Content Include="Resources\Ligne.png" />
+    <None Include="Resources\Maximize.png" />
     <Content Include="Resources\menu.png" />
+    <None Include="Resources\Minimize.png" />
     <Content Include="Resources\move.png" />
     <Content Include="Resources\music.png" />
     <Content Include="Resources\Red_Line.png" />
@@ -285,6 +300,7 @@
     <Content Include="Resources\Selection.png" />
     <Content Include="Resources\table.png" />
     <Content Include="Resources\Teleporteur.png" />
+    <None Include="Resources\User.png" />
     <Content Include="Resources\wall.png" />
     <Content Include="Resources\wheel.png" />
     <Content Include="Resources\Zoom.png" />
