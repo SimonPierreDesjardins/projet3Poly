@@ -3,25 +3,25 @@
 
 using namespace Networking;
 
-ConnectionResolver& Networking::NetworkFactory::BuildResolver()
+ConnectionResolver* Networking::NetworkFactory::BuildResolver()
 {
-	IOServiceHandler::IncrementUserCount();
-	ConnectionResolver resolver(*(IOServiceHandler::getIOService()));
+	iosHandler.IncrementUserCount();
+	ConnectionResolver* resolver = new ConnectionResolver(*(iosHandler.getIOService()));
 
 	return std::move(resolver);
 }
 
-ServerListener& Networking::NetworkFactory::BuildListener()
+ServerListener* Networking::NetworkFactory::BuildListener()
 {
-	IOServiceHandler::IncrementUserCount();
-	ServerListener serverListener(*(IOServiceHandler::getIOService()));
+	iosHandler.IncrementUserCount();
+	ServerListener* serverListener = new ServerListener(*(iosHandler.getIOService()));
 
 	return std::move(serverListener);
 }
 
 Connection& Networking::NetworkFactory::BuildConnection(tcp::socket* socket)
 {
-	IOServiceHandler::IncrementUserCount();
+	iosHandler.IncrementUserCount();
 	Connection connection(socket);
 	return std::move(connection);
 }
@@ -32,11 +32,14 @@ std::shared_ptr<asio::io_service> Networking::NetworkFactory::IOServiceHandler::
 		aios = std::make_shared<asio::io_service>();
 	}
 
-	if (aiosThread != NULL) {
-		StartIOThread();
-	}
+	StartIOThread();
 
 	return aios;
+}
+
+Networking::NetworkFactory::IOServiceHandler::~IOServiceHandler()
+{
+	StopIOThread();
 }
 
 void Networking::NetworkFactory::IOServiceHandler::IncrementUserCount()
@@ -58,7 +61,7 @@ void Networking::NetworkFactory::IOServiceHandler::DecrementUserCount()
 void Networking::NetworkFactory::IOServiceHandler::StartIOThread()
 {
 	if (aiosThread == NULL) {
-		aiosThread = new std::thread([]() {
+		aiosThread = new std::thread([this]() {
 			// keep running as long as there are users of the IOThread.
 			if (aios->stopped() && userCount > 0 ) {
 				aios->run();
@@ -82,4 +85,4 @@ void Networking::NetworkFactory::IOServiceHandler::StopIOThread()
 	aiosThread = NULL;
 }
 
-int Networking::NetworkFactory::IOServiceHandler::userCount = 0;
+Networking::NetworkFactory::IOServiceHandler Networking::NetworkFactory::iosHandler;

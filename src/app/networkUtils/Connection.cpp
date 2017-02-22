@@ -11,7 +11,9 @@ Connection::Connection(asio::ip::tcp::socket* socket) {
 
 Connection::~Connection()
 {
+	_connectionLock.lock();
 	CloseConnection();
+	_connectionLock.lock();
 }
 
 void Connection::Start() {
@@ -37,6 +39,7 @@ void Connection::ReadData()
 			// End of connection
 			CheckIfDisconnect(ec);
 		}
+		_connectionLock.unlock();
 	});
 	_connectionLock.unlock();
 }

@@ -8,8 +8,14 @@ ServerListener::ServerListener(asio::io_service & ioService) : _acceptor(ioServi
 {
 }
 
+Networking::ServerListener::~ServerListener()
+{
+	_acceptor.close();
+}
+
 void ServerListener::StartAccepting(short port)
 {
+	_acceptor.open(tcp::v4());
 	_acceptor.bind(tcp::endpoint(tcp::v4(), port));
 	tcp::socket* socket = new tcp::socket(_acceptor.get_io_service());
 	_acceptor.async_accept(*socket,
@@ -24,6 +30,8 @@ void ServerListener::StartAccepting(short port)
 		}
 		else
 		{
+			socket->close();
+			delete socket;
 			if (errorCode.value() != asio::error::operation_aborted) {
 				Logger::LogError(errorCode);
 			}

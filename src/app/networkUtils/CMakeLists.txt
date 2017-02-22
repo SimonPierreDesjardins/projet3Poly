@@ -20,7 +20,7 @@ NetworkFactory.cpp
 NetworkDisposal.cpp
 )
 
-set_property(TARGET networkUtils PROPERTY FOLDER "app/server")
+set_property(TARGET networkUtils PROPERTY FOLDER "app/network")
 
 
 target_compile_definitions(networkUtils

@@ -15,11 +15,11 @@ namespace Networking {
 	public:
 		///<summary>Builds a network resolver that can be used to connect to a given ip and port</summary>
 		///<returns>An instance of a Resolver</returns>
-		static ConnectionResolver& BuildResolver();
+		static ConnectionResolver* BuildResolver();
 
 		///<summary>Builds a network listener that can listen for incomming connctions on a given port</summary>
 		///<returns>An instance of a Listener</returns>
-		static ServerListener& BuildListener();
+		static ServerListener* BuildListener();
 
 
 	private:
@@ -28,23 +28,27 @@ namespace Networking {
 
 		class IOServiceHandler {
 		public:
-			static std::shared_ptr<asio::io_service> getIOService();
+			std::shared_ptr<asio::io_service> getIOService();
 
-			static void IncrementUserCount();
+			~IOServiceHandler();
 
-			static void DecrementUserCount();
+			void IncrementUserCount();
+
+			void DecrementUserCount();
 
 		private:
-			static void StartIOThread();
+			void StartIOThread();
 
-			static void StopIOThread();
+			void StopIOThread();
 			
-			static std::shared_ptr<asio::io_service> aios;
+			std::shared_ptr<asio::io_service> aios;
 
-			static std::thread* aiosThread;
+			std::thread* aiosThread;
 
-			static int userCount;
+			int userCount = 0;
 		};
+
+		static IOServiceHandler iosHandler;
 	};
 }
 

@@ -17,6 +17,13 @@ void NetworkDisposal::Dispose(ServerListener * listener)
 	_disposer.Dispose(listener);
 }
 
+Networking::NetworkDisposal::Disposer::~Disposer()
+{
+	_runDisposal = false;
+	while (!_disposalThread->joinable());
+	_disposalThread->join();
+}
+
 void NetworkDisposal::Disposer::Dispose(Connection * connection)
 {
 	_queueLock.lock();
@@ -46,6 +53,9 @@ void NetworkDisposal::Disposer::StartThread()
 	if (_disposalThread != NULL) {
 		return;
 	}
+
+	_runDisposal = true;
+
 	_disposalThread = new std::thread([this]() {
 		int deletionCount = 0;
 
@@ -54,42 +64,56 @@ void NetworkDisposal::Disposer::StartThread()
 
 			deletionCount = 0;
 
-			// check for connections
-			if (_connectionsToDelete.size() > 0) {
-				Connection* deletedOne = _connectionsToDelete.front();
-				if (deletedOne != NULL) {
-					delete deletedOne;
-					deletedOne = NULL;
-					deletionCount++;
-				}
-			}
+			while (ObjectsLeftToDispose()) {
 
-			// check for resolvers
-			if (_resolversToDelete.size() > 0) {
-				ConnectionResolver* deletedOne = _resolversToDelete.front();
-				if (deletedOne != NULL) {
-					delete deletedOne;
-					deletedOne = NULL;
-					deletionCount++;
+				// check for connections
+				if (_connectionsToDelete.size() > 0) {
+					Connection* deletedOne = _connectionsToDelete.front();
+					_connectionsToDelete.pop();
+					if (deletedOne != NULL) {
+						delete deletedOne;
+						deletedOne = NULL;
+						deletionCount++;
+					}
 				}
-			}
 
-			// check for resolvers
-			if (_listenersToDelete.size() > 0) {
-				ServerListener* deletedOne = _listenersToDelete.front();
-				if (deletedOne != NULL) {
-					delete deletedOne;
-					deletedOne = NULL;
-					deletionCount++;
+				// check for resolvers
+				if (_resolversToDelete.size() > 0) {
+					ConnectionResolver* deletedOne = _resolversToDelete.front();
+					_resolversToDelete.pop();
+					if (deletedOne != NULL) {
+						delete deletedOne;
+						deletedOne = NULL;
+						deletionCount++;
+					}
 				}
+
+				// check for listeners
+				if (_listenersToDelete.size() > 0) {
+					ServerListener* deletedOne = _listenersToDelete.front();
+					_listenersToDelete.pop();
+					if (deletedOne != NULL) {
+						delete deletedOne;
+						deletedOne = NULL;
+						deletionCount++;
+					}
+				}
+
 			}
 
 			_queueLock.unlock();
 
 			for (; deletionCount > 0; deletionCount--) {
-				NetworkFactory::IOServiceHandler::DecrementUserCount();
+				NetworkFactory::iosHandler.DecrementUserCount();
 			}
-
 		}
 	});
 }
+
+bool Networking::NetworkDisposal::Disposer::ObjectsLeftToDispose()
+{
+	return (_listenersToDelete.size() | _resolversToDelete.size() | _connectionsToDelete.size()) > 0;
+}
+
+
+Networking::NetworkDisposal::Disposer Networking::NetworkDisposal::_disposer;
