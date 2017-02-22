@@ -738,7 +738,7 @@ void NoeudRobot::positionnerRoues()
 	//Positionner la roue droite en fonction du robot
 	roueDroite_->assignerAngleRotation(angleRotation_);
 	position = positionRelative_;
-	position[0] = position[0] + sin(angleRotation_*PI / 180)*-0.2; //Correction afin de rendre la roue au bon endroit apres la rotation de 180 degre de celle ci.
+	position[0] = position[0] + sin(angleRotation_*PI / 180)*-0.2; //Correction afin de rendre la roue au bon endroit apres la rotation de 180 degre de celle ci pour robot (-0.2).
 	position[1] = position[1] - cos(angleRotation_*PI / 180)*-0.2;
 	position[2] = 0.8;
 	roueDroite_->assignerPositionRelative(position);

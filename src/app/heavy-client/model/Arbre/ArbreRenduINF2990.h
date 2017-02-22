@@ -76,6 +76,13 @@ public:
 	/// La chaine représentant le type du skybox.
 	static const std::string NOM_SKYBOX;
 
+	//La chaine représentant les différents modèles que l'on peut changer
+	static const std::string NOM_F1;
+
+	static const std::string NOM_TRUCK;
+
+	static const std::string NOM_VOLKS;
+
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre
 	void chargerZone(FILE* fp);

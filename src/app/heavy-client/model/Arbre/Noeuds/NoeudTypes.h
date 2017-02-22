@@ -21,6 +21,9 @@
 #include "NoeudDepart.h"
 #include "NoeudJonction.h"
 #include "NoeudRoues.h"
+#include "NoeudF1.h"
+#include "NoeudTruck.h"
+#include "NoeudVolks.h"
 
 #endif /// __NOEUD_TYPES_H__
 

@@ -43,6 +43,13 @@ const std::string ArbreRenduINF2990::NOM_ROUES{ "roues" };
 /// La chaine représentant le type du skybox
 const std::string ArbreRenduINF2990::NOM_SKYBOX{ "skybox" };
 
+//La chaine représentant les différents modèles que l'on peut changer
+const std::string ArbreRenduINF2990::NOM_F1{ "f1" };
+
+const std::string ArbreRenduINF2990::NOM_TRUCK{ "truck" };
+
+const std::string ArbreRenduINF2990::NOM_VOLKS{ "volks" };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ArbreRenduINF2990::ArbreRenduINF2990()
@@ -60,7 +67,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	// Construction des usines
 	ajouterUsine(NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigne>>(NOM_LIGNENOIRE, std::string{ "media/modeles/segment.obj" }));
-	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robot.obj" }));
+	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/mining-dump-truck.obj" }));
 	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));
 	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/mur.obj" }));
 	ajouterUsine(NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/segment.obj" }));
@@ -68,6 +75,10 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_DEPART, std::make_unique<UsineNoeud<NoeudDepart>>(NOM_DEPART, std::string{ "media/modeles/Fleche.obj" }));
 	ajouterUsine(NOM_JONCTION, std::make_unique<UsineNoeud<NoeudJonction>>(NOM_JONCTION, std::string{ "media/modeles/jonction.obj" }));
 	ajouterUsine(NOM_ROUES, std::make_unique<UsineNoeud<NoeudRoues>>(NOM_ROUES, std::string{ "media/modeles/roue.obj" }));
+
+	ajouterUsine(NOM_F1, std::make_unique<UsineNoeud<NoeudF1>>(NOM_F1, std::string{ "media/modeles/ferrari-f1-race-car.obj" }));
+	ajouterUsine(NOM_TRUCK, std::make_unique<UsineNoeud<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }));
+	ajouterUsine(NOM_VOLKS, std::make_unique<UsineNoeud<NoeudVolks>>(NOM_VOLKS, std::string{ "media/modeles/volks.obj" }));
 }
 
 ////////////////////////////////////////////////////////////////////////

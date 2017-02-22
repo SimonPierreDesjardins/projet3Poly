@@ -41,6 +41,12 @@ set(NOEUDS_SRC
     Arbre/Noeuds/NoeudTable.h
     Arbre/Noeuds/NoeudTable.cpp
     Arbre/Noeuds/NoeudTypes.h
+    Arbre/Noeuds/NoeudTruck.cpp
+    Arbre/Noeuds/NoeudTruck.h
+    Arbre/Noeuds/NoeudF1.cpp
+    Arbre/Noeuds/NoeudF1.h
+    Arbre/Noeuds/NoeudVolks.cpp
+    Arbre/Noeuds/NoeudVolks.h
 )
 
 set(USINES_SRC
