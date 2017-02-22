@@ -40,24 +40,10 @@
             this.panneauRotation_ = new System.Windows.Forms.Label();
             this.viewPort = new System.Windows.Forms.Panel();
             this.picturePause = new System.Windows.Forms.PictureBox();
-            this.mainScreen = new System.Windows.Forms.Panel();
             this.panneauOperation_.SuspendLayout();
             this.viewPort.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picturePause)).BeginInit();
-            this.mainScreen.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // picturePause
-            // 
-            this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.picturePause.Image = global::ui.Properties.Resources.pauseNoire;
-            this.picturePause.Location = new System.Drawing.Point(267, 171);
-            this.picturePause.Name = "picturePause";
-            this.picturePause.Size = new System.Drawing.Size(96, 96);
-            this.picturePause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.picturePause.TabIndex = 0;
-            this.picturePause.TabStop = false;
-            this.picturePause.Visible = false;
             // 
             // panneauOperation_
             // 
@@ -169,7 +155,6 @@
             this.viewPort.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.viewPort.Size = new System.Drawing.Size(749, 536);
             this.viewPort.TabIndex = 0;
-            this.viewPort.Visible = false;
             this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
             this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
             this.viewPort.Resize += new System.EventHandler(this.viewPort_Resize);
@@ -186,22 +171,13 @@
             this.picturePause.TabStop = false;
             this.picturePause.Visible = false;
             // 
-            // mainScreen
-            // 
-            this.mainScreen.Controls.Add(this.viewPort);
-            this.mainScreen.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mainScreen.Location = new System.Drawing.Point(0, 0);
-            this.mainScreen.Name = "mainScreen";
-            this.mainScreen.Size = new System.Drawing.Size(749, 536);
-            this.mainScreen.TabIndex = 10;
-            // 
             // Window
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(749, 536);
             this.Controls.Add(this.panneauOperation_);
-            this.Controls.Add(this.mainScreen);
+            this.Controls.Add(this.viewPort);
             this.MinimumSize = new System.Drawing.Size(765, 575);
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -211,8 +187,6 @@
             this.panneauOperation_.PerformLayout();
             this.viewPort.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.picturePause)).EndInit();
-            this.mainScreen.ResumeLayout(false);
-            this.mainScreen.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,7 +204,6 @@
         private System.Windows.Forms.TextBox textboxDimension_;
         public System.Windows.Forms.Panel viewPort;
         public System.Windows.Forms.PictureBox picturePause;
-        public System.Windows.Forms.Panel mainScreen;
     }
 }
 

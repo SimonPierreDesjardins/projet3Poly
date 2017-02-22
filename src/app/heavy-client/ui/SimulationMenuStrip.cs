@@ -66,11 +66,11 @@ namespace ui
             parent_.configuration.deallocateCurrentProfilToolStrip();
             parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
 
-            parent_.mainScreen.Controls.Add(parent_.mainMenu);
+            parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
 
-            parent_.viewPort.Visible = false;
             Program.peutAfficher = false;
+            parent_.viewPort.Refresh();
 
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
