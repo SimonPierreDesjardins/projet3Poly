@@ -113,6 +113,7 @@ namespace ui
                 inMainWindow = false;
                 minMaxButton.Visible = false;
                 minMaxButton.Enabled = false;
+                onlineChatButton.Enabled = false;
 
                 //Set chat components normal
                 this.Height = 280;
@@ -134,7 +135,8 @@ namespace ui
                 inMainWindow = true;
                 minMaxButton.Enabled = true;
                 minMaxButton.Visible = true;
-               
+                onlineChatButton.Enabled = true;
+
                 chatWindow_.Controls.Remove(parent_.userChat);
                 chatWindow_.Dispose();
 
