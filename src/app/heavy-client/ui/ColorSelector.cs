@@ -54,7 +54,7 @@ namespace ui
                 {
                     FonctionsNatives.changePieceColor(currentPieceChange_, oldColor_.A, oldColor_.R, oldColor_.G, oldColor_.B); //Sinon, remet la couleur qui avait été précédemment appliquée
                 }
-            }  
+            }     
         }
 
         private bool inColorCanvas(int X, int Y)
@@ -80,7 +80,11 @@ namespace ui
         public void applyChanges()
         {
             //Didn't click on apply
-            if (wantedChange && usingDefault)
+            if (!wantedChange && usingDefault)
+            {
+                FonctionsNatives.setUsingDefaultMaterialForPiece(currentPieceChange_, true);
+            }
+            else
             {
                 FonctionsNatives.changePieceColor(currentPieceChange_, oldColor_.A, oldColor_.R, oldColor_.G, oldColor_.B);
             }
