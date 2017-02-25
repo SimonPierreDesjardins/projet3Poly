@@ -825,6 +825,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value)
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(piece, value);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_ROBOT)->setCouleurDefault(piece,value);
 	}
 
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)

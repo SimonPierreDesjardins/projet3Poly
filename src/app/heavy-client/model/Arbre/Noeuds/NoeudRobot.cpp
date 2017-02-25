@@ -67,7 +67,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	NoeudAbstrait* depart_ = table_->chercher(ArbreRenduINF2990::NOM_DEPART);
 
     profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	couleur_ = couleur_ = profil_->obtenirCouleurs(BODY);
+	couleur_ = profil_->obtenirCouleurs(BODY);
 	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(BODY);
     suiveurLigne_ = profil_->obtenirSuiveurLigne();
     capteursDistance_ = profil_->obtenirCapteursDistance();
@@ -157,7 +157,7 @@ void NoeudRobot::afficherConcret() const
 		glColor4f(couleur_[1], couleur_[2], couleur_[3], couleur_[0]);
 		glEnable(GL_COLOR_MATERIAL);
 	}
-
+	
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
     controleurLumiere_->afficherLumiereSpotRobot();
@@ -787,6 +787,30 @@ void NoeudRobot::assignerCouleurs(int modele, int a, int r, int g, int b)
 void NoeudRobot::assignerMode(int mode)
 {
 	mode_ = mode;
+}
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::setCouleurDefaut(int piece,bool default)
+///
+/// Cette fonction permet de remettre la couleur par default
+///
+/// @param[in] bool true si par default et int indiquant la piece
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::setCouleurDefault(int piece,bool default)
+{
+	if (piece == WHEELS)
+	{
+		roueDroite_->setCouleurDefault(piece,default);
+		roueGauche_->setCouleurDefault(piece, default);
+	}
+	else if (piece == BODY)
+	{
+		estCouleurDefaut_ = default;
+	}
+	
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -172,6 +172,28 @@ void NoeudRoues::assignerCouleurs(int modele, int a, int r, int g, int b)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRoues::setCouleurDefaut(int piece,bool default)
+///
+/// Cette fonction permet de remettre la couleur par default
+///
+/// @param[in] bool true si par default et int indiquant la piece
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRoues::setCouleurDefault(int piece, bool default)
+{
+	if (piece == WHEELS)
+	{
+		estCouleurDefaut_ = default;
+	}
+}
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

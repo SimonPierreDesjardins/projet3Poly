@@ -181,6 +181,8 @@ public:
 
 	virtual void assignerMode(int mode) {};
 
+	virtual void setCouleurDefault(int piece,bool default) {};
+
 protected:
 	///Si l'objet est en train de se faire créer
 	bool enCreation_		{ false };

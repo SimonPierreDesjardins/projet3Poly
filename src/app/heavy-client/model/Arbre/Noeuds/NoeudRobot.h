@@ -89,6 +89,8 @@ public:
     inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
+	void setCouleurDefault(int piece,bool default);
+
 
 private:
 	//Vitesse des moteurs du robot

@@ -40,6 +40,7 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	void setRightWheel(bool isRight);
 	void assignerCouleurs(int modele, int a, int r, int g, int b);
+	void setCouleurDefault(int piece, bool default);
 
 private:
 	ProfilUtilisateur* profil_{ nullptr };
