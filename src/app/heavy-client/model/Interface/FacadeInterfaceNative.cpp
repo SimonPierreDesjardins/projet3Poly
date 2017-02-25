@@ -817,10 +817,34 @@ extern "C"
 			return 0;
 	}
 
+	__declspec(dllexport) bool __cdecl getUsingDefaultMaterialForPiece(int piece)
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurParDefaut(piece);
+	}
+
+	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(piece, value);
+	}
+
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
 	{	
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCouleur(piece, a, r, g, b);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_ROBOT)->assignerCouleurs(piece,a,r,g,b);
+	}
+
+	__declspec(dllexport) int* __cdecl getPieceColor(int piece)
+	{
+		float* couleurPieceFloat = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurs(piece);
+		int couleurPieceInt[4];
+		
+		couleurPieceInt[0] = (int)(couleurPieceFloat[0] * 255);
+		couleurPieceInt[1] = (int)(couleurPieceFloat[1] * 255);
+		couleurPieceInt[2] = (int)(couleurPieceFloat[2] * 255);
+		couleurPieceInt[3] = (int)(couleurPieceFloat[3] * 255);
+
+		//delete couleurPieceFloat;
+		return couleurPieceInt;
 	}
 }
 

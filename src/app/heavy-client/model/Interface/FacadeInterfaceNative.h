@@ -95,7 +95,10 @@ extern "C"
 	__declspec(dllexport) int __cdecl obtenirTypeVue();
 
 	//Menu personalize
+	__declspec(dllexport) bool __cdecl getUsingDefaultMaterialForPiece(int piece);
+	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value);
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b);
+	__declspec(dllexport) int* __cdecl getPieceColor(int piece);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

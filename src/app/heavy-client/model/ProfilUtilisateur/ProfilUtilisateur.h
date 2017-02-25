@@ -106,6 +106,7 @@ class ProfilUtilisateur
 		float* obtenirCouleurs(int modele);
 
 		bool obtenirCouleurParDefaut(int modele);
+		void setCouleurParDefaut(int modele, bool value);
 
 	private:
 		bool creationDossierDonnees();

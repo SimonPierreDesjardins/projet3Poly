@@ -756,6 +756,18 @@ bool ProfilUtilisateur::obtenirCouleurParDefaut(int modele) {
 	}
 }
 
+void ProfilUtilisateur::setCouleurParDefaut(int modele, bool value) 
+{
+	if (modele == WHEELS)
+	{
+		estDefautRoues_ = value;
+	}
+	else
+	{
+		estDefautRobot_ = value;
+	}
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

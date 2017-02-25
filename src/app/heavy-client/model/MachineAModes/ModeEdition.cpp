@@ -25,7 +25,6 @@
 ///
 /// Ne fait qu'initialiser les variables membres de la classe.
 ///
-///
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////

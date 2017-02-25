@@ -133,9 +133,16 @@ namespace ui
             musicChangeLabel.ForeColor = Color.Silver;
 
             if (parent_.viewPort.Controls.Contains(wheelColorSelector))
+            {
+                wheelColorSelector.applyChanges();
                 parent_.viewPort.Controls.Remove(wheelColorSelector);
-            if (parent_.viewPort.Controls.Contains(robotColorSelector))
+            }   
+            else if (parent_.viewPort.Controls.Contains(robotColorSelector))
+            {
+                robotColorSelector.applyChanges();
                 parent_.viewPort.Controls.Remove(robotColorSelector);
+            }
+                
         }
 
         private void PersonnalisationSideMenu_Load(object sender, System.EventArgs e)

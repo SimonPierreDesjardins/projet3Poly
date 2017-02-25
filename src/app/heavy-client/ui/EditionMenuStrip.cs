@@ -213,6 +213,7 @@ namespace ui
             parent_.testMenuStrip.Dock = DockStyle.Top;
             
             FonctionsNatives.assignerMode(Mode.TEST);
+            parent_.verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -252,6 +253,7 @@ namespace ui
             parent_.viewPort.Refresh();
 
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+            parent_.verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////
