@@ -43,16 +43,18 @@ namespace ui
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
-            newColor_ = oldColor_;
-            if (oldColor_.A == 0)  //Gère le seul moment ou le alpha peut être à 0, si oldColor_ n'avait aucune valeur.
+            if (newColor_ != oldColor_)
             {
-                FonctionsNatives.setUsingDefaultMaterialForPiece(currentPieceChange_, true); //Remet le matériel sur le robot
-            }
-            else
-            {
-                FonctionsNatives.changePieceColor(currentPieceChange_, oldColor_.A, oldColor_.R, oldColor_.G, oldColor_.B); //Sinon, remet la couleur qui avait été précédemment appliquée
-            }
-            
+                newColor_ = oldColor_;
+                if (oldColor_.A == 0)  //Gère le seul moment ou le alpha peut être à 0, si oldColor_ n'avait aucune valeur.
+                {
+                    FonctionsNatives.setUsingDefaultMaterialForPiece(currentPieceChange_, true); //Remet le matériel sur le robot
+                }
+                else
+                {
+                    FonctionsNatives.changePieceColor(currentPieceChange_, oldColor_.A, oldColor_.R, oldColor_.G, oldColor_.B); //Sinon, remet la couleur qui avait été précédemment appliquée
+                }
+            }  
         }
 
         private bool inColorCanvas(int X, int Y)
@@ -81,10 +83,6 @@ namespace ui
             if (wantedChange && usingDefault)
             {
                 FonctionsNatives.changePieceColor(currentPieceChange_, oldColor_.A, oldColor_.R, oldColor_.G, oldColor_.B);
-            }
-            else
-            {
-                FonctionsNatives.setUsingDefaultMaterialForPiece(currentPieceChange_, true);
             }
         }
     }
