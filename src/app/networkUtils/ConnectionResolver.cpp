@@ -9,10 +9,13 @@ ConnectionResolver::ConnectionResolver(asio::io_service& ioService):
 }
 
 ConnectionResolver::~ConnectionResolver() {
+	_resolverLock.lock();
 	Close();
+	_resolverLock.unlock();
 }
 
 void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
+	_resolverLock.lock();
 
 	tcp::resolver::query query(ipAddress, port);
 	auto endPointIterator = _resolver.resolve(query);
@@ -33,10 +36,12 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 		Logger::Log("Connection established", Logger::DebugLevel::CONNECTION_EVENTS);
 
 		// build a connection object and callback
-		Connection* connection = &(NetworkFactory::BuildConnection(socket));
+		Connection* connection = NetworkFactory::BuildConnection(socket);
 		OnConnection(connection, error);
 		connection -> Start();
 	}
+
+	_resolverLock.unlock();
 }
 
 void ConnectionResolver::Close() {

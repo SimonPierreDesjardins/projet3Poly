@@ -19,12 +19,12 @@ namespace Networking {
 
 		///<summary>Builds a network listener that can listen for incomming connctions on a given port</summary>
 		///<returns>An instance of a Listener</returns>
-		static ServerListener* BuildListener();
+		static ServerListener* BuildListener(short port);
 
 
 	private:
 
-		static Connection& BuildConnection(tcp::socket* socket);
+		static Connection* BuildConnection(tcp::socket* socket);
 
 		class IOServiceHandler {
 		public:
@@ -46,6 +46,8 @@ namespace Networking {
 			std::thread* aiosThread;
 
 			int userCount = 0;
+
+			std::mutex _threadLock;
 		};
 
 		static IOServiceHandler iosHandler;

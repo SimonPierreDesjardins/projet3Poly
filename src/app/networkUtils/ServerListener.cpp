@@ -4,7 +4,7 @@
 using asio::ip::tcp;
 using namespace Networking;
 
-ServerListener::ServerListener(asio::io_service & ioService) : _acceptor(ioService)
+ServerListener::ServerListener(asio::io_service & ioService, short port) : _acceptor(ioService, tcp::endpoint(tcp::v4(), port))
 {
 }
 
@@ -13,20 +13,20 @@ Networking::ServerListener::~ServerListener()
 	_acceptor.close();
 }
 
-void ServerListener::StartAccepting(short port)
+void ServerListener::StartAccepting()
 {
-	_acceptor.open(tcp::v4());
-	_acceptor.bind(tcp::endpoint(tcp::v4(), port));
 	tcp::socket* socket = new tcp::socket(_acceptor.get_io_service());
 	_acceptor.async_accept(*socket,
-	[this, port, socket](std::error_code errorCode)
+	[this, socket](std::error_code errorCode)
 	{
 		if (!errorCode)
 		{
-			Connection* connection = &(NetworkFactory::BuildConnection(socket));
+			Logger::Log("Connection established", Logger::DebugLevel::CONNECTION_EVENTS);
+
+			Connection* connection = NetworkFactory::BuildConnection(socket);
 			OnOtherConnected(connection);
 			connection->Start();
-			StartAccepting(port); // Keep the listener going
+			StartAccepting(); // Keep the listener going
 		}
 		else
 		{

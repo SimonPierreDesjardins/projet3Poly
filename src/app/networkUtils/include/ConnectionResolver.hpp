@@ -41,6 +41,8 @@ namespace Networking{
 		tcp::resolver _resolver;
 
 		bool _connectionEstablished; // true if polling has revealed that the player is currently online
+
+		std::mutex _resolverLock;
 		
 	};
 }

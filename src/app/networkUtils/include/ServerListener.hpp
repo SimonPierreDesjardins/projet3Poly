@@ -15,14 +15,14 @@ namespace  Networking {
 		friend class NetworkDisposal;
 
 	public:
-		void StartAccepting(short port);
+		void StartAccepting();
 
 		__event void OnOtherConnected(Connection* connectionToOther);
 
 		void StopAccepting();
 
 	private:
-		ServerListener(asio::io_service & ioService);
+		ServerListener(asio::io_service & ioService, short port);
 
 		~ServerListener();
 

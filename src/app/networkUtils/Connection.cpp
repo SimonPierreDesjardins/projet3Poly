@@ -71,6 +71,8 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 	case asio::error::connection_aborted:
 	case asio::error::connection_reset:
 		//_socket -> close();
+		Logger::Log("Connection lost", Logger::DebugLevel::CONNECTION_EVENTS);
+
 		OnConnectionLost();
 		break;
 	}

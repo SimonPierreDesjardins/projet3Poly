@@ -11,19 +11,18 @@ ConnectionResolver* Networking::NetworkFactory::BuildResolver()
 	return std::move(resolver);
 }
 
-ServerListener* Networking::NetworkFactory::BuildListener()
+ServerListener* Networking::NetworkFactory::BuildListener(short port)
 {
 	iosHandler.IncrementUserCount();
-	ServerListener* serverListener = new ServerListener(*(iosHandler.getIOService()));
+	ServerListener* serverListener = new ServerListener(*(iosHandler.getIOService()), port);
 
 	return std::move(serverListener);
 }
 
-Connection& Networking::NetworkFactory::BuildConnection(tcp::socket* socket)
+Connection* Networking::NetworkFactory::BuildConnection(tcp::socket* socket)
 {
 	iosHandler.IncrementUserCount();
-	Connection connection(socket);
-	return std::move(connection);
+	return std::move(new Connection(socket));
 }
 
 std::shared_ptr<asio::io_service> Networking::NetworkFactory::IOServiceHandler::getIOService()
@@ -60,29 +59,34 @@ void Networking::NetworkFactory::IOServiceHandler::DecrementUserCount()
 
 void Networking::NetworkFactory::IOServiceHandler::StartIOThread()
 {
+	_threadLock.lock();
 	if (aiosThread == NULL) {
 		aiosThread = new std::thread([this]() {
 			// keep running as long as there are users of the IOThread.
-			if (aios->stopped() && userCount > 0 ) {
+			while (userCount > 0 ) {
 				aios->run();
 			}
 		});
 	}
+	_threadLock.unlock();
 }
 
 void Networking::NetworkFactory::IOServiceHandler::StopIOThread()
 {
-	if (aiosThread == NULL || aios == NULL)
-		return;
+	_threadLock.lock();
 
-	// Stop service and thread
-	aios->stop();
-	while (!(aiosThread->joinable()));
-	aiosThread->join();
+	if (aiosThread != NULL && aios != NULL) {
+		// Stop service and thread
+		aios->stop();
+		while (!(aiosThread->joinable()));
+		aiosThread->join();
 
-	// Clean pointer
-	delete aiosThread;
-	aiosThread = NULL;
+		// Clean pointer
+		delete aiosThread;
+		aiosThread = NULL;
+	}
+
+	_threadLock.unlock();
 }
 
 Networking::NetworkFactory::IOServiceHandler Networking::NetworkFactory::iosHandler;
