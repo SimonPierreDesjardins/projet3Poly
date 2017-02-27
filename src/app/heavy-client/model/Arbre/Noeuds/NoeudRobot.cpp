@@ -82,15 +82,20 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
+	//std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);//temporaireF1
+	//std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);//temporaireF1
 
 	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
 	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
+	//roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();//temporaireF1
+	//roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();//temporaireF1
 	roueGauche_->setRightWheel(false);
 	roueDroite_->setRightWheel(true);
 
 	positionnerRoues();
 	table_->ajouter(roueGauche);
 	table_->ajouter(roueDroite);
+	
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
@@ -151,13 +156,13 @@ void NoeudRobot::afficherConcret() const
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
+	
 	if (!estCouleurDefaut_)
 	{
 		glDisable(GL_COLOR_MATERIAL);
 		glColor4f(couleur_[1], couleur_[2], couleur_[3], couleur_[0]);
 		glEnable(GL_COLOR_MATERIAL);
 	}
-	
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
     controleurLumiere_->afficherLumiereSpotRobot();
@@ -165,6 +170,8 @@ void NoeudRobot::afficherConcret() const
 
 	// Affichage du modèle.
 	vbo_->dessiner();
+
+
 
     // Débugage des capteurs de distance.
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
