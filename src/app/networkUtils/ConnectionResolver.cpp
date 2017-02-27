@@ -9,6 +9,8 @@ ConnectionResolver::ConnectionResolver(asio::io_service& ioService):
 }
 
 ConnectionResolver::~ConnectionResolver() {
+	_inDeletionProcess = true;
+
 	_resolverLock.lock();
 	Close();
 	_resolverLock.unlock();
@@ -36,7 +38,7 @@ void ConnectionResolver::Resolve(std::string ipAddress, std::string port) {
 		Logger::Log("Connection established", Logger::DebugLevel::CONNECTION_EVENTS);
 
 		// build a connection object and callback
-		Connection* connection = NetworkFactory::BuildConnection(socket);
+		Connection* connection = NetworkObjects::BuildConnection(socket);
 		OnConnection(connection, error);
 		connection -> Start();
 	}

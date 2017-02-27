@@ -11,9 +11,10 @@ Connection::Connection(asio::ip::tcp::socket* socket) {
 
 Connection::~Connection()
 {
+	_inDeletionProcess = true;
 	_connectionLock.lock();
 	CloseConnection();
-	_connectionLock.lock();
+	_connectionLock.unlock();
 }
 
 void Connection::Start() {
@@ -26,6 +27,9 @@ void Connection::ReadData()
 	_socket -> async_receive(asio::buffer(_buffer),
 	[this](std::error_code ec, std::size_t length)
 	{
+		if (_inDeletionProcess)
+			return;
+
 		_connectionLock.lock();
 		if (!ec)
 		{
@@ -89,6 +93,9 @@ void Connection::WriteData()
 	//_socket -> async_write_some(asio::buffer(_buffer, length),
 	[this](asio::error_code ec, std::size_t /*length*/)
 	{
+		if (_inDeletionProcess)
+			return;
+
 		_connectionLock.lock();
 		if (!ec)
 		{

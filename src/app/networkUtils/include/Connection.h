@@ -11,8 +11,7 @@
 namespace Networking 
 {
 	class Connection{
-		friend class NetworkFactory;
-		friend class NetworkDisposal;
+		friend class NetworkObjects;
 		friend class ConnectionResolver;
 		friend class ServerListener;
 
@@ -56,7 +55,7 @@ namespace Networking
 		std::queue<std::string> _sendQueue;
 
 		static std::mutex _connectionLock;
-
+		bool _inDeletionProcess = false;
 	};
 }
 #endif

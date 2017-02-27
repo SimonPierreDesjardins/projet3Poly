@@ -7,7 +7,6 @@
 #include "ConnectionResolver.hpp"
 #include "ServerListener.hpp"
 #include "NetworkLogger.h"
-#include "NetworkFactory.h"
-#include "NetworkDisposal.h"
+#include "NetworkObjects.h"
 
 #endif // !NETWORKING_H

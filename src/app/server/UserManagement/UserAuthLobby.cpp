@@ -8,7 +8,7 @@ server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener)
 server::UserAuthLobby::~UserAuthLobby()
 {
 	UnhookFromListenerEvents(_listener);
-	Networking::NetworkDisposal::Dispose(_listener);
+	Networking::NetworkObjects::Dispose(_listener);
 }
 
 void server::UserAuthLobby::HookToListenerEvents(Networking::ServerListener * listener)

@@ -8,7 +8,7 @@ void SetupServer() {
 	Networking::Logger::SetDebugLevel(Networking::Logger::ALL);
 
 	// create listener
-	Networking::ServerListener* listener = Networking::NetworkFactory::BuildListener(5000);
+	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
 
 	// create User auth system
 	server::UserAuthLobby UserLobby(listener);
@@ -29,7 +29,7 @@ void SetupServer() {
 		std::getline(std::cin, command);
 	}
 
-	Networking::NetworkDisposal::Dispose(listener);
+	Networking::NetworkObjects::Dispose(listener);
 }
 
 
@@ -37,7 +37,7 @@ void SetupServer() {
 void SetupTestClient() {
 	std::cout << "Setting up resolver" << std::endl;
 
-	Networking::ConnectionResolver* res = Networking::NetworkFactory::BuildResolver();
+	Networking::ConnectionResolver* res = Networking::NetworkObjects::BuildResolver();
 	res->Resolve("localhost", "5000");
 
 	// listen for commands
@@ -47,7 +47,7 @@ void SetupTestClient() {
 		std::getline(std::cin, command);
 	}
 
-	Networking::NetworkDisposal::Dispose(res);
+	Networking::NetworkObjects::Dispose(res);
 }
 
 int main(int argc, char* argv[]) {

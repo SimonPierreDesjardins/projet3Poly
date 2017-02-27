@@ -11,9 +11,7 @@ namespace  Networking {
 
 	class ServerListener
 	{
-		friend class NetworkFactory;
-		friend class NetworkDisposal;
-
+		friend class NetworkObjects;
 	public:
 		void StartAccepting();
 
@@ -29,6 +27,11 @@ namespace  Networking {
 		tcp::acceptor _acceptor;
 
 		void LogError(std::string errorMessage);
+
+
+		std::mutex _listenerLock;
+		bool _inDeletionProcess = false;
+
 	};
 }
 

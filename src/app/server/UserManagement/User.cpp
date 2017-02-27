@@ -8,7 +8,7 @@ void server::User::AssignConnection(Networking::Connection * connectionToTreat)
 server::User::~User()
 {
 	UnhookFromConnection(_connection);
-	Networking::NetworkDisposal(_connection);
+	Networking::NetworkObjects::Dispose(_connection);
 }
 
 void server::User::HookToConnection(Networking::Connection * connectionToListenTo)
@@ -31,6 +31,6 @@ void server::User::OnReceivedMessage(std::string& message)
 void server::User::OnDisconnect()
 {
 	UnhookFromConnection(_connection);
-	Networking::NetworkDisposal::Dispose(_connection);
+	Networking::NetworkObjects::Dispose(_connection);
 	OnUserDisconnected(this);
 }

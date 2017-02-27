@@ -11,7 +11,7 @@ using asio::ip::tcp;
 namespace Networking{
 
 	class ConnectionResolver{
-		friend class NetworkFactory;
+		friend class NetworkObjects;
 		friend class NetworkDisposal;
 
 	public:
@@ -42,8 +42,9 @@ namespace Networking{
 
 		bool _connectionEstablished; // true if polling has revealed that the player is currently online
 
+		// control data racing
 		std::mutex _resolverLock;
-		
+		bool _inDeletionProcess = false;
 	};
 }
 
