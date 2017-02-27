@@ -13,6 +13,8 @@ namespace ui
     public partial class MainMenu : UserControl
     {
         Window parent_;
+        MapMenu mapMenu_;
+
         private bool PasserEnSimulation = false;
 
         ////////////////////////////////////////////////////////////////////////
@@ -130,8 +132,13 @@ namespace ui
             parent_.verificationDuNombreElementChoisi();
         }
 
-        private void mainMenu_JeuxButton_Click(object sender, EventArgs e)
+        private void mainMenu_cardsOnlineButton_Click(object sender, EventArgs e)
         {
+            animationChangingMenu();
+            mapMenu_ = new MapMenu(parent_);
+
+            parent_.viewPort.Controls.Add(mapMenu_);
+            mapMenu_.Dock = DockStyle.Fill;
         }
 
         ////////////////////////////////////////////////////////////////////////

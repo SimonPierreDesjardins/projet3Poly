@@ -80,7 +80,7 @@ namespace ui
         protected override void OnMouseEnter(EventArgs e)
         {
             //When not selected
-            if (this.BackColor != Color.FromArgb(0, 102, 204))
+            if (this.BackColor != Color.FromArgb(0,102,204))
             {
                 BackColor = System.Drawing.Color.FromArgb(36, 42, 49);
                 foreach (Control c in this.Controls)
@@ -112,9 +112,9 @@ namespace ui
                 toolTip.Tag = null;
             }
 
-            if (this.BackColor != Color.FromArgb(0, 102, 204))
+            if (this.BackColor != Color.FromArgb(26,32,40))
             {
-                BackColor = Color.Transparent;
+                BackColor = Color.FromArgb(26, 32, 40);
                 foreach (Control c in this.Controls)
                 {
                     if (c.GetType() == typeof(CustomLabel))

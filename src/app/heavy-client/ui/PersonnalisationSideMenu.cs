@@ -73,6 +73,17 @@ namespace ui
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void wheelColor_Button_Click(object sender, EventArgs e)
+        ///
+        /// Affiche la palette de couleur pour permettre a l'utilisateur de modifier
+        /// la couleur des roues
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void wheelColor_Button_Click(object sender, System.EventArgs e)
         {
             setDefaultUnselectedColors();
@@ -84,6 +95,17 @@ namespace ui
             wheelColorSelector.Location = new Point(parent_.viewPort.Width - wheelColorSelector.Width, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void carColor_Button_Click(object sender, EventArgs e)
+        ///
+        /// Affiche la palette de couleur pour permettre a l'utilisateur de modifier
+        /// la couleur du chasis
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void carColor_Button_Click(object sender, System.EventArgs e)
         {
             setDefaultUnselectedColors();
@@ -95,6 +117,16 @@ namespace ui
             robotColorSelector.Location = new Point(parent_.viewPort.Width - robotColorSelector.Width, 0);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void carChange_Button_Click(object sender, EventArgs e)
+        ///
+        /// Permet a l'utilisateur de changer le chasis (modele obj)
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void carChange_Button_Click(object sender, System.EventArgs e)
         {
             setDefaultUnselectedColors();
@@ -102,6 +134,16 @@ namespace ui
             carChange_Button.BackColor = Color.FromArgb(0, 102, 204);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void tableChange_Button_Click(object sender, EventArgs e)
+        ///
+        /// Permet a l'utilisateur de changer la table (modele obj)
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void tableChange_Button_Click(object sender, System.EventArgs e)
         {
             setDefaultUnselectedColors();
@@ -109,6 +151,16 @@ namespace ui
             tableChange_Button.BackColor = Color.FromArgb(0, 102, 204);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void musicChange_Button_Click(object sender, EventArgs e)
+        ///
+        /// Permet a l'utilisateur de changer la musique lors de la simulation
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void musicChange_Button_Click(object sender, System.EventArgs e)
         {
             setDefaultUnselectedColors();
@@ -116,6 +168,14 @@ namespace ui
             musicChange_Button.BackColor = Color.FromArgb(0, 102, 204);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void setDefaultUnselectedColors(object sender, EventArgs e)
+        ///
+        /// Remet la couleur par défaut aux boutons et enlève la palette de couleur
+        /// si elle est présent en appliquant les changements
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void setDefaultUnselectedColors()
         {
             returnMainMenu_Button.BackColor = Color.Transparent;
@@ -143,11 +203,6 @@ namespace ui
                 parent_.viewPort.Controls.Remove(robotColorSelector);
             }
                 
-        }
-
-        private void PersonnalisationSideMenu_Load(object sender, System.EventArgs e)
-        {
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
     }
 }

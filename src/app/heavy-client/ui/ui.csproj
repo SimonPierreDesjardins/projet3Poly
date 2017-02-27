@@ -129,6 +129,18 @@
     <Compile Include="MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="MapMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MapMenu.Designer.cs">
+      <DependentUpon>MapMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MapPresentator.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MapPresentator.Designer.cs">
+      <DependentUpon>MapPresentator.cs</DependentUpon>
+    </Compile>
     <Compile Include="PersonnalisationSideMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -207,6 +219,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapMenu.resx">
+      <DependentUpon>MapMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MapPresentator.resx">
+      <DependentUpon>MapPresentator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PersonnalisationSideMenu.resx">
       <DependentUpon>PersonnalisationSideMenu.cs</DependentUpon>
