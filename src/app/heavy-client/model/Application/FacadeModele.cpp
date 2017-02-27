@@ -640,6 +640,12 @@ void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
 	horizontal = desktop.right;
 	vertical = desktop.bottom;
 }
+
+void FacadeModele::openConnection(const std::string hostName, const std::string& port)
+{
+	eventHandler_.requestConnection(hostName, port);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

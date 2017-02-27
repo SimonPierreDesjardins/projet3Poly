@@ -9,7 +9,6 @@
 #include <string>
 
 #include "glm\glm.hpp"
-#include "FacadeInterfaceNative.h"
 #include "FacadeModele.h"
 #include "AideGL.h"
 #include "Vue.h"
@@ -23,6 +22,8 @@
 #include "CommandeRobot.h"
 #include "EnginSon.h"
 #include "Projection.h"
+
+#include "FacadeInterfaceNative.h"
 
 extern "C"
 {
@@ -846,6 +847,11 @@ extern "C"
 
 		//delete couleurPieceFloat;
 		return couleurPieceInt;
+	}
+
+	__declspec(dllexport) void __cdecl connectToServer(char* hostName, char* port)
+	{
+		FacadeModele::obtenirInstance()->openConnection(std::string(hostName), std::string(port));
 	}
 }
 

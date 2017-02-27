@@ -1,4 +1,4 @@
-
+﻿
 # Trouver le path des .lib des librairies externes
 find_library(tinyxml_LIB
     tinyxml_D_x64
@@ -69,6 +69,7 @@ set(EXTERNAL_LIBRARIES
     ${OPENGL_gl_LIBRARY}
     ${OPENGL_glu_LIBRARY}
     Winmm.lib
+    ws2_32.lib
 )
 
 include_directories(

@@ -10,7 +10,6 @@
 #ifndef __APPLICATION_FACADEMODELE_H__
 #define __APPLICATION_FACADEMODELE_H__
 
-#include <windows.h>
 #include <string>
 #include <memory>
 
@@ -26,6 +25,8 @@
 #include "BoiteEnvironnement.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
+
+#include "EventHandler.h"
 
 class NoeudAbstrait;
 
@@ -113,6 +114,8 @@ public:
    /// Retourne la dimension de l'écran
    void getDesktopResolution(int& horizontal, int& vertical);
 
+   void openConnection(const std::string hostName, const std::string& port);
+
 private:
    /// Constructeur par défaut.
    FacadeModele() = default;
@@ -157,6 +160,8 @@ private:
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
    /// Le controle de l'affichage des lumières.
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
+
+	EventHandler eventHandler_;
 };
 
 ////////////////////////////////////////////////////////////////////////

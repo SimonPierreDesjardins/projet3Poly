@@ -98,11 +98,6 @@ set(ENGIN_SON_SRC
     EnginSon/EnginSon.cpp
 )
 
-set(INTERFACE_SRC
-    Interface/FacadeInterfaceNative.h
-    Interface/FacadeInterfaceNative.cpp
-)
-
 set(LUMIERE_SRC
     Lumiere/ControleurLumiere.h
     Lumiere/ControleurLumiere.cpp
@@ -193,6 +188,27 @@ set(VISITEUR_SRC
     Visiteur/VisiteurTypes.h
 )
 
+set(CLIENT_NETWORK_SRC
+	event-handler/client-network/Connection.h
+	event-handler/client-network/Connection.cpp
+	event-handler/client-network/ConnectionResolver.h
+	event-handler/client-network/ConnectionResolver.cpp
+)
+source_group("event-handler\\client-network" FILES ${CLIENT_NETWORK_SRC})
+
+set(UI_INTERFACE_SRC
+	event-handler/ui-interface/FacadeInterfaceNative.h
+	event-handler/ui-interface/FacadeInterfaceNative.cpp
+)
+source_group("event-handler\\ui-interface" FILES ${UI_INTERFACE_SRC})
+
+set(EVENT_HANDLER_SRC
+    event-handler/EventHandler.h
+    event-handler/EventHandler.cpp
+)
+source_group("event-handler" FILES ${EVENT_HANDLER_SRC})
+
+
 # Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
     AffichageTexte
@@ -205,6 +221,9 @@ include_directories(
     ControleRobot
     ControleRobot/Commande
     ControleRobot/Comportement
+	event-handler
+	event-handler/client-network
+	event-handler/ui-interface
     EnginSon
     Interface
     Lumiere
@@ -256,6 +275,10 @@ add_library(model SHARED
     ${PHYSIQUE_SRC}
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
+    ${EVENT_HANDLER_SRC}
+	${UI_INTERFACE_SRC}
+	${CLIENT_NETWORK_SRC}
+    CMakelists.txt
 )
 
 # Linker les librairies externes avec la dll

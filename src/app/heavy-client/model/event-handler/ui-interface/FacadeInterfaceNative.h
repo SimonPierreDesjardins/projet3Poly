@@ -99,6 +99,8 @@ extern "C"
 	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value);
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b);
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece);
+	
+	__declspec(dllexport) void __cdecl connectToServer(char* hostName, char* port);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
