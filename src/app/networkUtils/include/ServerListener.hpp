@@ -11,9 +11,8 @@ namespace  Networking {
 
 	class ServerListener
 	{
+		friend class NetworkObjects;
 	public:
-		ServerListener(asio::io_service & ioService, short port);
-
 		void StartAccepting();
 
 		__event void OnOtherConnected(Connection* connectionToOther);
@@ -21,9 +20,18 @@ namespace  Networking {
 		void StopAccepting();
 
 	private:
+		ServerListener(asio::io_service & ioService, short port);
+
+		~ServerListener();
+
 		tcp::acceptor _acceptor;
 
 		void LogError(std::string errorMessage);
+
+
+		std::mutex _listenerLock;
+		bool _inDeletionProcess = false;
+
 	};
 }
 

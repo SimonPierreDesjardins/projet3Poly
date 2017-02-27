@@ -9,17 +9,13 @@ Connection::Connection(asio::ip::tcp::socket* socket) {
 	_sendQueue = std::queue<std::string>();
 }
 
-Networking::Connection::~Connection()
+Connection::~Connection()
 {
+	_inDeletionProcess = true;
+	_connectionLock.lock();
 	CloseConnection();
+	_connectionLock.unlock();
 }
-
-/*
-Connection::Connection(Connection& connection) {
-	_socket = connection._socket;
-	_sendQueue = std::queue<std::string>();
-}
-*/
 
 void Connection::Start() {
 	ReadData();
@@ -31,6 +27,10 @@ void Connection::ReadData()
 	_socket -> async_receive(asio::buffer(_buffer),
 	[this](std::error_code ec, std::size_t length)
 	{
+		if (_inDeletionProcess)
+			return;
+
+		_connectionLock.lock();
 		if (!ec)
 		{
 			auto data = std::string(_buffer, length);
@@ -43,12 +43,13 @@ void Connection::ReadData()
 			// End of connection
 			CheckIfDisconnect(ec);
 		}
+		_connectionLock.unlock();
 	});
 	_connectionLock.unlock();
 }
 
 void Connection::SendData(std::string data) {
-	data = std::to_string(data.length()) + ";" + data;
+	data = std::to_string(data.size()) + ";" + data;
 
 	_sendQueue.push(std::move(data));
 
@@ -74,6 +75,8 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 	case asio::error::connection_aborted:
 	case asio::error::connection_reset:
 		//_socket -> close();
+		Logger::Log("Connection lost", Logger::DebugLevel::CONNECTION_EVENTS);
+
 		OnConnectionLost();
 		break;
 	}
@@ -81,14 +84,19 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 
 void Connection::WriteData()
 {
+	_connectionLock.lock();
 	std::string data = std::move(_sendQueue.front());
 	_sendQueue.pop();
 	strncpy_s(_buffer, 1024, data.c_str(), data.size());
 
 	_socket->async_write_some(asio::buffer(_buffer, data.size()),
 	//_socket -> async_write_some(asio::buffer(_buffer, length),
-	[this](std::error_code ec, std::size_t /*length*/)
+	[this](asio::error_code ec, std::size_t /*length*/)
 	{
+		if (_inDeletionProcess)
+			return;
+
+		_connectionLock.lock();
 		if (!ec)
 		{
 			if (_sendQueue.size() >= 1) {
@@ -99,9 +107,12 @@ void Connection::WriteData()
 			}
 		}
 		else {
-			Logger::Log(ec.message());
+			Logger::LogError(ec);
 		}
+		_connectionLock.unlock();
 	});
+
+	_connectionLock.lock();
 }
 
 std::mutex Connection::_connectionLock;

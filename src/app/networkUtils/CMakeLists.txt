@@ -10,13 +10,15 @@ include/Connection.h
 include/ConnectionResolver.hpp
 include/NetworkLogger.h
 include/ServerListener.hpp
+include/NetworkObjects.h
 Connection.cpp
 ConnectionResolver.cpp
 NetworkLogger.cpp
 ServerListener.cpp
+NetworkObjects.cpp
 )
 
-set_property(TARGET networkUtils PROPERTY FOLDER "app/server")
+set_property(TARGET networkUtils PROPERTY FOLDER "app/network")
 
 
 target_compile_definitions(networkUtils
