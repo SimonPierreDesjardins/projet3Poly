@@ -6,7 +6,7 @@
 class EventHandler
 {
 public:
-	EventHandler() = default;
+	EventHandler();
 	~EventHandler() = default;
 
 	void requestConnection(const std::string& hostName, const std::string& port);

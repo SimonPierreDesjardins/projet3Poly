@@ -15,7 +15,7 @@ Connection::Connection()
 	WSADATA wsaData;
 	
 	// Start WSA
-	assert(WSAStartup(MAKEWORD(2, 2), &wsaData));
+	assert(WSAStartup(MAKEWORD(2, 2), &wsaData) == NO_ERROR);
 	
 	// Initialize socket
 	socket_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -27,7 +27,8 @@ Connection::Connection()
 
 Connection::~Connection()
 {
-	
+	closesocket(socket_);
+	WSACleanup();
 }
 
 bool Connection::requestConnection(const std::string& hostName, const std::string& port)
@@ -40,7 +41,7 @@ bool Connection::requestConnection(const std::string& hostName, const std::strin
 
 	// Translate strings to addrinfo structure
 	addrinfo* info;
-	assert(getaddrinfo(hostName.c_str(), port.c_str(), &hints, &info) != NO_ERROR);
+	assert(getaddrinfo(hostName.c_str(), port.c_str(), &hints, &info) == NO_ERROR);
 
 	// Find the good info
 	while (info == NULL || info->ai_family != AF_INET)
@@ -52,13 +53,14 @@ bool Connection::requestConnection(const std::string& hostName, const std::strin
 	assert(info != NULL && info->ai_family == AF_INET);
 	
 	int result = connect(socket_, info->ai_addr, int(info->ai_addrlen));
+	freeaddrinfo(info);
 	if (result == SOCKET_ERROR)
 	{
 		// Handle connection error here.
 	}
+
 	
 	listener_ = std::thread(&Connection::listen, this);
-
 	return true;
 }
 
@@ -71,7 +73,7 @@ void Connection::listen()
 
 void Connection::sendMessage(const std::string& message)
 {
-
+	
 }
 
 void Connection::receiveMessage(const std::string& message)
