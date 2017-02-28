@@ -101,9 +101,13 @@ extern "C"
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece);
 	
 	__declspec(dllexport) void __cdecl connectToServer(char* hostName, char* port);
+	__declspec(dllexport) void __cdecl createProfile(char* profileName);
+	__declspec(dllexport) void __cdecl authenticate(char* profileName);
+
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

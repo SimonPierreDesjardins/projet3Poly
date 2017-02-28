@@ -851,7 +851,17 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl connectToServer(char* hostName, char* port)
 	{
-		FacadeModele::obtenirInstance()->openConnection(std::string(hostName), std::string(port));
+		FacadeModele::obtenirInstance()->getEventHandler()->requestConnection(std::string(hostName), std::string(port));
+	}
+
+	__declspec(dllexport) void __cdecl createProfile(char* profileName)
+	{
+		FacadeModele::obtenirInstance()->getEventHandler()->createProfile(std::string(profileName));
+	}
+
+	__declspec(dllexport) void __cdecl authenticate(char* profileName)
+	{
+		FacadeModele::obtenirInstance()->getEventHandler()->authenticate(std::string(profileName));
 	}
 }
 

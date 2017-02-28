@@ -191,8 +191,8 @@ set(VISITEUR_SRC
 set(CLIENT_NETWORK_SRC
 	event-handler/client-network/Connection.h
 	event-handler/client-network/Connection.cpp
-	event-handler/client-network/ConnectionResolver.h
-	event-handler/client-network/ConnectionResolver.cpp
+	event-handler/client-network/NetworkManager.h
+	event-handler/client-network/NetworkManager.cpp
 )
 source_group("event-handler\\client-network" FILES ${CLIENT_NETWORK_SRC})
 

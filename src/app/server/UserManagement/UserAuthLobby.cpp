@@ -46,6 +46,7 @@ void server::UserAuthLobby::UnhookFromUser(User * user)
 
 void server::UserAuthLobby::OnReceivedMessage(User * user, std::string& message)
 {
+
 	//Attempt to authenticate user with message
 }
 

@@ -99,6 +99,8 @@ public:
    inline AffichageTexte* obtenirAffichageTexte() const;
    // Retourne le controleur de lumière.
    inline ControleurLumiere* obtenirControleurLumiere() const;
+   // Retourne le gestionnaire d'evenements
+   inline EventHandler* getEventHandler();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -113,8 +115,6 @@ public:
 
    /// Retourne la dimension de l'écran
    void getDesktopResolution(int& horizontal, int& vertical);
-
-   void openConnection(const std::string hostName, const std::string& port);
 
 private:
    /// Constructeur par défaut.
@@ -299,6 +299,11 @@ inline void FacadeModele::assignerAutorisationInputClavier(const bool& autorisat
 	autorisationInputClavier_ = autorisation;
 }
 
+inline EventHandler* FacadeModele::getEventHandler()
+{
+	return &eventHandler_;
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn  bool obtenirAutorisationInput()
@@ -329,6 +334,7 @@ void FacadeModele::assignerAutorisationInputSouris(const bool& autorisation)
 { 
 	autorisationInputSouris_ = autorisation; 
 }
+
 
 #endif // __APPLICATION_FACADEMODELE_H__
 

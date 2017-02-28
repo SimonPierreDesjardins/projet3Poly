@@ -3,10 +3,19 @@
 
 EventHandler::EventHandler()
 {
-	requestConnection("192.168.1.10", "5000");
 }
 
 void EventHandler::requestConnection(const std::string& hostName, const std::string& port)
 {
-	connection_.requestConnection(hostName, port);
+	network_.requestConnection(hostName, port);
+}
+
+void EventHandler::createProfile(const std::string& profileName)
+{
+	network_.createProfile(profileName);
+}
+
+void EventHandler::authenticate(const std::string& profileName)
+{
+	network_.authenticate(profileName);
 }
