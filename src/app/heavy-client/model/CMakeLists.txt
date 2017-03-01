@@ -3,11 +3,6 @@
     AffichageTexte/AffichageTexte.cpp
 )
         
-set(APPLICATION_SRC
-    Application/FacadeModele.h
-    Application/FacadeModele.cpp
-)
-        
 set(ARBRE_SRC
     Arbre/ArbreRendu.h
     Arbre/ArbreRendu.cpp
@@ -189,18 +184,20 @@ set(VISITEUR_SRC
 )
 
 set(CLIENT_NETWORK_SRC
-	event-handler/client-network/Connection.h
-	event-handler/client-network/Connection.cpp
-	event-handler/client-network/NetworkManager.h
-	event-handler/client-network/NetworkManager.cpp
+	client-network/Connection.h
+	client-network/Connection.cpp
+	client-network/NetworkManager.h
+	client-network/NetworkManager.cpp
 )
-source_group("event-handler\\client-network" FILES ${CLIENT_NETWORK_SRC})
+source_group("client-network" FILES ${CLIENT_NETWORK_SRC})
 
-set(UI_INTERFACE_SRC
-	event-handler/ui-interface/FacadeInterfaceNative.h
-	event-handler/ui-interface/FacadeInterfaceNative.cpp
+set(MODEL_SRC
+	FacadeInterfaceNative.h
+	FacadeInterfaceNative.cpp
+	FacadeModele.h
+	FacadeModele.cpp
 )
-source_group("event-handler\\ui-interface" FILES ${UI_INTERFACE_SRC})
+source_group("" FILES ${MODEL_SRC})
 
 set(EVENT_HANDLER_SRC
     event-handler/EventHandler.h
@@ -211,6 +208,7 @@ source_group("event-handler" FILES ${EVENT_HANDLER_SRC})
 
 # Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
+	.
     AffichageTexte
     Application
     Arbre
@@ -222,8 +220,7 @@ include_directories(
     ControleRobot/Commande
     ControleRobot/Comportement
 	event-handler
-	event-handler/client-network
-	event-handler/ui-interface
+	client-network
     EnginSon
     Interface
     Lumiere
@@ -235,17 +232,16 @@ include_directories(
 )
 
 # Ajouter les filtres dans le projet visual studio
-source_group("")
 source_group("affichage-texte" FILES ${AFFICHAGE_TEXTE_SRC})
 source_group("application" FILES ${APPLICATION_SRC})
 source_group("arbre" FILES ${ARBRE_SRC})
-source_group("arbre/noeuds" FILES ${NOEUDS_SRC})
-source_group("arbre/usines" FILES ${USINES_SRC})
+source_group("arbre\\noeuds" FILES ${NOEUDS_SRC})
+source_group("arbre\\usines" FILES ${USINES_SRC})
 source_group("capteur" FILES ${CAPTEUR_SRC})
 source_group("config" FILES ${CONFIGURATION_SRC})
 source_group("controle-robot" FILES ${CONTROLE_ROBOT_SRC})
-source_group("controle-robot/commande" FILES ${COMMANDE_SRC})
-source_group("controle-robot/comportement" FILES ${COMPORTEMENT_SRC})
+source_group("controle-robot\\commande" FILES ${COMMANDE_SRC})
+source_group("controle-robot\\comportement" FILES ${COMPORTEMENT_SRC})
 source_group("engin-son" FILES ${ENGIN_SON_SRC})
 source_group("interface" FILES ${INTERFACE_SRC})
 source_group("lumiere" FILES ${LUMIERE_SRC})
@@ -258,7 +254,6 @@ source_group("visiteur" FILES ${VISITEUR_SRC})
 # Compiler les fichiers sources dans une dll
 add_library(model SHARED
     ${AFFICHAGE_TEXTE_SRC}
-    ${APPLICATION_SRC}
     ${ARBRE_SRC}
     ${NOEUDS_SRC}
     ${USINES_SRC}
@@ -278,6 +273,7 @@ add_library(model SHARED
     ${EVENT_HANDLER_SRC}
 	${UI_INTERFACE_SRC}
 	${CLIENT_NETWORK_SRC}
+	${MODEL_SRC}
     CMakelists.txt
 )
 
