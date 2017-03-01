@@ -4,11 +4,37 @@
 
 #include "Networking.h"
 #include "User.h"
+#include "MultiUserSystem.h"
 
 namespace server {
+	// Wraps a connection to send connection reference on callbacks
+	class ConnectionWrapper {
+	public:
+		ConnectionWrapper(Networking::Connection* connection);
+
+		Networking::Connection* GetConnection();
+
+		__event void OnDisconnect(ConnectionWrapper* wrapper);
+
+		__event void OnMessageSent(ConnectionWrapper* wrapper, std::string& message);
+
+	private:
+
+		void ListenToConnection(Networking::Connection* connection);
+		void StopListeningToConnection(Networking::Connection* connection);
+
+		void OnData(std::string& message);
+
+		void OnDisco();
+
+		Networking::Connection* _connection;
+
+	};
+
 	class UserAuthLobby {
 	public:
-		UserAuthLobby(Networking::ServerListener* listener);
+		///<summary>Creates a connection authentifier that listens on listener and forwards authenticated users to a multi-user system </summary>
+		UserAuthLobby(Networking::ServerListener* listener, MultiUserSystem& mus);
 
 		~UserAuthLobby();
 
@@ -20,13 +46,16 @@ namespace server {
 		void UnhookFromListenerEvents(Networking::ServerListener* listener);
 		void TreatConnection(Networking::Connection* connectionToTreat);
 
-		void HookToUser(User* user);
-		void UnhookFromUser(User* user);
+		void HookToWrapper(ConnectionWrapper* wrapper);
+		void UnhookFromWrapper(ConnectionWrapper* wrapper);
 
-		void OnReceivedMessage(User* user, std::string& message);
-		void OnUserDisconnect(User* user);
+		void OnReceivedMessage(ConnectionWrapper* user, std::string& message);
+		void OnUserDisconnect(ConnectionWrapper* user);
 
 		Networking::ServerListener* _listener;
+
+		// Contains the system authenticated users should be sent to
+		MultiUserSystem& _userReceiver;
 	};
 
 }

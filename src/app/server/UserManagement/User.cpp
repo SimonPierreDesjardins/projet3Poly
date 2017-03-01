@@ -5,6 +5,10 @@ void server::User::AssignConnection(Networking::Connection * connectionToTreat)
 	HookToConnection(connectionToTreat);
 }
 
+server::User::User(UserInformation & userInfo):Info(userInfo)
+{
+}
+
 server::User::~User()
 {
 	UnhookFromConnection(_connection);

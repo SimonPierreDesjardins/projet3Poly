@@ -3,28 +3,27 @@
 #define __USER_H
 
 #include "Networking.h"
+#include "../Database/UserDatabase.h"
 
 namespace server {
 
-	class UserInformation {
-	public:
-		std::string UserName;
-	};
-
 	class User {
 	public:
+		User(UserInformation& userInfo);
+
+		~User();
+
 		void AssignConnection(Networking::Connection* connectionToTreat);
 
-		void AssignInfo(UserInformation info) {
+		void AssignInfo(UserInformation& info) {
 			Info = info;
 		}
 
-		~User();
 
 		__event void OnUserDisconnected(User* thisUser);
 		__event void OnUserSentMessage(User* thisUser, std::string& message);
 
-		UserInformation Info;
+		UserInformation& Info;
 
 	private:
 		void HookToConnection(Networking::Connection* connectionToListenTo);
@@ -36,7 +35,6 @@ namespace server {
 		Networking::Connection* _connection;
 
 	};
-
 }
 
 

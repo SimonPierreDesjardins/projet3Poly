@@ -10,8 +10,10 @@ void SetupServer() {
 	// create listener
 	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
 
+	//Make map system
+
 	// create User auth system
-	server::UserAuthLobby UserLobby(listener);
+	//server::UserAuthLobby UserLobby(listener);
 
 	// create UserLobby
 
