@@ -828,7 +828,7 @@ namespace ui
         public static extern int obtenirTypeVue();
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void connectToServer(String hostName, String port);
+        public static extern bool connectToServer(String hostName, String port);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void createProfile(String profileName);

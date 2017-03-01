@@ -27,6 +27,7 @@ Connection::Connection()
 Connection::~Connection()
 {
 	closeConnection();
+	WSACleanup();
 }
 
 void Connection::closeConnection()
@@ -35,10 +36,9 @@ void Connection::closeConnection()
 	shutdown(socket_, SD_SEND);
 	mConnection.unlock();
 
+	isConnected_ = false;
 	listener_.join();
 	closesocket(socket_);
-	WSACleanup();
-
 }
 
 bool Connection::openConnection(const std::string& hostName, const std::string& port)
@@ -70,7 +70,7 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 	freeaddrinfo(info);
 	if (result == SOCKET_ERROR)
 	{
-		// Handle connection error here.
+		return false;
 	}
 	isConnected_ = true;
 	listener_ = std::thread(&Connection::listen, this);

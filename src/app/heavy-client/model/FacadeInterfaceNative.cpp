@@ -849,9 +849,9 @@ extern "C"
 		return couleurPieceInt;
 	}
 
-	__declspec(dllexport) void __cdecl connectToServer(char* hostName, char* port)
+	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestConnection(std::string(hostName), std::string(port));
+		return FacadeModele::obtenirInstance()->getNetworkManager()->requestConnection(std::string(hostName), std::string(port));
 	}
 
 	__declspec(dllexport) void __cdecl createProfile(char* profileName)
