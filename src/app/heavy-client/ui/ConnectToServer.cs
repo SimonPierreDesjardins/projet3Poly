@@ -14,9 +14,11 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            //TODO: Check connection
-            connectPanel.Visible = true;
-
+            if (FonctionsNatives.isConnected())
+            {
+                DeconnectPanel.Visible = true;
+                connectPanel.Visible = false;
+            }              
         }
 
         private void IPTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -50,8 +52,7 @@ namespace ui
             //TODO: Connection to server
             if (continuConnexion)
             {
-                parent_.mainMenu.ChangeColor((Bitmap)parent_.mainMenu.connexionPictureBox.Image, Color.Green);
-
+                FonctionsNatives.connectToServer(IPTextBox.Text, "5000");
                 connectPanel.Visible = false;
 
                 this.Location = new Point((parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - Width / 2,
@@ -60,10 +61,6 @@ namespace ui
                 authenticatePanel.Visible = true;
                 newAccountWarningLabel.Visible = false;
                 existingAccountWarningLabel.Visible = false;
-            }
-            else
-            {
-                parent_.mainMenu.ChangeColor((Bitmap)parent_.mainMenu.connexionPictureBox.Image, Color.Red);
             }
         }
 
@@ -100,6 +97,7 @@ namespace ui
 
         private void cancelNewUserButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.disconnectFromServer();
             goBackToMainMenu();
         }
 
@@ -116,6 +114,7 @@ namespace ui
 
         private void cancelExistingUserButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.disconnectFromServer();
             goBackToMainMenu();
         }
 
@@ -136,6 +135,7 @@ namespace ui
 
         private void DeconnectButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.disconnectFromServer();
             goBackToMainMenu();
         }
 

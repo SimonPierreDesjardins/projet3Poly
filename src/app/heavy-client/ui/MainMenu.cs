@@ -33,7 +33,10 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            //TODO: Check connection state
+            if (FonctionsNatives.isConnected())
+                connexionPictureBox.Image = ChangeColor((Bitmap)connexionPictureBox.Image, Color.Green);
+            else
+                connexionPictureBox.Image = ChangeColor((Bitmap)connexionPictureBox.Image, Color.Red);
 
             this.Width = 0;
             ShowMenuTimer.Start();

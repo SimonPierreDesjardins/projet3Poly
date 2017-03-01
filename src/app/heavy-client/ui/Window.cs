@@ -89,11 +89,6 @@ namespace ui
 
             Program.peutAfficher = false;
 
-            // TODO : Ajouter le widget pour la connection avec profil et remplacer les valeurs hardcodees.
-            FonctionsNatives.connectToServer("127.0.0.1", "5000");
-            FonctionsNatives.createProfile("coucou");
-            FonctionsNatives.authenticate("coucou");
-
             InitialiserAnimation();
             panneauOperation_.Visible = false;
             configuration = new Configure(this);
@@ -840,5 +835,11 @@ namespace ui
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void authenticate(String profileName);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void disconnectFromServer();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool isConnected();
     }
 }

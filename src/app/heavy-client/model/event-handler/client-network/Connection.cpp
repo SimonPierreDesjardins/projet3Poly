@@ -72,8 +72,7 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 	{
 		// Handle connection error here.
 	}
-
-	sendMessage(std::string("hello"));
+	isConnected_ = true;
 	listener_ = std::thread(&Connection::listen, this);
 	return true;
 }
