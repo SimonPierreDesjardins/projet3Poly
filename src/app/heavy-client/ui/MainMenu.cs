@@ -7,6 +7,7 @@
 using System;
 using System.Windows.Forms;
 using ModeEnum;
+using System.Drawing;
 
 namespace ui
 {
@@ -14,6 +15,7 @@ namespace ui
     {
         Window parent_;
         MapMenu mapMenu_;
+        ConnectToServer connectOptions_;
 
         private bool PasserEnSimulation = false;
 
@@ -30,6 +32,8 @@ namespace ui
         {
             InitializeComponent();
             parent_ = parent;
+
+            //TODO: Check connection state
 
             this.Width = 0;
             ShowMenuTimer.Start();
@@ -178,6 +182,16 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
+        private void mainMenu_ConnexionButton_Click(object sender, EventArgs e)
+        {
+            animationChangingMenu();
+            connectOptions_ = new ConnectToServer(parent_);
+            parent_.viewPort.Controls.Add(connectOptions_);
+            connectOptions_.Location = new Point( (parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - connectOptions_.Width / 2,
+                                                   parent_.viewPort.Height / 2 - connectOptions_.Height / 2);
+            connectOptions_.Dock = DockStyle.Fill;
+        }
+
         private void mainMenu_QuitButton_Click(object sender, EventArgs e)
         {
             parent_.configuration.Dispose();
@@ -239,6 +253,37 @@ namespace ui
                 this.Width -= 5;
             else
                 HideMenuTimer.Stop();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public Bitmap ChangeColor(Bitmap scrBitmap, Color newColor)
+        ///
+        /// Change la couleur d'un image par une nouvelle couleur.
+        /// 
+        /// @param Bitmap scrBitmap: le bitmap de l'image qui doit être modifié
+        /// @param Color newColor: La nouvelle couleur de l'image
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public Bitmap ChangeColor(Bitmap scrBitmap, Color newColor)
+        {
+            Color actualColor;
+            //make an empty bitmap the same size as scrBitmap
+            Bitmap newBitmap = new Bitmap(scrBitmap.Width, scrBitmap.Height);
+            for (int i = 0; i < scrBitmap.Width; i++)
+            {
+                for (int j = 0; j < scrBitmap.Height; j++)
+                {
+                    //get the pixel from the scrBitmap image
+                    actualColor = scrBitmap.GetPixel(i, j);
+                    // > 150 because.. Images edges can be of low pixel colr. if we set all pixel color to new then there will be no smoothness left.
+                    if (actualColor.A > 175)
+                        newBitmap.SetPixel(i, j, newColor);
+                    //else
+                        //newBitmap.SetPixel(i, j, actualColor);
+                }
+            }
+            return newBitmap;
         }
     }
 }

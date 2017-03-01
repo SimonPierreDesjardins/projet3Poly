@@ -22,7 +22,9 @@ enum Mode
         EDITION,
         CONFIGURE,
         TEST,
-        PERSONALIZE
+        PERSONALIZE,
+        TUTORIAL_EDITION,
+        TUTORIAL_SIMULATION
     };
 
 #if !__LINE__

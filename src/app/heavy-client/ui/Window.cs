@@ -86,9 +86,6 @@ namespace ui
             mainMenu.Dock = DockStyle.Left;
 
             userChat = new UserTabChat(this);
-            viewPort.Controls.Add(userChat);
-            userChat.Location = new Point(viewPort.Width - userChat.Width, viewPort.Height - userChat.Height);
-            userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
 
             Program.peutAfficher = false;
 
