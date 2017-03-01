@@ -31,12 +31,12 @@ void Connection::ReadData()
 		if (_inDeletionProcess)
 			return;
 
-		_connectionLock.lock();
+		//_connectionLock.lock();
 		if (!ec)
 		{
 			auto data = std::string(_buffer, length);
 			OnReceivedData(data);
-			_connectionLock.unlock();
+			//_connectionLock.unlock();
 			ReadData();
 		}
 		else 
@@ -44,7 +44,7 @@ void Connection::ReadData()
 			Logger::LogError(ec);
 			// End of connection
 			CheckIfDisconnect(ec);
-			_connectionLock.unlock();
+			//_connectionLock.unlock();
 		}
 	});
 }
@@ -85,7 +85,6 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 
 void Connection::WriteData()
 {
-	_connectionLock.lock();
 	std::string data = std::move(_sendQueue.front());
 	_sendQueue.pop();
 	strncpy_s(_buffer, 1024, data.c_str(), data.size());
@@ -97,7 +96,6 @@ void Connection::WriteData()
 		if (_inDeletionProcess)
 			return;
 
-		_connectionLock.lock();
 		if (!ec)
 		{
 			if (_sendQueue.size() >= 1) {
@@ -112,10 +110,7 @@ void Connection::WriteData()
 		else {
 			Logger::LogError(ec);
 		}
-		_connectionLock.unlock();
 	});
-
-	_connectionLock.lock();
 }
 
 std::mutex Connection::_connectionLock;

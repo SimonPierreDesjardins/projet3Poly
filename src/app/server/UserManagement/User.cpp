@@ -27,6 +27,7 @@ void server::User::UnhookFromConnection(Networking::Connection * connectionToDea
 void server::User::OnReceivedMessage(std::string& message)
 {
 	OnUserSentMessage(this, message);
+	_connection->SendData(message);
 }
 
 void server::User::OnDisconnect()

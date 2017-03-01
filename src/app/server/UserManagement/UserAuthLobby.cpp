@@ -49,6 +49,7 @@ void server::UserAuthLobby::UnhookFromUser(User * user)
 
 void server::UserAuthLobby::OnReceivedMessage(User * user, std::string& message)
 {
+	std::cout << message << std::endl;
 }
 
 void server::UserAuthLobby::OnUserDisconnect(User * user)
