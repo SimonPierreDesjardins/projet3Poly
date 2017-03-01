@@ -94,10 +94,10 @@ void server::ConnectionWrapper::StopListeningToConnection(Networking::Connection
 
 void server::ConnectionWrapper::OnData(std::string & message)
 {
-	OnMessageSent(this, message);
+	__raise OnMessageSent(this, message);
 }
 
 void server::ConnectionWrapper::OnDisco()
 {
-	OnDisconnect(this);
+	__raise OnDisconnect(this);
 }

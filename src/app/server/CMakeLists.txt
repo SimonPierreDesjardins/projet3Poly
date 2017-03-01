@@ -5,17 +5,17 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 )
 
-add_executable(Server
-
-# User management files
+set(USR_MGMT 
 UserManagement/User.h
 UserManagement/User.cpp
 UserManagement/UserAuthLobby.h
 UserManagement/UserAuthLobby.cpp
 UserManagement/MultiUserSystem.h
 UserManagement/MultiUserSystem.cpp
+)
+source_group(UserManagement FILES ${USR_MGMT})
 
-# Database management files
+set(DB 
 Database/Database.h
 Database/Database.cpp
 Database/UserDatabase.h
@@ -26,6 +26,26 @@ Database/BaseDatalist.h
 Database/BaseDatalist.cpp
 Database/IdGenerator.h
 Database/IdGenerator.cpp
+)
+source_group(Database FILES ${DB})
+
+set(MAP_SYST 
+MapSystem/MapEditingSession.cpp
+MapSystem/MapEditingSession.h
+MapSystem/MapListLobby.cpp
+MapSystem/MapListLobby.h
+)
+source_group(MapSystem FILES ${MAP_SYST})
+
+add_executable(Server
+#Map system files
+${MAP_SYST}
+
+# User management files
+${USR_MGMT}
+
+# Database management files
+${DB}
 
 ServerStarter.cpp
 )

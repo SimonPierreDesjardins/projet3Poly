@@ -15,10 +15,9 @@ namespace server {
 
 		void AssignConnection(Networking::Connection* connectionToTreat);
 
-		void AssignInfo(UserInformation& info) {
-			Info = info;
-		}
+		void AssignInfo(UserInformation& info);
 
+		void ForwardMessage(std::string& message);
 
 		__event void OnUserDisconnected(User* thisUser);
 		__event void OnUserSentMessage(User* thisUser, std::string& message);
