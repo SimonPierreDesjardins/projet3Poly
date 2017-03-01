@@ -5,11 +5,13 @@ include_directories(
 )
 
 add_executable(Server
-UserManagement/User.h
-UserManagement/User.cpp
-UserManagement/UserAuthLobby.h
-UserManagement/UserAuthLobby.cpp
-ServerStarter.cpp
+	UserManagement/User.h
+	UserManagement/User.cpp
+	UserManagement/UserAuthLobby.h
+	UserManagement/UserAuthLobby.cpp
+	chat-management/ChatManager.h
+	chat-management/ChatManager.cpp
+	ServerStarter.cpp
 )
 
 target_link_libraries(Server PRIVATE networkUtils)

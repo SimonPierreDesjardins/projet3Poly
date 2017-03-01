@@ -13,6 +13,7 @@ namespace server {
 
 	class User {
 	public:
+		User() {}
 		void AssignConnection(Networking::Connection* connectionToTreat);
 
 		void AssignInfo(UserInformation info) {

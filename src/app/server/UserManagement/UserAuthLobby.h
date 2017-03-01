@@ -2,32 +2,38 @@
 #ifndef __USER_AUTH_LOBBY_H
 #define __USER_AUTH_LOBBY_H
 
+#include <unordered_map>
+
 #include "Networking.h"
 #include "User.h"
 
-namespace server {
-	class UserAuthLobby {
-	public:
-		UserAuthLobby(Networking::ServerListener* listener);
+namespace server 
+{
+class UserAuthLobby 
+{
+public:
 
-		~UserAuthLobby();
+	UserAuthLobby(Networking::ServerListener* listener);
+	~UserAuthLobby();
 
+private:
 
-	private:
+	Networking::ServerListener* _listener;
 
-		// Connection reception treatment
-		void HookToListenerEvents(Networking::ServerListener* listener);
-		void UnhookFromListenerEvents(Networking::ServerListener* listener);
-		void TreatConnection(Networking::Connection* connectionToTreat);
+	std::unordered_map<std::string, User*> authentificatedUsers_;
 
-		void HookToUser(User* user);
-		void UnhookFromUser(User* user);
+	// Connection reception treatment
+	void HookToListenerEvents(Networking::ServerListener* listener);
+	void UnhookFromListenerEvents(Networking::ServerListener* listener);
+	void TreatConnection(Networking::Connection* connectionToTreat);
 
-		void OnReceivedMessage(User* user, std::string& message);
-		void OnUserDisconnect(User* user);
+	void HookToUser(User* user);
+	void UnhookFromUser(User* user);
 
-		Networking::ServerListener* _listener;
-	};
+	void OnReceivedMessage(User* user, std::string& message);
+	void OnUserDisconnect(User* user);
+
+};
 
 }
 

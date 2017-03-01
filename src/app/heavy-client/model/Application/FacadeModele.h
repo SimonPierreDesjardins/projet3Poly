@@ -10,7 +10,6 @@
 #ifndef __APPLICATION_FACADEMODELE_H__
 #define __APPLICATION_FACADEMODELE_H__
 
-#include <windows.h>
 #include <string>
 #include <memory>
 
@@ -26,6 +25,8 @@
 #include "BoiteEnvironnement.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
+
+#include "EventHandler.h"
 
 class NoeudAbstrait;
 
@@ -98,6 +99,8 @@ public:
    inline AffichageTexte* obtenirAffichageTexte() const;
    // Retourne le controleur de lumière.
    inline ControleurLumiere* obtenirControleurLumiere() const;
+   // Retourne le gestionnaire d'evenements
+   inline client_network::NetworkManager* getNetworkManager();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -157,6 +160,10 @@ private:
    std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
    /// Le controle de l'affichage des lumières.
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
+
+    client_network::NetworkManager network_;
+	EventHandler eventHandler_;
+
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -294,6 +301,11 @@ inline void FacadeModele::assignerAutorisationInputClavier(const bool& autorisat
 	autorisationInputClavier_ = autorisation;
 }
 
+inline client_network::NetworkManager* FacadeModele::getNetworkManager()
+{
+	return &network_;
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn  bool obtenirAutorisationInput()
@@ -324,6 +336,7 @@ void FacadeModele::assignerAutorisationInputSouris(const bool& autorisation)
 { 
 	autorisationInputSouris_ = autorisation; 
 }
+
 
 #endif // __APPLICATION_FACADEMODELE_H__
 
