@@ -40,7 +40,7 @@ ControleRobot::ControleRobot()
 		table_ = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
 
 		if (table_ != nullptr){
-			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(ArbreRenduINF2990::NOM_ROBOT);
+			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(ArbreRenduINF2990::NOM_AUDI); //ICI QUON VA CHANGER LE MODELE SELON LE CHOIX DANS LE PROFILE
 
 			table_->ajouter(robot);
 

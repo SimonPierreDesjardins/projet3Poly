@@ -48,7 +48,7 @@ const std::string ArbreRenduINF2990::NOM_F1{ "f1" };
 
 const std::string ArbreRenduINF2990::NOM_TRUCK{ "truck" };
 
-const std::string ArbreRenduINF2990::NOM_VOLKS{ "volks" };
+const std::string ArbreRenduINF2990::NOM_AUDI{ "audi" };
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -67,7 +67,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	// Construction des usines
 	ajouterUsine(NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigne>>(NOM_LIGNENOIRE, std::string{ "media/modeles/segment.obj" }));
-	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/audi_r8.obj" }));
+	ajouterUsine(NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robot.obj" }));
 	ajouterUsine(NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));
 	ajouterUsine(NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/mur.obj" }));
 	ajouterUsine(NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/segment.obj" }));
@@ -78,7 +78,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 
 	ajouterUsine(NOM_F1, std::make_unique<UsineNoeud<NoeudF1>>(NOM_F1, std::string{ "media/modeles/ferrari-f1-race-car.obj" }));
 	ajouterUsine(NOM_TRUCK, std::make_unique<UsineNoeud<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }));
-	ajouterUsine(NOM_VOLKS, std::make_unique<UsineNoeud<NoeudVolks>>(NOM_VOLKS, std::string{ "media/modeles/volks.obj" }));
+	ajouterUsine(NOM_AUDI, std::make_unique<UsineNoeud<NoeudAudi>>(NOM_AUDI, std::string{ "media/modeles/audi_r8.obj" }));
 }
 
 ////////////////////////////////////////////////////////////////////////

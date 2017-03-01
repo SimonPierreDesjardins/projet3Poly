@@ -139,7 +139,7 @@ namespace opengl{
 			bool possedeSommets{ mesh.possedeSommets() };
 			bool possedeFaces{ mesh.possedeFaces() };
 
-			if(noeud.obtenirNom() == "Body" || noeud.obtenirNom() == "Back_Bumper" || noeud.obtenirNom() == "Front_Bumper" || noeud.obtenirNom() == "Cube")
+			if(noeud.obtenirNom() == "Body" || noeud.obtenirNom() == "Back_Bumper" || noeud.obtenirNom() == "Front_Bumper" || noeud.obtenirNom() == "Cube.002")
 				possedeCouleurs = true;
 		
 			

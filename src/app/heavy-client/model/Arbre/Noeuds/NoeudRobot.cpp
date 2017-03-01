@@ -71,6 +71,7 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(BODY);
     suiveurLigne_ = profil_->obtenirSuiveurLigne();
     capteursDistance_ = profil_->obtenirCapteursDistance();
+	profil_->setModele("robot");
 
     // À modifier avec le merge du profile.
     visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
@@ -82,20 +83,21 @@ NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 	
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
-	//std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);//temporaireF1
-	//std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);//temporaireF1
+
+	ajouter(roueGauche);
+	ajouter(roueDroite);
 
 	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
 	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
-	//roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();//temporaireF1
-	//roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();//temporaireF1
+	roueDroite_->assignerPositionRelative({ 0.0, 0.25, 0.8 }); 
+	roueGauche_->assignerPositionRelative({ 0.0,  0.0, 0.8 });
+
+
 	roueGauche_->setRightWheel(false);
 	roueDroite_->setRightWheel(true);
 
+
 	positionnerRoues();
-	table_->ajouter(roueGauche);
-	table_->ajouter(roueDroite);
-	
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
@@ -151,9 +153,6 @@ void NoeudRobot::positionDepart()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::afficherConcret() const
 {
-	// Appel à la version de la classe de base pour l'affichage des enfants.
-	NoeudComposite::afficherConcret();
-
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	
@@ -163,6 +162,7 @@ void NoeudRobot::afficherConcret() const
 		glColor4f(couleur_[1], couleur_[2], couleur_[3], couleur_[0]);
 		glEnable(GL_COLOR_MATERIAL);
 	}
+
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
     controleurLumiere_->afficherLumiereSpotRobot();
@@ -170,8 +170,9 @@ void NoeudRobot::afficherConcret() const
 
 	// Affichage du modèle.
 	vbo_->dessiner();
-
-
+	
+	// Appel à la version de la classe de base pour l'affichage des enfants.
+	NoeudComposite::afficherConcret();
 
     // Débugage des capteurs de distance.
 	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
@@ -723,8 +724,8 @@ void NoeudRobot::effectuerCollision(const double& dt)
 ///
 /// @fn void NoeudRobot::positionnerRoues()
 ///
-/// Cette fonctione permet de positionner les roues du robot par rapport à
-/// son angle de rotation et sa position relative.
+/// Cette fonctione permet de faire tourner les roues du robot par rapport à
+/// son angle de rotation et sa vitesse.
 ///
 /// @param[in] Aucun
 ///
@@ -733,22 +734,12 @@ void NoeudRobot::effectuerCollision(const double& dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::positionnerRoues()
 {
-	//Positionner la roue gauche en fonction du robot
 	roueGauche_->assignerAngleRotation(angleRotation_);
-	glm::dvec3 position = positionRelative_;
-	position[0] = position[0] - sin(angleRotation_*PI / 180)*0.0;
-	position[1] = position[1] + cos(angleRotation_*PI / 180)*0.0;
-	position[2] = 0.8;
-	roueGauche_->assignerPositionRelative(position);
+
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
 
-	//Positionner la roue droite en fonction du robot
 	roueDroite_->assignerAngleRotation(angleRotation_);
-	position = positionRelative_;
-	position[0] = position[0] + sin(angleRotation_*PI / 180)*-0.2; //Correction afin de rendre la roue au bon endroit apres la rotation de 180 degre de celle ci pour robot (-0.2).
-	position[1] = position[1] - cos(angleRotation_*PI / 180)*-0.2;
-	position[2] = 0.8;
-	roueDroite_->assignerPositionRelative(position);
+
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
 

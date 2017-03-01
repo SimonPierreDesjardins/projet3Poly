@@ -76,12 +76,15 @@ void NoeudRoues::setVitesseCourante(float vitesse)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRoues::afficherConcret() const
 {
-	// Appel à la version de la classe de base pour l'affichage des enfants.
-	NoeudComposite::afficherConcret();
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
-
+	if(profil_->getModele() == "audi" )
+		glScalef(0.95, 0.95, 0.85);
+	if(profil_->getModele() == "f1")
+		glScalef(0.6, 0.8, 0.75);
+	if (profil_->getModele() == "truck")
+		glScalef(1.25, 1.25, 1.25);
 	if (!estCouleurDefaut_)
 	{
 		glDisable(GL_COLOR_MATERIAL);
@@ -91,12 +94,8 @@ void NoeudRoues::afficherConcret() const
 	//Faire tourner la roue droite de 180 degres
 	if(isRightWheel)
 	{ 
-		glTranslatef(-positionRelative_[0], -positionRelative_[1], -positionRelative_[2]);
-		glRotatef(180.0, 0.0, 0.0, 1.0);
-		glTranslatef(-positionRelative_[0], -positionRelative_[1], positionRelative_[2]);
-		
+		glRotatef(180.0, 0.0, 0.0, 1.0);	
 	}
-	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 	//Ajuster la rotation des roues
 	if (isRightWheel)
 	{

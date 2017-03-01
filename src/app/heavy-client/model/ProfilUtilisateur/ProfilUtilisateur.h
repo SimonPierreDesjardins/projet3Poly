@@ -107,6 +107,9 @@ class ProfilUtilisateur
 
 		bool obtenirCouleurParDefaut(int modele);
 		void setCouleurParDefaut(int modele, bool value);
+		
+		void setModele(std::string modele);
+		std::string getModele();
 
 	private:
 		bool creationDossierDonnees();
@@ -193,6 +196,8 @@ class ProfilUtilisateur
 
 		bool estDefautRoues_ = true;
 		bool estDefautRobot_ = true;
+
+		std::string modele_;
 		
 };
 

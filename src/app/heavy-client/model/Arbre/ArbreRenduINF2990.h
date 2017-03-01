@@ -81,7 +81,7 @@ public:
 
 	static const std::string NOM_TRUCK;
 
-	static const std::string NOM_VOLKS;
+	static const std::string NOM_AUDI;
 
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre
