@@ -1,4 +1,5 @@
 #include "UserManagement\UserAuthLobby.h"
+#include "MapSystem\MapEditingSession.h"
 #include <iostream>
 
 void SetupServer() {
@@ -10,8 +11,11 @@ void SetupServer() {
 	// create listener
 	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
 
+	//Make map system
+	server::MapEditingSession session;
+
 	// create User auth system
-	server::UserAuthLobby UserLobby(listener);
+	server::UserAuthLobby UserLobby(listener, session);
 
 	// create UserLobby
 
