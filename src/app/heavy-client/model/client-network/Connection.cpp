@@ -19,7 +19,6 @@ Connection::Connection()
 	// Start WSA
 	assert(WSAStartup(MAKEWORD(2, 2), &wsaData) == NO_ERROR);
 	
-
 	setOnMessageReceivedHandler(&Connection::receiveMessage, this);
 	setOnConnectionLostHandler(&Connection::lostConnection, this);
 }
@@ -35,14 +34,20 @@ void Connection::closeConnection()
 	mConnection.lock();
 	shutdown(socket_, SD_SEND);
 	mConnection.unlock();
-
 	isConnected_ = false;
-	listener_.join();
+
+	if (listener_.joinable())
+	{
+		listener_.join();
+	}
+
 	closesocket(socket_);
 }
 
 bool Connection::openConnection(const std::string& hostName, const std::string& port)
 {
+	if (isConnected_) return false;
+
 	// Initialize socket
 	socket_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	assert(socket_ != INVALID_SOCKET);
@@ -70,10 +75,13 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 	freeaddrinfo(info);
 	if (result == SOCKET_ERROR)
 	{
+		isConnected_ = false;
 		return false;
 	}
+
 	isConnected_ = true;
 	listener_ = std::thread(&Connection::listen, this);
+	//sendMessage(std::string("hello"));
 	return true;
 }
 
@@ -116,7 +124,6 @@ void Connection::receiveMessage(const std::string& message)
 
 void Connection::lostConnection()
 {
-	std::cout << "Lost connection" << std::endl;
 
 }
 
