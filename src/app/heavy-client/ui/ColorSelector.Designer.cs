@@ -47,6 +47,7 @@
             this.colorPicture.Size = new System.Drawing.Size(256, 156);
             this.colorPicture.TabIndex = 0;
             this.colorPicture.TabStop = false;
+            this.colorPicture.Click += new System.EventHandler(this.colorPicture_Click);
             this.colorPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.colorPicture_MouseMove);
             // 
             // applyButton

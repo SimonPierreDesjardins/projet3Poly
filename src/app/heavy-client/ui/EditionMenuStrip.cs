@@ -248,7 +248,6 @@ namespace ui
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
 
-            parent_.viewPort.Visible = true;
             Program.peutAfficher = false;
             parent_.viewPort.Refresh();
 

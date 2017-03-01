@@ -78,6 +78,7 @@ namespace ui
             //Minimize
             if (tabControl.Height != 0)
             {
+                panel.BackColor = Color.FromArgb(26, 32, 40);
                 tabControl.Height = 0;
                 this.Height = 30;
 
@@ -88,6 +89,7 @@ namespace ui
             //Maximize
             else
             {
+                panel.BackColor = Color.FromArgb(0,102,204);
                 this.Height = 280;
                 tabControl.Height = 249;
 
@@ -108,12 +110,14 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void outWindowButton_Click(object sender, EventArgs e)
         {
+            //Puts it in seperate window
             if (inMainWindow)
             {
                 inMainWindow = false;
                 minMaxButton.Visible = false;
                 minMaxButton.Enabled = false;
                 onlineChatButton.Enabled = false;
+                panel.BackColor = Color.FromArgb(26, 32, 40);
 
                 //Set chat components normal
                 this.Height = 280;
@@ -136,6 +140,7 @@ namespace ui
                 minMaxButton.Enabled = true;
                 minMaxButton.Visible = true;
                 onlineChatButton.Enabled = true;
+                panel.BackColor = Color.FromArgb(0, 102, 204);
 
                 chatWindow_.Controls.Remove(parent_.userChat);
                 chatWindow_.Dispose();
@@ -144,7 +149,8 @@ namespace ui
                 parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width,
                                                       parent_.viewPort.Height - parent_.userChat.Height);
                 parent_.viewPort.Controls.Add(parent_.userChat);
-                
+                parent_.userChat.BringToFront();
+
                 parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
             }
         }
