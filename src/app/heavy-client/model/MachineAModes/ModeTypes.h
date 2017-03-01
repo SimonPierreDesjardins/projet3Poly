@@ -13,8 +13,10 @@
 
 #include "ModeConfigure.h"
 #include "ModeEdition.h"
+#include "ModeTutorialEdition.h"
 #include "ModeMenuPrincipal.h"
 #include "ModeSimulation.h"
+#include "ModeTutorialSimulation.h"
 #include "ModeTest.h"
 #include "ModePersonalize.h"
 

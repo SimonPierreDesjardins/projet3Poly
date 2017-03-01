@@ -15,9 +15,9 @@ public:
 	inline bool isConnected() const;
 	inline void closeConnection();
 
-	void requestConnection(const std::string& hostName, const std::string& port);
-	void createProfile(const std::string& profileName);
-	void authenticate(const std::string& profileName);
+	inline bool requestConnection(const std::string& hostName, const std::string& port);
+	inline void createProfile(const std::string& profileName);
+	inline void authenticate(const std::string& profileName);
 
 	void handleServerMessage(const std::string& message);
 
@@ -33,6 +33,21 @@ inline bool NetworkManager::isConnected() const
 inline void NetworkManager::closeConnection() 
 {
 	connection_.closeConnection();
+}
+
+inline bool NetworkManager::requestConnection(const std::string& hostName, const std::string& port)
+{
+	return connection_.openConnection(hostName, port);
+}
+
+inline void NetworkManager::createProfile(const std::string& profileName)
+{
+
+}
+
+inline void NetworkManager::authenticate(const std::string& profileName)
+{
+
 }
 
 }

@@ -86,16 +86,8 @@ namespace ui
             mainMenu.Dock = DockStyle.Left;
 
             userChat = new UserTabChat(this);
-            viewPort.Controls.Add(userChat);
-            userChat.Location = new Point(viewPort.Width - userChat.Width, viewPort.Height - userChat.Height);
-            userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
 
             Program.peutAfficher = false;
-
-            // TODO : Ajouter le widget pour la connection avec profil et remplacer les valeurs hardcodees.
-            FonctionsNatives.connectToServer("127.0.0.1", "5000");
-            FonctionsNatives.createProfile("coucou");
-            FonctionsNatives.authenticate("coucou");
 
             InitialiserAnimation();
             panneauOperation_.Visible = false;
@@ -836,12 +828,18 @@ namespace ui
         public static extern int obtenirTypeVue();
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void connectToServer(String hostName, String port);
+        public static extern bool connectToServer(String hostName, String port);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void createProfile(String profileName);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void authenticate(String profileName);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void disconnectFromServer();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool isConnected();
     }
 }
