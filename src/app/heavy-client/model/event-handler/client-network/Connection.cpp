@@ -7,6 +7,8 @@
 
 #include "Connection.h"
 
+
+
 namespace client_network
 {
 
@@ -17,9 +19,6 @@ Connection::Connection()
 	// Start WSA
 	assert(WSAStartup(MAKEWORD(2, 2), &wsaData) == NO_ERROR);
 	
-	// Initialize socket
-	socket_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	assert(socket_ != INVALID_SOCKET);
 
 	setOnMessageReceivedHandler(&Connection::receiveMessage, this);
 	setOnConnectionLostHandler(&Connection::lostConnection, this);
@@ -27,12 +26,27 @@ Connection::Connection()
 
 Connection::~Connection()
 {
-	closesocket(socket_);
-	WSACleanup();
+	closeConnection();
 }
 
-bool Connection::requestConnection(const std::string& hostName, const std::string& port)
+void Connection::closeConnection()
 {
+	mConnection.lock();
+	shutdown(socket_, SD_SEND);
+	mConnection.unlock();
+
+	listener_.join();
+	closesocket(socket_);
+	WSACleanup();
+
+}
+
+bool Connection::openConnection(const std::string& hostName, const std::string& port)
+{
+	// Initialize socket
+	socket_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+	assert(socket_ != INVALID_SOCKET);
+
 	addrinfo hints;
 	ZeroMemory(&hints, sizeof(hints));
 	hints.ai_family = AF_INET;
@@ -59,21 +73,41 @@ bool Connection::requestConnection(const std::string& hostName, const std::strin
 		// Handle connection error here.
 	}
 
-	
+	sendMessage(std::string("hello"));
 	listener_ = std::thread(&Connection::listen, this);
 	return true;
 }
 
 void Connection::listen()
 {
-	int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
-	onMessageReceived_(std::string(rcvBuffer_.data()));
+	fd_set sockets{ { socket_ }, 1 };
+	while (isConnected_)
+	{
+		// Check if there is an message on the socket q.
+		if (!select(NULL, &sockets, NULL, NULL, &timeout_))
+		{
+			// Read and handle the new message.
+			mConnection.lock();
+			int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
+			onMessageReceived_(std::string(rcvBuffer_.data()));
+			if (readBytes == 0)
+			{
+				isConnected_ = false;
+			}
+			mConnection.unlock();
+		}
+	}
 }
 
+void Connection::readData()
+{
+}
 
 void Connection::sendMessage(const std::string& message)
 {
-	
+	mConnection.lock();
+	send(socket_, message.data(), message.size(), MSG_OOB);
+	mConnection.unlock();
 }
 
 void Connection::receiveMessage(const std::string& message)

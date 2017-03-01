@@ -3,6 +3,7 @@
 
 #include <string>
 #include <thread>
+#include <mutex>
 #include <array>
 #include <functional>
 
@@ -17,7 +18,9 @@ public:
 	Connection();
 	~Connection();
 
-	bool requestConnection(const std::string& hostName, const std::string& port);
+	bool openConnection(const std::string& hostName, const std::string& port);
+	void closeConnection();
+
 	void sendMessage(const std::string& message);
 	
 	template<class F, class T>
@@ -37,13 +40,17 @@ private:
 	std::function<void(std::string)> onMessageReceived_;
 	std::function<void(void)> onConnectionLost_;
 
+	timeval timeout_{ 0, 20000 };
 	SOCKET socket_ = INVALID_SOCKET;
 	std::thread listener_;
+	std::mutex mConnection;
+	bool isConnected_ = false;
 
-	static const int DEFAULT_BUFF_LEN = 1500;
+	static const int DEFAULT_BUFF_LEN = 4096;
 	std::array<char, DEFAULT_BUFF_LEN> rcvBuffer_;
 
 	void listen();
+	void readData();
 
 	void receiveMessage(const std::string& message);
 	void lostConnection();

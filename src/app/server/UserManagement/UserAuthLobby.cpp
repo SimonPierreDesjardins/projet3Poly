@@ -1,4 +1,7 @@
+#include <iostream>
+
 #include "UserAuthLobby.h"
+
 
 server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener)
 {
@@ -34,25 +37,23 @@ void server::UserAuthLobby::TreatConnection(Networking::Connection * connection)
 
 void server::UserAuthLobby::HookToUser(User * user)
 {
-	__hook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect);
-	__hook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage);
+	__hook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect, this);
+	__hook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage, this);
 }
 
 void server::UserAuthLobby::UnhookFromUser(User * user)
 {
-	__unhook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect);
-	__unhook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage);
+	__unhook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect, this);
+	__unhook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage, this);
 }
 
 void server::UserAuthLobby::OnReceivedMessage(User * user, std::string& message)
 {
-
-	//Attempt to authenticate user with message
 }
 
 void server::UserAuthLobby::OnUserDisconnect(User * user)
 {
 	// unhook from events and dispose of user
-	UnhookFromUser(user);
+	//UnhookFromUser(user);
 	//delete user;
 }
