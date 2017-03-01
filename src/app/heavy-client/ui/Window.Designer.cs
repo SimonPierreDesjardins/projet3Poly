@@ -58,7 +58,7 @@
             this.panneauOperation_.Controls.Add(this.panneauPositionX_);
             this.panneauOperation_.Controls.Add(this.panneauDimension_);
             this.panneauOperation_.Controls.Add(this.panneauRotation_);
-            this.panneauOperation_.Location = new System.Drawing.Point(621, 27);
+            this.panneauOperation_.Location = new System.Drawing.Point(671, 27);
             this.panneauOperation_.Name = "panneauOperation_";
             this.panneauOperation_.Size = new System.Drawing.Size(128, 223);
             this.panneauOperation_.TabIndex = 8;
@@ -154,7 +154,7 @@
             this.viewPort.MinimumSize = new System.Drawing.Size(100, 100);
             this.viewPort.Name = "viewPort";
             this.viewPort.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.viewPort.Size = new System.Drawing.Size(749, 536);
+            this.viewPort.Size = new System.Drawing.Size(799, 536);
             this.viewPort.TabIndex = 0;
             this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
             this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
@@ -164,7 +164,7 @@
             // 
             this.picturePause.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.picturePause.Image = ((System.Drawing.Image)(resources.GetObject("picturePause.Image")));
-            this.picturePause.Location = new System.Drawing.Point(330, 208);
+            this.picturePause.Location = new System.Drawing.Point(355, 208);
             this.picturePause.Name = "picturePause";
             this.picturePause.Size = new System.Drawing.Size(96, 96);
             this.picturePause.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
@@ -176,10 +176,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(749, 536);
+            this.ClientSize = new System.Drawing.Size(799, 536);
             this.Controls.Add(this.panneauOperation_);
             this.Controls.Add(this.viewPort);
-            this.MinimumSize = new System.Drawing.Size(765, 575);
+            this.MinimumSize = new System.Drawing.Size(815, 575);
             this.Name = "Window";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Simulateur de robot";

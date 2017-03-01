@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.HideMenuTimer = new System.Windows.Forms.Timer(this.components);
             this.ShowMenuTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
@@ -44,6 +45,9 @@
             this.customLabel1 = new ui.CustomLabel();
             this.mainMenu_SimulationButton = new ui.PanelButton();
             this.label1 = new ui.CustomLabel();
+            this.mainMenu_ConnexionButton = new ui.PanelButton();
+            this.customLabel6 = new ui.CustomLabel();
+            this.connexionPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.mainMenu_QuitButton.SuspendLayout();
             this.mainMenu_ConfigurationButton.SuspendLayout();
@@ -51,6 +55,8 @@
             this.mainMenu_cardsOnlineButton.SuspendLayout();
             this.mainMenu_EditionButton.SuspendLayout();
             this.mainMenu_SimulationButton.SuspendLayout();
+            this.mainMenu_ConnexionButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.connexionPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // HideMenuTimer
@@ -67,6 +73,7 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.panel1.Controls.Add(this.mainMenu_ConnexionButton);
             this.panel1.Controls.Add(this.mainMenu_QuitButton);
             this.panel1.Controls.Add(this.mainMenu_ConfigurationButton);
             this.panel1.Controls.Add(this.mainMenu_PersoButton);
@@ -83,7 +90,7 @@
             this.mainMenu_QuitButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_QuitButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.mainMenu_QuitButton.Controls.Add(this.customLabel5);
-            this.mainMenu_QuitButton.Location = new System.Drawing.Point(0, 350);
+            this.mainMenu_QuitButton.Location = new System.Drawing.Point(0, 408);
             this.mainMenu_QuitButton.Name = "mainMenu_QuitButton";
             this.mainMenu_QuitButton.Size = new System.Drawing.Size(200, 50);
             this.mainMenu_QuitButton.TabIndex = 3;
@@ -210,6 +217,39 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Simulation";
             // 
+            // mainMenu_ConnexionButton
+            // 
+            this.mainMenu_ConnexionButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mainMenu_ConnexionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.mainMenu_ConnexionButton.Controls.Add(this.connexionPictureBox);
+            this.mainMenu_ConnexionButton.Controls.Add(this.customLabel6);
+            this.mainMenu_ConnexionButton.Location = new System.Drawing.Point(0, 350);
+            this.mainMenu_ConnexionButton.Name = "mainMenu_ConnexionButton";
+            this.mainMenu_ConnexionButton.Size = new System.Drawing.Size(200, 50);
+            this.mainMenu_ConnexionButton.TabIndex = 5;
+            this.mainMenu_ConnexionButton.Click += new System.EventHandler(this.mainMenu_ConnexionButton_Click);
+            // 
+            // customLabel6
+            // 
+            this.customLabel6.AutoSize = true;
+            this.customLabel6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel6.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel6.Location = new System.Drawing.Point(55, 15);
+            this.customLabel6.Name = "customLabel6";
+            this.customLabel6.Size = new System.Drawing.Size(103, 21);
+            this.customLabel6.TabIndex = 0;
+            this.customLabel6.Text = "Connection";
+            // 
+            // connexionPictureBox
+            // 
+            this.connexionPictureBox.Enabled = false;
+            this.connexionPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("connexionPictureBox.Image")));
+            this.connexionPictureBox.Location = new System.Drawing.Point(18, 15);
+            this.connexionPictureBox.Name = "connexionPictureBox";
+            this.connexionPictureBox.Size = new System.Drawing.Size(24, 24);
+            this.connexionPictureBox.TabIndex = 1;
+            this.connexionPictureBox.TabStop = false;
+            // 
             // MainMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -231,6 +271,9 @@
             this.mainMenu_EditionButton.PerformLayout();
             this.mainMenu_SimulationButton.ResumeLayout(false);
             this.mainMenu_SimulationButton.PerformLayout();
+            this.mainMenu_ConnexionButton.ResumeLayout(false);
+            this.mainMenu_ConnexionButton.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.connexionPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -251,5 +294,8 @@
         private PanelButton mainMenu_QuitButton;
         private CustomLabel customLabel5;
         private System.Windows.Forms.Panel panel1;
+        private PanelButton mainMenu_ConnexionButton;
+        private CustomLabel customLabel6;
+        public System.Windows.Forms.PictureBox connexionPictureBox;
     }
 }

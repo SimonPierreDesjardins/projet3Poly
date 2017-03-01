@@ -90,6 +90,12 @@
     <Compile Include="Configure.Designer.cs">
       <DependentUpon>Configure.cs</DependentUpon>
     </Compile>
+    <Compile Include="ConnectToServer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ConnectToServer.Designer.cs">
+      <DependentUpon>ConnectToServer.cs</DependentUpon>
+    </Compile>
     <Compile Include="CustomClass.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -199,6 +205,9 @@
     <EmbeddedResource Include="Configure.resx">
       <DependentUpon>Configure.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConnectToServer.resx">
+      <DependentUpon>ConnectToServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditionMenuStrip.resx">
       <DependentUpon>EditionMenuStrip.cs</DependentUpon>
