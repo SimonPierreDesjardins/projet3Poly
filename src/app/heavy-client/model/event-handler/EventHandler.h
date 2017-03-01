@@ -6,15 +6,8 @@
 class EventHandler
 {
 public:
-	EventHandler();
+	EventHandler() = default;
 	~EventHandler() = default;
-
-	void requestConnection(const std::string& hostName, const std::string& port);
-	void createProfile(const std::string& profileName);
-	void authenticate(const std::string& profileName);
-
-private:
-	client_network::NetworkManager network_;
 };
 
-#endif
+#endif // EVENT_HANDLER_H

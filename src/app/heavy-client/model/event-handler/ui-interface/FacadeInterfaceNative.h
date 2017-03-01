@@ -100,9 +100,12 @@ extern "C"
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b);
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece);
 	
+	// Network
 	__declspec(dllexport) void __cdecl connectToServer(char* hostName, char* port);
 	__declspec(dllexport) void __cdecl createProfile(char* profileName);
 	__declspec(dllexport) void __cdecl authenticate(char* profileName);
+	__declspec(dllexport) void __cdecl disconnectFromServer();
+	__declspec(dllexport) bool __cdecl isConnected();
 
 }
 

@@ -100,7 +100,7 @@ public:
    // Retourne le controleur de lumière.
    inline ControleurLumiere* obtenirControleurLumiere() const;
    // Retourne le gestionnaire d'evenements
-   inline EventHandler* getEventHandler();
+   inline client_network::NetworkManager* getNetworkManager();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -161,7 +161,9 @@ private:
    /// Le controle de l'affichage des lumières.
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
 
+    client_network::NetworkManager network_;
 	EventHandler eventHandler_;
+
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -299,9 +301,9 @@ inline void FacadeModele::assignerAutorisationInputClavier(const bool& autorisat
 	autorisationInputClavier_ = autorisation;
 }
 
-inline EventHandler* FacadeModele::getEventHandler()
+inline client_network::NetworkManager* FacadeModele::getNetworkManager()
 {
-	return &eventHandler_;
+	return &network_;
 }
 
 ////////////////////////////////////////////////////////////////////////

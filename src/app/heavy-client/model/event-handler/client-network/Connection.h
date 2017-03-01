@@ -18,6 +18,7 @@ public:
 	Connection();
 	~Connection();
 
+	inline bool isConnected() const;
 	bool openConnection(const std::string& hostName, const std::string& port);
 	void closeConnection();
 
@@ -30,7 +31,7 @@ public:
 	void setOnMessageReceivedHandler(F&& handler);
 
 	template<class F, class T>
-	void setOnConnectionLostHandler(F&& handler, T&& object);
+	void setOnConnectionLostHandler(F&& handler, T&& instance);
 
 	template<class F>
 	void setOnConnectionLostHandler(F&& handler);
@@ -79,6 +80,11 @@ template<class F>
 void Connection::setOnConnectionLostHandler(F&& handler)
 {
 	onConnectionLost_ = std::bind(handler);
+}
+
+inline bool Connection::isConnected() const
+{
+	return isConnected_;
 }
 
 }
