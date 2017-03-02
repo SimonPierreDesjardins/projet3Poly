@@ -72,43 +72,49 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatWindow.cs">
+    <Compile Include="Chat\ChatWindow.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ChatWindow.Designer.cs">
+    <Compile Include="Chat\ChatWindow.Designer.cs">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </Compile>
-    <Compile Include="ColorSelector.cs">
+    <Compile Include="Personalize\ModeleSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ColorSelector.Designer.cs">
+    <Compile Include="Personalize\ModeleSelector.Designer.cs">
+      <DependentUpon>ModeleSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Personalize\ColorSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Personalize\ColorSelector.Designer.cs">
       <DependentUpon>ColorSelector.cs</DependentUpon>
     </Compile>
-    <Compile Include="Configure.cs">
+    <Compile Include="Other\Configure.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Configure.Designer.cs">
+    <Compile Include="Other\Configure.Designer.cs">
       <DependentUpon>Configure.cs</DependentUpon>
     </Compile>
-    <Compile Include="ConnectToServer.cs">
+    <Compile Include="MainMenu\ConnectToServer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ConnectToServer.Designer.cs">
+    <Compile Include="MainMenu\ConnectToServer.Designer.cs">
       <DependentUpon>ConnectToServer.cs</DependentUpon>
     </Compile>
-    <Compile Include="CustomClass.cs">
+    <Compile Include="Other\CustomClass.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EditionMenuStrip.cs">
+    <Compile Include="Edition\EditionMenuStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EditionMenuStrip.Designer.cs">
+    <Compile Include="Edition\EditionMenuStrip.Designer.cs">
       <DependentUpon>EditionMenuStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="EditionSideMenu.cs">
+    <Compile Include="Edition\EditionSideMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="EditionSideMenu.Designer.cs">
+    <Compile Include="Edition\EditionSideMenu.Designer.cs">
       <DependentUpon>EditionSideMenu.cs</DependentUpon>
     </Compile>
     <Compile Include="FormulairesSysFichiers\ExplorateurOuverture.cs">
@@ -129,34 +135,34 @@
     <Compile Include="FormulairesSysFichiers\NouveauFichier.Designer.cs">
       <DependentUpon>NouveauFichier.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu.cs">
+    <Compile Include="MainMenu\MainMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainMenu.Designer.cs">
+    <Compile Include="MainMenu\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapMenu.cs">
+    <Compile Include="MainMenu\MapMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MapMenu.Designer.cs">
+    <Compile Include="MainMenu\MapMenu.Designer.cs">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapPresentator.cs">
+    <Compile Include="MainMenu\MapPresentator.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MapPresentator.Designer.cs">
+    <Compile Include="MainMenu\MapPresentator.Designer.cs">
       <DependentUpon>MapPresentator.cs</DependentUpon>
     </Compile>
-    <Compile Include="PersonnalisationSideMenu.cs">
+    <Compile Include="Personalize\PersonnalisationSideMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="PersonnalisationSideMenu.Designer.cs">
+    <Compile Include="Personalize\PersonnalisationSideMenu.Designer.cs">
       <DependentUpon>PersonnalisationSideMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="PopOutInterface.cs">
+    <Compile Include="Other\PopOutInterface.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PopOutInterface.Designer.cs">
+    <Compile Include="Other\PopOutInterface.Designer.cs">
       <DependentUpon>PopOutInterface.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
@@ -164,28 +170,28 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="SimulationMenuStrip.cs">
+    <Compile Include="Simulation\SimulationMenuStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="SimulationMenuStrip.Designer.cs">
+    <Compile Include="Simulation\SimulationMenuStrip.Designer.cs">
       <DependentUpon>SimulationMenuStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestMenuStrip.cs">
+    <Compile Include="Test\TestMenuStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TestMenuStrip.Designer.cs">
+    <Compile Include="Test\TestMenuStrip.Designer.cs">
       <DependentUpon>TestMenuStrip.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserChatChannel.cs">
+    <Compile Include="Chat\UserChatChannel.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserChatChannel.Designer.cs">
+    <Compile Include="Chat\UserChatChannel.Designer.cs">
       <DependentUpon>UserChatChannel.cs</DependentUpon>
     </Compile>
-    <Compile Include="UserTabChat.cs">
+    <Compile Include="Chat\UserTabChat.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UserTabChat.Designer.cs">
+    <Compile Include="Chat\UserTabChat.Designer.cs">
       <DependentUpon>UserTabChat.cs</DependentUpon>
     </Compile>
     <Compile Include="Window.cs">
@@ -196,23 +202,23 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ChatWindow.resx">
+    <EmbeddedResource Include="Chat\ChatWindow.resx">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ColorSelector.resx">
+    <EmbeddedResource Include="Personalize\ColorSelector.resx">
       <DependentUpon>ColorSelector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Configure.resx">
+    <EmbeddedResource Include="Other\Configure.resx">
       <DependentUpon>Configure.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConnectToServer.resx">
+    <EmbeddedResource Include="MainMenu\ConnectToServer.resx">
       <DependentUpon>ConnectToServer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditionMenuStrip.resx">
+    <EmbeddedResource Include="Edition\EditionMenuStrip.resx">
       <DependentUpon>EditionMenuStrip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="EditionSideMenu.resx">
+    <EmbeddedResource Include="Edition\EditionSideMenu.resx">
       <DependentUpon>EditionSideMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormulairesSysFichiers\ExplorateurOuverture.resx">
@@ -226,32 +232,35 @@
     <EmbeddedResource Include="FormulairesSysFichiers\NouveauFichier.resx">
       <DependentUpon>NouveauFichier.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu.resx">
+    <EmbeddedResource Include="MainMenu\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapMenu.resx">
+    <EmbeddedResource Include="MainMenu\MapMenu.resx">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapPresentator.resx">
+    <EmbeddedResource Include="MainMenu\MapPresentator.resx">
       <DependentUpon>MapPresentator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PersonnalisationSideMenu.resx">
+    <EmbeddedResource Include="Personalize\ModeleSelector.resx">
+      <DependentUpon>ModeleSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Personalize\PersonnalisationSideMenu.resx">
       <DependentUpon>PersonnalisationSideMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="PopOutInterface.resx">
+    <EmbeddedResource Include="Other\PopOutInterface.resx">
       <DependentUpon>PopOutInterface.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="SimulationMenuStrip.resx">
+    <EmbeddedResource Include="Simulation\SimulationMenuStrip.resx">
       <DependentUpon>SimulationMenuStrip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TestMenuStrip.resx">
+    <EmbeddedResource Include="Test\TestMenuStrip.resx">
       <DependentUpon>TestMenuStrip.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserChatChannel.resx">
+    <EmbeddedResource Include="Chat\UserChatChannel.resx">
       <DependentUpon>UserChatChannel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="UserTabChat.resx">
+    <EmbeddedResource Include="Chat\UserTabChat.resx">
       <DependentUpon>UserTabChat.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window.resx">

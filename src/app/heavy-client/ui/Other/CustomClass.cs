@@ -112,7 +112,7 @@ namespace ui
                 toolTip.Tag = null;
             }
 
-            if (this.BackColor != Color.FromArgb(26,32,40))
+            if (this.BackColor != Color.FromArgb(0,102,204))
             {
                 BackColor = Color.FromArgb(26, 32, 40);
                 foreach (Control c in this.Controls)

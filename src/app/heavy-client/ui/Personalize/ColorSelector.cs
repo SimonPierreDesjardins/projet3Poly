@@ -13,7 +13,6 @@ namespace ui
 {
     public partial class ColorSelector : UserControl
     {
-        Window parent_;
         Color oldColor_;
         Color newColor_;
         int currentPieceChange_;
@@ -31,13 +30,15 @@ namespace ui
         /// @parem int currentPieceChange: int indiquant le numero de la piece qui est modifier
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public ColorSelector(Window parent, int currentPieceChange)
+        public ColorSelector(int currentPieceChange)
         {
             InitializeComponent();
-            parent_ = parent;
             bmp = (Bitmap)colorPicture.Image;
 
             currentPieceChange_ = currentPieceChange;
+
+            if (currentPieceChange == (int)VehiculePiece.VehiculePiece.BODY)
+                controlDescription.Text = "Choix de couleur pour le chasis";
 
             if (!FonctionsNatives.getUsingDefaultMaterialForPiece(currentPieceChange_))
             {

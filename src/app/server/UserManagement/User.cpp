@@ -6,6 +6,20 @@ void server::User::AssignConnection(Networking::Connection * connectionToTreat)
 	HookToConnection(connectionToTreat);
 }
 
+void server::User::AssignInfo(UserInformation & info)
+{
+	Info = info;
+}
+
+void server::User::ForwardMessage(std::string & message)
+{
+	_connection->SendData(message);
+}
+
+server::User::User(UserInformation & userInfo):Info(userInfo)
+{
+}
+
 server::User::~User()
 {
 	UnhookFromConnection(_connection);

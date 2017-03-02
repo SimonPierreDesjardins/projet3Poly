@@ -342,7 +342,7 @@
             // bridgeObjectButton
             // 
             this.bridgeObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.bridgeObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.bridgeObjectButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.bridgeObjectButton.Controls.Add(this.bridgePictureBox);
             this.bridgeObjectButton.Location = new System.Drawing.Point(0, 377);
             this.bridgeObjectButton.Name = "bridgeObjectButton";
@@ -362,7 +362,7 @@
             // teleportObjectButton
             // 
             this.teleportObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.teleportObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.teleportObjectButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.teleportObjectButton.Controls.Add(this.teleportorPictureBox);
             this.teleportObjectButton.Location = new System.Drawing.Point(0, 331);
             this.teleportObjectButton.Name = "teleportObjectButton";
@@ -382,7 +382,7 @@
             // wallObjectButton
             // 
             this.wallObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.wallObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.wallObjectButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.wallObjectButton.Controls.Add(this.wallObjectPicture);
             this.wallObjectButton.Location = new System.Drawing.Point(0, 285);
             this.wallObjectButton.Name = "wallObjectButton";
@@ -403,7 +403,7 @@
             // postObjectButton
             // 
             this.postObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.postObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.postObjectButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.postObjectButton.Controls.Add(this.postObjectPicture);
             this.postObjectButton.Location = new System.Drawing.Point(0, 239);
             this.postObjectButton.Name = "postObjectButton";
@@ -424,7 +424,7 @@
             // redLineObjectButton
             // 
             this.redLineObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.redLineObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.redLineObjectButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.redLineObjectButton.Controls.Add(this.redLinePictureBox);
             this.redLineObjectButton.Location = new System.Drawing.Point(0, 193);
             this.redLineObjectButton.Name = "redLineObjectButton";
@@ -444,7 +444,7 @@
             // greenLineObjectButton
             // 
             this.greenLineObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.greenLineObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.greenLineObjectButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.greenLineObjectButton.Controls.Add(this.greenLinePictureBox);
             this.greenLineObjectButton.Location = new System.Drawing.Point(0, 147);
             this.greenLineObjectButton.Name = "greenLineObjectButton";
@@ -464,7 +464,7 @@
             // lineObjectButton
             // 
             this.lineObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.lineObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.lineObjectButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.lineObjectButton.Controls.Add(this.lineObjectPicture);
             this.lineObjectButton.Location = new System.Drawing.Point(0, 101);
             this.lineObjectButton.Name = "lineObjectButton";
@@ -544,7 +544,6 @@
             this.lineObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lineObjectPicture)).EndInit();
             this.panelButton3.ResumeLayout(false);
-            this.panelButton3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
 

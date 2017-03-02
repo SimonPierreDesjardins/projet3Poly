@@ -34,6 +34,7 @@
             this.customLabel2 = new ui.CustomLabel();
             this.cancelButton = new ui.PanelButton();
             this.customLabel1 = new ui.CustomLabel();
+            this.controlDescription = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.colorPicture)).BeginInit();
             this.applyButton.SuspendLayout();
             this.cancelButton.SuspendLayout();
@@ -42,7 +43,7 @@
             // colorPicture
             // 
             this.colorPicture.Image = ((System.Drawing.Image)(resources.GetObject("colorPicture.Image")));
-            this.colorPicture.Location = new System.Drawing.Point(0, 0);
+            this.colorPicture.Location = new System.Drawing.Point(0, 23);
             this.colorPicture.Name = "colorPicture";
             this.colorPicture.Size = new System.Drawing.Size(256, 156);
             this.colorPicture.TabIndex = 0;
@@ -54,7 +55,7 @@
             // 
             this.applyButton.BackColor = System.Drawing.Color.Transparent;
             this.applyButton.Controls.Add(this.customLabel2);
-            this.applyButton.Location = new System.Drawing.Point(129, 156);
+            this.applyButton.Location = new System.Drawing.Point(129, 179);
             this.applyButton.Name = "applyButton";
             this.applyButton.Size = new System.Drawing.Size(129, 26);
             this.applyButton.TabIndex = 2;
@@ -75,7 +76,7 @@
             // 
             this.cancelButton.BackColor = System.Drawing.Color.Transparent;
             this.cancelButton.Controls.Add(this.customLabel1);
-            this.cancelButton.Location = new System.Drawing.Point(0, 156);
+            this.cancelButton.Location = new System.Drawing.Point(0, 179);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(129, 26);
             this.cancelButton.TabIndex = 1;
@@ -92,23 +93,36 @@
             this.customLabel1.TabIndex = 0;
             this.customLabel1.Text = "Annuler";
             // 
+            // controlDescription
+            // 
+            this.controlDescription.AutoSize = true;
+            this.controlDescription.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.controlDescription.ForeColor = System.Drawing.Color.Silver;
+            this.controlDescription.Location = new System.Drawing.Point(3, 0);
+            this.controlDescription.Name = "controlDescription";
+            this.controlDescription.Size = new System.Drawing.Size(249, 21);
+            this.controlDescription.TabIndex = 3;
+            this.controlDescription.Text = "Choix de couleur pour les roues";
+            // 
             // ColorSelector
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.Controls.Add(this.controlDescription);
             this.Controls.Add(this.applyButton);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.colorPicture);
             this.MinimumSize = new System.Drawing.Size(258, 100);
             this.Name = "ColorSelector";
-            this.Size = new System.Drawing.Size(258, 182);
+            this.Size = new System.Drawing.Size(258, 207);
             ((System.ComponentModel.ISupportInitialize)(this.colorPicture)).EndInit();
             this.applyButton.ResumeLayout(false);
             this.applyButton.PerformLayout();
             this.cancelButton.ResumeLayout(false);
             this.cancelButton.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -119,5 +133,6 @@
         private CustomLabel customLabel1;
         private PanelButton applyButton;
         private CustomLabel customLabel2;
+        private System.Windows.Forms.Label controlDescription;
     }
 }
