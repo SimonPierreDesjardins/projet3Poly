@@ -78,6 +78,12 @@
     <Compile Include="Chat\ChatWindow.Designer.cs">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Personalize\ModeleSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Personalize\ModeleSelector.Designer.cs">
+      <DependentUpon>ModeleSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Personalize\ColorSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -234,6 +240,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainMenu\MapPresentator.resx">
       <DependentUpon>MapPresentator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Personalize\ModeleSelector.resx">
+      <DependentUpon>ModeleSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Personalize\PersonnalisationSideMenu.resx">
       <DependentUpon>PersonnalisationSideMenu.cs</DependentUpon>

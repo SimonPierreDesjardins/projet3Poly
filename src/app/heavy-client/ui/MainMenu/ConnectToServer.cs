@@ -106,15 +106,21 @@ namespace ui
 
             if (continuConnexion)
             {
-                FonctionsNatives.connectToServer(IPTextBox.Text, "5000");
-                connectPanel.Visible = false;
+                if (FonctionsNatives.connectToServer(IPTextBox.Text, "5000"))
+                {
+                    connectPanel.Visible = false;
 
-                this.Location = new Point((parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - Width / 2,
-                                           parent_.viewPort.Height / 2 - Height / 2);
+                    this.Location = new Point((parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - Width / 2,
+                                               parent_.viewPort.Height / 2 - Height / 2);
 
-                authenticatePanel.Visible = true;
-                newAccountWarningLabel.Visible = false;
-                existingAccountWarningLabel.Visible = false;
+                    authenticatePanel.Visible = true;
+                    newAccountWarningLabel.Visible = false;
+                    existingAccountWarningLabel.Visible = false;
+                }else
+                {
+                    IPWarningLabel.Visible = true;
+                    IPWarningLabel.Text = "Serveur non disponible à cette adresse.";
+                }
             }
         }
 
@@ -203,6 +209,7 @@ namespace ui
         private void cancelNewUserButton_Click(object sender, EventArgs e)
         {
             FonctionsNatives.disconnectFromServer();
+            removeChat();
             goBackToMainMenu();
         }
 
@@ -242,6 +249,7 @@ namespace ui
         private void cancelExistingUserButton_Click(object sender, EventArgs e)
         {
             FonctionsNatives.disconnectFromServer();
+            removeChat();
             goBackToMainMenu();
         }
 
@@ -291,6 +299,7 @@ namespace ui
         private void DeconnectButton_Click(object sender, EventArgs e)
         {
             FonctionsNatives.disconnectFromServer();
+            removeChat();
             goBackToMainMenu();
         }
 
@@ -326,6 +335,14 @@ namespace ui
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
+        }
+
+        private void removeChat()
+        {
+            if (parent_.userChat.inMainWindow)
+                parent_.viewPort.Controls.Remove(parent_.userChat);
+            else
+                parent_.userChat.chatWindow_.Dispose();
         }
     }
 }

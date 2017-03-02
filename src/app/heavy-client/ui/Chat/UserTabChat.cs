@@ -13,8 +13,8 @@ namespace ui
     public partial class UserTabChat : UserControl
     {
         Window parent_;
-        ChatWindow chatWindow_;
-        Boolean inMainWindow = true;
+        public ChatWindow chatWindow_;
+        public Boolean inMainWindow = true;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -47,7 +47,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void onlineChatButton_Click(object sender, EventArgs e)
         {
-            minizeOrMaximizeChat();
+            if (inMainWindow)
+                minizeOrMaximizeChat();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -91,7 +92,7 @@ namespace ui
             {
                 panel.BackColor = Color.FromArgb(0,102,204);
                 this.Height = 280;
-                tabControl.Height = 249;
+                tabControl.Height = 252;
 
                 this.Location = new Point(parent_.viewPort.Width - this.Width, parent_.viewPort.Height - this.Height);
                 minMaxPictureBox.Image = Properties.Resources.Minimize;
@@ -113,46 +114,54 @@ namespace ui
             //Puts it in seperate window
             if (inMainWindow)
             {
-                inMainWindow = false;
-                minMaxButton.Visible = false;
-                minMaxButton.Enabled = false;
-                onlineChatButton.Enabled = false;
-                panel.BackColor = Color.FromArgb(26, 32, 40);
-
-                //Set chat components normal
-                this.Height = 280;
-                tabControl.Height = 249;
-                minMaxPictureBox.Image = Properties.Resources.Minimize;
-
-                if (parent_.viewPort.Controls.Contains(parent_.userChat))
-                    parent_.viewPort.Controls.Remove(parent_.userChat);
-                else if (parent_.viewPort.Controls.Contains(parent_.userChat))
-                    parent_.viewPort.Controls.Remove(parent_.userChat);
-
-                chatWindow_ = new ChatWindow(parent_);
-                chatWindow_.Controls.Add(parent_.userChat);
-                parent_.userChat.Dock = DockStyle.Fill;
-                chatWindow_.Show();
-
-            } else
-            {
-                inMainWindow = true;
-                minMaxButton.Enabled = true;
-                minMaxButton.Visible = true;
-                onlineChatButton.Enabled = true;
-                panel.BackColor = Color.FromArgb(0, 102, 204);
-
-                chatWindow_.Controls.Remove(parent_.userChat);
-                chatWindow_.Dispose();
-
-                parent_.userChat.Size = new Size(265, 280);
-                parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width,
-                                                      parent_.viewPort.Height - parent_.userChat.Height);
-                parent_.viewPort.Controls.Add(parent_.userChat);
-                parent_.userChat.BringToFront();
-
-                parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                chatToseperateWindow();
             }
+            else
+            {
+                chatToMainWindow();
+            }
+        }
+        
+        private void chatToseperateWindow()
+        {
+            inMainWindow = false;
+            minMaxButton.Visible = false;
+            minMaxButton.Enabled = false;
+            panel.BackColor = Color.FromArgb(26, 32, 40);
+
+            //Set chat components normal
+            this.Height = 280;
+            tabControl.Height = 252;
+            minMaxPictureBox.Image = Properties.Resources.Minimize;
+
+            if (parent_.viewPort.Controls.Contains(parent_.userChat))
+                parent_.viewPort.Controls.Remove(parent_.userChat);
+            else if (parent_.viewPort.Controls.Contains(parent_.userChat))
+                parent_.viewPort.Controls.Remove(parent_.userChat);
+
+            chatWindow_ = new ChatWindow(parent_);
+            chatWindow_.Controls.Add(parent_.userChat);
+            parent_.userChat.Dock = DockStyle.Fill;
+            chatWindow_.Show();
+        }
+
+        private void chatToMainWindow()
+        {
+            inMainWindow = true;
+            minMaxButton.Enabled = true;
+            minMaxButton.Visible = true;
+            panel.BackColor = Color.FromArgb(0, 102, 204);
+
+            chatWindow_.Controls.Remove(parent_.userChat);
+            chatWindow_.Dispose();
+
+            parent_.userChat.Size = new Size(265, 280);
+            parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width,
+                                                  parent_.viewPort.Height - parent_.userChat.Height);
+            parent_.viewPort.Controls.Add(parent_.userChat);
+            parent_.userChat.BringToFront();
+
+            parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
         }
 
         ////////////////////////////////////////////////////////////////////////

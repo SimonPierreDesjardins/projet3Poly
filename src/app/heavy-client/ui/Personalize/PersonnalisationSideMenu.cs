@@ -13,8 +13,9 @@ namespace ui
     public partial class PersonnalisationSideMenu : UserControl
     {
         Window parent_;
-        public ColorSelector wheelColorSelector;
-        public ColorSelector robotColorSelector;
+        ColorSelector wheelColorSelector;
+        ColorSelector robotColorSelector;
+        ModeleSelector carSelector;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -30,8 +31,9 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            wheelColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.WHEELS);
-            robotColorSelector = new ColorSelector(parent_, (int)VehiculePiece.VehiculePiece.BODY);
+            wheelColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.WHEELS);
+            robotColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.BODY);
+            carSelector = new ModeleSelector();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -132,6 +134,10 @@ namespace ui
             setDefaultUnselectedColors();
             robotChangeLabel.ForeColor = Color.Silver;
             carChange_Button.BackColor = Color.FromArgb(0, 102, 204);
+
+            parent_.viewPort.Controls.Add(carSelector);
+            carSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            carSelector.Location = new Point(parent_.viewPort.Width - carSelector.Width, 0);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -202,7 +208,11 @@ namespace ui
                 robotColorSelector.applyChanges();
                 parent_.viewPort.Controls.Remove(robotColorSelector);
             }
-                
+            else if (parent_.viewPort.Controls.Contains(carSelector))
+            {
+                parent_.viewPort.Controls.Remove(carSelector);
+            }
+
         }
     }
 }
