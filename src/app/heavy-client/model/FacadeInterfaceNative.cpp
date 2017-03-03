@@ -906,6 +906,20 @@ extern "C"
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(WHEELS, true);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) char* __cdecl getModele()
+	///
+	///	Fonction qui get le modele
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) char* __cdecl getModele()
+	{
+		return (char*) FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str();
+	}
+
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)
 	{
 		return FacadeModele::obtenirInstance()->getNetworkManager()->requestConnection(std::string(hostName), std::string(port));

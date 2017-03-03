@@ -49,5 +49,8 @@ namespace ui
     {
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void setModele(String modele);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern String getModele();
     }
 }
