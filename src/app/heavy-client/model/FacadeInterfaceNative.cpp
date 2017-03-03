@@ -915,9 +915,9 @@ extern "C"
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) char* __cdecl getModele()
+	__declspec(dllexport) void __cdecl getModele(char* chemin, int longueur)
 	{
-		return (char*) FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str();
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str());
 	}
 
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)
