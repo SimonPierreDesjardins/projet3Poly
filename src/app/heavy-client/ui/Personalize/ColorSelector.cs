@@ -22,11 +22,10 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public ColorSelector(Window parent, int currentPieceChange)
+        /// @fn public ColorSelector(int currentPieceChange)
         ///
         /// Cette fonction initialize les controles sur user control et assigne les attributs.
         ///
-        /// @param Window parent: reference a la fenetre principal du programme
         /// @parem int currentPieceChange: int indiquant le numero de la piece qui est modifier
         /// 
         ////////////////////////////////////////////////////////////////////////
