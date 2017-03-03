@@ -13,9 +13,13 @@ namespace ui
 {
     public partial class ModeleSelector : UserControl
     {
+        String modele_;
+
         public ModeleSelector()
         {
             InitializeComponent();
+
+            //modele_ = FonctionsNatives.getModele();
         }
 
         private void robotButton_Click(object sender, EventArgs e)

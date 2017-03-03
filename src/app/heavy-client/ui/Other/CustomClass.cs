@@ -114,7 +114,7 @@ namespace ui
 
             if (this.BackColor != Color.FromArgb(0,102,204))
             {
-                BackColor = Color.FromArgb(26, 32, 40);
+                BackColor = Color.Transparent;
                 foreach (Control c in this.Controls)
                 {
                     if (c.GetType() == typeof(CustomLabel))

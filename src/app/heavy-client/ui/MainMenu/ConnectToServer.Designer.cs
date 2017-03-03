@@ -31,20 +31,18 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ConnectToServer));
             this.connectPanel = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
+            this.connectionButton = new ui.PanelButton();
+            this.pictureBox8 = new System.Windows.Forms.PictureBox();
+            this.customLabel2 = new ui.CustomLabel();
             this.IPWarningLabel = new System.Windows.Forms.Label();
             this.IPTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.cancelButton = new ui.PanelButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.customLabel1 = new ui.CustomLabel();
             this.authenticatePanel = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.newAccountWarningLabel = new System.Windows.Forms.Label();
-            this.newAccountTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.DeconnectPanel = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ExistingAccountTextBox = new System.Windows.Forms.TextBox();
-            this.existingAccountWarningLabel = new System.Windows.Forms.Label();
             this.cancelExistingUserButton = new ui.PanelButton();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.customLabel8 = new ui.CustomLabel();
@@ -54,25 +52,30 @@
             this.crateAndAuthenticateButton = new ui.PanelButton();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.customLabel4 = new ui.CustomLabel();
+            this.newAccountWarningLabel = new System.Windows.Forms.Label();
+            this.existingAccountWarningLabel = new System.Windows.Forms.Label();
+            this.newAccountTextBox = new System.Windows.Forms.TextBox();
+            this.ExistingAccountTextBox = new System.Windows.Forms.TextBox();
             this.authenticateButton = new ui.PanelButton();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
             this.customLabel3 = new ui.CustomLabel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.DeconnectPanel = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
             this.DeconnectButton = new ui.PanelButton();
             this.pictureBox7 = new System.Windows.Forms.PictureBox();
             this.customLabel6 = new ui.CustomLabel();
             this.CancelDeconnectButton = new ui.PanelButton();
             this.customLabel5 = new ui.CustomLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.connectionButton = new ui.PanelButton();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
-            this.customLabel2 = new ui.CustomLabel();
-            this.cancelButton = new ui.PanelButton();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.customLabel1 = new ui.CustomLabel();
             this.connectPanel.SuspendLayout();
+            this.connectionButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
+            this.cancelButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.authenticatePanel.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.DeconnectPanel.SuspendLayout();
             this.cancelExistingUserButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.cancelNewUserButton.SuspendLayout();
@@ -81,14 +84,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
             this.authenticateButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.DeconnectPanel.SuspendLayout();
             this.DeconnectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
             this.CancelDeconnectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
-            this.connectionButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            this.cancelButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // connectPanel
@@ -115,6 +115,38 @@
             this.label4.Size = new System.Drawing.Size(183, 21);
             this.label4.TabIndex = 9;
             this.label4.Text = "Connexion à un server";
+            // 
+            // connectionButton
+            // 
+            this.connectionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.connectionButton.Controls.Add(this.pictureBox8);
+            this.connectionButton.Controls.Add(this.customLabel2);
+            this.connectionButton.Location = new System.Drawing.Point(153, 228);
+            this.connectionButton.Name = "connectionButton";
+            this.connectionButton.Size = new System.Drawing.Size(146, 44);
+            this.connectionButton.TabIndex = 7;
+            this.connectionButton.Click += new System.EventHandler(this.connectionButton_Click);
+            // 
+            // pictureBox8
+            // 
+            this.pictureBox8.Enabled = false;
+            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
+            this.pictureBox8.Location = new System.Drawing.Point(10, 10);
+            this.pictureBox8.Name = "pictureBox8";
+            this.pictureBox8.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox8.TabIndex = 2;
+            this.pictureBox8.TabStop = false;
+            // 
+            // customLabel2
+            // 
+            this.customLabel2.AutoSize = true;
+            this.customLabel2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel2.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel2.Location = new System.Drawing.Point(50, 10);
+            this.customLabel2.Name = "customLabel2";
+            this.customLabel2.Size = new System.Drawing.Size(94, 21);
+            this.customLabel2.TabIndex = 0;
+            this.customLabel2.Text = "Connexion";
             // 
             // IPWarningLabel
             // 
@@ -150,6 +182,38 @@
             this.label2.Size = new System.Drawing.Size(172, 21);
             this.label2.TabIndex = 1;
             this.label2.Text = "Adresse IP du server :";
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.cancelButton.Controls.Add(this.pictureBox1);
+            this.cancelButton.Controls.Add(this.customLabel1);
+            this.cancelButton.Location = new System.Drawing.Point(15, 228);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(124, 44);
+            this.cancelButton.TabIndex = 8;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Enabled = false;
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(13, 10);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox1.TabIndex = 1;
+            this.pictureBox1.TabStop = false;
+            // 
+            // customLabel1
+            // 
+            this.customLabel1.AutoSize = true;
+            this.customLabel1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel1.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel1.Location = new System.Drawing.Point(50, 10);
+            this.customLabel1.Name = "customLabel1";
+            this.customLabel1.Size = new System.Drawing.Size(71, 21);
+            this.customLabel1.TabIndex = 0;
+            this.customLabel1.Text = "Annuler";
             // 
             // authenticatePanel
             // 
@@ -191,101 +255,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(480, 256);
             this.panel1.TabIndex = 8;
-            // 
-            // newAccountWarningLabel
-            // 
-            this.newAccountWarningLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.newAccountWarningLabel.AutoSize = true;
-            this.newAccountWarningLabel.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newAccountWarningLabel.ForeColor = System.Drawing.Color.Red;
-            this.newAccountWarningLabel.Location = new System.Drawing.Point(25, 121);
-            this.newAccountWarningLabel.Name = "newAccountWarningLabel";
-            this.newAccountWarningLabel.Size = new System.Drawing.Size(96, 17);
-            this.newAccountWarningLabel.TabIndex = 16;
-            this.newAccountWarningLabel.Text = "warningLabel";
-            this.newAccountWarningLabel.Visible = false;
-            // 
-            // newAccountTextBox
-            // 
-            this.newAccountTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.newAccountTextBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.newAccountTextBox.Location = new System.Drawing.Point(28, 87);
-            this.newAccountTextBox.MaxLength = 10;
-            this.newAccountTextBox.Name = "newAccountTextBox";
-            this.newAccountTextBox.Size = new System.Drawing.Size(146, 27);
-            this.newAccountTextBox.TabIndex = 14;
-            this.newAccountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.newAccountTextBox_KeyPress);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Silver;
-            this.label1.Location = new System.Drawing.Point(24, 46);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(158, 21);
-            this.label1.TabIndex = 9;
-            this.label1.Text = "Nouveau compte :";
-            // 
-            // DeconnectPanel
-            // 
-            this.DeconnectPanel.Controls.Add(this.label5);
-            this.DeconnectPanel.Controls.Add(this.DeconnectButton);
-            this.DeconnectPanel.Controls.Add(this.CancelDeconnectButton);
-            this.DeconnectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.DeconnectPanel.Location = new System.Drawing.Point(0, 0);
-            this.DeconnectPanel.Name = "DeconnectPanel";
-            this.DeconnectPanel.Size = new System.Drawing.Size(512, 285);
-            this.DeconnectPanel.TabIndex = 2;
-            this.DeconnectPanel.Visible = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(11, 10);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(202, 21);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "Déconnexion à un server";
-            // 
-            // label3
-            // 
-            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.ForeColor = System.Drawing.Color.Silver;
-            this.label3.Location = new System.Drawing.Point(287, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(150, 21);
-            this.label3.TabIndex = 10;
-            this.label3.Text = "Compte existant :";
-            // 
-            // ExistingAccountTextBox
-            // 
-            this.ExistingAccountTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.ExistingAccountTextBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ExistingAccountTextBox.Location = new System.Drawing.Point(291, 90);
-            this.ExistingAccountTextBox.MaxLength = 10;
-            this.ExistingAccountTextBox.Name = "ExistingAccountTextBox";
-            this.ExistingAccountTextBox.Size = new System.Drawing.Size(146, 27);
-            this.ExistingAccountTextBox.TabIndex = 13;
-            this.ExistingAccountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ExistingAccountTextBox_KeyPress);
-            // 
-            // existingAccountWarningLabel
-            // 
-            this.existingAccountWarningLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.existingAccountWarningLabel.AutoSize = true;
-            this.existingAccountWarningLabel.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.existingAccountWarningLabel.ForeColor = System.Drawing.Color.Red;
-            this.existingAccountWarningLabel.Location = new System.Drawing.Point(288, 124);
-            this.existingAccountWarningLabel.Name = "existingAccountWarningLabel";
-            this.existingAccountWarningLabel.Size = new System.Drawing.Size(96, 17);
-            this.existingAccountWarningLabel.TabIndex = 15;
-            this.existingAccountWarningLabel.Text = "warningLabel";
-            this.existingAccountWarningLabel.Visible = false;
             // 
             // cancelExistingUserButton
             // 
@@ -383,6 +352,54 @@
             this.customLabel4.TabIndex = 0;
             this.customLabel4.Text = "Créer";
             // 
+            // newAccountWarningLabel
+            // 
+            this.newAccountWarningLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.newAccountWarningLabel.AutoSize = true;
+            this.newAccountWarningLabel.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newAccountWarningLabel.ForeColor = System.Drawing.Color.Red;
+            this.newAccountWarningLabel.Location = new System.Drawing.Point(25, 121);
+            this.newAccountWarningLabel.Name = "newAccountWarningLabel";
+            this.newAccountWarningLabel.Size = new System.Drawing.Size(96, 17);
+            this.newAccountWarningLabel.TabIndex = 16;
+            this.newAccountWarningLabel.Text = "warningLabel";
+            this.newAccountWarningLabel.Visible = false;
+            // 
+            // existingAccountWarningLabel
+            // 
+            this.existingAccountWarningLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.existingAccountWarningLabel.AutoSize = true;
+            this.existingAccountWarningLabel.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.existingAccountWarningLabel.ForeColor = System.Drawing.Color.Red;
+            this.existingAccountWarningLabel.Location = new System.Drawing.Point(288, 124);
+            this.existingAccountWarningLabel.Name = "existingAccountWarningLabel";
+            this.existingAccountWarningLabel.Size = new System.Drawing.Size(96, 17);
+            this.existingAccountWarningLabel.TabIndex = 15;
+            this.existingAccountWarningLabel.Text = "warningLabel";
+            this.existingAccountWarningLabel.Visible = false;
+            // 
+            // newAccountTextBox
+            // 
+            this.newAccountTextBox.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.newAccountTextBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.newAccountTextBox.Location = new System.Drawing.Point(28, 87);
+            this.newAccountTextBox.MaxLength = 10;
+            this.newAccountTextBox.Name = "newAccountTextBox";
+            this.newAccountTextBox.Size = new System.Drawing.Size(146, 27);
+            this.newAccountTextBox.TabIndex = 14;
+            this.newAccountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.newAccountTextBox_KeyPress);
+            // 
+            // ExistingAccountTextBox
+            // 
+            this.ExistingAccountTextBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.ExistingAccountTextBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ExistingAccountTextBox.Location = new System.Drawing.Point(291, 90);
+            this.ExistingAccountTextBox.MaxLength = 10;
+            this.ExistingAccountTextBox.Name = "ExistingAccountTextBox";
+            this.ExistingAccountTextBox.Size = new System.Drawing.Size(146, 27);
+            this.ExistingAccountTextBox.TabIndex = 13;
+            this.ExistingAccountTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.ExistingAccountTextBox_KeyPress);
+            // 
             // authenticateButton
             // 
             this.authenticateButton.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
@@ -414,6 +431,53 @@
             this.customLabel3.Size = new System.Drawing.Size(103, 21);
             this.customLabel3.TabIndex = 0;
             this.customLabel3.Text = "Authentifier";
+            // 
+            // label3
+            // 
+            this.label3.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.ForeColor = System.Drawing.Color.Silver;
+            this.label3.Location = new System.Drawing.Point(287, 46);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(150, 21);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Compte existant :";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Silver;
+            this.label1.Location = new System.Drawing.Point(24, 46);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(158, 21);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Nouveau compte :";
+            // 
+            // DeconnectPanel
+            // 
+            this.DeconnectPanel.Controls.Add(this.label5);
+            this.DeconnectPanel.Controls.Add(this.DeconnectButton);
+            this.DeconnectPanel.Controls.Add(this.CancelDeconnectButton);
+            this.DeconnectPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DeconnectPanel.Location = new System.Drawing.Point(0, 0);
+            this.DeconnectPanel.Name = "DeconnectPanel";
+            this.DeconnectPanel.Size = new System.Drawing.Size(512, 285);
+            this.DeconnectPanel.TabIndex = 2;
+            this.DeconnectPanel.Visible = false;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Silver;
+            this.label5.Location = new System.Drawing.Point(11, 10);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(202, 21);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Déconnexion à un server";
             // 
             // DeconnectButton
             // 
@@ -479,70 +543,6 @@
             this.pictureBox2.TabIndex = 1;
             this.pictureBox2.TabStop = false;
             // 
-            // connectionButton
-            // 
-            this.connectionButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.connectionButton.Controls.Add(this.pictureBox8);
-            this.connectionButton.Controls.Add(this.customLabel2);
-            this.connectionButton.Location = new System.Drawing.Point(153, 228);
-            this.connectionButton.Name = "connectionButton";
-            this.connectionButton.Size = new System.Drawing.Size(146, 44);
-            this.connectionButton.TabIndex = 7;
-            this.connectionButton.Click += new System.EventHandler(this.connectionButton_Click);
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.Enabled = false;
-            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(10, 10);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox8.TabIndex = 2;
-            this.pictureBox8.TabStop = false;
-            // 
-            // customLabel2
-            // 
-            this.customLabel2.AutoSize = true;
-            this.customLabel2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel2.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel2.Location = new System.Drawing.Point(50, 10);
-            this.customLabel2.Name = "customLabel2";
-            this.customLabel2.Size = new System.Drawing.Size(94, 21);
-            this.customLabel2.TabIndex = 0;
-            this.customLabel2.Text = "Connexion";
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cancelButton.Controls.Add(this.pictureBox1);
-            this.cancelButton.Controls.Add(this.customLabel1);
-            this.cancelButton.Location = new System.Drawing.Point(15, 228);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(124, 44);
-            this.cancelButton.TabIndex = 8;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Enabled = false;
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(13, 10);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox1.TabIndex = 1;
-            this.pictureBox1.TabStop = false;
-            // 
-            // customLabel1
-            // 
-            this.customLabel1.AutoSize = true;
-            this.customLabel1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel1.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel1.Location = new System.Drawing.Point(50, 10);
-            this.customLabel1.Name = "customLabel1";
-            this.customLabel1.Size = new System.Drawing.Size(71, 21);
-            this.customLabel1.TabIndex = 0;
-            this.customLabel1.Text = "Annuler";
-            // 
             // ConnectToServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -555,11 +555,15 @@
             this.Size = new System.Drawing.Size(512, 285);
             this.connectPanel.ResumeLayout(false);
             this.connectPanel.PerformLayout();
+            this.connectionButton.ResumeLayout(false);
+            this.connectionButton.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
+            this.cancelButton.ResumeLayout(false);
+            this.cancelButton.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.authenticatePanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.DeconnectPanel.ResumeLayout(false);
-            this.DeconnectPanel.PerformLayout();
             this.cancelExistingUserButton.ResumeLayout(false);
             this.cancelExistingUserButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
@@ -572,18 +576,14 @@
             this.authenticateButton.ResumeLayout(false);
             this.authenticateButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.DeconnectPanel.ResumeLayout(false);
+            this.DeconnectPanel.PerformLayout();
             this.DeconnectButton.ResumeLayout(false);
             this.DeconnectButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
             this.CancelDeconnectButton.ResumeLayout(false);
             this.CancelDeconnectButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
-            this.connectionButton.ResumeLayout(false);
-            this.connectionButton.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            this.cancelButton.ResumeLayout(false);
-            this.cancelButton.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }

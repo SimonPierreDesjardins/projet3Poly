@@ -108,20 +108,31 @@ namespace ui
             {
                 if (FonctionsNatives.connectToServer(IPTextBox.Text, "5000"))
                 {
-                    connectPanel.Visible = false;
-
-                    this.Location = new Point((parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - Width / 2,
-                                               parent_.viewPort.Height / 2 - Height / 2);
-
-                    authenticatePanel.Visible = true;
-                    newAccountWarningLabel.Visible = false;
-                    existingAccountWarningLabel.Visible = false;
-                }else
+                    onConnectionSucces();
+                }
+                else
                 {
-                    IPWarningLabel.Visible = true;
-                    IPWarningLabel.Text = "Serveur non disponible à cette adresse.";
+                    onConnectionFailure();
                 }
             }
+        }
+
+        private void onConnectionSucces()
+        {
+            connectPanel.Visible = false;
+
+            this.Location = new Point((parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - Width / 2,
+                                       parent_.viewPort.Height / 2 - Height / 2);
+
+            authenticatePanel.Visible = true;
+            newAccountWarningLabel.Visible = false;
+            existingAccountWarningLabel.Visible = false;
+        }
+
+        private void onConnectionFailure()
+        {
+            IPWarningLabel.Visible = true;
+            IPWarningLabel.Text = "Serveur non disponible à cette adresse.";
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -344,5 +355,6 @@ namespace ui
             else
                 parent_.userChat.chatWindow_.Dispose();
         }
+
     }
 }
