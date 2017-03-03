@@ -197,7 +197,7 @@ class ProfilUtilisateur
 		bool estDefautRoues_ = true;
 		bool estDefautRobot_ = true;
 
-		std::string modele_;
+		std::string modele_{"robot"};
 		
 };
 

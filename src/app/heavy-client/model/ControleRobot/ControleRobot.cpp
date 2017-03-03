@@ -36,11 +36,12 @@ ControleRobot::ControleRobot()
 	table_ = nullptr;
 	robot_ = nullptr;
 	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	if (arbre != nullptr){
 		table_ = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
 
 		if (table_ != nullptr){
-			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(ArbreRenduINF2990::NOM_AUDI); //ICI QUON VA CHANGER LE MODELE SELON LE CHOIX DANS LE PROFILE
+			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(profil_->getModele()); //ICI QUON VA CHANGER LE MODELE SELON LE CHOIX DANS LE PROFILE
 
 			table_->ajouter(robot);
 
@@ -57,7 +58,7 @@ ControleRobot::ControleRobot()
 		for (int j = 0; j < 2; j++)
 			flagCapteur[i][j] = false;
 
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	
     controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 

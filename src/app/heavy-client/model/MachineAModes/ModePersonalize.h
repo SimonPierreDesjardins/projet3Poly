@@ -65,6 +65,8 @@ public:
 
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
+	void creerControleRobot();
 	
 };
 

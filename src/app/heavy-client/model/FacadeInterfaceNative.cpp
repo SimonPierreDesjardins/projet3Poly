@@ -818,23 +818,60 @@ extern "C"
 			return 0;
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl getUsingDefaultMaterialForPiece(int piece)
+	///
+	///	Fonction retourne si le profil utilise la couleur par defaut ou non
+	///
+	/// @return bool
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) bool __cdecl getUsingDefaultMaterialForPiece(int piece)
 	{
 		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurParDefaut(piece);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value)
+	///
+	///	Fonction qui attribue la couleur par defaut
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value)
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(piece, value);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(piece,value);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
+	///
+	///	Fonction qui attribue la couleur sur la piece en question
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
 	{	
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCouleur(piece, a, r, g, b);
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->assignerCouleurs(piece,a,r,g,b);
 	}
 
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) int* __cdecl getPieceColor(int piece)
+	///
+	///	Fonction qui retourne la couleur de la piece en question
+	///
+	/// @return tableau contenant les couleurs
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece)
 	{
 		float* couleurPieceFloat = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurs(piece);
@@ -847,6 +884,26 @@ extern "C"
 
 		//delete couleurPieceFloat;
 		return couleurPieceInt;
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setModele(int modele)
+	///
+	///	Fonction qui attribue le modele choisi
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setModele(char *modele)
+	{
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele()));
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setModele(std::string(modele));
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(BODY, true);
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(WHEELS, true);
+		FacadeModele::obtenirInstance()->obtenirMode()->creerControleRobot();
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(BODY, true);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(WHEELS, true);
 	}
 
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)

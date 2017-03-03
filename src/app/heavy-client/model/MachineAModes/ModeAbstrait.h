@@ -65,7 +65,9 @@ public:
 	/// @return Aucune
 	///
 	////////////////////////////////////////////////////////////////////////
+	
 	virtual void postChangementDeProfil(){};
+	virtual void creerControleRobot() {};
 
 	virtual void gererTouchePlus();
 	virtual void gererToucheMoins();
@@ -79,6 +81,8 @@ public:
 	virtual void gererClicDroitRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
+
+	
 
 protected:
 	int typeMode_;
