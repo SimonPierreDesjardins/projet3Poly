@@ -77,13 +77,16 @@ include_directories(
     util/Modele
     util/OpenGL
     util/Vue
-    ui/Enum)
+    ui/enum)
 
 # Ajout de la librairie utilitaire
 add_subdirectory(util)
 
 # Ajout de la librairie model
 add_subdirectory(model)
+
+# Librairie compilee avec /clr pour interfacer avec le C#
+add_subdirectory(ui-model-interface)
 
 # Ajout du projet C# pour l'interface graphique
 include_external_msproject(ui 
