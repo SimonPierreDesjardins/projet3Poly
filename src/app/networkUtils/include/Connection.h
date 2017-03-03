@@ -33,7 +33,7 @@ namespace Networking
 		void Start();
 
 		// Constructor taking a functionnal socket
-		Connection(asio::ip::tcp::socket* socket);
+		Connection(asio::ip::tcp::socket* socket) { _socket = socket; _sendQueue = std::queue<std::string>(); }
 
 		// Destructor that also cleans and closes the connection if necessary
 		~Connection();

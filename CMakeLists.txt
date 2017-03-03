@@ -22,4 +22,6 @@ add_subdirectory(src/app/heavy-client)
 
 # Adds server and networking as a visual studio projects
 add_subdirectory(src/app/networkUtils)
+
 add_subdirectory(src/app/server)
+

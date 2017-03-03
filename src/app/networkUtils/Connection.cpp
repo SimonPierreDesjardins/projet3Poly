@@ -4,10 +4,12 @@
 using asio::ip::tcp;
 using namespace Networking;
 
+/*
 Connection::Connection(asio::ip::tcp::socket* socket) {
 	_socket = socket;
 	_sendQueue = std::queue<std::string>();
 }
+*/
 
 Connection::~Connection()
 {
@@ -23,7 +25,6 @@ void Connection::Start() {
 
 void Connection::ReadData()
 {
-	_connectionLock.lock();
 	_socket -> async_receive(asio::buffer(_buffer),
 	[this](std::error_code ec, std::size_t length)
 	{
@@ -35,6 +36,7 @@ void Connection::ReadData()
 		{
 			auto data = std::string(_buffer, length);
 			OnReceivedData(data);
+			_connectionLock.unlock();
 			ReadData();
 		}
 		else 
@@ -42,10 +44,9 @@ void Connection::ReadData()
 			Logger::LogError(ec);
 			// End of connection
 			CheckIfDisconnect(ec);
+			_connectionLock.unlock();
 		}
-		_connectionLock.unlock();
 	});
-	_connectionLock.unlock();
 }
 
 void Connection::SendData(std::string data) {
@@ -77,7 +78,7 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 		//_socket -> close();
 		Logger::Log("Connection lost", Logger::DebugLevel::CONNECTION_EVENTS);
 
-		OnConnectionLost();
+		__raise OnConnectionLost();
 		break;
 	}
 }
@@ -102,9 +103,11 @@ void Connection::WriteData()
 			if (_sendQueue.size() >= 1) {
 				WriteData();
 			}
+
 			else {
 				ReadData(); // get back to reading
 			}
+
 		}
 		else {
 			Logger::LogError(ec);

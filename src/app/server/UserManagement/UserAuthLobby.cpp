@@ -1,6 +1,10 @@
-#include "UserAuthLobby.h"
+#include <iostream>
 
-server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener)
+#include "UserAuthLobby.h"
+#include "../Database/IdGenerator.h"
+
+
+server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, MultiUserSystem& mus):_userReceiver(mus)
 {
 	HookToListenerEvents(listener);
 }
@@ -25,33 +29,77 @@ void server::UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener 
 
 void server::UserAuthLobby::TreatConnection(Networking::Connection * connection)
 {
-	// create a user, hook to its events and add this connection to it
+	//Normally, listen to this connection and wait for it to identify itself
 
-	User* user = new User();
-	HookToUser(user);
-	user->AssignConnection(connection);
+	// For first release, just confirm connection and forward to the map system
+
+	UserInformation* information = new UserInformation();
+	information->UserName = IdGenerator::GenerateId();
+
+	User* connectedUser = new User(*information);
+
+	_userReceiver.AddUser(connectedUser);
+
+	//User* user = new User();
+	//HookToWrapper(new ConnectionWrapper(connection));
+	//user->AssignConnection(connection);
 }
 
-void server::UserAuthLobby::HookToUser(User * user)
+void server::UserAuthLobby::HookToWrapper(ConnectionWrapper * wrapper)
 {
-	__hook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect);
-	__hook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage);
+	__hook(&ConnectionWrapper::OnDisconnect, wrapper, &UserAuthLobby::OnUserDisconnect, this);
+	__hook(&ConnectionWrapper::OnMessageSent, wrapper, &UserAuthLobby::OnReceivedMessage, this);
 }
 
-void server::UserAuthLobby::UnhookFromUser(User * user)
+void server::UserAuthLobby::UnhookFromWrapper(ConnectionWrapper * wrapper)
 {
-	__unhook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect);
-	__unhook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage);
+	__unhook(&ConnectionWrapper::OnDisconnect, wrapper, &UserAuthLobby::OnUserDisconnect, this);
+	__unhook(&ConnectionWrapper::OnMessageSent, wrapper, &UserAuthLobby::OnReceivedMessage, this);
 }
 
-void server::UserAuthLobby::OnReceivedMessage(User * user, std::string& message)
+void server::UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, std::string& message)
 {
-	//Attempt to authenticate user with message
+	// Attempt to authenticate user with message
+
+	// Auto authenticate for now
 }
 
-void server::UserAuthLobby::OnUserDisconnect(User * user)
+void server::UserAuthLobby::OnUserDisconnect(ConnectionWrapper * wrapper)
 {
 	// unhook from events and dispose of user
-	UnhookFromUser(user);
+	//UnhookFromWrapper(wrapper);
 	//delete user;
+}
+
+server::ConnectionWrapper::ConnectionWrapper(Networking::Connection * connection)
+{
+	_connection = connection;
+	ListenToConnection(connection);
+}
+
+Networking::Connection * server::ConnectionWrapper::GetConnection()
+{
+	return _connection;
+}
+
+void server::ConnectionWrapper::ListenToConnection(Networking::Connection * connection)
+{
+	__hook(&Networking::Connection::OnReceivedData, connection, &ConnectionWrapper::OnData);
+	__hook(&Networking::Connection::OnConnectionLost, connection, &ConnectionWrapper::OnDisco);
+}
+
+void server::ConnectionWrapper::StopListeningToConnection(Networking::Connection * connection)
+{
+	__unhook(&Networking::Connection::OnReceivedData, connection, &ConnectionWrapper::OnData);
+	__unhook(&Networking::Connection::OnConnectionLost, connection, &ConnectionWrapper::OnDisco);
+}
+
+void server::ConnectionWrapper::OnData(std::string & message)
+{
+	__raise OnMessageSent(this, message);
+}
+
+void server::ConnectionWrapper::OnDisco()
+{
+	__raise OnDisconnect(this);
 }

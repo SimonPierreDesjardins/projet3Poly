@@ -86,9 +86,6 @@ namespace ui
             mainMenu.Dock = DockStyle.Left;
 
             userChat = new UserTabChat(this);
-            viewPort.Controls.Add(userChat);
-            userChat.Location = new Point(viewPort.Width - userChat.Width, viewPort.Height - userChat.Height);
-            userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
 
             Program.peutAfficher = false;
 
@@ -110,6 +107,21 @@ namespace ui
             FonctionsNatives.initialiserOpenGL(viewPort.Handle);
             FonctionsNatives.dessinerOpenGL();
         }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void initializeServerConnection(String hostName, String port)
+        ///
+        /// Cette fonction lance la connection au serveur 
+        ///
+        /// @param String hostname: Le hostName ou l'adresse ip du serveur
+        /// @param String port: Le port du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void initializeServerConnection(String hostName, String port)
+        {
+        }
+
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -814,5 +826,20 @@ namespace ui
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirTypeVue();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool connectToServer(String hostName, String port);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void createProfile(String profileName);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void authenticate(String profileName);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void disconnectFromServer();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool isConnected();
     }
 }
