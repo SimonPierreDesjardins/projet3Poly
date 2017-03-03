@@ -213,9 +213,9 @@ void ModePersonalize::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ModePersonalize::creerControleRobot(std::string modele)
+/// @fn void ModePersonalize::creerControleRobot()
 ///
-/// Fonction qui permet d'alterner l'état de la lumière spot
+/// Fonction qui permet de créer un controle robot
 ///
 /// @return Aucune
 ///

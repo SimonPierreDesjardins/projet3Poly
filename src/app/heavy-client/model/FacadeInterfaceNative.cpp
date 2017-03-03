@@ -908,7 +908,7 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) char* __cdecl getModele()
+	/// @fn __declspec(dllexport) void __cdecl getModele(char* chemin, int longueur)
 	///
 	///	Fonction qui get le modele
 	///
