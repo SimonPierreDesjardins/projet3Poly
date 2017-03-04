@@ -897,13 +897,17 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl setModele(char *modele)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele()));
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setModele(std::string(modele));
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(BODY, true);
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(WHEELS, true);
-		FacadeModele::obtenirInstance()->obtenirMode()->creerControleRobot();
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(BODY, true);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(WHEELS, true);
+		if (FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele() != modele)
+		{
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele()));
+			FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setModele(std::string(modele));
+			FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(BODY, true);
+			FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(WHEELS, true);
+			FacadeModele::obtenirInstance()->obtenirMode()->creerControleRobot();
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(BODY, true);
+			FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(WHEELS, true);
+		}
+		
 	}
 
 	////////////////////////////////////////////////////////////////////////
