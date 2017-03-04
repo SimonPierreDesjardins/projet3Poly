@@ -194,6 +194,12 @@
     <Compile Include="Chat\UserTabChat.Designer.cs">
       <DependentUpon>UserTabChat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Simulation\TutorialSimulation.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Simulation\TutorialSimulation.Designer.cs">
+      <DependentUpon>TutorialSimulation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -253,6 +259,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Simulation\SimulationMenuStrip.resx">
       <DependentUpon>SimulationMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Simulation\TutorialSimulation.resx">
+      <DependentUpon>TutorialSimulation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Test\TestMenuStrip.resx">
       <DependentUpon>TestMenuStrip.cs</DependentUpon>

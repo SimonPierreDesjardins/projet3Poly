@@ -8,7 +8,6 @@ using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
-using System.Drawing;
 
 namespace ui
 {
@@ -39,16 +38,13 @@ namespace ui
         private const int WM_MOUSEMOVE = 0x0200;
         private const int WM_MOUSEWHEEL = 0x020A;
 
-        bool arreterToutMessage_;
-
-        public void arreterToutMessage()
-        { arreterToutMessage_ = true; }
+        bool allowCommunication_;
 
         public bool estEnPause = false;
 
         public bool PreFilterMessage(ref Message m)
         {
-            if (!arreterToutMessage_)
+            if (allowCommunication_)
             {
                 // On veut seulement traiter les inputs sur le view_port.
                 if (m.HWnd == viewPort.Handle ||
@@ -77,7 +73,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public Window()
         {
-            arreterToutMessage_ = false;
+            allowCommunication_ = true;
             InitializeComponent();
 
             //Init all menus
@@ -158,7 +154,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
-            arreterToutMessage();
+            allowCommunication_ = false;
 
             lock (Program.unLock)
             {
