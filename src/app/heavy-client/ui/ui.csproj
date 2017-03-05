@@ -301,9 +301,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\pauseNoire.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.1 %28x86 et x64%29</ProductName>
@@ -321,34 +318,51 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\add.png" />
+    <Content Include="Resources\AddUser.png" />
+    <Content Include="Resources\AuthenticateUser.png" />
     <Content Include="Resources\back-arrow.png" />
     <Content Include="Resources\Bridge.png" />
+    <Content Include="Resources\cancel.png" />
     <Content Include="Resources\car-change.png" />
     <Content Include="Resources\car.png" />
-    <None Include="Resources\chat.bmp" />
-    <None Include="Resources\Chat.png" />
-    <None Include="Resources\Channels.png" />
-    <Content Include="Resources\Create.png" />
+    <Content Include="Resources\CarBodyAudi.png" />
+    <Content Include="Resources\CarBodyF1.png" />
+    <Content Include="Resources\CarBodyRobot.png" />
+    <Content Include="Resources\CarBodyTruck.png" />
+    <Content Include="Resources\Channels.png" />
+    <Content Include="Resources\Chat.png" />
+    <Content Include="Resources\colorCanvas.png" />
+    <Content Include="Resources\column.png" />
+    <Content Include="Resources\confirm.png" />
+    <Content Include="Resources\connectServer.png" />
     <Content Include="Resources\delete.png" />
+    <Content Include="Resources\DisconnectServer.png" />
     <Content Include="Resources\Duplicate.png" />
+    <Content Include="Resources\formula-1-car-facing-right.png" />
     <Content Include="Resources\Green_Line.png" />
+    <Content Include="Resources\LeftArrow.png" />
     <Content Include="Resources\Ligne.png" />
-    <None Include="Resources\Maximize.png" />
-    <Content Include="Resources\menu.png" />
-    <None Include="Resources\Minimize.png" />
+    <Content Include="Resources\Maximize.png" />
     <Content Include="Resources\move.png" />
     <Content Include="Resources\music.png" />
+    <Content Include="Resources\NewWindow.png" />
+    <Content Include="Resources\pauseNoire.png" />
     <Content Include="Resources\Red_Line.png" />
+    <Content Include="Resources\RightArrow.png" />
     <Content Include="Resources\Rotate.png" />
     <Content Include="Resources\save.png" />
     <Content Include="Resources\Scale.png" />
     <Content Include="Resources\Selection.png" />
+    <Content Include="Resources\SendIcon.png" />
     <Content Include="Resources\table.png" />
     <Content Include="Resources\Teleporteur.png" />
-    <None Include="Resources\User.png" />
+    <Content Include="Resources\User.png" />
     <Content Include="Resources\wall.png" />
     <Content Include="Resources\wheel.png" />
+    <Content Include="Resources\wifi.png" />
     <Content Include="Resources\Zoom.png" />
+    <Content Include="Resources\Zoom_Disabled.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -14,7 +14,7 @@ namespace ui
     public partial class SimulationMenuStrip : UserControl
     {
         Window parent_;
-        TutorialSimulation simulationTutorial;
+        public TutorialSimulation simulationTutorial;
 
         ////////////////////////////////////////////////////////////////////////
         ///

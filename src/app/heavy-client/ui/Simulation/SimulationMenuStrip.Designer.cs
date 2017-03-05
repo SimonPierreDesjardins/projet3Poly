@@ -146,6 +146,6 @@
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem premierePersonneToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem profilsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem tutorielToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem tutorielToolStripMenuItem;
     }
 }

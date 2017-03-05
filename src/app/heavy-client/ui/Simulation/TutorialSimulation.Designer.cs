@@ -32,27 +32,32 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.instructionBox = new System.Windows.Forms.ListBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.previousButton = new ui.PanelButton();
             this.customLabel2 = new ui.CustomLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.nextButton = new ui.PanelButton();
             this.nextLabel = new ui.CustomLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.nextPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.previousButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.nextButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nextPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
             // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.panel1.Controls.Add(this.previousButton);
             this.panel1.Controls.Add(this.nextButton);
             this.panel1.Controls.Add(this.instructionBox);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 300);
             this.panel1.TabIndex = 0;
@@ -60,13 +65,14 @@
             // instructionBox
             // 
             this.instructionBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.instructionBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instructionBox.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.instructionBox.ForeColor = System.Drawing.Color.Silver;
             this.instructionBox.FormattingEnabled = true;
-            this.instructionBox.ItemHeight = 21;
+            this.instructionBox.ItemHeight = 17;
             this.instructionBox.Location = new System.Drawing.Point(9, 35);
             this.instructionBox.Name = "instructionBox";
-            this.instructionBox.Size = new System.Drawing.Size(389, 214);
+            this.instructionBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.instructionBox.Size = new System.Drawing.Size(389, 208);
             this.instructionBox.TabIndex = 1;
             // 
             // label1
@@ -79,6 +85,16 @@
             this.label1.Size = new System.Drawing.Size(188, 21);
             this.label1.TabIndex = 0;
             this.label1.Text = "Tutoriel Pour Simulation";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
+            this.panel2.Controls.Add(this.panel1);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(417, 306);
+            this.panel2.TabIndex = 1;
             // 
             // previousButton
             // 
@@ -115,7 +131,7 @@
             // nextButton
             // 
             this.nextButton.Controls.Add(this.nextLabel);
-            this.nextButton.Controls.Add(this.pictureBox1);
+            this.nextButton.Controls.Add(this.nextPictureBox);
             this.nextButton.Location = new System.Drawing.Point(285, 262);
             this.nextButton.Name = "nextButton";
             this.nextButton.Size = new System.Drawing.Size(119, 35);
@@ -133,32 +149,34 @@
             this.nextLabel.TabIndex = 1;
             this.nextLabel.Text = "Suivant";
             // 
-            // pictureBox1
+            // nextPictureBox
             // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(85, 5);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.nextPictureBox.Enabled = false;
+            this.nextPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("nextPictureBox.Image")));
+            this.nextPictureBox.Location = new System.Drawing.Point(85, 5);
+            this.nextPictureBox.Name = "nextPictureBox";
+            this.nextPictureBox.Size = new System.Drawing.Size(24, 24);
+            this.nextPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.nextPictureBox.TabIndex = 0;
+            this.nextPictureBox.TabStop = false;
             // 
             // TutorialSimulation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.Name = "TutorialSimulation";
-            this.Size = new System.Drawing.Size(411, 300);
+            this.Size = new System.Drawing.Size(417, 306);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
             this.previousButton.ResumeLayout(false);
             this.previousButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
             this.nextButton.ResumeLayout(false);
             this.nextButton.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nextPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -173,6 +191,7 @@
         private System.Windows.Forms.PictureBox pictureBox2;
         private PanelButton nextButton;
         private CustomLabel nextLabel;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox nextPictureBox;
+        private System.Windows.Forms.Panel panel2;
     }
 }

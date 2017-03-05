@@ -437,6 +437,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(IntPtr keyDown)
         {
+            if (viewPort.Controls.Contains(simulationMenuStrip.simulationTutorial))
+                return;
+
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
