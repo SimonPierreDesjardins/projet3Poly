@@ -306,6 +306,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_LBUTTONDBLCLK:
 		case WM_LBUTTONDOWN:
 			etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+
 			break;
 
 		case WM_LBUTTONUP:
@@ -319,6 +320,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case WM_RBUTTONUP:
 			etat_->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			TestCallback();
 			break;
 
 		case WM_MOUSEMOVE:
@@ -331,6 +333,8 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 	}
+
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

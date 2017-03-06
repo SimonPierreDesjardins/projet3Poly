@@ -1,11 +1,13 @@
 ﻿////////////////////////////////////////////////
 ////////////////////////////////////////////////
 using ModeEnum;
+using System;
 /// @file   EditionTutorielInstructions.cs
 /// @author Frédéric Grégoire
 /// @date   2017-03-04
 ///
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ui
@@ -15,7 +17,7 @@ namespace ui
         //Définition des states
         const int INTRODUCTION = 0;
         const int CREATE_POST = 1;
-        const int WAIT_FOR_CREATION_POST = 2;
+        const int SCALE_TOOL = 2;
         const int CONCLUSION = 3;
 
         int state_;
@@ -47,6 +49,9 @@ namespace ui
             instructionBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             instructionBox.MeasureItem += instructionBox_MeasureItem;
             instructionBox.DrawItem += instructionBox_DrawItem;
+
+            mInstance = new Callback(Handler);
+            SetCallback(mInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -103,8 +108,8 @@ namespace ui
                     explainCreatePostState();
                     break;
 
-                case WAIT_FOR_CREATION_POST:
-                    createPostWait();
+                case SCALE_TOOL:
+                    scaleToolState();
                     break;
 
                 case CONCLUSION:
@@ -149,9 +154,15 @@ namespace ui
             instructionBox.Items.Add(instruction);
         }
 
-        private void createPostWait()
+        private void waitingProcess()
+        {
+        }
+
+        private void scaleToolState()
         {
             instructionBox.Items.Clear();
+            string instruction = "We fking did it!";
+            instructionBox.Items.Add(instruction);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -307,7 +318,25 @@ namespace ui
             return state_;
         }
 
+        private delegate int Callback(string text);
+        private Callback mInstance;   // Ensure it doesn't get garbage collected
 
+        public void Test()
+        {
+            TestCallback();
+        }
 
+        private int Handler(string text)
+        {
+            // Do something...
+            Console.WriteLine(text);
+            return 42;
+        }
+
+        [DllImport("model.dll")]
+        private static extern void SetCallback(Callback fn);
+
+        [DllImport("model.dll")]
+        private static extern void TestCallback();
     }
 }

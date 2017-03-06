@@ -15,6 +15,7 @@
 #include <memory>
 #include "glm\glm.hpp"
 #include "EtatAbstrait.h"
+#include "FacadeInterfaceNative.h"
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeTutorialEdition
@@ -30,7 +31,6 @@ public:
 	ModeTutorialEdition();
 	//Destructeur
 	virtual ~ModeTutorialEdition();
-
 	
 	//Gestion des différentes touches et de leur effet selon le mode choisi
 	virtual void gererToucheT();

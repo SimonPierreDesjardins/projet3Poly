@@ -948,6 +948,19 @@ extern "C"
 	{
 		return FacadeModele::obtenirInstance()->getNetworkManager()->isConnected();
 	}
+
+	Callback Handler = 0;
+
+	__declspec(dllexport) void __cdecl SetCallback(Callback handler)
+	{
+		Handler = handler;
+	}
+
+	__declspec(dllexport) void __cdecl TestCallback()
+	{
+		int retval = Handler("hello world");
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

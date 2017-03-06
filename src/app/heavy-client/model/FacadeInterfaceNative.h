@@ -109,6 +109,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
 
+	typedef int(__stdcall * Callback)(const char* text);
+
+	__declspec(dllexport) void __cdecl SetCallback(Callback handler); 
+	__declspec(dllexport) void __cdecl TestCallback();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
