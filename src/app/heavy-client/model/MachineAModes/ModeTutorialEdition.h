@@ -19,9 +19,9 @@
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeTutorialEdition
-/// @brief Classe qui représente le mode edition de notre machine à modes
+/// @brief Classe qui représente le mode edition tutoriel de notre machine à modes
 ///
-///        Cette classe s'occupe d'implémenter les fonctions du mode edition
+///    Cette classe s'occupe d'implémenter les fonctions du mode edition tutoriel
 ///////////////////////////////////////////////////////////////////////////
 class ModeTutorialEdition : public ModeAbstrait
 {
@@ -46,10 +46,10 @@ public:
 	void setCurrentTutorialState(int newCurrentTutorialState);
 
 protected:
-
 	//Visiteur pour la suppression d'un noeud
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
 
+	//État du tutoriel d'Édition
 	int currentTutorialState_ = 0;
 
 	//Ancienne position en X et Y de la souris

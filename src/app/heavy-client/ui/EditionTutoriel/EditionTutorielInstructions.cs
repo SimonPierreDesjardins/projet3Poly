@@ -190,9 +190,6 @@ namespace ui
 
         private void creatingAPostObjectState()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             instructionBox.Items.Clear();
             string instruction = "Maintenant que vous avez l'outil pour la création de poteau, vous devez en ajouter un à la carte. \n\n" +
                                  "Pour ce faire, il suffit d'appuyer le button gauche de la souris sur un endroit disponible de la table et " +
@@ -202,24 +199,22 @@ namespace ui
 
         private void selectSelectToolState()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.selectToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.selectPictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.selectPictureBox.Image, Color.White);
 
             instructionBox.Items.Clear();
-            string instruction = "Choisi le select Tool";
+            string instruction = "Maintenant que vous avez créé un poteau, il serait bien d'y apporter des changements. \n\n" +
+                                 "Pour ce faire, vous devez sélectionner l'outil de sélection. \n" +
+                                 "Comme les autres outils, il est disponible dans le menu situé à votre gauche. \n" +
+                                 "Vous pouvez également utiliser la touche rapide 'S' afin de sélectionner l'outil de sélection et " +
+                                 "ce dernier sera activé";
             instructionBox.Items.Add(instruction);
         }
 
         private void selectingPostObject()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             instructionBox.Items.Clear();
             string instruction = "Applique le select Tool";
             instructionBox.Items.Add(instruction);
@@ -227,24 +222,22 @@ namespace ui
 
         private void selectScaleToolState()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.ScaleToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.scalePictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.scalePictureBox.Image, Color.White);
 
             instructionBox.Items.Clear();
-            string instruction = "Choisi le scale";
+            string instruction = "Maintenant que le poteau est sélectionner on peut y apporter des changements. \n\n" +
+                                 "On débutera pour une l'outil de redimensionnement. \n" +
+                                 "Comme les autres outils, il est disponible dans le menu situé à votre gauche. \n" +
+                                 "Vous pouvez également utiliser la touche rapide 'E' afin de sélectionner l'outil de redimensionnement et " +
+                                 "ce dernier sera activé";
             instructionBox.Items.Add(instruction);
         }
 
         private void applyingScaleToolState()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             instructionBox.Items.Clear();
             string instruction = "Applique le scale";
             instructionBox.Items.Add(instruction);
@@ -252,24 +245,21 @@ namespace ui
 
         private void selectMoveToolState()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.MoveToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.movePictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.movePictureBox.Image, Color.White);
 
             instructionBox.Items.Clear();
-            string instruction = "Choisi le move";
+            string instruction = "On peut également déplacer le poteau à l'aide de l'outil de déplacement. \n\n" +
+                                 "Comme les autres outils, il est disponible dans le menu situé à votre gauche. \n" +
+                                 "Vous pouvez également utiliser la touche rapide 'D' afin de sélectionner l'outil de déplacement et " +
+                                 "ce dernier sera activé";
             instructionBox.Items.Add(instruction);
         }
 
         private void applyingMoveToolState()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             instructionBox.Items.Clear();
             string instruction = "Applique le move";
             instructionBox.Items.Add(instruction);
@@ -277,23 +267,24 @@ namespace ui
 
         private void selectDuplicateToolState()
         {
-            nextButton.Visible = false;
-            previousButton.Visible = true;
-
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.DuplicateToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.duplicatePictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.duplicatePictureBox.Image, Color.White);
 
             instructionBox.Items.Clear();
-            string instruction = "Choisi le duplicate";
+            string instruction = "Afin d'ajouter des objets à notre table, on peut dupliquer un ou plusieurs objets avec l'outil de duplication. \n\n" +
+                                 "Comme les autres outils, il est disponible dans le menu situé à votre gauche. \n" +
+                                 "Vous pouvez également utiliser la touche rapide 'C' afin de sélectionner l'outil de déplacement et " +
+                                 "ce dernier sera activé";
             instructionBox.Items.Add(instruction);
         }
 
         private void applyingDuplicateToolState()
         {
+            nextLabel.Text = "Suivant";
+            nextPictureBox.Image = ui.Properties.Resources.RightArrow;
             nextButton.Visible = false;
-            previousButton.Visible = true;
 
             instructionBox.Items.Clear();
             string instruction = "Applique le duplicate";
@@ -309,8 +300,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void conclusionState()
         {
-            nextLabel.Text = "Suivant";
-            nextPictureBox.Image = ui.Properties.Resources.RightArrow;
+            nextLabel.Text = "Terminé";
+            nextPictureBox.Image = ui.Properties.Resources.confirm;
             nextButton.Visible = true;
 
             instructionBox.Items.Clear();
@@ -433,6 +424,11 @@ namespace ui
 
             this.Location = new Point(X, Y);
             FonctionsNatives.dessinerOpenGL();
+        }
+
+        public int GetState()
+        {
+            return state_;
         }
 
         public void WaitingForModelCallBack()

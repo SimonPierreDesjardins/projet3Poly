@@ -528,8 +528,29 @@ namespace ui
         {
             switch ((int)keyDown)
             {
+                case Constants.Key_C:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL)
+                        editionTutorielSideMenu.duplicateTool();
+                    break;
+
+                case Constants.Key_D:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_MOVE_TOOL)
+                        editionTutorielSideMenu.moveTool();
+                    break;
+
+                case Constants.Key_E:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_SCALE_TOOL)
+                        editionTutorielSideMenu.scaleTool();
+                    break;
+
                 case Constants.Key_P:
-                    editionTutorielSideMenu.postObject();
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)
+                        editionTutorielSideMenu.postObject();
+                    break;
+
+                case Constants.Key_S:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TOOL)
+                        editionTutorielSideMenu.selectTool();
                     break;
 
                 default:
