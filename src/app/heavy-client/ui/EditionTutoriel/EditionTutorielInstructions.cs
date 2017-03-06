@@ -124,15 +124,19 @@ namespace ui
                     break;
 
                 case (int)EditionTutorial.State.SELECT_MOVE_TOOL:
+                    selectMoveToolState();
                     break;
 
                 case (int)EditionTutorial.State.APPLYING_MOVE:
+                    applyingMoveToolState();
                     break;
 
                 case (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL:
+                    selectDuplicateToolState();
                     break;
 
                 case (int)EditionTutorial.State.APPLYING_DUPLICATE:
+                    applyingDuplicateToolState();
                     break;
 
                 case (int)EditionTutorial.State.CONCLUSION:
@@ -246,6 +250,56 @@ namespace ui
             instructionBox.Items.Add(instruction);
         }
 
+        private void selectMoveToolState()
+        {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.disableAllControls();
+            parent_.editionTutorielSideMenu.MoveToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.movePictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.movePictureBox.Image, Color.White);
+
+            instructionBox.Items.Clear();
+            string instruction = "Choisi le move";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void applyingMoveToolState()
+        {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            instructionBox.Items.Clear();
+            string instruction = "Applique le move";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void selectDuplicateToolState()
+        {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.disableAllControls();
+            parent_.editionTutorielSideMenu.DuplicateToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.duplicatePictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.duplicatePictureBox.Image, Color.White);
+
+            instructionBox.Items.Clear();
+            string instruction = "Choisi le duplicate";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void applyingDuplicateToolState()
+        {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            instructionBox.Items.Clear();
+            string instruction = "Applique le duplicate";
+            instructionBox.Items.Add(instruction);
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public conclusionState()
@@ -318,9 +372,9 @@ namespace ui
         public void previousState()
         {
             state_--;
-            FonctionsNatives.UpdateEditionTutorialState(state_);
-
             switchInstruction();
+
+            FonctionsNatives.UpdateEditionTutorialState(state_);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -342,19 +396,9 @@ namespace ui
         public void nextState()
         {
             state_++;
-            FonctionsNatives.UpdateEditionTutorialState(state_);
-
-            if (state_ == 1)
-                previousButton.Visible = true;
-            else if (state_ == 6)
-            {
-                nextLabel.Text = "Terminer";
-                nextPictureBox.Image = ui.Properties.Resources.confirm;
-            }
-            else if (state_ == 7)
-                finishTutorial();
-
             switchInstruction();
+
+            FonctionsNatives.UpdateEditionTutorialState(state_);
         }
 
         private void tutorialPanel_MouseDown(object sender, MouseEventArgs e)
@@ -405,6 +449,7 @@ namespace ui
             Console.WriteLine("wooohoooo");
             state_++;
             switchInstruction();
+            FonctionsNatives.UpdateEditionTutorialState(state_);
         }
 
         [DllImport("model.dll")]

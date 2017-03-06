@@ -16,6 +16,7 @@
 #include "VisiteurSauvegarde.h"
 #include "EtatTypes.h"
 #include "NoeudRobot.h"
+#include "EditionTutorialState.cs"
 
 const int VK_KEY_W = 'W';
 const int VK_KEY_A = 'A';
@@ -60,10 +61,11 @@ enum Etat
 ModeTutorialEdition::ModeTutorialEdition()
 {
 	typeMode_ = TUTORIAL_EDITION;
-	etat_ = std::make_unique <EtatSelection>();
+	//etat_ = std::make_unique <EtatSelection>();
+	etat_ = NULL;
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
+	//FacadeModele::obtenirInstance()->assignerEnvironnement(2);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -86,15 +88,9 @@ ModeTutorialEdition::~ModeTutorialEdition()
 ///
 /// @fn void ModeTutorialEdition::gererToucheT()
 ///
-/// Cette fonction permet de gérer la touche T dans le ModeTutorialEdition.
-///
-/// Elle assigne le mode TEST à l'instance obtenue.
-///
 ////////////////////////////////////////////////////////////////////////
 void ModeTutorialEdition::gererToucheT()
-{
-	//FacadeModele::obtenirInstance()->assignerMode(TEST);
-}
+{}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -155,7 +151,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_ESCAPE:
-				etat_->gererToucheEchappe();
+				//etat_->gererToucheEchappe();
 				break;
 
 			case VK_OEM_PLUS:
@@ -167,67 +163,82 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_D:
-				etat_ = std::make_unique<EtatDeplacement>();
+				if (getCurrentTutorialState() == (int)SELECT_MOVE_TOOL)
+				{
+					etat_ = std::make_unique<EtatDeplacement>();
+					ChangeEditionTutorialState();
+				}
 				break;
 
 			case VK_KEY_S:
 				// Verification de controle pour ne pas changer d'outils lors du ctrl+s
-				if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
-					etat_ = std::make_unique<EtatSelection>();
+				if (getCurrentTutorialState() == (int)SELECT_TOOL)
+				{
+					if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
+						etat_ = std::make_unique<EtatSelection>();
+						ChangeEditionTutorialState();
+					}
 				}
 				break;
 
 			case VK_KEY_R:
-				etat_ = std::make_unique<EtatRotation>();
+				//etat_ = std::make_unique<EtatRotation>();
 				break;
 
 			case VK_KEY_E:
-				etat_ = std::make_unique<EtatMiseAEchelle>();
+				if (getCurrentTutorialState() == (int)SELECT_SCALE_TOOL)
+				{
+					etat_ = std::make_unique<EtatMiseAEchelle>();
+					ChangeEditionTutorialState();
+				}
 				break;
 
 			case VK_KEY_C:
-				etat_ = std::make_unique<EtatDuplication>();
+				if (getCurrentTutorialState() == (int)SELECT_DUPLICATE_TOOL)
+				{
+					etat_ = std::make_unique<EtatDuplication>();
+					ChangeEditionTutorialState();
+				}
 				break;
 
 			case VK_KEY_Z:
-				etat_ = std::make_unique<EtatLoupe>();
+				//etat_ = std::make_unique<EtatLoupe>();
 				break;
 
 			case VK_KEY_P:
-				etat_ = std::make_unique<EtatCreationPoteau>();
+				if (getCurrentTutorialState() == (int)SELECT_POST_TOOL)
+				{
+					etat_ = std::make_unique<EtatCreationPoteau>();
+					ChangeEditionTutorialState();
+				}
 				break;
 
 			case VK_KEY_M:
-				etat_ = std::make_unique<EtatCreationMur>();
+				//etat_ = std::make_unique<EtatCreationMur>();
 				break;
 
 			case VK_KEY_L:
-				etat_ = std::make_unique<EtatCreationLigne>();
+				//etat_ = std::make_unique<EtatCreationLigne>();
 				break;
 
 			case VK_KEY_T:
-				gererToucheT();
+				//gererToucheT();
 				break;
 
 			case VK_DELETE:
-				gererToucheSupprimer();
+				//gererToucheSupprimer();
 				break;
 
 			case VK_MENU:
-				// Poursuivre.
 			case VK_LMENU:
-				// Poursuivre.
 			case VK_RMENU:
-				etat_->gererToucheAltEnfoncee();
+				//etat_->gererToucheAltEnfoncee();
 				break;
 
 			case VK_CONTROL:
-				// Poursuivre.
 			case VK_LCONTROL:
-				// Poursuivre.
 			case VK_RCONTROL:
-				// Poursuivre.
-				etat_->gererToucheControlEnfoncee();
+				//etat_->gererToucheControlEnfoncee();
 				break;
 
 			default:
@@ -238,19 +249,15 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		if (msg == WM_KEYUP) {
 			switch (wParam) {
 			case VK_MENU:
-				// Poursuivre.
 			case VK_LMENU:
-				// Poursuivre.
 			case VK_RMENU:
-				etat_->gererToucheAltRelachee();
+				//etat_->gererToucheAltRelachee();
 				break;
 
 			case VK_CONTROL:
-				// Poursuivre.
 			case VK_RCONTROL:
-				// Poursuivre.
 			case VK_LCONTROL:
-				etat_->gererToucheControlRelachee();
+				//etat_->gererToucheControlRelachee();
 				break;
 
 			default:
@@ -261,19 +268,15 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		if (msg == WM_SYSKEYDOWN) {
 			switch (wParam)	{
 			case VK_MENU:
-				// Poursuivre.
 			case VK_LMENU:
-				// Poursuivre.
 			case VK_RMENU:
-				etat_->gererToucheAltEnfoncee();
+				//etat_->gererToucheAltEnfoncee();
 				break;
 
 			case VK_CONTROL:
-				// Poursuivre.
 			case VK_LCONTROL:
-				// Poursuivre.
 			case VK_RCONTROL:
-				etat_->gererToucheControlEnfoncee();
+				//etat_->gererToucheControlEnfoncee();
 				break;
 			}
 		}
@@ -281,19 +284,15 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		if (msg == WM_SYSKEYUP) {
 			switch (wParam) {
 			case VK_MENU:
-				// Poursuivre.
 			case VK_LMENU:
-				// Poursuivre.
 			case VK_RMENU:
-				etat_->gererToucheAltRelachee();
+				//etat_->gererToucheAltRelachee();
 				break;
 
 			case VK_CONTROL:
-				// Poursuivre.
 			case VK_RCONTROL:
-				// Poursuivre.
 			case VK_LCONTROL:
-				etat_->gererToucheControlRelachee();
+				//etat_->gererToucheControlRelachee();
 				break;
 			}
 		}
@@ -305,31 +304,39 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 		case WM_LBUTTONDBLCLK:
 		case WM_LBUTTONDOWN:
-			etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-
+			if (etat_ != NULL)
+			{
+				etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			}
 			break;
 
 		case WM_LBUTTONUP:
-			etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			if (etat_ != NULL)
+			{
+				etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			}
 			break;
 
 		case WM_RBUTTONDBLCLK:
 		case WM_RBUTTONDOWN:
-			etat_->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			//etat_->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_RBUTTONUP:
-			etat_->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			//etat_->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			ChangeEditionTutorialState();
 			break;
 
 		case WM_MOUSEMOVE:
-			etat_->assignerSymboleCurseur();
-			etat_->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			if (etat_ != NULL)
+			{
+				etat_->assignerSymboleCurseur();
+				etat_->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			}
 			break;
 
 		case WM_MOUSEWHEEL:
-			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			//gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
 			break;
 		}
 	}
