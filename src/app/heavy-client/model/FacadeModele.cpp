@@ -556,11 +556,6 @@ void FacadeModele::assignerMode(Mode mode)
 			mode_ = std::make_unique<ModeTutorialEdition>();
 			break;
 
-		case TUTORIAL_SIMULATION:
-			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeTutorialSimulation>();
-			break;
-
 		default:
 			break;
 	}

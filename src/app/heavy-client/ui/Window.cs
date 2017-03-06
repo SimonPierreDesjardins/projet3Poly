@@ -21,8 +21,13 @@ namespace ui
         public PersonnalisationSideMenu personnalisationSideMenu;
         public SimulationMenuStrip simulationMenuStrip;
         public TestMenuStrip testMenuStrip;
+
         public EditionSideMenu editionSideMenu;
         public EditionMenuStrip editionMenuStrip;
+
+        public EditionTutorielMenuStrip editionTutorielMenuStrip;
+        public EditionTutorielSideMenu editionTutorielSideMenu;
+        public EditionTutorielInstructions editionTutorielInstructions;
 
         public object timerLock_ = new object();
         public bool lockWasTaken = false;
@@ -328,6 +333,11 @@ namespace ui
                 case 5:
                     break;
 
+                //Mode Édition Tutoriel
+                case 6:
+                    gererToucheEditionTutoriel(keyDown);
+                    break;
+
                 default:
                     break;
             }
@@ -501,6 +511,28 @@ namespace ui
                 case Constants.Key_E:
                     if (ModifierKeys.HasFlag(Keys.Control))
                         testMenuStrip.goModeEdition();
+                    break;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void gererToucheEditionTutoriel(IntPtr keyDown)
+        ///
+        /// Gère les touches pour le mode Édition Tutoriel
+        /// 
+        /// @param IntPtr keyDown: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void gererToucheEditionTutoriel(IntPtr keyDown)
+        {
+            switch ((int)keyDown)
+            {
+                case Constants.Key_P:
+                    editionTutorielSideMenu.postObject();
+                    break;
+
+                default:
                     break;
             }
         }

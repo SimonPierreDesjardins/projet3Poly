@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace ui
 {
-    public partial class EditionMenuStrip : UserControl
+    public partial class EditionTutorielMenuStrip : UserControl
     {
         Window parent_;
 
@@ -24,7 +24,7 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public EditionMenuStrip(Window parent)
+        public EditionTutorielMenuStrip(Window parent)
         {
             InitializeComponent();
             parent_ = parent;
@@ -373,36 +373,6 @@ namespace ui
             }
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
-        }
-
-        private void tutorielToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            parent_.editionTutorielMenuStrip = new EditionTutorielMenuStrip(parent_);
-            parent_.editionTutorielSideMenu = new EditionTutorielSideMenu(parent_);
-            parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
-
-            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
-            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
-
-            parent_.viewPort.Controls.Add(parent_.editionTutorielSideMenu);
-            parent_.editionTutorielSideMenu.Dock = DockStyle.Left;
-
-            parent_.viewPort.Controls.Add(parent_.editionTutorielMenuStrip);
-            parent_.editionTutorielMenuStrip.Dock = DockStyle.Top;
-
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(Mode.TUTORIAL_EDITION);
-            parent_.verificationDuNombreElementChoisi();
-
-
-            parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
-            parent_.editionTutorielInstructions.Location = new Point(parent_.viewPort.Width / 2 - parent_.editionTutorielInstructions.Width / 2,
-                                                                    parent_.viewPort.Height / 2 - parent_.editionTutorielInstructions.Height / 2);
-            parent_.editionTutorielInstructions.Anchor = AnchorStyles.None;
-            parent_.viewPort.Controls.Add(parent_.editionTutorielInstructions);
-
-            parent_.editionTutorielInstructions.BringToFront();
         }
     }
 }

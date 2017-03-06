@@ -78,6 +78,24 @@
     <Compile Include="Chat\ChatWindow.Designer.cs">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielMenuStrip.Designer.cs">
+      <DependentUpon>EditionTutorielMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielSideMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielSideMenu.Designer.cs">
+      <DependentUpon>EditionTutorielSideMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielInstructions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielInstructions.Designer.cs">
+      <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
+    </Compile>
     <Compile Include="Personalize\ModeleSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -210,6 +228,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Chat\ChatWindow.resx">
       <DependentUpon>ChatWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\EditionTutorielMenuStrip.resx">
+      <DependentUpon>EditionTutorielMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\EditionTutorielSideMenu.resx">
+      <DependentUpon>EditionTutorielSideMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\EditionTutorielInstructions.resx">
+      <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ColorSelector.resx">
       <DependentUpon>ColorSelector.cs</DependentUpon>

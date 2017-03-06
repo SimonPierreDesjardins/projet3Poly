@@ -139,8 +139,6 @@ set(MACHINE_A_MODES_SRC
     MachineAModes/ModePersonalize.h
     MachineAModes/ModeTutorialEdition.h
     MachineAModes/ModeTutorialEdition.cpp
-    MachineAModes/ModeTutorialSimulation.h
-    MachineAModes/ModeTutorialSimulation.cpp
 )
 
 set(PHYSIQUE_SRC
