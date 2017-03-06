@@ -320,7 +320,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case WM_RBUTTONUP:
 			etat_->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			TestCallback();
+			ChangeEditionTutorialState();
 			break;
 
 		case WM_MOUSEMOVE:
@@ -333,8 +333,34 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 	}
+}
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+///
+///	Fonction qui permet de traiter les entrées utilisateur en mode test.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
+int ModeTutorialEdition::getCurrentTutorialState()
+{
+	return currentTutorialState_;
+}
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+///
+///	Fonction qui permet de traiter les entrées utilisateur en mode test.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTutorialEdition::setCurrentTutorialState(int newCurrentTutorialState)
+{
+	currentTutorialState_ = newCurrentTutorialState;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

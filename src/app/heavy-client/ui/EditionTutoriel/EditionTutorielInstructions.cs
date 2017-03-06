@@ -1,11 +1,11 @@
 ﻿////////////////////////////////////////////////
-////////////////////////////////////////////////
-using ModeEnum;
-using System;
 /// @file   EditionTutorielInstructions.cs
 /// @author Frédéric Grégoire
 /// @date   2017-03-04
 ///
+////////////////////////////////////////////////
+using ModeEnum;
+using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -14,12 +14,6 @@ namespace ui
 {
     public partial class EditionTutorielInstructions : UserControl
     {
-        //Définition des states
-        const int INTRODUCTION = 0;
-        const int CREATE_POST = 1;
-        const int SCALE_TOOL = 2;
-        const int CONCLUSION = 3;
-
         int state_;
         Window parent_;
         bool _capturingMoves;
@@ -44,13 +38,14 @@ namespace ui
 
             state_ = 0;
             switchInstruction();
+            FonctionsNatives.UpdateEditionTutorialState(state_);
             previousButton.Visible = false;
 
             instructionBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             instructionBox.MeasureItem += instructionBox_MeasureItem;
             instructionBox.DrawItem += instructionBox_DrawItem;
 
-            mInstance = new Callback(Handler);
+            mInstance = new Callback(InterfaceFunctionChangeStateTutoriel);
             SetCallback(mInstance);
         }
 
@@ -100,23 +95,52 @@ namespace ui
         {
             switch(state_)
             {
-                case INTRODUCTION:
+                case (int)EditionTutorial.State.INTRODUCTION:
                     introductionState();
                     break;
 
-                case CREATE_POST:
-                    explainCreatePostState();
+                case (int)EditionTutorial.State.SELECT_POST_TOOL:
+                    selectPostCreateToolState();
                     break;
 
-                case SCALE_TOOL:
-                    scaleToolState();
+                case (int)EditionTutorial.State.CREATING_POST:
+                    creatingAPostObjectState();
                     break;
 
-                case CONCLUSION:
+                case (int)EditionTutorial.State.SELECT_TOOL:
+                    selectSelectToolState();
+                    break;
+
+                case (int)EditionTutorial.State.SELECTING_POST:
+                    selectingPostObject();
+                    break;
+
+                case (int)EditionTutorial.State.SELECT_SCALE_TOOL:
+                    selectScaleToolState();
+                    break;
+
+                case (int)EditionTutorial.State.APPLYING_SCALE:
+                    applyingScaleToolState();
+                    break;
+
+                case (int)EditionTutorial.State.SELECT_MOVE_TOOL:
+                    break;
+
+                case (int)EditionTutorial.State.APPLYING_MOVE:
+                    break;
+
+                case (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL:
+                    break;
+
+                case (int)EditionTutorial.State.APPLYING_DUPLICATE:
+                    break;
+
+                case (int)EditionTutorial.State.CONCLUSION:
                     conclusionState();
                     break;
 
                 default:
+                    finishTutorial();
                     break;
             }
         }
@@ -130,6 +154,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void introductionState()
         {
+            nextButton.Visible = true;
+            previousButton.Visible = false;
+
             instructionBox.Items.Clear();
             string instruction = "Bienvenu au tutoriel interactif pour le mode Édition! \n\n" +
                                  "Dans ce tutoriel, les outils disponible vous seront expliqué en détail et " +
@@ -139,8 +166,11 @@ namespace ui
             instructionBox.Items.Add(instruction);
         }
 
-        private void explainCreatePostState()
+        private void selectPostCreateToolState()
         {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
             parent_.editionTutorielSideMenu.createToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.createPictureBox.Image = 
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.createPictureBox.Image, Color.White);
@@ -154,14 +184,65 @@ namespace ui
             instructionBox.Items.Add(instruction);
         }
 
-        private void waitingProcess()
+        private void creatingAPostObjectState()
         {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            instructionBox.Items.Clear();
+            string instruction = "Maintenant que vous avez l'outil pour la création de poteau, vous devez en ajouter un à la carte. \n\n" +
+                                 "Pour ce faire, il suffit d'appuyer le button gauche de la souris sur un endroit disponible de la table et " +
+                                 "de le relâcher à l'endroit ou vous voulez positionner le poteau.";
+            instructionBox.Items.Add(instruction);
         }
 
-        private void scaleToolState()
+        private void selectSelectToolState()
         {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.disableAllControls();
+            parent_.editionTutorielSideMenu.selectToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.selectPictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.selectPictureBox.Image, Color.White);
+
             instructionBox.Items.Clear();
-            string instruction = "We fking did it!";
+            string instruction = "Choisi le select Tool";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void selectingPostObject()
+        {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            instructionBox.Items.Clear();
+            string instruction = "Applique le select Tool";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void selectScaleToolState()
+        {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.disableAllControls();
+            parent_.editionTutorielSideMenu.ScaleToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.scalePictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.scalePictureBox.Image, Color.White);
+
+            instructionBox.Items.Clear();
+            string instruction = "Choisi le scale";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void applyingScaleToolState()
+        {
+            nextButton.Visible = false;
+            previousButton.Visible = true;
+
+            instructionBox.Items.Clear();
+            string instruction = "Applique le scale";
             instructionBox.Items.Add(instruction);
         }
 
@@ -174,76 +255,15 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void conclusionState()
         {
+            nextLabel.Text = "Suivant";
+            nextPictureBox.Image = ui.Properties.Resources.RightArrow;
+            nextButton.Visible = true;
+
             instructionBox.Items.Clear();
             string instruction = "Vous avez maintenant complété le tutoriel pour l'Édition! \n\n" +
                                  "Vous pouvez toujours refaire le tutoriel pour l'Édition en sélectionnant l'option 'Tutoriel' dans le menu au haut de l'écran, " +
                                  "lorsque vous êtes en train d'éditer une map.";
             instructionBox.Items.Add(instruction);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void previousButton_Click(object sender, EventArgs e)
-        ///
-        /// Décrémente l'état du tutoriel et appel switchInstruction pour changer le
-        /// text présenté à l'utilisateur
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void previousButton_Click(object sender, System.EventArgs e)
-        {
-            previousState();
-        }
-
-        public void previousState()
-        {
-            state_--;
-
-            if (state_ == 0)
-                previousButton.Visible = false;
-            else if (state_ == 5)
-            {
-                nextLabel.Text = "Suivant";
-                nextPictureBox.Image = ui.Properties.Resources.RightArrow;
-            }
-
-
-            switchInstruction();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void nextButton_Click(object sender, EventArgs e)
-        ///
-        /// Incrémente l'état du tutoriel et appel switchInstruction pour changer le
-        /// text présenté à l'utilisateur
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void nextButton_Click(object sender, System.EventArgs e)
-        {
-            nextState();
-        }
-
-        public void nextState()
-        {
-            state_++;
-
-            if (state_ == 1)
-                previousButton.Visible = true;
-            else if (state_ == 6)
-            {
-                nextLabel.Text = "Terminer";
-                nextPictureBox.Image = ui.Properties.Resources.confirm;
-            }
-            else if (state_ == 7)
-                finishTutorial();
-
-            switchInstruction();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -277,6 +297,64 @@ namespace ui
             parent_.verificationDuNombreElementChoisi();
 
             FonctionsNatives.dessinerOpenGL();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void previousButton_Click(object sender, EventArgs e)
+        ///
+        /// Décrémente l'état du tutoriel et appel switchInstruction pour changer le
+        /// text présenté à l'utilisateur
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void previousButton_Click(object sender, System.EventArgs e)
+        {
+            previousState();
+        }
+
+        public void previousState()
+        {
+            state_--;
+            FonctionsNatives.UpdateEditionTutorialState(state_);
+
+            switchInstruction();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void nextButton_Click(object sender, EventArgs e)
+        ///
+        /// Incrémente l'état du tutoriel et appel switchInstruction pour changer le
+        /// text présenté à l'utilisateur
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void nextButton_Click(object sender, System.EventArgs e)
+        {
+            nextState();
+        }
+
+        public void nextState()
+        {
+            state_++;
+            FonctionsNatives.UpdateEditionTutorialState(state_);
+
+            if (state_ == 1)
+                previousButton.Visible = true;
+            else if (state_ == 6)
+            {
+                nextLabel.Text = "Terminer";
+                nextPictureBox.Image = ui.Properties.Resources.confirm;
+            }
+            else if (state_ == 7)
+                finishTutorial();
+
+            switchInstruction();
         }
 
         private void tutorialPanel_MouseDown(object sender, MouseEventArgs e)
@@ -313,30 +391,39 @@ namespace ui
             FonctionsNatives.dessinerOpenGL();
         }
 
-        public int getState()
+        public void WaitingForModelCallBack()
         {
-            return state_;
+            ChangeEditionTutorialState();
         }
 
-        private delegate int Callback(string text);
-        private Callback mInstance;   // Ensure it doesn't get garbage collected
-
-        public void Test()
-        {
-            TestCallback();
-        }
-
-        private int Handler(string text)
+        private delegate void Callback();
+        // Ensure it doesn't get garbage collected
+        private Callback mInstance;
+        private void InterfaceFunctionChangeStateTutoriel()
         {
             // Do something...
-            Console.WriteLine(text);
-            return 42;
+            Console.WriteLine("wooohoooo");
+            state_++;
+            switchInstruction();
         }
 
         [DllImport("model.dll")]
         private static extern void SetCallback(Callback fn);
 
         [DllImport("model.dll")]
-        private static extern void TestCallback();
+        private static extern void ChangeEditionTutorialState();
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    ///
+    /// @fn  static partial class FonctionsNatives
+    ///
+    /// Permet de faire le lien avec les méthodes implémentées dans le C++
+    ///
+    ////////////////////////////////////////////////////////////////////////
+    static partial class FonctionsNatives
+    {
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void UpdateEditionTutorialState(int currentState);
     }
 }

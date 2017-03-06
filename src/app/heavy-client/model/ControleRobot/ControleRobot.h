@@ -36,7 +36,6 @@ class ControleurLumiere;
 ///////////////////////////////////////////////////////////////////////////
 class ControleRobot
 {
-	friend class ModeTutorialSimulation;
 	friend class ModeSimulation;
 	friend class ModeTest;
 	// Ceci nous permet de tester convenablement

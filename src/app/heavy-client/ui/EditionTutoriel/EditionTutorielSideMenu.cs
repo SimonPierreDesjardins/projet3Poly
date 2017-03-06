@@ -609,7 +609,7 @@ namespace ui
             return newBitmap;
         }
 
-        private void disableAllControls()
+        public void disableAllControls()
         {
             selectToolButton.Enabled = false;
             selectPictureBox.Image = ChangeColor((Bitmap)selectPictureBox.Image, Color.Gray);

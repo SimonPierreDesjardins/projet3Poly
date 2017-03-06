@@ -42,10 +42,15 @@ public:
 
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
+	int getCurrentTutorialState();
+	void setCurrentTutorialState(int newCurrentTutorialState);
+
 protected:
 
 	//Visiteur pour la suppression d'un noeud
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
+
+	int currentTutorialState_ = 0;
 
 	//Ancienne position en X et Y de la souris
 	int ancienSourisX_{ 0 };

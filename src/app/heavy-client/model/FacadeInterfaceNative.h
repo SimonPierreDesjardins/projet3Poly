@@ -109,10 +109,11 @@ extern "C"
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
 
-	typedef int(__stdcall * Callback)(const char* text);
-
-	__declspec(dllexport) void __cdecl SetCallback(Callback handler); 
-	__declspec(dllexport) void __cdecl TestCallback();
+	//Edition Tutorial
+	typedef int(__stdcall * Callback)();
+	__declspec(dllexport) void __cdecl SetCallback(Callback function);
+	__declspec(dllexport) void __cdecl ChangeEditionTutorialState();
+	__declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

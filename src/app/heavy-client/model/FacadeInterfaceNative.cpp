@@ -22,6 +22,7 @@
 #include "CommandeRobot.h"
 #include "EnginSon.h"
 #include "Projection.h"
+#include "ModeTypes.h"
 
 #include "FacadeInterfaceNative.h"
 
@@ -949,16 +950,22 @@ extern "C"
 		return FacadeModele::obtenirInstance()->getNetworkManager()->isConnected();
 	}
 
-	Callback Handler = 0;
+	Callback InterfaceFunctionChangeStateTutoriel = 0;
 
-	__declspec(dllexport) void __cdecl SetCallback(Callback handler)
+	__declspec(dllexport) void __cdecl SetCallback(Callback function)
 	{
-		Handler = handler;
+		InterfaceFunctionChangeStateTutoriel = function;
 	}
 
-	__declspec(dllexport) void __cdecl TestCallback()
+	__declspec(dllexport) void __cdecl ChangeEditionTutorialState()
 	{
-		int retval = Handler("hello world");
+		InterfaceFunctionChangeStateTutoriel();
+	}
+
+	__declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState)
+	{
+		if (dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode()))
+			dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::setCurrentTutorialState(currentState);
 	}
 
 }
