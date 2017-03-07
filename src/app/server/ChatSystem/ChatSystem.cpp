@@ -61,6 +61,12 @@ void server::ChatSystem::TreatUserMessage(User * user, std::string & message)
 	case 'q':
 		ParseUserLeaveRequest(user, message);
 		break;
+	case 'm':
+		// Send message back to everyone
+		for each (auto user in _userList) {
+			user.second->ForwardMessage(message);
+		}
+		break;
 	}
 }
 
