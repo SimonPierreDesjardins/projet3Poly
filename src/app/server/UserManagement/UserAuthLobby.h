@@ -34,7 +34,7 @@ namespace server {
 	class UserAuthLobby {
 	public:
 		///<summary>Creates a connection authentifier that listens on listener and forwards authenticated users to a multi-user system </summary>
-		UserAuthLobby(Networking::ServerListener* listener, MultiUserSystem& mus);
+		UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus);
 
 		~UserAuthLobby();
 
@@ -55,7 +55,7 @@ namespace server {
 		Networking::ServerListener* _listener;
 
 		// Contains the system authenticated users should be sent to
-		MultiUserSystem& _userReceiver;
+		std::vector<MultiUserSystem*> _userReceivers;
 	};
 
 }

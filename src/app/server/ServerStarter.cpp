@@ -1,5 +1,6 @@
 #include "UserManagement\UserAuthLobby.h"
 #include "ChatSystem\ChatSystem.h"
+#include "MapSystem\MapListLobby.h"
 #include <iostream>
 
 void SetupServer() {
@@ -16,15 +17,16 @@ void SetupServer() {
 	// create ChatSystem
 	server::ChatSystem chatSystem;
 
+	// create MapSystem
+
+	// create vector of systems to pass the user to when authenticated
+	std::vector<server::MultiUserSystem*> newUserReceivers;
+	newUserReceivers.push_back(&chatSystem);
+
 	// create User auth system
-	server::UserAuthLobby UserLobby(listener, chatSystem);
+	server::UserAuthLobby UserLobby(listener, newUserReceivers);
 
 	// create UserLobby
-
-	
-
-
-	// create MapSystem
 
 	std::cout << "Starting listener" << std::endl;
 	listener->StartAccepting();

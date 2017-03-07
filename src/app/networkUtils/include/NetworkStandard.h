@@ -9,11 +9,11 @@ namespace Networking {
 		const int COMMAND = 5;
 		const int DATA_START = 6;
 
-		void AddMessageLengthHeader(std::string& message) {
+		std::string AddMessageLengthHeader(std::string& message) {
 			int length = message.size();
 			std::string lengthHeader(static_cast<char*>(static_cast<void*>(&length)), sizeof length);
 			// optimal string concatenation modified message
-			message = (lengthHeader += message);
+			return std::move(lengthHeader += message);
 		}
 
 		int GetMessageLength(std::string& message) {

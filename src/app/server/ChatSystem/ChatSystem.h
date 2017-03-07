@@ -32,9 +32,10 @@ namespace server {
 			///<summary> Removes the user from this session</summary>
 			void RemoveUser(std::string username);
 
-		private:
-			std::vector<std::string> _userList;
+			std::vector<std::string> UserList;
 		};
+
+		std::string GetChannelList();
 
 		void ParseUserJoinRequest(User* user, std::string& message);
 

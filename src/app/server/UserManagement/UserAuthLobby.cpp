@@ -1,8 +1,9 @@
 #include "UserAuthLobby.h"
 #include "../Database/IdGenerator.h"
 
-server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, MultiUserSystem& mus):_userReceiver(mus)
+server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus)
 {
+	_userReceivers = mus;
 	HookToListenerEvents(listener);
 }
 
@@ -36,7 +37,9 @@ void server::UserAuthLobby::TreatConnection(Networking::Connection * connection)
 
 	User* connectedUser = new User(*information);
 
-	_userReceiver.AddUser(connectedUser);
+	for each(auto userReceiver in _userReceivers) {
+		userReceiver ->AddUser(connectedUser);
+	}
 
 	//User* user = new User();
 	//HookToWrapper(new ConnectionWrapper(connection));
