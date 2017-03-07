@@ -156,6 +156,34 @@ void NoeudTruck::afficherConcret() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// void NoeudTruck::suivreCamera()
+///
+/// Cette méthode positionne la caméra première personne en fonction de la 
+/// position courante du truck
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudTruck::suivreCamera()
+{
+	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
+
+	if (vue->estPremierePersonne())
+	{
+		vue::Camera* camera = vue->obtenirCamera();
+		glm::dvec3 positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
+
+		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
+
+		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 5.0 };
+		camera->assignerPointVise(positionRectangle + positionVise);
+
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 4, sin(angleRotation_* PI / 180) * 4, -5.0 }); 
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn void NoeNoeudTruckudF1::positionnerRoues()
 ///
 /// Cette fonctione permet de positionner les roues du robot par rapport à

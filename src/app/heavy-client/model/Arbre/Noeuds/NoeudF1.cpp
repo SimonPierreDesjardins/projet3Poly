@@ -154,6 +154,35 @@ void NoeudF1::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// void NoeudF1::suivreCamera()
+///
+/// Cette méthode positionne la caméra première personne en fonction de la 
+/// position courante du f1
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudF1::suivreCamera()
+{
+	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
+
+	if (vue->estPremierePersonne())
+	{
+		vue::Camera* camera = vue->obtenirCamera();
+		glm::dvec3 positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
+
+		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
+
+		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 2.0 };
+		camera->assignerPointVise(positionRectangle + positionVise);
+
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 4, sin(angleRotation_* PI / 180) * 4, -2.0 });
+	}
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudF1::positionnerRoues()

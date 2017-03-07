@@ -50,6 +50,8 @@ const std::string ArbreRenduINF2990::NOM_TRUCK{ "truck" };
 
 const std::string ArbreRenduINF2990::NOM_AUDI{ "audi" };
 
+const std::string ArbreRenduINF2990::NOM_TELEPORTEUR{ "teleporteur" };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ArbreRenduINF2990::ArbreRenduINF2990()

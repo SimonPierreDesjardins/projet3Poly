@@ -456,11 +456,6 @@ void FacadeModele::assignerVuePremierePersonne()
 	glm::dvec3 positionRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(profil_->getModele())->obtenirPositionCourante();
 	double angleRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(profil_->getModele())->obtenirAngleRotation();
 
-	if (profil_->getModele() == "truck") //ajustement pour le modele du camion
-	{
-		positionRobot.x = positionRobot.x - 50;
-		positionRobot.y = positionRobot.y - 50;
-	}
 
 	vue_ = std::make_unique<vue::VueOrbite>(
 		vue::Camera(
