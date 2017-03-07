@@ -158,6 +158,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void introductionState()
         {
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
             nextButton.Visible = true;
             previousButton.Visible = false;
 
@@ -172,17 +176,24 @@ namespace ui
 
         private void selectPostCreateToolState()
         {
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
             nextButton.Visible = false;
             previousButton.Visible = true;
 
             parent_.editionTutorielSideMenu.createToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.createPictureBox.Image = 
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.createPictureBox.Image, Color.White);
+            parent_.editionTutorielSideMenu.postObjectButton.Enabled = true;
+            parent_.editionTutorielSideMenu.postObjectPicture.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.postObjectPicture.Image, Color.White);
 
             instructionBox.Items.Clear();
             string instruction = "Comme première tâche, vous devez sélectionner l'outil pour la création de poteau. \n" +
                                  "Pour accéder à cet outil, vous devez cliquer sur l'icon créer objet dans le menu du côté, puis " +
-                                 "sélectionner le poteau dans le menu qui apparaîtra. \n\n" +
+                                 "sélectionner le poteau dans le menu qui apparaîtra. \n" +
                                  "Vous pouvez également utiliser la touche rapide 'P' afin de sélectionner l'outil création de poteau et " +
                                  "ce dernier s'ajoutera au menu de gauche";
             instructionBox.Items.Add(instruction);
@@ -190,6 +201,8 @@ namespace ui
 
         private void creatingAPostObjectState()
         {
+            previousButton.Visible = false;
+
             instructionBox.Items.Clear();
             string instruction = "Maintenant que vous avez l'outil pour la création de poteau, vous devez en ajouter un à la carte. \n\n" +
                                  "Pour ce faire, il suffit d'appuyer le button gauche de la souris sur un endroit disponible de la table et " +
@@ -199,6 +212,14 @@ namespace ui
 
         private void selectSelectToolState()
         {
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+            FonctionsNatives.UnselectAllObjects();
+            parent_.verificationDuNombreElementChoisi();
+
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.selectToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.selectPictureBox.Image =
@@ -215,6 +236,8 @@ namespace ui
 
         private void selectingPostObject()
         {
+            previousButton.Visible = false;
+
             instructionBox.Items.Clear();
             string instruction = "Applique le select Tool";
             instructionBox.Items.Add(instruction);
@@ -222,6 +245,12 @@ namespace ui
 
         private void selectScaleToolState()
         {
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.ScaleToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.scalePictureBox.Image =
@@ -238,6 +267,8 @@ namespace ui
 
         private void applyingScaleToolState()
         {
+            previousButton.Visible = false;
+
             instructionBox.Items.Clear();
             string instruction = "Applique le scale";
             instructionBox.Items.Add(instruction);
@@ -245,6 +276,12 @@ namespace ui
 
         private void selectMoveToolState()
         {
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.MoveToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.movePictureBox.Image =
@@ -260,6 +297,8 @@ namespace ui
 
         private void applyingMoveToolState()
         {
+            previousButton.Visible = false;
+
             instructionBox.Items.Clear();
             string instruction = "Applique le move";
             instructionBox.Items.Add(instruction);
@@ -267,6 +306,12 @@ namespace ui
 
         private void selectDuplicateToolState()
         {
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
             parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.DuplicateToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.duplicatePictureBox.Image =
@@ -282,6 +327,8 @@ namespace ui
 
         private void applyingDuplicateToolState()
         {
+            previousButton.Visible = false;
+
             nextLabel.Text = "Suivant";
             nextPictureBox.Image = ui.Properties.Resources.RightArrow;
             nextButton.Visible = false;
@@ -362,7 +409,24 @@ namespace ui
 
         public void previousState()
         {
-            state_--;
+            switch (state_)
+            {
+                case (int)EditionTutorial.State.SELECT_POST_TOOL:
+                    state_--;
+                    break;
+
+                case (int)EditionTutorial.State.SELECT_TOOL:
+                case (int)EditionTutorial.State.SELECTING_POST:
+                case (int)EditionTutorial.State.SELECT_SCALE_TOOL:
+                case (int)EditionTutorial.State.SELECT_MOVE_TOOL:
+                case (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL:
+                    state_ -= 2;
+                    break;
+
+                case (int)EditionTutorial.State.CONCLUSION:
+                    state_ -= 3;
+                    break;
+            }
             switchInstruction();
 
             FonctionsNatives.UpdateEditionTutorialState(state_);
@@ -466,5 +530,11 @@ namespace ui
     {
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void UpdateEditionTutorialState(int currentState);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void UnselectCurrentTool();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void UnselectAllObjects();
     }
 }

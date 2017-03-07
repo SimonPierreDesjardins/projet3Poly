@@ -36,19 +36,6 @@ const int VK_KEY_P = 'P';
 const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
 
-enum Etat
-{
-	SELECTION,
-	DEPLACEMENT,
-	ROTATION,
-	MISE_A_ECHELLE,
-	DUPLICATION,
-	CREATION_POTEAU,
-	CREATION_MUR,
-	CREATION_LIGNE_NOIRE,
-	ZOOM
-};
-
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeEdition
 /// @brief Classe qui représente le mode edition de notre machine à modes
@@ -77,10 +64,6 @@ public:
 	virtual void sauvegarder();
 
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
-	inline Etat obtenirTypeEtat() const;
-
-	/// Modifie l'etat courant.
-	void assignerEtat(Etat etat);
 
 protected:
 

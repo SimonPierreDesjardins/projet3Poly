@@ -36,19 +36,6 @@ const int VK_KEY_P = 'P';
 const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
 
-enum Etat
-{
-	SELECTION,
-	DEPLACEMENT,
-	ROTATION,
-	MISE_A_ECHELLE,
-	DUPLICATION,
-	CREATION_POTEAU,
-	CREATION_MUR,
-	CREATION_LIGNE_NOIRE,
-	ZOOM
-};
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeTutorialEdition::ModeTutorialEdition()
@@ -64,8 +51,6 @@ ModeTutorialEdition::ModeTutorialEdition()
 	//etat_ = std::make_unique <EtatSelection>();
 	etat_ = NULL;
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
-
-	//FacadeModele::obtenirInstance()->assignerEnvironnement(2);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -166,7 +151,6 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_MOVE_TOOL)
 				{
 					etat_ = std::make_unique<EtatDeplacement>();
-					ChangeEditionTutorialState();
 				}
 				break;
 
@@ -176,7 +160,6 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				{
 					if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
 						etat_ = std::make_unique<EtatSelection>();
-						ChangeEditionTutorialState();
 					}
 				}
 				break;
@@ -189,7 +172,6 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_SCALE_TOOL)
 				{
 					etat_ = std::make_unique<EtatMiseAEchelle>();
-					ChangeEditionTutorialState();
 				}
 				break;
 
@@ -197,7 +179,6 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_DUPLICATE_TOOL)
 				{
 					etat_ = std::make_unique<EtatDuplication>();
-					ChangeEditionTutorialState();
 				}
 				break;
 
@@ -209,7 +190,6 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_POST_TOOL)
 				{
 					etat_ = std::make_unique<EtatCreationPoteau>();
-					ChangeEditionTutorialState();
 				}
 				break;
 
@@ -306,14 +286,14 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		case WM_LBUTTONDOWN:
 			if (etat_ != NULL)
 			{
-				etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				leftClickDownWithCurrentTool(lParam);
 			}
 			break;
 
 		case WM_LBUTTONUP:
 			if (etat_ != NULL)
 			{
-				etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+				leftClickUpWithCurrentTool(lParam);
 			}
 			break;
 
@@ -368,6 +348,129 @@ int ModeTutorialEdition::getCurrentTutorialState()
 void ModeTutorialEdition::setCurrentTutorialState(int newCurrentTutorialState)
 {
 	currentTutorialState_ = newCurrentTutorialState;
+}
+
+void ModeTutorialEdition::unselectCurrentTool()
+{
+	etat_ = NULL;
+}
+
+int ModeTutorialEdition::getNomberOfObjects(std::string TypeOfObject)
+{
+	NoeudComposite* table = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"));
+	int objects = table->obtenirNombreEnfants();
+	int numberOfObject = 0;
+	for (int i = 0; i < objects; i++)
+	{
+		if (table->chercher(i)->obtenirType() == TypeOfObject)
+		{
+			numberOfObject++;
+			indexOfCurrentObject_ = i;
+		}
+	} 
+	return numberOfObject;
+}
+
+bool ModeTutorialEdition::isTutorialObjectSelect()
+{
+	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->estSelectionne();
+}
+
+double ModeTutorialEdition::getScaleOfTutorialObject()
+{
+	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirFacteurMiseAEchelle();
+}
+
+glm::dvec3 ModeTutorialEdition::getPositionOfTutorialObject()
+{
+	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirPositionCourante();
+}
+
+void ModeTutorialEdition::leftClickDownWithCurrentTool(LPARAM lParam)
+{
+	etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+	switch (etat_->getType())
+	{
+		case NONE:
+		break;
+
+		case CREATION_LIGNE:
+			break;
+
+		case CREATION_MUR:
+			break;
+
+		case DUPLICATION:
+		case CREATION_POTEAU:
+			numberOfObjects_ = getNomberOfObjects("poteau");
+			break;
+
+		case DEPLACEMENT:
+			currentPosition_ = getPositionOfTutorialObject();
+			break;
+
+		case LOUPE:
+			break;
+
+		case MISE_A_ECHELLE:
+			currentScale_ = getScaleOfTutorialObject();
+			break;
+
+		case ROTATION:
+			break;
+
+		case SELECTION:
+			break;
+
+		default:
+			break;
+	}
+}
+
+void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
+{
+	etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+	switch (etat_->getType())
+	{
+	case NONE:
+		break;
+
+	case CREATION_LIGNE:
+		break;
+
+	case CREATION_MUR:
+		break;
+
+	case DUPLICATION:
+	case CREATION_POTEAU:
+		if (numberOfObjects_ != getNomberOfObjects("poteau"))
+			ChangeEditionTutorialState();
+		break;
+
+	case DEPLACEMENT:
+		if (currentPosition_ != getPositionOfTutorialObject())
+			ChangeEditionTutorialState();
+		break;
+
+	case LOUPE:
+		break;
+
+	case MISE_A_ECHELLE:
+		if (currentScale_ != getScaleOfTutorialObject())
+			ChangeEditionTutorialState();
+		break;
+
+	case ROTATION:
+		break;
+
+	case SELECTION:
+		if (isTutorialObjectSelect())
+			ChangeEditionTutorialState();
+		break;
+
+	default:
+		break;
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

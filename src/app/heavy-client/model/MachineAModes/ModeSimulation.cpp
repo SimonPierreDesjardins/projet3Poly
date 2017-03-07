@@ -206,6 +206,9 @@ void ModeSimulation::postChangementDeProfil(){
 ////////////////////////////////////////////////////////////////////////
 void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	if (!FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier())
+		return;
+
 	if (msg == WM_KEYDOWN )
 	{
 		switch (wParam)

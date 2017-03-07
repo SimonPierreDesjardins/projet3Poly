@@ -23,6 +23,7 @@
 ////////////////////////////////////////////////////////////////////////
 EtatDuplication::EtatDuplication()
 {
+	setType(DUPLICATION);
 	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 

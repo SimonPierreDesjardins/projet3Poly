@@ -968,6 +968,17 @@ extern "C"
 			dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::setCurrentTutorialState(currentState);
 	}
 
+	__declspec(dllexport) void __cdecl UnselectCurrentTool()
+	{
+		if (dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode()))
+			dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::unselectCurrentTool();
+	}
+
+	__declspec(dllexport) void __cdecl UnselectAllObjects()
+	{
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

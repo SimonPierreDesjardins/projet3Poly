@@ -24,6 +24,7 @@
 class EtatLoupe : public EtatAbstrait
 {
 public:
+	EtatLoupe();
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 
 	virtual void gererMouvementSouris(const int & x, const int& y);

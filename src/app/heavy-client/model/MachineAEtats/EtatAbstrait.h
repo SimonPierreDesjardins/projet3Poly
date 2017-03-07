@@ -14,6 +14,7 @@
 #include <memory>
 #include "VisiteurAbstrait.h"
 #include "glm\glm.hpp"
+#include "TypeOfTool.cs"
 
 class ArbreRendu;
 namespace vue
@@ -56,6 +57,9 @@ public:
 	virtual void gererToucheAltEnfoncee();
 	virtual void gererToucheAltRelachee();
 
+	int getType() { return type_; }
+	void setType(Tool toolName) { type_ = toolName; }
+
 protected:
 	virtual void reinitialiser();
 
@@ -75,8 +79,9 @@ protected:
 	int ancienY_{ 0 };
 	glm::ivec2 anchor{glm::ivec2()};
 	static glm::ivec2 currentPosition_;
-};
 
+	int type_ = NONE;
+};
 
 #endif /// ETAT_ABSTRAIT_H
 

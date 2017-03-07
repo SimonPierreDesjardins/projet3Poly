@@ -22,6 +22,7 @@
 ////////////////////////////////////////////////////////////////////////
 EtatMiseAEchelle::EtatMiseAEchelle()
 {
+	setType(MISE_A_ECHELLE);
 	visiteurMiseAEchelle_ = std::make_unique<VisiteurMiseAEchelle>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }

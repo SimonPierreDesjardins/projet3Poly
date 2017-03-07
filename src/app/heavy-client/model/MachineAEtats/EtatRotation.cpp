@@ -22,6 +22,7 @@
 ////////////////////////////////////////////////////////////////////////
 EtatRotation::EtatRotation()
 {
+	setType(ROTATION);
 	visiteurRotation_ = std::make_unique<VisiteurRotation>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }

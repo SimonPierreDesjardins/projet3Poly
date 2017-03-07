@@ -22,6 +22,7 @@
 ////////////////////////////////////////////////////////////////////////
 EtatDeplacement::EtatDeplacement()
 {
+	setType(DEPLACEMENT);
 	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }

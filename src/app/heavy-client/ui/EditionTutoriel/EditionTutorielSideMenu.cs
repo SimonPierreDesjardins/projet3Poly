@@ -13,7 +13,6 @@ namespace ui
     public partial class EditionTutorielSideMenu : UserControl
     {
         Window parent_;
-        int state_;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -65,6 +64,9 @@ namespace ui
             setDefaultUnselectedColors();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -96,6 +98,9 @@ namespace ui
             setDefaultUnselectedColors();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_MOVE_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -158,6 +163,9 @@ namespace ui
             setDefaultUnselectedColors();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_SCALE_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -189,6 +197,9 @@ namespace ui
             setDefaultUnselectedColors();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -385,6 +396,9 @@ namespace ui
             postObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(postObjectPicture);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_P, (IntPtr)1638401);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -465,13 +479,13 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void setDefaultUnselectedColors()
+        /// @fn public void setDefaultUnselectedColors()
         ///
         /// Remet la couleur par défaut à tous les controles présent dans le menu
         /// d'outil et le menu de création d'objet.
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void setDefaultUnselectedColors()
+        public void setDefaultUnselectedColors()
         {
             //Tools
             selectToolButton.BackColor = Color.Transparent;
@@ -600,7 +614,7 @@ namespace ui
                     //get the pixel from the scrBitmap image
                     actualColor = scrBitmap.GetPixel(i, j);
                     // > 150 because.. Images edges can be of low pixel colr. if we set all pixel color to new then there will be no smoothness left.
-                    if (actualColor.A > 175)
+                    if (actualColor.A > 100)
                         newBitmap.SetPixel(i, j, newColor);
                     //else
                         //newBitmap.SetPixel(i, j, actualColor);
@@ -611,6 +625,7 @@ namespace ui
 
         public void disableAllControls()
         {
+            //Tools
             selectToolButton.Enabled = false;
             selectPictureBox.Image = ChangeColor((Bitmap)selectPictureBox.Image, Color.Gray);
             MoveToolButton.Enabled = false;
@@ -627,6 +642,22 @@ namespace ui
             zoomPictureBox.Image = ChangeColor((Bitmap)zoomPictureBox.Image, Color.Gray);
             deleteToolButton.Enabled = false;
             deletePictureBox.Image = ChangeColor((Bitmap)deletePictureBox.Image, Color.Gray);
+
+            //Objects
+            lineObjectButton.Enabled = false;
+            lineObjectPicture.Image = ChangeColor((Bitmap)lineObjectPicture.Image, Color.Gray);
+            greenLineObjectButton.Enabled = false;
+            greenLinePictureBox.Image = ChangeColor((Bitmap)greenLinePictureBox.Image, Color.Gray);
+            redLineObjectButton.Enabled = false;
+            redLinePictureBox.Image = ChangeColor((Bitmap)redLinePictureBox.Image, Color.Gray);
+            postObjectButton.Enabled = false;
+            postObjectPicture.Image = ChangeColor((Bitmap)postObjectPicture.Image, Color.Gray);
+            wallObjectButton.Enabled = false;
+            wallObjectPicture.Image = ChangeColor((Bitmap)wallObjectPicture.Image, Color.Gray);
+            teleportObjectButton.Enabled = false;
+            teleportorPictureBox.Image = ChangeColor((Bitmap)teleportorPictureBox.Image, Color.Gray);
+            bridgeObjectButton.Enabled = false;
+            bridgePictureBox.Image = ChangeColor((Bitmap)bridgePictureBox.Image, Color.Gray);
         }
     }
 }

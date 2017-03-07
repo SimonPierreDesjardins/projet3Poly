@@ -29,6 +29,7 @@
 ////////////////////////////////////////////////////////////////////////
 EtatSelection::EtatSelection()
 {
+	setType(SELECTION);
 	visiteurSelection_ = std::make_unique<VisiteurSelection>();
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	facade_ = FacadeModele::obtenirInstance();

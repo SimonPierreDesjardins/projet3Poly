@@ -16,6 +16,7 @@
 #include "glm\glm.hpp"
 #include "EtatAbstrait.h"
 #include "FacadeInterfaceNative.h"
+#include <sstream>
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeTutorialEdition
@@ -45,12 +46,25 @@ public:
 	int getCurrentTutorialState();
 	void setCurrentTutorialState(int newCurrentTutorialState);
 
+	void unselectCurrentTool();
+	int getNomberOfObjects(std::string TypeOfObject);
+	bool isTutorialObjectSelect();
+	double getScaleOfTutorialObject();
+	glm::dvec3 getPositionOfTutorialObject();
+
+	void leftClickDownWithCurrentTool(LPARAM lParam);
+	void leftClickUpWithCurrentTool(LPARAM lParam);
+
 protected:
 	//Visiteur pour la suppression d'un noeud
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
 
 	//État du tutoriel d'Édition
 	int currentTutorialState_ = 0;
+	int numberOfObjects_ = 0;
+	int indexOfCurrentObject_ = 0;
+	double currentScale_ = 0;
+	glm::dvec3 currentPosition_;
 
 	//Ancienne position en X et Y de la souris
 	int ancienSourisX_{ 0 };

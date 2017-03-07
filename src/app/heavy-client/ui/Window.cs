@@ -530,27 +530,42 @@ namespace ui
             {
                 case Constants.Key_C:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
                         editionTutorielSideMenu.duplicateTool();
+                    }  
                     break;
 
                 case Constants.Key_D:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_MOVE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
                         editionTutorielSideMenu.moveTool();
+                    }
                     break;
 
                 case Constants.Key_E:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_SCALE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
                         editionTutorielSideMenu.scaleTool();
+                    }
                     break;
 
                 case Constants.Key_P:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
                         editionTutorielSideMenu.postObject();
+                    }
                     break;
 
                 case Constants.Key_S:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
                         editionTutorielSideMenu.selectTool();
+                    }
                     break;
 
                 default:

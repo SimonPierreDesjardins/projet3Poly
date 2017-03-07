@@ -23,6 +23,7 @@
 ////////////////////////////////////////////////////////////////////////
 EtatCreationPoteau::EtatCreationPoteau()
 {
+	setType(CREATION_POTEAU);
 	visiteurCreationPoteau_ = std::make_unique<VisiteurCreationPoteau>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }

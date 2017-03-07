@@ -14,6 +14,11 @@
 #include "AideGl.h"
 #include "OpenGL_Programme.h"
 
+EtatLoupe::EtatLoupe() : EtatAbstrait()
+{
+	setType(LOUPE);
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void EtatLoupe::gererClicGaucheRelache(const int& x, const int& y)
