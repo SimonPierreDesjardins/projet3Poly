@@ -11,6 +11,7 @@ include/ConnectionResolver.hpp
 include/NetworkLogger.h
 include/ServerListener.hpp
 include/NetworkObjects.h
+include/NetworkStandard.h
 Connection.cpp
 ConnectionResolver.cpp
 NetworkLogger.cpp
