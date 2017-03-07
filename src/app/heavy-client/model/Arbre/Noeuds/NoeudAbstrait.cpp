@@ -26,7 +26,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 NoeudAbstrait::NoeudAbstrait(
-	const std::string& type //= std::string{ "" }
+	const std::string& type
 	) :
 	type_( type )
 {
@@ -575,6 +575,44 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
 
     // Effectuer une mise à jour.
     mettreAJourFormeEnglobante();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
+///
+/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
+///
+/// @param positionRelative : La position courante.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudAbstrait::assignerPositionCourante(
+    const glm::dvec3& positionCourante)
+{
+    positionCourante_ = positionCourante;
+	notifyEntityMovedAbsolute(0, { positionCourante.x, positionCourante.y, positionCourante.z });
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
+///
+/// Cette fonction permet d'assigner la position relative du noeud par
+/// rapport à son parent.
+///
+/// @param positionRelative : La position relative.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudAbstrait::assignerPositionRelative(
+	const glm::dvec3& positionRelative
+	)
+{
+	positionRelative_ = positionRelative;
+	notifyEntityMovedRelative(0, { positionRelative.x, positionRelative.y, positionRelative.z });
 }
 
 ////////////////////////////////////////////////

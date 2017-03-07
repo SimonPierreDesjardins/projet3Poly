@@ -11,10 +11,11 @@
 #ifndef MODE_EDITION_H
 #define MODE_EDITION_H
 
+#include <memory>
+
 #include "ModeAbstrait.h"
 #include "VisiteurAbstrait.h"
 #include "VisiteurSuppression.h"
-#include <memory>
 #include "glm\glm.hpp"
 #include "EtatAbstrait.h"
 
@@ -36,7 +37,7 @@ const int VK_KEY_P = 'P';
 const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
 
-enum Etat
+enum EtatType
 {
 	SELECTION,
 	DEPLACEMENT,
@@ -48,6 +49,11 @@ enum Etat
 	CREATION_LIGNE_NOIRE,
 	ZOOM
 };
+
+namespace event_handler
+{
+	class EventHandler;
+}
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeEdition
@@ -64,6 +70,7 @@ public:
 
 	//Constructeur par défaut
 	ModeEdition();
+
 	//Destructeur
 	virtual ~ModeEdition();
 
@@ -77,12 +84,14 @@ public:
 	virtual void sauvegarder();
 
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
-	inline Etat obtenirTypeEtat() const;
 
 	/// Modifie l'etat courant.
-	void assignerEtat(Etat etat);
+	void assignerEtat(EtatType etat);
 
 protected:
+
+
+	event_handler::EventHandler* eventHandler_;
 
 	//Visiteur pour la suppression d'un noeud
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;

@@ -457,8 +457,8 @@ void NoeudComposite::animer(float dt)
     glm::dvec3 positionCouranteEnfant = { 0.0, 0.0, 0.0 };
 	for (std::shared_ptr<NoeudAbstrait> enfant : enfants_) 
     {
-        positionCouranteEnfant = enfant->obtenirPositionRelative() + positionCourante_;
-        enfant->assignerPositionCourante(positionCouranteEnfant);
+        //enfant->positionCourante_ = enfant->positionRelative_ + positionCourante_;
+        //enfant->assignerPositionCourante(positionCouranteEnfant);
 		enfant->animer(dt);
 	}
 }
@@ -491,6 +491,25 @@ std::shared_ptr<const NoeudAbstrait> NoeudComposite::getEnfant(int indice) const
 NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 {
 	return enfants_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudComposite::assignerPositionCourante(const glm::dvec3& positionRelative)
+///
+/// Permet d'ajuster la position absolue des enfants d'un noeud composite
+///
+/// @param positionCourante: La position courante du noeud
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudComposite::assignerPositionCourante(const glm::dvec3& positionCourante)
+{
+	positionCourante_ = positionCourante;
+	for (int i = 0; i < enfants_.size(); ++i)
+	{
+		glm::dvec3 positionRelativeEnfant = enfants_[i]->obtenirPositionRelative();
+		enfants_[i]->assignerPositionCourante(positionCourante_ + positionRelativeEnfant);
+	}
 }
 
 ////////////////////////////////////////////////

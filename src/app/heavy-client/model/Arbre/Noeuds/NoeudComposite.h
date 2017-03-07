@@ -47,6 +47,9 @@ public:
    /// Efface le noeud passé en paramètre.
    virtual void effacer( const NoeudAbstrait* noeud );
 
+   /// Assigne la position courante du noeud.
+   virtual void assignerPositionCourante(const glm::dvec3& positionRelative);
+
    /// Cherche un noeud par le type (sur un noeud constant).
    virtual const NoeudAbstrait* chercher( const std::string& typeNoeud ) const;
    /// Cherche un noeud par le type.

@@ -206,6 +206,12 @@ source_group("" FILES ${MODEL_SRC})
 set(EVENT_HANDLER_SRC
     event-handler/EventHandler.h
     event-handler/EventHandler.cpp
+    event-handler/MessageSerializer.h
+    event-handler/MessageSerializer.cpp
+    event-handler/Observer.h
+    event-handler/Observer.cpp
+    event-handler/Observable.h
+    event-handler/Observable.cpp
 )
 source_group("event-handler" FILES ${EVENT_HANDLER_SRC})
 

@@ -81,7 +81,6 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 
 	isConnected_ = true;
 	listener_ = std::thread(&Connection::listen, this);
-	sendMessage(std::string("hello"));
 	return true;
 }
 

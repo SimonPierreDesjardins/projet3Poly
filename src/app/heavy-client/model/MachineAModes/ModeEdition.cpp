@@ -8,16 +8,18 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "ModeEdition.h"
 #include <math.h>
-#include "Utilitaire.h"
 #include <iostream>
+#include "Utilitaire.h"
 #include "FacadeModele.h"
+#include "NetworkManager.h"
 #include "Vue.h"
 #include "Projection.h"
 #include "VisiteurSauvegarde.h"
 #include "EtatTypes.h"
 #include "NoeudRobot.h"
+
+#include "ModeEdition.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -90,6 +92,49 @@ void ModeEdition::sauvegarder()
 void ModeEdition::gererToucheSupprimer()
 {
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
+}
+
+/// Modifie l'etat courant.
+void ModeEdition::assignerEtat(EtatType etat)
+{
+	switch(etat)
+	{
+	case SELECTION:
+		etat_ = std::make_unique<EtatSelection>();
+		break;
+
+	case DEPLACEMENT:
+		etat_ = std::make_unique<EtatDeplacement>();
+		break;
+
+	case ROTATION:
+		etat_ = std::make_unique<EtatRotation>();
+		break;
+
+	case MISE_A_ECHELLE:
+		etat_ = std::make_unique<EtatMiseAEchelle>();
+		break;
+	
+	case DUPLICATION:
+		etat_ = std::make_unique<EtatDuplication>();
+		break;
+
+	case CREATION_POTEAU:
+		etat_ = std::make_unique<EtatCreationPoteau>();
+		break;
+
+	case CREATION_MUR:
+		etat_ = std::make_unique<EtatCreationMur>();
+		break;
+	
+	case CREATION_LIGNE_NOIRE:
+		etat_ = std::make_unique<EtatCreationLigne>();
+		break;
+	
+	case ZOOM:
+		etat_ = std::make_unique<EtatLoupe>();
+		break;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

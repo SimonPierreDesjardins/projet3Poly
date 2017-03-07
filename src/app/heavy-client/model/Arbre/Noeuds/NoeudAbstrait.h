@@ -20,6 +20,7 @@
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
 #include "RectangleEnglobant.h"
+#include "Observable.h"
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 
@@ -50,7 +51,7 @@ class FormeEnglobanteAbstraite;
 /// @author DGI-2990
 /// @date 2007-01-24
 ///////////////////////////////////////////////////////////////////////////
-class NoeudAbstrait 
+class NoeudAbstrait : public event_handler::Observable
 {
 public:
 	/// Constructeur.
@@ -68,11 +69,11 @@ public:
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 	/// Assigne la position relative du noeud.
-	inline void assignerPositionRelative(const glm::dvec3& positionRelative);	
+	virtual void assignerPositionRelative(const glm::dvec3& positionRelative);	
     /// Obtient la position courante du noeud.
     inline const glm::dvec3& obtenirPositionCourante() const;
     /// Assigne la position courante du noeud.
-    inline void assignerPositionCourante(const glm::dvec3& positionRelative);
+    virtual void assignerPositionCourante(const glm::dvec3& positionRelative);
 	/// Obtient l'angle de rotation du noeud.
 	inline double obtenirAngleRotation() const;
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
@@ -190,6 +191,8 @@ protected:
 	/// Type du noeud.
 	std::string				type_;
 
+	int	                    id_;
+
 	/// Mode d'affichage des polygones.
 	GLenum					modePolygones_{ GL_FILL };
 
@@ -301,25 +304,6 @@ inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
-///
-/// Cette fonction permet d'assigner la position relative du noeud par
-/// rapport à son parent.
-///
-/// @param positionRelative : La position relative.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerPositionRelative(
-	const glm::dvec3& positionRelative
-	)
-{
-	positionRelative_ = positionRelative;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
 ///
 /// Cette fonction retourne la position courante du noeud dans l'espace virtuel.
@@ -332,22 +316,6 @@ inline const glm::dvec3& NoeudAbstrait::obtenirPositionCourante() const
     return positionCourante_;
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
-///
-/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
-///
-/// @param positionRelative : La position courante.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerPositionCourante(
-    const glm::dvec3& positionCourante)
-{
-    positionCourante_ = positionCourante;
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///

@@ -4,39 +4,47 @@
 
 #include "Networking.h"
 
-namespace server {
+#include "Observable.h"
 
-	class UserInformation {
-	public:
-		std::string UserName;
-	};
+namespace server
+{
 
-	class User {
-	public:
-		User() {}
-		void AssignConnection(Networking::Connection* connectionToTreat);
+class UserInformation 
+{
+public:
+	std::string userName_;
+	int id_;
+	bool isAuthentified_ = false;
+};
 
-		void AssignInfo(UserInformation info) {
-			Info = info;
-		}
+class User : public Observable
+{
+public:
+	User() = default;
+	User(int id);
+	virtual ~User();
 
-		~User();
+	void AssignConnection(Networking::Connection* connectionToTreat);
 
-		__event void OnUserDisconnected(User* thisUser);
-		__event void OnUserSentMessage(User* thisUser, std::string& message);
+	void AssignInfo(UserInformation info) {
+		info_ = info;
+	}
 
-		UserInformation Info;
+	//__event void OnUserDisconnected(User* thisUser);
+	//__event void OnUserSentMessage(User* thisUser, std::string& message);
 
-	private:
-		void HookToConnection(Networking::Connection* connectionToListenTo);
-		void UnhookFromConnection(Networking::Connection* connectionToListenTo);
+	UserInformation info_;
 
-		void OnReceivedMessage(std::string& message);
-		void OnDisconnect();
+private:
+	void HookToConnection(Networking::Connection* connectionToListenTo);
+	void UnhookFromConnection(Networking::Connection* connectionToListenTo);
 
-		Networking::Connection* _connection;
+	void OnReceivedMessage(std::string& message);
+	void OnDisconnect();
 
-	};
+	Networking::Connection* _connection;
+
+};
 
 }
 

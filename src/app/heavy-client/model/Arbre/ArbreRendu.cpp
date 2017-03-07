@@ -26,12 +26,11 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ArbreRendu::ArbreRendu()
-	: NoeudComposite{ "racine" }
+ArbreRendu::ArbreRendu(event_handler::EventHandler* eventHandler)
+	: NoeudComposite{ "racine" }, eventHandler_(eventHandler)
 {
 	// On ne veut pas que ce noeud soit sélectionnable.
 	assignerEstSelectionnable(false);
-
 }
 
 
@@ -69,10 +68,15 @@ std::shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(
 		// Incapable de trouver l'usine
 		return nullptr;
 	}
+	
 	const UsineAbstraite* usine{ (*(usines_.find(typeNouveauNoeud))).second.get() };
-	return usine->creerNoeud();
-}
 
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud = usine->creerNoeud();
+	nouveauNoeud->addObserver(eventHandler_);
+	eventHandler_->onEntityCreated(typeNouveauNoeud);
+
+	return nouveauNoeud;
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///

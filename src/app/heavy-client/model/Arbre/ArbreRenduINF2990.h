@@ -33,7 +33,7 @@ class ArbreRenduINF2990 : public ArbreRendu
 {
 public:
 	/// Constructeur par défaut.
-	ArbreRenduINF2990();
+	ArbreRenduINF2990(event_handler::EventHandler* eventHandler);
 	/// Destructeur.
 	virtual ~ArbreRenduINF2990();
 

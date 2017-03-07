@@ -1,38 +1,47 @@
 #include "User.h"
+#include <iostream>
 
-void server::User::AssignConnection(Networking::Connection * connectionToTreat)
+namespace server
 {
-	_connection = connectionToTreat;
-	HookToConnection(connectionToTreat);
+
+User::User(int id)
+{
+	info_.id_ = id;
 }
 
-server::User::~User()
+User::~User()
 {
 	UnhookFromConnection(_connection);
 	Networking::NetworkObjects::Dispose(_connection);
 }
 
-void server::User::HookToConnection(Networking::Connection * connectionToListenTo)
+void User::AssignConnection(Networking::Connection * connectionToTreat)
+{
+	_connection = connectionToTreat;
+	HookToConnection(connectionToTreat);
+}
+
+void User::HookToConnection(Networking::Connection * connectionToListenTo)
 {
 	__hook(&Networking::Connection::OnReceivedData, connectionToListenTo, &User::OnReceivedMessage);
 	__hook(&Networking::Connection::OnConnectionLost, connectionToListenTo, &User::OnDisconnect);
 }
 
-void server::User::UnhookFromConnection(Networking::Connection * connectionToDeafenFrom)
+void User::UnhookFromConnection(Networking::Connection * connectionToDeafenFrom)
 {
 	__unhook(&Networking::Connection::OnReceivedData, connectionToDeafenFrom, &User::OnReceivedMessage);
 	__unhook(&Networking::Connection::OnConnectionLost, connectionToDeafenFrom, &User::OnDisconnect);
 }
 
-void server::User::OnReceivedMessage(std::string& message)
+void User::OnReceivedMessage(std::string& message)
 {
-	OnUserSentMessage(this, message);
-	_connection->SendData(message);
+	std::cout << message << std::endl;
+	//dispatchReceivedMessage(message);
 }
 
-void server::User::OnDisconnect()
+void User::OnDisconnect()
 {
-	//UnhookFromConnection(_connection);
-	Networking::NetworkObjects::Dispose(_connection);
-	__raise OnUserDisconnected(this);
+	//notifyDisconnected(info_.id_);
+}
+
 }

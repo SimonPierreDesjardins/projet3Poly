@@ -18,6 +18,11 @@
 
 class NoeudAbstrait;
 
+namespace event_handler
+{
+	class EventHandler;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRendu
 /// @brief Classe d'arbre de rendu qui contient la racine de l'arbre de
@@ -38,7 +43,8 @@ class ArbreRendu : public NoeudComposite
 {
 public:
    /// Constructeur par défaut.
-   ArbreRendu();
+   ArbreRendu(event_handler::EventHandler* eventHandler);
+
    /// Destructeur.
    virtual ~ArbreRendu();
 
@@ -116,6 +122,8 @@ private:
 
 	/// Association du nom d'un type vers l'usine correspondante.
 	RegistreUsines usines_;   
+
+	event_handler::EventHandler* eventHandler_ = nullptr;
 };
 
 

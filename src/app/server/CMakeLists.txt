@@ -2,18 +2,70 @@
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
+	chat-management
+	map-management
+	map-management/map-rooms
+	UserManagement
+	message-dispatcher
+	.
 )
 
-add_executable(Server
+set(USER_MANAGEMENT_SRC
 	UserManagement/User.h
 	UserManagement/User.cpp
 	UserManagement/UserAuthLobby.h
 	UserManagement/UserAuthLobby.cpp
+)
+source_group("user-management" FILES ${USER_MANAGEMENT_SRC})
+
+set(CHAT_MANAGEMENT_SRC
 	chat-management/ChatManager.h
 	chat-management/ChatManager.cpp
-	ServerStarter.cpp
 )
+source_group("chat-management" FILES ${CHAT_MANAGEMENT_SRC})
 
+set(MAP_ROOMS_SRC
+	map-management/map-rooms/SimulationRoom.h
+	map-management/map-rooms/SimulationRoom.cpp
+	map-management/map-rooms/EditionRoom.h
+	map-management/map-rooms/EditionRoom.cpp
+	map-management/map-rooms/AbstractMapRoom.h
+	map-management/map-rooms/AbstractMapRoom.cpp
+)
+source_group("map-management\\map-rooms" FILES ${MAP_ROOMS_SRC})
+
+set(MAP_MANAGEMENT_SRC
+	map-management/MapRoomManager.h
+	map-management/MapRoomManager.cpp
+)
+source_group("map-management" FILES ${MAP_MANAGEMENT_SRC})
+
+set(MESSAGE_DISPATCHER_SRC
+	message-dispatcher/Observer.h
+	message-dispatcher/Observer.cpp
+	message-dispatcher/Observable.h
+	message-dispatcher/Observable.cpp
+	message-dispatcher/MessageDispatcher.h
+	message-dispatcher/MessageDispatcher.cpp
+)
+source_group("message-dispatcher" FILES ${MESSAGE_DISPATCHER_SRC})
+
+set(SERVER_SRC
+	ServerStarter.cpp
+	MultiUserSession.h
+	MultiUserSession.cpp
+	CMakeLists.txt
+)
+source_group("" FILES ${SERVER_SRC})
+
+add_executable(Server
+	${MESSAGE_DISPATCHER_SRC}
+	${USER_MANAGEMENT_SRC}
+	${CHAT_MANAGEMENT_SRC}
+	${MAP_MANAGEMENT_SRC}
+	${MAP_ROOMS_SRC}
+	${SERVER_SRC}
+)
 target_link_libraries(Server PRIVATE networkUtils)
 
 set_property(TARGET Server PROPERTY FOLDER "app/server")

@@ -2,59 +2,62 @@
 
 #include "UserAuthLobby.h"
 
+namespace server
+{
 
-server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener)
+UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener)
 {
 	HookToListenerEvents(listener);
 }
 
-server::UserAuthLobby::~UserAuthLobby()
+UserAuthLobby::~UserAuthLobby()
 {
 	UnhookFromListenerEvents(_listener);
 	Networking::NetworkObjects::Dispose(_listener);
 }
 
-void server::UserAuthLobby::HookToListenerEvents(Networking::ServerListener * listener)
+
+void UserAuthLobby::HookToListenerEvents(Networking::ServerListener * listener)
 {
 	_listener = listener;
-	__hook(&Networking::ServerListener::OnOtherConnected, listener, &UserAuthLobby::TreatConnection);
+	__hook(&Networking::ServerListener::OnOtherConnected, listener, &UserAuthLobby::handleConnection);
 }
 
-void server::UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener * listener)
+void UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener * listener)
 {
-	__unhook(&Networking::ServerListener::OnOtherConnected, listener, &UserAuthLobby::TreatConnection);
-	_listener = NULL;
+	__unhook(&Networking::ServerListener::OnOtherConnected, listener, &UserAuthLobby::handleConnection);
+	_listener = nullptr;
 }
 
-void server::UserAuthLobby::TreatConnection(Networking::Connection * connection)
-{
-	// create a user, hook to its events and add this connection to it
 
-	User* user = new User();
-	HookToUser(user);
+void UserAuthLobby::handleConnection(Networking::Connection * connection)
+{
+	int userId = nextUserId_++;
+	std::unique_ptr<User> user = std::make_unique<User>(userId);
+	user->addObserver(this);
 	user->AssignConnection(connection);
+	users_.insert(std::pair<int, std::unique_ptr<User>>(userId, std::move(user)));
 }
 
-void server::UserAuthLobby::HookToUser(User * user)
+void UserAuthLobby::onReceivedMessage(const std::string& message)
 {
-	__hook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect, this);
-	__hook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage, this);
+	// TODO: Handle user request disconnection here.
+	// TODO: Handle user authentification here.
 }
 
-void server::UserAuthLobby::UnhookFromUser(User * user)
+
+void UserAuthLobby::onDisconnected(int userId)
 {
-	__unhook(&User::OnUserDisconnected, user, &UserAuthLobby::OnUserDisconnect, this);
-	__unhook(&User::OnUserSentMessage, user, &UserAuthLobby::OnReceivedMessage, this);
+	UsersContainer::iterator disconnectedUser = users_.find(userId);
+	assert(disconnectedUser != users_.end());
+	
+	// If the user is authetified, remove from authentified list.
+	if (disconnectedUser->second->info_.isAuthentified_)
+	{
+		AuthUsersContainer::iterator authDisconnectedUser = authentificatedUsers_.find(disconnectedUser->second->info_.userName_);
+		authentificatedUsers_.erase(authDisconnectedUser);
+	}
+	users_.erase(disconnectedUser);
 }
 
-void server::UserAuthLobby::OnReceivedMessage(User * user, std::string& message)
-{
-	std::cout << message << std::endl;
-}
-
-void server::UserAuthLobby::OnUserDisconnect(User * user)
-{
-	// unhook from events and dispose of user
-	//UnhookFromUser(user);
-	//delete user;
 }

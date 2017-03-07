@@ -77,6 +77,7 @@ void VisiteurDeplacement::visiter(NoeudTable* noeud)
 		if (enfant->estSelectionne()) {
 			positionVirtuelle = enfant->obtenirPositionRelative();
 			enfant->assignerPositionRelative(positionVirtuelle + positionRelative_);
+			enfant->assignerPositionCourante(positionVirtuelle + positionRelative_);
 		}
 	}
 }

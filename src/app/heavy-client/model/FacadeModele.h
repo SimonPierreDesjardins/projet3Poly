@@ -117,8 +117,7 @@ public:
    void getDesktopResolution(int& horizontal, int& vertical);
 
 private:
-   /// Constructeur par défaut.
-   FacadeModele() = default;
+   FacadeModele();
 
    bool peutAfficher_{true};
    bool autorisationInputSouris_{ true };
@@ -162,7 +161,7 @@ private:
    std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
 
     client_network::NetworkManager network_;
-	EventHandler eventHandler_;
+	event_handler::EventHandler eventHandler_;
 
 };
 
