@@ -24,6 +24,10 @@ namespace server {
 	private:
 		//Loads up user information from stream
 		MapDatabase(std::string basePath);
+
+		virtual void WriteObject(DatalistElement& element);
+
+
 	};
 }
 

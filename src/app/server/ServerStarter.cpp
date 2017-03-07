@@ -1,4 +1,5 @@
 #include "UserManagement\UserAuthLobby.h"
+#include "ChatSystem\ChatSystem.h"
 #include <iostream>
 
 void SetupServer() {
@@ -12,12 +13,16 @@ void SetupServer() {
 
 	//Make map system
 
+	// create ChatSystem
+	server::ChatSystem chatSystem;
+
 	// create User auth system
-	//server::UserAuthLobby UserLobby(listener);
+	server::UserAuthLobby UserLobby(listener, chatSystem);
 
 	// create UserLobby
 
-	// create ChatSystem
+	
+
 
 	// create MapSystem
 

@@ -37,6 +37,12 @@ MapSystem/MapListLobby.h
 )
 source_group(MapSystem FILES ${MAP_SYST})
 
+set(CHT_SYST 
+ChatSystem/ChatSystem.cpp
+ChatSystem/ChatSystem.h
+)
+source_group(ChatSystem FILES ${CHT_SYST})
+
 add_executable(Server
 #Map system files
 ${MAP_SYST}
@@ -46,6 +52,9 @@ ${USR_MGMT}
 
 # Database management files
 ${DB}
+
+# Chat system files
+${CHT_SYST}
 
 ServerStarter.cpp
 )
