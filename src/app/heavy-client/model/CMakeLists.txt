@@ -142,6 +142,8 @@ set(MACHINE_A_MODES_SRC
     MachineAModes/ModeTutorialEdition.cpp
     MachineAModes/ModeTutorialSimulation.h
     MachineAModes/ModeTutorialSimulation.cpp
+    MachineAModes/ModeMapSelection.h
+    MachineAModes/ModeMapSelection.cpp
 )
 
 set(PHYSIQUE_SRC
@@ -193,6 +195,8 @@ set(CLIENT_NETWORK_SRC
 	client-network/Connection.cpp
 	client-network/NetworkManager.h
 	client-network/NetworkManager.cpp
+	client-network/MessageDispatcher.h
+	client-network/MessageDispatcher.cpp
 )
 source_group("client-network" FILES ${CLIENT_NETWORK_SRC})
 
@@ -213,6 +217,8 @@ set(EVENT_HANDLER_SRC
     event-handler/Observer.cpp
     event-handler/Observable.h
     event-handler/Observable.cpp
+    event-handler/LocalEvent.h
+    event-handler/LocalEvent.cpp
 )
 source_group("event-handler" FILES ${EVENT_HANDLER_SRC})
 

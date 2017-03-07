@@ -3,7 +3,7 @@
 
 #include <unordered_map>
 
-#include "glm/glm.hpp"
+#include "LocalEvent.h"
 
 namespace event_handler
 {
@@ -19,14 +19,7 @@ public:
 	void addObserver(Observer* observer);
 	void removeObserver(Observer* observer);
 
-	void notifyEntityMovedRelative(int entityId, const glm::vec3& position);
-	void notifyEntityMovedAbsolute(int entityId, const glm::vec3& position);
-	void notifyEntityResized(int entityId, const glm::vec3& position);
-	void notifyEntityRotated(int entityId, const glm::vec3& position);
-	void notifyEntitySelected();
-
-	void notifyEntityCreated();
-	void notifyEntityDeleted();
+	void notify(const LocalEvent& localEvent);
 
 private:
 	std::unordered_map<int, Observer*> observers_;

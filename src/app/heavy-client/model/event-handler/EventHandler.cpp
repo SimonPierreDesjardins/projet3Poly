@@ -10,35 +10,9 @@ EventHandler::EventHandler(client_network::NetworkManager* networkManager)
 {
 }
 
-void EventHandler::onEntitySelected()
+void EventHandler::handleLocalEvent(const LocalEvent& localEvent)
 {
-}
-
-void EventHandler::onEntityMovedAbsolute(int entityId, const glm::vec3& position)
-{
-	networkManager_->requestUpdateAbsolutePosition(entityId, position);
-}
-
-void EventHandler::onEntityMovedRelative(int entityId, const glm::vec3& position)
-{
-	networkManager_->requestUpdateRelativePosition(entityId, position);
-}
-
-void EventHandler::onEntityResized()
-{
-}
-
-void EventHandler::onEntityRotated()
-{
-}
-
-void EventHandler::onEntityCreated(const std::string& type, const glm::vec3& position)
-{
-	networkManager_->requestEntityCreation(type, position);
-}
-
-void EventHandler::onEntityDeleted()
-{
+	networkManager_->sendMessage(localEvent.getMessage());
 }
 
 }

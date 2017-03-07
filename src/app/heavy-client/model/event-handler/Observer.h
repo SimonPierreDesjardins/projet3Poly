@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "glm/glm.hpp"
+#include "LocalEvent.h"
 
 namespace event_handler
 {
@@ -16,14 +16,7 @@ public:
 
 	inline int getId() const;
 
-	virtual void onEntitySelected();
-	virtual void onEntityMovedRelative(int entityId, const glm::vec3& position);
-	virtual void onEntityMovedAbsolute(int entityId, const glm::vec3& position);
-	virtual void onEntityResized();
-	virtual void onEntityRotated();
-
-	virtual void onEntityCreated();
-	virtual void onEntityDeleted();
+	virtual void handleLocalEvent(const LocalEvent& localEvent) = 0;
 
 private:
 	static int nextObservedId_;

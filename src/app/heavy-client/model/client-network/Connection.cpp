@@ -123,6 +123,8 @@ void Connection::readData()
 
 void Connection::sendMessage(const std::string& message)
 {
+	if (!isConnected_) return;
+
 	mConnection.lock();
 	send(socket_, message.c_str(), message.size(), 0);
 	mConnection.unlock();

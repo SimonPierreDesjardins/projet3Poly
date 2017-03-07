@@ -2,6 +2,8 @@
 #define CLIENT_NETWORK_NETWORK_MANAGER_H
 
 #include "Connection.h"
+#include "Observable.h"
+
 #include "glm/glm.hpp"
 
 namespace client_network
@@ -20,22 +22,12 @@ public:
 	inline void createProfile(const std::string& profileName);
 	inline void authenticate(const std::string& profileName);
 
-	void joinRoom(int roomId);
-
-	void requestUpdateRelativePosition(int entityId, const glm::vec3& position);
-	void requestUpdateAbsolutePosition(int entityId, const glm::vec3& position);
-	void requestUpdateSize(int entityId, const glm::vec3& size);
-	void requestUpdateRotation(int entityId, const glm::vec3& rotation);
-	void requestUpdateSelected(int entityId, bool isSelected);
-
-	void requestEntityCreation(const std::string& type, const glm::vec3& position = glm::vec3{0.0, 0.0, 0.0});
+	inline void sendMessage(const std::string& message);
 
 	void handleServerMessage(const std::string& message);
 
 private:
 	
-	void serializeVector(std::string& message, const glm::vec3& data);
-
 	Connection connection_;
 };
 
@@ -62,6 +54,11 @@ inline void NetworkManager::createProfile(const std::string& profileName)
 inline void NetworkManager::authenticate(const std::string& profileName)
 {
 
+}
+
+inline void NetworkManager::sendMessage(const std::string& message)
+{
+	connection_.sendMessage(message);
 }
 
 }
