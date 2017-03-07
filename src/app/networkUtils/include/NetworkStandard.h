@@ -1,6 +1,6 @@
 #ifndef __NETWORK_STANDARD_H
 #define __NETWORK_STANDARD_H
-namespace Network {
+namespace Networking {
 	namespace MessageStandard {
 		//Index of the system indicator byte in the message
 		const int LENGTH_END = 0;
