@@ -48,11 +48,12 @@ void NetworkManager::requestUpdateSelected(int entityId, bool isSelected)
 
 }
 
-void NetworkManager::requestEntityCreation(const std::string& type)
+void NetworkManager::requestEntityCreation(const std::string& type, const glm::vec3& position)
 {
 	if (connection_.isConnected())
 	{
 		std::string moveMessage = "pc" + type + ";";
+		serializeVector(moveMessage, position);
 		moveMessage.insert(0, std::to_string(moveMessage.size()));
 		connection_.sendMessage(moveMessage);
 	}
@@ -60,6 +61,16 @@ void NetworkManager::requestEntityCreation(const std::string& type)
 
 void NetworkManager::handleServerMessage(const std::string& message)
 {
+}
+
+void NetworkManager::serializeVector(std::string& message, const glm::vec3& data)
+{
+	char const* serialized = reinterpret_cast<char const*>(&data.x);
+	message += std::string(serialized) + ";";
+	serialized = reinterpret_cast<char const*>(&data.y);
+	message += std::string(serialized) + ";";
+	serialized = reinterpret_cast<char const*>(&data.z);
+	message += std::string(serialized);
 }
 
 }

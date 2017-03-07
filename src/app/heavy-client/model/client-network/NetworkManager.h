@@ -28,11 +28,14 @@ public:
 	void requestUpdateRotation(int entityId, const glm::vec3& rotation);
 	void requestUpdateSelected(int entityId, bool isSelected);
 
-	void requestEntityCreation(const std::string& type);
+	void requestEntityCreation(const std::string& type, const glm::vec3& position = glm::vec3{0.0, 0.0, 0.0});
 
 	void handleServerMessage(const std::string& message);
 
 private:
+	
+	void serializeVector(std::string& message, const glm::vec3& data);
+
 	Connection connection_;
 };
 

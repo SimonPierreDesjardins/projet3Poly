@@ -195,8 +195,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 		-50, 50, -50, 50, false });
 
 	// Création du module qui gère l'affichage du texte avec OpenGL.
-	affichageTexte_ = std::make_unique<AffichageTexte>();
-
+	affichageTexte_ = std::make_unique<AffichageTexte>(vue_.get(), profil_.get());
 }
 
 
@@ -401,6 +400,7 @@ void FacadeModele::assignerVueOrtho()
 			0, 500, 0, 500,
 			1, 1000, 80, 105, 1.25,
 			-50, 50, -50, 50, false });
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -422,6 +422,7 @@ void FacadeModele::assignerVueOrbite()
 			0, 500, 0, 500,
 			1, 10000, 1, 100000, 1.25,
 			-50, 50, -50, 50, true }, false,false);
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -445,6 +446,7 @@ void FacadeModele::assignerVueOrbitePerso()
 		-50, 50, -50, 50, true }, false,true);
 	//place la camera pour qu'elle est un bon angle sur le robot
 	vue_->deplacerXY(-375, 550);
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 
@@ -470,6 +472,7 @@ void FacadeModele::assignerVuePremierePersonne()
 			0, 500, 0, 500,
 			1, 10000, 10, 10000, 1.25,
 			-50, 50, -50, 50, true }, true,false);
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////

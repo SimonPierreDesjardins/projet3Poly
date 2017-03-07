@@ -32,9 +32,9 @@ void EventHandler::onEntityRotated()
 {
 }
 
-void EventHandler::onEntityCreated(const std::string& type)
+void EventHandler::onEntityCreated(const std::string& type, const glm::vec3& position)
 {
-	networkManager_->requestEntityCreation(type);
+	networkManager_->requestEntityCreation(type, position);
 }
 
 void EventHandler::onEntityDeleted()

@@ -20,7 +20,7 @@ public:
 	virtual void onEntityResized();
 	virtual void onEntityRotated();
 
-	virtual void onEntityCreated(const std::string& type);
+	virtual void onEntityCreated(const std::string& type, const glm::vec3& position = { 0.0, 0.0, 0.0 });
 	virtual void onEntityDeleted();
 
 private:

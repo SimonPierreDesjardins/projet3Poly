@@ -28,6 +28,8 @@
 
 #include "EventHandler.h"
 
+#include "SimulationEngine.h"
+
 class NoeudAbstrait;
 
 ///////////////////////////////////////////////////////////////////////////
@@ -101,6 +103,8 @@ public:
    inline ControleurLumiere* obtenirControleurLumiere() const;
    // Retourne le gestionnaire d'evenements
    inline client_network::NetworkManager* getNetworkManager();
+   //
+   inline event_handler::EventHandler* getEventHandler();
 
    /// Réinitialise la scène.
    void reinitialiser();
@@ -162,7 +166,6 @@ private:
 
     client_network::NetworkManager network_;
 	event_handler::EventHandler eventHandler_;
-
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -303,6 +306,11 @@ inline void FacadeModele::assignerAutorisationInputClavier(const bool& autorisat
 inline client_network::NetworkManager* FacadeModele::getNetworkManager()
 {
 	return &network_;
+}
+
+inline event_handler::EventHandler* FacadeModele::getEventHandler()
+{
+	return &eventHandler_;
 }
 
 ////////////////////////////////////////////////////////////////////////

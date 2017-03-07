@@ -76,6 +76,8 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);
 		arbre_->accepterVisiteur(visiteurCreationPoteau_.get());
 		NoeudAbstrait* poteau = visiteurCreationPoteau_->obtenirReferenceNoeud();
+
+		eventHandler_->onEntityCreated(ArbreRenduINF2990::NOM_POTEAU, { positionVirtuelle.x, positionVirtuelle.y, positionVirtuelle.z });
 		
 		// Mettre à jour les quads et vérifier si le nouveau poteau se situe à l'extérieur de la table.
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
