@@ -1,3 +1,5 @@
+#ifndef __NETWORK_STANDARD_H
+#define __NETWORK_STANDARD_H
 namespace Network {
 	namespace MessageStandard {
 		//Index of the system indicator byte in the message
@@ -8,3 +10,5 @@ namespace Network {
 		const int DATA_START = 6;
 	}
 }
+
+#endif //!__NETWORK_STANDARD_H
