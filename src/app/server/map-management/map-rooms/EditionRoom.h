@@ -12,6 +12,7 @@ public:
 	EditionRoom() = default;
 	virtual ~EditionRoom() = default;
 	
+	void handleEntityCreationMessage(User* sender, const std::string& message);
 
 };
 

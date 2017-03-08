@@ -33,6 +33,10 @@ public:
 	virtual void visiter(ArbreRendu* noeud);
 	/// Creation de poteau sur la table.
 	virtual void visiter(NoeudTable* noeud);
+
+private:
+	ArbreRendu* arbre_ = nullptr;
+	NoeudTable* table_ = nullptr;
 };
 
 #endif // VISITEUR_CREATION_POTEAU_H

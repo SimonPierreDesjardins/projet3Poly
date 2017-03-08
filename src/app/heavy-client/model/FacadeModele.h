@@ -26,6 +26,7 @@
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
+#include "NetworkManager.h"
 #include "EventHandler.h"
 
 #include "SimulationEngine.h"
@@ -43,129 +44,135 @@ class NoeudAbstrait;
 class FacadeModele
 {
 public:
-   /// Destructeur.
-   ~FacadeModele();
 
-   /// Obtient l'instance unique de la classe.
-   static FacadeModele* obtenirInstance();
-   /// Libère l'instance unique de la classe.
-   static void libererInstance();
+	/// Destructeur.
+	~FacadeModele();
 
-   /// Crée un contexte OpenGL et initialise celui-ci.
-   void initialiserOpenGL(HWND hWnd);
+	/// Obtient l'instance unique de la classe.
+	static FacadeModele* obtenirInstance();
+	/// Libère l'instance unique de la classe.
+	static void libererInstance();
 
-   /// Charge la configuration à partir d'un fichier XML.
-   void chargerConfiguration() const;
-   /// Enregistre la configuration courante dans un fichier XML.
-   void enregistrerConfiguration() const;
-   /// Libère le contexte OpenGL.
-   void libererOpenGL();
+	void initialize(HWND hWnd);
 
-   /// Affiche le contenu du modèle.
-   void afficher() const;
-   /// Affiche la base du contenu du modèle.
-   void afficherBase() const;
+	/// Crée un contexte OpenGL et initialise celui-ci.
+	void initialiserOpenGL(HWND hWnd);
 
-   /// Modifie le Mode courant.
-   void assignerMode(Mode mode);
-   // Obtenir le Mode courant.
-   inline ModeAbstrait* obtenirMode();
+	/// Charge la configuration à partir d'un fichier XML.
+	void chargerConfiguration() const;
+	/// Enregistre la configuration courante dans un fichier XML.
+	void enregistrerConfiguration() const;
+	/// Libère le contexte OpenGL.
+	void libererOpenGL();
 
-   // Obtient si le modèle est autorisé à recevoir des entrées utilisateurs. 
-   inline bool obtenirAutorisationInputSouris() const; 
-   // Assigne si le modèle est autorisé à recevoir des entrées utilisateurs. 
-   inline void assignerAutorisationInputSouris(const bool& autorisation);
+	/// Affiche le contenu du modèle.
+	void afficher() const;
+	/// Affiche la base du contenu du modèle.
+	void afficherBase() const;
 
-   inline bool obtenirAutorisationInputClavier() const;
+	/// Modifie le Mode courant.
+	void assignerMode(Mode mode);
+	// Obtenir le Mode courant.
+	inline ModeAbstrait* obtenirMode();
 
-   inline void assignerAutorisationInputClavier(const bool& autorisation);
-  
-   /// Retourne la vue courante.
-   inline vue::Vue* obtenirVue();
+	// Obtient si le modèle est autorisé à recevoir des entrées utilisateurs. 
+	inline bool obtenirAutorisationInputSouris() const; 
+	// Assigne si le modèle est autorisé à recevoir des entrées utilisateurs. 
+	inline void assignerAutorisationInputSouris(const bool& autorisation);
 
-   //Assigne les parametres pour la vue ortho
-   void assignerVueOrtho();
-   //Assigne les parametres pour la vue orbite
-   void assignerVueOrbite();
-   void assignerVueOrbitePerso();
-   //Assigne les parametres pour la vue à la première personne
-   void assignerVuePremierePersonne();
-   
-   /// Retourne l'arbre de rendu.
-   inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
-   /// Retourne l'arbre de rendu.
-   inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
-   /// Retourne le profil de l'utilisateur.
-   inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
-   // Retourne l'affichage du texte.
-   inline AffichageTexte* obtenirAffichageTexte() const;
-   // Retourne le controleur de lumière.
-   inline ControleurLumiere* obtenirControleurLumiere() const;
-   // Retourne le gestionnaire d'evenements
-   inline client_network::NetworkManager* getNetworkManager();
-   //
-   inline event_handler::EventHandler* getEventHandler();
+	inline bool obtenirAutorisationInputClavier() const;
 
-   /// Réinitialise la scène.
-   void reinitialiser();
+	inline void assignerAutorisationInputClavier(const bool& autorisation);
 
-   /// Anime la scène.
-   void animer(float temps);
-   void stopAffichage();
-   void continuerAffichage();
+	/// Retourne la vue courante.
+	inline vue::Vue* obtenirVue();
 
-   /// Assigne un skybox à rendre
-   void assignerEnvironnement(int noEnviro);
+	//Assigne les parametres pour la vue ortho
+	void assignerVueOrtho();
+	//Assigne les parametres pour la vue orbite
+	void assignerVueOrbite();
+	void assignerVueOrbitePerso();
+	//Assigne les parametres pour la vue à la première personne
+	void assignerVuePremierePersonne();
 
-   /// Retourne la dimension de l'écran
-   void getDesktopResolution(int& horizontal, int& vertical);
+	/// Retourne l'arbre de rendu.
+	inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
+	/// Retourne l'arbre de rendu.
+	inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
+	/// Retourne le profil de l'utilisateur.
+	inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
+	// Retourne l'affichage du texte.
+	inline AffichageTexte* obtenirAffichageTexte() const;
+	// Retourne le controleur de lumière.
+	inline ControleurLumiere* obtenirControleurLumiere() const;
+	// Retourne le gestionnaire d'evenements
+	inline client_network::NetworkManager* getNetworkManager();
+	//
+	inline event_handler::EventHandler* getEventHandler();
+
+	/// Réinitialise la scène.
+	void reinitialiser();
+
+	/// Anime la scène.
+	void animer(float temps);
+	void stopAffichage();
+	void continuerAffichage();
+
+	/// Assigne un skybox à rendre
+	void assignerEnvironnement(int noEnviro);
+
+	/// Retourne la dimension de l'écran
+	void getDesktopResolution(int& horizontal, int& vertical);
 
 private:
-   FacadeModele();
 
-   bool peutAfficher_{true};
-   bool autorisationInputSouris_{ true };
-   bool autorisationInputClavier_{ true };
-   /// Constructeur copie désactivé.
-   FacadeModele(const FacadeModele&) = delete;
-   /// Opérateur d'assignation désactivé.
-   FacadeModele& operator =(const FacadeModele&) = delete;
+	bool peutAfficher_{true};
+	bool autorisationInputSouris_{ true };
+	bool autorisationInputClavier_{ true };
+	/// Constructeur copie désactivé.
+	FacadeModele(const FacadeModele&) = delete;
+	/// Opérateur d'assignation désactivé.
+	FacadeModele& operator =(const FacadeModele&) = delete;
 
-   /// Nom du fichier XML dans lequel doit se trouver la configuration.
-   static const std::string FICHIER_CONFIGURATION;
+	/// Nom du fichier XML dans lequel doit se trouver la configuration.
+	static const std::string FICHIER_CONFIGURATION;
 
-   /// Pointeur vers l'instance unique de la classe.
-   static std::unique_ptr<FacadeModele> instance_;
+	/// Pointeur vers l'instance unique de la classe.
+	static std::unique_ptr<FacadeModele> instance_;
 
-   /// Poignée ("handle") vers la fenêtre où l'affichage se fait.
-   HWND  hWnd_{ nullptr };
-   /// Poignée ("handle") vers le contexte OpenGL.
-   HGLRC hGLRC_{ nullptr };
-   /// Poignée ("handle") vers le "device context".
-   HDC   hDC_{ nullptr };
-    
-   /// Vue courante de la scène.
-   std::unique_ptr<vue::Vue> vue_{ nullptr };
-
-   /// Arbre de rendu contenant les différents objets de la scène.
-   std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
-
-   /// Le mode d'utilisation courant.
-   std::unique_ptr<ModeAbstrait> mode_{ nullptr };
-
-   /// Le profil utilisateur.
-   std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
-
-   /// La boite qui donne un environnement
-   std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
-
-   /// Le controle de l'affichage du texte.
-   std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
-   /// Le controle de l'affichage des lumières.
-   std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
+	/// Poignée ("handle") vers la fenêtre où l'affichage se fait.
+	HWND  hWnd_{ nullptr };
+	/// Poignée ("handle") vers le contexte OpenGL.
+	HGLRC hGLRC_{ nullptr };
+	/// Poignée ("handle") vers le "device context".
+	HDC   hDC_{ nullptr };
 
     client_network::NetworkManager network_;
+
 	event_handler::EventHandler eventHandler_;
+
+	/// Vue courante de la scène.
+	std::unique_ptr<vue::Vue> vue_{ nullptr };
+
+	/// Arbre de rendu contenant les différents objets de la scène.
+	std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
+
+	/// Le mode d'utilisation courant.
+	std::unique_ptr<ModeAbstrait> mode_{ nullptr };
+
+	/// Le profil utilisateur.
+	std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
+
+	/// La boite qui donne un environnement
+	std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
+
+	/// Le controle de l'affichage du texte.
+	std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
+	/// Le controle de l'affichage des lumières.
+	std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
+
+
+	FacadeModele();
 };
 
 ////////////////////////////////////////////////////////////////////////

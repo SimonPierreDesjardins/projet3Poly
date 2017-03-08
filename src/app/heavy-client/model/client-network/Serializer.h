@@ -13,9 +13,13 @@ public:
 	Serializer() = default;
 	~Serializer() = default;
 
-	void serialize(std::string& message, const glm::vec3& data);
+	void serialize(const glm::vec3& data, std::string& message);
 	void serialize(uint32_t data, std::string& message);
 	void serialize(uint8_t data, std::string& message);
+
+	uint32_t deserializeInteger(char data[4]);
+	float deserializeFloat(char data[4]);
+	uint8_t deserializeChar(char data);
 };
 
 }

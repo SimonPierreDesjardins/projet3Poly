@@ -35,7 +35,22 @@ void MultiUserSession::postRemoveUser(User* user)
 
 void MultiUserSession::broadcastMessage(const std::string& message)
 {
-	// TODO: for loop here with send message.
+	UsersContainer::iterator it;
+	for (it = users_.begin(); it != users_.end(); it++)
+	{
+		it->second->sendMessage(message);
+	}
 }
 
+void MultiUserSession::broadcastMessageExcluded(User* excludedUser, const std::string& message)
+{
+	UsersContainer::iterator it;
+	for (it = users_.begin(); it != users_.end(); it++)
+	{
+		if (it->second != excludedUser) 
+		{
+			it->second->sendMessage(message);
+		}
+	}
+}
 }

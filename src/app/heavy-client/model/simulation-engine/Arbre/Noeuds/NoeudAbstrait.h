@@ -20,7 +20,6 @@
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
 #include "RectangleEnglobant.h"
-#include "Observable.h"
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
 
@@ -68,7 +67,7 @@ enum EntityType
 /// @author DGI-2990
 /// @date 2007-01-24
 ///////////////////////////////////////////////////////////////////////////
-class NoeudAbstrait : public event_handler::Observable
+class NoeudAbstrait
 {
 public:
 	/// Constructeur.

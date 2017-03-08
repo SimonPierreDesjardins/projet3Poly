@@ -20,18 +20,16 @@ public:
 class User : public Observable
 {
 public:
+	UserInformation info_;
+
 	User() = default;
 	User(int id);
 	virtual ~User();
 
 	void AssignConnection(Networking::Connection* connectionToTreat);
 
-	void AssignInfo(UserInformation info) 
-	{
-		info_ = info;
-	}
-
-	UserInformation info_;
+	inline void AssignInfo(UserInformation info);
+	inline void sendMessage(const std::string& message);
 
 private:
 	void HookToConnection(Networking::Connection* connectionToListenTo);
@@ -41,6 +39,16 @@ private:
 
 	Networking::Connection* _connection;
 };
+
+inline void User::sendMessage(const std::string& message)
+{
+	_connection->SendData(message);
+}
+
+inline void User::AssignInfo(UserInformation info)
+{
+	info_ = info;
+}
 
 }
 

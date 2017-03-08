@@ -78,9 +78,11 @@ protected:
 	glm::dvec3 positionRelative_{ glm::dvec3() };
 	glm::dvec3 positionRelativeAvant_{ glm::dvec3() };
 	glm::dvec3 positionRelativeApres_{ glm::dvec3() };
+
 	bool estDrag_{ false };
 	double angleRotation_{ 0.0 };
 	double facteurMiseAEchelle_{ 0.0 };
+
 	bool estAffiche_{ false };
 	NoeudAbstrait* referenceNoeud_{ nullptr };
 };

@@ -14,6 +14,7 @@
 #include <memory>
 #include "glm\glm.hpp"
 #include "VisiteurAbstrait.h"
+#include "Observable.h"
 
 
 
@@ -38,7 +39,7 @@ namespace event_handler
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatAbstrait
+class EtatAbstrait : public event_handler::Observable
 {
 public:
 	EtatAbstrait();
@@ -68,7 +69,6 @@ protected:
 
 	ArbreRendu* arbre_{ nullptr };
 	vue::Vue* vue_{ nullptr };
-	event_handler::EventHandler* eventHandler_{ nullptr };
 
 	bool estClickDrag();
 	bool curseurEstSurTable_{ true };

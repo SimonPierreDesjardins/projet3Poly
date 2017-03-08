@@ -594,7 +594,6 @@ void NoeudAbstrait::assignerPositionCourante(
     positionCourante_ = positionCourante;
 	LocalEvent localEvent;
 	localEvent.buildUpdateAbsolutePositionMessage(0, { positionCourante.x, positionCourante.y, positionCourante.z });
-	notify(localEvent);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -616,7 +615,6 @@ void NoeudAbstrait::assignerPositionRelative(
 	positionRelative_ = positionRelative;
 	LocalEvent localEvent;
 	localEvent.buildUpdateRelativePositionMessage(0, { positionRelative.x, positionRelative.y, positionRelative.z });
-	notify(localEvent);
 }
 
 ////////////////////////////////////////////////

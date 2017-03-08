@@ -38,7 +38,7 @@ void LocalEvent::buildEntityCreatedMessage(uint32_t entityId, uint8_t type, uint
 	serializer_.serialize(type, message_);
 	serializer_.serialize(entityId, message_);
 	serializer_.serialize(parentId, message_);
-	serializer_.serialize(message_, position);
+	serializer_.serialize(position, message_);
 }
 
 void LocalEvent::buildEntityDeletedMessage(uint32_t entityId)

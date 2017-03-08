@@ -5,6 +5,8 @@
 
 #include "LocalEvent.h"
 
+class NoeudAbstrait;
+
 namespace event_handler
 {
 
@@ -16,14 +18,19 @@ public:
 	Observable() = default;
 	virtual ~Observable() = 0;
 
-	void addObserver(Observer* observer);
-	void removeObserver(Observer* observer);
+	inline void setObserver(Observer* observer);
 
-	void notify(const LocalEvent& localEvent);
+	void notifyEntityCreated(NoeudAbstrait* noeud);
 
-private:
-	std::unordered_map<int, Observer*> observers_;
+protected:
+	Observer* observer_;
 };
+
+void Observable::setObserver(Observer* observer)
+{
+	assert(observer != nullptr);
+	observer_ = observer;
+}
 
 }
 

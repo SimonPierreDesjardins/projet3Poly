@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "LocalEvent.h"
+#include "NoeudAbstrait.h"
 
 namespace event_handler
 {
@@ -16,7 +16,7 @@ public:
 
 	inline int getId() const;
 
-	virtual void handleLocalEvent(const LocalEvent& localEvent) = 0;
+	virtual void onEntityCreated(NoeudAbstrait* entity) = 0;
 
 private:
 	static int nextObservedId_;

@@ -46,7 +46,7 @@ extern "C"
 		if (handle == nullptr) {
 			return;
 		}
-		FacadeModele::obtenirInstance()->initialiserOpenGL((HWND)(handle));
+		FacadeModele::obtenirInstance()->initialize((HWND)(handle));
         //executerTests();
 	}
 

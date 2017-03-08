@@ -50,7 +50,7 @@ void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& m
 	assert(message[4] == MAP_EDITION_MESSAGE);
 	switch (message[5])
 	{
-	case 'e':
+	case 'c':
 		handleEntityCreationMessage(sender, message);
 		break;
 

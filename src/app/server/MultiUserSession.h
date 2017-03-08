@@ -23,7 +23,8 @@ public:
 	void addUser(User* user);
 	void removeUser(User* user);
 
-	virtual void broadcastMessage(const std::string& message);
+	void broadcastMessage(const std::string& message);
+	void broadcastMessageExcluded(User* excludedUser, const std::string& message);
 
 protected:
 	virtual void postAddUser(User* user);

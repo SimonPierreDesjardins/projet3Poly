@@ -8,11 +8,10 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "FacadeModele.h"
-#include "Vue.h"
-#include "VisiteurCreationPoteau.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
+
+#include "VisiteurCreationPoteau.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -57,7 +56,8 @@ VisiteurCreationPoteau::~VisiteurCreationPoteau()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurCreationPoteau::visiter(ArbreRendu* noeud)
 {
-	noeud->chercher(0)->accepterVisiteur(this);
+	arbre_ = noeud;
+	arbre_->chercher(0)->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -73,8 +73,10 @@ void VisiteurCreationPoteau::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurCreationPoteau::visiter(NoeudTable* noeud)
 {
-	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
+	table_ = noeud;
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
 	nouveauNoeud->assignerPositionRelative(positionRelative_);
+	nouveauNoeud->assignerPositionCourante(positionRelative_);
 	noeud->ajouter(nouveauNoeud);
 	referenceNoeud_ = nouveauNoeud.get();
 }

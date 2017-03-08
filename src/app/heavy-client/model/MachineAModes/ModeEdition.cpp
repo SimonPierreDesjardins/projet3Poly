@@ -33,12 +33,13 @@
 ModeEdition::ModeEdition()
 {
 	typeMode_ = EDITION;
-	etat_ = std::make_unique <EtatSelection>();
+	assignerEtat(SELECTION);
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
-
-	FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(0);
+	FacadeModele* facade = FacadeModele::obtenirInstance();
+	facade->assignerEnvironnement(2);
+	eventHandler_ = facade->getEventHandler();
+	facade->getNetworkManager()->requestToJoinMapSession(0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -138,6 +139,7 @@ void ModeEdition::assignerEtat(EtatType etat)
 		etat_ = std::make_unique<EtatLoupe>();
 		break;
 	}
+	etat_->setObserver(eventHandler_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -197,31 +199,31 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_R:
-				etat_ = std::make_unique<EtatRotation>();
+				assignerEtat(SELECTION);
 				break;
 
 			case VK_KEY_E:
-				etat_ = std::make_unique<EtatMiseAEchelle>();
+				assignerEtat(MISE_A_ECHELLE);
 				break;
 
 			case VK_KEY_C:
-				etat_ = std::make_unique<EtatDuplication>();
+				assignerEtat(DUPLICATION);
 				break;
 
 			case VK_KEY_Z:
-				etat_ = std::make_unique<EtatLoupe>();
+				assignerEtat(ZOOM);
 				break;
 
 			case VK_KEY_P:
-				etat_ = std::make_unique<EtatCreationPoteau>();
+				assignerEtat(CREATION_POTEAU);
 				break;
 
 			case VK_KEY_M:
-				etat_ = std::make_unique<EtatCreationMur>();
+				assignerEtat(CREATION_MUR);
 				break;
 
 			case VK_KEY_L:
-				etat_ = std::make_unique<EtatCreationLigne>();
+				assignerEtat(CREATION_LIGNE_NOIRE);
 				break;
 
 			case VK_KEY_T:

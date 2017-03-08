@@ -84,6 +84,26 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 	return true;
 }
 
+void Connection::fetchSocketMessage()
+{
+	// Read and handle the new message.
+	mConnection.lock();
+	rcvBuffer_.fill(char());
+	int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
+
+	if (readBytes != 0)
+	{
+		onMessageReceived_(rcvBuffer_.data(), readBytes);
+	}
+	else // Connection lost 
+	{
+		isConnected_ = false;
+		// TODO: Notifier le ui de la deconnexion.
+	} 
+	// TODO: else pour le recv qui fail.
+	mConnection.unlock();
+}
+
 void Connection::listen()
 {
 	fd_set readfds;
@@ -96,18 +116,7 @@ void Connection::listen()
 		int selectResult = !select(NULL, &readfds, NULL, NULL, &timeout_);
 		if (selectResult != SOCKET_ERROR && FD_ISSET(socket_, &readfds))
 		{
-			// Read and handle the new message.
-			mConnection.lock();
-			rcvBuffer_.fill(char());
-			int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
-			onMessageReceived_(std::string(rcvBuffer_.data()));
-			if (readBytes == 0)
-			{
-				isConnected_ = false;
-				// TODO: Notifier le ui de la deconnexion.
-			} 
-			// TODO: else pour le recv qui fail.
-			mConnection.unlock();
+			fetchSocketMessage();
 		}
 		else if (selectResult == SOCKET_ERROR)
 		{
@@ -126,11 +135,11 @@ void Connection::sendMessage(const std::string& message)
 	if (!isConnected_) return;
 
 	mConnection.lock();
-	send(socket_, message.c_str(), message.size(), 0);
+	send(socket_, message.c_str(), (int)(message.size()), 0);
 	mConnection.unlock();
 }
 
-void Connection::receiveMessage(const std::string& message)
+void Connection::receiveMessage(char const* message, int32_t size)
 {
 	std::cout << message << std::endl;
 }

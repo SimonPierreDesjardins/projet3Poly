@@ -5,14 +5,13 @@
 namespace event_handler
 {
 
-EventHandler::EventHandler(client_network::NetworkManager* networkManager)
-	: networkManager_(networkManager)
+void EventHandler::onEntityCreated(NoeudAbstrait* noeud)
 {
-}
+	const glm::dvec3& relPos = noeud->obtenirPositionRelative();
+	const glm::dvec3& absPos = noeud->obtenirPositionCourante();
 
-void EventHandler::handleLocalEvent(const LocalEvent& localEvent)
-{
-	networkManager_->sendMessage(localEvent.getMessage());
+	networkManager_->requestEntityCreation(noeud->getId(), noeud->getType(), noeud->obtenirParent()->getId(),
+		{ relPos.x, relPos.y, relPos.z }, { absPos.x, absPos.y, absPos.z });
 }
 
 }
