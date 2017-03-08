@@ -30,17 +30,13 @@ public:
 		info_ = info;
 	}
 
-	//__event void OnUserDisconnected(User* thisUser);
-	//__event void OnUserSentMessage(User* thisUser, std::string& message);
-
 	UserInformation info_;
 
 private:
 	void HookToConnection(Networking::Connection* connectionToListenTo);
-	void UnhookFromConnection(Networking::Connection* connectionToListenTo);
 
-	void OnReceivedMessage(std::string& message);
-	void OnDisconnect();
+	void OnReceivedMessage(const std::string& message);
+	void OnConnectionLost();
 
 	Networking::Connection* _connection;
 

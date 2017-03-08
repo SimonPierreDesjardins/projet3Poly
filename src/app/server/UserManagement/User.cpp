@@ -11,8 +11,7 @@ User::User(int id)
 
 User::~User()
 {
-	UnhookFromConnection(_connection);
-	Networking::NetworkObjects::Dispose(_connection);
+	delete _connection;
 }
 
 void User::AssignConnection(Networking::Connection * connectionToTreat)
@@ -23,25 +22,20 @@ void User::AssignConnection(Networking::Connection * connectionToTreat)
 
 void User::HookToConnection(Networking::Connection * connectionToListenTo)
 {
-	__hook(&Networking::Connection::OnReceivedData, connectionToListenTo, &User::OnReceivedMessage);
-	__hook(&Networking::Connection::OnConnectionLost, connectionToListenTo, &User::OnDisconnect);
+	_connection->hookOnReceivedMessage(&User::OnReceivedMessage, this);
+	_connection->hookOnConnectionLost(&User::OnConnectionLost, this);
 }
 
-void User::UnhookFromConnection(Networking::Connection * connectionToDeafenFrom)
-{
-	__unhook(&Networking::Connection::OnReceivedData, connectionToDeafenFrom, &User::OnReceivedMessage);
-	__unhook(&Networking::Connection::OnConnectionLost, connectionToDeafenFrom, &User::OnDisconnect);
-}
-
-void User::OnReceivedMessage(std::string& message)
+void User::OnReceivedMessage(const std::string& message)
 {
 	std::cout << message << std::endl;
-	//dispatchReceivedMessage(message);
+	dispatchReceivedMessage(message);
 }
 
-void User::OnDisconnect()
+void User::OnConnectionLost()
 {
-	//notifyDisconnected(info_.id_);
+	notifyDisconnected(info_.id_);
+	delete this;
 }
 
 }

@@ -3,15 +3,19 @@
 namespace server
 {
 
-int MultiUserSession::id_ = 0;
 
-MultiUserSession::MultiUserSession()
+MultiUserSession::MultiUserSession(char systemType)
+	: Observer(systemType)
 {
-	id_++;
 }
 
 MultiUserSession::~MultiUserSession()
 {
+}
+
+void MultiUserSession::addUser(User* user)
+{
+
 }
 
 }

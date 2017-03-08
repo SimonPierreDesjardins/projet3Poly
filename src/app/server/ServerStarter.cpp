@@ -1,4 +1,5 @@
 #include "UserManagement\UserAuthLobby.h"
+#include "MapRoomManager.h"
 #include <iostream>
 
 void SetupServer() {
@@ -18,6 +19,8 @@ void SetupServer() {
 	// create ChatSystem
 
 	// create MapSystem
+	server::MapRoomManager mapRoomManager;
+	mapRoomManager.createRoom(server::EDITION_ROOM);
 
 	std::cout << "Starting listener" << std::endl;
 	listener->StartAccepting();
@@ -28,6 +31,7 @@ void SetupServer() {
 	while (command != "exit") {
 		std::getline(std::cin, command);
 	}
+	mapRoomManager.removeRoom(0);
 
 	Networking::NetworkObjects::Dispose(listener);
 }

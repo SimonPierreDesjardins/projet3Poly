@@ -6,6 +6,7 @@ namespace server
 {
 
 UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener)
+	: MultiUserSession('u')
 {
 	HookToListenerEvents(listener);
 }
@@ -32,32 +33,37 @@ void UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener * listen
 
 void UserAuthLobby::handleConnection(Networking::Connection * connection)
 {
-	int userId = nextUserId_++;
-	std::unique_ptr<User> user = std::make_unique<User>(userId);
+	uint32_t userId = nextUserId_++;
+	User* user = new User(userId);
 	user->addObserver(this);
 	user->AssignConnection(connection);
-	users_.insert(std::pair<int, std::unique_ptr<User>>(userId, std::move(user)));
+	ownedUsers_.insert(std::pair<uint32_t, User*>(userId, user));
 }
 
 void UserAuthLobby::onReceivedMessage(const std::string& message)
 {
 	// TODO: Handle user request disconnection here.
 	// TODO: Handle user authentification here.
+	// TODO: Add map from user id to username to confirm authentification.
 }
 
 
-void UserAuthLobby::onDisconnected(int userId)
+void UserAuthLobby::onDisconnected(uint32_t userId)
 {
-	UsersContainer::iterator disconnectedUser = users_.find(userId);
-	assert(disconnectedUser != users_.end());
+	// Find the disconnected user.
+	OwnedUsersContainer::iterator disconnectedUser = ownedUsers_.find(userId);
+	assert(disconnectedUser != ownedUsers_.end());
 	
-	// If the user is authetified, remove from authentified list.
+	// If the user is authentificated, remove from authentificated list.
 	if (disconnectedUser->second->info_.isAuthentified_)
 	{
-		AuthUsersContainer::iterator authDisconnectedUser = authentificatedUsers_.find(disconnectedUser->second->info_.userName_);
-		authentificatedUsers_.erase(authDisconnectedUser);
+		UsersContainer::iterator authDisconnectedUser = users_.find(userId);
+		users_.erase(authDisconnectedUser);
 	}
-	users_.erase(disconnectedUser);
+
+	// Remove from owned list and deallocate the user.
+	std::cout << "User " << std::to_string(disconnectedUser->second->info_.id_) << " disconnected.";
+	ownedUsers_.erase(disconnectedUser);
 }
 
 }

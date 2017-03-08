@@ -9,15 +9,12 @@
 namespace server
 {
 
-class MapRoomManager : public MultiUserSession
+class EditionRoom : public AbstractMapRoom
 {
-
 public:
-	MapRoomManager();
-	~MapRoomManager();
+	EditionRoom() = default;
+	virtual ~EditionRoom() = default;
 
-private:
-	std::vector<AbstractMapRoom> rooms_;
 };
 
 }

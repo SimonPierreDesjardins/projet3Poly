@@ -1,6 +1,9 @@
 #ifndef MULTI_USER_SESSION_H
 #define MULTI_USER_SESSION_H
 
+#include <unordered_map>
+
+#include "User.h"
 #include "Observer.h"
 
 namespace server
@@ -9,20 +12,20 @@ namespace server
 class MultiUserSession : public Observer
 {
 public:
-	MultiUserSession();
+	MultiUserSession(char systemType);
 	virtual ~MultiUserSession() = 0;
 	inline int getSessionId() const;
 
-	inline int getId() const;
+	void addUser(User* user);
+
+protected:
+
+	typedef std::unordered_map<uint32_t, User*> UsersContainer;
+	UsersContainer users_;
 
 private:
-	static int id_;
+	MultiUserSession();
 };
-
-inline int MultiUserSession::getId() const
-{
-	return id_;
-}
 
 }
 

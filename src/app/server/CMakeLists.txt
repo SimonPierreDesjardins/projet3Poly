@@ -54,6 +54,8 @@ set(SERVER_SRC
 	ServerStarter.cpp
 	MultiUserSession.h
 	MultiUserSession.cpp
+	ServerFacade.h
+	ServerFacade.cpp
 	CMakeLists.txt
 )
 source_group("" FILES ${SERVER_SRC})

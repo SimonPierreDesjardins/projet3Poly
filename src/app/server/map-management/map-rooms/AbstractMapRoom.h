@@ -4,9 +4,12 @@
 class AbstractMapRoom
 {
 public:	
-
-private:	
-
+	AbstractMapRoom() = default;
+	virtual ~AbstractMapRoom() = 0;
 };
+
+inline AbstractMapRoom::~AbstractMapRoom()
+{
+}
 
 #endif // ABSTRACT_MAP_ROOM

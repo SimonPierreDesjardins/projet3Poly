@@ -8,32 +8,29 @@
 
 #include "Networking.h"
 
-#include "Observer.h"
+#include "MultiUserSession.h"
 
 #include "User.h"
 
 namespace server 
 {
 
-class UserAuthLobby : public Observer
+class UserAuthLobby : public MultiUserSession
 {
 public:
 	UserAuthLobby(Networking::ServerListener* listener);
 	virtual ~UserAuthLobby();
 
 	virtual void onReceivedMessage(const std::string& message);
-	virtual void onDisconnected(int userId);
+	virtual void onDisconnected(uint32_t userId);
 
 private:
 
 	Networking::ServerListener* _listener;
-	int nextUserId_ = 0;
+	uint32_t nextUserId_ = 0;
 
-	typedef std::unordered_map<std::string, User*> AuthUsersContainer;
-	typedef std::unordered_map<int, std::unique_ptr<User>> UsersContainer;
-
-	AuthUsersContainer authentificatedUsers_;
-	UsersContainer users_;
+	typedef std::unordered_map<uint32_t, User*> OwnedUsersContainer;
+	OwnedUsersContainer ownedUsers_;
 
 	// Connection reception treatment
 	void HookToListenerEvents(Networking::ServerListener* listener);

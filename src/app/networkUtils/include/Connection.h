@@ -2,60 +2,98 @@
 #ifndef __CONNECTION_H__
 #define __CONNECTION_H__
 
-#include "asio.hpp"
-#include "Networking.h"
 #include <queue>
 #include <memory>
 #include <mutex>
+#include <functional>
+
+#include "asio.hpp"
+#include "Networking.h"
 
 namespace Networking 
 {
-	class Connection{
-		friend class NetworkObjects;
-		friend class ConnectionResolver;
-		friend class ServerListener;
+class Connection
+{
+	friend class NetworkObjects;
+	friend class ConnectionResolver;
+	friend class ServerListener;
 
-	public:
+public:
 
-		///<summary>Sends the string of bytes through the connection</summary>
-		///<param name='data'>The string of bytes to send.</param>
-		void SendData(std::string data);
+	// Destructor that also cleans and closes the connection if necessary
+	~Connection();
 
-		///<summary>Event called whenever data is received by this connection</summary>
-		///<param name='data'>The string of bytes recieved.</param>
-		__event void OnReceivedData(std::string& data);
+	///<summary>Sends the string of bytes through the connection</summary>
+	///<param name='data'>The string of bytes to send.</param>
+	void SendData(std::string data);
 
-		///<summary>Event called whenever the connection is lost</summary>
-		__event void OnConnectionLost();
+	template<class F, class T>
+	void hookOnReceivedMessage(F&& handler, T&& instance);
 
-	private:
-		//Starts the connection process to send data to eachother
-		void Start();
+	template<class F>
+	void hookOnReceivedMessage(F&& handler);
 
-		// Constructor taking a functionnal socket
-		Connection(asio::ip::tcp::socket* socket) { _socket = socket; _sendQueue = std::queue<std::string>(); }
+	template<class F, class T>
+	void hookOnConnectionLost(F&& handler, T&& instance);
 
-		// Destructor that also cleans and closes the connection if necessary
-		~Connection();
+	template<class F>
+	void hookOnConnectionLost(F&& handler);
 
-		// Connection closer
-		void CloseConnection();
+private:
+	//Starts the connection process to send data to eachother
+	void Start();
 
-		void CheckIfDisconnect(std::error_code error);
+	// Constructor taking a functionnal socket
+	Connection(asio::ip::tcp::socket* socket) { _socket = socket; _sendQueue = std::queue<std::string>(); }
 
-		void ReadData();
 
-		void WriteData();
+	// Connection closer
+	void CloseConnection();
 
-		asio::ip::tcp::socket* _socket; // A reference to the currently used network socket
+	void CheckIfDisconnect(std::error_code error);
 
-		// Buffer used to store data received from the client.
-		char _buffer[1024];
+	void ReadData();
 
-		std::queue<std::string> _sendQueue;
+	void WriteData();
 
-		static std::mutex _connectionLock;
-		bool _inDeletionProcess = false;
-	};
+	asio::ip::tcp::socket* _socket; // A reference to the currently used network socket
+
+	// Buffer used to store data received from the client.
+	char _buffer[1024];
+
+	std::queue<std::string> _sendQueue;
+
+	static std::mutex _connectionLock;
+	bool _inDeletionProcess = false;
+
+	std::function<void(const std::string&)> onReceivedMessage_;
+	std::function<void(void)> onConnectionLost_;
+};
+
+template<class F, class T>
+void Connection::hookOnReceivedMessage(F&& handler, T&& instance)
+{
+	onReceivedMessage_ = std::bind(handler, instance, std::placeholders::_1);
 }
+
+template<class F>
+void Connection::hookOnReceivedMessage(F&& handler)
+{
+	onReceivedMessage_ = std::bind(handler, std::placeholders::_1);
+}
+
+template<class F, class T>
+void Connection::hookOnConnectionLost(F&& handler, T&& instance)
+{
+	onConnectionLost_ = std::bind(handler, instance);
+}
+
+template<class F>
+void Connection::hookOnConnectionLost(F&& handler)
+{
+	onConnectionLost_ = std::bind(handler);
+}
+
+}
+
 #endif

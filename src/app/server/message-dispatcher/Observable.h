@@ -21,7 +21,7 @@ public:
 	void removeObserver(Observer* observer);
 
 private:
-	std::unordered_map<int, Observer*> observers_;
+	std::unordered_map<char, Observer*> observers_;
 };
 
 }

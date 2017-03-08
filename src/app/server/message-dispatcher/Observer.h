@@ -9,22 +9,23 @@ namespace server
 class Observer
 {
 public:
-	Observer() = default;
+	Observer(char systemType);
 	virtual ~Observer() = 0;
 
 	virtual void onReceivedMessage(const std::string& message);
-	virtual void onDisconnected(int userId);
+	virtual void onDisconnected(uint32_t disconnectedUserId);
 
-	inline int getId() const;
+	inline char getSystemType() const;
 
 private:
-	static int nextObservedId_;
-	int id_ = 0;
+	char systemType_;
+
+	Observer() = delete;
 };
 
-inline int Observer::getId() const
+inline char Observer::getSystemType() const
 {
-	return id_;
+	return systemType_;
 }
 
 }
