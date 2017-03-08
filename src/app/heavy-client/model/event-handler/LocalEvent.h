@@ -37,10 +37,10 @@ public:
 	void buildUserJoinedRoomMessage(uint32_t roomId);
 
 	void buildEntitySelectedMessage(uint32_t entityId);
-	void buildEntityMovedRelativeMessage(int entityId, const glm::vec3& position);
-	void buildEntityMovedAbsoluteMessage(int entityId, const glm::vec3& position);
-	void buildEntityResizedMessage(int entityId, const glm::vec3& resize);
-	void buildEntityRotatedMessage(int entityId, const glm::vec3& rotation);
+	void buildUpdateRelativePositionMessage(int entityId, const glm::vec3& position);
+	void buildUpdateAbsolutePositionMessage(int entityId, const glm::vec3& position);
+	void buildUpdateScaleMessage(int entityId, const glm::vec3& resize);
+	void buildUpdateRotationMessage(int entityId, const glm::vec3& rotation);
 
 	void buildEntityCreatedMessage(uint32_t entityId, uint8_t type, uint32_t parentId, const glm::vec3& position);
 	void buildEntityDeletedMessage(uint32_t entityId);

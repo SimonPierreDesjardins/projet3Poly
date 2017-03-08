@@ -1,10 +1,12 @@
 ﻿# Permettre d'inclure des fichiers d'entêtes des librairies externes sans spécifier le path complet
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
+	${CMAKE_SOURCE_DIR}/ext/Eigen/include
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 	chat-management
 	map-management
 	map-management/map-rooms
+	map-management/entities
 	UserManagement
 	message-dispatcher
 	.
@@ -23,6 +25,14 @@ set(CHAT_MANAGEMENT_SRC
 	chat-management/ChatManager.cpp
 )
 source_group("chat-management" FILES ${CHAT_MANAGEMENT_SRC})
+
+set(ENTITIES_SRC
+	map-management/entities/Entity.h
+	map-management/entities/Entity.cpp
+	map-management/entities/EntityTree.h
+	map-management/entities/EntityTree.cpp
+)
+source_group("map-management\\entities" FILES ${ENTITIES_SRC})
 
 set(MAP_ROOMS_SRC
 	map-management/map-rooms/SimulationRoom.h
@@ -45,8 +55,6 @@ set(MESSAGE_DISPATCHER_SRC
 	message-dispatcher/Observer.cpp
 	message-dispatcher/Observable.h
 	message-dispatcher/Observable.cpp
-	message-dispatcher/MessageDispatcher.h
-	message-dispatcher/MessageDispatcher.cpp
 )
 source_group("message-dispatcher" FILES ${MESSAGE_DISPATCHER_SRC})
 
@@ -64,6 +72,7 @@ add_executable(Server
 	${CHAT_MANAGEMENT_SRC}
 	${MAP_MANAGEMENT_SRC}
 	${MAP_ROOMS_SRC}
+	${ENTITIES_SRC}
 	${SERVER_SRC}
 )
 target_link_libraries(Server PRIVATE networkUtils)

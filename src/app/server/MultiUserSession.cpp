@@ -10,7 +10,7 @@ MultiUserSession::~MultiUserSession()
 
 void MultiUserSession::onDisconnected(User* disconnectedUser)
 {
-	removeUser(disconnectedUser);
+	users_.erase(disconnectedUser->info_.id_);
 }
 
 void MultiUserSession::addUser(User* user)

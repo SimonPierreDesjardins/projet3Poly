@@ -32,7 +32,7 @@ void UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener * listen
 
 void UserAuthLobby::postAddUser(User* user)
 {
-	user->addSystemObserver(this, 'u');
+	user->addSystemObserver(this, USER_MESSAGE);
 }
 
 void UserAuthLobby::postRemoveUser(User* user)
@@ -87,6 +87,14 @@ void UserAuthLobby::onReceivedMessage(User* sender, const std::string& message)
 	case 'm':
 		break;
 	}
+}
+
+void UserAuthLobby::onUserDisconnected(User* disconnectedUser)
+{
+	// Remove the user from dangling users and authentificated users list if he's there.
+	uint32_t userId = disconnectedUser->info_.id_;
+	users_.erase(userId);
+	authUsers_.erase(userId);
 }
 
 }

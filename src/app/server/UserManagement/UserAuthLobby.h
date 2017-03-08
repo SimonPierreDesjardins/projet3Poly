@@ -23,6 +23,7 @@ public:
 	virtual ~UserAuthLobby();
 
 	virtual void onReceivedMessage(User* sender, const std::string& message);
+	virtual void onUserDisconnected(User* disconnectedUser);
 
 protected:
 	virtual void postAddUser(User* user);

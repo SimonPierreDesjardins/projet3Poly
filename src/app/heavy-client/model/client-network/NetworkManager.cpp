@@ -37,7 +37,7 @@ void NetworkManager::requestToleaveMapSession()
 {
 	std::string message;
 	serializer_.serialize(uint32_t(2), message);
-	message.append("mj");
+	message.append("ml");
 	connection_.sendMessage(message);
 }
 

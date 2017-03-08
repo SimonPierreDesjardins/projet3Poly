@@ -3,6 +3,7 @@
 #include "EditionRoom.h"
 
 #include "MapRoomManager.h"
+#include <iostream>
 
 namespace server
 {
@@ -34,6 +35,7 @@ void MapRoomManager::handleJoinMapSessionRequest(User* sender, const std::string
 	{
 		it->second->addUser(sender);
 		roomsByUserId_.insert(std::pair<uint32_t, AbstractMapRoom*>(sender->info_.id_, it->second.get()));
+		std::cout << "User " << std::to_string(sender->info_.id_) << " joined room " << std::to_string(mapId) << "." << std::endl;
 	}
 }
 
@@ -47,6 +49,7 @@ void MapRoomManager::handleLeaveMapSessionRequest(User* sender, const std::strin
 	{
 		it->second->removeUser(sender);
 		roomsByUserId_.erase(userId);
+		std::cout << "User " << std::to_string(sender->info_.id_) << " left a map room." << std::endl;
 	}
 }
 
@@ -71,12 +74,10 @@ void MapRoomManager::onReceivedMessage(User* sender, const std::string& message)
 
 void MapRoomManager::onDisconnected(User* disconnectedUser)
 {
-	removeUser(disconnectedUser);
 	uint32_t userId = disconnectedUser->info_.id_;
-	if (roomsByUserId_.find(userId) != roomsByUserId_.end())
-	{
-		roomsByUserId_.erase(userId);
-	}
+	// Also remove the user in the room.
+	users_.erase(userId);
+	roomsByUserId_.erase(userId);
 }
 
 void MapRoomManager::createRoom(RoomType roomType)

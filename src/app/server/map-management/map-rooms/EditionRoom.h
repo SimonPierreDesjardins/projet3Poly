@@ -11,6 +11,8 @@ class EditionRoom : public AbstractMapRoom
 public:
 	EditionRoom() = default;
 	virtual ~EditionRoom() = default;
+	
+
 };
 
 }
