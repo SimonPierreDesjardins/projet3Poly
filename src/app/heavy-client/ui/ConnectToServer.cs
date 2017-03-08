@@ -87,6 +87,8 @@ namespace ui
 
         private void createAndConnectNewUser()
         {
+            FonctionsNatives.createProfile(newAccountTextBox.Text);
+            FonctionsNatives.authenticate(newAccountTextBox.Text);
             goBackToMainMenu();
 
             parent_.viewPort.Controls.Add(parent_.userChat);
@@ -125,8 +127,9 @@ namespace ui
 
         private void connectExistingUser()
         {
-            goBackToMainMenu();
+            FonctionsNatives.authenticate(newAccountTextBox.Text);
 
+            goBackToMainMenu();
             parent_.viewPort.Controls.Add(parent_.userChat);
             parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width, parent_.viewPort.Height - parent_.userChat.Height);
             parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);

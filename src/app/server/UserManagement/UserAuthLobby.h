@@ -11,6 +11,7 @@
 #include "MultiUserSession.h"
 
 #include "User.h"
+#include "MapRoomManager.h"
 
 namespace server 
 {
@@ -18,25 +19,33 @@ namespace server
 class UserAuthLobby : public MultiUserSession
 {
 public:
-	UserAuthLobby(Networking::ServerListener* listener);
+	UserAuthLobby(Networking::ServerListener* listener, MapRoomManager* mapRoomManager);
 	virtual ~UserAuthLobby();
 
-	virtual void onReceivedMessage(const std::string& message);
-	virtual void onDisconnected(uint32_t userId);
+	virtual void onReceivedMessage(User* sender, const std::string& message);
+	virtual void onDisconnected(User* disconnectedUser);
 
 private:
 
 	Networking::ServerListener* _listener;
-	uint32_t nextUserId_ = 0;
 
-	typedef std::unordered_map<uint32_t, User*> OwnedUsersContainer;
-	OwnedUsersContainer ownedUsers_;
+	MapRoomManager* mapRoomManager_;
+	// ChatRoomManager here
+
+	typedef std::unordered_map<uint32_t, User*> DanglingUsersContainer;
+	DanglingUsersContainer danglingUsers_;
+
+	uint32_t nextUserId_ = 0;
 
 	// Connection reception treatment
 	void HookToListenerEvents(Networking::ServerListener* listener);
 	void UnhookFromListenerEvents(Networking::ServerListener* listener);
 
 	void handleConnection(Networking::Connection* handleConnection);
+
+	void handleCreateUsernameRequest(User* sender, std::string message);
+	void handleLoginRequest(User* sender, std::string username);
+	//void handleModifiedPropertyRequest();
 };
 
 }

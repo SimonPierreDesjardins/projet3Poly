@@ -7,6 +7,7 @@ namespace server
 {
 
 class Observer;
+class User;
 
 class Observable
 {
@@ -14,8 +15,8 @@ public:
 	Observable() = default;
 	virtual ~Observable() = 0;
 
-	void dispatchReceivedMessage(const std::string& message);
-	void notifyDisconnected(int observableId);
+	void dispatchReceivedMessage(User* sender, const std::string& message);
+	void notifyDisconnected(User* disconnectedUser);
 
 	void addObserver(Observer* observer);
 	void removeObserver(Observer* observer);

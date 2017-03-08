@@ -28,13 +28,12 @@ void User::HookToConnection(Networking::Connection * connectionToListenTo)
 
 void User::OnReceivedMessage(const std::string& message)
 {
-	std::cout << message << std::endl;
-	dispatchReceivedMessage(message);
+	dispatchReceivedMessage(this, message);
 }
 
 void User::OnConnectionLost()
 {
-	notifyDisconnected(info_.id_);
+	notifyDisconnected(this);
 	delete this;
 }
 

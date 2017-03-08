@@ -25,14 +25,22 @@ public:
 	MapRoomManager();
 	virtual ~MapRoomManager();
 
-	virtual void onReceivedMessage(const std::string& message);
+	virtual void onReceivedMessage(User* sender, const std::string& message);
+	virtual void onDisconnected(User* disconnectedUser);
 
 	void createRoom(RoomType roomType);
-	void removeRoom(uint32_t roomid);
+	void removeRoom(uint32_t roomId);
 
 private:
+
+	void handleJoinMapSessionRequest(User* sender, const std::string& message);
+	void handleLeaveMapSessionRequest(User* sender, const std::string& message);
+
 	int nextRoomId_ = 0;
 	std::unordered_map<uint32_t, std::unique_ptr<AbstractMapRoom>> rooms_;
+
+	// Rooms mapped by user id. This is used for fast removal of users from rooms.
+	std::unordered_map<uint32_t, AbstractMapRoom*> roomsByUserId_;
 };
 
 }

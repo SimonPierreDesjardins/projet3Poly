@@ -14,9 +14,14 @@ class MultiUserSession : public Observer
 public:
 	MultiUserSession(char systemType);
 	virtual ~MultiUserSession() = 0;
+
 	inline int getSessionId() const;
 
+	virtual void onDisconnected(User* diconnectedUser);
+
 	void addUser(User* user);
+	void removeUser(User* user);
+	void broadcastMessage(const std::string& message);
 
 protected:
 

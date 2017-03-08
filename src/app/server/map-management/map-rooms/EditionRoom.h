@@ -2,9 +2,6 @@
 #define EDITION_ROOM_H
 
 #include "AbstractMapRoom.h"
-#include "Observer.h"
-
-#include "MultiUserSession.h"
 
 namespace server
 {
@@ -14,9 +11,10 @@ class EditionRoom : public AbstractMapRoom
 public:
 	EditionRoom() = default;
 	virtual ~EditionRoom() = default;
-
+	
+	virtual void onReceivedMessage(User* sender, const std::string& message);
 };
 
 }
 
-#endif // MAP_ROOM_MANAGER_H
+#endif // EDITION_ROOM_H

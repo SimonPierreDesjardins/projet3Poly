@@ -6,14 +6,16 @@
 namespace server
 {
 
+class User;
+
 class Observer
 {
 public:
 	Observer(char systemType);
 	virtual ~Observer() = 0;
 
-	virtual void onReceivedMessage(const std::string& message);
-	virtual void onDisconnected(uint32_t disconnectedUserId);
+	virtual void onReceivedMessage(User* user, const std::string& message);
+	virtual void onDisconnected(User* user);
 
 	inline char getSystemType() const;
 

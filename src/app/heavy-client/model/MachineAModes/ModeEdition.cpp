@@ -37,6 +37,8 @@ ModeEdition::ModeEdition()
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
 	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
+
+	FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -53,6 +55,7 @@ ModeEdition::~ModeEdition()
 	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()  != nullptr) {
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 	}
+	FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
 }
 
 ////////////////////////////////////////////////////////////////////////

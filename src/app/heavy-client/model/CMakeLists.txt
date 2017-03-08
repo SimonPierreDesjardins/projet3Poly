@@ -197,6 +197,8 @@ set(CLIENT_NETWORK_SRC
 	client-network/NetworkManager.cpp
 	client-network/MessageDispatcher.h
 	client-network/MessageDispatcher.cpp
+    client-network/Serializer.h
+    client-network/Serializer.cpp
 )
 source_group("client-network" FILES ${CLIENT_NETWORK_SRC})
 

@@ -11,16 +11,19 @@ void SetupServer() {
 	// create listener
 	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
 
-	// create User auth system
-	server::UserAuthLobby UserLobby(listener);
+	server::MapRoomManager mapRoomManager;
 
+	// create User auth system
+	server::UserAuthLobby UserLobby(listener, &mapRoomManager);
+
+	mapRoomManager.createRoom(server::EDITION_ROOM);
 	// create UserLobby
 
 	// create ChatSystem
 
 	// create MapSystem
-	server::MapRoomManager mapRoomManager;
-	mapRoomManager.createRoom(server::EDITION_ROOM);
+	// For testing purposes
+
 
 	std::cout << "Starting listener" << std::endl;
 	listener->StartAccepting();
@@ -31,6 +34,7 @@ void SetupServer() {
 	while (command != "exit") {
 		std::getline(std::cin, command);
 	}
+
 	mapRoomManager.removeRoom(0);
 
 	Networking::NetworkObjects::Dispose(listener);

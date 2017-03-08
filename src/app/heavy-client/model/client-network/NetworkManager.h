@@ -3,6 +3,7 @@
 
 #include "Connection.h"
 #include "Observable.h"
+#include "Serializer.h"
 
 #include "glm/glm.hpp"
 
@@ -19,8 +20,12 @@ public:
 	inline void closeConnection();
 
 	inline bool requestConnection(const std::string& hostName, const std::string& port);
-	inline void createProfile(const std::string& profileName);
-	inline void authenticate(const std::string& profileName);
+
+	void createProfile(const std::string& profileName);
+	void authenticate(const std::string& profileName);
+
+	void requestToJoinMapSession(uint32_t mapId);
+	void requestToleaveMapSession();
 
 	inline void sendMessage(const std::string& message);
 
@@ -29,6 +34,9 @@ public:
 private:
 	
 	Connection connection_;
+	Serializer serializer_;
+
+	bool isAuthentified_ = false;
 };
 
 inline bool NetworkManager::isConnected() const
@@ -44,16 +52,6 @@ inline void NetworkManager::closeConnection()
 inline bool NetworkManager::requestConnection(const std::string& hostName, const std::string& port)
 {
 	return connection_.openConnection(hostName, port);
-}
-
-inline void NetworkManager::createProfile(const std::string& profileName)
-{
-
-}
-
-inline void NetworkManager::authenticate(const std::string& profileName)
-{
-
 }
 
 inline void NetworkManager::sendMessage(const std::string& message)

@@ -1,5 +1,7 @@
 #include "Observer.h"
 
+#include "User.h"
+
 namespace server
 {
 
@@ -12,11 +14,11 @@ Observer::~Observer()
 {
 }
 
-void Observer::onReceivedMessage(const std::string& message)
+void Observer::onReceivedMessage(User* user, const std::string& message)
 {
 }
 
-void Observer::onDisconnected(uint32_t disconnectedUserId)
+void Observer::onDisconnected(User* user)
 {
 }
 

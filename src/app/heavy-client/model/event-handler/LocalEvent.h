@@ -13,6 +13,8 @@
 
 #include "glm/glm.hpp"
 
+#include "Serializer.h"
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class AffichageTexte
 /// @brief Classe qui permet de faire l'affichage OpenGL.
@@ -46,9 +48,7 @@ public:
 private:
 	std::string message_;
 
-	void serialize(std::string& message, const glm::vec3& data);
-	void serialize(uint32_t data, std::string& message);
-	void serialize(uint8_t data, std::string& message);
+	client_network::Serializer serializer_;
 };
 
 inline const std::string& LocalEvent::getMessage() const

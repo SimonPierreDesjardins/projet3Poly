@@ -37,36 +37,14 @@ void LocalEvent::buildEntityCreatedMessage(uint32_t entityId, uint8_t type, uint
 {
 	message_.clear();
 	size_t messageSize = 32;
-	serialize((uint32_t)messageSize, message_);
+	serializer_.serialize((uint32_t)messageSize, message_);
 	message_.append("pc");
-	serialize(entityId, message_);
-	serialize(parentId, message_);
-	serialize(message_, position);
+	serializer_.serialize(entityId, message_);
+	serializer_.serialize(parentId, message_);
+	serializer_.serialize(message_, position);
 }
 
 void LocalEvent::buildEntityDeletedMessage(uint32_t entityId)
 {
 
-}
-
-void LocalEvent::serialize(uint8_t data, std::string& message)
-{
-	char* serialized = reinterpret_cast<char*>(&data);
-	message.append(std::string(serialized));
-}
-
-void LocalEvent::serialize(uint32_t data, std::string& message)
-{
-	char* serialized = reinterpret_cast<char*>(&data);
-	message.append(std::string(serialized));
-}
-
-void LocalEvent::serialize(std::string& message, const glm::vec3& data)
-{
-	char const* serialized = reinterpret_cast<char const*>(&data.x);
-	message.append(std::string(serialized));
-	serialized = reinterpret_cast<char const*>(&data.y);
-	message.append(std::string(serialized));
-	serialized = reinterpret_cast<char const*>(&data.z);
-	message.append(std::string(serialized));
 }

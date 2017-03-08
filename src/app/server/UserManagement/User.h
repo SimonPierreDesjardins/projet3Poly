@@ -26,7 +26,8 @@ public:
 
 	void AssignConnection(Networking::Connection* connectionToTreat);
 
-	void AssignInfo(UserInformation info) {
+	void AssignInfo(UserInformation info) 
+	{
 		info_ = info;
 	}
 
@@ -39,7 +40,6 @@ private:
 	void OnConnectionLost();
 
 	Networking::Connection* _connection;
-
 };
 
 }
