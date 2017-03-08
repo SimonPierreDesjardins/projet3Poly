@@ -23,7 +23,10 @@ public:
 	virtual ~UserAuthLobby();
 
 	virtual void onReceivedMessage(User* sender, const std::string& message);
-	virtual void onDisconnected(User* disconnectedUser);
+
+protected:
+	virtual void postAddUser(User* user);
+	virtual void postRemoveUser(User* user);
 
 private:
 
@@ -32,8 +35,8 @@ private:
 	MapRoomManager* mapRoomManager_;
 	// ChatRoomManager here
 
-	typedef std::unordered_map<uint32_t, User*> DanglingUsersContainer;
-	DanglingUsersContainer danglingUsers_;
+	typedef std::unordered_map<uint32_t, User*> AuthUsersContainer;
+	AuthUsersContainer authUsers_;
 
 	uint32_t nextUserId_ = 0;
 

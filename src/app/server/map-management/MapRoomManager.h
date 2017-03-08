@@ -22,7 +22,7 @@ class MapRoomManager : public MultiUserSession
 {
 
 public:
-	MapRoomManager();
+	MapRoomManager() = default;
 	virtual ~MapRoomManager();
 
 	virtual void onReceivedMessage(User* sender, const std::string& message);
@@ -30,6 +30,10 @@ public:
 
 	void createRoom(RoomType roomType);
 	void removeRoom(uint32_t roomId);
+
+protected:
+	virtual void postAddUser(User* user);
+	virtual void postRemoveUser(User* user);
 
 private:
 

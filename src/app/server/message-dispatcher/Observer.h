@@ -8,26 +8,27 @@ namespace server
 
 class User;
 
+enum SystemType
+{
+	USER_MESSAGE = 'u',
+	CHAT_MESSAGE = 'c',
+	MAP_MESSAGE = 'm',
+	PHYSIC_MESSAGE = 'p',
+	MAP_EDITION_MESSAGE = 'e'
+};
+
 class Observer
 {
 public:
-	Observer(char systemType);
+	Observer() = default;
 	virtual ~Observer() = 0;
 
-	virtual void onReceivedMessage(User* user, const std::string& message);
-	virtual void onDisconnected(User* user);
-
-	inline char getSystemType() const;
-
-private:
-	char systemType_;
-
-	Observer() = delete;
+	virtual void onReceivedMessage(User* user, const std::string& message) = 0;
+	virtual void onDisconnected(User* user) = 0;
 };
 
-inline char Observer::getSystemType() const
+inline Observer::~Observer()
 {
-	return systemType_;
 }
 
 }

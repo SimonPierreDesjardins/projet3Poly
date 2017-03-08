@@ -11,8 +11,6 @@ class EditionRoom : public AbstractMapRoom
 public:
 	EditionRoom() = default;
 	virtual ~EditionRoom() = default;
-	
-	virtual void onReceivedMessage(User* sender, const std::string& message);
 };
 
 }

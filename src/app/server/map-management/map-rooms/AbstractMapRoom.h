@@ -9,19 +9,16 @@ namespace server
 class AbstractMapRoom : public MultiUserSession
 {
 public:	
-	AbstractMapRoom();
+	AbstractMapRoom() = default;
 	virtual ~AbstractMapRoom() = 0;
 
 	virtual void onReceivedMessage(User* sender, const std::string& message);
 
-	void joinRoom(User* user);
-	void leaveRoom(User* user);
+protected:
 
+	virtual void postAddUser(User* user);
+	virtual void postRemoveUser(User* user);
 };
-
-inline AbstractMapRoom::~AbstractMapRoom()
-{
-}
 
 }
 #endif // ABSTRACT_MAP_ROOM

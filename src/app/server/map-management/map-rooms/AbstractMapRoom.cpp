@@ -3,26 +3,28 @@
 namespace server
 {
 
-AbstractMapRoom::AbstractMapRoom()
-	: MultiUserSession('p')
+AbstractMapRoom::~AbstractMapRoom()
 {
 }
 
-void AbstractMapRoom::joinRoom(User* user)
+
+void AbstractMapRoom::postAddUser(User* user)
 {
-	addUser(user);
-	user->addObserver(this);
+	// Subscribe to physic and map edition messages.
+	user->addSystemObserver(this, PHYSIC_MESSAGE);
+	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 }
 
-void AbstractMapRoom::leaveRoom(User* user)
+void AbstractMapRoom::postRemoveUser(User* user)
 {
-	removeUser(user);
-	user->removeObserver(this);
+	// Unsub from physic and map edition messages.
+	user->removeSystemObserver(PHYSIC_MESSAGE);
+	user->removeSystemObserver(MAP_EDITION_MESSAGE);
 }
 
 void AbstractMapRoom::onReceivedMessage(User* sender, const std::string& message)
 {
-	assert(message[4] == 'p');
+	assert(message[4] == PHYSIC_MESSAGE);
 
 	switch (message[5])
 	{
@@ -41,7 +43,6 @@ void AbstractMapRoom::onReceivedMessage(User* sender, const std::string& message
 	case 's':
 		break;
 	}
-
 }
 
 }

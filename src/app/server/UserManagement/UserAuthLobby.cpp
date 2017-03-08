@@ -6,7 +6,7 @@ namespace server
 {
 
 UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, MapRoomManager* mapRoomManager)
-	: MultiUserSession('u'), mapRoomManager_(mapRoomManager)
+	: mapRoomManager_(mapRoomManager)
 {
 	HookToListenerEvents(listener);
 }
@@ -30,14 +30,26 @@ void UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener * listen
 	_listener = nullptr;
 }
 
+void UserAuthLobby::postAddUser(User* user)
+{
+	user->addSystemObserver(this, 'u');
+}
+
+void UserAuthLobby::postRemoveUser(User* user)
+{
+	// If the user is authentificated, remove from authentificated list.
+	if (user->info_.isAuthentified_)
+	{
+		authUsers_.erase(user->info_.id_);
+	}
+}
 
 void UserAuthLobby::handleConnection(Networking::Connection * connection)
 {
 	uint32_t userId = nextUserId_++;
 	User* user = new User(userId);
-	user->addObserver(this);
 	user->AssignConnection(connection);
-	danglingUsers_.insert(std::pair<uint32_t, User*>(userId, user));
+	addUser(user);
 }
 
 void UserAuthLobby::handleCreateUsernameRequest(User* sender, std::string message)
@@ -50,9 +62,9 @@ void UserAuthLobby::handleLoginRequest(User* sender, std::string message)
 {
 	// TODO: Check if the username exists and is not used.
 	std::cout << "Received login request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
-	addUser(sender);
+	authUsers_.insert(std::make_pair(sender->info_.id_, sender));
 	mapRoomManager_->addUser(sender);
-	sender->addObserver(mapRoomManager_);
+	// chatRoomManager_->addUser(sender);
 }
 
 void UserAuthLobby::onReceivedMessage(User* sender, const std::string& message)
@@ -75,26 +87,6 @@ void UserAuthLobby::onReceivedMessage(User* sender, const std::string& message)
 	case 'm':
 		break;
 	}
-}
-
-
-void UserAuthLobby::onDisconnected(User* disconnectedUser)
-{
-	// Find the disconnected user.
-	int userId = disconnectedUser->info_.id_;
-	DanglingUsersContainer::iterator it = danglingUsers_.find(userId);
-	assert(it != danglingUsers_.end());
-	
-	// If the user is authentificated, remove from authentificated list.
-	if (it->second->info_.isAuthentified_)
-	{
-		UsersContainer::iterator authDisconnectedUser = users_.find(userId);
-		users_.erase(authDisconnectedUser);
-	}
-
-	// Remove from dangling list and deallocate the user.
-	std::cout << "User " << std::to_string(it->second->info_.id_) << " disconnected." << std::endl;
-	danglingUsers_.erase(it);
 }
 
 }

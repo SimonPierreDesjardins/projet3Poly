@@ -7,13 +7,18 @@
 namespace server
 {
 
-MapRoomManager::MapRoomManager()
-	: MultiUserSession('m')
+MapRoomManager::~MapRoomManager()
 {
 }
 
-MapRoomManager::~MapRoomManager()
+void MapRoomManager::postAddUser(User* user)
 {
+	user->addSystemObserver(this, MAP_MESSAGE);
+}
+
+void MapRoomManager::postRemoveUser(User* user)
+{
+	user->removeSystemObserver(MAP_MESSAGE);
 }
 
 void MapRoomManager::handleJoinMapSessionRequest(User* sender, const std::string& message)
@@ -27,7 +32,7 @@ void MapRoomManager::handleJoinMapSessionRequest(User* sender, const std::string
 	std::unordered_map<uint32_t, std::unique_ptr<AbstractMapRoom>>::iterator it = rooms_.find(mapId);
 	if (it != rooms_.end())
 	{
-		it->second->joinRoom(sender);
+		it->second->addUser(sender);
 		roomsByUserId_.insert(std::pair<uint32_t, AbstractMapRoom*>(sender->info_.id_, it->second.get()));
 	}
 }
@@ -40,7 +45,7 @@ void MapRoomManager::handleLeaveMapSessionRequest(User* sender, const std::strin
 	std::unordered_map<uint32_t, AbstractMapRoom*>::iterator it = roomsByUserId_.find(userId);
 	if (it != roomsByUserId_.end())
 	{
-		it->second->leaveRoom(sender);
+		it->second->removeUser(sender);
 		roomsByUserId_.erase(userId);
 	}
 }

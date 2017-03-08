@@ -69,3 +69,10 @@ add_executable(Server
 target_link_libraries(Server PRIVATE networkUtils)
 
 set_property(TARGET Server PROPERTY FOLDER "app/server")
+
+target_compile_definitions(Server
+	PRIVATE
+    ASIO_STANDALONE
+	_WIN32_WINNT=0x0501
+    _WINSOCK_DEPRECATED_NO_WARNINGS
+)
