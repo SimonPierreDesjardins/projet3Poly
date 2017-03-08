@@ -313,6 +313,9 @@ namespace ui
             FonctionsNatives.assignerVueOrbite();
             crochetPourVue();
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.CHANGE_VIEW)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////

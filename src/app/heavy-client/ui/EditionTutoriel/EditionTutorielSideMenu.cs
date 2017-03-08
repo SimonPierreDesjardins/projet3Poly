@@ -132,6 +132,9 @@ namespace ui
             setDefaultUnselectedColors();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_ROTATION_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -278,6 +281,9 @@ namespace ui
         {
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
             parent_.verificationDuNombreElementChoisi();
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.DELETE_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -310,6 +316,9 @@ namespace ui
             lineObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(lineObjectPicture);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_LINE_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -431,6 +440,9 @@ namespace ui
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(wallObjectPicture);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_WALL_TOOL)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////

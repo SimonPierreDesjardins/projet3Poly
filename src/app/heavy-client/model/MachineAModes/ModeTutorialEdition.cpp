@@ -136,7 +136,10 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_ESCAPE:
-				//etat_->gererToucheEchappe();
+				if (getCurrentTutorialState() == (int)CREATING_WALL || getCurrentTutorialState() == (int)CREATING_LINE)
+				{
+					etat_->gererToucheEchappe();
+				}
 				break;
 
 			case VK_OEM_PLUS:
@@ -165,7 +168,10 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_R:
-				//etat_ = std::make_unique<EtatRotation>();
+				if (getCurrentTutorialState() == (int)SELECT_ROTATION_TOOL)
+				{
+					etat_ = std::make_unique<EtatRotation>();
+				}
 				break;
 
 			case VK_KEY_E:
@@ -194,19 +200,24 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_M:
-				//etat_ = std::make_unique<EtatCreationMur>();
+				if (getCurrentTutorialState() == (int)SELECT_WALL_TOOL)
+				{
+					etat_ = std::make_unique<EtatCreationMur>();
+				}
 				break;
 
 			case VK_KEY_L:
-				//etat_ = std::make_unique<EtatCreationLigne>();
-				break;
-
-			case VK_KEY_T:
-				//gererToucheT();
+				if (getCurrentTutorialState() == (int)SELECT_LINE_TOOL)
+				{
+					etat_ = std::make_unique<EtatCreationLigne>();
+				}
 				break;
 
 			case VK_DELETE:
-				//gererToucheSupprimer();
+				if (getCurrentTutorialState() == (int)DELETE_TOOL)
+				{
+					gererToucheSupprimer();
+				}
 				break;
 
 			case VK_MENU:
@@ -218,7 +229,10 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_CONTROL:
 			case VK_LCONTROL:
 			case VK_RCONTROL:
-				//etat_->gererToucheControlEnfoncee();
+				if (getCurrentTutorialState() == (int)CREATING_LINE)
+				{
+					etat_->gererToucheControlEnfoncee();
+				}
 				break;
 
 			default:
@@ -237,7 +251,10 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_CONTROL:
 			case VK_RCONTROL:
 			case VK_LCONTROL:
-				//etat_->gererToucheControlRelachee();
+				if (getCurrentTutorialState() == (int)CREATING_LINE)
+				{
+					etat_->gererToucheControlRelachee();
+				}
 				break;
 
 			default:
@@ -256,7 +273,10 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_CONTROL:
 			case VK_LCONTROL:
 			case VK_RCONTROL:
-				//etat_->gererToucheControlEnfoncee();
+				if (getCurrentTutorialState() == (int)CREATING_LINE)
+				{
+					etat_->gererToucheControlEnfoncee();
+				}
 				break;
 			}
 		}
@@ -272,7 +292,10 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_CONTROL:
 			case VK_RCONTROL:
 			case VK_LCONTROL:
-				//etat_->gererToucheControlRelachee();
+				if (getCurrentTutorialState() == (int)CREATING_LINE)
+				{
+					etat_->gererToucheControlRelachee();
+				}
 				break;
 			}
 		}
@@ -316,7 +339,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case WM_MOUSEWHEEL:
-			//gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
 			break;
 		}
 	}
@@ -381,6 +404,11 @@ double ModeTutorialEdition::getScaleOfTutorialObject()
 	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirFacteurMiseAEchelle();
 }
 
+double ModeTutorialEdition::getRotationOfTutorialObject()
+{
+	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirAngleRotation();
+}
+
 glm::dvec3 ModeTutorialEdition::getPositionOfTutorialObject()
 {
 	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirPositionCourante();
@@ -395,9 +423,11 @@ void ModeTutorialEdition::leftClickDownWithCurrentTool(LPARAM lParam)
 		break;
 
 		case CREATION_LIGNE:
+			numberOfObjects_ = getNomberOfObjects("ligne");
 			break;
 
 		case CREATION_MUR:
+			numberOfObjects_ = getNomberOfObjects("mur");
 			break;
 
 		case DUPLICATION:
@@ -413,10 +443,11 @@ void ModeTutorialEdition::leftClickDownWithCurrentTool(LPARAM lParam)
 			break;
 
 		case MISE_A_ECHELLE:
-			currentScale_ = getScaleOfTutorialObject();
+			currentObjectAttribut_ = getScaleOfTutorialObject();
 			break;
 
 		case ROTATION:
+			currentObjectAttribut_ = getRotationOfTutorialObject();
 			break;
 
 		case SELECTION:
@@ -436,9 +467,13 @@ void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
 		break;
 
 	case CREATION_LIGNE:
+		if (numberOfObjects_ != getNomberOfObjects("ligne"))
+			ChangeEditionTutorialState();
 		break;
 
 	case CREATION_MUR:
+		if (numberOfObjects_ != getNomberOfObjects("mur"))
+			ChangeEditionTutorialState();
 		break;
 
 	case DUPLICATION:
@@ -456,11 +491,13 @@ void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
 		break;
 
 	case MISE_A_ECHELLE:
-		if (currentScale_ != getScaleOfTutorialObject())
+		if (currentObjectAttribut_ != getScaleOfTutorialObject())
 			ChangeEditionTutorialState();
 		break;
 
 	case ROTATION:
+		if (currentObjectAttribut_ = getRotationOfTutorialObject())
+			ChangeEditionTutorialState();
 		break;
 
 	case SELECTION:

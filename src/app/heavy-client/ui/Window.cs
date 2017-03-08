@@ -552,6 +552,22 @@ namespace ui
                     }
                     break;
 
+                case Constants.Key_L:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_LINE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.lineObject();
+                    }
+                    break;
+
+                case Constants.Key_M:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_WALL_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.wallObject();
+                    }
+                    break;
+
                 case Constants.Key_P:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)
                     {
@@ -560,11 +576,35 @@ namespace ui
                     }
                     break;
 
+                case Constants.Key_R:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_ROTATION_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.rotateTool();
+                    }
+                    break;
+
                 case Constants.Key_S:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TOOL)
                     {
                         editionTutorielInstructions.nextState();
                         editionTutorielSideMenu.selectTool();
+                    }
+                    break;
+
+                case Constants.Key_Del:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.DELETE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.deleteTool();
+                    }
+                    break;
+
+                case Constants.Key_2:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.CHANGE_VIEW)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielMenuStrip.orbiteView();
                     }
                     break;
 

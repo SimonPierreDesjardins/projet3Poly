@@ -50,6 +50,7 @@ public:
 	int getNomberOfObjects(std::string TypeOfObject);
 	bool isTutorialObjectSelect();
 	double getScaleOfTutorialObject();
+	double getRotationOfTutorialObject();
 	glm::dvec3 getPositionOfTutorialObject();
 
 	void leftClickDownWithCurrentTool(LPARAM lParam);
@@ -63,7 +64,7 @@ protected:
 	int currentTutorialState_ = 0;
 	int numberOfObjects_ = 0;
 	int indexOfCurrentObject_ = 0;
-	double currentScale_ = 0;
+	double currentObjectAttribut_ = 0;
 	glm::dvec3 currentPosition_;
 
 	//Ancienne position en X et Y de la souris

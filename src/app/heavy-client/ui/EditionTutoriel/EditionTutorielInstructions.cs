@@ -139,6 +139,37 @@ namespace ui
                     applyingDuplicateToolState();
                     break;
 
+                case (int)EditionTutorial.State.DELETE_TOOL:
+                    break;
+
+                case (int)EditionTutorial.State.SELECT_WALL_TOOL:
+                    selectWallToolState();
+                    break;
+
+                case (int)EditionTutorial.State.CREATING_WALL:
+                    creatingAWallObjectState();
+                    break;
+
+                case (int)EditionTutorial.State.SELECT_ROTATION_TOOL:
+                    selectRotationToolState();
+                    break;
+
+                case (int)EditionTutorial.State.APPLYING_ROTATION:
+                    applyingRotationToolState();
+                    break;
+
+                case (int)EditionTutorial.State.SELECT_LINE_TOOL:
+                    selectLineToolState();
+                    break;
+
+                case (int)EditionTutorial.State.CREATING_LINE:
+                    creatingALineObjectState();
+                    break;
+
+                case (int)EditionTutorial.State.CHANGE_VIEW:
+                    changeViewSate();
+                    break;
+
                 case (int)EditionTutorial.State.CONCLUSION:
                     conclusionState();
                     break;
@@ -220,13 +251,12 @@ namespace ui
             FonctionsNatives.UnselectAllObjects();
             parent_.verificationDuNombreElementChoisi();
 
-            parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.selectToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.selectPictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.selectPictureBox.Image, Color.White);
 
             instructionBox.Items.Clear();
-            string instruction = "Maintenant que vous avez créé un poteau, il serait bien d'y apporter des changements. \n\n" +
+            string instruction = "Il serait bien apporter des changements au poteau nouvellement créé. \n\n" +
                                  "Pour ce faire, vous devez sélectionner l'outil de sélection. \n" +
                                  "Comme les autres outils, il est disponible dans le menu situé à votre gauche. \n" +
                                  "Vous pouvez également utiliser la touche rapide 'S' afin de sélectionner l'outil de sélection et " +
@@ -239,7 +269,9 @@ namespace ui
             previousButton.Visible = false;
 
             instructionBox.Items.Clear();
-            string instruction = "Applique le select Tool";
+            string instruction = "Pour sélectionner un objet, il suffit de déplacer la souris par dessus celui-ci et de cliquer " +
+                                 "sur l'objet avec le bouton gauche de la souris. \n\n" +
+                                 "Pour completer cette étape, sélectionnez le poteau nouvellement créé.";
             instructionBox.Items.Add(instruction);
         }
 
@@ -251,14 +283,13 @@ namespace ui
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
 
-            parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.ScaleToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.scalePictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.scalePictureBox.Image, Color.White);
 
             instructionBox.Items.Clear();
-            string instruction = "Maintenant que le poteau est sélectionner on peut y apporter des changements. \n\n" +
-                                 "On débutera pour une l'outil de redimensionnement. \n" +
+            string instruction = "Une fois qu'un objet est sélectionner on peut y appliquer une mise-à-échelle, une rotation, une duplication ou une translation. \n\n" +
+                                 "On débutera parr une l'outil de redimensionnement. \n" +
                                  "Comme les autres outils, il est disponible dans le menu situé à votre gauche. \n" +
                                  "Vous pouvez également utiliser la touche rapide 'E' afin de sélectionner l'outil de redimensionnement et " +
                                  "ce dernier sera activé";
@@ -270,7 +301,9 @@ namespace ui
             previousButton.Visible = false;
 
             instructionBox.Items.Clear();
-            string instruction = "Applique le scale";
+            string instruction = "Pour appliquer cette outils il suffit d'appuyer sur le bouton gauche de la souris et de la déplacer vers le haut " +
+                                 "pour agrandir l'objet ou vers le bas pour réduire la dimension de l'objet. \n\n" +
+                                 "Pour compléter cette étape il vous suffit de modifier le facteur de redimensionnement de l'objet sélectionné.";
             instructionBox.Items.Add(instruction);
         }
 
@@ -282,7 +315,6 @@ namespace ui
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
 
-            parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.MoveToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.movePictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.movePictureBox.Image, Color.White);
@@ -300,7 +332,9 @@ namespace ui
             previousButton.Visible = false;
 
             instructionBox.Items.Clear();
-            string instruction = "Applique le move";
+            string instruction = "Pour appliquer cette outils il suffit d'appuyer sur le bouton gauche de la souris et de la déplacer dans la " +
+                                 "direction de votre choix. Il est important que l'objet reste sur la table ou il sera replacé a sa position initiale. \n\n" +
+                                 "Pour compléter cette étape il vous suffit de déplacer l'objet sélectionné.";
             instructionBox.Items.Add(instruction);
         }
 
@@ -312,7 +346,6 @@ namespace ui
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
 
-            parent_.editionTutorielSideMenu.disableAllControls();
             parent_.editionTutorielSideMenu.DuplicateToolButton.Enabled = true;
             parent_.editionTutorielSideMenu.duplicatePictureBox.Image =
                 parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.duplicatePictureBox.Image, Color.White);
@@ -329,13 +362,103 @@ namespace ui
         {
             previousButton.Visible = false;
 
+            instructionBox.Items.Clear();
+            string instruction = "Cet outil duplicate le ou les objets choisi. \n\n" +
+                                 "Pour appliquer la duplication, il vous suffit de cliquer à l'endroit désiré sur la zone de simulation et " +
+                                 "l'outil créera les objets. \n\n" +
+                                 "Pour completer cette étape, il vous suffit d'utiliser l'outil pour créer un autre poteau.";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void selectWallToolState()
+        {
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
+            parent_.editionTutorielSideMenu.createToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.createPictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.createPictureBox.Image, Color.White);
+            parent_.editionTutorielSideMenu.wallObjectButton.Enabled = true;
+            parent_.editionTutorielSideMenu.wallObjectPicture.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.wallObjectPicture.Image, Color.White);
+
+            instructionBox.Items.Clear();
+            string instruction = "Select Wall";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void creatingAWallObjectState()
+        {
+            previousButton.Visible = false;
+
+            instructionBox.Items.Clear();
+            string instruction = "Create Wall";
+            instructionBox.Items.Add(instruction);
+        }
+        
+        private void selectRotationToolState()
+        {
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
+            parent_.editionTutorielSideMenu.RotateToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.rotatePictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.rotatePictureBox.Image, Color.White);
+
+            instructionBox.Items.Clear();
+            string instruction = "Select Rotation";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void applyingRotationToolState()
+        {
+            previousButton.Visible = false;
+
+            instructionBox.Items.Clear();
+            string instruction = "Apply Rotation";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void selectLineToolState()
+        {
+            previousButton.Visible = true;
+
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
+            parent_.editionTutorielSideMenu.createToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.createPictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.createPictureBox.Image, Color.White);
+            parent_.editionTutorielSideMenu.lineObjectButton.Enabled = true;
+            parent_.editionTutorielSideMenu.lineObjectPicture.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.lineObjectPicture.Image, Color.White);
+
+            instructionBox.Items.Clear();
+            string instruction = "Select Line";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void creatingALineObjectState()
+        {
+            previousButton.Visible = false;
+
+            instructionBox.Items.Clear();
+            string instruction = "Apply Line";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void changeViewSate()
+        {
             nextLabel.Text = "Suivant";
             nextPictureBox.Image = ui.Properties.Resources.RightArrow;
             nextButton.Visible = false;
-
-            instructionBox.Items.Clear();
-            string instruction = "Applique le duplicate";
-            instructionBox.Items.Add(instruction);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -350,6 +473,7 @@ namespace ui
             nextLabel.Text = "Terminé";
             nextPictureBox.Image = ui.Properties.Resources.confirm;
             nextButton.Visible = true;
+            previousButton.Visible = true;
 
             instructionBox.Items.Clear();
             string instruction = "Vous avez maintenant complété le tutoriel pour l'Édition! \n\n" +

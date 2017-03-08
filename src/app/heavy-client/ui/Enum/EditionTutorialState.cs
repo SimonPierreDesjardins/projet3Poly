@@ -26,6 +26,14 @@ namespace EditionTutorial
         APPLYING_MOVE,
         SELECT_DUPLICATE_TOOL,
         APPLYING_DUPLICATE,
+        DELETE_TOOL,
+        SELECT_WALL_TOOL,
+        CREATING_WALL,
+        SELECT_ROTATION_TOOL,
+        APPLYING_ROTATION,
+        SELECT_LINE_TOOL,
+        CREATING_LINE,
+        CHANGE_VIEW,
         CONCLUSION
     };
 
