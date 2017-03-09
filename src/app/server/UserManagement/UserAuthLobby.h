@@ -15,28 +15,7 @@
 namespace server 
 {
 
-// Wraps a connection to send connection reference on callbacks
-class ConnectionWrapper 
-{
-public:
-	ConnectionWrapper(Networking::Connection* connection);
-
-	Networking::Connection* GetConnection();
-
-	__event void OnDisconnect(ConnectionWrapper* wrapper);
-	__event void OnMessageSent(ConnectionWrapper* wrapper, const std::string& message);
-
-private:
-
-	void HookToConnection(Networking::Connection* connectionToListenTo);
-
-	void OnData(const std::string& message);
-
-	void OnDisco();
-
-	Networking::Connection* _connection;
-
-};
+class ConnectionWrapper;
 
 class UserAuthLobby
 {
@@ -46,9 +25,6 @@ public:
 
 	void OnReceivedMessage(ConnectionWrapper* user, const std::string& message);
 	void OnUserDisconnect(ConnectionWrapper* user);
-
-	void HookToWrapper(ConnectionWrapper* wrapper);
-	void UnhookFromWrapper(ConnectionWrapper* wrapper);
 
 private:
 
@@ -66,6 +42,25 @@ private:
 	void handleCreateUsernameRequest(ConnectionWrapper* sender, std::string message);
 	void handleLoginRequest(ConnectionWrapper* sender, std::string username);
 	//void handleModifiedPropertyRequest();
+};
+
+// Wraps a connection to send connection reference on callbacks
+class ConnectionWrapper 
+{
+public:
+	ConnectionWrapper(Networking::Connection* connection, UserAuthLobby* authLobby);
+
+	Networking::Connection* GetConnection();
+
+	void OnDisconnect();
+	void OnMessageSent(const std::string& message);
+
+private:
+
+	void HookToConnection(Networking::Connection* connectionToListenTo);
+
+	Networking::Connection* _connection;
+	UserAuthLobby* _authLoby;
 };
 
 }

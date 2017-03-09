@@ -13,7 +13,6 @@
 #include "NoeudComposite.h"
 
 #include <unordered_map>
-#include <map>
 #include <memory>
 
 #include "UsineNoeud.h"
@@ -24,6 +23,7 @@ namespace event_handler
 {
 	class EventHandler;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRendu
@@ -116,20 +116,22 @@ protected:
 	// Chemin vers le fichier de zone sélectionné par l'utilisateur
 	std::string cheminFichierZone;
 
-	using IdContainer = std::unordered_map<int, NoeudAbstrait*>;
-	// Les noeuds en fonction de leur identifiant.
-	IdContainer entitiesById_;
 
 
 private:
     /// Définition du type pour l'association du nom d'un type vers l'usine
 	/// correspondante.
-	using RegistreUsines = std::map<std::string, std::unique_ptr<const UsineAbstraite>>;
+	using RegistreUsines = std::unordered_map<std::string, std::unique_ptr<const UsineAbstraite>>;
 	using NameContainer = std::unordered_map<EntityType, std::string>;
+	using IdContainer = std::unordered_map<uint32_t, NoeudAbstrait*>;
+	// Les noeuds en fonction de leur identifiant.
 
 	/// Association du nom d'un type vers l'usine correspondante.
 	RegistreUsines usines_;   
 	NameContainer  names_;
+
+	IdContainer entitiesByLocalId_;
+	IdContainer entitiesByServerId_;
 	
 	event_handler::EventHandler* eventHandler_ = nullptr;
 };
@@ -152,6 +154,7 @@ private:
 inline void ArbreRendu::ajouterUsine(EntityType type, const std::string& name, std::unique_ptr<const UsineAbstraite> usine)
 {
    usines_[name].swap(usine);
+   names_.insert(std::make_pair(type, name));
 }
 
 

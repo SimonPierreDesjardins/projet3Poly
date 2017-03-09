@@ -199,6 +199,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void createAndConnectNewUser()
         {
+            FonctionsNatives.createProfile(newAccountTextBox.Text);
+            FonctionsNatives.authenticate(newAccountTextBox.Text);
+
             goBackToMainMenu();
 
             parent_.viewPort.Controls.Add(parent_.userChat);
@@ -289,6 +292,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void connectExistingUser()
         {
+            FonctionsNatives.authenticate(ExistingAccountTextBox.Text);
+
             goBackToMainMenu();
 
             parent_.viewPort.Controls.Add(parent_.userChat);

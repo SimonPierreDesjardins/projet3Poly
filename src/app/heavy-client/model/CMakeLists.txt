@@ -190,6 +190,16 @@ set(VISITEUR_SRC
     simulation-engine/Visiteur/VisiteurTypes.h
 )
 
+set(MAP_SESSION_SRC
+	client-network/map-session/MapSession.h
+	client-network/map-session/MapSession.cpp
+	client-network/map-session/OnlineMapSession.h
+	client-network/map-session/OnlineMapSession.cpp
+	client-network/map-session/OfflineMapSession.h
+	client-network/map-session/OfflineMapSession.cpp
+)
+source_group("client-network\\map-session" FILES ${MAP_SESSION_SRC})
+
 set(CLIENT_NETWORK_SRC
 	client-network/Connection.h
 	client-network/Connection.cpp
@@ -297,6 +307,7 @@ add_library(model SHARED
     ${VISITEUR_SRC}
     ${EVENT_HANDLER_SRC}
 	${UI_INTERFACE_SRC}
+    ${MAP_SESSION_SRC}
 	${CLIENT_NETWORK_SRC}
 	${MODEL_SRC}
     ${SIMULATION_ENGINE_SRC}

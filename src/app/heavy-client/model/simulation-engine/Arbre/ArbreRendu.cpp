@@ -145,8 +145,8 @@ std::shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(uint32_t parentId
 	const std::string& typeNouveauNoeud)
 {
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = nullptr;
-	IdContainer::iterator it = entitiesById_.find(parentId);
-	if (it != entitiesById_.end())
+	IdContainer::iterator it = entitiesByServerId_.find(parentId);
+	if (it != entitiesByServerId_.end())
 	{
 		nouveauNoeud = creerNoeud(typeNouveauNoeud);
 		if (nouveauNoeud) {
@@ -294,13 +294,15 @@ std::string ArbreRendu::obtenirCheminFichierZoneDefaut()
 ////////////////////////////////////////////////////////////////////////
 int ArbreRendu::obtenirNombreSelection()
 {
-	NoeudAbstrait* table = chercher(0);
-	NoeudAbstrait* enfant;
 	int nbSelection = 0;
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
-		enfant = table->chercher(i);
-		if (enfant->estSelectionne()) {
-			nbSelection += 1;
+	NoeudAbstrait* table = chercher(0);
+	if (table) 
+	{
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				nbSelection += 1;
+			}
 		}
 	}
 	return nbSelection;
@@ -317,15 +319,18 @@ int ArbreRendu::obtenirNombreSelection()
 ////////////////////////////////////////////////////////////////////////
 double ArbreRendu::obtenirAngleRotation()
 {
-	NoeudAbstrait* table = chercher(0);
-	NoeudAbstrait* enfant;
-	bool trouve = false;
 	double angle = 0.0;
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
-		enfant = table->chercher(i);
-		if (enfant->estSelectionne()) {
-			angle = enfant->obtenirAngleRotation();
-			trouve = true;
+
+	NoeudAbstrait* table = chercher(0);
+	if (table)
+	{
+		bool trouve = false;
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				angle = enfant->obtenirAngleRotation();
+				trouve = true;
+			}
 		}
 	}
 	return (double)((int)angle % 360);
@@ -342,21 +347,23 @@ double ArbreRendu::obtenirAngleRotation()
 ////////////////////////////////////////////////////////////////////////
 double ArbreRendu::obtenirFacteurMiseAEchelle()
 {
-	NoeudAbstrait* table = chercher(0);
-	NoeudAbstrait* enfant;
-	bool trouve = false;
 	double facteurMiseAEchelle = 1.0;
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
-		enfant = table->chercher(i);
-		if (enfant->estSelectionne()) {
-			if (enfant->obtenirNom() == "ligneNoire" || enfant->obtenirNom() == "depart") {
-				facteurMiseAEchelle = 1;
+	NoeudAbstrait* table = chercher(0);
+	if (table)
+	{
+		bool trouve = false;
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				if (enfant->obtenirNom() == "ligneNoire" || enfant->obtenirNom() == "depart") {
+					facteurMiseAEchelle = 1;
+				}
+				else{
+					facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
+				}
+					
+				trouve = true;
 			}
-			else{
-				facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
-			}
-				
-			trouve = true;
 		}
 	}
 	return facteurMiseAEchelle;
@@ -373,15 +380,17 @@ double ArbreRendu::obtenirFacteurMiseAEchelle()
 ////////////////////////////////////////////////////////////////////////
 double ArbreRendu::obtenirPositionRelativeX()
 {
-	NoeudAbstrait* table = chercher(0);
-	NoeudAbstrait* enfant;
-	bool trouve = false;
 	double positionX = 0.0;
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
-		enfant = table->chercher(i);
-		if (enfant->estSelectionne()) {
-			positionX = enfant->obtenirPositionRelative()[0];
-			trouve = true;
+	NoeudAbstrait* table = chercher(0);
+	if (table)
+	{
+		bool trouve = false;
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				positionX = enfant->obtenirPositionRelative()[0];
+				trouve = true;
+			}
 		}
 	}
 	return positionX;
@@ -398,15 +407,17 @@ double ArbreRendu::obtenirPositionRelativeX()
 ////////////////////////////////////////////////////////////////////////
 double ArbreRendu::obtenirPositionRelativeY()
 {
-	NoeudAbstrait* table = chercher(0);
-	NoeudAbstrait* enfant;
-	bool trouve = false;
 	double positionY = 0.0;
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
-		enfant = table->chercher(i);
-		if (enfant->estSelectionne()) {
-			positionY = enfant->obtenirPositionRelative()[1];
-			trouve = true;
+	NoeudAbstrait* table = chercher(0);
+	if (table)
+	{
+		bool trouve = false;
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) {
+				positionY = enfant->obtenirPositionRelative()[1];
+				trouve = true;
+			}
 		}
 	}
 	return positionY;
@@ -424,25 +435,28 @@ double ArbreRendu::obtenirPositionRelativeY()
 ////////////////////////////////////////////////////////////////////////
 void ArbreRendu::assignerAngleRotation(const double& angle)
 {
-	std::unique_ptr<VisiteurRotation> visiteurRotation = std::make_unique <VisiteurRotation>();
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
-
     NoeudAbstrait* table = chercher(0); 
-    unsigned int nEnfants = table->obtenirNombreEnfants();
-	for (unsigned int i = 0; i < nEnfants; i++) {
-		NoeudAbstrait* enfant = table->chercher(i);
-		if (enfant->estSelectionne()) 
-        {
-			double angleAvantChangement = enfant->obtenirAngleRotation();
-			visiteurRotation->assignerAngleRotation(angle - angleAvantChangement);
-			enfant->accepterVisiteur(visiteurRotation.get());
+	if (table)
+	{
+		std::unique_ptr<VisiteurRotation> visiteurRotation = std::make_unique <VisiteurRotation>();
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
 
-			accepterVisiteur(visiteurVerification.get());
-            bool positionValide = visiteurVerification->objetsDansZoneSimulation();
-			if (!positionValide) 
-            {
-				visiteurRotation->assignerAngleRotation(angleAvantChangement - angle);
+		unsigned int nEnfants = table->obtenirNombreEnfants();
+		for (unsigned int i = 0; i < nEnfants; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) 
+			{
+				double angleAvantChangement = enfant->obtenirAngleRotation();
+				visiteurRotation->assignerAngleRotation(angle - angleAvantChangement);
 				enfant->accepterVisiteur(visiteurRotation.get());
+
+				accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+				if (!positionValide) 
+				{
+					visiteurRotation->assignerAngleRotation(angleAvantChangement - angle);
+					enfant->accepterVisiteur(visiteurRotation.get());
+				}
 			}
 		}
 	}
@@ -460,22 +474,26 @@ void ArbreRendu::assignerAngleRotation(const double& angle)
 ////////////////////////////////////////////////////////////////////////
 void ArbreRendu::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
 {
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
-	NoeudAbstrait* table = chercher("table");
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
-    	NoeudAbstrait* enfant = table->chercher(i);
-		if (enfant->estSelectionne()) 
-        {
-            // Assigner le nouveau facteur de mise à échelle.
-			double facteurAvantChangement = enfant->obtenirFacteurMiseAEchelle();
-			enfant->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+	NoeudAbstrait* table = chercher(0);
+	if (table)
+	{
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
 
-            // Vérifier la nouvelle position du noeud.
-			accepterVisiteur(visiteurVerification.get());
-            bool positionValide = visiteurVerification->objetsDansZoneSimulation();
-			if (!positionValide) 
-            {
-				enfant->assignerFacteurMiseAEchelle(facteurAvantChangement);
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) 
+			{
+				// Assigner le nouveau facteur de mise à échelle.
+				double facteurAvantChangement = enfant->obtenirFacteurMiseAEchelle();
+				enfant->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+
+				// Vérifier la nouvelle position du noeud.
+				accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+				if (!positionValide) 
+				{
+					enfant->assignerFacteurMiseAEchelle(facteurAvantChangement);
+				}
 			}
 		}
 	}
@@ -493,28 +511,31 @@ void ArbreRendu::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
 ////////////////////////////////////////////////////////////////////////
 void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
 {
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
 	NoeudAbstrait* table = chercher(0);
-    unsigned int nEnfants = table->obtenirNombreEnfants();
-	for (unsigned int i = 0; i < nEnfants; i++) {
-		NoeudAbstrait* enfant = table->chercher(i);
-		if (enfant->estSelectionne()) 
-        {
-            // Ajuster la position du noeud et garder la dernière position.
-            double positionXAvantChangement = enfant->obtenirPositionRelative().x;
-			glm::dvec3 position = enfant->obtenirPositionRelative();
-			position.x = positionRelativeX;
-			enfant->assignerPositionRelative(position);
-
-            // Verifier la position du noeud.
-			accepterVisiteur(visiteurVerification.get());
-            bool positionValide = visiteurVerification->objetsDansZoneSimulation();
-
-            // Replacer le noeud.
-			if (!positionValide) 
-            {
-				position[0] = positionXAvantChangement;
+	if (table)
+	{
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
+		unsigned int nEnfants = table->obtenirNombreEnfants();
+		for (unsigned int i = 0; i < nEnfants; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) 
+			{
+				// Ajuster la position du noeud et garder la dernière position.
+				double positionXAvantChangement = enfant->obtenirPositionRelative().x;
+				glm::dvec3 position = enfant->obtenirPositionRelative();
+				position.x = positionRelativeX;
 				enfant->assignerPositionRelative(position);
+
+				// Verifier la position du noeud.
+				accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+
+				// Replacer le noeud.
+				if (!positionValide) 
+				{
+					position[0] = positionXAvantChangement;
+					enfant->assignerPositionRelative(position);
+				}
 			}
 		}
 	}
@@ -532,27 +553,30 @@ void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
 ////////////////////////////////////////////////////////////////////////
 void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
 {
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
 	NoeudAbstrait* table = chercher(0);
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
-    	NoeudAbstrait* enfant = table->chercher(i);
-		if (enfant->estSelectionne()) 
-        {
-            // Ajuster la position du noeud et garder la dernière position.
-			double positionYAvantChangement = enfant->obtenirPositionRelative()[1];
-			glm::dvec3 position = enfant->obtenirPositionRelative();
-			position.y = positionRelativeY;
-			enfant->assignerPositionRelative(position);
-
-            // Vérifier que la position est valide.
-			accepterVisiteur(visiteurVerification.get());
-            bool positionValide = visiteurVerification->objetsDansZoneSimulation();
-
-            // Replacer le noeud.
-			if (!positionValide) 
-            {
-				position[1] = positionYAvantChangement;
+	if (table)
+	{
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne()) 
+			{
+				// Ajuster la position du noeud et garder la dernière position.
+				double positionYAvantChangement = enfant->obtenirPositionRelative()[1];
+				glm::dvec3 position = enfant->obtenirPositionRelative();
+				position.y = positionRelativeY;
 				enfant->assignerPositionRelative(position);
+
+				// Vérifier que la position est valide.
+				accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+
+				// Replacer le noeud.
+				if (!positionValide) 
+				{
+					position[1] = positionYAvantChangement;
+					enfant->assignerPositionRelative(position);
+				}
 			}
 		}
 	}

@@ -6,7 +6,7 @@
 namespace server
 {
 
-server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus)
+UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus)
 {
 	_userReceivers = mus;
 	HookToListenerEvents(listener);
@@ -33,8 +33,7 @@ void UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener * listen
 
 void UserAuthLobby::handleConnection(Networking::Connection * connection)
 {
-	ConnectionWrapper* wrapper = new ConnectionWrapper(connection);
-	HookToWrapper(wrapper);
+	ConnectionWrapper* wrapper = new ConnectionWrapper(connection, this);
 }
 
 void UserAuthLobby::handleCreateUsernameRequest(ConnectionWrapper* wrapper, std::string message)
@@ -55,28 +54,14 @@ void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string m
 	Networking::Connection* connection = wrapper->GetConnection();
 	user->AssignConnection(wrapper->GetConnection());
 
-	UnhookFromWrapper(wrapper);
 	delete wrapper;
-	
 
 	for each(auto userReceiver in _userReceivers) {
 		userReceiver->AddUser(user);
 	}
 }
 
-void server::UserAuthLobby::HookToWrapper(ConnectionWrapper * wrapper)
-{
-	__hook(&ConnectionWrapper::OnDisconnect, wrapper, &UserAuthLobby::OnUserDisconnect);
-	__hook(&ConnectionWrapper::OnMessageSent, wrapper, &UserAuthLobby::OnReceivedMessage);
-}
-
-void server::UserAuthLobby::UnhookFromWrapper(ConnectionWrapper * wrapper)
-{
-	__unhook(&ConnectionWrapper::OnDisconnect, wrapper, &UserAuthLobby::OnUserDisconnect);
-	__unhook(&ConnectionWrapper::OnMessageSent, wrapper, &UserAuthLobby::OnReceivedMessage);
-}
-
-void server::UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::string& message)
+void UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::string& message)
 {
 	// We should only receive messages for the user system
 	assert(message.size() > 6 && message[4] == 'u');
@@ -101,38 +86,39 @@ void server::UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const
 	// Auto authenticate for now
 }
 
-void server::UserAuthLobby::OnUserDisconnect(ConnectionWrapper * wrapper)
+void UserAuthLobby::OnUserDisconnect(ConnectionWrapper * wrapper)
 {
-	// unhook from events and dispose of user
-	UnhookFromWrapper(wrapper);
-	//delete user;
+	// Handle unauthentified user disconnected here, wrapper deleted for now.
+	delete wrapper;
 }
 
-server::ConnectionWrapper::ConnectionWrapper(Networking::Connection * connection)
+ConnectionWrapper::ConnectionWrapper(Networking::Connection * connection, 
+	UserAuthLobby* lobby)
 {
 	_connection = connection;
+	_authLoby = lobby;
 	HookToConnection(connection);
 }
 
-Networking::Connection * server::ConnectionWrapper::GetConnection()
+Networking::Connection * ConnectionWrapper::GetConnection()
 {
 	return _connection;
 }
 
 void ConnectionWrapper::HookToConnection(Networking::Connection * connectionToListenTo)
 {
-	connectionToListenTo->hookOnConnectionLost(&ConnectionWrapper::OnDisco, this);
-	connectionToListenTo->hookOnReceivedMessage(&ConnectionWrapper::OnData, this);
+	connectionToListenTo->hookOnConnectionLost(&ConnectionWrapper::OnDisconnect, this);
+	connectionToListenTo->hookOnReceivedMessage(&ConnectionWrapper::OnMessageSent, this);
 }
 
-void server::ConnectionWrapper::OnData(const std::string & message)
+void ConnectionWrapper::OnDisconnect()
 {
-	__raise OnMessageSent(this, message);
+	_authLoby->OnUserDisconnect(this);
 }
 
-void server::ConnectionWrapper::OnDisco()
+void ConnectionWrapper::OnMessageSent(const std::string& message)
 {
-	__raise OnDisconnect(this);
+	_authLoby->OnReceivedMessage(this, message);
 }
 
 }

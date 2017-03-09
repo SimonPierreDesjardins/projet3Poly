@@ -52,7 +52,8 @@ enum EntityType
 	ROBOT_ENTITY,
 	F1_ENTITY,
 	TRUCK_ENTITY,
-	VOLKS_ENTITY
+	VOLKS_ENTITY,
+	AUDI_ENTITY
 };
 
 ///////////////////////////////////////////////////////////////////////////

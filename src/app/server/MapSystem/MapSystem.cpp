@@ -85,14 +85,18 @@ char server::MapSystem::GetSystemType()
 
 std::string server::MapSystem::GetMapListMessage()
 {
-	std::string mapListString = "ml";
-	auto last = std::prev(_mapList.end());
 
-	for (auto it = _mapList.begin(); it != _mapList.end(); ++it)
+	std::string mapListString = "ml";
+	// Prevent crash from checking for previous of end() in empty list. 
+	if (!_mapList.empty())
 	{
-		mapListString += it->second.GetSerializedInfo();
-		if (it != last) {
-			mapListString += ';';
+		auto last = std::prev(_mapList.end());
+		for (auto it = _mapList.begin(); it != _mapList.end(); ++it)
+		{
+			mapListString += it->second.GetSerializedInfo();
+			if (it != last) {
+				mapListString += ';';
+			}
 		}
 	}
 	return Networking::MessageStandard::AddMessageLengthHeader(mapListString);
