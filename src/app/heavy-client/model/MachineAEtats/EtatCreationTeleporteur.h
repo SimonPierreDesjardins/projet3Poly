@@ -33,10 +33,15 @@ public:
 	virtual void gererMouvementSouris(const int& x, const int& y);
 	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
 	virtual void assignerSymboleCurseur();
+	virtual void gererToucheEchappe();
 
 private:
 	std::unique_ptr<VisiteurCreationTeleporteur> visiteurCreationTeleporteur_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
+	int compteurTeleporteur_;
+	bool enCreation_{false};
+	NoeudAbstrait* teleporteur_;
+	NoeudAbstrait* ancienTeleporteur_;
 };
 
 

@@ -36,7 +36,12 @@ EtatCreationTeleporteur::EtatCreationTeleporteur()
 ////////////////////////////////////////////////////////////////////////
 EtatCreationTeleporteur::~EtatCreationTeleporteur()
 {
-
+	if (enCreation_)
+	{
+		arbre_->chercher("table")->effacer(teleporteur_);
+		enCreation_ = false;
+		teleporteur_ = nullptr;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -68,7 +73,7 @@ void EtatCreationTeleporteur::gererClicGaucheEnfonce(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 {
-	EtatAbstrait::gererClicGaucheRelache(x, y);
+	/*EtatAbstrait::gererClicGaucheRelache(x, y);
 	if (!estClickDrag() && curseurEstSurTable_) {
 		// Ajout du teleporteur sur la table.
 		glm::dvec3 positionVirtuelle;
@@ -76,11 +81,54 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 		visiteurCreationTeleporteur_->assignerPositionRelative(positionVirtuelle);
 		arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 		NoeudAbstrait* teleporteur = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
+		compteurTeleporteur_++;
 		
 		// Mettre à jour les quads et vérifier si le nouveau teleporteur se situe à l'extérieur de la table.
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 		if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 			arbre_->chercher("table")->effacer(teleporteur);
+			compteurTeleporteur_--;
+		}
+	}*/
+	EtatAbstrait::gererClicGaucheRelache(x, y);
+	glm::dvec3 positionVirtuelle;
+	if (!estClickDrag() && curseurEstSurTable_)
+	{
+		//Premier clic
+		if (!enCreation_)
+		{
+			enCreation_ = true;
+			vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+			visiteurCreationTeleporteur_->assignerPositionRelative(positionVirtuelle);
+			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
+			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
+			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
+				arbre_->chercher("table")->effacer(teleporteur_);
+				teleporteur_ = nullptr;
+				enCreation_ = false;
+				ancienTeleporteur_ = nullptr;
+			}
+		}
+		//Deuxieme clic
+		else
+		{
+			ancienTeleporteur_ = teleporteur_;
+			vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+			visiteurCreationTeleporteur_->assignerPositionRelative(positionVirtuelle);
+			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
+			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
+			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
+				arbre_->chercher("table")->effacer(teleporteur_);
+				teleporteur_ = ancienTeleporteur_;
+				enCreation_ = true;
+				ancienTeleporteur_ = nullptr;
+			}
+			else
+			{
+				enCreation_ = false;
+			}
 		}
 	}
 }
@@ -137,6 +185,23 @@ void EtatCreationTeleporteur::assignerSymboleCurseur()
 	if (!curseurEstSurTable_) {
 		HCURSOR Cursor = LoadCursor(NULL, IDC_NO);
 		SetCursor(Cursor);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EtatCreationTeleporteur::gererToucheEchappe()
+///
+/// Cette fonction supprime le teleporteur si le 2e n'est pas fait.
+///
+////////////////////////////////////////////////////////////////////////
+void EtatCreationTeleporteur::gererToucheEchappe()
+{
+	if (enCreation_)
+	{
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(teleporteur_);
+		enCreation_ = false;
+		teleporteur_ = nullptr;
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////
