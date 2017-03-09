@@ -156,6 +156,34 @@ void NoeudAudi::afficherConcret() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// void NoeudAudi::suivreCamera()
+///
+/// Cette méthode positionne la caméra première personne en fonction de la 
+/// position courante du audi
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudAudi::suivreCamera()
+{
+	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
+
+	if (vue->estPremierePersonne())
+	{
+		vue::Camera* camera = vue->obtenirCamera();
+		glm::dvec3 positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
+
+		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
+
+		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 3.0 };
+		camera->assignerPointVise(positionRectangle + positionVise);
+
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 3, sin(angleRotation_* PI / 180) * 3, -3.0 });
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn void NoeudAudi::positionnerRoues()
 ///
 /// Cette fonctione permet de positionner les roues du robot par rapport à

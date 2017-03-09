@@ -45,6 +45,8 @@ public:
 
 	void afficherConcret() const;
 
+	void suivreCamera();
+
 private:
 
 	// Les attributs du robot.
