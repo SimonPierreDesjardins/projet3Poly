@@ -127,10 +127,12 @@ private:
     /// Définition du type pour l'association du nom d'un type vers l'usine
 	/// correspondante.
 	using RegistreUsines = std::map<std::string, std::unique_ptr<const UsineAbstraite>>;
+	using NameContainer = std::unordered_map<EntityType, std::string>;
 
 	/// Association du nom d'un type vers l'usine correspondante.
 	RegistreUsines usines_;   
-
+	NameContainer  names_;
+	
 	event_handler::EventHandler* eventHandler_ = nullptr;
 };
 
@@ -149,9 +151,7 @@ private:
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline void ArbreRendu::ajouterUsine(
-   const std::string& type, std::unique_ptr<const UsineAbstraite> usine
-   )
+inline void ArbreRendu::ajouterUsine(EntityType type, const std::string& name, std::unique_ptr<const UsineAbstraite> usine)
 {
    usines_[type].swap(usine);
 }

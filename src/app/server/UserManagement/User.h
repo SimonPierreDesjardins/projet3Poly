@@ -52,5 +52,4 @@ inline void User::AssignInfo(UserInformation info)
 
 }
 
-
 #endif

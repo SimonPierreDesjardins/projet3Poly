@@ -9,7 +9,6 @@ namespace client_network
 MessageDispatcher::MessageDispatcher(event_handler::EventHandler* eventHandler_)
 	: eventHandler_(eventHandler_)
 {
-	
 }
 
 MessageDispatcher::~MessageDispatcher()
@@ -59,9 +58,53 @@ void MessageDispatcher::lookupMessage()
 	}
 }
 
+void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
+{
+	// Message size should always be 39 according to our protocole.
+	if (message.size() != 39)
+	{
+		// TODO: Log error here.
+		return;
+	}
+
+	uint32_t entityId = serializer_.deserializeInteger(&message[6]);
+	uint8_t  entityTupe = serializer_.deserializeChar(message[10]);
+	uint32_t parentId = serializer_.deserializeInteger(&message[11]);
+
+	float ax = serializer_.deserializeFloat(&message[15]);
+	float ay = serializer_.deserializeFloat(&message[19]);
+	float az = serializer_.deserializeFloat(&message[23]);
+
+	float rx = serializer_.deserializeFloat(&message[27]);
+	float ry = serializer_.deserializeFloat(&message[31]);
+	float rz = serializer_.deserializeFloat(&message[35]);
+}
+
+void MessageDispatcher::handleMapEditionMessage(const std::string& message)
+{
+	switch (message[5])
+	{
+	case 'c':
+		handleEntityCreationMessage(message);
+		break;
+	}
+}
+
 void MessageDispatcher::dispatch(const std::string& message)
 {
-	// parse the message here.
+	// Check message validity.
+	uint32_t messageSize = serializer_.deserializeInteger(message.c_str());
+	if (message.size() != messageSize + 4)
+	{
+		return;
+	}
+
+	switch (message[4])
+	{
+	case 'e':
+		handleMapEditionMessage(message);
+		break;
+	}
 }
 
 }

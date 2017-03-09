@@ -25,15 +25,15 @@ void Serializer::serialize(uint8_t data, std::string& message)
 	message.append(serialized, 1);
 }
 
-uint32_t Serializer::deserializeInteger(char data[4])
+uint32_t Serializer::deserializeInteger(char const* data)
 {
-	uint32_t* deserialized = reinterpret_cast<uint32_t*>(data);
+	uint32_t const* deserialized = reinterpret_cast<uint32_t const*>(data);
 	return *deserialized;
 }
 
-float Serializer::deserializeFloat(char data[4])
+float Serializer::deserializeFloat(char const* data)
 {
-	float* deserialized = reinterpret_cast<float*>(data);
+	float const* deserialized = reinterpret_cast<float const*>(data);
 	return *deserialized;
 }
 

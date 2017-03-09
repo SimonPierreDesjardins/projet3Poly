@@ -148,6 +148,7 @@ void FacadeModele::initialize(HWND hWnd)
 	affichageTexte_ = std::make_unique<AffichageTexte>(vue_.get(), profil_.get());
 
 	eventHandler_.setNetworkManager(&network_);
+	eventHandler_.setEntityTree(arbre_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////

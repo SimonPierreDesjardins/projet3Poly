@@ -7,6 +7,8 @@
 #include <mutex>
 #include <condition_variable>
 
+#include "Serializer.h"
+
 namespace event_handler
 {
 	class EventHandler;
@@ -25,11 +27,10 @@ public:
 	void stopDispatching();
 	void handleReceivedMessage(char const* message, int32_t size);
 
+
 private:
 	bool isDispatching_ = false;
 	event_handler::EventHandler* eventHandler_{ nullptr };
-
-	std::string message_;
 
 	std::queue<std::string> messageQueue_;
 
@@ -38,9 +39,13 @@ private:
 	std::mutex lookupLock_;
 	std::condition_variable lookupcv_;
 
+	Serializer serializer_;
 
 	void lookupMessage();
 	void dispatch(const std::string& message);
+	void handleMapEditionMessage(const std::string& message);
+	void handleEntityCreationMessage(const std::string& message);
+
 	MessageDispatcher() = delete;
 };
 

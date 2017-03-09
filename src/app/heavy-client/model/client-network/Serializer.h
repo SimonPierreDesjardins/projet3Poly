@@ -17,8 +17,8 @@ public:
 	void serialize(uint32_t data, std::string& message);
 	void serialize(uint8_t data, std::string& message);
 
-	uint32_t deserializeInteger(char data[4]);
-	float deserializeFloat(char data[4]);
+	uint32_t deserializeInteger(char const* data);
+	float deserializeFloat(char const* data);
 	uint8_t deserializeChar(char data);
 };
 
