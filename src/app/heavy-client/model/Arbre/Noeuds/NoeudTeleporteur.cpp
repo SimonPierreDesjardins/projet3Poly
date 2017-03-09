@@ -130,8 +130,14 @@ void NoeudTeleporteur::afficherConcret() const
 	if (estSelectionne()) 
     {
         glDisable(GL_COLOR_MATERIAL);
-		glColor4d(1.0, 0.20, 0.0, 1.0);
+		glColor4f(1.0f, 0.20f, 0.0f, 1.0f);
         glEnable(GL_COLOR_MATERIAL);
+	}
+	else
+	{
+		glDisable(GL_COLOR_MATERIAL);
+		glColor4f(0.0862745121f, 0.407843143f, 0.701960802f, 1.0f);
+		glEnable(GL_COLOR_MATERIAL);
 	}
 
 	glRotated(angleRotation_, 0, 0, 1);
