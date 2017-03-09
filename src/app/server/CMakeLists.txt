@@ -32,8 +32,8 @@ source_group(Database FILES ${DB})
 set(MAP_SYST 
 MapSystem/MapEditingSession.cpp
 MapSystem/MapEditingSession.h
-MapSystem/MapListLobby.cpp
-MapSystem/MapListLobby.h
+MapSystem/MapSystem.cpp
+MapSystem/MapSystem.h
 )
 source_group(MapSystem FILES ${MAP_SYST})
 
