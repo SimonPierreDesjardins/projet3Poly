@@ -36,6 +36,7 @@ public:
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
+	virtual void visiter(NoeudTeleporteur* noeud);
 private:
 	std::vector<double> facteursDimensionsInitiaux_;
 };

@@ -112,6 +112,29 @@ void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 	duplication_->ajouter(nouveauNoeud);
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurDuplication::visiter(NoeudTeleporteur* noeud)
+///
+/// Fonction qui crée et ajoute un noeud teleporteur au noeud Table passé en paramètre.
+///
+/// @param[in] noeud : Le noeud teleporteur que l'on veut ajouter.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurDuplication::visiter(NoeudTeleporteur* noeud)
+{
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_TELEPORTEUR);
+
+	nouveauNoeud->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
+	// Assigner la position à la table dans la duplication si il y a plus qu'un noeud.
+	nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative() - centreSelection_);
+	duplication_->ajouter(nouveauNoeud);
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurDuplication::visiter(NoeudMur* noeud)

@@ -374,6 +374,8 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     return enIntersection;
 }
 
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::verifierCollision(NoeudMur* noeud)

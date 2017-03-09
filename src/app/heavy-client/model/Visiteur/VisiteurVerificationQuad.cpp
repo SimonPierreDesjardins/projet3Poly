@@ -125,6 +125,22 @@ void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn VisiteurVerificationQuad::visiter(NoeudTeleporteur* noeud)
+///
+/// Fonction qui vérifie que le Teleporteur passé en paramètre se trouve dans les limites de la table.
+///
+/// @param[in] noeud : Le noeud Teleporteur sur lequel on veut effectuer la vérication.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurVerificationQuad::visiter(NoeudTeleporteur* noeud)
+{
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 ///
 /// Fonction qui vérifie que le mur passé en paramètre se trouve dans les limites de la table.

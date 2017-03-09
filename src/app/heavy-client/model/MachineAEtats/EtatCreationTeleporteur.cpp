@@ -77,7 +77,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 		arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 		NoeudAbstrait* teleporteur = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
 		
-		// Mettre à jour les quads et vérifier si le nouveau poteau se situe à l'extérieur de la table.
+		// Mettre à jour les quads et vérifier si le nouveau teleporteur se situe à l'extérieur de la table.
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 		if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 			arbre_->chercher("table")->effacer(teleporteur);

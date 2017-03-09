@@ -134,8 +134,9 @@ void NoeudTeleporteur::afficherConcret() const
         glEnable(GL_COLOR_MATERIAL);
 	}
 
+	glRotated(angleRotation_, 0, 0, 1);
 	// Effectuer la mise à échelle.
-	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
+	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, facteurMiseAEchelle_);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
