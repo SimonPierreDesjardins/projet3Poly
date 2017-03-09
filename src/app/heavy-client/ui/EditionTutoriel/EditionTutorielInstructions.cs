@@ -641,6 +641,8 @@ namespace ui
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
 
+            parent_.editionTutorielMenuStrip.vuesToolStripMenuItem.Enabled = true;
+
             instructionBox.Items.Clear();
             string instruction = "Comme dernière tâche du tutoriel, il vous suffit de changer la vue. La vue orbite permet de voir les objets sous un angle " +
                                  "différent. Comme avec la caméra actuel, vous pouvez déplacer la vue avec les flèches et vous pouvez vous approcher ou vous éloigner " +
@@ -659,6 +661,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void conclusionState()
         {
+            parent_.editionTutorielMenuStrip.vuesToolStripMenuItem.Enabled = false;
+
             previousLabel.Text = "Début";
             previousButton.Visible = true;
 

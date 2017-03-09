@@ -32,7 +32,6 @@ namespace ui
             editionObjectMenu.Width = 0;
 
             disableAllControls();
-            parent_.editionTutorielMenuStrip.Enabled = false;
         }
 
         ////////////////////////////////////////////////////////////////////////

@@ -32,6 +32,8 @@ namespace ui
             menuStrip1.Renderer = new myRenderer();
             crochetPourVue();
             enregistrerToolStripMenuItem.Enabled = false;
+
+            disableAllControls();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -376,6 +378,20 @@ namespace ui
             }
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void disableAllControls()
+        ///
+        /// Désactive toutes les controls sur le userControl
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void disableAllControls()
+        {
+            fichierToolStripMenuItem.Enabled = false;
+            vuesToolStripMenuItem.Enabled = false;
+            informationsToolStripMenuItem.Enabled = false;
         }
     }
 }

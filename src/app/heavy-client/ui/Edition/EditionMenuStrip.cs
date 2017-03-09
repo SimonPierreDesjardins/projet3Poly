@@ -395,7 +395,6 @@ namespace ui
             FonctionsNatives.assignerMode(Mode.TUTORIAL_EDITION);
             parent_.verificationDuNombreElementChoisi();
 
-
             parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
             parent_.editionTutorielInstructions.Location = new Point(parent_.viewPort.Width / 2 - parent_.editionTutorielInstructions.Width / 2,
                                                                     parent_.viewPort.Height / 2 - parent_.editionTutorielInstructions.Height / 2);

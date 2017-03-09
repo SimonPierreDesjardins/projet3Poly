@@ -215,7 +215,7 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fichierToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem vuesToolStripMenuItem;
+        public System.Windows.Forms.ToolStripMenuItem vuesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orthoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nouveauToolStripMenuItem;
