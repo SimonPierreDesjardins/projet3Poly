@@ -1,6 +1,6 @@
 #include "IdGenerator.h"
 
-std::string & server::IdGenerator::GenerateId()
+std::string server::IdGenerator::GenerateId()
 {
 	std::ostringstream ostr;
 
@@ -11,4 +11,4 @@ std::string & server::IdGenerator::GenerateId()
 	return ostr.str();
 }
 
-unsigned int server::IdGenerator::nextId = 0;
+unsigned int server::IdGenerator::nextId = 1;

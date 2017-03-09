@@ -8,10 +8,8 @@
 
 #include "Networking.h"
 
-#include "MultiUserSession.h"
 
 #include "User.h"
-#include "MapRoomManager.h"
 #include "MultiUserSystem.h"
 
 namespace server 
@@ -54,12 +52,10 @@ public:
 
 private:
 
-	Networking::ServerListener* _listener;
-
-	MapRoomManager* mapRoomManager_;
 	// ChatRoomManager here
 
 	std::vector<MultiUserSystem*> _userReceivers;
+	Networking::ServerListener* _listener;
 
 	// Connection reception treatment
 	void HookToListenerEvents(Networking::ServerListener* listener);

@@ -42,6 +42,8 @@ set(NOEUDS_SRC
     simulation-engine/Arbre/Noeuds/NoeudF1.h
     simulation-engine/Arbre/Noeuds/NoeudVolks.cpp
     simulation-engine/Arbre/Noeuds/NoeudVolks.h
+    simulation-engine/Arbre/Noeuds/NoeudAudi.h
+    simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
 )
 
 set(USINES_SRC

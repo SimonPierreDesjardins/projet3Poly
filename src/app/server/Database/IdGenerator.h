@@ -7,9 +7,9 @@
 #include <iostream>
 
 namespace server {
-	class IdGenerator {
+	static class IdGenerator {
 	public:
-		static std::string& GenerateId();
+		static std::string GenerateId();
 
 	private:
 		static unsigned int nextId;

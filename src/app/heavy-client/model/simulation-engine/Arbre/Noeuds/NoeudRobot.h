@@ -73,9 +73,9 @@ public:
     void calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& viteseTranslationCollision,
                                       double& vitesseAngulaireCollision) const;
 	//Permet de positionner les roues
-	void positionnerRoues();
+	virtual void positionnerRoues();
 
-	void assignerCouleurs(int modele, int a, int r, int g, int b);
+	virtual void assignerCouleurs(int modele, int a, int r, int g, int b);
 
 	void assignerMode(int mode);
 
@@ -92,7 +92,7 @@ public:
 	void setCouleurDefault(int piece,bool default);
 
 
-private:
+protected:
 	//Vitesse des moteurs du robot
 	float vitesseRotation_{ 0.f };
 	float vitesseDroite_{ 0.f };
@@ -138,6 +138,8 @@ private:
 	NoeudAbstrait* table_;
 	NoeudRoues* roueGauche_;
 	NoeudRoues* roueDroite_;
+	NoeudRoues* roueGauche2_;
+	NoeudRoues* roueDroite2_;
 	float* couleur_;
 	bool estCouleurDefaut_ = true;
 	int mode_;

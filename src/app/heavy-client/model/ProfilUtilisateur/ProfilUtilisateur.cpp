@@ -756,6 +756,15 @@ bool ProfilUtilisateur::obtenirCouleurParDefaut(int modele) {
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::setCouleurParDefaut(int modele, bool value)
+///
+///	Fonction qui attribue la valeur true ou false a lattribut estDefautRoues
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::setCouleurParDefaut(int modele, bool value) 
 {
 	if (modele == WHEELS)
@@ -766,6 +775,34 @@ void ProfilUtilisateur::setCouleurParDefaut(int modele, bool value)
 	{
 		estDefautRobot_ = value;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::setModele(std::string modele)
+///
+///	Fonction qui attribue le modele courant
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::setModele(std::string modele)
+{
+	modele_ = modele;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::setCouleurParDefaut(int modele, bool value)
+///
+///	Fonction qui attribue la valeur true ou false a lattribut estDefautRoues
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+std::string ProfilUtilisateur::getModele()
+{
+	return modele_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

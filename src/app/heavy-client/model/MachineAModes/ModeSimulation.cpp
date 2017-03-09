@@ -85,8 +85,6 @@ ModeSimulation::~ModeSimulation()
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
-
-
 }
 
 ////////////////////////////////////////////////////////////////////////

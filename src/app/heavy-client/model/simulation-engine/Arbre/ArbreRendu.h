@@ -51,9 +51,7 @@ public:
 	virtual ~ArbreRendu();
 
 	// Ajoute une usine associée à un type de noeud.
-	inline void ajouterUsine(
-	  const std::string& type, std::unique_ptr<const UsineAbstraite> usine
-	  );
+	inline void ajouterUsine(EntityType type, const std::string& name, std::unique_ptr<const UsineAbstraite> usine);
 
     // Crée un nouveau noeud.
     std::shared_ptr<NoeudAbstrait> creerNoeud(const std::string& typeNouveauNoeud) const;
@@ -153,7 +151,7 @@ private:
 ////////////////////////////////////////////////////////////////////////
 inline void ArbreRendu::ajouterUsine(EntityType type, const std::string& name, std::unique_ptr<const UsineAbstraite> usine)
 {
-   usines_[type].swap(usine);
+   usines_[name].swap(usine);
 }
 
 

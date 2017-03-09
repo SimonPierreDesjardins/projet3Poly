@@ -99,6 +99,8 @@ extern "C"
 	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value);
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b);
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece);
+	__declspec(dllexport) void __cdecl setModele(char *modele);
+	__declspec(dllexport) void __cdecl getModele(char* chemin, int longueur);
 	
 	// Network
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port);
