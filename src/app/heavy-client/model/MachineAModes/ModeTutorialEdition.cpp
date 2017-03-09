@@ -453,6 +453,7 @@ glm::dvec3 ModeTutorialEdition::getPositionOfTutorialObject()
 ////////////////////////////////////////////////////////////////////////
 void ModeTutorialEdition::selectAllTutorialObjects()
 {
+	UnselectAllObjects();
 	int objects = table_->obtenirNombreEnfants();
 	for (int i = startIndexOfTutorialObjects_; i < objects; i++)
 	{
