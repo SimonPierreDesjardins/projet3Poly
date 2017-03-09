@@ -60,6 +60,7 @@ namespace ui
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
+            setDefaultCurrentTool();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
         }
@@ -91,6 +92,7 @@ namespace ui
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
+            setDefaultCurrentTool();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
         }
@@ -122,6 +124,7 @@ namespace ui
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
+            setDefaultCurrentTool();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
         }
@@ -153,6 +156,7 @@ namespace ui
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
+            setDefaultCurrentTool();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
         }
@@ -184,6 +188,7 @@ namespace ui
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
+            setDefaultCurrentTool();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
         }
@@ -234,6 +239,7 @@ namespace ui
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
+            setDefaultCurrentTool();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
         }
@@ -487,7 +493,17 @@ namespace ui
             wallObjectButton.BackColor = Color.Transparent;
             teleportObjectButton.BackColor = Color.Transparent;
             bridgeObjectButton.BackColor = Color.Transparent;
+        }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void setDefaultCurrentTool()
+        ///
+        /// Fait comme si aucun outil de création était sélectionner
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void setDefaultCurrentTool()
+        {
             currentToolButton.BackColor = Color.Transparent;
             currentToolButton.Visible = false;
         }

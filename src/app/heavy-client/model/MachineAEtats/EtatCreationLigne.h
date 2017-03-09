@@ -37,6 +37,8 @@ public:
 	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
 	virtual void assignerSymboleCurseur();
 
+	bool isInCreation() { return enCreation_; };
+
 private:
 	std::unique_ptr<VisiteurCreationLigne> visiteurCreationLigne_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };

@@ -42,15 +42,15 @@ const int VK_KEY_M = 'M';
 ///
 /// Ne fait qu'initialiser les variables membres de la classe.
 ///
-/// @return Aucune (constructeur).
-///
 ////////////////////////////////////////////////////////////////////////
 ModeTutorialEdition::ModeTutorialEdition()
 {
 	typeMode_ = TUTORIAL_EDITION;
-	//etat_ = std::make_unique <EtatSelection>();
-	etat_ = NULL;
+	etat_ = std::make_unique <EtatAbstrait>();
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
+
+	table_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"));
+	startIndexOfTutorialObjects_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->obtenirNombreEnfants();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -67,27 +67,6 @@ ModeTutorialEdition::~ModeTutorialEdition()
 	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()  != nullptr) {
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 	}
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeTutorialEdition::gererToucheT()
-///
-////////////////////////////////////////////////////////////////////////
-void ModeTutorialEdition::gererToucheT()
-{}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void ModeTutorialEdition::sauvegarder()
-///
-/// Cette fonction permet de gérer la sauvegarde dans le ModeTutorialEdition.
-///
-////////////////////////////////////////////////////////////////////////
-void ModeTutorialEdition::sauvegarder()
-{
-	std::unique_ptr<VisiteurSauvegarde> visiteur = std::make_unique<VisiteurSauvegarde>();
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -154,6 +133,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_MOVE_TOOL)
 				{
 					etat_ = std::make_unique<EtatDeplacement>();
+					currentPosition_ = getPositionOfTutorialObject();
 				}
 				break;
 
@@ -171,6 +151,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_ROTATION_TOOL)
 				{
 					etat_ = std::make_unique<EtatRotation>();
+					currentObjectAttribut_ = getRotationOfTutorialObject();
 				}
 				break;
 
@@ -178,6 +159,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_SCALE_TOOL)
 				{
 					etat_ = std::make_unique<EtatMiseAEchelle>();
+					currentObjectAttribut_ = getScaleOfTutorialObject();
 				}
 				break;
 
@@ -185,6 +167,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_DUPLICATE_TOOL)
 				{
 					etat_ = std::make_unique<EtatDuplication>();
+					numberOfObjects_ = getNomberOfObjects("mur");
 				}
 				break;
 
@@ -196,6 +179,8 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_POST_TOOL)
 				{
 					etat_ = std::make_unique<EtatCreationPoteau>();
+					numberOfObjects_ = getNomberOfObjects("poteau");
+
 				}
 				break;
 
@@ -203,6 +188,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_WALL_TOOL)
 				{
 					etat_ = std::make_unique<EtatCreationMur>();
+					numberOfObjects_ = getNomberOfObjects("mur");
 				}
 				break;
 
@@ -210,6 +196,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_LINE_TOOL)
 				{
 					etat_ = std::make_unique<EtatCreationLigne>();
+					numberOfObjects_ = getNomberOfObjects("ligneNoire");
 				}
 				break;
 
@@ -307,35 +294,25 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 		case WM_LBUTTONDBLCLK:
 		case WM_LBUTTONDOWN:
-			if (etat_ != NULL)
-			{
-				leftClickDownWithCurrentTool(lParam);
-			}
+			etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_LBUTTONUP:
-			if (etat_ != NULL)
-			{
-				leftClickUpWithCurrentTool(lParam);
-			}
+			leftClickUpWithCurrentTool(lParam);
 			break;
 
 		case WM_RBUTTONDBLCLK:
 		case WM_RBUTTONDOWN:
-			//etat_->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+			etat_->gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_RBUTTONUP:
-			//etat_->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			ChangeEditionTutorialState();
+			etat_->gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_MOUSEMOVE:
-			if (etat_ != NULL)
-			{
-				etat_->assignerSymboleCurseur();
-				etat_->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			}
+			etat_->assignerSymboleCurseur();
+			etat_->gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 			break;
 
 		case WM_MOUSEWHEEL:
@@ -347,11 +324,12 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+/// @fn int ModeTutorialEdition::getCurrentTutorialState()
 ///
-///	Fonction qui permet de traiter les entrées utilisateur en mode test.
+///	Fonction qui permet de retourner l'état du tutoriel édition. La valeur
+/// retourné est un int représentant un état dans l'enum EditionTutorial State
 ///
-/// @return Aucune (destructeur).
+/// @return int: L'état du tutoriel édition.
 ///
 ////////////////////////////////////////////////////////////////////////
 int ModeTutorialEdition::getCurrentTutorialState()
@@ -361,11 +339,11 @@ int ModeTutorialEdition::getCurrentTutorialState()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+/// @fn void ModeTutorialEdition::setCurrentTutorialState(int newCurrentTutorialState)
 ///
-///	Fonction qui permet de traiter les entrées utilisateur en mode test.
+///	Fonction qui permet d'assigner l'état courant du tutoriel édition.
 ///
-/// @return Aucune (destructeur).
+/// @param int newCurrentTutorialState: état du tutoriel
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModeTutorialEdition::setCurrentTutorialState(int newCurrentTutorialState)
@@ -373,19 +351,35 @@ void ModeTutorialEdition::setCurrentTutorialState(int newCurrentTutorialState)
 	currentTutorialState_ = newCurrentTutorialState;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeTutorialEdition::unselectCurrentTool()
+///
+///	Désélectionne l'outil courant en utilisant le pointeur d'état vers NULL
+///
+////////////////////////////////////////////////////////////////////////
 void ModeTutorialEdition::unselectCurrentTool()
 {
-	etat_ = NULL;
+	etat_ = std::make_unique <EtatAbstrait>();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn int ModeTutorialEdition::getNomberOfObjects(std::string TypeOfObject)
+///
+///	Fonction qui permet de compter le nombre d'objets d'un type présent sur la table
+///
+/// @param std::string TypeOfObject: nom de l'objet à compter
+/// @return int: Le nombre de fois qu'on objet est sur la table
+///
+////////////////////////////////////////////////////////////////////////
 int ModeTutorialEdition::getNomberOfObjects(std::string TypeOfObject)
 {
-	NoeudComposite* table = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"));
-	int objects = table->obtenirNombreEnfants();
+	int objects = table_->obtenirNombreEnfants();
 	int numberOfObject = 0;
 	for (int i = 0; i < objects; i++)
 	{
-		if (table->chercher(i)->obtenirType() == TypeOfObject)
+		if (table_->chercher(i)->obtenirType() == TypeOfObject)
 		{
 			numberOfObject++;
 			indexOfCurrentObject_ = i;
@@ -394,119 +388,149 @@ int ModeTutorialEdition::getNomberOfObjects(std::string TypeOfObject)
 	return numberOfObject;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ModeTutorialEdition::isTutorialObjectSelect()
+///
+///	Fonction qui permet de savoir si le dernier objet créé est sélectionné.
+///
+/// @return bool: True si l'objet est sélectionné, false sinon.
+///
+////////////////////////////////////////////////////////////////////////
 bool ModeTutorialEdition::isTutorialObjectSelect()
 {
-	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->estSelectionne();
+	return table_->chercher(indexOfCurrentObject_)->estSelectionne();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double ModeTutorialEdition::getScaleOfTutorialObject()
+///
+///	Fonction qui permet de savoir le facteur de dimension du dernier objet créé.
+///
+/// @return double: Le facteur de dimension.
+///
+////////////////////////////////////////////////////////////////////////
 double ModeTutorialEdition::getScaleOfTutorialObject()
 {
-	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirFacteurMiseAEchelle();
+	return table_->chercher(indexOfCurrentObject_)->obtenirFacteurMiseAEchelle();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double ModeTutorialEdition::getRotationOfTutorialObject()
+///
+///	Fonction qui permet de savoir le facteur de rotation du dernier objet créé.
+///
+/// @return double: Le facteur de rotation.
+///
+////////////////////////////////////////////////////////////////////////
 double ModeTutorialEdition::getRotationOfTutorialObject()
 {
-	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirAngleRotation();
+	return table_->chercher(indexOfCurrentObject_)->obtenirAngleRotation();
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn glm::dvec3 ModeTutorialEdition::getPositionOfTutorialObject()
+///
+///	Fonction qui permet de savoir la position du dernier objet créé.
+///
+/// @return glm::dvec3: La position de l'objet.
+///
+////////////////////////////////////////////////////////////////////////
 glm::dvec3 ModeTutorialEdition::getPositionOfTutorialObject()
 {
-	return static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->chercher(indexOfCurrentObject_)->obtenirPositionCourante();
+	return table_->chercher(indexOfCurrentObject_)->obtenirPositionCourante();
 }
 
-void ModeTutorialEdition::leftClickDownWithCurrentTool(LPARAM lParam)
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeTutorialEdition::selectAllTutorialObjects()
+///
+///	Fonction qui permet de sélectionner tous les objets créés lors du tutoriel.
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTutorialEdition::selectAllTutorialObjects()
 {
-	etat_->gererClicGaucheEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+	int objects = table_->obtenirNombreEnfants();
+	for (int i = startIndexOfTutorialObjects_; i < objects; i++)
+	{
+		table_->chercher(i)->selectionnerTout();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
+///
+///	Fonction qui permet de gérer le clique gauche relâché en fonction de l'outil
+///
+/// @param LPARAM lParam: Paramètre de la souris
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
+{
+	etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 	switch (etat_->getType())
 	{
-		case NONE:
+		case CREATION_LIGNE:
+		{
+			EtatCreationLigne* creationLineTool(static_cast<EtatCreationLigne*>(etat_.get()));
+			if (!creationLineTool->isInCreation())
+			{
+				if (numberOfObjects_ != getNomberOfObjects("ligneNoire"))
+					ChangeEditionTutorialState();
+			}
+		}
 		break;
 
-		case CREATION_LIGNE:
-			numberOfObjects_ = getNomberOfObjects("ligne");
-			break;
-
 		case CREATION_MUR:
-			numberOfObjects_ = getNomberOfObjects("mur");
-			break;
+		{
+			EtatCreationMur* creationWallTool(static_cast<EtatCreationMur*>(etat_.get()));
+			if (!creationWallTool->isInCreation())
+			{
+				if (numberOfObjects_ != getNomberOfObjects("mur"))
+					ChangeEditionTutorialState();
+			}
+		}
+		break;
 
-		case DUPLICATION:
 		case CREATION_POTEAU:
-			numberOfObjects_ = getNomberOfObjects("poteau");
+			if (numberOfObjects_ != getNomberOfObjects("poteau"))
+				ChangeEditionTutorialState();
 			break;
 
 		case DEPLACEMENT:
-			currentPosition_ = getPositionOfTutorialObject();
+			if (currentPosition_ != getPositionOfTutorialObject())
+				ChangeEditionTutorialState();
+			break;
+
+		case DUPLICATION:
+			if (numberOfObjects_ != getNomberOfObjects("mur"))
+				ChangeEditionTutorialState();
 			break;
 
 		case LOUPE:
 			break;
 
 		case MISE_A_ECHELLE:
-			currentObjectAttribut_ = getScaleOfTutorialObject();
+			if (currentObjectAttribut_ != getScaleOfTutorialObject())
+				ChangeEditionTutorialState();
 			break;
 
 		case ROTATION:
-			currentObjectAttribut_ = getRotationOfTutorialObject();
+			if (currentObjectAttribut_ = getRotationOfTutorialObject())
+				ChangeEditionTutorialState();
 			break;
 
 		case SELECTION:
+			if (isTutorialObjectSelect())
+				ChangeEditionTutorialState();
 			break;
 
 		default:
 			break;
-	}
-}
-
-void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
-{
-	etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-	switch (etat_->getType())
-	{
-	case NONE:
-		break;
-
-	case CREATION_LIGNE:
-		if (numberOfObjects_ != getNomberOfObjects("ligne"))
-			ChangeEditionTutorialState();
-		break;
-
-	case CREATION_MUR:
-		if (numberOfObjects_ != getNomberOfObjects("mur"))
-			ChangeEditionTutorialState();
-		break;
-
-	case DUPLICATION:
-	case CREATION_POTEAU:
-		if (numberOfObjects_ != getNomberOfObjects("poteau"))
-			ChangeEditionTutorialState();
-		break;
-
-	case DEPLACEMENT:
-		if (currentPosition_ != getPositionOfTutorialObject())
-			ChangeEditionTutorialState();
-		break;
-
-	case LOUPE:
-		break;
-
-	case MISE_A_ECHELLE:
-		if (currentObjectAttribut_ != getScaleOfTutorialObject())
-			ChangeEditionTutorialState();
-		break;
-
-	case ROTATION:
-		if (currentObjectAttribut_ = getRotationOfTutorialObject())
-			ChangeEditionTutorialState();
-		break;
-
-	case SELECTION:
-		if (isTutorialObjectSelect())
-			ChangeEditionTutorialState();
-		break;
-
-	default:
-		break;
 	}
 }
 

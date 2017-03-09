@@ -116,6 +116,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState);
 	__declspec(dllexport) void __cdecl UnselectCurrentTool();
 	__declspec(dllexport) void __cdecl UnselectAllObjects();
+	__declspec(dllexport) void __cdecl SelectAllTutorialObjects();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

@@ -105,6 +105,7 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	bool autoriserInput = FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier();
 
+
 	if (autoriserInput) {
 		if (msg == WM_KEYDOWN) {
 			switch (wParam) {

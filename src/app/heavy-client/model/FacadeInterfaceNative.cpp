@@ -950,33 +950,85 @@ extern "C"
 		return FacadeModele::obtenirInstance()->getNetworkManager()->isConnected();
 	}
 
-	Callback InterfaceFunctionChangeStateTutoriel = 0;
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl SetCallback(Callback function)
+	///
+	/// Fonction qui assigne une référence vers une fonction du c#. 
+	///
+	/// @param Callback function: reference de la fonction du c#
+	///
+	////////////////////////////////////////////////////////////////////////
+	Callback InterfaceFunctionChangeStateTutoriel = 0;
 	__declspec(dllexport) void __cdecl SetCallback(Callback function)
 	{
 		InterfaceFunctionChangeStateTutoriel = function;
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl ChangeEditionTutorialState()
+	///
+	/// Cette fonction appel la méthode InterfaceFunctionChangeStateTutoriel du c#
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl ChangeEditionTutorialState()
 	{
 		InterfaceFunctionChangeStateTutoriel();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState)
+	///
+	/// Cette fonction assigne l'état du tutoriel au mode
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState)
 	{
-		if (dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode()))
-			dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::setCurrentTutorialState(currentState);
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == TUTORIAL_EDITION)
+			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::setCurrentTutorialState(currentState);
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl UnselectCurrentTool()
+	///
+	/// Cette fonction désélectionne l'outil utilisé dans le tutoriel du mode
+	/// édition
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl UnselectCurrentTool()
 	{
-		if (dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode()))
-			dynamic_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::unselectCurrentTool();
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == TUTORIAL_EDITION)
+			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::unselectCurrentTool();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl UnselectAllObjects()
+	///
+	/// Cette fonction désélectionne tous les objets présent dans la simulation
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl UnselectAllObjects()
 	{
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl SelectAllTutorialObjects()
+	///
+	/// Cette fonction permet de sélectionner tous les objets créé lors du tutoriel
+	/// du mode édition
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl SelectAllTutorialObjects()
+	{
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == TUTORIAL_EDITION)
+			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::selectAllTutorialObjects();
 	}
 
 }

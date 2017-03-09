@@ -16,6 +16,7 @@
 #include "glm\glm.hpp"
 #include "EtatAbstrait.h"
 #include "FacadeInterfaceNative.h"
+#include "NoeudComposite.h"
 #include <sstream>
 
 //////////////////////////////////////////////////////////////////////////
@@ -32,20 +33,14 @@ public:
 	ModeTutorialEdition();
 	//Destructeur
 	virtual ~ModeTutorialEdition();
-	
-	//Gestion des différentes touches et de leur effet selon le mode choisi
-	virtual void gererToucheT();
-
 	virtual void gererToucheSupprimer();
-
-	//Gestion du système de chargement et de sauvegarde
-	virtual void sauvegarder();
 
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	int getCurrentTutorialState();
 	void setCurrentTutorialState(int newCurrentTutorialState);
 
+	void selectAllTutorialObjects();
 	void unselectCurrentTool();
 	int getNomberOfObjects(std::string TypeOfObject);
 	bool isTutorialObjectSelect();
@@ -53,7 +48,6 @@ public:
 	double getRotationOfTutorialObject();
 	glm::dvec3 getPositionOfTutorialObject();
 
-	void leftClickDownWithCurrentTool(LPARAM lParam);
 	void leftClickUpWithCurrentTool(LPARAM lParam);
 
 protected:
@@ -61,11 +55,14 @@ protected:
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
 
 	//État du tutoriel d'Édition
+	int startIndexOfTutorialObjects_ = 0;
 	int currentTutorialState_ = 0;
 	int numberOfObjects_ = 0;
 	int indexOfCurrentObject_ = 0;
 	double currentObjectAttribut_ = 0;
 	glm::dvec3 currentPosition_;
+
+	NoeudComposite* table_{ nullptr };
 
 	//Ancienne position en X et Y de la souris
 	int ancienSourisX_{ 0 };
