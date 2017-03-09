@@ -62,6 +62,7 @@ namespace ui
             setDefaultUnselectedColors();
             setDefaultCurrentTool();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
         }
 
@@ -94,6 +95,7 @@ namespace ui
             setDefaultUnselectedColors();
             setDefaultCurrentTool();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
         }
 
@@ -126,6 +128,7 @@ namespace ui
             setDefaultUnselectedColors();
             setDefaultCurrentTool();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
         }
 
@@ -158,6 +161,7 @@ namespace ui
             setDefaultUnselectedColors();
             setDefaultCurrentTool();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
         }
 
@@ -190,6 +194,7 @@ namespace ui
             setDefaultUnselectedColors();
             setDefaultCurrentTool();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
         }
 
@@ -209,6 +214,7 @@ namespace ui
             ShowObjectMenu.Start();
 
             setDefaultUnselectedColors();
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             createToolButton.BackColor = Color.FromArgb(0, 102, 204);
         }
 
@@ -241,6 +247,7 @@ namespace ui
             setDefaultUnselectedColors();
             setDefaultCurrentTool();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
         }
 
@@ -268,6 +275,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public void deleteTool()
         {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
             parent_.verificationDuNombreElementChoisi();
         }

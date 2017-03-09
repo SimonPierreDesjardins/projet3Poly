@@ -521,7 +521,7 @@ void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
 			break;
 
 		case ROTATION:
-			if (currentObjectAttribut_ = getRotationOfTutorialObject())
+			if (currentObjectAttribut_ != getRotationOfTutorialObject())
 				ChangeEditionTutorialState();
 			break;
 

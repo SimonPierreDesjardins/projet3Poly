@@ -34,6 +34,11 @@ namespace ui
             enregistrerToolStripMenuItem.Enabled = false;
         }
 
+        private void fichierToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Focus();
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
@@ -46,6 +51,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             nouvelleZone();
         }
 
@@ -80,6 +86,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             ouvrirZone(false);
         }
 
@@ -123,6 +130,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void enregistrerToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             enregistrer();
         }
 
@@ -150,6 +158,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void enregistrerSousToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             enregistrerSousZone();
         }
 
@@ -189,6 +198,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             goTestMode();
         }
 
@@ -207,13 +217,13 @@ namespace ui
             parent_.configuration.populerToolStripProfils(parent_.testMenuStrip.profilsToolStripMenuItem);
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
             parent_.viewPort.Refresh();
 
             parent_.viewPort.Controls.Add(parent_.testMenuStrip);
             parent_.testMenuStrip.Dock = DockStyle.Top;
             
             FonctionsNatives.assignerMode(Mode.TEST);
-            parent_.verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -228,6 +238,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void menuprincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             goMenuPrincipal();
         }
 
@@ -245,6 +256,7 @@ namespace ui
 
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
 
@@ -252,7 +264,11 @@ namespace ui
             parent_.viewPort.Refresh();
 
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
-            parent_.verificationDuNombreElementChoisi();
+        }
+
+        private void vuesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -267,6 +283,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void orthoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             orthoView();
         }
 
@@ -297,6 +314,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void orbiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             orbiteView();
         }
 
@@ -350,6 +368,11 @@ namespace ui
             }
         }
 
+        private void informationsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Focus();
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void aideToolStripMenuItem_Click(object sender, EventArgs e)
@@ -377,12 +400,15 @@ namespace ui
 
         private void tutorielToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             parent_.editionTutorielMenuStrip = new EditionTutorielMenuStrip(parent_);
             parent_.editionTutorielSideMenu = new EditionTutorielSideMenu(parent_);
             parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
+            parent_.editionTutorielModificationPanel = new TutorialEditionModificationPanel(parent_);
 
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
 
             parent_.viewPort.Controls.Add(parent_.editionTutorielSideMenu);
             parent_.editionTutorielSideMenu.Dock = DockStyle.Left;
@@ -390,17 +416,23 @@ namespace ui
             parent_.viewPort.Controls.Add(parent_.editionTutorielMenuStrip);
             parent_.editionTutorielMenuStrip.Dock = DockStyle.Top;
 
+            parent_.editionTutorielModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionTutorielModificationPanel.Width,
+                                                                  parent_.editionMenuStrip.Height);
+            parent_.editionTutorielModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            parent_.editionTutorielModificationPanel.Visible = false;
+            parent_.viewPort.Controls.Add(parent_.editionTutorielModificationPanel);
+
             parent_.viewPort.Refresh();
 
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
             FonctionsNatives.assignerMode(Mode.TUTORIAL_EDITION);
-            parent_.verificationDuNombreElementChoisi();
 
             parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
             parent_.editionTutorielInstructions.Location = new Point(parent_.viewPort.Width / 2 - parent_.editionTutorielInstructions.Width / 2,
                                                                     parent_.viewPort.Height / 2 - parent_.editionTutorielInstructions.Height / 2);
             parent_.editionTutorielInstructions.Anchor = AnchorStyles.None;
             parent_.viewPort.Controls.Add(parent_.editionTutorielInstructions);
-
             parent_.editionTutorielInstructions.BringToFront();
         }
     }
