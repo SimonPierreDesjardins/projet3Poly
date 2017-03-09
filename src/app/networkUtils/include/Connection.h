@@ -20,8 +20,6 @@ class Connection
 
 public:
 
-	// Destructor that also cleans and closes the connection if necessary
-	~Connection();
 
 	///<summary>Sends the string of bytes through the connection</summary>
 	///<param name='data'>The string of bytes to send.</param>
@@ -40,12 +38,14 @@ public:
 	void hookOnConnectionLost(F&& handler);
 
 private:
+	// Destructor that also cleans and closes the connection if necessary
+	~Connection();
+
 	//Starts the connection process to send data to eachother
 	void Start();
 
 	// Constructor taking a functionnal socket
 	Connection(asio::ip::tcp::socket* socket) { _socket = socket; _sendQueue = std::queue<std::string>(); }
-
 
 	// Connection closer
 	void CloseConnection();

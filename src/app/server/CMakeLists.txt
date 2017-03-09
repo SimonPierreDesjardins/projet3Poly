@@ -2,11 +2,12 @@
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
 	${CMAKE_SOURCE_DIR}/ext/Eigen/include
+    ${CMAKE_SOURCE_DIR}/ext/rapidJSON/include
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 	chat-management
-	map-management
-	map-management/map-rooms
-	map-management/entities
+	MapSystem
+	MapSystem/map-rooms
+	MapSystem/entities
 	UserManagement
 	message-dispatcher
 	.
@@ -17,38 +18,34 @@ set(USER_MANAGEMENT_SRC
 	UserManagement/User.cpp
 	UserManagement/UserAuthLobby.h
 	UserManagement/UserAuthLobby.cpp
+	UserManagement/MultiUserSystem.h
+	UserManagement/MultiUserSystem.cpp
 )
-source_group("user-management" FILES ${USER_MANAGEMENT_SRC})
-
-set(CHAT_MANAGEMENT_SRC
-	chat-management/ChatManager.h
-	chat-management/ChatManager.cpp
-)
-source_group("chat-management" FILES ${CHAT_MANAGEMENT_SRC})
+source_group("UserManagement" FILES ${USER_MANAGEMENT_SRC})
 
 set(ENTITIES_SRC
-	map-management/entities/Entity.h
-	map-management/entities/Entity.cpp
-	map-management/entities/EntityTree.h
-	map-management/entities/EntityTree.cpp
+	MapSystem/entities/Entity.h
+	MapSystem/entities/Entity.cpp
+	MapSystem/entities/EntityTree.h
+	MapSystem/entities/EntityTree.cpp
 )
-source_group("map-management\\entities" FILES ${ENTITIES_SRC})
+source_group("MapSystem\\entities" FILES ${ENTITIES_SRC})
 
 set(MAP_ROOMS_SRC
-	map-management/map-rooms/SimulationRoom.h
-	map-management/map-rooms/SimulationRoom.cpp
-	map-management/map-rooms/EditionRoom.h
-	map-management/map-rooms/EditionRoom.cpp
-	map-management/map-rooms/AbstractMapRoom.h
-	map-management/map-rooms/AbstractMapRoom.cpp
+	MapSystem/map-rooms/SimulationRoom.h
+	MapSystem/map-rooms/SimulationRoom.cpp
+	MapSystem/map-rooms/EditionRoom.h
+	MapSystem/map-rooms/EditionRoom.cpp
+	MapSystem/map-rooms/AbstractMapRoom.h
+	MapSystem/map-rooms/AbstractMapRoom.cpp
 )
-source_group("map-management\\map-rooms" FILES ${MAP_ROOMS_SRC})
+source_group("MapSystem\\MapRooms" FILES ${MAP_ROOMS_SRC})
 
-set(MAP_MANAGEMENT_SRC
-	map-management/MapRoomManager.h
-	map-management/MapRoomManager.cpp
+set(MAP_SYST 
+	MapSystem/MapSystem.cpp 
+	MapSystem/MapSystem.h
 )
-source_group("map-management" FILES ${MAP_MANAGEMENT_SRC})
+source_group(MapSystem FILES ${MAP_SYST})
 
 set(MESSAGE_DISPATCHER_SRC
 	message-dispatcher/Observer.h
@@ -58,23 +55,44 @@ set(MESSAGE_DISPATCHER_SRC
 )
 source_group("message-dispatcher" FILES ${MESSAGE_DISPATCHER_SRC})
 
+set(DB 
+	Database/Database.h
+	Database/Database.cpp
+	Database/UserDatabase.h
+	Database/UserDatabase.cpp
+	Database/MapDatabase.h
+	Database/MapDatabase.cpp
+	Database/BaseDatalist.h
+	Database/BaseDatalist.cpp
+	Database/IdGenerator.h
+	Database/IdGenerator.cpp
+)
+source_group(Database FILES ${DB})
+
+
+set(CHT_SYST 
+	ChatSystem/ChatSystem.cpp
+	ChatSystem/ChatSystem.h
+)
+source_group(ChatSystem FILES ${CHT_SYST})
+
 set(SERVER_SRC
 	ServerStarter.cpp
-	MultiUserSession.h
-	MultiUserSession.cpp
 	CMakeLists.txt
 )
 source_group("" FILES ${SERVER_SRC})
 
 add_executable(Server
+	${DB}
+	${CHT_SYST}
 	${MESSAGE_DISPATCHER_SRC}
 	${USER_MANAGEMENT_SRC}
-	${CHAT_MANAGEMENT_SRC}
-	${MAP_MANAGEMENT_SRC}
 	${MAP_ROOMS_SRC}
+	${MAP_SYST}
 	${ENTITIES_SRC}
 	${SERVER_SRC}
 )
+
 target_link_libraries(Server PRIVATE networkUtils)
 
 set_property(TARGET Server PROPERTY FOLDER "app/server")

@@ -1,5 +1,6 @@
 #include "UserManagement\UserAuthLobby.h"
-#include "MapRoomManager.h"
+#include "ChatSystem\ChatSystem.h"
+#include "MapSystem.h"
 #include <iostream>
 
 void SetupServer() {
@@ -11,19 +12,21 @@ void SetupServer() {
 	// create listener
 	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
 
-	server::MapRoomManager mapRoomManager;
-
-	// create User auth system
-	server::UserAuthLobby UserLobby(listener, &mapRoomManager);
-
-	mapRoomManager.createRoom(server::EDITION_ROOM);
-	// create UserLobby
-
 	// create ChatSystem
+	server::ChatSystem chatSystem;
 
 	// create MapSystem
-	// For testing purposes
+	server::MapSystem mapSystem;
 
+	// create vector of systems to pass the user to when authenticated
+	std::vector<server::MultiUserSystem*> newUserReceivers;
+	newUserReceivers.push_back(&chatSystem);
+	newUserReceivers.push_back(&mapSystem);
+
+	// create User auth system
+	server::UserAuthLobby UserLobby(listener, newUserReceivers);
+
+	// create UserLobby
 
 	std::cout << "Starting listener" << std::endl;
 	listener->StartAccepting();
@@ -35,7 +38,6 @@ void SetupServer() {
 		std::getline(std::cin, command);
 	}
 
-	mapRoomManager.removeRoom(0);
 
 	Networking::NetworkObjects::Dispose(listener);
 }

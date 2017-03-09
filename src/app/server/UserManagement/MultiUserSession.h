@@ -22,6 +22,7 @@ public:
 
 	void addUser(User* user);
 	void removeUser(User* user);
+	//bool containsUser(User* user);
 
 	void broadcastMessage(const std::string& message);
 	void broadcastMessageExcluded(User* excludedUser, const std::string& message);

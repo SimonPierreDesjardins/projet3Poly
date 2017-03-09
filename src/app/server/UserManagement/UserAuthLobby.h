@@ -12,22 +12,45 @@
 
 #include "User.h"
 #include "MapRoomManager.h"
+#include "MultiUserSystem.h"
 
 namespace server 
 {
 
-class UserAuthLobby : public MultiUserSession
+// Wraps a connection to send connection reference on callbacks
+class ConnectionWrapper 
 {
 public:
-	UserAuthLobby(Networking::ServerListener* listener, MapRoomManager* mapRoomManager);
+	ConnectionWrapper(Networking::Connection* connection);
+
+	Networking::Connection* GetConnection();
+
+	__event void OnDisconnect(ConnectionWrapper* wrapper);
+	__event void OnMessageSent(ConnectionWrapper* wrapper, const std::string& message);
+
+private:
+
+	void HookToConnection(Networking::Connection* connectionToListenTo);
+
+	void OnData(const std::string& message);
+
+	void OnDisco();
+
+	Networking::Connection* _connection;
+
+};
+
+class UserAuthLobby
+{
+public:
+	UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus);
 	virtual ~UserAuthLobby();
 
-	virtual void onReceivedMessage(User* sender, const std::string& message);
-	virtual void onUserDisconnected(User* disconnectedUser);
+	void OnReceivedMessage(ConnectionWrapper* user, const std::string& message);
+	void OnUserDisconnect(ConnectionWrapper* user);
 
-protected:
-	virtual void postAddUser(User* user);
-	virtual void postRemoveUser(User* user);
+	void HookToWrapper(ConnectionWrapper* wrapper);
+	void UnhookFromWrapper(ConnectionWrapper* wrapper);
 
 private:
 
@@ -36,10 +59,7 @@ private:
 	MapRoomManager* mapRoomManager_;
 	// ChatRoomManager here
 
-	typedef std::unordered_map<uint32_t, User*> AuthUsersContainer;
-	AuthUsersContainer authUsers_;
-
-	uint32_t nextUserId_ = 0;
+	std::vector<MultiUserSystem*> _userReceivers;
 
 	// Connection reception treatment
 	void HookToListenerEvents(Networking::ServerListener* listener);
@@ -47,8 +67,8 @@ private:
 
 	void handleConnection(Networking::Connection* handleConnection);
 
-	void handleCreateUsernameRequest(User* sender, std::string message);
-	void handleLoginRequest(User* sender, std::string username);
+	void handleCreateUsernameRequest(ConnectionWrapper* sender, std::string message);
+	void handleLoginRequest(ConnectionWrapper* sender, std::string username);
 	//void handleModifiedPropertyRequest();
 };
 

@@ -8,22 +8,24 @@ AbstractMapRoom::~AbstractMapRoom()
 {
 }
 
+char AbstractMapRoom::GetSystemType()
+{
+	return systemType_;
+}
 
-void AbstractMapRoom::postAddUser(User* user)
+void AbstractMapRoom::TreatUserJoin(User* user)
 {
 	// Subscribe to physic and map edition messages.
-	user->addSystemObserver(this, PHYSIC_MESSAGE);
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 }
 
-void AbstractMapRoom::postRemoveUser(User* user)
+void AbstractMapRoom::TreatUserDisconnect(User* user)
 {
 	// Unsub from physic and map edition messages.
-	user->removeSystemObserver(PHYSIC_MESSAGE);
 	user->removeSystemObserver(MAP_EDITION_MESSAGE);
 }
 
-void AbstractMapRoom::onReceivedMessage(User* sender, const std::string& message)
+void AbstractMapRoom::TreatUserMessage(User* sender, const std::string& message)
 {
 	assert(message[4] == PHYSIC_MESSAGE || message[4] == MAP_EDITION_MESSAGE);
 

@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include "Observable.h"
+
 namespace server
 {
 
@@ -19,12 +21,15 @@ enum SystemType
 
 class Observer
 {
+
+friend class Observable;
+
 public:
 	Observer() = default;
 	virtual ~Observer() = 0;
 
-	virtual void onReceivedMessage(User* user, const std::string& message) = 0;
-	virtual void onDisconnected(User* user) = 0;
+	virtual void onUserMessageReceived(User* user, const std::string& message) = 0;
+	virtual void onUserDisconnected(User* user) = 0;
 };
 
 inline Observer::~Observer()

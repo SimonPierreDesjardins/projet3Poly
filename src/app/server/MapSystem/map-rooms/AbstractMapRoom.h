@@ -1,13 +1,13 @@
 #ifndef ABSTRACT_MAP_ROOM_H
 #define ABSTRACT_MAP_ROOM_H
 
-#include "MultiUserSession.h"
+#include "MultiUserSystem.h"
 #include "EntityTree.h"
 
 namespace server
 {
 
-class AbstractMapRoom : public MultiUserSession
+class AbstractMapRoom : public MultiUserSystem
 {
 public:	
 	AbstractMapRoom() = default;
@@ -15,11 +15,13 @@ public:
 
 protected:
 	EntityTree tree_;
+	char systemType_{ 'p' };
 
-	virtual void postAddUser(User* user);
-	virtual void postRemoveUser(User* user);
+	virtual char GetSystemType();
 
-	virtual void onReceivedMessage(User* sender, const std::string& message);
+	virtual void TreatUserJoin(User* user);
+	virtual void TreatUserDisconnect(User* user);
+	virtual void TreatUserMessage(User* sender, const std::string& message);
 
 	virtual void handlePhysicMessage(User* sender, const std::string& message);
 	virtual void handleMapEditionMessage(User* sender, const std::string& message);

@@ -44,16 +44,16 @@ namespace event_handler
 class ArbreRendu : public NoeudComposite
 {
 public:
-   // Constructeur par défaut.
-   ArbreRendu(event_handler::EventHandler* eventHandler);
+	// Constructeur par défaut.
+	ArbreRendu(event_handler::EventHandler* eventHandler);
 
-   // Destructeur.
-   virtual ~ArbreRendu();
+	// Destructeur.
+	virtual ~ArbreRendu();
 
-   // Ajoute une usine associée à un type de noeud.
-   inline void ajouterUsine(
-      const std::string& type, std::unique_ptr<const UsineAbstraite> usine
-      );
+	// Ajoute une usine associée à un type de noeud.
+	inline void ajouterUsine(
+	  const std::string& type, std::unique_ptr<const UsineAbstraite> usine
+	  );
 
     // Crée un nouveau noeud.
     std::shared_ptr<NoeudAbstrait> creerNoeud(const std::string& typeNouveauNoeud) const;

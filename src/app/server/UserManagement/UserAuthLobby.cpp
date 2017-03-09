@@ -1,13 +1,14 @@
 #include <iostream>
 
 #include "UserAuthLobby.h"
+#include "../Database/IdGenerator.h"
 
 namespace server
 {
 
-UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, MapRoomManager* mapRoomManager)
-	: mapRoomManager_(mapRoomManager)
+server::UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus)
 {
+	_userReceivers = mus;
 	HookToListenerEvents(listener);
 }
 
@@ -30,44 +31,52 @@ void UserAuthLobby::UnhookFromListenerEvents(Networking::ServerListener * listen
 	_listener = nullptr;
 }
 
-void UserAuthLobby::postAddUser(User* user)
-{
-	user->addSystemObserver(this, USER_MESSAGE);
-}
-
-void UserAuthLobby::postRemoveUser(User* user)
-{
-	// If the user is authentificated, remove from authentificated list.
-	if (user->info_.isAuthentified_)
-	{
-		authUsers_.erase(user->info_.id_);
-	}
-}
-
 void UserAuthLobby::handleConnection(Networking::Connection * connection)
 {
-	uint32_t userId = nextUserId_++;
-	User* user = new User(userId);
-	user->AssignConnection(connection);
-	addUser(user);
+	ConnectionWrapper* wrapper = new ConnectionWrapper(connection);
+	HookToWrapper(wrapper);
 }
 
-void UserAuthLobby::handleCreateUsernameRequest(User* sender, std::string message)
+void UserAuthLobby::handleCreateUsernameRequest(ConnectionWrapper* wrapper, std::string message)
 {
 	// TODO: Check if the new username is available and add to database.
 	std::cout << "Received profile creation request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
 }
 
-void UserAuthLobby::handleLoginRequest(User* sender, std::string message)
+void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string message)
 {
 	// TODO: Check if the username exists and is not used.
 	std::cout << "Received login request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
-	authUsers_.insert(std::make_pair(sender->info_.id_, sender));
-	mapRoomManager_->addUser(sender);
-	// chatRoomManager_->addUser(sender);
+
+	UserInformation* information = new UserInformation();
+	information->UserName = IdGenerator::GenerateId();
+
+	User* user = new User(*information);
+	Networking::Connection* connection = wrapper->GetConnection();
+	user->AssignConnection(wrapper->GetConnection());
+
+	UnhookFromWrapper(wrapper);
+	delete wrapper;
+	
+
+	for each(auto userReceiver in _userReceivers) {
+		userReceiver->AddUser(user);
+	}
 }
 
-void UserAuthLobby::onReceivedMessage(User* sender, const std::string& message)
+void server::UserAuthLobby::HookToWrapper(ConnectionWrapper * wrapper)
+{
+	__hook(&ConnectionWrapper::OnDisconnect, wrapper, &UserAuthLobby::OnUserDisconnect);
+	__hook(&ConnectionWrapper::OnMessageSent, wrapper, &UserAuthLobby::OnReceivedMessage);
+}
+
+void server::UserAuthLobby::UnhookFromWrapper(ConnectionWrapper * wrapper)
+{
+	__unhook(&ConnectionWrapper::OnDisconnect, wrapper, &UserAuthLobby::OnUserDisconnect);
+	__unhook(&ConnectionWrapper::OnMessageSent, wrapper, &UserAuthLobby::OnReceivedMessage);
+}
+
+void server::UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::string& message)
 {
 	// We should only receive messages for the user system
 	assert(message.size() > 6 && message[4] == 'u');
@@ -75,11 +84,11 @@ void UserAuthLobby::onReceivedMessage(User* sender, const std::string& message)
 	switch (message[5])
 	{
 	case 'c':
-		handleCreateUsernameRequest(sender, message);
+		handleCreateUsernameRequest(wrapper, message);
 		break;
 
 	case 'l':
-		handleLoginRequest(sender, message);
+		handleLoginRequest(wrapper, message);
 		break;
 
 	case 'a':
@@ -87,14 +96,43 @@ void UserAuthLobby::onReceivedMessage(User* sender, const std::string& message)
 	case 'm':
 		break;
 	}
+	// Attempt to authenticate user with message
+
+	// Auto authenticate for now
 }
 
-void UserAuthLobby::onUserDisconnected(User* disconnectedUser)
+void server::UserAuthLobby::OnUserDisconnect(ConnectionWrapper * wrapper)
 {
-	// Remove the user from dangling users and authentificated users list if he's there.
-	uint32_t userId = disconnectedUser->info_.id_;
-	users_.erase(userId);
-	authUsers_.erase(userId);
+	// unhook from events and dispose of user
+	UnhookFromWrapper(wrapper);
+	//delete user;
+}
+
+server::ConnectionWrapper::ConnectionWrapper(Networking::Connection * connection)
+{
+	_connection = connection;
+	HookToConnection(connection);
+}
+
+Networking::Connection * server::ConnectionWrapper::GetConnection()
+{
+	return _connection;
+}
+
+void ConnectionWrapper::HookToConnection(Networking::Connection * connectionToListenTo)
+{
+	connectionToListenTo->hookOnConnectionLost(&ConnectionWrapper::OnDisco, this);
+	connectionToListenTo->hookOnReceivedMessage(&ConnectionWrapper::OnData, this);
+}
+
+void server::ConnectionWrapper::OnData(const std::string & message)
+{
+	__raise OnMessageSent(this, message);
+}
+
+void server::ConnectionWrapper::OnDisco()
+{
+	__raise OnDisconnect(this);
 }
 
 }

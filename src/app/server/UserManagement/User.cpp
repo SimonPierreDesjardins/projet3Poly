@@ -4,14 +4,14 @@
 namespace server
 {
 
-User::User(int id)
+server::User::User(UserInformation & userInfo)
+	: Info(userInfo)
 {
-	info_.id_ = id;
 }
 
 User::~User()
 {
-	delete _connection;
+	Networking::NetworkObjects::Dispose(_connection);
 }
 
 void User::AssignConnection(Networking::Connection * connectionToTreat)

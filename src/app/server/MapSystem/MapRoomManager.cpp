@@ -35,7 +35,6 @@ void MapRoomManager::handleJoinMapSessionRequest(User* sender, const std::string
 	{
 		it->second->addUser(sender);
 		roomsByUserId_.insert(std::pair<uint32_t, AbstractMapRoom*>(sender->info_.id_, it->second.get()));
-		std::cout << "User " << std::to_string(sender->info_.id_) << " joined room " << std::to_string(mapId) << "." << std::endl;
 	}
 }
 
@@ -49,7 +48,6 @@ void MapRoomManager::handleLeaveMapSessionRequest(User* sender, const std::strin
 	{
 		it->second->removeUser(sender);
 		roomsByUserId_.erase(userId);
-		std::cout << "User " << std::to_string(sender->info_.id_) << " left a map room." << std::endl;
 	}
 }
 

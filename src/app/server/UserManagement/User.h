@@ -3,33 +3,25 @@
 #define __USER_H
 
 #include "Networking.h"
+#include "../Database/UserDatabase.h"
 
 #include "Observable.h"
 
 namespace server
 {
 
-class UserInformation 
-{
-public:
-	std::string userName_;
-	int id_;
-	bool isAuthentified_ = false;
-};
-
 class User : public Observable
 {
 public:
-	UserInformation info_;
+	UserInformation& Info;
 
-	User() = default;
-	User(int id);
+	User(UserInformation& userInfo);
 	virtual ~User();
 
 	void AssignConnection(Networking::Connection* connectionToTreat);
+	inline void AssignInfo(UserInformation& info);
 
-	inline void AssignInfo(UserInformation info);
-	inline void sendMessage(const std::string& message);
+	void ForwardMessage(const std::string& message);
 
 private:
 	void HookToConnection(Networking::Connection* connectionToListenTo);
@@ -40,14 +32,14 @@ private:
 	Networking::Connection* _connection;
 };
 
-inline void User::sendMessage(const std::string& message)
+inline void User::ForwardMessage(const std::string& message)
 {
 	_connection->SendData(message);
 }
 
-inline void User::AssignInfo(UserInformation info)
+inline void User::AssignInfo(UserInformation& info)
 {
-	info_ = info;
+	Info = info;
 }
 
 }
