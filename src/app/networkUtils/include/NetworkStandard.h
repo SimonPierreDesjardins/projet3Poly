@@ -1,5 +1,8 @@
 #ifndef __NETWORK_STANDARD_H
 #define __NETWORK_STANDARD_H
+
+#include <string>
+
 namespace Networking {
 	namespace MessageStandard {
 		//Index of the system indicator byte in the message
@@ -9,20 +12,9 @@ namespace Networking {
 		const int COMMAND = 5;
 		const int DATA_START = 6;
 
-		std::string AddMessageLengthHeader(std::string& message) {
-			int length = message.size();
-			std::string lengthHeader(static_cast<char*>(static_cast<void*>(&length)), sizeof length);
-			// optimal string concatenation modified message
-			return std::move(lengthHeader += message);
-		}
+		std::string AddMessageLengthHeader(std::string& message);
 
-		int GetMessageLength(std::string& message) {
-			int length = int((unsigned char)(message[0]) << 24 |
-				(unsigned char)(message[1]) << 16 |
-				(unsigned char)(message[2]) << 8 |
-				(unsigned char)(message[3]));
-			return 0;
-		}
+		int GetMessageLength(std::string& message);
 	}
 }
 

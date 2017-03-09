@@ -17,6 +17,7 @@ ConnectionResolver.cpp
 NetworkLogger.cpp
 ServerListener.cpp
 NetworkObjects.cpp
+NetworkStandard.cpp
 )
 
 set_property(TARGET networkUtils PROPERTY FOLDER "app/network")
