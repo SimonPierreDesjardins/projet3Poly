@@ -31,12 +31,10 @@ void Connection::ReadData()
 		if (_inDeletionProcess)
 			return;
 
-		_connectionLock.lock();
 		if (!ec)
 		{
 			auto data = std::string(_buffer, length);
-			OnReceivedData(data);
-			_connectionLock.unlock();
+			onReceivedMessage_(data);
 			ReadData();
 		}
 		else 
@@ -44,14 +42,11 @@ void Connection::ReadData()
 			Logger::LogError(ec);
 			// End of connection
 			CheckIfDisconnect(ec);
-			_connectionLock.unlock();
 		}
 	});
 }
 
 void Connection::SendData(std::string data) {
-	data = std::to_string(data.size()) + ";" + data;
-
 	_sendQueue.push(std::move(data));
 
 	// if this new message is alone in the queue, start writing
@@ -63,7 +58,9 @@ void Connection::SendData(std::string data) {
 void Networking::Connection::CloseConnection()
 {
 	if (_socket != NULL) {
+		asio::error_code ec;
 		_socket->cancel();
+		_socket->shutdown(asio::ip::tcp::socket::shutdown_both, ec);
 		_socket->close();
 		delete _socket;
 	}
@@ -78,26 +75,23 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 		//_socket -> close();
 		Logger::Log("Connection lost", Logger::DebugLevel::CONNECTION_EVENTS);
 
-		__raise OnConnectionLost();
+		onConnectionLost_();
 		break;
 	}
 }
 
 void Connection::WriteData()
 {
-	_connectionLock.lock();
 	std::string data = std::move(_sendQueue.front());
 	_sendQueue.pop();
-	strncpy_s(_buffer, 1024, data.c_str(), data.size());
 
-	_socket->async_write_some(asio::buffer(_buffer, data.size()),
+	_socket->async_write_some(asio::buffer(data.c_str(), data.size()),
 	//_socket -> async_write_some(asio::buffer(_buffer, length),
 	[this](asio::error_code ec, std::size_t /*length*/)
 	{
 		if (_inDeletionProcess)
 			return;
 
-		_connectionLock.lock();
 		if (!ec)
 		{
 			if (_sendQueue.size() >= 1) {
@@ -112,10 +106,7 @@ void Connection::WriteData()
 		else {
 			Logger::LogError(ec);
 		}
-		_connectionLock.unlock();
 	});
-
-	_connectionLock.lock();
 }
 
 std::mutex Connection::_connectionLock;

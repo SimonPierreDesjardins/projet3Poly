@@ -11,17 +11,21 @@ include/ConnectionResolver.hpp
 include/NetworkLogger.h
 include/ServerListener.hpp
 include/NetworkObjects.h
+include/NetworkStandard.h
 Connection.cpp
 ConnectionResolver.cpp
 NetworkLogger.cpp
 ServerListener.cpp
 NetworkObjects.cpp
+NetworkStandard.cpp
 )
 
 set_property(TARGET networkUtils PROPERTY FOLDER "app/network")
 
 
 target_compile_definitions(networkUtils
-PRIVATE
-ASIO_STANDALONE
+    PRIVATE
+    ASIO_STANDALONE
+    _WIN32_WINNT=0x0501
+    _WINSOCK_DEPRECATED_NO_WARNINGS
 )

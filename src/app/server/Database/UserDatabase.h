@@ -10,9 +10,9 @@ namespace server {
 
 	class UserInformation:public DatalistElement {
 	public:
-		std::string UserName = "";
-		std::vector<std::string> privateMaps = std::vector<std::string>();
-		virtual std::string GetId();
+		std::string UserName;
+		std::vector<std::string> privateMaps;
+		virtual const std::string& GetId();
 	};
 
 	///<summary>Holds the list of users and their infos</summary>

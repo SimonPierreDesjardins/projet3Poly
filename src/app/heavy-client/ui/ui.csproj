@@ -96,6 +96,8 @@
     <Compile Include="EditionTutoriel\EditionTutorielInstructions.Designer.cs">
       <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
     </Compile>
+    <Compile Include="enum\EditionTutorialState.cs" />
+    <Compile Include="enum\TypeOfTool.cs" />
     <Compile Include="Personalize\ModeleSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -135,6 +137,11 @@
     <Compile Include="Edition\EditionSideMenu.Designer.cs">
       <DependentUpon>EditionSideMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="enum\ConfigureControlEnum.cs" />
+    <Compile Include="enum\ModeEnum.cs" />
+    <Compile Include="enum\TypeCommandeEnum.cs" />
+    <Compile Include="enum\TypeComportementEnum.cs" />
+    <Compile Include="enum\VehiculePiece.cs" />
     <Compile Include="FormulairesSysFichiers\ExplorateurOuverture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -322,10 +329,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Enum\Enum.csproj">
-      <Project>{c6fb0f99-403a-43a9-86b5-c8ca99ac438a}</Project>
-      <Name>Enum</Name>
-    </ProjectReference>
+    <None Include="Resources\pauseNoire.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">

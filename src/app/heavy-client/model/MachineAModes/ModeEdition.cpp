@@ -8,16 +8,18 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "ModeEdition.h"
 #include <math.h>
-#include "Utilitaire.h"
 #include <iostream>
+#include "Utilitaire.h"
 #include "FacadeModele.h"
+#include "NetworkManager.h"
 #include "Vue.h"
 #include "Projection.h"
 #include "VisiteurSauvegarde.h"
 #include "EtatTypes.h"
 #include "NoeudRobot.h"
+
+#include "ModeEdition.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -31,10 +33,13 @@
 ModeEdition::ModeEdition()
 {
 	typeMode_ = EDITION;
-	etat_ = std::make_unique <EtatSelection>();
+	assignerEtat(SELECTION);
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
+	FacadeModele* facade = FacadeModele::obtenirInstance();
+	facade->assignerEnvironnement(2);
+	eventHandler_ = facade->getEventHandler();
+	facade->getNetworkManager()->requestToJoinMapSession(0);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -51,6 +56,7 @@ ModeEdition::~ModeEdition()
 	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()  != nullptr) {
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 	}
+	FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -90,6 +96,50 @@ void ModeEdition::sauvegarder()
 void ModeEdition::gererToucheSupprimer()
 {
 	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
+}
+
+/// Modifie l'etat courant.
+void ModeEdition::assignerEtat(Tool etat)
+{
+	switch(etat)
+	{
+	case SELECTION:
+		etat_ = std::make_unique<EtatSelection>();
+		break;
+
+	case DEPLACEMENT:
+		etat_ = std::make_unique<EtatDeplacement>();
+		break;
+
+	case ROTATION:
+		etat_ = std::make_unique<EtatRotation>();
+		break;
+
+	case MISE_A_ECHELLE:
+		etat_ = std::make_unique<EtatMiseAEchelle>();
+		break;
+	
+	case DUPLICATION:
+		etat_ = std::make_unique<EtatDuplication>();
+		break;
+
+	case CREATION_POTEAU:
+		etat_ = std::make_unique<EtatCreationPoteau>();
+		break;
+
+	case CREATION_MUR:
+		etat_ = std::make_unique<EtatCreationMur>();
+		break;
+	
+	case CREATION_LIGNE_NOIRE:
+		etat_ = std::make_unique<EtatCreationLigne>();
+		break;
+	
+	case LOUPE:
+		etat_ = std::make_unique<EtatLoupe>();
+		break;
+	}
+	etat_->setObserver(eventHandler_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -150,31 +200,31 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_R:
-				etat_ = std::make_unique<EtatRotation>();
+				assignerEtat(SELECTION);
 				break;
 
 			case VK_KEY_E:
-				etat_ = std::make_unique<EtatMiseAEchelle>();
+				assignerEtat(MISE_A_ECHELLE);
 				break;
 
 			case VK_KEY_C:
-				etat_ = std::make_unique<EtatDuplication>();
+				assignerEtat(DUPLICATION);
 				break;
 
 			case VK_KEY_Z:
-				etat_ = std::make_unique<EtatLoupe>();
+				assignerEtat(LOUPE);
 				break;
 
 			case VK_KEY_P:
-				etat_ = std::make_unique<EtatCreationPoteau>();
+				assignerEtat(CREATION_POTEAU);
 				break;
 
 			case VK_KEY_M:
-				etat_ = std::make_unique<EtatCreationMur>();
+				assignerEtat(CREATION_MUR);
 				break;
 
 			case VK_KEY_L:
-				etat_ = std::make_unique<EtatCreationLigne>();
+				assignerEtat(CREATION_LIGNE_NOIRE);
 				break;
 
 			case VK_KEY_T:

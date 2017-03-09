@@ -4,32 +4,43 @@
 #define __MULTI_USER__SYSTEM_H
 
 #include "User.h"
-#include <map>
+#include <unordered_map>
+#include "Observer.h"
 
-namespace server{
-	class MultiUserSystem {
-	public:
-		void AddUser(User* user);
+namespace server
+{
 
-	protected:
+class MultiUserSystem : public Observer
+{
+public:
+	void AddUser(User* user);
+	void RemoveUser(User* user);
+	inline size_t GetNumberOfUsers() const;
 
-		virtual void TreatUserJoin(User* user) = 0;
+	void broadcastMessage(const std::string& message);
+	void broadcastMessage(User* excludedUser, const std::string& message);
 
-		virtual void TreatUserMessage(User* user, std::string& message) = 0;
+protected:
 
-		virtual void TreatUserDisconnect(User* user) = 0;
+	virtual char GetSystemType() = 0;
+	virtual void TreatUserJoin(User* user) = 0;
+	virtual void TreatUserMessage(User* user, const std::string& message) = 0;
+	virtual void TreatUserDisconnect(User* user) = 0;
 
-		std::map<std::string, User*> _userList;
+	std::unordered_map<std::string, User*> _userList;
 
-	private:
-		void StartListeningToUser(User* user);
-		void StopListeningToUser(User* user);
+private:
+	virtual void onUserDisconnected(User* user);
+	virtual void onUserMessageReceived(User* user, const std::string& message);
 
-		void OnUserDisconnected(User* user);
+};
 
-		void OnUserMessageReceived(User* user, std::string& message);
+inline size_t MultiUserSystem::GetNumberOfUsers() const
+{
+	return _userList.size();
+}
 
-	};
+
 }
 
 #endif // !__MULTI_USER__SYSTEM_H

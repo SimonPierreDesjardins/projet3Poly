@@ -55,6 +55,12 @@ std::unique_ptr<FacadeModele> FacadeModele::instance_{ nullptr };
 /// Chaîne indiquant le nom du fichier de configuration du projet.
 const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 
+/// Constructeur par défaut.
+FacadeModele::FacadeModele()
+	: network_(&eventHandler_)
+{
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn FacadeModele* FacadeModele::obtenirInstance()
@@ -109,6 +115,42 @@ FacadeModele::~FacadeModele()
     controleurLumiere_.reset(nullptr);
 }
 
+void FacadeModele::initialize(HWND hWnd)
+{
+	initialiserOpenGL(hWnd);
+
+	assignerMode(MENU_PRINCIPAL);
+
+	profil_ = std::make_unique<ProfilUtilisateur>();
+
+	controleurLumiere_ = std::make_unique<ControleurLumiere>();
+	// Lumière ambiante "globale"
+	// Attention :
+	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
+	controleurLumiere_->afficherLumiereAmbianteGlobale();
+
+	// Création de l'arbre de rendu.  À moins d'être complètement certain
+	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
+	// l'arbre après avoir créé le contexte OpenGL.
+	arbre_ = std::make_unique<ArbreRenduINF2990>(&eventHandler_);
+	arbre_->initialiser();
+
+	// On crée une vue par défaut. 
+	vue_ = std::make_unique<vue::VueOrtho>(vue::Camera(
+		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
+		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
+		vue::ProjectionOrtho{
+		0, 500, 0, 500,
+		1, 1000, 1, 10000, 1.25,
+		-50, 50, -50, 50, false });
+
+	// Création du module qui gère l'affichage du texte avec OpenGL.
+	affichageTexte_ = std::make_unique<AffichageTexte>(vue_.get(), profil_.get());
+
+	eventHandler_.setNetworkManager(&network_);
+	eventHandler_.setEntityTree(arbre_.get());
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void FacadeModele::initialiserOpenGL(HWND hWnd)
@@ -125,8 +167,6 @@ FacadeModele::~FacadeModele()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::initialiserOpenGL(HWND hWnd)
 {
-	assignerMode(MENU_PRINCIPAL);
-	profil_ = std::make_unique<ProfilUtilisateur>();
 	hWnd_ = hWnd;
 	bool succes{ aidegl::creerContexteGL(hWnd_, hDC_, hGLRC_) };
 	assert(succes && "Le contexte OpenGL n'a pu être créé.");
@@ -166,33 +206,7 @@ void FacadeModele::initialiserOpenGL(HWND hWnd)
 	// Le cull face
 	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
-
-	controleurLumiere_ = std::make_unique<ControleurLumiere>();
-	// Lumière ambiante "globale"
-	// Attention :
-	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	controleurLumiere_->afficherLumiereAmbianteGlobale();
-
-	// Création de l'arbre de rendu.  À moins d'être complètement certain
-	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
-	// l'arbre après avoir créé le contexte OpenGL.
-	arbre_ = std::make_unique<ArbreRenduINF2990>();
-	arbre_->initialiser();
-
-	// On crée une vue par défaut. 
-	vue_ = std::make_unique<vue::VueOrtho>(vue::Camera(
-		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
-		vue::ProjectionOrtho{
-		0, 500, 0, 500,
-		1, 1000, 1, 10000, 1.25,
-		-50, 50, -50, 50, false });
-
-	// Création du module qui gère l'affichage du texte avec OpenGL.
-	affichageTexte_ = std::make_unique<AffichageTexte>();
-
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -395,6 +409,7 @@ void FacadeModele::assignerVueOrtho()
 			0, 500, 0, 500,
 			1, 1000, 80, 105, 1.25,
 			-50, 50, -50, 50, false });
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -416,6 +431,7 @@ void FacadeModele::assignerVueOrbite()
 			0, 500, 0, 500,
 			1, 10000, 1, 100000, 1.25,
 			-50, 50, -50, 50, true }, false,false);
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -439,6 +455,7 @@ void FacadeModele::assignerVueOrbitePerso()
 		-50, 50, -50, 50, true }, false,true);
 	//place la camera pour qu'elle est un bon angle sur le robot
 	vue_->deplacerXY(-375, 550);
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 
@@ -465,6 +482,7 @@ void FacadeModele::assignerVuePremierePersonne()
 			0, 500, 0, 500,
 			1, 10000, 10, 10000, 1.25,
 			-50, 50, -50, 50, true }, true,false);
+	affichageTexte_->assignerVue(vue_.get());
 }
 
 ////////////////////////////////////////////////////////////////////////

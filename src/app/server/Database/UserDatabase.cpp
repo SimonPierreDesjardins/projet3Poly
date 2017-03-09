@@ -11,7 +11,7 @@ server::UserDatabase::UserDatabase(std::string basePath):BaseDatalist(basePath) 
 
 }
 
-std::string server::UserInformation::GetId()
+const std::string& server::UserInformation::GetId()
 {
 	return UserName;
 }

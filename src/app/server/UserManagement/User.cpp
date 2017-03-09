@@ -1,51 +1,40 @@
 #include "User.h"
+#include <iostream>
 
-void server::User::AssignConnection(Networking::Connection * connectionToTreat)
+namespace server
+{
+
+server::User::User(UserInformation & userInfo)
+	: Info(userInfo)
+{
+}
+
+User::~User()
+{
+	Networking::NetworkObjects::Dispose(_connection);
+}
+
+void User::AssignConnection(Networking::Connection * connectionToTreat)
 {
 	_connection = connectionToTreat;
 	HookToConnection(connectionToTreat);
 }
 
-void server::User::AssignInfo(UserInformation & info)
+void User::HookToConnection(Networking::Connection * connectionToListenTo)
 {
-	Info = info;
+	_connection->hookOnReceivedMessage(&User::OnReceivedMessage, this);
+	_connection->hookOnConnectionLost(&User::OnConnectionLost, this);
 }
 
-void server::User::ForwardMessage(std::string & message)
+void User::OnReceivedMessage(const std::string& message)
 {
-	_connection->SendData(message);
+	dispatchReceivedMessage(this, message);
 }
 
-server::User::User(UserInformation & userInfo):Info(userInfo)
+void User::OnConnectionLost()
 {
+	notifyDisconnected(this);
+	delete this;
 }
 
-server::User::~User()
-{
-	UnhookFromConnection(_connection);
-	Networking::NetworkObjects::Dispose(_connection);
-}
-
-void server::User::HookToConnection(Networking::Connection * connectionToListenTo)
-{
-	__hook(&Networking::Connection::OnReceivedData, connectionToListenTo, &User::OnReceivedMessage);
-	__hook(&Networking::Connection::OnConnectionLost, connectionToListenTo, &User::OnDisconnect);
-}
-
-void server::User::UnhookFromConnection(Networking::Connection * connectionToDeafenFrom)
-{
-	__unhook(&Networking::Connection::OnReceivedData, connectionToDeafenFrom, &User::OnReceivedMessage);
-	__unhook(&Networking::Connection::OnConnectionLost, connectionToDeafenFrom, &User::OnDisconnect);
-}
-
-void server::User::OnReceivedMessage(std::string& message)
-{
-	OnUserSentMessage(this, message);
-}
-
-void server::User::OnDisconnect()
-{
-	//UnhookFromConnection(_connection);
-	Networking::NetworkObjects::Dispose(_connection);
-	__raise OnUserDisconnected(this);
 }

@@ -12,8 +12,9 @@
 #define ETAT_ABSTRAIT_H
 
 #include <memory>
-#include "VisiteurAbstrait.h"
 #include "glm\glm.hpp"
+#include "VisiteurAbstrait.h"
+#include "Observable.h"
 #include "TypeOfTool.cs"
 
 class ArbreRendu;
@@ -21,6 +22,11 @@ namespace vue
 {
 	class Vue;
 };
+
+namespace event_handler
+{
+	class EventHandler;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EtatAbstrait
@@ -32,7 +38,7 @@ namespace vue
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatAbstrait
+class EtatAbstrait : public event_handler::Observable
 {
 public:
 	EtatAbstrait();
@@ -65,6 +71,7 @@ protected:
 
 	ArbreRendu* arbre_{ nullptr };
 	vue::Vue* vue_{ nullptr };
+	event_handler::EventHandler* eventHandler_{ nullptr };
 
 	bool estClickDrag();
 	bool curseurEstSurTable_{ true };

@@ -8,11 +8,16 @@
 
 namespace server {
 
-	class MapInfo{
+	class MapInfo : public DatalistElement{
 	public:
-		std::string mapId;
+
+		MapInfo();
+		const std::string& GetId();
 		std::string mapName;
 		bool isPrivate;
+
+	private:
+		std::string _mapId;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
@@ -24,6 +29,10 @@ namespace server {
 	private:
 		//Loads up user information from stream
 		MapDatabase(std::string basePath);
+
+		virtual void WriteObject(DatalistElement& element);
+
+
 	};
 }
 

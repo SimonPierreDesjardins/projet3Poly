@@ -5,36 +5,43 @@
 #include "Networking.h"
 #include "../Database/UserDatabase.h"
 
-namespace server {
+#include "Observable.h"
 
-	class User {
-	public:
-		User(UserInformation& userInfo);
+namespace server
+{
 
-		~User();
+class User : public Observable
+{
+public:
+	UserInformation& Info;
 
-		void AssignConnection(Networking::Connection* connectionToTreat);
+	User(UserInformation& userInfo);
+	virtual ~User();
 
-		void AssignInfo(UserInformation& info);
+	void AssignConnection(Networking::Connection* connectionToTreat);
+	inline void AssignInfo(UserInformation& info);
 
-		void ForwardMessage(std::string& message);
+	void ForwardMessage(const std::string& message);
 
-		__event void OnUserDisconnected(User* thisUser);
-		__event void OnUserSentMessage(User* thisUser, std::string& message);
+private:
+	void HookToConnection(Networking::Connection* connectionToListenTo);
 
-		UserInformation& Info;
+	void OnReceivedMessage(const std::string& message);
+	void OnConnectionLost();
 
-	private:
-		void HookToConnection(Networking::Connection* connectionToListenTo);
-		void UnhookFromConnection(Networking::Connection* connectionToListenTo);
+	Networking::Connection* _connection;
+};
 
-		void OnReceivedMessage(std::string& message);
-		void OnDisconnect();
-
-		Networking::Connection* _connection;
-
-	};
+inline void User::ForwardMessage(const std::string& message)
+{
+	_connection->SendData(message);
 }
 
+inline void User::AssignInfo(UserInformation& info)
+{
+	Info = info;
+}
+
+}
 
 #endif

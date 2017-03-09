@@ -11,7 +11,7 @@ namespace server {
 
 	class DatalistElement{
 	public:
-		virtual std::string GetId() = 0;
+		virtual const std::string& GetId() = 0;
 	};
 
 	///<summary>Base implementation for lists of data in databases where elements extend DatalistElement</summary>
@@ -23,7 +23,7 @@ namespace server {
 			_filePath = filePath;
 			FILE* file;
 			if (fopen_s(&file, _filePath.c_str(), "r") != 0) {
-				//error occured, if file absent, ignore as file will be created on save
+				//error occured, if file absent, ignore as file will be created on save. create default doc
 				return;
 			}
 			else {
@@ -34,6 +34,16 @@ namespace server {
 				fclose(file);
 			}
 
+			if (doc.HasMember("elementList")) {
+				rapidjson::Value elementList = doc["elementList"];
+				for (rapidjson::Value::ConstValueIterator itr = elementList.Begin(); itr != elementList.End(); ++itr) {
+					printf("%d ", itr->GetInt());
+
+				}
+			}
+			else {
+				doc.
+			}
 			// read data
 			*/
 		}
@@ -48,9 +58,15 @@ namespace server {
 			_infoList.insert_or_assign(element.GetId(), element);
 		}
 
+		virtual std::map<std::string, DatalistElement&>& GetElements() {
+			return _infoList;
+		}
+
 	protected:
 
 		virtual void WriteObject(DatalistElement& element) = 0;
+
+		//virtual DatalistElement& GetObject(rapidjson::Value value) = 0;
 
 		/// Objet pour écrire dans un fichier.
 		rapidjson::Writer<rapidjson::FileWriteStream>* writer;

@@ -16,7 +16,7 @@ namespace TypeOfTool
     enum Tool
         {
             NONE,
-            CREATION_LIGNE,
+            CREATION_LIGNE_NOIRE,
             CREATION_MUR,
             CREATION_POTEAU,
             DEPLACEMENT,

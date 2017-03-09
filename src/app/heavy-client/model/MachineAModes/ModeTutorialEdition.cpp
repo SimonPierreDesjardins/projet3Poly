@@ -355,7 +355,7 @@ void ModeTutorialEdition::setCurrentTutorialState(int newCurrentTutorialState)
 ///
 /// @fn void ModeTutorialEdition::unselectCurrentTool()
 ///
-///	Désélectionne l'outil courant en utilisant le pointeur d'état vers NULL
+///	Désélectionne l'outil courant en utilisant le pointeur d'état vers un EtatAbstrait
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModeTutorialEdition::unselectCurrentTool()
@@ -379,7 +379,7 @@ int ModeTutorialEdition::getNomberOfObjects(std::string TypeOfObject)
 	int numberOfObject = 0;
 	for (int i = 0; i < objects; i++)
 	{
-		if (table_->chercher(i)->obtenirType() == TypeOfObject)
+		if (table_->chercher(i)->obtenirNom() == TypeOfObject)
 		{
 			numberOfObject++;
 			indexOfCurrentObject_ = i;
@@ -475,7 +475,7 @@ void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
 	etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 	switch (etat_->getType())
 	{
-		case CREATION_LIGNE:
+		case CREATION_LIGNE_NOIRE:
 		{
 			EtatCreationLigne* creationLineTool(static_cast<EtatCreationLigne*>(etat_.get()));
 			if (!creationLineTool->isInCreation())

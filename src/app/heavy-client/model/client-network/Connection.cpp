@@ -81,27 +81,47 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 
 	isConnected_ = true;
 	listener_ = std::thread(&Connection::listen, this);
-	//sendMessage(std::string("hello"));
 	return true;
+}
+
+void Connection::fetchSocketMessage()
+{
+	// Read and handle the new message.
+	mConnection.lock();
+	rcvBuffer_.fill(char());
+	int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
+
+	if (readBytes != 0)
+	{
+		onMessageReceived_(rcvBuffer_.data(), readBytes);
+	}
+	else // Connection lost 
+	{
+		isConnected_ = false;
+		// TODO: Notifier le ui de la deconnexion.
+	} 
+	// TODO: else pour le recv qui fail.
+	mConnection.unlock();
 }
 
 void Connection::listen()
 {
-	fd_set sockets{ { socket_ }, 1 };
+	fd_set readfds;
 	while (isConnected_)
 	{
-		// Check if there is an message on the socket q.
-		if (!select(NULL, &sockets, NULL, NULL, &timeout_))
+		FD_ZERO(&readfds);
+		FD_SET(socket_, &readfds);
+
+		// Check if there is a message on the socket q.
+		int selectResult = !select(NULL, &readfds, NULL, NULL, &timeout_);
+		if (selectResult != SOCKET_ERROR && FD_ISSET(socket_, &readfds))
 		{
-			// Read and handle the new message.
-			mConnection.lock();
-			int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
-			onMessageReceived_(std::string(rcvBuffer_.data()));
-			if (readBytes == 0)
-			{
-				isConnected_ = false;
-			}
-			mConnection.unlock();
+			fetchSocketMessage();
+		}
+		else if (selectResult == SOCKET_ERROR)
+		{
+			isConnected_ = false;
+			// TODO: Notifier le ui de la deconnexion.
 		}
 	}
 }
@@ -112,12 +132,14 @@ void Connection::readData()
 
 void Connection::sendMessage(const std::string& message)
 {
+	if (!isConnected_) return;
+
 	mConnection.lock();
-	send(socket_, message.data(), message.size(), MSG_OOB);
+	send(socket_, message.c_str(), (int)(message.size()), 0);
 	mConnection.unlock();
 }
 
-void Connection::receiveMessage(const std::string& message)
+void Connection::receiveMessage(char const* message, int32_t size)
 {
 	std::cout << message << std::endl;
 }

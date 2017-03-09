@@ -77,7 +77,7 @@ include_directories(
     util/Modele
     util/OpenGL
     util/Vue
-    ui/Enum)
+    ui/enum)
 
 # Ajout de la librairie utilitaire
 add_subdirectory(util)
@@ -90,9 +90,3 @@ include_external_msproject(ui
     ${CMAKE_SOURCE_DIR}/src/app/heavy-client/ui/ui.csproj)
 
 set_property(TARGET ui PROPERTY FOLDER "app/heavy-client")
-
-# Ajout du projet C# pour les Enum
-include_external_msproject(enum 
-    ${CMAKE_SOURCE_DIR}/src/app/heavy-client/ui/enum/enum.csproj)
-
-set_property(TARGET enum PROPERTY FOLDER "app/heavy-client")

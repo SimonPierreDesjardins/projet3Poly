@@ -16,6 +16,8 @@
 #include "Vue.h"
 #include "Projection.h"
 
+#include "EventHandler.h"
+
 glm::ivec2 EtatAbstrait::currentPosition_ = { 0.0, 0.0 };
 
 
@@ -30,6 +32,8 @@ EtatAbstrait::EtatAbstrait()
 {
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	vue_ = FacadeModele::obtenirInstance()->obtenirVue();
+	eventHandler_ = FacadeModele::obtenirInstance()->getEventHandler();
+	setObserver(eventHandler_);
 }
 
 ////////////////////////////////////////////////////////////////////////

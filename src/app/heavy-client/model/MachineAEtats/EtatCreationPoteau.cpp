@@ -75,12 +75,19 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		glm::dvec3 positionVirtuelle;
 		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 		visiteurCreationPoteau_->assignerPositionRelative(positionVirtuelle);
+
 		arbre_->accepterVisiteur(visiteurCreationPoteau_.get());
+
 		NoeudAbstrait* poteau = visiteurCreationPoteau_->obtenirReferenceNoeud();
-		
 		// Mettre à jour les quads et vérifier si le nouveau poteau se situe à l'extérieur de la table.
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
-		if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
+		if (visiteurVerificationQuad_->objetsDansZoneSimulation()) 
+		{
+			// On confirme la création d'objet avec le serveur.
+			notifyEntityCreated(poteau);
+		}
+		else 
+		{
 			arbre_->chercher("table")->effacer(poteau);
 		}
 	}

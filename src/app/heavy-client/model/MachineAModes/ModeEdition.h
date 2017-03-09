@@ -11,10 +11,11 @@
 #ifndef MODE_EDITION_H
 #define MODE_EDITION_H
 
+#include <memory>
+
 #include "ModeAbstrait.h"
 #include "VisiteurAbstrait.h"
 #include "VisiteurSuppression.h"
-#include <memory>
 #include "glm\glm.hpp"
 #include "EtatAbstrait.h"
 
@@ -36,6 +37,11 @@ const int VK_KEY_P = 'P';
 const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
 
+namespace event_handler
+{
+	class EventHandler;
+}
+
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeEdition
 /// @brief Classe qui représente le mode edition de notre machine à modes
@@ -51,6 +57,7 @@ public:
 
 	//Constructeur par défaut
 	ModeEdition();
+
 	//Destructeur
 	virtual ~ModeEdition();
 
@@ -65,7 +72,13 @@ public:
 
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
+	/// Modifie l'etat courant.
+	void assignerEtat(Tool etat);
+
 protected:
+
+
+	event_handler::EventHandler* eventHandler_;
 
 	//Visiteur pour la suppression d'un noeud
 	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
