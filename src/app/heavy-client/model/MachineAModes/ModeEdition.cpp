@@ -168,6 +168,10 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				etat_ = std::make_unique<EtatCreationPoteau>();
 				break;
 
+			case VK_KEY_O:
+				etat_ = std::make_unique<EtatCreationTeleporteur>();
+				break;
+
 			case VK_KEY_M:
 				etat_ = std::make_unique<EtatCreationMur>();
 				break;

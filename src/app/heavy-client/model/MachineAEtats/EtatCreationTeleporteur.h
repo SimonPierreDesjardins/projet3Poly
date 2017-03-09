@@ -1,0 +1,47 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file EtatCreationTeleporteur.h
+/// @author Simon-Pierre Desjardins
+/// @date 2017-03-08
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
+
+#ifndef ETAT_CREATION_TELEPORTEUR_H
+#define ETAT_CREATION_TELEPORTEUR_H
+
+#include "EtatAbstrait.h"
+#include "VisiteurTypes.h"
+#include <iostream>
+
+///////////////////////////////////////////////////////////////////////////
+/// @class EtatCreationTeleporteur
+/// @brief État représentant la creation d'un teleporteur
+///
+/// @author Simon-Pierre Desjardins
+/// @date 2017-03-08
+///////////////////////////////////////////////////////////////////////////
+class EtatCreationTeleporteur : public EtatAbstrait
+{
+public:
+	EtatCreationTeleporteur();
+	virtual ~EtatCreationTeleporteur();
+
+	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
+	virtual void gererClicGaucheRelache(const int& x, const int& y);
+	virtual void gererMouvementSouris(const int& x, const int& y);
+	virtual void gererPositionCurseurConcret(const bool& positionEstSurTable);
+	virtual void assignerSymboleCurseur();
+
+private:
+	std::unique_ptr<VisiteurCreationTeleporteur> visiteurCreationTeleporteur_{ nullptr };
+	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
+};
+
+
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

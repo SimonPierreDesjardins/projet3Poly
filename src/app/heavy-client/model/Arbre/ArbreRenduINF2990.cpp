@@ -77,6 +77,7 @@ ArbreRenduINF2990::ArbreRenduINF2990()
 	ajouterUsine(NOM_DEPART, std::make_unique<UsineNoeud<NoeudDepart>>(NOM_DEPART, std::string{ "media/modeles/Fleche.obj" }));
 	ajouterUsine(NOM_JONCTION, std::make_unique<UsineNoeud<NoeudJonction>>(NOM_JONCTION, std::string{ "media/modeles/jonction.obj" }));
 	ajouterUsine(NOM_ROUES, std::make_unique<UsineNoeud<NoeudRoues>>(NOM_ROUES, std::string{ "media/modeles/roue.obj" }));
+	ajouterUsine(NOM_TELEPORTEUR, std::make_unique<UsineNoeud<NoeudTeleporteur>>(NOM_TELEPORTEUR, std::string{ "media/modeles/teleporter.obj" }));
 
 	ajouterUsine(NOM_F1, std::make_unique<UsineNoeud<NoeudF1>>(NOM_F1, std::string{ "media/modeles/ferrari-f1-race-car.obj" }));
 	ajouterUsine(NOM_TRUCK, std::make_unique<UsineNoeud<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }));

@@ -35,6 +35,7 @@ const int VK_KEY_T = 'T';
 const int VK_KEY_P = 'P';
 const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
+const int VK_KEY_O = 'O';
 
 enum Etat
 {
@@ -46,7 +47,8 @@ enum Etat
 	CREATION_POTEAU,
 	CREATION_MUR,
 	CREATION_LIGNE_NOIRE,
-	ZOOM
+	ZOOM,
+	CREATION_TELEPORTEUR
 };
 
 //////////////////////////////////////////////////////////////////////////

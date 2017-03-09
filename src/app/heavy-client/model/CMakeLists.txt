@@ -42,6 +42,8 @@ set(NOEUDS_SRC
     Arbre/Noeuds/NoeudF1.h
     Arbre/Noeuds/NoeudAudi.cpp
     Arbre/Noeuds/NoeudAudi.h
+    Arbre/Noeuds/NoeudTeleporteur.h
+    Arbre/Noeuds/NoeudTeleporteur.cpp
 )
 
 set(USINES_SRC
@@ -120,6 +122,8 @@ set(MACHINE_A_ETATS_SRC
     MachineAEtats/EtatSelection.h
     MachineAEtats/EtatSelection.cpp
     MachineAEtats/EtatTypes.h
+    MachineAEtats/EtatCreationTeleporteur.h
+    MachineAEtats/EtatCreationTeleporteur.cpp
 )
 
 set(MACHINE_A_MODES_SRC
@@ -185,6 +189,8 @@ set(VISITEUR_SRC
     Visiteur/VisiteurVerificationQuad.h
     Visiteur/VisiteurVerificationQuad.cpp
     Visiteur/VisiteurTypes.h
+    Visiteur/VisiteurCreationTeleporteur.h
+    Visiteur/VisiteurCreationTeleporteur.cpp
 )
 
 set(CLIENT_NETWORK_SRC
