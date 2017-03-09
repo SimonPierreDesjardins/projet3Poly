@@ -18,10 +18,12 @@ void SetupServer() {
 	server::ChatSystem chatSystem;
 
 	// create MapSystem
+	server::MapSystem mapSystem;
 
 	// create vector of systems to pass the user to when authenticated
 	std::vector<server::MultiUserSystem*> newUserReceivers;
 	newUserReceivers.push_back(&chatSystem);
+	newUserReceivers.push_back(&mapSystem);
 
 	// create User auth system
 	server::UserAuthLobby UserLobby(listener, newUserReceivers);

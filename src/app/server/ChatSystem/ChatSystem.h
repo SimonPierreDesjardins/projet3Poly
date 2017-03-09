@@ -1,3 +1,6 @@
+#ifndef __CHAT_SYSTEM_H
+#define __CHAT_SYSTEM_H
+
 #include "../UserManagement/MultiUserSystem.h"
 
 namespace server {
@@ -48,3 +51,5 @@ namespace server {
 		std::map<std::string, ChatSession> _chatSessions;
 	};
 }
+
+#endif //!__CHAT_SYSTEM_H
