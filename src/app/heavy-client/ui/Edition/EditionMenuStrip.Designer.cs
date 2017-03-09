@@ -78,6 +78,7 @@
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(71, 25);
             this.fichierToolStripMenuItem.Text = "Fichier";
+            this.fichierToolStripMenuItem.Click += new System.EventHandler(this.fichierToolStripMenuItem_Click);
             // 
             // nouveauToolStripMenuItem
             // 
@@ -131,6 +132,7 @@
             this.vuesToolStripMenuItem.Name = "vuesToolStripMenuItem";
             this.vuesToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
             this.vuesToolStripMenuItem.Text = "Vues";
+            this.vuesToolStripMenuItem.Click += new System.EventHandler(this.vuesToolStripMenuItem_Click);
             // 
             // orthoToolStripMenuItem
             // 
@@ -155,11 +157,12 @@
             this.informationsToolStripMenuItem.Name = "informationsToolStripMenuItem";
             this.informationsToolStripMenuItem.Size = new System.Drawing.Size(119, 25);
             this.informationsToolStripMenuItem.Text = "Informations";
+            this.informationsToolStripMenuItem.Click += new System.EventHandler(this.informationsToolStripMenuItem_Click);
             // 
             // aideToolStripMenuItem
             // 
             this.aideToolStripMenuItem.Name = "aideToolStripMenuItem";
-            this.aideToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
+            this.aideToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.aideToolStripMenuItem.Text = "Aide";
             this.aideToolStripMenuItem.Click += new System.EventHandler(this.aideToolStripMenuItem_Click);
             // 

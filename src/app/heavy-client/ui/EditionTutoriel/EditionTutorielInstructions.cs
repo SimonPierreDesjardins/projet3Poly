@@ -16,9 +16,6 @@ namespace ui
     {
         int state_;
         Window parent_;
-        bool _capturingMoves;
-
-        Point MouseDownLocation;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -372,6 +369,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectSelectToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
@@ -402,6 +400,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectingObjectState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             instructionBox.Items.Clear();
             string instruction = "Pour sélectionner un objet, il suffit de déplacer la souris par dessus celui-ci et de cliquer " +
                                  "sur l'objet avec le bouton gauche de la souris. Vous pouvez également créer un rectangle élastisque " +
@@ -422,6 +421,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectScaleToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
@@ -450,6 +450,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void applyingScaleToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             instructionBox.Items.Clear();
             string instruction = "Pour appliquer cette outils il suffit d'appuyer sur le bouton gauche de la souris et de la déplacer vers le haut " +
                                  "pour agrandir l'objet ou vers le bas pour réduire la dimension de l'objet. \n\n" +
@@ -468,6 +469,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectMoveToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
@@ -495,6 +497,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void applyingMoveToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             instructionBox.Items.Clear();
             string instruction = "Pour appliquer cette outils il suffit d'appuyer sur le bouton gauche de la souris et de la déplacer dans la " +
                                  "direction de votre choix. Il est important que l'objet reste sur la table ou il sera replacé a sa position initiale. \n\n" +
@@ -513,6 +516,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectRotationToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
@@ -540,6 +544,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void applyingRotationToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             instructionBox.Items.Clear();
             string instruction = "Pour appliquer cette outils il suffit d'appuyer sur le bouton gauche de la souris et de la déplacer dans la " +
                                  "direction de votre choix. Un déplacement vers le haut fera une rotation horaire alors qu'une rotation vers le bas " +
@@ -559,6 +564,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectDuplicateToolState()
         {
+            parent_.editionTutorielModificationPanel.ajusteToMode();
             parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
             parent_.editionTutorielSideMenu.disableAllControls();
             FonctionsNatives.UnselectCurrentTool();
@@ -688,10 +694,12 @@ namespace ui
         {
             parent_.editionSideMenu = new EditionSideMenu(parent_);
             parent_.editionMenuStrip = new EditionMenuStrip(parent_);
+            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
 
             parent_.viewPort.Controls.Remove(this);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielMenuStrip);
+            parent_.viewPort.Controls.Remove(parent_.editionTutorielModificationPanel);
 
             parent_.viewPort.Controls.Add(parent_.editionSideMenu);
             parent_.editionSideMenu.Dock = DockStyle.Left;
@@ -699,13 +707,17 @@ namespace ui
             parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
             parent_.editionMenuStrip.Dock = DockStyle.Top;
 
+            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
+                                                                  parent_.editionMenuStrip.Height);
+            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            parent_.editionModificationPanel.Visible = false;
+            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
+
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
 
             Program.peutAfficher = true;
-
             FonctionsNatives.assignerMode(Mode.EDITION);
-            parent_.verificationDuNombreElementChoisi();
 
             FonctionsNatives.dessinerOpenGL();
         }
@@ -801,73 +813,7 @@ namespace ui
             switchInstruction();
 
             FonctionsNatives.UpdateEditionTutorialState(state_);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void tutorialPanel_MouseDown(object sender, EventArgs e)
-        ///
-        /// Fonction qui permet de savoir la position de la souris lorsque le boutton
-        /// gauche est appuyer
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void tutorialPanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            if(e.Button != MouseButtons.Left)
-                return;
-
-            MouseDownLocation = e.Location;
-            _capturingMoves = true;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void tutorialPanel_MouseUp(object sender, EventArgs e)
-        ///
-        /// Indique que le composant 'TutorialPanel' n'est plus sélectionner et ne
-        /// peux plus se déplacer
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void tutorialPanel_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (_capturingMoves)
-            {
-                _capturingMoves = false;
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void tutorialPanel_MouseMove(object sender, MouseEventArgs e)
-        ///
-        /// Permet de déplacer le userControl si le bouton gauche de la souris est maintenu
-        /// enfoncé.
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param MouseEventArgs e: Déplacement de la souris
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void tutorialPanel_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (!_capturingMoves)
-                return;
-
-            int X = this.Location.X - (MouseDownLocation.X - e.X);
-            int Y = this.Location.Y - (MouseDownLocation.Y - e.Y);
-
-            if (X < parent_.editionSideMenu.Width || (X + this.Width) > parent_.viewPort.Width)
-                return;
-            if (Y < parent_.editionMenuStrip.Height || (Y + this.Height) > parent_.viewPort.Height)
-                return;
-
-            this.Location = new Point(X, Y);
-            FonctionsNatives.dessinerOpenGL();
+            maxUserControl();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -882,6 +828,45 @@ namespace ui
         public int GetState()
         {
             return state_;
+        }
+
+        private void TitleButton_Click(object sender, EventArgs e)
+        {
+            if (this.Height > 30)
+                minUserControl();
+            else
+                maxUserControl();
+        }
+
+        private void minMaxButton_Click(object sender, EventArgs e)
+        {
+            if (this.Height > 30)
+                minUserControl();
+            else
+                maxUserControl();
+        }
+
+        private void minUserControl()
+        {
+            tutorialPanel.BackColor = Color.FromArgb(26, 32, 40);
+            this.Height = 30;
+            //70 sideMenu edition ouvert
+            this.Location = new Point(70, parent_.viewPort.Height - this.Height);
+            this.Anchor = (AnchorStyles.Bottom | AnchorStyles.Left);
+            minMaxPictureBox.Image = Properties.Resources.Maximize;
+            FonctionsNatives.dessinerOpenGL();
+        }
+
+        private void maxUserControl()
+        {
+            tutorialPanel.BackColor = Color.FromArgb(0, 102, 204);
+            this.Height = 306;
+
+            this.Location = new Point(parent_.viewPort.Width / 2 - this.Width / 2,
+                                      parent_.viewPort.Height / 2 - this.Height / 2);
+            this.Anchor = AnchorStyles.None;
+            minMaxPictureBox.Image = Properties.Resources.Minimize;
+            FonctionsNatives.dessinerOpenGL();
         }
 
         ////////////////////////////////////////////////////////////////////////
