@@ -3,7 +3,6 @@
 namespace client_network
 {
 
-
 NetworkManager::NetworkManager(event_handler::EventHandler* eventHandler)
 	: dispatcher_(eventHandler)
 {
@@ -60,6 +59,12 @@ void NetworkManager::requestEntityCreation(uint32_t entityId, uint8_t type, uint
 	serializer_.serialize(absolutePosition, message);
 	serializer_.serialize(relativePosition, message);
 	connection_.sendMessage(message);
+}
+
+void NetworkManager::sendSizePrefixedMessage(std::string& message)
+{
+	serializer_.serialize((uint32_t)(message.size()), message);
+	sendMessage(message);
 }
 
 }

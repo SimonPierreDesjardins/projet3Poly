@@ -37,6 +37,7 @@ public:
 		const glm::vec3& absolutePosition, const glm::vec3& relativePosition);
 
 	inline void sendMessage(const std::string& message);
+	void sendSizePrefixedMessage(std::string& message);
 
 	void handleServerMessage(const std::string& message);
 

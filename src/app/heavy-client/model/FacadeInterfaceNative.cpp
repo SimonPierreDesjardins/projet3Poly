@@ -1009,7 +1009,7 @@ extern "C"
 	{
 		// Need the size of the array so the string builder doesn't stop at 
 		// the first \0 (likely in the serialized message size)
-		FacadeModele::obtenirInstance()->getNetworkManager()->sendMessage(std::string(message, size));
+		FacadeModele::obtenirInstance()->getNetworkManager()->sendSizePrefixedMessage(std::string(message, size));
 	}
 
 

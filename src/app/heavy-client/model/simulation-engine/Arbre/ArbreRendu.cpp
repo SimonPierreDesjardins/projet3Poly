@@ -128,32 +128,11 @@ std::shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(NoeudAbstrait* pa
 	return nouveauNoeud;
 }
 
-////////////////////////////////////////////////////////////////////////
-//
-// @fn shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(const std::string& typeParent, const std::string& typeNouveauNoeud)
-//
-// Cette fonction permet d'ajouter un nouveau noeud dans l'arbre de
-// rendu.
-//
-// @param[in] parentId         : L'identifiant du parent.
-// @param[in] typeNouveauNoeud : Le type du nouveau noeud.
-//
-// @return Le noeud nouvellement créé.
-//
-////////////////////////////////////////////////////////////////////////
-std::shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(uint32_t parentId, 
-	const std::string& typeNouveauNoeud)
+// Crée et ajoute un nouveau noeud avec une référence sur le parent.
+std::shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(NoeudAbstrait* parent, EntityType entityType)
 {
-	std::shared_ptr<NoeudAbstrait> nouveauNoeud = nullptr;
-	IdContainer::iterator it = entitiesByServerId_.find(parentId);
-	if (it != entitiesByServerId_.end())
-	{
-		nouveauNoeud = creerNoeud(typeNouveauNoeud);
-		if (nouveauNoeud) {
-			it->second->ajouter(nouveauNoeud);
-		}
-	}
-	return nouveauNoeud;
+	// TODO
+	return nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////
