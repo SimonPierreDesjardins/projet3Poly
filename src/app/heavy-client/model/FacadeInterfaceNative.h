@@ -108,6 +108,8 @@ extern "C"
 	__declspec(dllexport) void __cdecl authenticate(char* profileName);
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
+	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
+
 
 	//Edition Tutorial
 	typedef int(__stdcall * Callback)();

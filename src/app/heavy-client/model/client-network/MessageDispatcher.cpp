@@ -35,6 +35,7 @@ void MessageDispatcher::startDispatching()
 void MessageDispatcher::stopDispatching()
 {
 	isDispatching_ = false;
+	lookupcv_.notify_all();
 	if (th_.joinable())
 	{
 		th_.join();
