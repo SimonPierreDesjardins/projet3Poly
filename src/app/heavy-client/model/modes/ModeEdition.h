@@ -13,7 +13,7 @@
 
 #include <memory>
 
-#include "ModeAbstrait.h"
+#include "OnlineMode.h"
 #include "VisiteurAbstrait.h"
 #include "VisiteurSuppression.h"
 #include "glm\glm.hpp"
@@ -51,7 +51,7 @@ namespace event_handler
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeEdition : public ModeAbstrait
+class ModeEdition : public OnlineMode
 {
 public:
 

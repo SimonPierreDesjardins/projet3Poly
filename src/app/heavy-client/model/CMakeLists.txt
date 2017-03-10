@@ -125,26 +125,29 @@ set(MACHINE_A_ETATS_SRC
     MachineAEtats/EtatTypes.h
 )
 
-set(MACHINE_A_MODES_SRC
-    MachineAModes/ModeAbstrait.h
-    MachineAModes/ModeAbstrait.cpp
-    MachineAModes/ModeConfigure.h
-    MachineAModes/ModeConfigure.cpp
-    MachineAModes/ModeEdition.h
-    MachineAModes/ModeEdition.cpp
-    MachineAModes/ModeMenuPrincipal.h
-    MachineAModes/ModeMenuPrincipal.cpp
-    MachineAModes/ModeSimulation.h
-    MachineAModes/ModeSimulation.cpp
-    MachineAModes/ModeTest.cpp
-    MachineAModes/ModeTypes.h
-    MachineAModes/ModePersonalize.cpp
-    MachineAModes/ModePersonalize.h
-    MachineAModes/ModeTutorialEdition.h
-    MachineAModes/ModeTutorialEdition.cpp
-    MachineAModes/ModeMapSelection.h
-    MachineAModes/ModeMapSelection.cpp
+set(MODES_SRC
+    modes/ModeAbstrait.h
+    modes/ModeAbstrait.cpp
+    modes/ModeConfigure.h
+    modes/ModeConfigure.cpp
+    modes/ModeEdition.h
+    modes/ModeEdition.cpp
+    modes/ModeMenuPrincipal.h
+    modes/ModeMenuPrincipal.cpp
+    modes/ModeSimulation.h
+    modes/ModeSimulation.cpp
+    modes/ModeTest.cpp
+    modes/ModeTypes.h
+    modes/ModePersonalize.cpp
+    modes/ModePersonalize.h
+    modes/ModeTutorialEdition.h
+    modes/ModeTutorialEdition.cpp
+    modes/ModeMapSelection.h
+    modes/ModeMapSelection.cpp
+    modes/OnlineMode.h
+    modes/OnlineMode.cpp
 )
+source_group("modes" FILES ${MODES_SRC})
 
 set(PHYSIQUE_SRC
     simulation-engine/Physique/CercleEnglobant.h
@@ -245,25 +248,23 @@ include_directories(
 	.
     simulation-engine
     simulation-engine/AffichageTexte
-    Application
     simulation-engine/Arbre
     simulation-engine/Arbre/Noeuds
     simulation-engine/Arbre/Usines
     simulation-engine/Capteur
-    Configuration
     simulation-engine/ControleRobot
     simulation-engine/ControleRobot/Commande
     simulation-engine/ControleRobot/Comportement
+    simulation-engine/EnginSon
+    simulation-engine/Lumiere
+    simulation-engine/Physique
+    simulation-engine/Visiteur
+    Configuration
 	event-handler
 	client-network
-    simulation-engine/EnginSon
-    Interface
-    simulation-engine/Lumiere
     MachineAEtats
-    MachineAModes
-    simulation-engine/Physique
+    modes
     ProfilUtilisateur
-    simulation-engine/Visiteur
 )
 
 # Ajouter les filtres dans le projet visual studio
@@ -281,7 +282,6 @@ source_group("simulation-engine\\engin-son" FILES ${ENGIN_SON_SRC})
 source_group("interface" FILES ${INTERFACE_SRC})
 source_group("simulation-engine\\lumiere" FILES ${LUMIERE_SRC})
 source_group("etats" FILES ${MACHINE_A_ETATS_SRC})
-source_group("modes" FILES ${MACHINE_A_MODES_SRC})
 source_group("simulation-engine\\physique" FILES ${PHYSIQUE_SRC})
 source_group("profil-utilisateur" FILES ${PROFIL_UTILISATEUR_SRC})
 source_group("simulation-engine\\visiteur" FILES ${VISITEUR_SRC})
@@ -301,7 +301,7 @@ add_library(model SHARED
     ${INTERFACE_SRC}
     ${LUMIERE_SRC}
     ${MACHINE_A_ETATS_SRC}
-    ${MACHINE_A_MODES_SRC}
+    ${MODES_SRC}
     ${PHYSIQUE_SRC}
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
