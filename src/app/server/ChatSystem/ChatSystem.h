@@ -33,10 +33,12 @@ namespace server {
 			std::string GetUserList();
 
 			///<summary> Adds a user to the list of users in this chat</summary>
-			void AddUser(std::string username);
+			///<summary> Returns true if operation performed</summary>
+			bool AddUser(std::string username);
 
 			///<summary> Removes the user from this session</summary>
-			void RemoveUser(std::string username);
+			///<summary> Returns true if operation performed</summary>
+			bool RemoveUser(std::string username);
 
 			std::vector<std::string> UserList;
 		};
@@ -49,11 +51,13 @@ namespace server {
 
 		void ParseUserLeaveRequest(User* user, const std::string& message);
 
-		void AddUserToChannel(User* user, std::string channelName);
+		void AddUserToChannel(User* user, const std::string& channelName);
 
-		void RemoveUserFromChannel(User* user, std::string channelName);
+		void RemoveUserFromChannel(User* user, const std::string& channelName);
+
+		void BroadcastUserList(std::string channelName);
 		
-		std::map<std::string, ChatSession> _chatSessions;
+		std::unordered_map<std::string, ChatSession> _chatSessions;
 	};
 }
 
