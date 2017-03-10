@@ -39,6 +39,25 @@ namespace ui
             chatListBox.DrawItem += chatBox_DrawItem;
         }
 
+        public ListBox.ObjectCollection getChannelListBoxInfo()
+        {
+            return ChannelListBox.Items;
+        }
+
+        public void addNewChannel(String newChannelName)
+        {
+            ChannelListBox.Items.Add(newChannelName);
+        }
+
+        public void setChannelList(UserChatChannel generalChannel)
+        {
+            ChannelListBox.Items.Clear();
+            foreach (var item in generalChannel.getChannelListBoxInfo())
+            {
+                ChannelListBox.Items.Add(item);
+            }
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void chatBox_MeasureItem(object sender, MeasureItemEventArgs e)
@@ -346,7 +365,7 @@ namespace ui
             else if (!System.Text.RegularExpressions.Regex.Replace(addChannelTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
                 parent_.userChat.createNewChannel(addChannelTextBox.Text);
-                ChannelListBox.Items.Add(addChannelTextBox.Text);
+                //ChannelListBox.Items.Add(addChannelTextBox.Text);
             }
             else
             {

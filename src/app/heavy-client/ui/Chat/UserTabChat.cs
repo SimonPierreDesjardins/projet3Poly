@@ -5,6 +5,7 @@
 ///
 ////////////////////////////////////////////////
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -14,6 +15,9 @@ namespace ui
     {
         Window parent_;
         public ChatWindow chatWindow_;
+        UserChatChannel generalChannel_ = null;
+        Dictionary<string, UserChatChannel> channels_;
+
         public Boolean inMainWindow = true;
 
         ////////////////////////////////////////////////////////////////////////
@@ -30,9 +34,8 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            createNewChannel("General");
-
-
+            channels_ = new Dictionary<string, UserChatChannel>();
+            generalChannel_ = createNewChannel("General");
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -173,7 +176,7 @@ namespace ui
         /// @param string name: nom de la tab à ajouter
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void createNewChannel(string name)
+        public UserChatChannel createNewChannel(string name)
         {
             //Add a tab
             TabPage newTabPage = new TabPage(name);
@@ -186,8 +189,25 @@ namespace ui
 
             //Add the content of the tab
             UserChatChannel newChannel = new UserChatChannel(parent_);
+            channels_.Add(name, newChannel);
+            if (generalChannel_ != null)
+            {
+                generalChannel_.addNewChannel(name);
+                updateChannelList();
+            } 
             newTabPage.Controls.Add(newChannel);
             newChannel.Dock = DockStyle.Fill;
+
+            return newChannel;
+        }
+
+        private void updateChannelList()
+        {
+            foreach (KeyValuePair<string, UserChatChannel> entry in channels_)
+            {
+                if (!entry.Key.Equals("General"))
+                    entry.Value.setChannelList(generalChannel_);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -207,6 +227,7 @@ namespace ui
                 if (tabName == tabControl.TabPages[i].Text)
                 {
                     tabControl.TabPages.Remove(tabControl.TabPages[i]);
+                    channels_.Remove(tabName);
                     leftChannel = true;
                 }
             }
