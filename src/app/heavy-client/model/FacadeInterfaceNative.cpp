@@ -925,29 +925,91 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str());
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)
+	///
+	/// Fonction qui permet de lancer une tentative de connexion avec le serveur.
+	///
+	/// @param hostName : L'adresse ip du serveur.
+	/// @param port     : Le port du serveur.
+	/// @return bool    : True si la tentative a réussi.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)
 	{
 		return FacadeModele::obtenirInstance()->getNetworkManager()->requestConnection(std::string(hostName), std::string(port));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl createProfile(char* profileName)
+	///
+	/// Fonction qui permet d'envoyer une requête de création de profile au serveur.
+	///
+	/// @param profileName : Le nom du profile.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl createProfile(char* profileName)
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->createProfile(std::string(profileName));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl authenticate(char* profileName)
+	///
+	/// Fonction qui permet d'envoyer une requête d'authentification au serveur.
+	///
+	/// @param profileName : Le nom du profile.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl authenticate(char* profileName)
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->authenticate(std::string(profileName));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl disconnectFromServer()
+	///
+	/// Fonction qui ferme la connexion du client.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl disconnectFromServer()
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->closeConnection();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl isConnected()
+	///
+	/// Fonction qui retourne si le client est connecté.
+	///
+	/// @return bool : True si le client est connecté.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) bool __cdecl isConnected()
 	{
 		return FacadeModele::obtenirInstance()->getNetworkManager()->isConnected();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl sendMessage(char const* message, int size)
+	///
+	/// Fonction qui permet d'envoyer un message au serveur
+	///
+	/// @param message : Un pointeur sur un array de char 
+	/// @param size : La taille du message 
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl sendMessage(char* message, int size)
+	{
+		// Need the size of the array so the string builder doesn't stop at 
+		// the first \0 (likely in the serialized message size)
+		FacadeModele::obtenirInstance()->getNetworkManager()->sendMessage(std::string(message, size));
 	}
 
 

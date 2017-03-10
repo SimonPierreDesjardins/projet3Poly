@@ -935,6 +935,9 @@ namespace ui
         public static extern int obtenirTypeVue();
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void sendMessage(String message, int size);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool connectToServer(String hostName, String port);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
