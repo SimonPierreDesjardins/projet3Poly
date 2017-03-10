@@ -7,6 +7,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ui
@@ -36,6 +37,9 @@ namespace ui
 
             channels_ = new Dictionary<string, UserChatChannel>();
             generalChannel_ = createNewChannel("General");
+
+            mInstance = new CallbackForChat(Handler);
+            SetCallbackForChat(mInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -188,7 +192,7 @@ namespace ui
             newTabPage.Margin = new System.Windows.Forms.Padding(0);
 
             //Add the content of the tab
-            UserChatChannel newChannel = new UserChatChannel(parent_);
+            UserChatChannel newChannel = new UserChatChannel(parent_, name);
             channels_.Add(name, newChannel);
             if (generalChannel_ != null)
             {
@@ -255,5 +259,26 @@ namespace ui
             }
             return unique;
         }
+
+        public void Test(string message)
+        {
+            TestCallback(message);
+        }
+
+        private delegate void CallbackForChat(IntPtr text, int size);
+        // Ensure it doesn't get garbage collected
+        private CallbackForChat mInstance;   
+        private void Handler(IntPtr message, int size)
+        {
+            // Do something...
+            Byte[] tmp = new Byte[size];
+            Marshal.Copy(message, tmp, 0, size);
+            Console.WriteLine(message);
+            Console.WriteLine("\n Callback \n");
+        }
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForChat(CallbackForChat fn);
+        [DllImport("model.dll")]
+        private static extern void TestCallback(string message);
     }
 }

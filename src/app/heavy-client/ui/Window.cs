@@ -16,6 +16,7 @@ namespace ui
         public Configure configuration;
 
         public UserTabChat userChat;
+        public string userName = "";
 
         public MainMenu mainMenu;
         public PersonnalisationSideMenu personnalisationSideMenu;

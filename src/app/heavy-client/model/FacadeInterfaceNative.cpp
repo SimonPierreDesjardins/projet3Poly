@@ -1093,6 +1093,18 @@ extern "C"
 			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::selectAllTutorialObjects();
 	}
 
+	CallbackForChat Handler = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForChat(CallbackForChat handler)
+	{
+		Handler = handler;
+	}
+
+	__declspec(dllexport) void __cdecl TestCallback(std::string message)
+	{
+		message = message.substr(4, message.length());
+		const unsigned char* bytes = (const unsigned char*)message.data();
+		Handler(bytes, message.size());
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

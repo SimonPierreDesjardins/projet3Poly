@@ -202,6 +202,9 @@ namespace ui
             FonctionsNatives.createProfile(newAccountTextBox.Text);
             FonctionsNatives.authenticate(newAccountTextBox.Text);
 
+            parent_.userName = newAccountTextBox.Text;
+            string tmp = "cj" + parent_.userName + ";General";
+            FonctionsNatives.sendMessage(tmp, tmp.Length);
             goBackToMainMenu();
 
             parent_.viewPort.Controls.Add(parent_.userChat);
@@ -294,6 +297,9 @@ namespace ui
         {
             FonctionsNatives.authenticate(ExistingAccountTextBox.Text);
 
+            parent_.userName = newAccountTextBox.Text;
+            string tmp = "cj" + parent_.userName + ";General";
+            FonctionsNatives.sendMessage(tmp, tmp.Length);
             goBackToMainMenu();
 
             parent_.viewPort.Controls.Add(parent_.userChat);
@@ -355,6 +361,7 @@ namespace ui
 
         private void removeChat()
         {
+            parent_.userName = "";
             if (parent_.userChat.inMainWindow)
                 parent_.viewPort.Controls.Remove(parent_.userChat);
             else

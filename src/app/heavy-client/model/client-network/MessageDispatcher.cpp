@@ -1,4 +1,5 @@
 #include "EventHandler.h"
+#include "FacadeInterfaceNative.h"
 #include <iostream>
 
 #include "MessageDispatcher.h"
@@ -104,6 +105,10 @@ void MessageDispatcher::dispatch(const std::string& message)
 	{
 	case 'e':
 		handleMapEditionMessage(message);
+		break;
+
+	case 'c':
+		TestCallback(message);
 		break;
 	}
 }

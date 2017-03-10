@@ -13,6 +13,7 @@ namespace ui
     public partial class UserChatChannel : UserControl
     {
         Window parent_;
+        String name_;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -23,11 +24,13 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public UserChatChannel(Window parent)
+        public UserChatChannel(Window parent, string name)
         {
             InitializeComponent();
             parent_ = parent;
-            
+            name_ = name;
+
+
             panelUser.Visible = false;
             userListBox.Items.Add("USERS MOFO");
             
@@ -335,6 +338,8 @@ namespace ui
         {
             if (!System.Text.RegularExpressions.Regex.Replace(chatTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
+                string tmp = "cm" + parent_.userName + ";" + name_ + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ";" + chatTextBox.Text;
+                FonctionsNatives.sendMessage(tmp, tmp.Length);
                 chatListBox.Items.Add(chatTextBox.Text);
                 chatListBox.TopIndex = chatListBox.Items.Count - 1;
 

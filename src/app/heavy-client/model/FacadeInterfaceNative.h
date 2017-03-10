@@ -110,7 +110,6 @@ extern "C"
 	__declspec(dllexport) bool __cdecl isConnected();
 	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
 
-
 	//Edition Tutorial
 	typedef int(__stdcall * Callback)();
 	__declspec(dllexport) void __cdecl SetCallback(Callback function);
@@ -119,6 +118,11 @@ extern "C"
 	__declspec(dllexport) void __cdecl UnselectCurrentTool();
 	__declspec(dllexport) void __cdecl UnselectAllObjects();
 	__declspec(dllexport) void __cdecl SelectAllTutorialObjects();
+
+	//Chat System
+	typedef void(__stdcall * CallbackForChat)(const unsigned char* text, int size);
+	__declspec(dllexport) void __cdecl SetCallbackForChat(CallbackForChat handler);
+	__declspec(dllexport) void __cdecl TestCallback(std::string message);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__
