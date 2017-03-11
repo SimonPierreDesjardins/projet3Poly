@@ -150,7 +150,7 @@
             // 
             this.chatTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatTextBox.Location = new System.Drawing.Point(12, 209);
+            this.chatTextBox.Location = new System.Drawing.Point(14, 207);
             this.chatTextBox.Name = "chatTextBox";
             this.chatTextBox.Size = new System.Drawing.Size(171, 20);
             this.chatTextBox.TabIndex = 15;
@@ -183,9 +183,12 @@
             this.chatListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatListBox.Location = new System.Drawing.Point(13, 10);
+            this.chatListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.chatListBox.IntegralHeight = false;
+            this.chatListBox.Location = new System.Drawing.Point(12, 5);
             this.chatListBox.Name = "chatListBox";
-            this.chatListBox.Size = new System.Drawing.Size(203, 186);
+            this.chatListBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.chatListBox.Size = new System.Drawing.Size(210, 186);
             this.chatListBox.TabIndex = 13;
             this.chatListBox.UseTabStops = false;
             // 

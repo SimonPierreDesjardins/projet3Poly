@@ -106,6 +106,7 @@ namespace ui
 
             if (continuConnexion)
             {
+                parent_.userChat = new UserTabChat(parent_);
                 if (FonctionsNatives.connectToServer(IPTextBox.Text, "5000"))
                 {
                     onConnectionSucces();
@@ -120,9 +121,6 @@ namespace ui
         private void onConnectionSucces()
         {
             connectPanel.Visible = false;
-
-            this.Location = new Point((parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - Width / 2,
-                                       parent_.viewPort.Height / 2 - Height / 2);
 
             authenticatePanel.Visible = true;
             newAccountWarningLabel.Visible = false;

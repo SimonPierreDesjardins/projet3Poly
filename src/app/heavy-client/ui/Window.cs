@@ -89,8 +89,6 @@ namespace ui
             viewPort.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
 
-            userChat = new UserTabChat(this);
-
             Program.peutAfficher = false;
 
             InitialiserAnimation();
