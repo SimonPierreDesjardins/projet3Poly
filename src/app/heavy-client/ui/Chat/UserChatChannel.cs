@@ -73,7 +73,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void chatBox_MeasureItem(object sender, MeasureItemEventArgs e)
         {
-            e.ItemHeight = (int)e.Graphics.MeasureString(chatListBox.Items[e.Index].ToString(), chatListBox.Font, chatListBox.Width).Height;
+            if (chatListBox.Items.Count > 0)
+            {
+                e.ItemHeight = (int)e.Graphics.MeasureString(chatListBox.Items[e.Index].ToString(), chatListBox.Font, chatListBox.Width).Height;
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -91,7 +94,7 @@ namespace ui
         {
             e.DrawBackground();
             e.DrawFocusRectangle();
-            if (e.Index != -1)
+            if (e.Index > -1)
                 e.Graphics.DrawString(chatListBox.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
         }
 
@@ -338,13 +341,16 @@ namespace ui
         {
             if (!System.Text.RegularExpressions.Regex.Replace(chatTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
-                string tmp = "cm" + parent_.userName + ";" + name_ + ";" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ";" + chatTextBox.Text;
+                string tmp = "cm" + parent_.userName + ";" + name_ + ";" + DateTime.Now.ToString("HH:mm:ss;yyyy-MM-dd;") + chatTextBox.Text;
                 FonctionsNatives.sendMessage(tmp, tmp.Length);
-                chatListBox.Items.Add(chatTextBox.Text);
-                chatListBox.TopIndex = chatListBox.Items.Count - 1;
-
                 chatTextBox.Clear();
             }
+        }
+
+        public void addMessageToChat(string message)
+        {
+            chatListBox.Items.Add(message);
+            chatListBox.TopIndex = chatListBox.Items.Count - 1;
         }
 
         ////////////////////////////////////////////////////////////////////////

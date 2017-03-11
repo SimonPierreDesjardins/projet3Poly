@@ -260,6 +260,83 @@ namespace ui
             return unique;
         }
 
+        private void handleChatMessage(string message)
+        {
+            switch(message[0])
+            {
+                case 'j':
+                    userJoinedAChannel(message);
+                    break;
+
+                case 'q':
+                    userLeftAChannel(message);
+                    break;
+
+                case 'm':
+                    userSentAMessage(message);
+                    break;
+
+                case 'l':
+                    channelList(message);
+                    break;
+
+                case 'u':
+                    userList(message);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void userJoinedAChannel(string message)
+        {
+
+        }
+
+        private void userLeftAChannel(string message)
+        {
+
+        }
+
+        private void userSentAMessage(string message)
+        {
+            int begin = 1;
+            int lenght = message.IndexOf(';');
+            string user = message.Substring(begin, lenght - 1);
+            begin += lenght;
+
+            lenght = message.IndexOf(';', begin) - begin;
+            string channelName = message.Substring(begin, lenght);
+            begin += lenght + 1;
+
+            lenght = message.IndexOf(';', begin) - begin;
+            string time = message.Substring(begin, lenght);
+            begin += lenght + 1;
+
+            lenght = message.IndexOf(';', begin) - begin;
+            string date = message.Substring(begin, lenght);
+            begin += lenght + 1;
+
+            string sent = message.Substring(begin);
+
+            UserChatChannel channel = channels_[channelName];
+            this.Invoke((MethodInvoker)delegate {
+                channel.addMessageToChat(user + " a envoyé a " + time + " " + date + ":\r\n" + sent);
+            });
+            
+        }
+
+        private void channelList(string message)
+        {
+
+        }
+
+        private void userList(string message)
+        {
+
+        }
+
         public void Test(string message)
         {
             TestCallback(message);
@@ -273,11 +350,17 @@ namespace ui
             // Do something...
             Byte[] tmp = new Byte[size];
             Marshal.Copy(message, tmp, 0, size);
-            Console.WriteLine(message);
+            var str = System.Text.Encoding.Default.GetString(tmp);
+
+            handleChatMessage(str);
+
+            //For debugging
+            Console.WriteLine(str);
             Console.WriteLine("\n Callback \n");
         }
         [DllImport("model.dll")]
         private static extern void SetCallbackForChat(CallbackForChat fn);
+
         [DllImport("model.dll")]
         private static extern void TestCallback(string message);
     }

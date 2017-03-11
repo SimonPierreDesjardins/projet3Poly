@@ -1101,7 +1101,7 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl TestCallback(std::string message)
 	{
-		message = message.substr(4, message.length());
+		message = message.substr(5);
 		const unsigned char* bytes = (const unsigned char*)message.data();
 		Handler(bytes, message.size());
 	}
