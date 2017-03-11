@@ -265,14 +265,6 @@ namespace ui
         {
             switch(message[0])
             {
-                case 'j':
-                    userJoinedAChannel(message);
-                    break;
-
-                case 'q':
-                    userLeftAChannel(message);
-                    break;
-
                 case 'm':
                     userSentAMessage(message);
                     break;
@@ -288,16 +280,6 @@ namespace ui
                 default:
                     break;
             }
-        }
-
-        private void userJoinedAChannel(string message)
-        {
-
-        }
-
-        private void userLeftAChannel(string message)
-        {
-
         }
 
         private void userSentAMessage(string message)
