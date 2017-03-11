@@ -10,7 +10,7 @@ namespace server
 class AbstractMapRoom : public MultiUserSystem
 {
 public:	
-	AbstractMapRoom() = default;
+	AbstractMapRoom();
 	virtual ~AbstractMapRoom() = 0;
 
 protected:
@@ -36,6 +36,8 @@ protected:
 	virtual void handleAngularVelocityUpdateMessage(User* sender, const std::string& message);
 	virtual void handleRotationUpdateMessage(User* sender, const std::string& message);
 	virtual void handleScaleUpdateMessage(User* sender, const std::string& message);
+
+	virtual void buildEntityCreationMessage(Entity* entity, std::string& message);
 };
 
 }

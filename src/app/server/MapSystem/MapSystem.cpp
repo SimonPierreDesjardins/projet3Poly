@@ -1,45 +1,61 @@
 #include "NetworkStandard.h"
+#include "TypeSerializerDeserializer.h"
 #include "../Database/IdGenerator.h"
 #include "EditionRoom.h"
 
 #include "MapSystem.h"
 
-server::MapEntry::MapEntry(MapInfo& info)
+namespace server
+{
+
+
+
+MapEntry::MapEntry(MapInfo& info)
 	: Info(info)
 {
+	updateSessionType();
 }
 
-std::string server::MapEntry::GetSerializedInfo()
+void MapEntry::updateSessionType()
+{
+	switch (Info.mapType)
+	{
+	case SIMULATION_MAP:
+		// TODO
+		break;
+
+	case EDITION_MAP:
+		currentSession_ = std::make_unique<EditionRoom>();
+		break;
+	}
+}
+
+std::string MapEntry::GetSerializedInfo()
 {
 	return Info.GetId() + ';' + Info.mapName + ';' + getSessionType() + ';' + getNumberOfUsers();
 }
 
-char server::MapEntry::getSessionType()
+char MapEntry::getSessionType()
 {
-	// TODO: Get session type from current session
-	return 'e';
+	return Info.mapType;
 }
 
-char server::MapEntry::getNumberOfUsers()
+char MapEntry::getNumberOfUsers()
 {
-	return (currentSession) ? currentSession->GetNumberOfUsers() : 0;
+	return currentSession_->GetNumberOfUsers();
 }
 
-void server::MapEntry::AddUser(User * user)
+void MapEntry::AddUser(User * user)
 {
-	if (!currentSession)
-	{
-		currentSession = std::make_unique<EditionRoom>();
-	}
-	currentSession->AddUser(user);
+	currentSession_->AddUser(user);
 }
 
-void server::MapSystem::TreatUserJoin(User * user)
+void MapSystem::TreatUserJoin(User * user)
 {
 	user->ForwardMessage(GetMapListMessage());
 }
 
-void server::MapSystem::TreatUserMessage(User * user, const std::string & message)
+void MapSystem::TreatUserMessage(User * user, const std::string & message)
 {
 	switch (message[Networking::MessageStandard::COMMAND]) {
 	case 'c':
@@ -72,18 +88,18 @@ void server::MapSystem::TreatUserMessage(User * user, const std::string & messag
 	}
 }
 
-void server::MapSystem::TreatUserDisconnect(User * user)
+void MapSystem::TreatUserDisconnect(User * user)
 {
 	// Cancel any transfers the user had going
 	HandleCancelMapTransferMessage(user, std::string());
 }
 
-char server::MapSystem::GetSystemType()
+char MapSystem::GetSystemType()
 {
 	return systemType_;
 }
 
-std::string server::MapSystem::GetMapListMessage()
+std::string MapSystem::GetMapListMessage()
 {
 
 	std::string mapListString = "ml";
@@ -102,7 +118,7 @@ std::string server::MapSystem::GetMapListMessage()
 	return Networking::MessageStandard::AddMessageLengthHeader(mapListString);
 }
 
-void server::MapSystem::UpdateUsersMapLists()
+void MapSystem::UpdateUsersMapLists()
 {
 	std::string mapListMessage = GetMapListMessage();
 	for each (auto systemUser in _userList) {
@@ -110,15 +126,33 @@ void server::MapSystem::UpdateUsersMapLists()
 	}
 }
 
-void server::MapSystem::HandleMapCreationMessage(User * user, const std::string & message)
+void MapSystem::NotifyMapCreation(const MapEntry& mapSession)
+{
+	// Compute message size.
+	size_t messageSize = mapSession.Info.mapName.size() +  
+		                 mapSession.Info.GetId().size() + 3;
+	// Build the message.
+	std::string message;
+	Networking::serialize((uint32_t)(messageSize), message);
+
+	message.append("mc");
+	message.append(1, mapSession.Info.mapType);
+	message.append(mapSession.Info.GetId());
+	message.append(mapSession.Info.mapName);
+
+	// Broadcast.
+	broadcastMessage(message);
+}
+
+void MapSystem::HandleMapCreationMessage(User * user, const std::string & message)
 {
 	// parse for info
-	std::string data = message.substr(Networking::MessageStandard::DATA_START);
-	std::string name = data.substr(0, data.find(';'));
-	char type = data[data.size() - 1];
+	char type = message[Networking::MessageStandard::DATA_START];
+	std::string name = message.substr(Networking::MessageStandard::DATA_START + 1);
 
 	MapInfo info;
 	info.mapName = name;
+	info.mapType = type;
 	MapEntry newSession(std::move(info));
 
 	// check if user had map transfer in progress
@@ -128,24 +162,26 @@ void server::MapSystem::HandleMapCreationMessage(User * user, const std::string 
 		_mapsInTransfer.erase(user->Info.GetId());
 	}
 
+	// Get reference before inserting
+	MapEntry* map = &newSession;
 	_mapList.insert({ newSession.Info.GetId(), std::move(newSession) });
+	NotifyMapCreation(*map);
 }
 
-void server::MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
+void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 {
 	std::string mapId = message.substr(Networking::MessageStandard::DATA_START);
-
 	auto it = _mapList.find(mapId);
 	if (it != _mapList.end())
 	{
 		it->second.AddUser(user);
 	}
 }
-void server::MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& message)
+void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& message)
 {
 	for (auto it = _mapList.begin(); it != _mapList.end(); ++it)
 	{
-		AbstractMapRoom* currentSession = it->second.currentSession.get();
+		AbstractMapRoom* currentSession = it->second.getCurrentSession();
 		if (currentSession)
 		{
 			currentSession->RemoveUser(user);
@@ -153,17 +189,17 @@ void server::MapSystem::HandleLeaveMapSessionRequest(User* user, const std::stri
 	}
 }
 
-void server::MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)
+void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)
 {
 	_mapList.erase(message.substr(Networking::MessageStandard::DATA_START));
 }
 
-void server::MapSystem::HandleMapGraphRequestMessage(User * user, const std::string & message)
+void MapSystem::HandleMapGraphRequestMessage(User * user, const std::string & message)
 {
 	// eventually implement start sending the map data
 }
 
-void server::MapSystem::HandleMapTransferMessage(User * user, const std::string & message)
+void MapSystem::HandleMapTransferMessage(User * user, const std::string & message)
 {
 	// +4 is to skip the nominator;denominator; in the message
 	std::string mapData = message.substr(Networking::MessageStandard::DATA_START + 4);
@@ -178,14 +214,16 @@ void server::MapSystem::HandleMapTransferMessage(User * user, const std::string 
 	}
 }
 
-void server::MapSystem::HandleCancelMapTransferMessage(User * user, const std::string & message)
+void MapSystem::HandleCancelMapTransferMessage(User * user, const std::string & message)
 {
 	if (_mapsInTransfer.count(user->Info.GetId()) > 0) {
 		_mapsInTransfer.erase(user->Info.GetId());
 	}
 }
 
-void server::MapSystem::HandleMapPermissionChange(User * user, const std::string & message)
+void MapSystem::HandleMapPermissionChange(User * user, const std::string & message)
 {
 	// Eventually manage user permissions
+}
+
 }

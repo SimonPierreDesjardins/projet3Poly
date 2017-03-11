@@ -64,8 +64,7 @@ const std::string ArbreRenduINF2990::NOM_TELEPORTEUR{ "teleporteur" };
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ArbreRenduINF2990::ArbreRenduINF2990(event_handler::EventHandler* eventHandler)
-	: ArbreRendu(eventHandler)
+ArbreRenduINF2990::ArbreRenduINF2990()
 {
 	// Construction des usines
 	ajouterUsine(TABLE_ENTITY, NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));

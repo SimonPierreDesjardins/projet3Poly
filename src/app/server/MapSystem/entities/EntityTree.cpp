@@ -14,20 +14,24 @@ EntityTree::~EntityTree()
 {
 }
 
-uint32_t EntityTree::createEntity(char entityType, uint32_t parentId,
-	const Eigen::Vector3f& initialRelativePosition, const Eigen::Vector3f& initialAbsolutePosition)
+Entity* EntityTree::createEntity(char entityType, uint32_t parentId)
 {
-	uint32_t newEntityId = 0;
+	Entity* newEntityPtr = nullptr;
 	EntityContainer::iterator it = entities_.find(parentId);
 	if (it != entities_.end())
 	{
 		// Handle map save here.
 		Entity* parent = &it->second;
-		newEntityId = nextEntityId_++;
-		Entity newEntity(newEntityId, entityType, parent, initialRelativePosition, initialAbsolutePosition);
-		entities_.insert(std::make_pair(newEntityId, std::move(newEntity)));
+		Entity newEntity;
+		newEntity.entityId_ = nextEntityId_++;
+		auto result = entities_.insert(std::make_pair(newEntity.entityId_, std::move(newEntity)));
+		// Return reference.
+		if (result.second)
+		{
+			newEntityPtr = &result.first->second;
+		}
 	}
-	return newEntityId;
+	return newEntityPtr;
 }
 
 bool EntityTree::deleteEntity(uint32_t entityToDelete)

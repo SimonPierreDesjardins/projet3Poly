@@ -1,8 +1,15 @@
 #include "AbstractMapRoom.h"
+#include "TypeSerializerDeserializer.h"
 #include <cassert>
 
 namespace server
 {
+
+AbstractMapRoom::AbstractMapRoom()
+{
+	Entity* table = tree_.createEntity(0, 0);
+	Entity* start = tree_.createEntity(1, table->entityId_);
+}
 
 AbstractMapRoom::~AbstractMapRoom()
 {
@@ -17,6 +24,14 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 {
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
+
+	// Send all the entities in the room.
+	for (auto it = tree_.begin(); it != tree_.end(); ++it)
+	{
+		std::string message;
+		buildEntityCreationMessage(&it->second, message);
+		user->ForwardMessage(message);
+	}
 }
 
 void AbstractMapRoom::TreatUserDisconnect(User* user)
@@ -64,6 +79,21 @@ void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& m
 		handleEntitySelectionMessage(sender, message);
 		break;
 	}
+}
+
+void AbstractMapRoom::buildEntityCreationMessage(Entity* entity, std::string& message)
+{
+	message.clear();
+	Networking::serialize((uint32_t)(79), message);
+	Networking::serialize((uint32_t)(entity->getParent()->entityId_), message);
+	message.append(entity->entityType_, 1);
+	Networking::serialize(entity->getParent()->entityId_, message);
+	Networking::serialize(entity->absolutePosition_, message);
+	Networking::serialize(entity->relativePosition_, message);
+	Networking::serialize(entity->rotation_, message);
+	Networking::serialize(entity->scale_, message);
+	Networking::serialize(entity->entityId_, message);
+	message.append(entity->selectingUserId_);
 }
 
 void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::string& message)

@@ -57,7 +57,8 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 
 /// Constructeur par défaut.
 FacadeModele::FacadeModele()
-	: network_(&eventHandler_)
+	// Inject dependencies
+	: network_(&eventHandler_), mapSessionManager_(&arbre_, &network_)
 {
 }
 
@@ -109,7 +110,6 @@ void FacadeModele::libererInstance()
 FacadeModele::~FacadeModele()
 {
 	mode_.reset(nullptr);
-	arbre_.reset(nullptr);
 	vue_.reset(nullptr);
     affichageTexte_.reset(nullptr);
     controleurLumiere_.reset(nullptr);
@@ -132,8 +132,7 @@ void FacadeModele::initialize(HWND hWnd)
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
 	// l'arbre après avoir créé le contexte OpenGL.
-	arbre_ = std::make_unique<ArbreRenduINF2990>(&eventHandler_);
-	arbre_->initialiser();
+	arbre_.initialiser();
 
 	// On crée une vue par défaut. 
 	vue_ = std::make_unique<vue::VueOrtho>(vue::Camera(
@@ -148,7 +147,8 @@ void FacadeModele::initialize(HWND hWnd)
 	affichageTexte_ = std::make_unique<AffichageTexte>(vue_.get(), profil_.get());
 
 	eventHandler_.setNetworkManager(&network_);
-	eventHandler_.setEntityTree(arbre_.get());
+	eventHandler_.setEntityTree(&arbre_);
+	eventHandler_.setMapSessionManager(&mapSessionManager_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -387,7 +387,7 @@ void FacadeModele::afficherBase() const
 	//controleurLumiere_->afficherLumiereSpotRobot();
 
 	// Afficher la scène.
-	arbre_->afficher(-1);
+	arbre_.afficher(-1);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -497,7 +497,7 @@ void FacadeModele::assignerVuePremierePersonne()
 void FacadeModele::reinitialiser()
 {
 	// Réinitialisation de la scène.
-	arbre_->initialiser();
+	arbre_.initialiser();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -516,10 +516,21 @@ void FacadeModele::reinitialiser()
 void FacadeModele::animer(float temps)
 {
 	// Mise à jour des objets.
-	arbre_->animer(temps);
+	arbre_.animer(temps);
 
 	// Mise à jour de la vue.
 	vue_->animer(temps);
+}
+
+void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSession)
+{
+	switch (mode)
+	{
+		// TODO: do simulation mode here too.
+	case EDITION:
+		mode_ = std::make_unique<ModeEdition>(mapSession);
+		break;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -546,7 +557,8 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case EDITION:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeEdition>();
+			// Use the local offline map session for default edition mode. 
+			mode_ = std::make_unique<ModeEdition>(mapSessionManager_.getLocalMapSession());
 			break;
 
 		case CONFIGURE:

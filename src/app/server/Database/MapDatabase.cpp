@@ -10,7 +10,6 @@ server::MapInfo::MapInfo()
 const std::string & server::MapInfo::GetId()
 {
 	return _mapId;
-	// TODO: insert return statement here
 }
 
 void server::MapDatabase::WriteObject(DatalistElement & element)

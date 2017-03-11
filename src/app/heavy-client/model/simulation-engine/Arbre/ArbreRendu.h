@@ -19,12 +19,6 @@
 
 class NoeudAbstrait;
 
-namespace event_handler
-{
-	class EventHandler;
-}
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRendu
 /// @brief Classe d'arbre de rendu qui contient la racine de l'arbre de
@@ -45,7 +39,7 @@ class ArbreRendu : public NoeudComposite
 {
 public:
 	// Constructeur par défaut.
-	ArbreRendu(event_handler::EventHandler* eventHandler);
+	ArbreRendu();
 
 	// Destructeur.
 	virtual ~ArbreRendu();
@@ -126,15 +120,11 @@ private:
 	/// correspondante.
 	using RegistreUsines = std::unordered_map<std::string, std::unique_ptr<const UsineAbstraite>>;
 	using NameContainer = std::unordered_map<EntityType, std::string>;
-	using IdContainer = std::unordered_map<uint32_t, NoeudAbstrait*>;
 	// Les noeuds en fonction de leur identifiant.
 
 	/// Association du nom d'un type vers l'usine correspondante.
 	RegistreUsines usines_;   
 	NameContainer  names_;
-	IdContainer entities_;
-	
-	event_handler::EventHandler* eventHandler_ = nullptr;
 };
 
 

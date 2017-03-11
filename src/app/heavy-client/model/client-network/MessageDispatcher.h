@@ -42,9 +42,20 @@ private:
 	Serializer serializer_;
 
 	void lookupMessage();
+
 	void dispatch(const std::string& message);
 	void handleMapEditionMessage(const std::string& message);
 	void handleEntityCreationMessage(const std::string& message);
+
+	// User sustem message
+	void handleUserAuthentificationConfirmation(const std::string& message);
+	void handleUserSystemMessage(const std::string& message);
+
+	// Map systemMessage
+	void handleMapSystemMessage(const std::string& message);
+	void handleMapCreationMessage(const std::string& message);
+	void handleMapJoinMessage(const std::string& message);
+	void handleMapQuitMessage(const std::string& message);
 
 	MessageDispatcher() = delete;
 };

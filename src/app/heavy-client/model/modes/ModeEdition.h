@@ -13,7 +13,7 @@
 
 #include <memory>
 
-#include "OnlineMode.h"
+#include "OnlineMapMode.h"
 #include "VisiteurAbstrait.h"
 #include "VisiteurSuppression.h"
 #include "glm\glm.hpp"
@@ -51,17 +51,14 @@ namespace event_handler
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeEdition : public OnlineMode
+class ModeEdition : public OnlineMapMode
 {
 public:
-
-	//Constructeur par défaut
-	ModeEdition();
+	ModeEdition(client_network::MapSession* mapSession);
 
 	//Destructeur
 	virtual ~ModeEdition();
 
-	
 	//Gestion des différentes touches et de leur effet selon le mode choisi
 	virtual void gererToucheT();
 
@@ -77,7 +74,6 @@ public:
 
 protected:
 
-
 	event_handler::EventHandler* eventHandler_;
 
 	//Visiteur pour la suppression d'un noeud
@@ -88,6 +84,9 @@ protected:
 	int ancienSourisY_{ 0 };
 
 	std::unique_ptr<EtatAbstrait> etat_;
+
+private:
+	ModeEdition() = delete;
 };
 
 #endif /// MODE_EDITION_H

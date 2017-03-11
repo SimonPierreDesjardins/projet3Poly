@@ -30,7 +30,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeEdition::ModeEdition()
+ModeEdition::ModeEdition(client_network::MapSession* mapSession)
+	: OnlineMapMode(mapSession)
 {
 	typeMode_ = EDITION;
 	assignerEtat(SELECTION);
@@ -39,7 +40,6 @@ ModeEdition::ModeEdition()
 	FacadeModele* facade = FacadeModele::obtenirInstance();
 	facade->assignerEnvironnement(2);
 	eventHandler_ = facade->getEventHandler();
-	facade->getNetworkManager()->requestToJoinMapSession(0);
 }
 
 ////////////////////////////////////////////////////////////////////////

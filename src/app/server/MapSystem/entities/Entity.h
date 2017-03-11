@@ -15,13 +15,11 @@ public:
 	Eigen::Vector3f rotation_;
 	Eigen::Vector3f scale_;
 
-	char entityType_ { -1 };
-	int32_t selectingUser_{ -1 };
-	int32_t entityId_{ -1 };
+	char entityType_ { 0 };
+	std::string selectingUserId_{ 20, 0 };
+	uint32_t entityId_{ 0 };
 
 	Entity() = default;
-	Entity(uint32_t entityId, char entityType, Entity* parent,
-		const Eigen::Vector3f& relativePosition, const Eigen::Vector3f& absolutePosition);
 	~Entity() = default;
 
 	inline void setParent(Entity* parent);

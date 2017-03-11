@@ -1,14 +1,53 @@
 #ifndef MAP_SESSION
 #define MAP_SESSION
 
-#include "NoeudAbstrait.h"
+#include <unordered_map>
+#include <unordered_set>
+#include <queue>
+#include "glm/glm.hpp"
+
+class ArbreRendu;
+class NoeudAbstrait;
+
+namespace client_network
+{
+
+class NetworkManager;
 
 class MapSession
 {
-	MapSession() = default;
-	~MapSession() = default;
+public:
+	struct SessionInfo
+	{
+		char mapType;
+		std::string mapId;
+	};
 
+	SessionInfo info;
+	
+	MapSession(ArbreRendu* tree, NetworkManager* network);
+	virtual ~MapSession() = default;
+
+	void localEntityCreated(NoeudAbstrait* entity);
+
+	void serverEntityCreated(uint8_t type, uint32_t parentId, const glm::vec3& relPos, 
+		                     const glm::vec3& absPos, const std::string& userId, uint32_t entityId);
+
+	void setIsOnlineSession(bool isOnline);
+
+private:
+	ArbreRendu* entityTree_;
+	NetworkManager* network_;
+	bool isOnline_ = false;
+
+	std::unordered_map<uint32_t, NoeudAbstrait*> entitiesById_;
+	std::queue<NoeudAbstrait*> pendingEntityCreationRequests_;
+
+	void sendEntityCreationRequest(NoeudAbstrait* entity);
+
+	MapSession() = delete;
 };
 
+}
 
-#endif
+#endif // MAP_SESSION

@@ -2,6 +2,7 @@
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
 	${CMAKE_SOURCE_DIR}/ext/Eigen/include
+	${CMAKE_SOURCE_DIR}/ext/glm/include
     ${CMAKE_SOURCE_DIR}/ext/rapidJSON/include
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 	chat-management

@@ -2,6 +2,7 @@
 
 #include "UserAuthLobby.h"
 #include "../Database/IdGenerator.h"
+#include "TypeSerializerDeserializer.h"
 
 namespace server
 {
@@ -59,6 +60,13 @@ void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string m
 	for each(auto userReceiver in _userReceivers) {
 		userReceiver->AddUser(user);
 	}
+
+	// Confirm authentification.
+	std::string authConfirmation;
+	Networking::serialize((uint32_t)(23), authConfirmation);
+	authConfirmation.append("uas");
+	authConfirmation.append(user->Info.GetId());
+	user->ForwardMessage(authConfirmation);
 }
 
 void UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::string& message)

@@ -8,7 +8,8 @@
 
 namespace server {
 
-	class UserInformation:public DatalistElement {
+	class UserInformation : public DatalistElement 
+	{
 	public:
 		std::string UserName;
 		std::vector<std::string> privateMaps;

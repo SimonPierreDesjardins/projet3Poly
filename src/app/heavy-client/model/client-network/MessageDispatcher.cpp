@@ -91,12 +91,81 @@ void MessageDispatcher::handleMapEditionMessage(const std::string& message)
 	}
 }
 
+void MessageDispatcher::handleMapCreationMessage(const std::string& message)
+{
+	char type = message[6];
+	std::string mapId = message.substr(7, 20);
+	std::string name = message.substr(21);
+	eventHandler_->onNewMapCreated(type, mapId, name);
+}
+
+void MessageDispatcher::handleMapJoinMessage(const std::string& message)
+{
+	std::string mapId = message.substr(6, 26); 
+	std::string userId = message.substr(27);
+	eventHandler_->onUserJoinedMap(mapId, userId);
+}
+
+void MessageDispatcher::handleMapQuitMessage(const std::string& message)
+{
+
+}
+
+void MessageDispatcher::handleMapSystemMessage(const std::string& message)
+{
+	switch (message[5])
+	{
+	case 'j':
+		handleMapJoinMessage(message);
+		break;
+
+	case 'q':
+		handleMapQuitMessage(message);
+		break;
+
+	case 'c':
+		handleMapCreationMessage(message);
+		break;
+
+	default:
+		std::cout << "Unexpected message received" << message << std::endl;
+		break;
+
+	}
+}
+
+void MessageDispatcher::handleUserAuthentificationConfirmation(const std::string& message)
+{
+	char authResult = message[6];
+	std::string userId = message.substr(7);
+	switch (authResult)
+	{
+	case 's':
+		eventHandler_->onUserAuthentified(userId);
+		break;
+
+	default:
+		std::cout << "user authentification failed." << std::endl;
+	}
+}
+
+void MessageDispatcher::handleUserSystemMessage(const std::string& message)
+{
+	switch (message[5])
+	{
+	case 'a':
+		handleUserAuthentificationConfirmation(message);
+		break;
+	}
+}
+
 void MessageDispatcher::dispatch(const std::string& message)
 {
 	// Check message validity.
 	uint32_t messageSize = serializer_.deserializeInteger(message.c_str());
-	if (message.size() != messageSize + 4)
+	if (message.size() <= 5)
 	{
+		std::cout << "Unexpected message received :" << message << std::endl;
 		return;
 	}
 
@@ -105,6 +174,23 @@ void MessageDispatcher::dispatch(const std::string& message)
 	case 'e':
 		handleMapEditionMessage(message);
 		break;
+
+	case 'm':
+		handleMapSystemMessage(message);
+		break;
+
+	case 'u':
+		handleUserSystemMessage(message);
+		break;
+
+	case 'c':
+		break;
+
+	case 'p':
+		break;
+
+	default:
+		std::cout << "Unexpected message received" << message << std::endl;
 	}
 }
 

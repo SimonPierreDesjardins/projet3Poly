@@ -26,8 +26,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ArbreRendu::ArbreRendu(event_handler::EventHandler* eventHandler)
-	: NoeudComposite{ 0, "racine" }, eventHandler_(eventHandler)
+ArbreRendu::ArbreRendu()
+	: NoeudComposite{ 0, "racine" }
 {
 	// On ne veut pas que ce noeud soit sélectionnable.
 	assignerEstSelectionnable(false);

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "NetworkManager.h"
 
 namespace client_network
@@ -30,12 +32,27 @@ void NetworkManager::createProfile(const std::string& username)
 	connection_.sendMessage(message);
 }
 
-void NetworkManager::requestToJoinMapSession(uint32_t mapId)
+void NetworkManager::requestMapCreation(const std::string& mapName, uint8_t mapType)
 {
 	std::string message;
-	serializer_.serialize(uint32_t(6), message);
+	serializer_.serialize((uint32_t)(mapName.size() + 3), message);
+	message.append("mc");
+	serializer_.serialize(mapType, message);
+	message.append(mapName);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestToJoinMapSession(const std::string& mapId)
+{
+	if (mapId.size() != 20)
+	{
+		std::cout << "requestToJoinMapSession - Invalid mapId :  " << mapId  << std::endl;
+		return;
+	}
+	std::string message;
+	serializer_.serialize(uint32_t(22), message);
 	message.append("mj");
-	serializer_.serialize(mapId, message);
+	message.append(mapId);
 	connection_.sendMessage(message);
 }
 
@@ -47,17 +64,19 @@ void NetworkManager::requestToleaveMapSession()
 	connection_.sendMessage(message);
 }
 
-void NetworkManager::requestEntityCreation(uint32_t entityId, uint8_t type, uint32_t parentId,
-	const glm::vec3& absolutePosition, const glm::vec3& relativePosition)
+void NetworkManager::requestEntityCreation(uint8_t type, uint32_t parentId,
+	const glm::vec3& absolutePosition, const glm::vec3& relativePosition,
+	const glm::vec3& rotation, const glm::vec3& scale)
 {
 	std::string message;
-	serializer_.serialize(uint32_t(35), message);
+	serializer_.serialize(uint32_t(55), message);
 	message.append("ec");
-	serializer_.serialize(entityId, message);
 	serializer_.serialize(type, message);
 	serializer_.serialize(parentId, message);
 	serializer_.serialize(absolutePosition, message);
 	serializer_.serialize(relativePosition, message);
+	serializer_.serialize(rotation, message);
+	serializer_.serialize(scale, message);
 	connection_.sendMessage(message);
 }
 
