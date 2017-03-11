@@ -194,6 +194,7 @@ namespace ui
             //Add the content of the tab
             UserChatChannel newChannel = new UserChatChannel(parent_, name);
             channels_.Add(name, newChannel);
+
             if (generalChannel_ != null)
             {
                 generalChannel_.addNewChannel(name);
@@ -320,21 +321,34 @@ namespace ui
 
             string sent = message.Substring(begin);
 
-            UserChatChannel channel = channels_[channelName];
-            this.Invoke((MethodInvoker)delegate {
-                channel.addMessageToChat(user + " a envoyé a " + time + " " + date + ":\r\n" + sent);
-            });
-            
+            UserChatChannel channel;
+            bool isValid = channels_.TryGetValue(channelName, out channel);
+            if (isValid)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    channel.addMessageToChat(user + " a envoyé a " + time + " " + date + ":\r\n" + sent);
+                });
+            }
         }
 
         private void channelList(string message)
         {
-
+            string[] channels = message.Split(';');
         }
 
         private void userList(string message)
         {
+            string[] users = message.Split(';');
+            string channelName = users[0].Substring(1);
 
+            UserChatChannel channel;
+            bool isValid = channels_.TryGetValue(channelName, out channel);
+            if (isValid)
+            {
+                this.Invoke((MethodInvoker)delegate {
+                    channel.addUsersToChannel(users);
+                });
+            }
         }
 
         public void Test(string message)
@@ -358,6 +372,7 @@ namespace ui
             Console.WriteLine(str);
             Console.WriteLine("\n Callback \n");
         }
+
         [DllImport("model.dll")]
         private static extern void SetCallbackForChat(CallbackForChat fn);
 

@@ -347,12 +347,6 @@ namespace ui
             }
         }
 
-        public void addMessageToChat(string message)
-        {
-            chatListBox.Items.Add(message);
-            chatListBox.TopIndex = chatListBox.Items.Count - 1;
-        }
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void createButton_Click(object sender, EventArgs e)
@@ -376,7 +370,8 @@ namespace ui
             else if (!System.Text.RegularExpressions.Regex.Replace(addChannelTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
                 parent_.userChat.createNewChannel(addChannelTextBox.Text);
-                //ChannelListBox.Items.Add(addChannelTextBox.Text);
+                string tmp = "cj" + parent_.userName + ";" + addChannelTextBox.Text;
+                FonctionsNatives.sendMessage(tmp, tmp.Length);
             }
             else
             {
@@ -412,7 +407,11 @@ namespace ui
                 bool unique = parent_.userChat.alreadyInChannel(ChannelListBox.SelectedItem.ToString());
                 
                 if (unique)
+                {
                     parent_.userChat.createNewChannel(ChannelListBox.SelectedItem.ToString());
+                    string tmp = "cj" + parent_.userName + ";" + ChannelListBox.SelectedItem.ToString();
+                    FonctionsNatives.sendMessage(tmp, tmp.Length);
+                }   
                 else
                 {
                     warningLabel.Visible = true;
@@ -444,12 +443,18 @@ namespace ui
 
             if (ChannelListBox.SelectedIndex != -1)
             {
-                bool leftChannel = parent_.userChat.leaveChannel(ChannelListBox.SelectedItem.ToString());
+                string channel = ChannelListBox.SelectedItem.ToString();
+                bool leftChannel = parent_.userChat.leaveChannel(channel);
 
                 if (!leftChannel)
                 {
                     warningLabel.Visible = true;
                     warningLabel.Text = "Ne peut quitter ce canal";
+                }
+                else
+                {
+                    string tmp = "cq" + parent_.userName + ";" + channel;
+                    FonctionsNatives.sendMessage(tmp, tmp.Length);
                 }
             }
             else
@@ -473,6 +478,19 @@ namespace ui
         {
             warningLabel.Visible = false;
             warningLabel.Text = "";
+        }
+
+        public void addMessageToChat(string message)
+        {
+            chatListBox.Items.Add(message);
+            chatListBox.TopIndex = chatListBox.Items.Count - 1;
+        }
+
+        public void addUsersToChannel(string[] users)
+        {
+            userListBox.Items.Clear();
+            for (int i = 1; i < users.Length; i++)
+                userListBox.Items.Add(users[i]);
         }
     }
 }
