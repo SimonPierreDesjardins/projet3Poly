@@ -15,6 +15,7 @@ namespace server {
 		DatalistElement() {
 			_id = IdGenerator::GenerateId();
 		}
+
 		uint32_t GetId() {
 			return _id;
 		}
