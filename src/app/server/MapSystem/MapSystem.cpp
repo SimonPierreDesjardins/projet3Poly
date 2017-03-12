@@ -11,7 +11,8 @@ server::MapEntry::MapEntry(MapInfo& info)
 
 std::string server::MapEntry::GetSerializedInfo()
 {
-	return Info.GetId() + ';' + Info.mapName + ';' + getSessionType() + ';' + getNumberOfUsers();
+	// TODO: replace the to_string with anactual serialization
+	return std::to_string( Info.GetId() ) + ';' + Info.mapName + ';' + getSessionType() + ';' + getNumberOfUsers();
 }
 
 char server::MapEntry::getSessionType()
@@ -105,7 +106,7 @@ std::string server::MapSystem::GetMapListMessage()
 void server::MapSystem::UpdateUsersMapLists()
 {
 	std::string mapListMessage = GetMapListMessage();
-	for each (auto systemUser in _userList) {
+	for each (auto systemUser in _connectedUserList) {
 		systemUser.second->ForwardMessage(mapListMessage);
 	}
 }
@@ -133,7 +134,8 @@ void server::MapSystem::HandleMapCreationMessage(User * user, const std::string 
 
 void server::MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 {
-	std::string mapId = message.substr(Networking::MessageStandard::DATA_START);
+	// TODO: replace with proper deserialization
+	unsigned int mapId = std::atoi( message.substr(Networking::MessageStandard::DATA_START).c_str());
 
 	auto it = _mapList.find(mapId);
 	if (it != _mapList.end())
@@ -155,7 +157,8 @@ void server::MapSystem::HandleLeaveMapSessionRequest(User* user, const std::stri
 
 void server::MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)
 {
-	_mapList.erase(message.substr(Networking::MessageStandard::DATA_START));
+	//TODO: replace with proper deserialization
+	_mapList.erase(std::atoi(message.substr(Networking::MessageStandard::DATA_START).c_str()));
 }
 
 void server::MapSystem::HandleMapGraphRequestMessage(User * user, const std::string & message)

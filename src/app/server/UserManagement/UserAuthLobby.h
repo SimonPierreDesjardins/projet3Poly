@@ -17,14 +17,19 @@ namespace server
 
 class ConnectionWrapper;
 
-class UserAuthLobby
+class UserAuthLobby:private MultiUserSystem
 {
 public:
 	UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus);
 	virtual ~UserAuthLobby();
 
 	void OnReceivedMessage(ConnectionWrapper* user, const std::string& message);
-	void OnUserDisconnect(ConnectionWrapper* user);
+	void OnDisconnection(ConnectionWrapper* user);
+protected:
+	virtual char GetSystemType();
+	virtual void TreatUserJoin(User* user);
+	virtual void TreatUserMessage(User* user, const std::string& message);
+	virtual void TreatUserDisconnect(User* user);
 
 private:
 
@@ -42,6 +47,9 @@ private:
 	void handleCreateUsernameRequest(ConnectionWrapper* sender, std::string message);
 	void handleLoginRequest(ConnectionWrapper* sender, std::string username);
 	//void handleModifiedPropertyRequest();
+
+	// created from all user infos in DB
+	std::unordered_map<std::string, User> _users;
 };
 
 // Wraps a connection to send connection reference on callbacks

@@ -12,7 +12,6 @@ namespace server {
 	public:
 
 		MapInfo();
-		const std::string& GetId();
 		std::string mapName;
 		bool isPrivate;
 

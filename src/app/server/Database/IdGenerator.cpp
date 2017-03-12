@@ -1,14 +1,10 @@
 #include "IdGenerator.h"
 
-std::string server::IdGenerator::GenerateId()
+unsigned int server::IdGenerator::GenerateId()
 {
-	std::ostringstream ostr;
-
-	ostr << std::setfill('0') << std::setw(stringLength) << nextId;
-
 	nextId++;
 
-	return ostr.str();
+	return nextId;
 }
 
 unsigned int server::IdGenerator::nextId = 1;

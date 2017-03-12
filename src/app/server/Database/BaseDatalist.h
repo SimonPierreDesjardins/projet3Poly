@@ -5,13 +5,22 @@
 #include "rapidjson\filewritestream.h"
 #include "rapidjson\filereadstream.h"
 #include "rapidjson\document.h"
-#include <map>
+#include "IdGenerator.h"
+#include <unordered_map>
 
 namespace server {
 
 	class DatalistElement{
 	public:
-		virtual const std::string& GetId() = 0;
+		DatalistElement() {
+			_id = IdGenerator::GenerateId();
+		}
+		unsigned int GetId() {
+			return _id;
+		}
+
+	private:
+		unsigned int _id;
 	};
 
 	///<summary>Base implementation for lists of data in databases where elements extend DatalistElement</summary>
@@ -58,7 +67,7 @@ namespace server {
 			_infoList.insert_or_assign(element.GetId(), element);
 		}
 
-		virtual std::map<std::string, DatalistElement&>& GetElements() {
+		virtual std::unordered_map<unsigned int, DatalistElement&>& GetElements() {
 			return _infoList;
 		}
 
@@ -98,7 +107,7 @@ namespace server {
 		}
 
 		// Map of info
-		std::map<std::string, DatalistElement&> _infoList;
+		std::unordered_map<unsigned int, DatalistElement&> _infoList;
 
 		// info to keep file close by
 		std::string _filePath;

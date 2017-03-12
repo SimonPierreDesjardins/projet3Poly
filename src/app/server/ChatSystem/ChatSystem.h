@@ -34,13 +34,13 @@ namespace server {
 
 			///<summary> Adds a user to the list of users in this chat</summary>
 			///<summary> Returns true if operation performed</summary>
-			bool AddUser(std::string username);
+			bool AddUser(User*);
 
 			///<summary> Removes the user from this session</summary>
 			///<summary> Returns true if operation performed</summary>
-			bool RemoveUser(std::string username);
+			bool RemoveUser(User*);
 
-			std::vector<std::string> UserList;
+			std::vector<User*> UserList;
 		};
 
 		char _systemType{ 'c' };
