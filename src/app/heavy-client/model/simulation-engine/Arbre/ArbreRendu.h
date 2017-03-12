@@ -47,8 +47,6 @@ public:
 	// Ajoute une usine associée à un type de noeud.
 	inline void ajouterUsine(EntityType type, const std::string& name, std::unique_ptr<const UsineAbstraite> usine);
 
-	inline NoeudAbstrait* findEntity(uint32_t localId);
-
     // Crée un nouveau noeud.
     std::shared_ptr<NoeudAbstrait> creerNoeud(const std::string& nomNouveauNoeud) const;
     std::shared_ptr<NoeudAbstrait> creerNoeud(EntityType entityType) const;
@@ -59,8 +57,6 @@ public:
 	// Crée et ajoute un nouveau noeud avec une référence sur le parent.
     std::shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(NoeudAbstrait* parent, const std::string& typeNouveauNoeud);
 
-	// Crée et ajoute un nouveau noeud avec une référence sur le parent.
-    std::shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(NoeudAbstrait* parent, EntityType entityType);
 
     /// Calcule la profondeur maximale possible pour l'arbre de rendu.
     static unsigned int calculerProfondeurMaximale();

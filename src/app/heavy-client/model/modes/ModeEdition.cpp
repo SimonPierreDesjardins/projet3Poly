@@ -139,7 +139,6 @@ void ModeEdition::assignerEtat(Tool etat)
 		etat_ = std::make_unique<EtatLoupe>();
 		break;
 	}
-	etat_->setObserver(eventHandler_);
 }
 
 ////////////////////////////////////////////////////////////////////////

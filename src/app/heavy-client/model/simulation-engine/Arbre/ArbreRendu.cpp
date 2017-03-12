@@ -74,6 +74,22 @@ std::shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(const std::string& typeNou
 	return nouveauNoeud;
 }
 
+std::shared_ptr<NoeudAbstrait> ArbreRendu::creerNoeud(EntityType entityType) const
+{
+	std::shared_ptr<NoeudAbstrait> newEntity = nullptr;
+	// Find the name from the type.
+	auto nameIt = names_.find(entityType);
+	if (nameIt != names_.end())
+	{
+		// Find the factory from the name.
+		auto factoryIt = usines_.find(nameIt->second);
+		if (factoryIt != usines_.end())
+		{
+			newEntity = factoryIt->second->creerNoeud();
+		}
+	}
+	return newEntity;
+}
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -126,13 +142,6 @@ std::shared_ptr<NoeudAbstrait> ArbreRendu::ajouterNouveauNoeud(NoeudAbstrait* pa
 		parent->ajouter(nouveauNoeud);
 	}
 	return nouveauNoeud;
-}
-
-// Crée et ajoute un nouveau noeud avec une référence sur le parent.
-std::shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(NoeudAbstrait* parent, EntityType entityType)
-{
-	// TODO
-	return nullptr;
 }
 
 ////////////////////////////////////////////////////////////////////////

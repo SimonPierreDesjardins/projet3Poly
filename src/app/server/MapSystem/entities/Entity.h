@@ -10,16 +10,16 @@ namespace server
 class Entity
 {
 public:
-	Eigen::Vector3f relativePosition_;
-	Eigen::Vector3f absolutePosition_;
-	Eigen::Vector3f rotation_;
-	Eigen::Vector3f scale_;
+	Eigen::Vector3f relativePosition_{ 0.0, 0.0, 0.0 };
+	Eigen::Vector3f absolutePosition_{ 0.0, 0.0, 0.0 };
+	Eigen::Vector3f rotation_{ 0.0, 0.0, 0.0 };
+	Eigen::Vector3f scale_{ 1.0, 1.0, 1.0 };
 
 	char entityType_ { 0 };
-	std::string selectingUserId_{ 20, 0 };
+	std::string selectingUserId_;
 	uint32_t entityId_{ 0 };
 
-	Entity() = default;
+	Entity();
 	~Entity() = default;
 
 	inline void setParent(Entity* parent);

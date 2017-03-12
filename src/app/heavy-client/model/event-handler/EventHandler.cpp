@@ -9,16 +9,18 @@
 namespace event_handler
 {
 
-void EventHandler::onEntityCreated(NoeudAbstrait* noeud)
+void EventHandler::onEntityCreated()
 {
-	const glm::dvec3& relPos = noeud->obtenirPositionRelative();
-	const glm::dvec3& absPos = noeud->obtenirPositionCourante();
 }
 
-void EventHandler::requestEntityCreation(uint32_t entityId, uint8_t type, uint32_t parentId,
-	const glm::dvec3& absolutePosition, const glm::dvec3& relativePosition)
+void EventHandler::onEntityCreated(uint8_t entityType, uint32_t parentId, 
+	const glm::vec3& absPos, const glm::vec3& relPos, 
+	const glm::vec3& rotation, const glm::vec3& scale,
+	uint32_t entityId, const std::string& userId)
 {
-		
+	if (currentSession_ != nullptr)
+	{
+	}
 }
 
 void EventHandler::onUserJoinedMap(const std::string& mapId, const std::string& userId)
@@ -30,6 +32,7 @@ void EventHandler::onUserJoinedMap(const std::string& mapId, const std::string& 
 		// If the user that joined the map is me.
 		if (userId == networkManager_->getUserId())
 		{
+			currentSession_ = mapSession;
 			FacadeModele::obtenirInstance()->setOnlineMapMode((Mode)(mapSession->info.mapType), mapSession);
 		}
 	}
@@ -37,6 +40,7 @@ void EventHandler::onUserJoinedMap(const std::string& mapId, const std::string& 
 
 void EventHandler::onNewMapCreated(char mapType, const std::string& mapId, std::string& name)
 {
+	mapSessionManager_->createServerSession(mapId, mapType, name);
 	// TODO: Remove this and use the ui.
 	networkManager_->requestToJoinMapSession(mapId);
 }
@@ -48,4 +52,3 @@ void EventHandler::onUserAuthentified(const std::string& userId)
 }
 
 }
-

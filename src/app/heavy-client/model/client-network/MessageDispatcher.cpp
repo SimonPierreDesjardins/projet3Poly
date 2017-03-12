@@ -61,24 +61,37 @@ void MessageDispatcher::lookupMessage()
 
 void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
 {
-	// Message size should always be 39 according to our protocole.
-	if (message.size() != 39)
+	if (message.size() < 83)
 	{
 		// TODO: Log error here.
 		return;
 	}
 
-	uint32_t entityId = serializer_.deserializeInteger(&message[6]);
-	uint8_t  entityTupe = serializer_.deserializeChar(message[10]);
-	uint32_t parentId = serializer_.deserializeInteger(&message[11]);
+	uint8_t  entityTupe = serializer_.deserializeChar(message[6]);
+	uint32_t parentId = serializer_.deserializeInteger(&message[7]);
 
-	float ax = serializer_.deserializeFloat(&message[15]);
-	float ay = serializer_.deserializeFloat(&message[19]);
-	float az = serializer_.deserializeFloat(&message[23]);
+	glm::vec3 absPos;
+	absPos.x = serializer_.deserializeFloat(&message[11]);
+	absPos.y = serializer_.deserializeFloat(&message[15]);
+	absPos.z = serializer_.deserializeFloat(&message[19]);
 
-	float rx = serializer_.deserializeFloat(&message[27]);
-	float ry = serializer_.deserializeFloat(&message[31]);
-	float rz = serializer_.deserializeFloat(&message[35]);
+	glm::vec3 relPos;
+	relPos.x = serializer_.deserializeFloat(&message[23]);
+	relPos.y = serializer_.deserializeFloat(&message[27]);
+	relPos.z = serializer_.deserializeFloat(&message[31]);
+
+	glm::vec3 rotation;
+	rotation.x = serializer_.deserializeFloat(&message[35]);
+	rotation.y = serializer_.deserializeFloat(&message[39]);
+	rotation.z = serializer_.deserializeFloat(&message[43]);
+
+	glm::vec3 scale;
+	scale.x = serializer_.deserializeFloat(&message[47]);
+	scale.y = serializer_.deserializeFloat(&message[51]);
+	scale.z = serializer_.deserializeFloat(&message[55]);
+
+	uint32_t entityId = serializer_.deserializeInteger(&message[59]);
+	std::string userId = message.substr(63);
 }
 
 void MessageDispatcher::handleMapEditionMessage(const std::string& message)
@@ -95,14 +108,14 @@ void MessageDispatcher::handleMapCreationMessage(const std::string& message)
 {
 	char type = message[6];
 	std::string mapId = message.substr(7, 20);
-	std::string name = message.substr(21);
+	std::string name = message.substr(27);
 	eventHandler_->onNewMapCreated(type, mapId, name);
 }
 
 void MessageDispatcher::handleMapJoinMessage(const std::string& message)
 {
-	std::string mapId = message.substr(6, 26); 
-	std::string userId = message.substr(27);
+	std::string mapId = message.substr(6, 20); 
+	std::string userId = message.substr(26);
 	eventHandler_->onUserJoinedMap(mapId, userId);
 }
 
@@ -163,6 +176,7 @@ void MessageDispatcher::dispatch(const std::string& message)
 {
 	// Check message validity.
 	uint32_t messageSize = serializer_.deserializeInteger(message.c_str());
+	std::cout << "Message received: " << message << std::endl;
 	if (message.size() <= 5)
 	{
 		std::cout << "Unexpected message received :" << message << std::endl;

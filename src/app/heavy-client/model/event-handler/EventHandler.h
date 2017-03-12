@@ -17,7 +17,7 @@ class ArbreRendu;
 namespace event_handler
 {
 
-class EventHandler : public Observer
+class EventHandler
 {
 public:
 	EventHandler() = default;
@@ -27,9 +27,11 @@ public:
 	inline void setMapSessionManager(client_network::MapSessionManager* entityTree);
 	inline void setEntityTree(ArbreRendu* entityTree);
 
-	virtual void onEntityCreated(NoeudAbstrait* noeud);
-	virtual void requestEntityCreation(uint32_t entityId, uint8_t type, uint32_t parentId,
-		const glm::dvec3& absolutePosition, const glm::dvec3& relativePosition);
+	virtual void onEntityCreated();
+
+	void onEntityCreated(uint8_t entityType, uint32_t parentId, const glm::vec3& absPos,
+		const glm::vec3& relPos, const glm::vec3& rotation, const glm::vec3& scale, 
+		uint32_t entityId, const std::string& userId);
 
 	void onNewMapCreated(char mapType, const std::string& mapId, std::string& name);
 	void onUserJoinedMap(const std::string& mapId, const std::string& userId);
@@ -38,7 +40,7 @@ public:
 private:
 	client_network::NetworkManager* networkManager_ = nullptr;
 	client_network::MapSessionManager* mapSessionManager_ = nullptr;
-	client_network::MapSession* currentSession = nullptr;
+	client_network::MapSession* currentSession_ = nullptr;
 
 	ArbreRendu* entityTree_ = nullptr;
 };

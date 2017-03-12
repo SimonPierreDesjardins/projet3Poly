@@ -163,9 +163,13 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	}
 
 	// Get reference before inserting
-	MapEntry* map = &newSession;
-	_mapList.insert({ newSession.Info.GetId(), std::move(newSession) });
-	NotifyMapCreation(*map);
+	MapEntry* map = nullptr;
+	auto pair = _mapList.insert({ newSession.Info.GetId(), std::move(newSession) });
+	if (pair.second)
+	{
+		map = &pair.first->second;
+		NotifyMapCreation(*map);
+	}
 }
 
 void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
@@ -174,11 +178,19 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 	auto it = _mapList.find(mapId);
 	if (it != _mapList.end())
 	{
+		// Send joined response.
+		std::string response(message);
+		response.append(user->Info.GetId());
+		user->ForwardMessage(response);
+		it->second.getCurrentSession()->broadcastMessage(response);
+
+		// Add the user.
 		it->second.AddUser(user);
 	}
 }
 void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& message)
 {
+	// Search for the room that contains the user.
 	for (auto it = _mapList.begin(); it != _mapList.end(); ++it)
 	{
 		AbstractMapRoom* currentSession = it->second.getCurrentSession();

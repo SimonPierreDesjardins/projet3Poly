@@ -21,17 +21,20 @@ public:
 	{
 		char mapType;
 		std::string mapId;
+		std::string mapName;
+		// TODO handle permissions here.
 	};
 
 	SessionInfo info;
-	
 	MapSession(ArbreRendu* tree, NetworkManager* network);
 	virtual ~MapSession() = default;
 
 	void localEntityCreated(NoeudAbstrait* entity);
 
-	void serverEntityCreated(uint8_t type, uint32_t parentId, const glm::vec3& relPos, 
-		                     const glm::vec3& absPos, const std::string& userId, uint32_t entityId);
+	void serverEntityCreated(uint8_t type, uint32_t parentId, 
+		const glm::vec3& relPos, const glm::vec3& absPos, 
+		const glm::vec3& rotation, const glm::vec3& scale,
+		uint32_t entityId, const std::string& userId);
 
 	void setIsOnlineSession(bool isOnline);
 
@@ -40,7 +43,7 @@ private:
 	NetworkManager* network_;
 	bool isOnline_ = false;
 
-	std::unordered_map<uint32_t, NoeudAbstrait*> entitiesById_;
+	std::unordered_map<uint32_t, NoeudAbstrait*> confirmedEntities_;
 	std::queue<NoeudAbstrait*> pendingEntityCreationRequests_;
 
 	void sendEntityCreationRequest(NoeudAbstrait* entity);

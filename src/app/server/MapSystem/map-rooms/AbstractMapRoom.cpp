@@ -25,8 +25,8 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 
-	// Send all the entities in the room.
-	for (auto it = tree_.begin(); it != tree_.end(); ++it)
+	// Send all the entities except the first one (which is the root).
+	for (auto it = ++tree_.begin(); it != tree_.end(); ++it)
 	{
 		std::string message;
 		buildEntityCreationMessage(&it->second, message);
@@ -85,8 +85,8 @@ void AbstractMapRoom::buildEntityCreationMessage(Entity* entity, std::string& me
 {
 	message.clear();
 	Networking::serialize((uint32_t)(79), message);
-	Networking::serialize((uint32_t)(entity->getParent()->entityId_), message);
-	message.append(entity->entityType_, 1);
+	message.append("ec");
+	message.append(1, entity->entityType_);
 	Networking::serialize(entity->getParent()->entityId_, message);
 	Networking::serialize(entity->absolutePosition_, message);
 	Networking::serialize(entity->relativePosition_, message);
