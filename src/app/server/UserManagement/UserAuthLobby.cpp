@@ -3,6 +3,7 @@
 #include "UserAuthLobby.h"
 #include "../Database/IdGenerator.h"
 #include "TypeSerializerDeserializer.h"
+#include "NetworkStandard.h"
 
 namespace server
 {
@@ -41,6 +42,9 @@ void UserAuthLobby::handleCreateUsernameRequest(ConnectionWrapper* wrapper, std:
 {
 	// TODO: Check if the new username is available and add to database.
 	std::cout << "Received profile creation request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
+	UserInformation info;
+	info.UserName = std::string(message.begin() + Networking::MessageStandard::DATA_START, message.end());
+	_users.insert({ info.UserName, User(info) });
 }
 
 void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string message)
@@ -51,30 +55,39 @@ void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string m
 	UserInformation* information = new UserInformation();
 	information->UserName = IdGenerator::GenerateId();
 
-	User* user = new User(*information);
-	Networking::Connection* connection = wrapper->GetConnection();
-	user->AssignConnection(wrapper->GetConnection());
+	std::string username(message.begin() + Networking::MessageStandard::DATA_START, message.end());
 
-	delete wrapper;
+	if (_users.count(username) > 0) {
+		
+		// Assign connection to its user
+		User* authedUser = &_users.at(username);
+		authedUser->AssignConnection(wrapper->GetConnection());
+		
+		// wrapper no longer needed since user is wrapping connection
+		delete wrapper;
 
-	// Confirm authentification.
-	std::string authConfirmation;
-	Networking::serialize((uint32_t)(23), authConfirmation);
-	authConfirmation.append("uas");
-	authConfirmation.append(user->Info.GetId());
-	user->ForwardMessage(authConfirmation);
+		// Confirm authentification.
+		std::string authConfirmation = "uas";
+		Networking::serialize(authedUser->Info.GetId(), authConfirmation);
+		authedUser->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader(authConfirmation));
 
-	for each(auto userReceiver in _userReceivers) {
-		userReceiver->AddUser(user);
+		for each(auto userReceiver in _userReceivers) {
+			userReceiver->AddUser(authedUser);
+		}
+	}
+	else {
+		// user doesn't exist...REBUKE!
+		std::string failMessage = "uaf";
+		wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader(failMessage));
 	}
 }
 
 void UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::string& message)
 {
 	// We should only receive messages for the user system
-	assert(message.size() > 6 && message[4] == 'u');
+	assert(message.size() > 6 && message[Networking::MessageStandard::SYSTEM] == 'u');
 
-	switch (message[5])
+	switch (message[Networking::MessageStandard::COMMAND])
 	{
 	case 'c':
 		handleCreateUsernameRequest(wrapper, message);
@@ -84,20 +97,46 @@ void UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::st
 		handleLoginRequest(wrapper, message);
 		break;
 
-	case 'a':
-		break;
-	case 'm':
-		break;
 	}
 	// Attempt to authenticate user with message
 
 	// Auto authenticate for now
 }
 
-void UserAuthLobby::OnUserDisconnect(ConnectionWrapper * wrapper)
+void UserAuthLobby::OnDisconnection(ConnectionWrapper * wrapper)
 {
-	// Handle unauthentified user disconnected here, wrapper deleted for now.
+	// Handle unauthentified connection disconnected here, wrapper deleted for now.
 	delete wrapper;
+}
+
+char UserAuthLobby::GetSystemType()
+{
+	return 'u';
+}
+
+void UserAuthLobby::TreatUserJoin(User * user)
+{
+	// This method is called when the authlobby has a user login
+	for each(auto userReceiver in _userReceivers) {
+		userReceiver->AddUser(user);
+	}
+}
+
+void UserAuthLobby::TreatUserMessage(User * user, const std::string & message)
+{
+
+	// treat user information change requests
+	switch (message[Networking::MessageStandard::COMMAND]) {
+		case 'a':
+			break;
+		case 'm':
+			break;
+	}
+}
+
+void UserAuthLobby::TreatUserDisconnect(User * user)
+{
+	// Make associated user in list disconnected
 }
 
 ConnectionWrapper::ConnectionWrapper(Networking::Connection * connection, 
@@ -121,7 +160,7 @@ void ConnectionWrapper::HookToConnection(Networking::Connection * connectionToLi
 
 void ConnectionWrapper::OnDisconnect()
 {
-	_authLoby->OnUserDisconnect(this);
+	_authLoby->OnDisconnection(this);
 }
 
 void ConnectionWrapper::OnMessageSent(const std::string& message)

@@ -19,7 +19,6 @@ namespace server {
 	public:
 
 		MapInfo();
-		const std::string& GetId();
 		std::string mapName;
 		char mapType{ EDITION_MAP };
 		bool isPrivate;

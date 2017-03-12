@@ -71,10 +71,10 @@ private:
 
 	void HandleMapPermissionChange(User* user, const std::string& message);
 
-	std::unordered_map<std::string, MapEntry> _mapList;
+	std::unordered_map<unsigned int, MapEntry> _mapList;
 
-	// map json string with users as keys to send transfers to the right 
-	std::unordered_map<std::string, std::string> _mapsInTransfer;
+	// map json string with users ids as keys to send transfers to the right 
+	std::unordered_map<unsigned int, std::string> _mapsInTransfer;
 };
 }
 

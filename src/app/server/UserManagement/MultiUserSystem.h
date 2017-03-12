@@ -27,7 +27,7 @@ protected:
 	virtual void TreatUserMessage(User* user, const std::string& message) = 0;
 	virtual void TreatUserDisconnect(User* user) = 0;
 
-	std::unordered_map<std::string, User*> _userList;
+	std::unordered_map<unsigned int, User*> _connectedUserList;
 
 private:
 	virtual void onUserDisconnected(User* user);
@@ -37,7 +37,7 @@ private:
 
 inline size_t MultiUserSystem::GetNumberOfUsers() const
 {
-	return _userList.size();
+	return _connectedUserList.size();
 }
 
 

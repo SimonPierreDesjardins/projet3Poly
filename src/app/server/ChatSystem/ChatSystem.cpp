@@ -11,7 +11,7 @@ std::string server::ChatSystem::ChatSession::GetUserList()
 	std::string userlistString = "";
 
 	for (int i = 0; i < UserList.size(); ++i) {
-		userlistString += UserList[i];
+		userlistString += UserList[i]->Info.UserName;
 		if (i < UserList.size() - 1) {
 			userlistString += ";";
 		}
@@ -20,23 +20,22 @@ std::string server::ChatSystem::ChatSession::GetUserList()
 	return userlistString;
 }
 
-bool server::ChatSystem::ChatSession::AddUser(std::string username)
+bool server::ChatSystem::ChatSession::AddUser(User* user)
 {
-	UserList.push_back(username);
+	UserList.push_back(user);
 	return true;
 }
 
-bool server::ChatSystem::ChatSession::RemoveUser(std::string username)
+bool server::ChatSystem::ChatSession::RemoveUser(User* user)
 {
 	auto end = UserList.end();
 
 	for (auto iter = UserList.begin(); iter != end; iter++) {
-		if (*iter == username) {
+		if (*iter == user) {
 			UserList.erase(iter);
 			return true;
 		}
 	}
-
 	return false;
 }
 
@@ -72,7 +71,7 @@ void server::ChatSystem::TreatUserMessage(User * user, const std::string & messa
 		break;
 	case 'm':
 		// Send message back to everyone
-		for each (auto user in _userList) {
+		for each (auto user in _connectedUserList) {
 			user.second->ForwardMessage(message);
 		}
 		break;
@@ -83,7 +82,7 @@ void server::ChatSystem::TreatUserDisconnect(User * user)
 {
 	for each (auto channelPair in _chatSessions)
 	{
-		if (channelPair.second.RemoveUser(user->Info.UserName)) {
+		if (channelPair.second.RemoveUser(user)) {
 			BroadcastUserList(channelPair.first);
 		}
 	}
@@ -126,7 +125,7 @@ void server::ChatSystem::AddUserToChannel(User * user, const std::string& channe
 		_chatSessions.insert({ channelName, std::move(ChatSession(channelName)) });
 	}
 	//add user to channel
-	_chatSessions.at(channelName).AddUser(user->Info.UserName);
+	_chatSessions.at(channelName).AddUser(user);
 
 	std::string userListMessage = Networking::MessageStandard::AddMessageLengthHeader("cu" + ';' + channelName + ';' + _chatSessions.at(channelName).GetUserList());
 
@@ -136,9 +135,8 @@ void server::ChatSystem::AddUserToChannel(User * user, const std::string& channe
 void server::ChatSystem::RemoveUserFromChannel(User * user, const std::string& channelName)
 {
 	if (_chatSessions.count(channelName)>0) {
-		_chatSessions.at(channelName).RemoveUser(user->Info.UserName);
+		_chatSessions.at(channelName).RemoveUser(user);
 	}
-
 	BroadcastUserList(channelName);
 }
 
@@ -147,7 +145,7 @@ void server::ChatSystem::BroadcastUserList(std::string channelName)
 	std::string userListMessage = Networking::MessageStandard::AddMessageLengthHeader("cu" + ';' + channelName + ';' + _chatSessions.at(channelName).GetUserList());
 
 	// send userlist o every user in that channel
-	for each (auto username in _chatSessions.at(channelName).UserList) {
-		_userList.at(username)->ForwardMessage(userListMessage);
+	for each (auto user in _chatSessions.at(channelName).UserList) {
+		user->ForwardMessage(userListMessage);
 	}
 }
