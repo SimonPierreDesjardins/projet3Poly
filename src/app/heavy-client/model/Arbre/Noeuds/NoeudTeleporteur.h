@@ -39,9 +39,12 @@ public:
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
+	int getId();
+	void setId(int id);
+
 private:
     CercleEnglobant cercleEnglobant_;
-
+	int idTeleporteur_;
     virtual void mettreAJourFormeEnglobante();
 };
  

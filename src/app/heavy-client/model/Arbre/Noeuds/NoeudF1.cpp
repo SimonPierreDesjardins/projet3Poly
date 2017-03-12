@@ -127,7 +127,7 @@ void NoeudF1::afficherConcret() const
 	else
 	{
 		glDisable(GL_COLOR_MATERIAL);
-		glColor4f(0.996078432, 0.0196078438, 0.0, 1.0);
+		glColor4f(0.996078432f, 0.0196078438f, 0.0f, 1.0f);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
