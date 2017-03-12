@@ -13,8 +13,8 @@ Connection::Connection(asio::ip::tcp::socket* socket) {
 
 Connection::~Connection()
 {
-	_inDeletionProcess = true;
 	_connectionLock.lock();
+	_inDeletionProcess = true;
 	CloseConnection();
 	_connectionLock.unlock();
 }

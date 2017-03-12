@@ -53,7 +53,7 @@ char server::ChatSystem::GetSystemType()
 void server::ChatSystem::TreatUserJoin(User * user)
 {
 	// send user the channel list
-	user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader("cl" + GetChannelList()));
+	user->ForwardMessage(GetChannelListMessage());
 
 	// add user to general
 	AddUserToChannel(user, "General");
@@ -80,17 +80,20 @@ void server::ChatSystem::TreatUserMessage(User * user, const std::string & messa
 
 void server::ChatSystem::TreatUserDisconnect(User * user)
 {
-	for each (auto channelPair in _chatSessions)
+	std::unordered_map<std::string, ChatSession>::iterator iterator = _chatSessions.begin();
+	std::unordered_map<std::string, ChatSession>::const_iterator end = _chatSessions.end();
+	while (iterator != end)
 	{
-		if (channelPair.second.RemoveUser(user)) {
-			BroadcastUserList(channelPair.first);
+		if ((*iterator).second.RemoveUser(user)) {
+			BroadcastUserList((*iterator).first);
 		}
+		iterator++;
 	}
 }
 
-std::string server::ChatSystem::GetChannelList()
+std::string server::ChatSystem::GetChannelListMessage()
 {
-	std::string channelList = "";
+	std::string channelList = "cl";
 
 	int i = 0, count = _chatSessions.size();
 	for each (auto sessionNamePair in  _chatSessions) {
@@ -101,19 +104,18 @@ std::string server::ChatSystem::GetChannelList()
 		++i;
 	}
 
-	return channelList;
+	return Networking::MessageStandard::AddMessageLengthHeader(channelList);
 }
 
 void server::ChatSystem::ParseUserJoinRequest(User* user, const std::string & message)
 {
-	// get the channel name out of the string
-	std::string channelName = message.substr(message.find(';', Networking::MessageStandard::DATA_START));
+	std::string channelName = message.substr(Networking::MessageStandard::DATA_START);
 	AddUserToChannel(user, std::move(channelName));
 }
 
 void server::ChatSystem::ParseUserLeaveRequest(User * user, const std::string & message)
 {
-	std::string channelName = message.substr(message.find(';', Networking::MessageStandard::DATA_START));
+	std::string channelName = message.substr(Networking::MessageStandard::DATA_START);
 	RemoveUserFromChannel(user, std::move(channelName));
 }
 
@@ -123,6 +125,7 @@ void server::ChatSystem::AddUserToChannel(User * user, const std::string& channe
 	if (_chatSessions.count(channelName) == 0) {
 		// doesn't exist so create
 		_chatSessions.insert({ channelName, std::move(ChatSession(channelName)) });
+		broadcastMessage(GetChannelListMessage());
 	}
 	//add user to channel
 	_chatSessions.at(channelName).AddUser(user);
@@ -140,9 +143,9 @@ void server::ChatSystem::RemoveUserFromChannel(User * user, const std::string& c
 	BroadcastUserList(channelName);
 }
 
-void server::ChatSystem::BroadcastUserList(std::string channelName)
+void server::ChatSystem::BroadcastUserList(const std::string& channelName)
 {
-	std::string userListMessage = Networking::MessageStandard::AddMessageLengthHeader("cu" + ';' + channelName + ';' + _chatSessions.at(channelName).GetUserList());
+	std::string userListMessage = Networking::MessageStandard::AddMessageLengthHeader("cu" + channelName + ';' + _chatSessions.at(channelName).GetUserList());
 
 	// send userlist o every user in that channel
 	for each (auto user in _chatSessions.at(channelName).UserList) {

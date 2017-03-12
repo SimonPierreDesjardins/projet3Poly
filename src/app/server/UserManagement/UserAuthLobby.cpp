@@ -42,38 +42,31 @@ void UserAuthLobby::handleCreateUsernameRequest(ConnectionWrapper* wrapper, std:
 {
 	// TODO: Check if the new username is available and add to database.
 	std::cout << "Received profile creation request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
-	UserInformation info;
-	info.UserName = std::string(message.begin() + Networking::MessageStandard::DATA_START, message.end());
-	_users.insert({ info.UserName, User(info) });
+	UserInformation* info = new UserInformation;
+	std::string username = std::string(message.begin() + Networking::MessageStandard::DATA_START, message.end());
+	info->UserName = username;
+	_users.insert({ info->UserName, new User(*info) });
 }
 
 void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string message)
 {
-	// TODO: Check if the username exists and is not used.
-	std::cout << "Received login request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
-
-	UserInformation* information = new UserInformation();
-	information->UserName = IdGenerator::GenerateId();
-
 	std::string username(message.begin() + Networking::MessageStandard::DATA_START, message.end());
+	
+	std::cout << "Received login request with username: " << username << "." << std::endl;
 
+	//TODO: check if user is already connected
 	if (_users.count(username) > 0) {
 		
 		// Assign connection to its user
-		User* authedUser = &_users.at(username);
+		User* authedUser = _users.at(username);
 		authedUser->AssignConnection(wrapper->GetConnection());
 		
 		// wrapper no longer needed since user is wrapping connection
 		delete wrapper;
 
-		// Confirm authentification.
-		std::string authConfirmation = "uas";
-		Networking::serialize(authedUser->Info.GetId(), authConfirmation);
-		authedUser->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader(authConfirmation));
+		AddUser(authedUser);
 
-		for each(auto userReceiver in _userReceivers) {
-			userReceiver->AddUser(authedUser);
-		}
+		
 	}
 	else {
 		// user doesn't exist...REBUKE!
@@ -98,9 +91,6 @@ void UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::st
 		break;
 
 	}
-	// Attempt to authenticate user with message
-
-	// Auto authenticate for now
 }
 
 void UserAuthLobby::OnDisconnection(ConnectionWrapper * wrapper)
@@ -117,6 +107,11 @@ char UserAuthLobby::GetSystemType()
 void UserAuthLobby::TreatUserJoin(User * user)
 {
 	// This method is called when the authlobby has a user login
+	// Confirm authentification.
+	std::string authConfirmation = "uas";
+	Networking::serialize(user->Info.GetId(), authConfirmation);
+	user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader(authConfirmation));
+
 	for each(auto userReceiver in _userReceivers) {
 		userReceiver->AddUser(user);
 	}

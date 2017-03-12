@@ -7,6 +7,7 @@ namespace server
 server::User::User(UserInformation & userInfo)
 	: Info(userInfo)
 {
+	_connection == NULL;
 }
 
 User::~User()

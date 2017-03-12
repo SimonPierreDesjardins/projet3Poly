@@ -171,7 +171,7 @@ void NetworkObjects::Disposer::StartThread()
 				if (_connectionsToDelete.size() > 0) {
 					Connection* deletedOne = _connectionsToDelete.front();
 					_connectionsToDelete.pop();
-					if (deletedOne != NULL) {
+					if (deletedOne != nullptr) {
 
 						//look for connection in vector to remove it
 						auto connectionIterator = _liveConnections.begin();
@@ -186,7 +186,7 @@ void NetworkObjects::Disposer::StartThread()
 
 						// delete object
 						delete deletedOne;
-						deletedOne = NULL;
+						deletedOne = nullptr;
 						deletionCount++;
 					}
 				}

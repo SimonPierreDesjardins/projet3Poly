@@ -45,7 +45,7 @@ namespace server {
 
 		char _systemType{ 'c' };
 
-		std::string GetChannelList();
+		std::string GetChannelListMessage();
 
 		void ParseUserJoinRequest(User* user, const std::string& message);
 
@@ -55,7 +55,7 @@ namespace server {
 
 		void RemoveUserFromChannel(User* user, const std::string& channelName);
 
-		void BroadcastUserList(std::string channelName);
+		void BroadcastUserList(const std::string& channelName);
 		
 		std::unordered_map<std::string, ChatSession> _chatSessions;
 	};

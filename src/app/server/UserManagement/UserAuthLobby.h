@@ -49,7 +49,7 @@ private:
 	//void handleModifiedPropertyRequest();
 
 	// created from all user infos in DB
-	std::unordered_map<std::string, User> _users;
+	std::unordered_map<std::string, User*> _users;
 };
 
 // Wraps a connection to send connection reference on callbacks
