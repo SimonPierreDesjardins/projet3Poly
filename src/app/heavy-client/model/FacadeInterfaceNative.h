@@ -110,6 +110,11 @@ extern "C"
 	__declspec(dllexport) bool __cdecl isConnected();
 	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
 
+	// Map management
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType);
+	__declspec(dllexport) void __cdecl joinMap(char* mapId, int size);
+	__declspec(dllexport) void __cdecl leaveMap();
+
 	//Edition Tutorial
 	typedef int(__stdcall * Callback)();
 	__declspec(dllexport) void __cdecl SetCallback(Callback function);

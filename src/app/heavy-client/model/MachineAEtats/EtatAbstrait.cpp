@@ -32,8 +32,6 @@ EtatAbstrait::EtatAbstrait()
 {
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	vue_ = FacadeModele::obtenirInstance()->obtenirVue();
-	eventHandler_ = FacadeModele::obtenirInstance()->getEventHandler();
-	setObserver(eventHandler_);
 }
 
 ////////////////////////////////////////////////////////////////////////

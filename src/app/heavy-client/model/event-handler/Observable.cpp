@@ -14,7 +14,7 @@ Observable::~Observable()
 
 void Observable::notifyEntityCreated(NoeudAbstrait* noeud)
 {
-	observer_->onEntityCreated(noeud);
+	//observer_->onEntityCreated(noeud);
 }
 
 }

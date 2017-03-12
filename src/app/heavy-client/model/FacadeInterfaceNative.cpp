@@ -925,6 +925,22 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str());
 	}
 
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType)
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
+	}
+
+	__declspec(dllexport) void __cdecl joinMap(char* mapId, int size)
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(std::string(mapId, size));
+	}
+
+	__declspec(dllexport) void __cdecl leaveMap()
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
+	}
+
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)

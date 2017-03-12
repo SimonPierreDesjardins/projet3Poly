@@ -10,24 +10,33 @@ namespace server
 class EntityTree
 {
 public:
+	using EntityContainer = std::unordered_map<uint32_t, Entity>;
 
 	EntityTree();
 	~EntityTree();
 
 	// Create a new entity with initial position, parentId and entity Type.
-	uint32_t createEntity(char entityType, uint32_t parentId, 
-		const Eigen::Vector3f& initialRelativePosition, const Eigen::Vector3f& initialAbsolutePosition);
-
+	Entity* createEntity(char entityType, uint32_t parentId);
 	bool deleteEntity(uint32_t entityToDelete);
-
 	Entity* findEntity(uint32_t entityId);
 
+	inline EntityContainer::iterator begin();
+	inline EntityContainer::iterator end();
+
 private:
-	using EntityContainer = std::unordered_map<uint32_t, Entity>;
 	EntityContainer entities_;
 	uint32_t nextEntityId_{ 1 };
 };
 
+inline EntityTree::EntityContainer::iterator EntityTree::begin()
+{
+	return entities_.begin();
+}
+
+inline EntityTree::EntityContainer::iterator EntityTree::end()
+{
+	return entities_.end();
+}
 
 }
 

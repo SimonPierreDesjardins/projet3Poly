@@ -35,11 +35,30 @@ namespace ui
         //Delete this button. only for testing
         private void button1_Click(object sender, EventArgs e)
         {
+
+            parent_.viewPort.Controls.Remove(this);
+            parent_.editionSideMenu = new EditionSideMenu(parent_);
+            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
+            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
+            parent_.editionSideMenu.Dock = DockStyle.Left;
+            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
+            parent_.editionMenuStrip.Dock = DockStyle.Top;
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            String name = "coucou";
+            FonctionsNatives.createMap(name, name.Length, (char)(2));
+
+            Program.peutAfficher = true;
+            parent_.verificationDuNombreElementChoisi();
+
+            /*
             MapPresentator newMap = new MapPresentator(parent_);
             this.mapPanel.Controls.Add(newMap);
             newMap.Size = new Size(this.mapPanel.Width, newMap.Height);
             newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
             newMap.Location = new Point(0, numberOfMaps_++ * 150);
+            */
         }
 
         ////////////////////////////////////////////////////////////////////////

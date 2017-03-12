@@ -19,12 +19,6 @@
 
 class NoeudAbstrait;
 
-namespace event_handler
-{
-	class EventHandler;
-}
-
-
 ///////////////////////////////////////////////////////////////////////////
 /// @class ArbreRendu
 /// @brief Classe d'arbre de rendu qui contient la racine de l'arbre de
@@ -45,15 +39,13 @@ class ArbreRendu : public NoeudComposite
 {
 public:
 	// Constructeur par défaut.
-	ArbreRendu(event_handler::EventHandler* eventHandler);
+	ArbreRendu();
 
 	// Destructeur.
 	virtual ~ArbreRendu();
 
 	// Ajoute une usine associée à un type de noeud.
 	inline void ajouterUsine(EntityType type, const std::string& name, std::unique_ptr<const UsineAbstraite> usine);
-
-	inline NoeudAbstrait* findEntity(uint32_t localId);
 
     // Crée un nouveau noeud.
     std::shared_ptr<NoeudAbstrait> creerNoeud(const std::string& nomNouveauNoeud) const;
@@ -65,8 +57,6 @@ public:
 	// Crée et ajoute un nouveau noeud avec une référence sur le parent.
     std::shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(NoeudAbstrait* parent, const std::string& typeNouveauNoeud);
 
-	// Crée et ajoute un nouveau noeud avec une référence sur le parent.
-    std::shared_ptr<NoeudAbstrait> ajouterNouveauNoeud(NoeudAbstrait* parent, EntityType entityType);
 
     /// Calcule la profondeur maximale possible pour l'arbre de rendu.
     static unsigned int calculerProfondeurMaximale();
@@ -126,15 +116,11 @@ private:
 	/// correspondante.
 	using RegistreUsines = std::unordered_map<std::string, std::unique_ptr<const UsineAbstraite>>;
 	using NameContainer = std::unordered_map<EntityType, std::string>;
-	using IdContainer = std::unordered_map<uint32_t, NoeudAbstrait*>;
 	// Les noeuds en fonction de leur identifiant.
 
 	/// Association du nom d'un type vers l'usine correspondante.
 	RegistreUsines usines_;   
 	NameContainer  names_;
-	IdContainer entities_;
-	
-	event_handler::EventHandler* eventHandler_ = nullptr;
 };
 
 

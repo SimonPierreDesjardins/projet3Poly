@@ -6,6 +6,13 @@
 #include "rapidjson\filereadstream.h"
 #include "BaseDatalist.h"
 
+enum MAP_TYPE
+{
+	// Utiliser les mêmes enums que sur le client lourd.
+	SIMULATION_MAP = 1,
+	EDITION_MAP = 2,
+};
+
 namespace server {
 
 	class MapInfo : public DatalistElement{
@@ -14,6 +21,7 @@ namespace server {
 		MapInfo();
 		const std::string& GetId();
 		std::string mapName;
+		char mapType{ EDITION_MAP };
 		bool isPrivate;
 
 	private:

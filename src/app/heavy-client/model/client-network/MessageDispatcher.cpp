@@ -62,24 +62,37 @@ void MessageDispatcher::lookupMessage()
 
 void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
 {
-	// Message size should always be 39 according to our protocole.
-	if (message.size() != 39)
+	if (message.size() < 83)
 	{
 		// TODO: Log error here.
 		return;
 	}
 
-	uint32_t entityId = serializer_.deserializeInteger(&message[6]);
-	uint8_t  entityTupe = serializer_.deserializeChar(message[10]);
-	uint32_t parentId = serializer_.deserializeInteger(&message[11]);
+	uint8_t  entityTupe = serializer_.deserializeChar(message[6]);
+	uint32_t parentId = serializer_.deserializeInteger(&message[7]);
 
-	float ax = serializer_.deserializeFloat(&message[15]);
-	float ay = serializer_.deserializeFloat(&message[19]);
-	float az = serializer_.deserializeFloat(&message[23]);
+	glm::vec3 absPos;
+	absPos.x = serializer_.deserializeFloat(&message[11]);
+	absPos.y = serializer_.deserializeFloat(&message[15]);
+	absPos.z = serializer_.deserializeFloat(&message[19]);
 
-	float rx = serializer_.deserializeFloat(&message[27]);
-	float ry = serializer_.deserializeFloat(&message[31]);
-	float rz = serializer_.deserializeFloat(&message[35]);
+	glm::vec3 relPos;
+	relPos.x = serializer_.deserializeFloat(&message[23]);
+	relPos.y = serializer_.deserializeFloat(&message[27]);
+	relPos.z = serializer_.deserializeFloat(&message[31]);
+
+	glm::vec3 rotation;
+	rotation.x = serializer_.deserializeFloat(&message[35]);
+	rotation.y = serializer_.deserializeFloat(&message[39]);
+	rotation.z = serializer_.deserializeFloat(&message[43]);
+
+	glm::vec3 scale;
+	scale.x = serializer_.deserializeFloat(&message[47]);
+	scale.y = serializer_.deserializeFloat(&message[51]);
+	scale.z = serializer_.deserializeFloat(&message[55]);
+
+	uint32_t entityId = serializer_.deserializeInteger(&message[59]);
+	std::string userId = message.substr(63);
 }
 
 void MessageDispatcher::handleMapEditionMessage(const std::string& message)
@@ -92,12 +105,82 @@ void MessageDispatcher::handleMapEditionMessage(const std::string& message)
 	}
 }
 
+void MessageDispatcher::handleMapCreationMessage(const std::string& message)
+{
+	char type = message[6];
+	std::string mapId = message.substr(7, 20);
+	std::string name = message.substr(27);
+	eventHandler_->onNewMapCreated(type, mapId, name);
+}
+
+void MessageDispatcher::handleMapJoinMessage(const std::string& message)
+{
+	std::string mapId = message.substr(6, 20); 
+	std::string userId = message.substr(26);
+	eventHandler_->onUserJoinedMap(mapId, userId);
+}
+
+void MessageDispatcher::handleMapQuitMessage(const std::string& message)
+{
+
+}
+
+void MessageDispatcher::handleMapSystemMessage(const std::string& message)
+{
+	switch (message[5])
+	{
+	case 'j':
+		handleMapJoinMessage(message);
+		break;
+
+	case 'q':
+		handleMapQuitMessage(message);
+		break;
+
+	case 'c':
+		handleMapCreationMessage(message);
+		break;
+
+	default:
+		std::cout << "Unexpected message received" << message << std::endl;
+		break;
+
+	}
+}
+
+void MessageDispatcher::handleUserAuthentificationConfirmation(const std::string& message)
+{
+	char authResult = message[6];
+	std::string userId = message.substr(7);
+	switch (authResult)
+	{
+	case 's':
+		eventHandler_->onUserAuthentified(userId);
+		break;
+
+	default:
+		std::cout << "user authentification failed." << std::endl;
+	}
+}
+
+void MessageDispatcher::handleUserSystemMessage(const std::string& message)
+{
+	switch (message[5])
+	{
+	case 'a':
+		handleUserAuthentificationConfirmation(message);
+		break;
+	}
+}
+
 void MessageDispatcher::dispatch(const std::string& message)
 {
 	// Check message validity.
 	uint32_t messageSize = serializer_.deserializeInteger(message.c_str());
-	if (message.size() != messageSize + 4)
+	std::cout << "Message received: " << message << std::endl;
+	if (message.size() <= 5)
 	{
+		std::cout << "Unexpected message received :" << message << std::endl;
 		return;
 	}
 
@@ -110,6 +193,19 @@ void MessageDispatcher::dispatch(const std::string& message)
 	case 'c':
 		TestCallback(message);
 		break;
+	case 'm':
+		handleMapSystemMessage(message);
+		break;
+
+	case 'u':
+		handleUserSystemMessage(message);
+		break;
+
+	case 'p':
+		break;
+
+	default:
+		std::cout << "Unexpected message received" << message << std::endl;
 	}
 }
 

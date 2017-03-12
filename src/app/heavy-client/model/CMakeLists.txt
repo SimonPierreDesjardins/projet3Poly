@@ -144,8 +144,8 @@ set(MODES_SRC
     modes/ModeTutorialEdition.cpp
     modes/ModeMapSelection.h
     modes/ModeMapSelection.cpp
-    modes/OnlineMode.h
-    modes/OnlineMode.cpp
+    modes/OnlineMapMode.h
+    modes/OnlineMapMode.cpp
 )
 source_group("modes" FILES ${MODES_SRC})
 
@@ -196,10 +196,8 @@ set(VISITEUR_SRC
 set(MAP_SESSION_SRC
 	client-network/map-session/MapSession.h
 	client-network/map-session/MapSession.cpp
-	client-network/map-session/OnlineMapSession.h
-	client-network/map-session/OnlineMapSession.cpp
-	client-network/map-session/OfflineMapSession.h
-	client-network/map-session/OfflineMapSession.cpp
+	client-network/map-session/MapSessionManager.h
+	client-network/map-session/MapSessionManager.cpp
 )
 source_group("client-network\\map-session" FILES ${MAP_SESSION_SRC})
 
@@ -262,6 +260,7 @@ include_directories(
     Configuration
 	event-handler
 	client-network
+	client-network/map-session
     MachineAEtats
     modes
     ProfilUtilisateur

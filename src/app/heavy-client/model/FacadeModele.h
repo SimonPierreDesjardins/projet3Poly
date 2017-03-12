@@ -26,12 +26,14 @@
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
+#include "MapSessionManager.h"
 #include "NetworkManager.h"
 #include "EventHandler.h"
 
 #include "SimulationEngine.h"
 
 class NoeudAbstrait;
+class OnlineMapMode;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class FacadeModele
@@ -72,6 +74,9 @@ public:
 
 	/// Modifie le Mode courant.
 	void assignerMode(Mode mode);
+	/// Modifie le mode courant pour un mode en ligne avec une session utilisateur.
+	void setOnlineMapMode(Mode mode, client_network::MapSession* mapSession);
+
 	// Obtenir le Mode courant.
 	inline ModeAbstrait* obtenirMode();
 
@@ -96,8 +101,6 @@ public:
 	void assignerVuePremierePersonne();
 
 	/// Retourne l'arbre de rendu.
-	inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
-	/// Retourne l'arbre de rendu.
 	inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
 	/// Retourne le profil de l'utilisateur.
 	inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
@@ -105,9 +108,9 @@ public:
 	inline AffichageTexte* obtenirAffichageTexte() const;
 	// Retourne le controleur de lumière.
 	inline ControleurLumiere* obtenirControleurLumiere() const;
-	// Retourne le gestionnaire d'evenements
+	// Retourne le gestionnaire de la connection réseau
 	inline client_network::NetworkManager* getNetworkManager();
-	//
+	// Retourne le gestionnaire d'evenements
 	inline event_handler::EventHandler* getEventHandler();
 
 	/// Réinitialise la scène.
@@ -147,15 +150,15 @@ private:
 	/// Poignée ("handle") vers le "device context".
 	HDC   hDC_{ nullptr };
 
+	client_network::MapSessionManager mapSessionManager_;
     client_network::NetworkManager network_;
-
 	event_handler::EventHandler eventHandler_;
 
 	/// Vue courante de la scène.
 	std::unique_ptr<vue::Vue> vue_{ nullptr };
 
 	/// Arbre de rendu contenant les différents objets de la scène.
-	std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
+	ArbreRenduINF2990 arbre_;
 
 	/// Le mode d'utilisation courant.
 	std::unique_ptr<ModeAbstrait> mode_{ nullptr };
@@ -207,21 +210,6 @@ inline vue::Vue* FacadeModele::obtenirVue()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline const shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
-///
-/// Cette fonction retourne l'arbre de rendu de la scène (version constante
-/// de la fonction).
-///
-/// @return L'arbre de rendu de la scène.
-///
-////////////////////////////////////////////////////////////////////////
-inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
-{
-   return arbre_.get();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
 /// @fn inline shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990()
 ///
 /// Cette fonction retourne l'arbre de rendu de la scène (version non constante
@@ -232,7 +220,7 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990() const
 ////////////////////////////////////////////////////////////////////////
 inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 {
-   return arbre_.get();
+   return &arbre_;
 }
 
 ////////////////////////////////////////////////////////////////////////

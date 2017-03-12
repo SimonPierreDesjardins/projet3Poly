@@ -7,63 +7,75 @@
 #include "AbstractMapRoom.h"
 #include "Database\MapDatabase.h"
 
-namespace server {
-	class MapEntry 
+namespace server 
 {
-	public:
-		MapInfo& Info;
 
-		MapEntry(MapInfo& info);
-		std::string GetSerializedInfo();
+class MapEntry 
+{
+public:
+	MapInfo& Info;
 
-		std::unique_ptr<AbstractMapRoom> currentSession;
-		char getSessionType();
-		char getNumberOfUsers();
-		void AddUser(User* user);
-	};
+	MapEntry(MapInfo& info);
+	std::string GetSerializedInfo();
 
-	class MapSystem:public MultiUserSystem
-	{
-	protected:
-		virtual void TreatUserJoin(User* user);
+	void updateSessionType();
+	inline AbstractMapRoom* getCurrentSession();
 
-		virtual void TreatUserMessage(User* user, const std::string& message);
+	char getSessionType();
+	char getNumberOfUsers();
+	void AddUser(User* user);
 
-		virtual void TreatUserDisconnect(User* user);
+private:
+	std::unique_ptr<AbstractMapRoom> currentSession_;
+};
 
-		virtual char GetSystemType();
+inline AbstractMapRoom* MapEntry::getCurrentSession()
+{
+	return currentSession_.get();
+}
 
-	private:
-	
-		char systemType_{ 'm' };
+class MapSystem : public MultiUserSystem
+{
+protected:
+	virtual void TreatUserJoin(User* user);
 
-		std::string GetMapListMessage();
+	virtual void TreatUserMessage(User* user, const std::string& message);
 
-		void UpdateUsersMapLists();
+	virtual void TreatUserDisconnect(User* user);
 
-		void HandleMapCreationMessage(User* user, const std::string& message);
+	virtual char GetSystemType();
 
-		void HandleMapJoinMessage(User* user, const std::string& message);
+private:
 
-		void HandleLeaveMapSessionRequest(User* user, const std::string& message);
+	char systemType_{ 'm' };
 
-		void HandleMapDeleteMessage(User* user, const std::string& message);
+	std::string GetMapListMessage();
 
-		void HandleMapGraphRequestMessage(User* user, const std::string& message);
+	void UpdateUsersMapLists();
 
-		void HandleMapTransferMessage(User* user, const std::string& message);
+	void NotifyMapCreation(const MapEntry& mapEntry);
 
-		void HandleCancelMapTransferMessage(User* user, const std::string& message);
+	void HandleMapCreationMessage(User* user, const std::string& message);
 
-		void HandleMapPermissionChange(User* user, const std::string& message);
+	void HandleMapJoinMessage(User* user, const std::string& message);
 
-		std::unordered_map<std::string, MapEntry> _mapList;
+	void HandleLeaveMapSessionRequest(User* user, const std::string& message);
 
-		// map json string with users as keys to send transfers to the right 
-		std::unordered_map<std::string, std::string> _mapsInTransfer;
+	void HandleMapDeleteMessage(User* user, const std::string& message);
 
+	void HandleMapGraphRequestMessage(User* user, const std::string& message);
 
-	};
+	void HandleMapTransferMessage(User* user, const std::string& message);
+
+	void HandleCancelMapTransferMessage(User* user, const std::string& message);
+
+	void HandleMapPermissionChange(User* user, const std::string& message);
+
+	std::unordered_map<std::string, MapEntry> _mapList;
+
+	// map json string with users as keys to send transfers to the right 
+	std::unordered_map<std::string, std::string> _mapsInTransfer;
+};
 }
 
 #endif //!__MAP_SYSTEM_H

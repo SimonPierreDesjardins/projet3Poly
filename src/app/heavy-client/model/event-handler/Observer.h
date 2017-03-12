@@ -16,8 +16,6 @@ public:
 
 	inline int getId() const;
 
-	virtual void onEntityCreated(NoeudAbstrait* entity) = 0;
-
 private:
 	static int nextObservedId_;
 	int id_ = 0;
