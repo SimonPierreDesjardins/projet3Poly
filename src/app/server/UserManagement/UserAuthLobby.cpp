@@ -78,7 +78,7 @@ void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string m
 void UserAuthLobby::OnReceivedMessage(ConnectionWrapper * wrapper, const std::string& message)
 {
 	// We should only receive messages for the user system
-	assert(message.size() > 6 && message[Networking::MessageStandard::SYSTEM] == 'u');
+	assert(message.size() > 6 && message[Networking::MessageStandard::SYSTEM] == 'u' && "OnReceivedMessage");
 
 	switch (message[Networking::MessageStandard::COMMAND])
 	{

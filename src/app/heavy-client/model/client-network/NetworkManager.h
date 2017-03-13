@@ -22,8 +22,8 @@ public:
 	NetworkManager(event_handler::EventHandler* eventHandler);
 	~NetworkManager() = default;
 
-	inline const std::string& getUserId() const;
-	inline void setUserId(const std::string& userId);
+	inline const uint32_t getUserId() const;
+	inline void setUserId(uint32_t userId);
 
 	inline bool isConnected() const;
 	inline void closeConnection();
@@ -35,7 +35,7 @@ public:
 	void authenticate(const std::string& profileName);
 
 	void requestMapCreation(const std::string& mapName, uint8_t mapType);
-	void requestToJoinMapSession(const std::string& mapId);
+	void requestToJoinMapSession(uint32_t mapId);
 	void requestToleaveMapSession();
 
 	void requestEntityCreation(uint8_t type, uint32_t parentId, 
@@ -51,7 +51,7 @@ private:
 	MessageDispatcher dispatcher_;
 	Connection connection_;
 	Serializer serializer_;
-	std::string userId_;
+	uint32_t userId_;
 
 	bool isAuthentified_ = false;
 
@@ -78,12 +78,12 @@ inline void NetworkManager::sendMessage(const std::string& message)
 	connection_.sendMessage(message);
 }
 
-inline const std::string& NetworkManager::getUserId() const
+inline const uint32_t NetworkManager::getUserId() const
 {
 	return userId_;
 }
 
-inline void NetworkManager::setUserId(const std::string& userId)
+inline void NetworkManager::setUserId(uint32_t userId)
 {
 	userId_ = userId;
 }

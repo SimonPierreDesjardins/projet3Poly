@@ -43,6 +43,7 @@ private:
 
 	void lookupMessage();
 
+	void pushMessage(const std::string& message);
 	void dispatch(const std::string& message);
 	void handleMapEditionMessage(const std::string& message);
 	void handleEntityCreationMessage(const std::string& message);

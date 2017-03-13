@@ -930,9 +930,9 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
 	}
 
-	__declspec(dllexport) void __cdecl joinMap(char* mapId, int size)
+	__declspec(dllexport) void __cdecl joinMap(int mapId)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(std::string(mapId, size));
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(mapId);
 	}
 
 	__declspec(dllexport) void __cdecl leaveMap()

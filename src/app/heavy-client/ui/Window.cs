@@ -703,7 +703,7 @@ namespace ui
         public static extern bool createMap(String mapName, int size, char mapType);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern bool joinMap(String mapId, int size);
+        public static extern bool joinMap(int mapId);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool leaveMap();

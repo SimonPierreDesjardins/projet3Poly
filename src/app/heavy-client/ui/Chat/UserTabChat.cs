@@ -325,12 +325,14 @@ namespace ui
 
             UserChatChannel channel;
             bool isValid = channels_.TryGetValue(channelName, out channel);
+            /*
             if (isValid)
             {
                 this.Invoke((MethodInvoker)delegate {
                     channel.addUsersToChannel(users);
                 });
             }
+            */
         }
 
         public void Test(string message)

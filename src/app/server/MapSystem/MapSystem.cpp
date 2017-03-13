@@ -176,7 +176,9 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 	if (it != _mapList.end())
 	{
 		// Send joined response.
-		std::string response(message);
+		std::string response;
+		Networking::serialize(uint32_t(sizeof(uint32_t) * 3), response);
+		Networking::serialize(mapId,response);
 		Networking::serialize(user->Info.GetId(), response);
 		user->ForwardMessage(response);
 		it->second.getCurrentSession()->broadcastMessage(response);

@@ -112,7 +112,7 @@ extern "C"
 
 	// Map management
 	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType);
-	__declspec(dllexport) void __cdecl joinMap(char* mapId, int size);
+	__declspec(dllexport) void __cdecl joinMap(int mapId);
 	__declspec(dllexport) void __cdecl leaveMap();
 
 	//Edition Tutorial

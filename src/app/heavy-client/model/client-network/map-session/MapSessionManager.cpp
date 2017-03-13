@@ -11,7 +11,7 @@ MapSessionManager::MapSessionManager(ArbreRendu* tree, NetworkManager* network)
 {
 }
 
-MapSession* MapSessionManager::getServerSession(const std::string& mapId)
+MapSession* MapSessionManager::getServerSession(uint32_t mapId)
 {
 	MapSession* mapSessionFound = nullptr;
 	auto it = serverMapSessions_.find(mapId);
@@ -22,7 +22,7 @@ MapSession* MapSessionManager::getServerSession(const std::string& mapId)
 	return mapSessionFound;
 }
 
-MapSession* MapSessionManager::createServerSession(const std::string& mapId, char mapType, const std::string& mapName)
+MapSession* MapSessionManager::createServerSession(uint32_t mapId, char mapType, const std::string& mapName)
 {
 	MapSession* newMapSessionPtr = nullptr;
 	MapSession newMapSession(tree_, network_);
@@ -37,7 +37,7 @@ MapSession* MapSessionManager::createServerSession(const std::string& mapId, cha
 	return newMapSessionPtr;
 }
 
-void MapSessionManager::deleteServerSession(const std::string& mapId)
+void MapSessionManager::deleteServerSession(uint32_t mapId)
 {
 	serverMapSessions_.erase(mapId);
 }
