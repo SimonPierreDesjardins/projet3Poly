@@ -9,6 +9,7 @@
 
 #include "asio.hpp"
 #include "Networking.h"
+#include "NetworkStandard.h"
 
 namespace Networking 
 {
@@ -59,7 +60,7 @@ private:
 	asio::ip::tcp::socket* _socket; // A reference to the currently used network socket
 
 	// Buffer used to store data received from the client.
-	char _buffer[1024];
+	char _buffer[Networking::MessageStandard::BUFFER_SIZE];
 
 	std::queue<std::string> _sendQueue;
 
