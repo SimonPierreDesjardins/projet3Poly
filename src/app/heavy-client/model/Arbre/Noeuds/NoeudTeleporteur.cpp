@@ -63,11 +63,9 @@ void NoeudTeleporteur::animer(float dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudTeleporteur::mettreAJourFormeEnglobante()
 {
-    double hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
-    double largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
-    double rayon = hauteur > largeur ? hauteur : largeur;
-    rayon /= 2.0;
-    cercleEnglobant_.mettreAJour(positionCourante_, rayon * facteurMiseAEchelle_);
+	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
+	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
+	rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -92,9 +90,9 @@ NoeudTeleporteur::~NoeudTeleporteur()
 /// @return Pointeur sur un cercle englobant.
 ///
 ////////////////////////////////////////////////////////////////////////
-CercleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante()
+RectangleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante()
 {
-    return &cercleEnglobant_;
+    return &rectangleEnglobant_;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -106,9 +104,9 @@ CercleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante()
 /// @return Pointeur const  sur un cercle englobant.
 ///
 ////////////////////////////////////////////////////////////////////////
-const CercleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante() const
+const RectangleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante() const
 {
-    return &cercleEnglobant_;
+    return &rectangleEnglobant_;
 }
 
 
@@ -141,8 +139,6 @@ void NoeudTeleporteur::afficherConcret() const
 	}
 
 	glRotated(angleRotation_, 0, 0, 1);
-	// Effectuer la mise à échelle.
-	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, facteurMiseAEchelle_);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -152,7 +148,7 @@ void NoeudTeleporteur::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //cercleEnglobant_.afficher(positionCourante_);
+    rectangleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -202,6 +198,38 @@ void NoeudTeleporteur::setId(int id)
 int NoeudTeleporteur::getId()
 {
 	return idTeleporteur_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudTeleporteur::assignerTeleporteur(NoeudAbstrait* teleporteur)
+///
+/// Cette fonction assigne le teleporteur lie a celui ci
+///
+/// @param[in] NoeudAbstrait* teleporteur
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudTeleporteur::assignerTeleporteur(NoeudAbstrait* teleporteur)
+{
+	teleporteur_ = (NoeudTeleporteur*)teleporteur;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
+///
+/// Cette fonction retourne teleporteur associe a celui-ci
+///
+/// @param[in] aucun
+///
+/// @return le noeud teleporteur associe a celui-ci
+///
+////////////////////////////////////////////////////////////////////////
+NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
+{
+	return teleporteur_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

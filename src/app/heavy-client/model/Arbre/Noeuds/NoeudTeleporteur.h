@@ -13,6 +13,7 @@
 
 #include "NoeudComposite.h"
 #include "CercleEnglobant.h"
+#include "RectangleEnglobant.h"
 #include "GL/glew.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -31,13 +32,16 @@ public:
 	/// Destructeur.
 	~NoeudTeleporteur();
 
-    virtual CercleEnglobant* obtenirFormeEnglobante();
-    virtual const CercleEnglobant* obtenirFormeEnglobante() const;
+    virtual RectangleEnglobant* obtenirFormeEnglobante();
+    virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
      
     virtual void animer(float dt);
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+	virtual void assignerTeleporteur(NoeudAbstrait* teleporteur);
+	virtual NoeudTeleporteur* obtenirProchainTeleporteur();
 
 	int getId();
 	void setId(int id);
@@ -46,6 +50,8 @@ private:
     CercleEnglobant cercleEnglobant_;
 	int idTeleporteur_;
     virtual void mettreAJourFormeEnglobante();
+	RectangleEnglobant rectangleEnglobant_;
+	NoeudTeleporteur* teleporteur_;
 };
  
 

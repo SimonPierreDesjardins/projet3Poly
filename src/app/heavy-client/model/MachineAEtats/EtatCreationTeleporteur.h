@@ -42,6 +42,7 @@ private:
 	bool enCreation_{false};
 	NoeudAbstrait* teleporteur_;
 	NoeudAbstrait* ancienTeleporteur_;
+	NoeudAbstrait* teleporteurTemp;
 };
 
 

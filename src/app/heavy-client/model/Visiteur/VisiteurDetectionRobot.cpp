@@ -187,6 +187,30 @@ void VisiteurDetectionRobot::visiter(NoeudMur* mur)
     }
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudTeleporteur* teleporteur)
+///
+/// Fonction qui vérifie si le robot est en collision avec un teleporteur et si le capteur du robot détecte un teleporteur.
+///
+/// @param[in] teleporteur:  Pointeur sur un noeud teleporteur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurDetectionRobot::visiter(NoeudTeleporteur* teleporteur)
+{
+	bool estEnCollision = robot_->verifierCollision(teleporteur);
+	if (!estEnCollision_)
+	{
+		estEnCollision_ = estEnCollision;
+	}
+	/*for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
+	{
+		capteursDistance_->at(i).verifierDetection(teleporteur);
+	}*/
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

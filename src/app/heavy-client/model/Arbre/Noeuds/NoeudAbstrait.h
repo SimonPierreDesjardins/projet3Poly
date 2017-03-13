@@ -181,6 +181,8 @@ public:
 
 	virtual void assignerMode(int mode) {};
 
+	virtual void assignerTeleporteur(NoeudAbstrait* teleporteur) {};
+
 	virtual void setCouleurDefault(int piece,bool default) {};
 
 protected:

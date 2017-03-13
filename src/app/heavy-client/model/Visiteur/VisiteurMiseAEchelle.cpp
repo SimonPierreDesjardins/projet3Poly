@@ -141,24 +141,6 @@ void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 	}
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn VisiteurMiseAEchelle::visiter(NoeudTeleporteur* noeud)
-///
-/// Fonction modifiant le facteur de dimension du teleporteur passé en paramètre.
-///
-/// @param[in] noeud : Le noeud teleporteur duquel on veut modifier le facteur de dimension.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void VisiteurMiseAEchelle::visiter(NoeudTeleporteur* noeud)
-{
-	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_;
-	if (facteurMiseAEchelle >= 0) {
-		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
-	}
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///
