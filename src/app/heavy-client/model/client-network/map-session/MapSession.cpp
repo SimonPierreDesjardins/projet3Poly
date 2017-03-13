@@ -49,8 +49,9 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			parent->ajouter(newEntity);
 			newEntity->assignerPositionCourante({ absPos.x, absPos.y, absPos.z });
 			newEntity->assignerPositionRelative({ relPos.x, relPos.y, relPos.z });
-			newEntity->assignerPositionCourante({ absPos.x, absPos.y, absPos.z });
-			newEntity->assignerPositionCourante({ absPos.x, absPos.y, absPos.z });
+			newEntity->assignerAngleRotation(rotation.z);
+			newEntity->assignerFacteurMiseAEchelle(scale.x);
+			confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
 		}
 	}
 	// This is a confirmation for the object to be created.

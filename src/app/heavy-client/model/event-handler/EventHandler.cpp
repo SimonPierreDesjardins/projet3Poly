@@ -20,6 +20,7 @@ void EventHandler::onEntityCreated(uint8_t entityType, uint32_t parentId,
 {
 	if (currentSession_ != nullptr)
 	{
+		currentSession_->serverEntityCreated(entityType, parentId, absPos, relPos, rotation, scale, entityId, userId);
 	}
 }
 

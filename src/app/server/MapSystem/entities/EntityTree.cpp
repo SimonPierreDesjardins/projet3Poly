@@ -22,6 +22,7 @@ Entity* EntityTree::createEntity(char entityType, uint32_t parentId)
 	{
 		// Handle map save here.
 		Entity newEntity;
+		newEntity.entityType_ = entityType;
 		newEntity.setParent(&it->second);
 		newEntity.entityId_ = nextEntityId_++;
 		auto result = entities_.insert(std::make_pair(newEntity.entityId_, std::move(newEntity)));

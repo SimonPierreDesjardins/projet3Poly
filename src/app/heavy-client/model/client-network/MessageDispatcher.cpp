@@ -67,7 +67,7 @@ void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
 		return;
 	}
 
-	uint8_t  entityTupe = serializer_.deserializeChar(message[6]);
+	uint8_t  entityType = serializer_.deserializeChar(message[6]);
 	uint32_t parentId = serializer_.deserializeInteger(&message[7]);
 
 	glm::vec3 absPos;
@@ -92,6 +92,8 @@ void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
 
 	uint32_t entityId = serializer_.deserializeInteger(&message[59]);
 	std::string userId = message.substr(63);
+
+	eventHandler_->onEntityCreated(entityType, parentId, absPos, relPos, rotation, scale, entityId, userId);
 }
 
 void MessageDispatcher::handleMapEditionMessage(const std::string& message)
