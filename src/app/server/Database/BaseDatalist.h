@@ -16,7 +16,7 @@ namespace server {
 			_id = IdGenerator::GenerateId();
 		}
 
-		uint32_t GetId() {
+		uint32_t GetId() const {
 			return _id;
 		}
 
@@ -25,9 +25,12 @@ namespace server {
 	};
 
 	///<summary>Base implementation for lists of data in databases where elements extend DatalistElement</summary>
-	class BaseDatalist{
+	template<class EType> class BaseDatalist{
+		static_assert(std::is_base_of<DatalistElement, EType>::value, "Datalist template class is not derived from DatalistElement");
+		typedef std::unordered_map<uint32_t, EType> ElementMap;
+
 	public:
-		BaseDatalist(std::string filePath) {
+		BaseDatalist(const std::string& filePath) {
 			/*
 			// open file and build data list
 			_filePath = filePath;
@@ -62,19 +65,19 @@ namespace server {
 			SaveDataList(); // Make sure to save database before closing
 		};
 		
-		//Adds users to the database
+		//Adds elements to the database
 		//Should save user information on change
-		void AddElement(DatalistElement& element) {
+		void AddElement(EType& element) {
 			_infoList.insert_or_assign(element.GetId(), element);
 		}
 
-		virtual std::unordered_map<unsigned int, DatalistElement&>& GetElements() {
+		ElementMap& GetElements() const {
 			return _infoList;
 		}
 
 	protected:
 
-		virtual void WriteObject(DatalistElement& element) = 0;
+		//virtual void WriteObject(DatalistElement& element) = 0;
 
 		//virtual DatalistElement& GetObject(rapidjson::Value value) = 0;
 
@@ -108,7 +111,7 @@ namespace server {
 		}
 
 		// Map of info
-		std::unordered_map<unsigned int, DatalistElement&> _infoList;
+		ElementMap _infoList;
 
 		// info to keep file close by
 		std::string _filePath;

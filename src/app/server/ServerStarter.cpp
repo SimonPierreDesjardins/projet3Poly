@@ -17,12 +17,12 @@ void SetupServer() {
 	server::ChatSystem chatSystem;
 
 	// create MapSystem
-	//server::MapSystem mapSystem;
+	server::MapSystem mapSystem;
 
 	// create vector of systems to pass the user to when authenticated
 	std::vector<server::MultiUserSystem*> newUserReceivers;
 	newUserReceivers.push_back(&chatSystem);
-	//newUserReceivers.push_back(&mapSystem);
+	newUserReceivers.push_back(&mapSystem);
 
 	// create User auth system
 	server::UserAuthLobby UserLobby(listener, newUserReceivers);
@@ -68,7 +68,7 @@ private:
 	}
 
 	void OnMessageReceived(const std::string& message) {
-		std::cout << message << std::endl;
+		std::cout << message.substr(Networking::MessageStandard::SYSTEM) << std::endl;
 	}
 
 	Networking::ConnectionResolver* _resolver;

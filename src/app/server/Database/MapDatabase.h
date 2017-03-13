@@ -22,13 +22,10 @@ namespace server {
 		std::string mapName;
 		char mapType{ EDITION_MAP };
 		bool isPrivate;
-
-	private:
-		std::string _mapId;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
-	class MapDatabase:public BaseDatalist{
+	class MapDatabase:public BaseDatalist<MapInfo>{
 	
 		//Class is built by the database class and database calls saving
 		friend class Database;

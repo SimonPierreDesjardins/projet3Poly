@@ -7,7 +7,7 @@ namespace server
 server::User::User(UserInformation & userInfo)
 	: Info(userInfo)
 {
-	_connection == NULL;
+	_connection = nullptr;
 }
 
 User::~User()
@@ -35,7 +35,6 @@ void User::OnReceivedMessage(const std::string& message)
 void User::OnConnectionLost()
 {
 	notifyDisconnected(this);
-	delete this;
 }
 
 }

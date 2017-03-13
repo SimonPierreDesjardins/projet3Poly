@@ -1,4 +1,5 @@
 #include "Networking.h"
+#include "TypeSerializerDeserializer.h"
 #include <iostream>
 
 using asio::ip::tcp;
@@ -33,8 +34,13 @@ void Connection::ReadData()
 
 		if (!ec)
 		{
-			auto data = std::string(_buffer, length);
-			onReceivedMessage_(data);
+			int messageStartIndex = 0;
+			while (messageStartIndex != length) {
+				uint32_t msgLength = Networking::deserializeInteger(_buffer + messageStartIndex);
+				std::string data(_buffer + messageStartIndex, msgLength);
+				onReceivedMessage_(data);
+				messageStartIndex += msgLength;
+			}
 			ReadData();
 		}
 		else 
@@ -97,11 +103,6 @@ void Connection::WriteData()
 			if (_sendQueue.size() >= 1) {
 				WriteData();
 			}
-
-			else {
-				ReadData(); // get back to reading
-			}
-
 		}
 		else {
 			Logger::LogError(ec);
