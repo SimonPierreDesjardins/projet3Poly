@@ -578,7 +578,7 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case TUTORIAL_EDITION:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeTutorialEdition>();
+			mode_ = std::make_unique<ModeTutorialEdition>(mapSessionManager_.getLocalMapSession());
 			break;
 
 		default:

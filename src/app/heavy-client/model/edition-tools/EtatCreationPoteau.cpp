@@ -21,7 +21,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationPoteau::EtatCreationPoteau()
+EtatCreationPoteau::EtatCreationPoteau(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(CREATION_POTEAU);
 	visiteurCreationPoteau_ = std::make_unique<VisiteurCreationPoteau>();

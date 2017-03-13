@@ -37,11 +37,6 @@ const int VK_KEY_P = 'P';
 const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
 
-namespace event_handler
-{
-	class EventHandler;
-}
-
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeEdition
 /// @brief Classe qui représente le mode edition de notre machine à modes
