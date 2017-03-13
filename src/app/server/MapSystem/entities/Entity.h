@@ -16,10 +16,10 @@ public:
 	Eigen::Vector3f scale_{ 1.0, 1.0, 1.0 };
 
 	char entityType_ { 0 };
-	std::string selectingUserId_;
+	uint32_t userId_{ 0 };
 	uint32_t entityId_{ 0 };
 
-	Entity();
+	Entity() = default;
 	~Entity() = default;
 
 	inline void setParent(Entity* parent);

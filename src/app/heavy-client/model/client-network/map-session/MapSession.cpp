@@ -25,12 +25,7 @@ void MapSession::localEntityCreated(NoeudAbstrait* entity)
 	{
 		sendEntityCreationRequest(entity);
 	}
-	// If we're offline or other creation requests are already queued,
-	// we queue this request.
-	else
-	{
-		pendingEntityCreationRequests_.push(entity);
-	}
+	pendingEntityCreationRequests_.push(entity);
 }
 
 void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
@@ -57,9 +52,17 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 	// This is a confirmation for the object to be created.
 	else
 	{
+		// Insert server confirmed entity.
 		NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.back();
 		pendingEntityCreationRequests_.pop();
 		confirmedEntities_.insert(std::make_pair(entityId, entityToInsert));
+
+		// Send next entity in pending.
+		if (!pendingEntityCreationRequests_.empty())
+		{
+			NoeudAbstrait* entityToConfirm = pendingEntityCreationRequests_.back();
+			sendEntityCreationRequest(entityToConfirm);
+		}
 	}
 }
 

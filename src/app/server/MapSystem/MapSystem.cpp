@@ -177,7 +177,8 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 	{
 		// Send joined response.
 		std::string response;
-		Networking::serialize(uint32_t(sizeof(uint32_t) * 3), response);
+		Networking::serialize(uint32_t(14), response);
+		response.append("mj");
 		Networking::serialize(mapId,response);
 		Networking::serialize(user->Info.GetId(), response);
 		user->ForwardMessage(response);
