@@ -1,4 +1,5 @@
 #include "UserManagement\UserAuthLobby.h"
+#include "Database\Database.h"
 #include "ChatSystem\ChatSystem.h"
 #include "MapSystem.h"
 #include "NetworkStandard.h"
@@ -10,8 +11,8 @@ void SetupServer() {
 
 	Networking::Logger::SetDebugLevel(Networking::Logger::ALL);
 
-	// create listener
-	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
+	//Load up all databases
+	server::Database database;
 
 	// create ChatSystem
 	server::ChatSystem chatSystem;
@@ -24,8 +25,11 @@ void SetupServer() {
 	newUserReceivers.push_back(&chatSystem);
 	newUserReceivers.push_back(&mapSystem);
 
+	// create listener
+	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
+
 	// create User auth system
-	server::UserAuthLobby UserLobby(listener, newUserReceivers);
+	server::UserAuthLobby UserLobby(listener, database.GetUserDatabase() , newUserReceivers);
 
 	// create UserLobby
 

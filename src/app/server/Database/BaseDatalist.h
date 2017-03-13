@@ -27,7 +27,7 @@ namespace server {
 	///<summary>Base implementation for lists of data in databases where elements extend DatalistElement</summary>
 	template<class EType> class BaseDatalist{
 		static_assert(std::is_base_of<DatalistElement, EType>::value, "Datalist template class is not derived from DatalistElement");
-		typedef std::unordered_map<uint32_t, EType> ElementMap;
+		typedef std::unordered_map<uint32_t, EType*> ElementMap;
 
 	public:
 		BaseDatalist(const std::string& filePath) {
@@ -66,12 +66,12 @@ namespace server {
 		};
 		
 		//Adds elements to the database
-		//Should save user information on change
-		void AddElement(EType& element) {
-			_infoList.insert_or_assign(element.GetId(), element);
+		//Should save information on change
+		void CreateEntry(EType* newEntry) {
+			_infoList.insert_or_assign(newEntry -> GetId(), newEntry);
 		}
 
-		ElementMap& GetElements() const {
+		ElementMap& GetElements() {
 			return _infoList;
 		}
 

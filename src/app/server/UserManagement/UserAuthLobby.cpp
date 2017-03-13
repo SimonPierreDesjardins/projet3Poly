@@ -8,9 +8,16 @@
 namespace server
 {
 
-UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus)
+UserAuthLobby::UserAuthLobby(Networking::ServerListener* listener, UserDatabase* userDB, std::vector<MultiUserSystem*> mus)
 {
+	_userDB = userDB;
 	_userReceivers = mus;
+
+	// Build user list from DB
+	for (auto userIdPair : _userDB->GetElements()) {
+		_users.insert({userIdPair.second->UserName, new User(*userIdPair.second)});
+	}
+
 	HookToListenerEvents(listener);
 }
 
@@ -42,9 +49,14 @@ void UserAuthLobby::handleCreateUsernameRequest(ConnectionWrapper* wrapper, std:
 {
 	// TODO: Check if the new username is available and add to database.
 	std::cout << "Received profile creation request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
+	
+	// Add new user to DB
 	UserInformation* info = new UserInformation;
 	std::string username = std::string(message.begin() + Networking::MessageStandard::DATA_START, message.end());
 	info->UserName = username;
+	_userDB->CreateEntry(info);
+
+	// Add new user to userlist
 	_users.insert({ info->UserName, new User(*info) });
 }
 
