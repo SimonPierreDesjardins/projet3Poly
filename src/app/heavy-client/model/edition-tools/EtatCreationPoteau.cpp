@@ -85,7 +85,7 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		if (visiteurVerificationQuad_->objetsDansZoneSimulation()) 
 		{
 			// On confirme la création d'objet avec le serveur.
-			//notifyEntityCreated(poteau);
+			mapSession_->localEntityCreated(poteau);
 		}
 		else 
 		{
