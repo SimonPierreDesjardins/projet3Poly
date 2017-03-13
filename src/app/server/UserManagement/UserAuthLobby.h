@@ -20,7 +20,7 @@ class ConnectionWrapper;
 class UserAuthLobby:private MultiUserSystem
 {
 public:
-	UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus);
+	UserAuthLobby(Networking::ServerListener* listener, UserDatabase* userDB, std::vector<MultiUserSystem*> mus);
 	virtual ~UserAuthLobby();
 
 	void OnReceivedMessage(ConnectionWrapper* user, const std::string& message);
@@ -50,6 +50,9 @@ private:
 
 	// created from all user infos in DB
 	std::unordered_map<std::string, User*> _users;
+	// link to db for user creation messages
+	UserDatabase* _userDB;
+
 };
 
 // Wraps a connection to send connection reference on callbacks

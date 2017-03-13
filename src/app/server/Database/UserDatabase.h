@@ -16,7 +16,7 @@ namespace server {
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
-	class UserDatabase:public BaseDatalist<DatalistElement>{
+	class UserDatabase:public BaseDatalist<UserInformation>{
 		friend class Database;
 
 	protected:
