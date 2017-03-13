@@ -308,7 +308,7 @@ namespace ui
             if (isValid)
             {
                 this.Invoke((MethodInvoker)delegate {
-                    channel.addMessageToChat(user + " a envoyé a " + time + " " + date + ":\r\n" + sent);
+                    channel.addMessageToChat(user + " a envoyé a " + time + " " + date + ":\r\n" + sent + "\r\n");
                 });
             }
         }
