@@ -5,6 +5,10 @@
 
 namespace Networking {
 	namespace MessageStandard {
+
+		//Buffer size constant
+		const int BUFFER_SIZE = 1024;
+
 		//Index of the system indicator byte in the message
 		const int LENGTH_END = 0;
 		const int LENGTH_BEGIN = 3;

@@ -52,12 +52,12 @@ namespace ui
             ChannelListBox.Items.Add(newChannelName);
         }
 
-        public void setChannelList(UserChatChannel generalChannel)
+        public void setChannelList(string[] listOfChannels)
         {
             ChannelListBox.Items.Clear();
-            foreach (var item in generalChannel.getChannelListBoxInfo())
+            foreach (var channel in listOfChannels)
             {
-                ChannelListBox.Items.Add(item);
+                ChannelListBox.Items.Add(channel);
             }
         }
 
@@ -133,16 +133,14 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void userButton_Click(object sender, EventArgs e)
         {
-            disableControls();
-
             //If Chat is active
             if (panelChat.Visible)
             {
                 userPictureBox.Image = Properties.Resources.Chat;
                 channelPictureBox.Image = Properties.Resources.Channels;
 
+                panelChat.Visible = false;
                 panelUser.Visible = true;
-                hideChat.Start();
             }
             //If ChannelList is displayed
             else if(panelChannel.Visible)
@@ -152,16 +150,14 @@ namespace ui
 
                 panelChannel.Visible = false;
                 panelUser.Visible = true;
-                enableControls();
             }
             else
             {
                 userPictureBox.Image = Properties.Resources.User;
                 channelPictureBox.Image = Properties.Resources.Channels;
 
-                panelChat.Width = 0;
+                panelUser.Visible = false;
                 panelChat.Visible = true;
-                showChat.Start();
             }
         }
 
@@ -181,8 +177,6 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void channelButton_Click(object sender, EventArgs e)
         {
-            disableControls();
-
             //If Chat is active
             if (panelChat.Visible)
             {
@@ -190,7 +184,7 @@ namespace ui
                 channelPictureBox.Image = Properties.Resources.Chat;
 
                 panelChannel.Visible = true;
-                hideChat.Start();
+                panelChat.Visible = false;
             }
             //If UserList is displayed
             else if(panelUser.Visible)
@@ -200,95 +194,14 @@ namespace ui
 
                 panelUser.Visible = false;
                 panelChannel.Visible = true;
-                enableControls();
             }
             else
             {
                 userPictureBox.Image = Properties.Resources.User;
                 channelPictureBox.Image = Properties.Resources.Channels;
 
-                panelChat.Width = 0;
-                panelChat.Visible = true;
-                showChat.Start();
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void disableControls()
-        ///
-        /// Désactiver les bouttons sur le control
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void disableControls()
-        {
-            userButton.Enabled = false;
-            channelButton.Enabled = false;
-        }
-
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enableControls()
-        ///
-        /// Active les bouttons sur le control
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void enableControls()
-        {
-            userButton.Enabled = true;
-            channelButton.Enabled = true;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void hideChat_Tick(object sender, EventArgs e)
-        ///
-        /// Cache le chat lorsque le timer est activé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du timer
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void hideChat_Tick(object sender, EventArgs e)
-        {
-            if (panelChat.Width > 0)
-            {
-                panelChat.Width -= 5;
-            }
-            else
-            {
-                hideChat.Stop();
-                panelChat.Visible = false;
-                enableControls();
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void hideChat_Tick(object sender, EventArgs e)
-        ///
-        /// Montre le chat lorsque le timer est activé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du timer
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void showChat_Tick(object sender, EventArgs e)
-        {
-
-            if (panelChat.Width < (this.Width - panelForButtons.Width - 5))
-            {
-                panelChat.Width += 5;
-                chatListBox.Refresh();
-            }
-            else
-            {
-                showChat.Stop();
-                panelUser.Visible = false;
                 panelChannel.Visible = false;
-                chatListBox.Refresh();
-                enableControls();
+                panelChat.Visible = true;
             }
         }
 
@@ -370,8 +283,6 @@ namespace ui
             else if (!System.Text.RegularExpressions.Regex.Replace(addChannelTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
                 parent_.userChat.createNewChannel(addChannelTextBox.Text);
-                string tmp = "cj" + parent_.userName + ";" + addChannelTextBox.Text;
-                FonctionsNatives.sendMessage(tmp, tmp.Length);
             }
             else
             {
@@ -409,8 +320,6 @@ namespace ui
                 if (unique)
                 {
                     parent_.userChat.createNewChannel(ChannelListBox.SelectedItem.ToString());
-                    string tmp = "cj" + parent_.userName + ";" + ChannelListBox.SelectedItem.ToString();
-                    FonctionsNatives.sendMessage(tmp, tmp.Length);
                 }   
                 else
                 {
@@ -453,7 +362,7 @@ namespace ui
                 }
                 else
                 {
-                    string tmp = "cq" + parent_.userName + ";" + channel;
+                    string tmp = "cq" + channel;
                     FonctionsNatives.sendMessage(tmp, tmp.Length);
                 }
             }
