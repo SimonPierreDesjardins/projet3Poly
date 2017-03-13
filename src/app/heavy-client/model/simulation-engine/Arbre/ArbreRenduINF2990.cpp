@@ -110,7 +110,7 @@ void ArbreRenduINF2990::initialiser()
 	ajouterUsine(TRUCK_ENTITY, NOM_TRUCK, std::make_unique<UsineNoeud<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }));
 	ajouterUsine(AUDI_ENTITY, NOM_AUDI, std::make_unique<UsineNoeud<NoeudAudi>>(NOM_AUDI, std::string{ "media/modeles/audi_r8.obj" }));
 
-	//chargerZoneDefaut();
+	chargerZoneDefaut();
 }
 
 ////////////////////////////////////////////////////////////////////////

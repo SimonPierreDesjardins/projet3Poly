@@ -5,6 +5,7 @@
 ///
 ////////////////////////////////////////////////
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -30,6 +31,27 @@ namespace ui
             parent_ = parent;
 
             fileDirLabel.Text = "";
+
+            //Offline maps
+            foreach (KeyValuePair<string, MapPresentator> entry in parent_.offlineMaps_)
+            {
+                // do something with entry.Value or entry.Key
+                MapPresentator map = entry.Value;
+                map.Size = new Size(this.mapPanel.Width, map.Height);
+                map.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+                map.Location = new Point(0, numberOfMaps_++ * 150);
+                this.mapPanel.Controls.Add(map);
+            }
+            //Online maps
+            foreach (KeyValuePair<int, MapPresentator> entry in parent_.onlineMaps_)
+            {
+                // do something with entry.Value or entry.Key
+                MapPresentator map = entry.Value;
+                map.Size = new Size(this.mapPanel.Width, map.Height);
+                map.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+                map.Location = new Point(0, numberOfMaps_++ * 150);
+                this.mapPanel.Controls.Add(map);
+            }
         }
 
         //Delete this button. only for testing
@@ -123,7 +145,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirZone(bool afficherZoneDefaut)
         {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture(afficherZoneDefaut);
+            ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
             DialogResult dialogresult = explorateur.ShowDialog();

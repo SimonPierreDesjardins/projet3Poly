@@ -14,7 +14,6 @@ namespace ui
     public partial class MainMenu : UserControl
     {
         Window parent_;
-        MapMenu mapMenu_;
         ConnectToServer connectOptions_;
 
         private bool PasserEnSimulation = false;
@@ -89,7 +88,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void ouvrirZone(bool afficherZoneDefaut)
         {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture(afficherZoneDefaut);
+            ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
             DialogResult dialogresult = explorateur.ShowDialog();
@@ -149,10 +148,11 @@ namespace ui
         private void mainMenu_cardsOnlineButton_Click(object sender, EventArgs e)
         {
             animationChangingMenu();
-            mapMenu_ = new MapMenu(parent_);
+            ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
+            parent_.mapMenu = new MapMenu(parent_);
 
-            parent_.viewPort.Controls.Add(mapMenu_);
-            mapMenu_.Dock = DockStyle.Fill;
+            parent_.mapMenu.Dock = DockStyle.Fill;
+            parent_.viewPort.Controls.Add(parent_.mapMenu);
         }
 
         ////////////////////////////////////////////////////////////////////////
