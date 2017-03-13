@@ -178,16 +178,16 @@
     <Compile Include="MainMenu\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu\MapMenu.cs">
+    <Compile Include="MapSelector\MapMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainMenu\MapMenu.Designer.cs">
+    <Compile Include="MapSelector\MapMenu.Designer.cs">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu\MapPresentator.cs">
+    <Compile Include="MapSelector\MapPresentator.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainMenu\MapPresentator.Designer.cs">
+    <Compile Include="MapSelector\MapPresentator.Designer.cs">
       <DependentUpon>MapPresentator.cs</DependentUpon>
     </Compile>
     <Compile Include="Personalize\PersonnalisationSideMenu.cs">
@@ -293,10 +293,10 @@
     <EmbeddedResource Include="MainMenu\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu\MapMenu.resx">
+    <EmbeddedResource Include="MapSelector\MapMenu.resx">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu\MapPresentator.resx">
+    <EmbeddedResource Include="MapSelector\MapPresentator.resx">
       <DependentUpon>MapPresentator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ModeleSelector.resx">

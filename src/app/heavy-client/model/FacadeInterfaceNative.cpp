@@ -1121,6 +1121,19 @@ extern "C"
 		const unsigned char* bytes = (const unsigned char*)message.data();
 		Handler(bytes, message.size());
 	}
+
+	CallbackForNewMap AddNewMap = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap)
+	{
+		AddNewMap = addNewMap;
+	}
+
+	__declspec(dllexport) void __cdecl AddMap(std::string message, bool connectionState, int mode, int nbPlayers, int id)
+	{
+		message = message.substr(5);
+		const unsigned char* bytes = (const unsigned char*)message.data();
+		AddNewMap(bytes, message.size(), connectionState, mode, nbPlayers, id);
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
