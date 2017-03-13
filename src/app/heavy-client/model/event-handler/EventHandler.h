@@ -31,11 +31,11 @@ public:
 
 	void onEntityCreated(uint8_t entityType, uint32_t parentId, const glm::vec3& absPos,
 		const glm::vec3& relPos, const glm::vec3& rotation, const glm::vec3& scale, 
-		uint32_t entityId, const std::string& userId);
+		uint32_t entityId, uint32_t userId);
 
-	void onNewMapCreated(char mapType, const std::string& mapId, std::string& name);
-	void onUserJoinedMap(const std::string& mapId, const std::string& userId);
-	void onUserAuthentified(const std::string& userId);
+	void onNewMapCreated(char mapType, uint32_t mapId, std::string& name);
+	void onUserJoinedMap(uint32_t mapId, uint32_t userId);
+	void onUserAuthentified(uint32_t userId);
 
 private:
 	client_network::NetworkManager* networkManager_ = nullptr;

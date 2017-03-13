@@ -35,8 +35,10 @@
             this.customLabel3 = new ui.CustomLabel();
             this.customLabel2 = new ui.CustomLabel();
             this.customLabel1 = new ui.CustomLabel();
-            this.panelButton1 = new ui.PanelButton();
-            this.panelButton1.SuspendLayout();
+            this.mapButton = new ui.PanelButton();
+            this.connectionLabel = new ui.CustomLabel();
+            this.customLabel5 = new ui.CustomLabel();
+            this.mapButton.SuspendLayout();
             this.SuspendLayout();
             // 
             // numberOfPlayersLabel
@@ -44,7 +46,7 @@
             this.numberOfPlayersLabel.AutoSize = true;
             this.numberOfPlayersLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.numberOfPlayersLabel.ForeColor = System.Drawing.Color.Silver;
-            this.numberOfPlayersLabel.Location = new System.Drawing.Point(195, 87);
+            this.numberOfPlayersLabel.Location = new System.Drawing.Point(196, 108);
             this.numberOfPlayersLabel.Name = "numberOfPlayersLabel";
             this.numberOfPlayersLabel.Size = new System.Drawing.Size(31, 21);
             this.numberOfPlayersLabel.TabIndex = 6;
@@ -55,7 +57,7 @@
             this.NameMapLabel.AutoSize = true;
             this.NameMapLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NameMapLabel.ForeColor = System.Drawing.Color.Silver;
-            this.NameMapLabel.Location = new System.Drawing.Point(95, 56);
+            this.NameMapLabel.Location = new System.Drawing.Point(96, 50);
             this.NameMapLabel.Name = "NameMapLabel";
             this.NameMapLabel.Size = new System.Drawing.Size(95, 21);
             this.NameMapLabel.TabIndex = 5;
@@ -66,7 +68,7 @@
             this.ModeLabel.AutoSize = true;
             this.ModeLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ModeLabel.ForeColor = System.Drawing.Color.Silver;
-            this.ModeLabel.Location = new System.Drawing.Point(95, 25);
+            this.ModeLabel.Location = new System.Drawing.Point(96, 20);
             this.ModeLabel.Name = "ModeLabel";
             this.ModeLabel.Size = new System.Drawing.Size(93, 21);
             this.ModeLabel.TabIndex = 4;
@@ -76,6 +78,7 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.LightGray;
+            this.panel1.Enabled = false;
             this.panel1.Location = new System.Drawing.Point(390, 10);
             this.panel1.Margin = new System.Windows.Forms.Padding(10);
             this.panel1.Name = "panel1";
@@ -87,7 +90,7 @@
             this.customLabel3.AutoSize = true;
             this.customLabel3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel3.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel3.Location = new System.Drawing.Point(25, 87);
+            this.customLabel3.Location = new System.Drawing.Point(26, 108);
             this.customLabel3.Name = "customLabel3";
             this.customLabel3.Size = new System.Drawing.Size(164, 21);
             this.customLabel3.TabIndex = 2;
@@ -98,7 +101,7 @@
             this.customLabel2.AutoSize = true;
             this.customLabel2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel2.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel2.Location = new System.Drawing.Point(25, 56);
+            this.customLabel2.Location = new System.Drawing.Point(26, 50);
             this.customLabel2.Name = "customLabel2";
             this.customLabel2.Size = new System.Drawing.Size(55, 21);
             this.customLabel2.TabIndex = 1;
@@ -109,45 +112,70 @@
             this.customLabel1.AutoSize = true;
             this.customLabel1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel1.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel1.Location = new System.Drawing.Point(25, 25);
+            this.customLabel1.Location = new System.Drawing.Point(26, 20);
             this.customLabel1.Name = "customLabel1";
             this.customLabel1.Size = new System.Drawing.Size(64, 21);
             this.customLabel1.TabIndex = 0;
             this.customLabel1.Text = "Mode :";
             // 
-            // panelButton1
+            // mapButton
             // 
-            this.panelButton1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelButton1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.panelButton1.Controls.Add(this.numberOfPlayersLabel);
-            this.panelButton1.Controls.Add(this.NameMapLabel);
-            this.panelButton1.Controls.Add(this.ModeLabel);
-            this.panelButton1.Controls.Add(this.panel1);
-            this.panelButton1.Controls.Add(this.customLabel3);
-            this.panelButton1.Controls.Add(this.customLabel2);
-            this.panelButton1.Controls.Add(this.customLabel1);
-            this.panelButton1.Location = new System.Drawing.Point(0, 0);
-            this.panelButton1.Name = "panelButton1";
-            this.panelButton1.Size = new System.Drawing.Size(600, 150);
-            this.panelButton1.TabIndex = 0;
+            this.mapButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.mapButton.Controls.Add(this.connectionLabel);
+            this.mapButton.Controls.Add(this.customLabel5);
+            this.mapButton.Controls.Add(this.numberOfPlayersLabel);
+            this.mapButton.Controls.Add(this.NameMapLabel);
+            this.mapButton.Controls.Add(this.ModeLabel);
+            this.mapButton.Controls.Add(this.panel1);
+            this.mapButton.Controls.Add(this.customLabel3);
+            this.mapButton.Controls.Add(this.customLabel2);
+            this.mapButton.Controls.Add(this.customLabel1);
+            this.mapButton.Location = new System.Drawing.Point(0, 0);
+            this.mapButton.Name = "mapButton";
+            this.mapButton.Size = new System.Drawing.Size(600, 150);
+            this.mapButton.TabIndex = 0;
+            this.mapButton.Click += new System.EventHandler(this.mapButton_Click);
+            // 
+            // connectionLabel
+            // 
+            this.connectionLabel.AutoSize = true;
+            this.connectionLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.connectionLabel.ForeColor = System.Drawing.Color.Silver;
+            this.connectionLabel.Location = new System.Drawing.Point(106, 80);
+            this.connectionLabel.Name = "connectionLabel";
+            this.connectionLabel.Size = new System.Drawing.Size(154, 21);
+            this.connectionLabel.TabIndex = 8;
+            this.connectionLabel.Text = "HorsLigne / Enligne";
+            // 
+            // customLabel5
+            // 
+            this.customLabel5.AutoSize = true;
+            this.customLabel5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel5.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel5.Location = new System.Drawing.Point(25, 80);
+            this.customLabel5.Name = "customLabel5";
+            this.customLabel5.Size = new System.Drawing.Size(75, 21);
+            this.customLabel5.TabIndex = 7;
+            this.customLabel5.Text = "Réseau :";
             // 
             // MapPresentator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.Controls.Add(this.panelButton1);
+            this.Controls.Add(this.mapButton);
             this.Name = "MapPresentator";
             this.Size = new System.Drawing.Size(600, 150);
-            this.panelButton1.ResumeLayout(false);
-            this.panelButton1.PerformLayout();
+            this.mapButton.ResumeLayout(false);
+            this.mapButton.PerformLayout();
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private PanelButton panelButton1;
+        private PanelButton mapButton;
         private CustomLabel numberOfPlayersLabel;
         private CustomLabel NameMapLabel;
         private CustomLabel ModeLabel;
@@ -155,5 +183,7 @@
         private CustomLabel customLabel3;
         private CustomLabel customLabel2;
         private CustomLabel customLabel1;
+        private CustomLabel connectionLabel;
+        private CustomLabel customLabel5;
     }
 }

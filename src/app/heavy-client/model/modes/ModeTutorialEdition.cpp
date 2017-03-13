@@ -43,7 +43,8 @@ const int VK_KEY_M = 'M';
 /// Ne fait qu'initialiser les variables membres de la classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeTutorialEdition::ModeTutorialEdition()
+ModeTutorialEdition::ModeTutorialEdition(client_network::MapSession * mapSession)
+	: OnlineMapMode(mapSession)
 {
 	typeMode_ = TUTORIAL_EDITION;
 	etat_ = std::make_unique <EtatAbstrait>();
@@ -178,7 +179,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_P:
 				if (getCurrentTutorialState() == (int)SELECT_POST_TOOL)
 				{
-					etat_ = std::make_unique<EtatCreationPoteau>();
+					etat_ = std::make_unique<EtatCreationPoteau>(mapSession_);
 					numberOfObjects_ = getNomberOfObjects("poteau");
 
 				}

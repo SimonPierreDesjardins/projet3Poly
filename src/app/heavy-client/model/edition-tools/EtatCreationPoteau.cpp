@@ -21,7 +21,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationPoteau::EtatCreationPoteau()
+EtatCreationPoteau::EtatCreationPoteau(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(CREATION_POTEAU);
 	visiteurCreationPoteau_ = std::make_unique<VisiteurCreationPoteau>();
@@ -84,7 +85,7 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		if (visiteurVerificationQuad_->objetsDansZoneSimulation()) 
 		{
 			// On confirme la création d'objet avec le serveur.
-			//notifyEntityCreated(poteau);
+			mapSession_->localEntityCreated(poteau);
 		}
 		else 
 		{

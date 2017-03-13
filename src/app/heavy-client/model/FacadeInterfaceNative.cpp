@@ -930,9 +930,9 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
 	}
 
-	__declspec(dllexport) void __cdecl joinMap(char* mapId, int size)
+	__declspec(dllexport) void __cdecl joinMap(int mapId)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(std::string(mapId, size));
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(mapId);
 	}
 
 	__declspec(dllexport) void __cdecl leaveMap()
@@ -1120,6 +1120,19 @@ extern "C"
 		message = message.substr(5);
 		const unsigned char* bytes = (const unsigned char*)message.data();
 		Handler(bytes, message.size());
+	}
+
+	CallbackForNewMap AddNewMap = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap)
+	{
+		AddNewMap = addNewMap;
+	}
+
+	__declspec(dllexport) void __cdecl AddMap(std::string message, bool connectionState, int mode, int nbPlayers, int id)
+	{
+		message = message.substr(5);
+		const unsigned char* bytes = (const unsigned char*)message.data();
+		AddNewMap(bytes, message.size(), connectionState, mode, nbPlayers, id);
 	}
 }
 

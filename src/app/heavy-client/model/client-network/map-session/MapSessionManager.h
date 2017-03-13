@@ -21,12 +21,12 @@ public:
 
 	inline MapSession* getLocalMapSession();
 
-	MapSession* getServerSession(const std::string& mapId);
-	MapSession* createServerSession(const std::string& mapId, char mapType, const std::string& mapName);
-	void deleteServerSession(const std::string& mapid);
+	MapSession* getServerSession(uint32_t mapId);
+	MapSession* createServerSession(uint32_t mapId, char mapType, const std::string& mapName);
+	void deleteServerSession(uint32_t mapid);
 
 private:
-	std::unordered_map<std::string, MapSession> serverMapSessions_;
+	std::unordered_map<uint32_t, MapSession> serverMapSessions_;
 	MapSession localMapSession_;
 
 	ArbreRendu* tree_;

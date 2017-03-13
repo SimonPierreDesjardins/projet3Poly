@@ -16,7 +16,6 @@ namespace ui
     {
         Window parent_;
         public ChatWindow chatWindow_;
-        UserChatChannel generalChannel_ = null;
         Dictionary<string, UserChatChannel> channels_;
 
         public Boolean inMainWindow = true;
@@ -36,7 +35,7 @@ namespace ui
             parent_ = parent;
 
             channels_ = new Dictionary<string, UserChatChannel>();
-            generalChannel_ = createNewChannel("General");
+            createNewChannel("General");
 
             mInstance = new CallbackForChat(Handler);
             SetCallbackForChat(mInstance);
@@ -180,7 +179,7 @@ namespace ui
         /// @param string name: nom de la tab à ajouter
         ///
         ////////////////////////////////////////////////////////////////////////
-        public UserChatChannel createNewChannel(string name)
+        public void createNewChannel(string name)
         {
             //Add a tab
             TabPage newTabPage = new TabPage(name);
@@ -195,24 +194,11 @@ namespace ui
             UserChatChannel newChannel = new UserChatChannel(parent_, name);
             channels_.Add(name, newChannel);
 
-            if (generalChannel_ != null)
-            {
-                generalChannel_.addNewChannel(name);
-                updateChannelList();
-            } 
-            newTabPage.Controls.Add(newChannel);
             newChannel.Dock = DockStyle.Fill;
+            newTabPage.Controls.Add(newChannel);
 
-            return newChannel;
-        }
-
-        private void updateChannelList()
-        {
-            foreach (KeyValuePair<string, UserChatChannel> entry in channels_)
-            {
-                if (!entry.Key.Equals("General"))
-                    entry.Value.setChannelList(generalChannel_);
-            }
+            string tmp = "cj" + name;
+            FonctionsNatives.sendMessage(tmp, tmp.Length);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -307,7 +293,7 @@ namespace ui
             bool isValid = channels_.TryGetValue(channelName, out channel);
             if (isValid)
             {
-                this.Invoke((MethodInvoker)delegate {
+                parent_.Invoke((MethodInvoker)delegate {
                     channel.addMessageToChat(user + " a envoyé a " + time + " " + date + ":\r\n" + sent + "\r\n");
                 });
             }
@@ -315,7 +301,15 @@ namespace ui
 
         private void channelList(string message)
         {
+            message = message.Substring(1);
             string[] channels = message.Split(';');
+
+            parent_.Invoke((MethodInvoker)delegate {
+                    foreach (KeyValuePair<string, UserChatChannel> entry in channels_)
+                    {
+                            entry.Value.setChannelList(channels);
+                    }
+                });
         }
 
         private void userList(string message)
@@ -327,7 +321,7 @@ namespace ui
             bool isValid = channels_.TryGetValue(channelName, out channel);
             if (isValid)
             {
-                this.Invoke((MethodInvoker)delegate {
+                parent_.Invoke((MethodInvoker)delegate {
                     channel.addUsersToChannel(users);
                 });
             }
@@ -349,10 +343,6 @@ namespace ui
             var str = System.Text.Encoding.Default.GetString(tmp);
 
             handleChatMessage(str);
-
-            //For debugging
-            Console.WriteLine(str);
-            Console.WriteLine("\n Callback \n");
         }
 
         [DllImport("model.dll")]

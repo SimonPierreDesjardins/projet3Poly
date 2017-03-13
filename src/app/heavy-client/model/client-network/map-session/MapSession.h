@@ -34,7 +34,7 @@ public:
 	void serverEntityCreated(uint8_t type, uint32_t parentId, 
 		const glm::vec3& relPos, const glm::vec3& absPos, 
 		const glm::vec3& rotation, const glm::vec3& scale,
-		uint32_t entityId, const std::string& userId);
+		uint32_t entityId, uint32_t userId);
 
 	void setIsOnlineSession(bool isOnline);
 

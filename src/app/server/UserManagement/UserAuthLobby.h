@@ -17,7 +17,7 @@ namespace server
 
 class ConnectionWrapper;
 
-class UserAuthLobby:private MultiUserSystem
+class UserAuthLobby : private MultiUserSystem
 {
 public:
 	UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus);

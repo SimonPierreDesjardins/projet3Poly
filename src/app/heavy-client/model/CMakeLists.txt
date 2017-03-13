@@ -102,27 +102,29 @@ set(LUMIERE_SRC
 )
 
 set(MACHINE_A_ETATS_SRC
-    MachineAEtats/EtatAbstrait.h
-    MachineAEtats/EtatAbstrait.cpp
-    MachineAEtats/EtatCreationLigne.h
-    MachineAEtats/EtatCreationLigne.cpp
-    MachineAEtats/EtatCreationMur.h
-    MachineAEtats/EtatCreationMur.cpp
-    MachineAEtats/EtatCreationPoteau.h
-    MachineAEtats/EtatCreationPoteau.cpp
-    MachineAEtats/EtatDeplacement.h
-    MachineAEtats/EtatDeplacement.cpp
-    MachineAEtats/EtatDuplication.h
-    MachineAEtats/EtatDuplication.cpp
-    MachineAEtats/EtatLoupe.h
-    MachineAEtats/EtatLoupe.cpp
-    MachineAEtats/EtatMiseAEchelle.h
-    MachineAEtats/EtatMiseAEchelle.cpp
-    MachineAEtats/EtatRotation.h
-    MachineAEtats/EtatRotation.cpp
-    MachineAEtats/EtatSelection.h
-    MachineAEtats/EtatSelection.cpp
-    MachineAEtats/EtatTypes.h
+    edition-tools/EtatAbstrait.h
+    edition-tools/EtatAbstrait.cpp
+    edition-tools/EtatCreationLigne.h
+    edition-tools/EtatCreationLigne.cpp
+    edition-tools/EtatCreationMur.h
+    edition-tools/EtatCreationMur.cpp
+    edition-tools/EtatCreationPoteau.h
+    edition-tools/EtatCreationPoteau.cpp
+    edition-tools/EtatDeplacement.h
+    edition-tools/EtatDeplacement.cpp
+    edition-tools/EtatDuplication.h
+    edition-tools/EtatDuplication.cpp
+    edition-tools/EtatLoupe.h
+    edition-tools/EtatLoupe.cpp
+    edition-tools/EtatMiseAEchelle.h
+    edition-tools/EtatMiseAEchelle.cpp
+    edition-tools/EtatRotation.h
+    edition-tools/EtatRotation.cpp
+    edition-tools/EtatSelection.h
+    edition-tools/EtatSelection.cpp
+	edition-tools/OnlineTool.h
+	edition-tools/OnlineTool.cpp
+    edition-tools/EtatTypes.h
 )
 
 set(MODES_SRC
@@ -258,10 +260,10 @@ include_directories(
     simulation-engine/Physique
     simulation-engine/Visiteur
     Configuration
-	event-handler
-	client-network
-	client-network/map-session
-    MachineAEtats
+    event-handler
+    client-network
+    client-network/map-session
+    edition-tools
     modes
     ProfilUtilisateur
 )

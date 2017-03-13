@@ -11,7 +11,7 @@
 #ifndef ETAT_CREATION_POTEAU_H
 #define ETAT_CREATION_POTEAU_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurTypes.h"
 #include <iostream>
 
@@ -22,10 +22,10 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatCreationPoteau : public EtatAbstrait
+class EtatCreationPoteau : public OnlineTool
 {
 public:
-	EtatCreationPoteau();
+	EtatCreationPoteau(client_network::MapSession* mapSession);
 	virtual ~EtatCreationPoteau();
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
@@ -37,6 +37,8 @@ public:
 private:
 	std::unique_ptr<VisiteurCreationPoteau> visiteurCreationPoteau_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
+
+	EtatCreationPoteau() = delete;
 };
 
 

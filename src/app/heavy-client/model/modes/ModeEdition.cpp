@@ -124,7 +124,7 @@ void ModeEdition::assignerEtat(Tool etat)
 		break;
 
 	case CREATION_POTEAU:
-		etat_ = std::make_unique<EtatCreationPoteau>();
+		etat_ = std::make_unique<EtatCreationPoteau>(mapSession_);
 		break;
 
 	case CREATION_MUR:

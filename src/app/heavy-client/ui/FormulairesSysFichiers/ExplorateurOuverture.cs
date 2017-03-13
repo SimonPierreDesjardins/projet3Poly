@@ -41,6 +41,8 @@ namespace ui
 
         bool afficherZoneDefaut = false;
 
+        Window parent_;
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public ExplorateurOuverture()
@@ -51,8 +53,10 @@ namespace ui
         /// @return Aucune
         ///
         ////////////////////////////////////////////////////////////////////////
-        public ExplorateurOuverture(bool afficher)
+        public ExplorateurOuverture(Window parent/*bool afficher*/)
         {
+            parent_ = parent;
+
             StringBuilder str = new StringBuilder(100);
             FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
             cheminFichierZoneDefaut = str.ToString();
@@ -60,8 +64,10 @@ namespace ui
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             extensionFichierZone = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("."));
             InitializeComponent();
-            afficherZoneDefaut = afficher;
+            afficherZoneDefaut = true;
             PopulateTreeView();
+
+            populateLocalMapList();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -227,12 +233,6 @@ namespace ui
             Close();
         }
 
-        static partial class FonctionNative
-        {
-            [System.Runtime.InteropServices.DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
-            public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
-        }
-
         private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)
@@ -243,5 +243,41 @@ namespace ui
             }
         }
 
+        private string getPath(string mapName)
+        {
+            for (int i = 0; i < listView1.Items.Count; i++)
+            {
+                string text = listView1.Items[i].Text;
+                text = text.Replace(extensionFichierZone, "");
+
+                if (mapName == text)
+                {
+                     return cheminFichier = ((FileInfo)listView1.Items[i].Tag).FullName;
+                }
+            }
+            return "";
+        }
+
+        public void populateLocalMapList()
+        {
+            for (int i = 0; i < listView1.Items.Count; i++)
+            {
+                string text = listView1.Items[i].Text;
+                text = text.Replace(extensionFichierZone, "");
+
+                if (!parent_.offlineMaps_.ContainsKey(text))
+                {
+                    MapPresentator newMap = new MapPresentator(parent_, text, false, 0, 1, 0);
+                    newMap.setPath(((FileInfo)listView1.Items[i].Tag).FullName);
+                    parent_.offlineMaps_.Add(text, newMap);
+                }
+            }
+        }
+
+        static partial class FonctionNative
+        {
+            [System.Runtime.InteropServices.DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+            public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
+        }
     }
 }

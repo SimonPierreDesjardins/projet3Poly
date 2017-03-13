@@ -9,7 +9,7 @@
 #ifndef MODE_TUTORIAL_EDITION_H
 #define MODE_TUTORIAL_EDITION_H
 
-#include "ModeAbstrait.h"
+#include "OnlineMapMode.h"
 #include "VisiteurAbstrait.h"
 #include "VisiteurSuppression.h"
 #include <memory>
@@ -25,12 +25,12 @@
 ///
 ///    Cette classe s'occupe d'implémenter les fonctions du mode edition tutoriel
 ///////////////////////////////////////////////////////////////////////////
-class ModeTutorialEdition : public ModeAbstrait
+class ModeTutorialEdition : public OnlineMapMode
 {
 public:
 
 	//Constructeur par défaut
-	ModeTutorialEdition();
+	ModeTutorialEdition(client_network::MapSession* mapSession);
 	//Destructeur
 	virtual ~ModeTutorialEdition();
 	virtual void gererToucheSupprimer();
@@ -69,6 +69,9 @@ protected:
 	int ancienSourisY_{ 0 };
 
 	std::unique_ptr<EtatAbstrait> etat_;
+
+private:
+	ModeTutorialEdition() = delete;
 };
 
 #endif /// MODE_TUTORIAL_EDITION_H

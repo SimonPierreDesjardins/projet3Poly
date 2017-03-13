@@ -16,14 +16,15 @@ void EventHandler::onEntityCreated()
 void EventHandler::onEntityCreated(uint8_t entityType, uint32_t parentId, 
 	const glm::vec3& absPos, const glm::vec3& relPos, 
 	const glm::vec3& rotation, const glm::vec3& scale,
-	uint32_t entityId, const std::string& userId)
+	uint32_t entityId, uint32_t userId)
 {
 	if (currentSession_ != nullptr)
 	{
+		currentSession_->serverEntityCreated(entityType, parentId, absPos, relPos, rotation, scale, entityId, userId);
 	}
 }
 
-void EventHandler::onUserJoinedMap(const std::string& mapId, const std::string& userId)
+void EventHandler::onUserJoinedMap(uint32_t mapId, uint32_t userId)
 {
 	client_network::MapSession* mapSession = mapSessionManager_->getServerSession(mapId);
 	// The map exists on the client.
@@ -38,14 +39,14 @@ void EventHandler::onUserJoinedMap(const std::string& mapId, const std::string& 
 	}
 }
 
-void EventHandler::onNewMapCreated(char mapType, const std::string& mapId, std::string& name)
+void EventHandler::onNewMapCreated(char mapType, uint32_t mapId, std::string& name)
 {
 	mapSessionManager_->createServerSession(mapId, mapType, name);
 	// TODO: Remove this and use the ui.
 	networkManager_->requestToJoinMapSession(mapId);
 }
 
-void EventHandler::onUserAuthentified(const std::string& userId)
+void EventHandler::onUserAuthentified(uint32_t userId)
 {
 	// TODO: notify the ui here.
 	networkManager_->setUserId(userId);
