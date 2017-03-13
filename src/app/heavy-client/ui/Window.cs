@@ -8,6 +8,7 @@ using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
+using System.Collections.Generic;
 
 namespace ui
 {
@@ -19,6 +20,7 @@ namespace ui
         public string userName = "";
 
         public MainMenu mainMenu;
+        public MapMenu mapMenu;
         public PersonnalisationSideMenu personnalisationSideMenu;
         public SimulationMenuStrip simulationMenuStrip;
         public TestMenuStrip testMenuStrip;
@@ -31,6 +33,9 @@ namespace ui
         public EditionTutorielSideMenu editionTutorielSideMenu;
         public EditionTutorielInstructions editionTutorielInstructions;
         public TutorialEditionModificationPanel editionTutorielModificationPanel;
+
+        public Dictionary<string, MapPresentator> offlineMaps_ = new Dictionary<string, MapPresentator>();
+        public Dictionary<int, MapPresentator> onlineMaps_ = new Dictionary<int, MapPresentator>();
 
         public object timerLock_ = new object();
         public bool lockWasTaken = false;
@@ -93,6 +98,9 @@ namespace ui
 
             InitialiserAnimation();
             configuration = new Configure(this);
+
+            mInstance = new CallbackForNewMap(addNewMap);
+            SetCallbackForNewMap(mInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -586,6 +594,36 @@ namespace ui
                 int h = viewPort.Height;
             }
         }
+
+        public void Test(string mapName, bool connectionState, int mode, int nbPlayers, int id)
+        {
+            AddMap(mapName, connectionState, mode, nbPlayers, id);
+        }
+
+        private delegate void CallbackForNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, int id);
+        // Ensure it doesn't get garbage collected
+        private CallbackForNewMap mInstance;
+        private void addNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, int id)
+        {
+            if (!onlineMaps_.ContainsKey(id))
+            {
+                Byte[] tmp = new Byte[mapNameSize];
+                Marshal.Copy(mapName, tmp, 0, mapNameSize);
+                var str = System.Text.Encoding.Default.GetString(tmp);
+
+                MapPresentator newMap = new MapPresentator(this, str, connectionState, mode, nbPlayers, id);
+                onlineMaps_.Add(id, newMap);
+
+                //Only for debug
+                Console.WriteLine("\n AddingNewMapToDictionary \n");
+            }
+        }
+
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForNewMap(CallbackForNewMap fn);
+
+        [DllImport("model.dll")]
+        private static extern void AddMap(string mapName, bool connectionState, int mode, int nbPlayers, int id);
     }
 
     ////////////////////////////////////////////////////////////////////////

@@ -95,7 +95,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public void ouvrirZone(bool afficherZoneDefaut)
         {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture(afficherZoneDefaut);
+            ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
             FonctionsNatives.assignerAutorisationInputClavier(false);
             FonctionsNatives.assignerAutorisationInputSouris(false);
 

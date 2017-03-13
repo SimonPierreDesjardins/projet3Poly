@@ -189,11 +189,11 @@
         private System.Windows.Forms.TreeView folderTreeView;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.Button annulerButt;
         private System.Windows.Forms.Button ouvrirButt;
         private System.Windows.Forms.ColumnHeader nomCol;
         private System.Windows.Forms.ColumnHeader typeCol;
         private System.Windows.Forms.ColumnHeader dateCol;
+        public System.Windows.Forms.ListView listView1;
     }
 }
