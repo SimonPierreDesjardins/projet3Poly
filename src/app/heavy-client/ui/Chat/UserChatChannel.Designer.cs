@@ -43,14 +43,14 @@
             this.addChannelTextBox = new System.Windows.Forms.TextBox();
             this.panelUser = new System.Windows.Forms.Panel();
             this.panel = new System.Windows.Forms.Panel();
+            this.sendButton = new ui.PanelButton();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.createButton = new ui.PanelButton();
             this.customLabel3 = new ui.CustomLabel();
             this.joinButton = new ui.PanelButton();
             this.customLabel2 = new ui.CustomLabel();
             this.leaveButton = new ui.PanelButton();
             this.customLabel1 = new ui.CustomLabel();
-            this.sendButton = new ui.PanelButton();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.channelButton = new ui.PanelButton();
             this.channelPictureBox = new System.Windows.Forms.PictureBox();
             this.userButton = new ui.PanelButton();
@@ -60,11 +60,11 @@
             this.panelChannel.SuspendLayout();
             this.panelUser.SuspendLayout();
             this.panel.SuspendLayout();
+            this.sendButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.createButton.SuspendLayout();
             this.joinButton.SuspendLayout();
             this.leaveButton.SuspendLayout();
-            this.sendButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.channelButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.channelPictureBox)).BeginInit();
             this.userButton.SuspendLayout();
@@ -101,16 +101,16 @@
             this.panelChat.Controls.Add(this.chatListBox);
             this.panelChat.Location = new System.Drawing.Point(0, 0);
             this.panelChat.Name = "panelChat";
-            this.panelChat.Size = new System.Drawing.Size(233, 239);
+            this.panelChat.Size = new System.Drawing.Size(235, 239);
             this.panelChat.TabIndex = 14;
             // 
             // chatTextBox
             // 
             this.chatTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatTextBox.Location = new System.Drawing.Point(7, 209);
+            this.chatTextBox.Location = new System.Drawing.Point(14, 207);
             this.chatTextBox.Name = "chatTextBox";
-            this.chatTextBox.Size = new System.Drawing.Size(189, 20);
+            this.chatTextBox.Size = new System.Drawing.Size(173, 20);
             this.chatTextBox.TabIndex = 15;
             this.chatTextBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.chatTextBox_PreviewKeyDown);
             // 
@@ -119,11 +119,18 @@
             this.chatListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.chatListBox.FormattingEnabled = true;
-            this.chatListBox.Location = new System.Drawing.Point(6, 5);
+            this.chatListBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.chatListBox.CausesValidation = false;
+            this.chatListBox.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chatListBox.IntegralHeight = false;
+            this.chatListBox.ItemHeight = 17;
+            this.chatListBox.Location = new System.Drawing.Point(12, 5);
             this.chatListBox.Name = "chatListBox";
-            this.chatListBox.Size = new System.Drawing.Size(221, 186);
+            this.chatListBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.chatListBox.Size = new System.Drawing.Size(206, 186);
             this.chatListBox.TabIndex = 13;
+            this.chatListBox.TabStop = false;
+            this.chatListBox.UseTabStops = false;
             // 
             // userListBox
             // 
@@ -208,6 +215,28 @@
             this.panel.Size = new System.Drawing.Size(237, 239);
             this.panel.TabIndex = 21;
             // 
+            // sendButton
+            // 
+            this.sendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.sendButton.BackColor = System.Drawing.Color.Transparent;
+            this.sendButton.Controls.Add(this.pictureBox3);
+            this.sendButton.Location = new System.Drawing.Point(192, 204);
+            this.sendButton.Name = "sendButton";
+            this.sendButton.Size = new System.Drawing.Size(26, 26);
+            this.sendButton.TabIndex = 14;
+            this.sendButton.Click += new System.EventHandler(this.sendButton_Click_1);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox3.Enabled = false;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(1, 1);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
+            // 
             // createButton
             // 
             this.createButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -273,28 +302,6 @@
             this.customLabel1.TabIndex = 0;
             this.customLabel1.Text = "Quitter ce canal";
             // 
-            // sendButton
-            // 
-            this.sendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendButton.BackColor = System.Drawing.Color.Transparent;
-            this.sendButton.Controls.Add(this.pictureBox3);
-            this.sendButton.Location = new System.Drawing.Point(201, 207);
-            this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(26, 26);
-            this.sendButton.TabIndex = 14;
-            this.sendButton.Click += new System.EventHandler(this.sendButton_Click_1);
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox3.Enabled = false;
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(1, 1);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox3.TabIndex = 0;
-            this.pictureBox3.TabStop = false;
-            // 
             // channelButton
             // 
             this.channelButton.BackColor = System.Drawing.Color.Transparent;
@@ -354,14 +361,14 @@
             this.panelChannel.PerformLayout();
             this.panelUser.ResumeLayout(false);
             this.panel.ResumeLayout(false);
+            this.sendButton.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.createButton.ResumeLayout(false);
             this.createButton.PerformLayout();
             this.joinButton.ResumeLayout(false);
             this.joinButton.PerformLayout();
             this.leaveButton.ResumeLayout(false);
             this.leaveButton.PerformLayout();
-            this.sendButton.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.channelButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.channelPictureBox)).EndInit();
             this.userButton.ResumeLayout(false);

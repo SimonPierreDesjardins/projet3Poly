@@ -91,7 +91,7 @@ void Connection::fetchSocketMessage()
 	rcvBuffer_.fill(char());
 	int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
 
-	if (readBytes != 0)
+	if (readBytes > 0)
 	{
 		onMessageReceived_(rcvBuffer_.data(), readBytes);
 	}

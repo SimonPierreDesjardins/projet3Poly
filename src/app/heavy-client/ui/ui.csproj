@@ -78,6 +78,18 @@
     <Compile Include="Chat\ChatWindow.Designer.cs">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditionTutoriel\TutorialEditionModificationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\TutorialEditionModificationPanel.Designer.cs">
+      <DependentUpon>TutorialEditionModificationPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Edition\EditionModificationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Edition\EditionModificationPanel.Designer.cs">
+      <DependentUpon>EditionModificationPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="EditionTutoriel\EditionTutorielMenuStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -244,6 +256,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditionTutoriel\EditionTutorielInstructions.resx">
       <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\TutorialEditionModificationPanel.resx">
+      <DependentUpon>TutorialEditionModificationPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edition\EditionModificationPanel.resx">
+      <DependentUpon>EditionModificationPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ColorSelector.resx">
       <DependentUpon>ColorSelector.cs</DependentUpon>

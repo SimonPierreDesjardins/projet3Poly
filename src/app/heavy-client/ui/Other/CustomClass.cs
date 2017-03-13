@@ -77,6 +77,12 @@ namespace ui
             toolTip = new ToolTip();
         }
 
+        protected override void OnClick(EventArgs e)
+        {
+            base.OnClick(e);
+            this.Focus();
+        }
+
         protected override void OnMouseEnter(EventArgs e)
         {
             //When not selected

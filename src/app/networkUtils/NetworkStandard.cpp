@@ -1,17 +1,15 @@
 #include "include\NetworkStandard.h"
+#include "TypeSerializerDeserializer.h"
 
-std::string Networking::MessageStandard::AddMessageLengthHeader(std::string & message)
+std::string Networking::MessageStandard::AddMessageLengthHeader(const std::string & message)
 {
-	int length = message.size();
-	std::string lengthHeader(static_cast<char*>(static_cast<void*>(&length)), sizeof length);
+	std::string lengthHeader = "";
+	serialize((uint32_t)(message.size() + sizeof uint32_t), lengthHeader);
 	// optimal string concatenation modified message
-	return std::move(lengthHeader += message);
+	return std::move( lengthHeader.append(message));
 }
 
 int Networking::MessageStandard::GetMessageLength(std::string & message)
 {
-	return int((unsigned char)(message[0]) << 24 |
-		(unsigned char)(message[1]) << 16 |
-		(unsigned char)(message[2]) << 8 |
-		(unsigned char)(message[3]));
+	return deserializeInteger(message.c_str());
 }

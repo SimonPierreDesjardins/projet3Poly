@@ -32,7 +32,9 @@ void MapEntry::updateSessionType()
 
 std::string MapEntry::GetSerializedInfo()
 {
-	return Info.GetId() + ';' + Info.mapName + ';' + getSessionType() + ';' + getNumberOfUsers();
+	std::string serializedEntry;
+	Networking::serialize(Info.GetId(), serializedEntry);
+	return serializedEntry + ';' + Info.mapName + ';' + getSessionType() + ';' + getNumberOfUsers();
 }
 
 char MapEntry::getSessionType()
@@ -121,27 +123,21 @@ std::string MapSystem::GetMapListMessage()
 void MapSystem::UpdateUsersMapLists()
 {
 	std::string mapListMessage = GetMapListMessage();
-	for each (auto systemUser in _userList) {
+	for each (auto systemUser in _connectedUserList) {
 		systemUser.second->ForwardMessage(mapListMessage);
 	}
 }
 
 void MapSystem::NotifyMapCreation(const MapEntry& mapSession)
 {
-	// Compute message size.
-	size_t messageSize = mapSession.Info.mapName.size() +  
-		                 mapSession.Info.GetId().size() + 3;
 	// Build the message.
-	std::string message;
-	Networking::serialize((uint32_t)(messageSize), message);
-
-	message.append("mc");
+	std::string message = "mc";
 	message.append(1, mapSession.Info.mapType);
-	message.append(mapSession.Info.GetId());
+	Networking::serialize(mapSession.Info.GetId(), message);
 	message.append(mapSession.Info.mapName);
 
 	// Broadcast.
-	broadcastMessage(message);
+	broadcastMessage(Networking::MessageStandard::AddMessageLengthHeader(message));
 }
 
 void MapSystem::HandleMapCreationMessage(User * user, const std::string & message)
@@ -174,13 +170,14 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 
 void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 {
-	std::string mapId = message.substr(Networking::MessageStandard::DATA_START);
+	unsigned int mapId = Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START);
+
 	auto it = _mapList.find(mapId);
 	if (it != _mapList.end())
 	{
 		// Send joined response.
 		std::string response(message);
-		response.append(user->Info.GetId());
+		Networking::serialize(user->Info.GetId(), response);
 		user->ForwardMessage(response);
 		it->second.getCurrentSession()->broadcastMessage(response);
 
@@ -203,7 +200,7 @@ void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& mess
 
 void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)
 {
-	_mapList.erase(message.substr(Networking::MessageStandard::DATA_START));
+	_mapList.erase(Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START));
 }
 
 void MapSystem::HandleMapGraphRequestMessage(User * user, const std::string & message)

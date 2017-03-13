@@ -3,17 +3,7 @@
 
 server::MapInfo::MapInfo()
 {
-	_mapId = IdGenerator::GenerateId();
-	mapName = _mapId;
-}
-
-const std::string & server::MapInfo::GetId()
-{
-	return _mapId;
-}
-
-void server::MapDatabase::WriteObject(DatalistElement & element)
-{
-
+	//TODO: build this from string eventually
+	mapName = GetId();
 }
 

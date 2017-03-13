@@ -13,11 +13,10 @@ namespace server {
 	public:
 		std::string UserName;
 		std::vector<std::string> privateMaps;
-		virtual const std::string& GetId();
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
-	class UserDatabase:public BaseDatalist{
+	class UserDatabase:public BaseDatalist<DatalistElement>{
 		friend class Database;
 
 	protected:

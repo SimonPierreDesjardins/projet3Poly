@@ -62,6 +62,7 @@ namespace ui
             hideObjectMenu();
             setDefaultUnselectedColors();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TOOL)
@@ -96,6 +97,7 @@ namespace ui
             hideObjectMenu();
             setDefaultUnselectedColors();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_MOVE_TOOL)
@@ -130,6 +132,7 @@ namespace ui
             hideObjectMenu();
             setDefaultUnselectedColors();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_ROTATION_TOOL)
@@ -164,6 +167,7 @@ namespace ui
             hideObjectMenu();
             setDefaultUnselectedColors();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_SCALE_TOOL)
@@ -198,6 +202,7 @@ namespace ui
             hideObjectMenu();
             setDefaultUnselectedColors();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL)
@@ -220,6 +225,7 @@ namespace ui
             ShowObjectMenu.Start();
 
             setDefaultUnselectedColors();
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             createToolButton.BackColor = Color.FromArgb(0, 102, 204);
         }
 
@@ -251,6 +257,7 @@ namespace ui
             hideObjectMenu();
             setDefaultUnselectedColors();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
         }
 
@@ -278,6 +285,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public void deleteTool()
         {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
             parent_.verificationDuNombreElementChoisi();
 

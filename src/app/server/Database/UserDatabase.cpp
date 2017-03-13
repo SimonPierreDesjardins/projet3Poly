@@ -6,12 +6,6 @@ void server::UserDatabase::WriteObject(DatalistElement & element)
 	//Use the writer to save individual user objects
 }
 
-server::UserDatabase::UserDatabase(std::string basePath):BaseDatalist(basePath) {
-	// normally Base Datalist builds list of users but we will do it here instead
-
-}
-
-const std::string& server::UserInformation::GetId()
-{
-	return UserName;
+server::UserDatabase::UserDatabase(const std::string basePath):BaseDatalist(basePath) {
+	// normally Base Datalist builds list of users
 }

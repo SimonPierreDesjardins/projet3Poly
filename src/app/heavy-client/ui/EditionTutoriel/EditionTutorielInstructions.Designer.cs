@@ -31,16 +31,22 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditionTutorielInstructions));
             this.tutorialPanel = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.instructionBox = new System.Windows.Forms.ListBox();
+            this.TitleButton = new ui.PanelButton();
+            this.customLabel1 = new ui.CustomLabel();
+            this.minMaxButton = new ui.PanelButton();
+            this.minMaxPictureBox = new System.Windows.Forms.PictureBox();
             this.previousButton = new ui.PanelButton();
             this.previousLabel = new ui.CustomLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.nextButton = new ui.PanelButton();
             this.nextLabel = new ui.CustomLabel();
             this.nextPictureBox = new System.Windows.Forms.PictureBox();
-            this.instructionBox = new System.Windows.Forms.ListBox();
-            this.label1 = new System.Windows.Forms.Label();
             this.tutorialPanel.SuspendLayout();
             this.panel1.SuspendLayout();
+            this.TitleButton.SuspendLayout();
+            this.minMaxButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minMaxPictureBox)).BeginInit();
             this.previousButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.nextButton.SuspendLayout();
@@ -56,9 +62,6 @@
             this.tutorialPanel.Name = "tutorialPanel";
             this.tutorialPanel.Size = new System.Drawing.Size(417, 306);
             this.tutorialPanel.TabIndex = 1;
-            this.tutorialPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tutorialPanel_MouseDown);
-            this.tutorialPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tutorialPanel_MouseMove);
-            this.tutorialPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.tutorialPanel_MouseUp);
             // 
             // panel1
             // 
@@ -66,14 +69,69 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.panel1.Controls.Add(this.TitleButton);
+            this.panel1.Controls.Add(this.minMaxButton);
             this.panel1.Controls.Add(this.previousButton);
             this.panel1.Controls.Add(this.nextButton);
             this.panel1.Controls.Add(this.instructionBox);
-            this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(411, 300);
             this.panel1.TabIndex = 0;
+            // 
+            // instructionBox
+            // 
+            this.instructionBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.instructionBox.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.instructionBox.ForeColor = System.Drawing.Color.Silver;
+            this.instructionBox.FormattingEnabled = true;
+            this.instructionBox.ItemHeight = 17;
+            this.instructionBox.Location = new System.Drawing.Point(9, 35);
+            this.instructionBox.Name = "instructionBox";
+            this.instructionBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
+            this.instructionBox.Size = new System.Drawing.Size(389, 208);
+            this.instructionBox.TabIndex = 1;
+            // 
+            // TitleButton
+            // 
+            this.TitleButton.Controls.Add(this.customLabel1);
+            this.TitleButton.Location = new System.Drawing.Point(9, 0);
+            this.TitleButton.Name = "TitleButton";
+            this.TitleButton.Size = new System.Drawing.Size(180, 25);
+            this.TitleButton.TabIndex = 12;
+            this.TitleButton.Click += new System.EventHandler(this.TitleButton_Click);
+            // 
+            // customLabel1
+            // 
+            this.customLabel1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel1.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel1.Location = new System.Drawing.Point(0, 0);
+            this.customLabel1.Name = "customLabel1";
+            this.customLabel1.Size = new System.Drawing.Size(177, 25);
+            this.customLabel1.TabIndex = 0;
+            this.customLabel1.Text = "Tutoriel pour Édition";
+            // 
+            // minMaxButton
+            // 
+            this.minMaxButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.minMaxButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.minMaxButton.Controls.Add(this.minMaxPictureBox);
+            this.minMaxButton.Location = new System.Drawing.Point(372, 0);
+            this.minMaxButton.Name = "minMaxButton";
+            this.minMaxButton.Size = new System.Drawing.Size(26, 26);
+            this.minMaxButton.TabIndex = 11;
+            this.minMaxButton.Click += new System.EventHandler(this.minMaxButton_Click);
+            // 
+            // minMaxPictureBox
+            // 
+            this.minMaxPictureBox.Enabled = false;
+            this.minMaxPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("minMaxPictureBox.Image")));
+            this.minMaxPictureBox.Location = new System.Drawing.Point(1, 1);
+            this.minMaxPictureBox.Name = "minMaxPictureBox";
+            this.minMaxPictureBox.Size = new System.Drawing.Size(24, 24);
+            this.minMaxPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.minMaxPictureBox.TabIndex = 0;
+            this.minMaxPictureBox.TabStop = false;
             // 
             // previousButton
             // 
@@ -139,30 +197,6 @@
             this.nextPictureBox.TabIndex = 0;
             this.nextPictureBox.TabStop = false;
             // 
-            // instructionBox
-            // 
-            this.instructionBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.instructionBox.Font = new System.Drawing.Font("Century Gothic", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.instructionBox.ForeColor = System.Drawing.Color.Silver;
-            this.instructionBox.FormattingEnabled = true;
-            this.instructionBox.ItemHeight = 17;
-            this.instructionBox.Location = new System.Drawing.Point(9, 35);
-            this.instructionBox.Name = "instructionBox";
-            this.instructionBox.SelectionMode = System.Windows.Forms.SelectionMode.None;
-            this.instructionBox.Size = new System.Drawing.Size(389, 208);
-            this.instructionBox.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Silver;
-            this.label1.Location = new System.Drawing.Point(5, 5);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(161, 21);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Tutoriel Pour Édition";
-            // 
             // EditionTutorielInstructions
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -173,7 +207,10 @@
             this.Size = new System.Drawing.Size(417, 306);
             this.tutorialPanel.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this.TitleButton.ResumeLayout(false);
+            this.minMaxButton.ResumeLayout(false);
+            this.minMaxButton.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.minMaxPictureBox)).EndInit();
             this.previousButton.ResumeLayout(false);
             this.previousButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -194,6 +231,9 @@
         private CustomLabel nextLabel;
         private System.Windows.Forms.PictureBox nextPictureBox;
         private System.Windows.Forms.ListBox instructionBox;
-        private System.Windows.Forms.Label label1;
+        private PanelButton TitleButton;
+        private PanelButton minMaxButton;
+        private System.Windows.Forms.PictureBox minMaxPictureBox;
+        private CustomLabel customLabel1;
     }
 }

@@ -13,6 +13,7 @@ namespace ui
     public partial class UserChatChannel : UserControl
     {
         Window parent_;
+        String name_;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -23,11 +24,13 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public UserChatChannel(Window parent)
+        public UserChatChannel(Window parent, string name)
         {
             InitializeComponent();
             parent_ = parent;
-            
+            name_ = name;
+
+
             panelUser.Visible = false;
             userListBox.Items.Add("USERS MOFO");
             
@@ -37,6 +40,25 @@ namespace ui
             chatListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             chatListBox.MeasureItem += chatBox_MeasureItem;
             chatListBox.DrawItem += chatBox_DrawItem;
+        }
+
+        public ListBox.ObjectCollection getChannelListBoxInfo()
+        {
+            return ChannelListBox.Items;
+        }
+
+        public void addNewChannel(String newChannelName)
+        {
+            ChannelListBox.Items.Add(newChannelName);
+        }
+
+        public void setChannelList(UserChatChannel generalChannel)
+        {
+            ChannelListBox.Items.Clear();
+            foreach (var item in generalChannel.getChannelListBoxInfo())
+            {
+                ChannelListBox.Items.Add(item);
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -51,7 +73,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void chatBox_MeasureItem(object sender, MeasureItemEventArgs e)
         {
-            e.ItemHeight = (int)e.Graphics.MeasureString(chatListBox.Items[e.Index].ToString(), chatListBox.Font, chatListBox.Width).Height;
+            if (chatListBox.Items.Count > 0)
+            {
+                e.ItemHeight = (int)e.Graphics.MeasureString(chatListBox.Items[e.Index].ToString(), chatListBox.Font, chatListBox.Width).Height;
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -69,7 +94,7 @@ namespace ui
         {
             e.DrawBackground();
             e.DrawFocusRectangle();
-            if (e.Index != -1)
+            if (e.Index > -1)
                 e.Graphics.DrawString(chatListBox.Items[e.Index].ToString(), e.Font, new SolidBrush(e.ForeColor), e.Bounds);
         }
 
@@ -316,9 +341,8 @@ namespace ui
         {
             if (!System.Text.RegularExpressions.Regex.Replace(chatTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
-                chatListBox.Items.Add(chatTextBox.Text);
-                chatListBox.TopIndex = chatListBox.Items.Count - 1;
-
+                string tmp = "cm" + parent_.userName + ";" + name_ + ";" + DateTime.Now.ToString("HH:mm:ss;yyyy-MM-dd;") + chatTextBox.Text;
+                FonctionsNatives.sendMessage(tmp, tmp.Length);
                 chatTextBox.Clear();
             }
         }
@@ -346,7 +370,8 @@ namespace ui
             else if (!System.Text.RegularExpressions.Regex.Replace(addChannelTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
                 parent_.userChat.createNewChannel(addChannelTextBox.Text);
-                ChannelListBox.Items.Add(addChannelTextBox.Text);
+                string tmp = "cj" + parent_.userName + ";" + addChannelTextBox.Text;
+                FonctionsNatives.sendMessage(tmp, tmp.Length);
             }
             else
             {
@@ -382,7 +407,11 @@ namespace ui
                 bool unique = parent_.userChat.alreadyInChannel(ChannelListBox.SelectedItem.ToString());
                 
                 if (unique)
+                {
                     parent_.userChat.createNewChannel(ChannelListBox.SelectedItem.ToString());
+                    string tmp = "cj" + parent_.userName + ";" + ChannelListBox.SelectedItem.ToString();
+                    FonctionsNatives.sendMessage(tmp, tmp.Length);
+                }   
                 else
                 {
                     warningLabel.Visible = true;
@@ -414,12 +443,18 @@ namespace ui
 
             if (ChannelListBox.SelectedIndex != -1)
             {
-                bool leftChannel = parent_.userChat.leaveChannel(ChannelListBox.SelectedItem.ToString());
+                string channel = ChannelListBox.SelectedItem.ToString();
+                bool leftChannel = parent_.userChat.leaveChannel(channel);
 
                 if (!leftChannel)
                 {
                     warningLabel.Visible = true;
                     warningLabel.Text = "Ne peut quitter ce canal";
+                }
+                else
+                {
+                    string tmp = "cq" + parent_.userName + ";" + channel;
+                    FonctionsNatives.sendMessage(tmp, tmp.Length);
                 }
             }
             else
@@ -443,6 +478,19 @@ namespace ui
         {
             warningLabel.Visible = false;
             warningLabel.Text = "";
+        }
+
+        public void addMessageToChat(string message)
+        {
+            chatListBox.Items.Add(message);
+            chatListBox.TopIndex = chatListBox.Items.Count - 1;
+        }
+
+        public void addUsersToChannel(string[] users)
+        {
+            userListBox.Items.Clear();
+            for (int i = 1; i < users.Length; i++)
+                userListBox.Items.Add(users[i]);
         }
     }
 }

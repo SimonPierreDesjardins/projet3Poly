@@ -82,8 +82,9 @@ void NetworkManager::requestEntityCreation(uint8_t type, uint32_t parentId,
 
 void NetworkManager::sendSizePrefixedMessage(std::string& message)
 {
-	serializer_.serialize((uint32_t)(message.size()), message);
-	sendMessage(message);
+	std::string size;
+	serializer_.serialize((uint32_t)(message.size()), size);
+	sendMessage(message.insert(0, size));
 }
 
 }

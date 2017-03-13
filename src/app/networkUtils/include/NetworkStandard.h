@@ -12,7 +12,7 @@ namespace Networking {
 		const int COMMAND = 5;
 		const int DATA_START = 6;
 
-		std::string AddMessageLengthHeader(std::string& message);
+		std::string AddMessageLengthHeader(const std::string& message);
 
 		int GetMessageLength(std::string& message);
 	}

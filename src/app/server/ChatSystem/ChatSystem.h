@@ -33,27 +33,31 @@ namespace server {
 			std::string GetUserList();
 
 			///<summary> Adds a user to the list of users in this chat</summary>
-			void AddUser(std::string username);
+			///<summary> Returns true if operation performed</summary>
+			bool AddUser(User*);
 
 			///<summary> Removes the user from this session</summary>
-			void RemoveUser(std::string username);
+			///<summary> Returns true if operation performed</summary>
+			bool RemoveUser(User*);
 
-			std::vector<std::string> UserList;
+			std::vector<User*> UserList;
 		};
 
 		char _systemType{ 'c' };
 
-		std::string GetChannelList();
+		std::string GetChannelListMessage();
 
 		void ParseUserJoinRequest(User* user, const std::string& message);
 
 		void ParseUserLeaveRequest(User* user, const std::string& message);
 
-		void AddUserToChannel(User* user, std::string channelName);
+		void AddUserToChannel(User* user, const std::string& channelName);
 
-		void RemoveUserFromChannel(User* user, std::string channelName);
+		void RemoveUserFromChannel(User* user, const std::string& channelName);
+
+		void BroadcastUserList(const std::string& channelName);
 		
-		std::map<std::string, ChatSession> _chatSessions;
+		std::unordered_map<std::string, ChatSession> _chatSessions;
 	};
 }
 

@@ -7,14 +7,12 @@
 #include <iostream>
 
 namespace server {
-	static class IdGenerator {
+	class IdGenerator {
 	public:
-		static std::string GenerateId();
+		static unsigned int GenerateId();
 
 	private:
 		static unsigned int nextId;
-
-		static const unsigned int stringLength = 20;
 	};
 
 
