@@ -30,12 +30,7 @@ protected:
 	virtual void handleEntityDeletionMessage(User* sender, const std::string& message);
 	virtual void handleEntitySelectionMessage(User* sender, const std::string& message);
 
-	virtual void handleRelativePositionUpdateMessage(User* sender, const std::string& message);
-	virtual void handleAbsolutePositionUpdateMessage(User* sender, const std::string& message);
-	virtual void handleLinearVelocityUpdateMessage(User* sender, const std::string& message);
-	virtual void handleAngularVelocityUpdateMessage(User* sender, const std::string& message);
-	virtual void handleRotationUpdateMessage(User* sender, const std::string& message);
-	virtual void handleScaleUpdateMessage(User* sender, const std::string& message);
+	void updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value);
 
 	virtual void buildEntityCreationMessage(Entity* entity, std::string& message);
 };

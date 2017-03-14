@@ -61,10 +61,34 @@ void AbstractMapRoom::TreatUserMessage(User* sender, const std::string& message)
 	}
 }
 
+void AbstractMapRoom::updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value)
+{
+	entity->updatePhysicProperty((PropertyType)(property), value);
+}
+
 void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& message)
 {
 	assert(message[4] == PHYSIC_MESSAGE);
 
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	Entity* updatedEntity = tree_.findEntity(entityId);
+
+	// If the entity id exists and it is selected by this user.
+	if (updatedEntity && updatedEntity->userId_ == sender->Info.GetId())
+	{
+		Eigen::Vector3f updatedPropertyValue;
+		updatedPropertyValue.x() =
+			Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 4);
+		updatedPropertyValue.y() =
+			Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 8);
+		updatedPropertyValue.z() =
+			Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 12);
+
+		updateEntityProperty(message[Networking::MessageStandard::COMMAND], updatedEntity, updatedPropertyValue);
+
+		// Update other users.
+		broadcastMessage(sender, message);
+	}
 }
 
 void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& message)
@@ -142,30 +166,6 @@ void AbstractMapRoom::handleEntityDeletionMessage(User* sender, const std::strin
 }
 
 void AbstractMapRoom::handleEntitySelectionMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleRelativePositionUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleAbsolutePositionUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleLinearVelocityUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleAngularVelocityUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleRotationUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleScaleUpdateMessage(User* sender, const std::string& message)
 {
 }
 
