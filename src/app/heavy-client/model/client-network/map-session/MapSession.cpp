@@ -46,6 +46,7 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			newEntity->assignerPositionRelative({ relPos.x, relPos.y, relPos.z });
 			newEntity->assignerAngleRotation(rotation.z);
 			newEntity->assignerFacteurMiseAEchelle(scale.x);
+			newEntity->setId(entityId);
 			confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
 		}
 	}
@@ -56,6 +57,7 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 		NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.back();
 		pendingEntityCreationRequests_.pop();
 		confirmedEntities_.insert(std::make_pair(entityId, entityToInsert));
+		entityToInsert->setId(entityId);
 
 		// Send next entity in pending.
 		if (!pendingEntityCreationRequests_.empty())

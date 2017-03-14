@@ -27,12 +27,15 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 
-	// Send all the entities except the first one (which is the root).
-	for (auto it = ++tree_.begin(); it != tree_.end(); ++it)
+	for (auto it = tree_.begin(); it != tree_.end(); ++it)
 	{
-		std::string message;
-		buildEntityCreationMessage(&it->second, message);
-		user->ForwardMessage(message);
+		// Send all the entities except the root.
+		if (it->second.entityId_ != 0)
+		{
+			std::string message;
+			buildEntityCreationMessage(&it->second, message);
+			user->ForwardMessage(message);
+		}
 	}
 }
 
