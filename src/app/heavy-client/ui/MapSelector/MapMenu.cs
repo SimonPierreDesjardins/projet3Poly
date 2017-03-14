@@ -16,6 +16,9 @@ namespace ui
         Window parent_;
         int numberOfMaps_ = 0;
 
+        public Dictionary<string, MapPresentator> offlineMaps_ = new Dictionary<string, MapPresentator>();
+        public Dictionary<int, MapPresentator> onlineMaps_ = new Dictionary<int, MapPresentator>();
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public MapMenu(Window parent)
@@ -31,26 +34,33 @@ namespace ui
             parent_ = parent;
 
             fileDirLabel.Text = "";
+        }
 
-            //Offline maps
-            foreach (KeyValuePair<string, MapPresentator> entry in parent_.offlineMaps_)
+        public void addOnlineMapEntry(int mapId, MapPresentator newMap)
+        { 
+            if (!onlineMaps_.ContainsKey(mapId))
             {
-                // do something with entry.Value or entry.Key
-                MapPresentator map = entry.Value;
-                map.Size = new Size(this.mapPanel.Width, map.Height);
-                map.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
-                map.Location = new Point(0, numberOfMaps_++ * 150);
-                this.mapPanel.Controls.Add(map);
+                newMap.Size = new Size(this.mapPanel.Width, newMap.Height);
+                newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+                newMap.Location = new Point(0, numberOfMaps_++ * 150);
+                onlineMaps_.Add(mapId, newMap);
+                //this.mapPanel.Controls.Add(newMap);
+
+                parent_.Invoke((MethodInvoker)delegate {
+                    this.mapPanel.Controls.Add(newMap);
+                });
             }
-            //Online maps
-            foreach (KeyValuePair<int, MapPresentator> entry in parent_.onlineMaps_)
+        }
+        
+        public void addOfflineMapEntry(string name, MapPresentator newMap)
+        {
+            if (!offlineMaps_.ContainsKey(name))
             {
-                // do something with entry.Value or entry.Key
-                MapPresentator map = entry.Value;
-                map.Size = new Size(this.mapPanel.Width, map.Height);
-                map.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
-                map.Location = new Point(0, numberOfMaps_++ * 150);
-                this.mapPanel.Controls.Add(map);
+                newMap.Size = new Size(this.mapPanel.Width, newMap.Height);
+                newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+                newMap.Location = new Point(0, numberOfMaps_++ * 150);
+                offlineMaps_.Add(name, newMap);
+                this.mapPanel.Controls.Add(newMap);
             }
         }
 
@@ -238,7 +248,15 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void confirmeButton_Click(object sender, EventArgs e)
         {
+            String mapName = textBox.Text;
+            FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.EDITION));
 
+            addPanel.Visible = false;
+            warningLabel.Visible = false;
+            textBox.Clear();
+            publicCheckBox.Checked = true;
+            privateCheckBox.Checked = false;
+            fileDirLabel.Text = "";
         }
     }
 }

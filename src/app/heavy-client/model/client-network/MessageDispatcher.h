@@ -57,6 +57,7 @@ private:
 	void handleMapCreationMessage(const std::string& message);
 	void handleMapJoinMessage(const std::string& message);
 	void handleMapQuitMessage(const std::string& message);
+	void handleMapListMessage(const std::string& message);
 
 	MessageDispatcher() = delete;
 };

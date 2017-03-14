@@ -10,7 +10,7 @@ namespace server
 
 
 
-MapEntry::MapEntry(MapInfo& info)
+MapEntry::MapEntry(const MapInfo& info)
 	: Info(info)
 {
 	updateSessionType();
@@ -30,11 +30,12 @@ void MapEntry::updateSessionType()
 	}
 }
 
-std::string MapEntry::GetSerializedInfo()
+void MapEntry::GetSerializedInfo(std::string& message)
 {
-	std::string serializedEntry;
-	Networking::serialize(Info.GetId(), serializedEntry);
-	return serializedEntry + ';' + Info.mapName + ';' + getSessionType() + ';' + getNumberOfUsers();
+	Networking::serialize(Info.GetId(), message);
+	message.append(1, getSessionType());
+	message.append(1, getNumberOfUsers());
+	message.append(Info.mapName);
 }
 
 char MapEntry::getSessionType()
@@ -111,7 +112,7 @@ std::string MapSystem::GetMapListMessage()
 		auto last = std::prev(_mapList.end());
 		for (auto it = _mapList.begin(); it != _mapList.end(); ++it)
 		{
-			mapListString += it->second.GetSerializedInfo();
+			it->second.GetSerializedInfo(mapListString);
 			if (it != last) {
 				mapListString += ';';
 			}
@@ -149,7 +150,7 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	MapInfo info;
 	info.mapName = name;
 	info.mapType = type;
-	MapEntry newSession(std::move(info));
+	MapEntry newSession(info);
 
 	// check if user had map transfer in progress
 	if (_mapsInTransfer.count(user->Info.GetId()) > 0) {

@@ -149,7 +149,7 @@ namespace ui
         {
             animationChangingMenu();
             ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
-            parent_.mapMenu = new MapMenu(parent_);
+            //parent_.mapMenu = new MapMenu(parent_);
 
             parent_.mapMenu.Dock = DockStyle.Fill;
             parent_.viewPort.Controls.Add(parent_.mapMenu);

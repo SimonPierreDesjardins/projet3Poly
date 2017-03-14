@@ -265,12 +265,9 @@ namespace ui
                 string text = listView1.Items[i].Text;
                 text = text.Replace(extensionFichierZone, "");
 
-                if (!parent_.offlineMaps_.ContainsKey(text))
-                {
-                    MapPresentator newMap = new MapPresentator(parent_, text, false, 0, 1, 0);
-                    newMap.setPath(((FileInfo)listView1.Items[i].Tag).FullName);
-                    parent_.offlineMaps_.Add(text, newMap);
-                }
+                MapPresentator newMap = new MapPresentator(parent_, text, false, 0, 1, 0);
+                newMap.setPath(((FileInfo)listView1.Items[i].Tag).FullName);
+                parent_.mapMenu.addOfflineMapEntry(text, newMap);
             }
         }
 

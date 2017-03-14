@@ -13,10 +13,10 @@ namespace server
 class MapEntry 
 {
 public:
-	MapInfo& Info;
+	MapInfo Info;
 
-	MapEntry(MapInfo& info);
-	std::string GetSerializedInfo();
+	MapEntry(const MapInfo& info);
+	void GetSerializedInfo(std::string& message);
 
 	void updateSessionType();
 	inline AbstractMapRoom* getCurrentSession();

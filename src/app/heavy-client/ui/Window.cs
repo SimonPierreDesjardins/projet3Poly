@@ -34,8 +34,6 @@ namespace ui
         public EditionTutorielInstructions editionTutorielInstructions;
         public TutorialEditionModificationPanel editionTutorielModificationPanel;
 
-        public Dictionary<string, MapPresentator> offlineMaps_ = new Dictionary<string, MapPresentator>();
-        public Dictionary<int, MapPresentator> onlineMaps_ = new Dictionary<int, MapPresentator>();
 
         public object timerLock_ = new object();
         public bool lockWasTaken = false;
@@ -98,6 +96,8 @@ namespace ui
 
             InitialiserAnimation();
             configuration = new Configure(this);
+            mapMenu = new MapMenu(this);
+
 
             mInstance = new CallbackForNewMap(addNewMap);
             SetCallbackForNewMap(mInstance);
@@ -605,18 +605,15 @@ namespace ui
         private CallbackForNewMap mInstance;
         private void addNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, int id)
         {
-            if (!onlineMaps_.ContainsKey(id))
-            {
-                Byte[] tmp = new Byte[mapNameSize];
-                Marshal.Copy(mapName, tmp, 0, mapNameSize);
-                var str = System.Text.Encoding.Default.GetString(tmp);
+            Byte[] tmp = new Byte[mapNameSize];
+            Marshal.Copy(mapName, tmp, 0, mapNameSize);
+            var str = System.Text.Encoding.Default.GetString(tmp);
 
-                MapPresentator newMap = new MapPresentator(this, str, connectionState, mode, nbPlayers, id);
-                onlineMaps_.Add(id, newMap);
+            MapPresentator newMap = new MapPresentator(this, str, connectionState, mode, nbPlayers, id);
+            mapMenu.addOnlineMapEntry(id, newMap);
 
-                //Only for debug
-                Console.WriteLine("\n AddingNewMapToDictionary \n");
-            }
+            //Only for debug
+            Console.WriteLine("\n AddingNewMapToDictionary \n");
         }
 
         [DllImport("model.dll")]

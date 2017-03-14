@@ -5,6 +5,7 @@
 #include "ArbreRendu.h"
 
 #include "EventHandler.h"
+#include "FacadeInterfaceNative.h"
 
 namespace event_handler
 {
@@ -39,11 +40,12 @@ void EventHandler::onUserJoinedMap(uint32_t mapId, uint32_t userId)
 	}
 }
 
-void EventHandler::onNewMapCreated(char mapType, uint32_t mapId, std::string& name)
+void EventHandler::onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers)
 {
 	mapSessionManager_->createServerSession(mapId, mapType, name);
 	// TODO: Remove this and use the ui.
-	networkManager_->requestToJoinMapSession(mapId);
+	//networkManager_->requestToJoinMapSession(mapId);
+	AddMap(name, true, mapType, nUsers, mapId);
 }
 
 void EventHandler::onUserAuthentified(uint32_t userId)

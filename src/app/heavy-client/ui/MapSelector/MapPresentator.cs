@@ -6,6 +6,8 @@
 ////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ui
@@ -70,8 +72,24 @@ namespace ui
             //Check for offline or online
             //Add function to send id_ somewhere
 
-            FonctionsNatives.assignerCheminFichierZone(pathToFile_);
-            FonctionsNatives.charger();
+            //FonctionsNatives.assignerCheminFichierZone(pathToFile_);      
+            //FonctionsNatives.charger();
+
+            parent_.editionSideMenu = new EditionSideMenu(parent_);
+            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
+            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
+
+            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
+            parent_.editionSideMenu.Dock = DockStyle.Left;
+
+            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
+            parent_.editionMenuStrip.Dock = DockStyle.Top;
+
+            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
+                                                                  parent_.editionMenuStrip.Height);
+            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            parent_.editionModificationPanel.Visible = false;
+            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);     
 
             parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
             parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
@@ -83,9 +101,18 @@ namespace ui
             
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
+
+            if (connectionState_)
+            {
+                FonctionsNatives.joinMap(mapId_);
+            }
+            else
+            {     
+                FonctionsNatives.assignerMode((ModeEnum.Mode)(modeType_));
+            }
 
             Program.peutAfficher = true;
+            parent_.verificationDuNombreElementChoisi();
         }
 
         internal void setPath(string path)
