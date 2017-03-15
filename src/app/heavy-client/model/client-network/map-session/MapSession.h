@@ -5,6 +5,7 @@
 #include <unordered_set>
 #include <queue>
 #include "glm/glm.hpp"
+#include "NetworkStandard.h"
 
 class ArbreRendu;
 class NoeudAbstrait;
@@ -35,6 +36,9 @@ public:
 		const glm::vec3& relPos, const glm::vec3& absPos, 
 		const glm::vec3& rotation, const glm::vec3& scale,
 		uint32_t entityId, uint32_t userId);
+
+	void serverEntityPropertyUpdated(uint32_t entityId, Networking::PropertyType, const glm::vec3& updatedProperty);
+	void localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType, const glm::vec3& updatedProperty);
 
 	void setIsOnlineSession(bool isOnline);
 

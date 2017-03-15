@@ -23,7 +23,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationLigne::EtatCreationLigne()
+EtatCreationLigne::EtatCreationLigne(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(CREATION_LIGNE_NOIRE);
 	visiteurCreationLigne_ = std::make_unique<VisiteurCreationLigne>();

@@ -11,7 +11,7 @@
 #ifndef ETAT_CREATION_MUR_H
 #define ETAT_CREATION_MUR_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurTypes.h"
 #include <iostream>
 
@@ -22,10 +22,10 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatCreationMur : public EtatAbstrait
+class EtatCreationMur : public OnlineTool
 {
 public:
-	EtatCreationMur();
+	EtatCreationMur(client_network::MapSession* mapSession);
 	virtual ~EtatCreationMur();
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);

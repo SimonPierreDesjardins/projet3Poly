@@ -54,4 +54,12 @@ void EventHandler::onUserAuthentified(uint32_t userId)
 	networkManager_->setUserId(userId);
 }
 
+void EventHandler::onEntityPropertyUpdated(uint32_t entityId, char propertyType, const glm::vec3& propertyValue)
+{
+	if (currentSession_ != nullptr)
+	{
+		currentSession_->serverEntityPropertyUpdated(entityId, (Networking::PropertyType)(propertyType), propertyValue);
+	}
+}
+
 }

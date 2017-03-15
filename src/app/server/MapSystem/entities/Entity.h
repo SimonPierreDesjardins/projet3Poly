@@ -3,28 +3,14 @@
 
 #include <Eigen/Dense>
 #include <unordered_map>
+#include "NetworkStandard.h"
 
 namespace server
 {
 
-enum PropertyType
-{
-	RELATIVE_POSITION = 'p',
-	ABSOLUTE_POSITION = 'a',
-	ROTATION = 'r',
-	SCALE = 's',
-	LINEAR_VELOCITY = 'v',
-	ANGULAR_VELOCITY = 'w'
-};
-
 class Entity
 {
 public:
-	Eigen::Vector3f relativePosition_{ 0.0, 0.0, 0.0 };
-	Eigen::Vector3f absolutePosition_{ 0.0, 0.0, 0.0 };
-	Eigen::Vector3f rotation_{ 0.0, 0.0, 0.0 };
-	Eigen::Vector3f scale_{ 1.0, 1.0, 1.0 };
-
 	char entityType_ { 0 };
 	uint32_t userId_{ 0 };
 	uint32_t entityId_{ 0 };
@@ -36,13 +22,13 @@ public:
 	inline Entity* getParent();
 	inline void addChild(Entity* child);
 	inline void removeChild(Entity* child);
-	inline void updatePhysicProperty(PropertyType propertyType, const Eigen::Vector3f& propertyValue);
-	inline Eigen::Vector3f* getProperty(PropertyType propertyType);
+	inline void updatePhysicProperty(Networking::PropertyType propertyType, const Eigen::Vector3f& propertyValue);
+	inline Eigen::Vector3f* getProperty(Networking::PropertyType propertyType);
 
 private:
 	Entity* parent_{ nullptr };
 	std::unordered_map<uint32_t, Entity*> children_;
-	std::unordered_map<PropertyType, Eigen::Vector3f> properties_;
+	std::unordered_map<Networking::PropertyType, Eigen::Vector3f> properties_;
 };
 
 inline void Entity::setParent(Entity* parent)
@@ -65,7 +51,7 @@ inline void Entity::removeChild(Entity* child)
 	children_.erase(child->entityId_);
 }
 
-inline void Entity::updatePhysicProperty(PropertyType propertyType, const Eigen::Vector3f& propertyValue)
+inline void Entity::updatePhysicProperty(Networking::PropertyType propertyType, const Eigen::Vector3f& propertyValue)
 {
 	auto it = properties_.find(propertyType);
 	if (it != properties_.end())
@@ -74,7 +60,7 @@ inline void Entity::updatePhysicProperty(PropertyType propertyType, const Eigen:
 	}
 }
 
-inline Eigen::Vector3f* Entity::getProperty(PropertyType propertyType)
+inline Eigen::Vector3f* Entity::getProperty(Networking::PropertyType propertyType)
 {
 	Eigen::Vector3f* property = nullptr;
 	auto it = properties_.find(propertyType);

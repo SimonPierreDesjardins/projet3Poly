@@ -92,4 +92,43 @@ void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 										absPos, relPos, rotation, scale);
 }
 
+void MapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking::PropertyType type, const glm::vec3& updatedProperty)
+{
+	auto it = confirmedEntities_.find(entityId);
+	if (it != confirmedEntities_.end())
+	{
+		switch (type)
+		{
+		case Networking::ABSOLUTE_POSITION:
+			it->second->assignerPositionCourante({ updatedProperty.x, updatedProperty.y, updatedProperty.z });
+			break;
+
+		case Networking::RELATIVE_POSITION:
+			it->second->assignerPositionRelative({ updatedProperty.x, updatedProperty.y, updatedProperty.z });
+			break;
+
+		case Networking::ROTATION:
+			it->second->assignerAngleRotation(updatedProperty.z);
+			break;
+
+		case Networking::SCALE:
+			it->second->assignerFacteurMiseAEchelle(updatedProperty.x);
+			break;
+
+		case Networking::LINEAR_VELOCITY:
+			// TODO
+			break;
+
+		case Networking::ANGULAR_VELOCITY:
+			// TODO
+			break;
+		}
+	}
+}
+
+void MapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType type, const glm::vec3& updatedProperty)
+{
+	network_->requestEntityPropertyUpdate(entity->getId(), (char)(type), updatedProperty);
+}
+
 }

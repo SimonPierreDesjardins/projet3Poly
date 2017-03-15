@@ -36,6 +36,7 @@ public:
 	void onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers = 0);
 	void onUserJoinedMap(uint32_t mapId, uint32_t userId);
 	void onUserAuthentified(uint32_t userId);
+	void onEntityPropertyUpdated(uint32_t entityId, char propertyType, const glm::vec3& propertyValue);
 
 private:
 	client_network::NetworkManager* networkManager_ = nullptr;

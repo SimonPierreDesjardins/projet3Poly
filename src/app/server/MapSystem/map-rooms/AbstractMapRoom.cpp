@@ -63,7 +63,7 @@ void AbstractMapRoom::TreatUserMessage(User* sender, const std::string& message)
 
 void AbstractMapRoom::updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value)
 {
-	entity->updatePhysicProperty((PropertyType)(property), value);
+	entity->updatePhysicProperty((Networking::PropertyType)(property), value);
 }
 
 void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& message)
@@ -117,10 +117,10 @@ void AbstractMapRoom::buildEntityCreationMessage(Entity* entity, std::string& me
 	message.append("ec");
 	message.append(1, entity->entityType_);
 	Networking::serialize(entity->getParent()->entityId_, message);
-	Networking::serialize(entity->absolutePosition_, message);
-	Networking::serialize(entity->relativePosition_, message);
-	Networking::serialize(entity->rotation_, message);
-	Networking::serialize(entity->scale_, message);
+	Networking::serialize(*entity->getProperty(Networking::ABSOLUTE_POSITION), message);
+	Networking::serialize(*entity->getProperty(Networking::RELATIVE_POSITION), message);
+	Networking::serialize(*entity->getProperty(Networking::ROTATION), message);
+	Networking::serialize(*entity->getProperty(Networking::SCALE), message);
 	Networking::serialize(entity->entityId_, message);
 	Networking::serialize(entity->userId_, message);
 }
@@ -134,21 +134,26 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 
 	newEntity->userId_ = sender->Info.GetId();
 
-	newEntity->absolutePosition_.x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 5);
-	newEntity->absolutePosition_.y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 9);
-	newEntity->absolutePosition_.z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 13);
 
-	newEntity->relativePosition_.x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 17);
-	newEntity->relativePosition_.y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 21);
-	newEntity->relativePosition_.z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 25);
+	Eigen::Vector3f* absPos = newEntity->getProperty(Networking::ABSOLUTE_POSITION);
+	absPos->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 5);
+	absPos->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 9);
+	absPos->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 13);
 
-	newEntity->rotation_.x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 29);
-	newEntity->rotation_.y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 33);
-	newEntity->rotation_.z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 37);
+	Eigen::Vector3f* relPos = newEntity->getProperty(Networking::RELATIVE_POSITION);
+	relPos->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 17);
+	relPos->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 21);
+	relPos->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 25);
 
-	newEntity->scale_.x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 41);
-	newEntity->scale_.y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 45);
-	newEntity->scale_.z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 49);
+	Eigen::Vector3f* rotation = newEntity->getProperty(Networking::ROTATION);
+	rotation->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 29);
+	rotation->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 33);
+	rotation->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 37);
+
+	Eigen::Vector3f* scale = newEntity->getProperty(Networking::SCALE);
+	scale->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 41);
+	scale->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 45);
+	scale->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 49);
 
 	std::string response(message);
 

@@ -188,7 +188,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_M:
 				if (getCurrentTutorialState() == (int)SELECT_WALL_TOOL)
 				{
-					etat_ = std::make_unique<EtatCreationMur>();
+					etat_ = std::make_unique<EtatCreationMur>(mapSession_);
 					numberOfObjects_ = getNomberOfObjects("mur");
 				}
 				break;
@@ -196,7 +196,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_L:
 				if (getCurrentTutorialState() == (int)SELECT_LINE_TOOL)
 				{
-					etat_ = std::make_unique<EtatCreationLigne>();
+					etat_ = std::make_unique<EtatCreationLigne>(mapSession_);
 					numberOfObjects_ = getNomberOfObjects("ligneNoire");
 				}
 				break;

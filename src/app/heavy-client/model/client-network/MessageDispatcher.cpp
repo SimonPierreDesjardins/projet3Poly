@@ -1,3 +1,5 @@
+#include "NetworkStandard.h"
+
 #include "EventHandler.h"
 #include "FacadeInterfaceNative.h"
 #include <iostream>
@@ -70,6 +72,17 @@ void MessageDispatcher::lookupMessage()
 		}
 		queueLock_.unlock();
 	}
+}
+
+void MessageDispatcher::handlePhysicMessage(const std::string& message)
+{
+	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	char propertyType = message[Networking::MessageStandard::COMMAND];
+	glm::vec3 updatedProperty;
+	updatedProperty.x = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 4);
+	updatedProperty.y = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 8);
+	updatedProperty.z = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 12);
+	eventHandler_->onEntityPropertyUpdated(entityId, propertyType, updatedProperty);
 }
 
 void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
@@ -216,7 +229,7 @@ void MessageDispatcher::dispatch(const std::string& message)
 {
 	// Check message validity.
 	uint32_t messageSize = serializer_.deserializeInteger(message.c_str());
-	std::cout << "Message received: " << message << std::endl;
+	//std::cout << "Message received: " << message << std::endl;
 	if (message.size() <= 5)
 	{
 		std::cout << "Unexpected message received :" << message << std::endl;
@@ -241,6 +254,7 @@ void MessageDispatcher::dispatch(const std::string& message)
 		break;
 
 	case 'p':
+		handlePhysicMessage(message);
 		break;
 
 	default:
