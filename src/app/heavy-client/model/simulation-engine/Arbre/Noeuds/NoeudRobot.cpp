@@ -401,7 +401,7 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 	RectangleEnglobant* rectangle = teleporteur->obtenirFormeEnglobante();
 	bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
 	bool enCollision = rectangle->obtenirEnCollision();
-	// Le poteau est en intersection et il ne se trouve pas déjà en collision.
+	// Le teleporteur est en intersection et il ne se trouve pas déjà en collision.
 	if (enIntersection)
 	{
 		if (!teleportationFaite_)
