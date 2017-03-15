@@ -63,6 +63,7 @@ namespace ui
             {
                 mapPanel.Controls.Add(pair.Value);
             }
+            verifyMapsAttributes();
         }
 
         public void addOnlineMapEntry(int mapId, MapPresentator newMap)
@@ -307,6 +308,7 @@ namespace ui
                     MapPresentator newMap = new MapPresentator(parent_, mapName, false, -1, 0, -1);
                     newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
                     parent_.mapMenu.addOfflineMapEntry(mapName, newMap);
+                    verifyMapsAttributes();
                 }
                 else
                 {
@@ -458,7 +460,7 @@ namespace ui
             offlineModePanel.Visible = false;
         }
 
-        private void mapPanel_Resize(object sender, EventArgs e)
+        private void verifyMapsAttributes()
         {
             foreach (Control map in mapPanel.Controls)
             {
