@@ -85,6 +85,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			visiteurCreationTeleporteur_->assignerPositionRelative(positionVirtuelle);
 			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
+			teleporteur_->assignerTeleporteur(nullptr);
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 				arbre_->chercher("table")->effacer(teleporteur_);

@@ -423,9 +423,17 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 		}
 		
 	}
-	// Le poteau n'est pas en intersection et il se trouvait en collision.
-	else // if (!enIntersection)
+	// Le teleporteur n'est pas en intersection et il se trouvait en collision.
+	else 
 	{
+		//Ce if permet 
+		if (teleporteurCourant_ != nullptr && teleporteur == teleporteurCourant_ && !rectangleEnglobant_.calculerIntersection(*(teleporteurCourant_->obtenirProchainTeleporteur()->obtenirFormeEnglobante())))
+		{
+			teleporteurCourant_ = nullptr; 
+			teleporteurCollision_ = false;
+			teleportationFaite_ = false;
+		}
+
 		enCollision = false;
 		rectangle->assignerEnCollision(enCollision);
 	}
@@ -791,15 +799,6 @@ void NoeudRobot::effectuerCollision(const double& dt)
 			mettreAJourFormeEnglobante();
 			teleportationFaite_ = true;
 		}
-		else
-		{
-			//positionRelative_.x = positionRelative_.x + 5;
-			teleporteurCourant_ = nullptr;
-			teleporteurCollision_ = false;
-			teleportationFaite_ = false;
-		}
-		
-
 	}
 }
 

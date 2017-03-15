@@ -19,6 +19,8 @@
 
 #include "VisiteurAbstrait.h"
 
+#include "FacadeModele.h"
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudTeleporteur::NoeudTeleporteur(const std::string& typeNoeud)
@@ -79,6 +81,12 @@ void NoeudTeleporteur::mettreAJourFormeEnglobante()
 ////////////////////////////////////////////////////////////////////////
 NoeudTeleporteur::~NoeudTeleporteur()
 {
+	if (teleporteur_ != nullptr && !teleporteur_->estSelectionne())
+	{
+		teleporteur_->assignerTeleporteur(nullptr);
+		teleporteur_->assignerSelection(true); //permet de supprimer le noeud de la meme paire
+		
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

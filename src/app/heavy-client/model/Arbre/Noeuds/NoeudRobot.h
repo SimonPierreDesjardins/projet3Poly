@@ -141,7 +141,7 @@ protected:
 	NoeudRoues* roueDroite_;
 	NoeudRoues* roueGauche2_;
 	NoeudRoues* roueDroite2_;
-	NoeudTeleporteur* teleporteurCourant_;
+	NoeudTeleporteur* teleporteurCourant_{nullptr};
 	float* couleur_;
 	bool estCouleurDefaut_ = true;
 	int mode_;
