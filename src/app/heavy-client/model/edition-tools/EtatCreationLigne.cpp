@@ -229,6 +229,9 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 	// Calculer et assigner la position relative à la ligne
 	glm::dvec3 centre = { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0 };
 	ligne_->assignerPositionRelative(centre);
+	ligne_->assignerPositionCourante(centre);
+	mapSession_->localEntityPropertyUpdated(ligne_, Networking::RELATIVE_POSITION, { centre.x, centre.y, centre.z });
+	mapSession_->localEntityPropertyUpdated(ligne_, Networking::ABSOLUTE_POSITION, { centre.x, centre.y, centre.z });
 
 	// Ajuster la position relative des segments.
 	glm::dvec3 positionEnfant;

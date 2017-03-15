@@ -1,7 +1,6 @@
 #ifndef MAP_SESSION_MANAGER
 #define MAP_SESSION_MANAGER
 
-#include <unordered_map>
 #include <memory>
 
 #include "MapSession.h"

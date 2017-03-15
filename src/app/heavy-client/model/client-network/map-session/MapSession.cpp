@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "MapSession.h"
 
 #include "NetworkManager.h"
@@ -20,12 +22,18 @@ void MapSession::setIsOnlineSession(bool isOnline)
 
 void MapSession::localEntityCreated(NoeudAbstrait* entity)
 {
+	pendingQueueLock_.lock();
+	std::cout << "Local entity created : " << entity->obtenirNom() << " id : " << entity->getId() 
+		<< " parent : " << entity->obtenirParent()->obtenirNom() << " id : " << entity->obtenirParent()->getId() << std::endl;
+	std::cout << "Queue size is " << pendingEntityCreationRequests_.size() << std::endl;
 	// If the session is online and the pending queue is empty, send the request now.
 	if (isOnline_ && pendingEntityCreationRequests_.empty())
 	{
+		std::cout << "Local EntityQueue is empty, sending creation request right now." << std::endl;
 		sendEntityCreationRequest(entity);
 	}
 	pendingEntityCreationRequests_.push(entity);
+	pendingQueueLock_.unlock();
 }
 
 void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
@@ -33,6 +41,7 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 	const glm::vec3& rotation, const glm::vec3& scale,
 	uint32_t entityId, uint32_t userId)
 {
+	pendingQueueLock_.lock();
 	// If this is a new object from another user.
 	if (userId != network_->getUserId())
 	{
@@ -48,24 +57,30 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			newEntity->assignerFacteurMiseAEchelle(scale.x);
 			newEntity->setId(entityId);
 			confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
+			std::cout << "Server entity created : " << newEntity->obtenirNom() <<
+				" id : " << newEntity->getId() << " parentid : " << parent->getId() << std::endl;
 		}
 	}
 	// This is a confirmation for the object to be created.
 	else
 	{
 		// Insert server confirmed entity.
-		NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.back();
+		NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.front();
 		pendingEntityCreationRequests_.pop();
 		confirmedEntities_.insert(std::make_pair(entityId, entityToInsert));
 		entityToInsert->setId(entityId);
 
+		std::cout << "Local entity creation confirmed : " << entityToInsert->obtenirNom() <<
+			" id : " << entityToInsert->getId() << " parentid : " << entityToInsert->obtenirParent()->getId() << std::endl;
+
 		// Send next entity in pending.
 		if (!pendingEntityCreationRequests_.empty())
 		{
-			NoeudAbstrait* entityToConfirm = pendingEntityCreationRequests_.back();
+			NoeudAbstrait* entityToConfirm = pendingEntityCreationRequests_.front();
 			sendEntityCreationRequest(entityToConfirm);
 		}
 	}
+	pendingQueueLock_.unlock();
 }
 
 void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
@@ -86,6 +101,9 @@ void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 		glm::vec3 scale = { entity->obtenirFacteurMiseAEchelle(),
 							0.0,
 							0.0 };
+
+		std::cout << "Local entity creation request sent : " << entity->obtenirNom() <<
+			" id : " << entity->getId() << " parentid : " << entity->obtenirParent()->getId() << std::endl;
 
 		network_->requestEntityCreation(entity->getType(),
 										entity->obtenirParent()->getId(),

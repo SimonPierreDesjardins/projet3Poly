@@ -2,8 +2,8 @@
 #define MAP_SESSION
 
 #include <unordered_map>
-#include <unordered_set>
 #include <queue>
+#include <mutex>
 #include "glm/glm.hpp"
 #include "NetworkStandard.h"
 
@@ -43,6 +43,8 @@ public:
 	void setIsOnlineSession(bool isOnline);
 
 private:
+	std::mutex pendingQueueLock_;
+
 	ArbreRendu* entityTree_;
 	NetworkManager* network_;
 	bool isOnline_ = false;
