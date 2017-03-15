@@ -126,7 +126,7 @@ void NoeudAudi::afficherConcret() const
 	else
 	{
 		glDisable(GL_COLOR_MATERIAL);
-		glColor4f(0.0862745121, 0.407843143, 0.701960802, 1.0);
+		glColor4f(0.0862745121f, 0.407843143f, 0.701960802f, 1.0f);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 

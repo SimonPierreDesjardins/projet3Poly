@@ -54,7 +54,7 @@
             this.editionObjectMenu = new System.Windows.Forms.Panel();
             this.bridgeObjectButton = new ui.PanelButton();
             this.bridgePictureBox = new System.Windows.Forms.PictureBox();
-            this.teleportObjectButton = new ui.PanelButton();
+            this.teleportorObjectButton = new ui.PanelButton();
             this.teleportorPictureBox = new System.Windows.Forms.PictureBox();
             this.wallObjectButton = new ui.PanelButton();
             this.wallObjectPicture = new System.Windows.Forms.PictureBox();
@@ -90,7 +90,7 @@
             this.editionObjectMenu.SuspendLayout();
             this.bridgeObjectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bridgePictureBox)).BeginInit();
-            this.teleportObjectButton.SuspendLayout();
+            this.teleportorObjectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teleportorPictureBox)).BeginInit();
             this.wallObjectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wallObjectPicture)).BeginInit();
@@ -326,7 +326,7 @@
             // 
             this.editionObjectMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
             this.editionObjectMenu.Controls.Add(this.bridgeObjectButton);
-            this.editionObjectMenu.Controls.Add(this.teleportObjectButton);
+            this.editionObjectMenu.Controls.Add(this.teleportorObjectButton);
             this.editionObjectMenu.Controls.Add(this.wallObjectButton);
             this.editionObjectMenu.Controls.Add(this.postObjectButton);
             this.editionObjectMenu.Controls.Add(this.redLineObjectButton);
@@ -359,15 +359,16 @@
             this.bridgePictureBox.TabIndex = 1;
             this.bridgePictureBox.TabStop = false;
             // 
-            // teleportObjectButton
+            // teleportorObjectButton
             // 
-            this.teleportObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.teleportObjectButton.BackColor = System.Drawing.Color.Transparent;
-            this.teleportObjectButton.Controls.Add(this.teleportorPictureBox);
-            this.teleportObjectButton.Location = new System.Drawing.Point(0, 331);
-            this.teleportObjectButton.Name = "teleportObjectButton";
-            this.teleportObjectButton.Size = new System.Drawing.Size(35, 40);
-            this.teleportObjectButton.TabIndex = 7;
+            this.teleportorObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.teleportorObjectButton.BackColor = System.Drawing.Color.Transparent;
+            this.teleportorObjectButton.Controls.Add(this.teleportorPictureBox);
+            this.teleportorObjectButton.Location = new System.Drawing.Point(0, 331);
+            this.teleportorObjectButton.Name = "teleportorObjectButton";
+            this.teleportorObjectButton.Size = new System.Drawing.Size(35, 40);
+            this.teleportorObjectButton.TabIndex = 7;
+            this.teleportorObjectButton.Click += new System.EventHandler(this.teleportorObjectButton_Click);
             // 
             // teleportorPictureBox
             // 
@@ -531,7 +532,7 @@
             this.editionObjectMenu.ResumeLayout(false);
             this.bridgeObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.bridgePictureBox)).EndInit();
-            this.teleportObjectButton.ResumeLayout(false);
+            this.teleportorObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.teleportorPictureBox)).EndInit();
             this.wallObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.wallObjectPicture)).EndInit();
@@ -574,7 +575,7 @@
         public System.Windows.Forms.Panel editionObjectMenu;
         public PanelButton bridgeObjectButton;
         public System.Windows.Forms.PictureBox bridgePictureBox;
-        public PanelButton teleportObjectButton;
+        public PanelButton teleportorObjectButton;
         public System.Windows.Forms.PictureBox teleportorPictureBox;
         public PanelButton wallObjectButton;
         public System.Windows.Forms.PictureBox wallObjectPicture;

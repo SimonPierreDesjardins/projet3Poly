@@ -20,6 +20,7 @@
 #include "EtatRotation.h"
 #include "EtatSelection.h"
 #include "EtatLoupe.h"
+#include "EtatCreationTeleporteur.h"
 
 #endif /// ETAT_TYPES_H 
 

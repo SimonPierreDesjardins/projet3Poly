@@ -112,6 +112,24 @@ void VisiteurSauvegarde::visiter(NoeudPoteau* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
+///
+/// Sauvegarde les noeuds teleporteur d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud teleporteur de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
+{
+	writer->StartObject();
+	noeud->toJson(*writer);
+	writer->EndObject();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn  void VisiteurSauvegarde::visiter(NoeudMur* noeud)
 ///
 /// Sauvegarde les noeuds murs d'un arbre de rendu dans un fichier Json

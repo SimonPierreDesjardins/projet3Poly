@@ -67,6 +67,8 @@ public:
 	/// Sauvegarde en JSON d'un NoeudRobot
 	virtual void visiter(NoeudRobot* noeud);
 
+	virtual void visiter(NoeudTeleporteur* noeud);
+
 private:
 
 	/// Objet pour écrire dans un fichier.

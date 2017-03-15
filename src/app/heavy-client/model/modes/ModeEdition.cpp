@@ -218,6 +218,10 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				assignerEtat(CREATION_POTEAU);
 				break;
 
+			case VK_KEY_O:
+				etat_ = std::make_unique<EtatCreationTeleporteur>();
+				break;
+
 			case VK_KEY_M:
 				assignerEtat(CREATION_MUR);
 				break;

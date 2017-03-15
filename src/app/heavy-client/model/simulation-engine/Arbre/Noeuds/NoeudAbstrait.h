@@ -53,7 +53,8 @@ enum EntityType
 	F1_ENTITY,
 	TRUCK_ENTITY,
 	VOLKS_ENTITY,
-	AUDI_ENTITY
+	AUDI_ENTITY,
+	TELEPORT_ENTITY
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -204,6 +205,8 @@ public:
 	virtual void assignerCouleurs(int modele, int a, int r, int g, int b) {};
 
 	virtual void assignerMode(int mode) {};
+
+	virtual void assignerTeleporteur(NoeudAbstrait* teleporteur) {};
 
 	virtual void setCouleurDefault(int piece,bool default) {};
 

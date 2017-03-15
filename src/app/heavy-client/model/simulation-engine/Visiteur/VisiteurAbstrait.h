@@ -27,6 +27,7 @@ class NoeudDepart;
 class NoeudJonction;
 class NoeudRoues;
 class NoeudSkybox;
+class NoeudTeleporteur;
 
 namespace modele{
 	class Modele3D;
@@ -73,6 +74,7 @@ public:
 	virtual void visiter(NoeudJonction* noeud);
 	virtual void visiter(NoeudRobot* noeud);
 	virtual void visiter(NoeudRoues* noeud);
+	virtual void visiter(NoeudTeleporteur* noeud);
 
 protected:
 	glm::dvec3 positionRelative_{ glm::dvec3() };

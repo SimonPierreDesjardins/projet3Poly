@@ -23,6 +23,7 @@
 #include "NoeudPoteau.h"
 #include "NoeudMur.h"
 #include "NoeudTable.h"
+#include "NoeudTeleporteur.h"
 
 #include "VisiteurAbstrait.h"
 #include "FacadeModele.h"
@@ -225,7 +226,14 @@ void NoeudRobot::animer(float dt)
 
     if (estEnCollision_)
     {
-        effectuerCollision(dt);
+		if (!teleportationFaite_)
+		{
+			effectuerCollision(dt);
+		}
+		else
+		{
+			estEnCollision_ = false;
+		}
     }
     mettreAJourFormeEnglobante();
 
@@ -375,6 +383,64 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     }
     return enIntersection;
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool NoeudRobot::verifierCollision(NoeudTeleporteur* noeud)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et un teleporteur
+///
+/// @param[in] noeud: Prend le NoeudTeleporteur en paramètre ce qui correspond aux teleporteurs.
+///
+/// @return bool qui indique s'il y a colision.
+///
+////////////////////////////////////////////////////////////////////////
+bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
+{
+	if (teleporteur == nullptr) return false;
+	RectangleEnglobant* rectangle = teleporteur->obtenirFormeEnglobante();
+	bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
+	bool enCollision = rectangle->obtenirEnCollision();
+	// Le poteau est en intersection et il ne se trouve pas déjà en collision.
+	if (enIntersection)
+	{
+		if (!teleportationFaite_)
+		{
+			EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
+			// On calcule les composantes de la collision.
+			enCollision = true;
+			teleporteurCollision_ = true;
+			teleporteurCourant_ = teleporteur;
+			rectangle->assignerEnCollision(enCollision);
+			glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
+			calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+
+			// On replace le teleporteur à la dernière position.
+			reinitialiserPosition();
+		}
+		else
+		{
+			enIntersection = false;
+		}	
+	}
+	// Le teleporteur n'est pas en intersection et il se trouvait en collision.
+	else 
+	{
+		//Ce if permet de laisser le robot sortir du teleporteur avant de reprendre en considération les collisions
+		if (teleporteurCourant_ != nullptr && teleporteur == teleporteurCourant_ && !rectangleEnglobant_.calculerIntersection(*(teleporteurCourant_->obtenirProchainTeleporteur()->obtenirFormeEnglobante())))
+		{
+			teleporteurCourant_ = nullptr;
+			teleporteurCollision_ = false;
+			teleportationFaite_ = false;
+		}
+
+		enCollision = false;
+		rectangle->assignerEnCollision(enCollision);
+	}
+	return enIntersection;
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -674,52 +740,66 @@ void NoeudRobot::mettreAJourFormeEnglobante()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::effectuerCollision(const double& dt)
 {
-    // Ajouter les vitesses de collision aux vitesses du moteur.    
-    double vitesseAngulaire = 0.0;
-    glm::dvec3 vitesseTranslation = { 0.0, 0.0, 0.0 };
+	if (!teleporteurCollision_)
+	{
+		// Ajouter les vitesses de collision aux vitesses du moteur.    
+		double vitesseAngulaire = 0.0;
+		glm::dvec3 vitesseTranslation = { 0.0, 0.0, 0.0 };
 
-    //calculerComposantesVitesseCourante(vitesseTranslation, vitesseAngulaire);
-    vitesseTranslation += vitesseTranslationCollision_;
-    vitesseAngulaire += vitesseAngulaireCollision_;
+		//calculerComposantesVitesseCourante(vitesseTranslation, vitesseAngulaire);
+		vitesseTranslation += vitesseTranslationCollision_;
+		vitesseAngulaire += vitesseAngulaireCollision_;
 
-    // Appliquer la vitesse de collision en fonction du temps
-    positionRelative_ += vitesseTranslation * dt / 10.0;
-    angleRotation_ += vitesseAngulaire * dt;
+		// Appliquer la vitesse de collision en fonction du temps
+		positionRelative_ += vitesseTranslation * dt / 10.0;
+		angleRotation_ += vitesseAngulaire * dt;
 
-    // La force frottement est toujours dans le sens inverse du déplacement.
-    glm::dvec3 frottementTranslation = -glm::normalize(vitesseTranslationCollision_);
-    frottementTranslation *= acceleration_;
-    double frottementRotation = acceleration_ * -glm::sign(vitesseAngulaireCollision_);
-    
-    // Appliquer la force de frottement sur la vitesse en translation tant qu'on se trouve en translation.
-    glm::dvec3 origine = { 0.0, 0.0, 0.0 };
-    glm::dvec3 dV = frottementTranslation * dt;
+		// La force frottement est toujours dans le sens inverse du déplacement.
+		glm::dvec3 frottementTranslation = -glm::normalize(vitesseTranslationCollision_);
+		frottementTranslation *= acceleration_;
+		double frottementRotation = acceleration_ * -glm::sign(vitesseAngulaireCollision_);
 
-    // Si la vitesse est plus petite que différence de vitesse, celle-ci devient nulle et le robot n'est plus en translation.
-    bool enTranslation = glm::length(dV) < glm::length(vitesseTranslationCollision_);
-    if (enTranslation)
-    {
-        vitesseTranslationCollision_ += dV;
-    }
-    else 
-    {
-        vitesseTranslationCollision_ = { 0.0, 0.0, 0.0 };
-    }
+		// Appliquer la force de frottement sur la vitesse en translation tant qu'on se trouve en translation.
+		glm::dvec3 origine = { 0.0, 0.0, 0.0 };
+		glm::dvec3 dV = frottementTranslation * dt;
 
-    // Appliquer la force de frottement sur la vitesse de rotation tant qu'on se trouve en rotation. 
-    double dVR = frottementRotation * dt;
-    bool enRotation = glm::abs(dVR) < glm::abs(vitesseAngulaireCollision_);
-    if (enRotation)
-    {
-        vitesseAngulaireCollision_ += dVR;
-    }
-    else 
-    {
-        vitesseAngulaireCollision_ = 0.0;
-    }
+		// Si la vitesse est plus petite que différence de vitesse, celle-ci devient nulle et le robot n'est plus en translation.
+		bool enTranslation = glm::length(dV) < glm::length(vitesseTranslationCollision_);
+		if (enTranslation)
+		{
+			vitesseTranslationCollision_ += dV;
+		}
+		else
+		{
+			vitesseTranslationCollision_ = { 0.0, 0.0, 0.0 };
+		}
 
-    // On se trouve toujours en collision si on se trouve en translation ou en rotation.
-    estEnCollision_ = (enTranslation || enRotation);
+		// Appliquer la force de frottement sur la vitesse de rotation tant qu'on se trouve en rotation. 
+		double dVR = frottementRotation * dt;
+		bool enRotation = glm::abs(dVR) < glm::abs(vitesseAngulaireCollision_);
+		if (enRotation)
+		{
+			vitesseAngulaireCollision_ += dVR;
+		}
+		else
+		{
+			vitesseAngulaireCollision_ = 0.0;
+		}
+
+		// On se trouve toujours en collision si on se trouve en translation ou en rotation.
+		estEnCollision_ = (enTranslation || enRotation);
+	}
+	else
+	{
+		if (teleportationFaite_ == false)
+		{
+			positionCourante_ = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante();
+			positionRelative_ = positionCourante_;
+			mettreAJourPosition(dt);
+			mettreAJourFormeEnglobante();
+			teleportationFaite_ = true;
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

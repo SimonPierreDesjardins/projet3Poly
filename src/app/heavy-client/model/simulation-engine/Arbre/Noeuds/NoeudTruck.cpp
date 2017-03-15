@@ -127,7 +127,7 @@ void NoeudTruck::afficherConcret() const
 	else
 	{
 		glDisable(GL_COLOR_MATERIAL);
-		glColor4f(0.980392158, 0.721568644, 0.0235294122, 1.0);
+		glColor4f(0.980392158f, 0.721568644f, 0.0235294122f, 1.0f);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 

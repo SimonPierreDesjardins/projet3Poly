@@ -23,6 +23,7 @@
 #include "VisiteurMiseAEchelle.h"
 #include "VisiteurRotation.h"
 #include "VisiteurVerificationQuad.h"
+#include "VisiteurCreationTeleporteur.h"
 
 #endif /// Header pour les états
 

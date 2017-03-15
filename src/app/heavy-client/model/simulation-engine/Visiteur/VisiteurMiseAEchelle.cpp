@@ -141,6 +141,7 @@ void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 	}
 }
 
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurMiseAEchelle::visiter(NoeudMur* noeud)

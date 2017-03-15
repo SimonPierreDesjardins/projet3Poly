@@ -19,7 +19,7 @@ MessageDispatcher::~MessageDispatcher()
 	stopDispatching();
 }
 
-void MessageDispatcher::handleReceivedMessage(const char* buffer, int32_t size)
+void MessageDispatcher::handleReceivedMessage(const char* buffer, uint32_t size)
 {
 	uint32_t iCurrentMessage = 0;
 	// Parse the buffer.
