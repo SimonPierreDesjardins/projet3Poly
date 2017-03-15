@@ -50,14 +50,24 @@ void UserAuthLobby::handleCreateUsernameRequest(ConnectionWrapper* wrapper, std:
 	// TODO: Check if the new username is available and add to database.
 	std::cout << "Received profile creation request with username: " << message.substr(6, message.size() - 6) << "." << std::endl;
 	
+	std::string username = std::string(message.begin() + Networking::MessageStandard::DATA_START, message.end());
+	
+	if (_users.count(username) > 0) {
+		// user already exists, send error to connection
+		wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader("uce"));
+		return;
+	}
+
 	// Add new user to DB
 	UserInformation* info = new UserInformation;
-	std::string username = std::string(message.begin() + Networking::MessageStandard::DATA_START, message.end());
 	info->UserName = username;
 	_userDB->CreateEntry(info);
 
 	// Add new user to userlist
 	_users.insert({ info->UserName, new User(*info) });
+
+	// send success to connection
+	wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader("ucs"));
 }
 
 void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string message)
