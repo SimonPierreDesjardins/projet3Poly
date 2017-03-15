@@ -2,31 +2,43 @@
 
 void server::MultiUserSystem::AddUser(User * user)
 {
-	_userList.insert({ user->Info.UserName, user });
-	StartListeningToUser(user);
+	_connectedUserList.insert({ user->Info.GetId(), user });
+	user->addSystemObserver(this, GetSystemType());
 	TreatUserJoin(user);
 }
 
-void server::MultiUserSystem::StartListeningToUser(User * user)
+void server::MultiUserSystem::RemoveUser(User* user)
 {
-	__hook(&User::OnUserDisconnected, user, &MultiUserSystem::OnUserDisconnected);
-	__hook(&User::OnUserSentMessage, user, &MultiUserSystem::OnUserMessageReceived);
+	_connectedUserList.erase(user->Info.GetId());
+	user->removeSystemObserver(GetSystemType());
 }
 
-void server::MultiUserSystem::StopListeningToUser(User * user)
+void server::MultiUserSystem::onUserDisconnected(User * user)
 {
-	__unhook(&User::OnUserDisconnected, user, &MultiUserSystem::OnUserDisconnected);
-	__unhook(&User::OnUserSentMessage, user, &MultiUserSystem::OnUserMessageReceived);
-}
-
-void server::MultiUserSystem::OnUserDisconnected(User * user)
-{
-	StopListeningToUser(user);
-	_userList.erase(user->Info.UserName);
+	_connectedUserList.erase(user->Info.GetId());
 	TreatUserDisconnect(user);
 }
 
-void server::MultiUserSystem::OnUserMessageReceived(User * user, std::string & message)
+void server::MultiUserSystem::onUserMessageReceived(User * user, const std::string & message)
 {
 	TreatUserMessage(user, message);
+}
+
+void server::MultiUserSystem::broadcastMessage(const std::string & message)
+{
+	for (auto it = _connectedUserList.begin(); it != _connectedUserList.end(); it++)
+	{
+		it->second->ForwardMessage(message);
+	}
+}
+
+void server::MultiUserSystem::broadcastMessage(User * excludedUser, const std::string & message)
+{
+	for (auto it = _connectedUserList.begin(); it != _connectedUserList.end(); it++)
+	{
+		if (it->second != excludedUser)
+		{
+			it->second->ForwardMessage(message);
+		}
+	}
 }

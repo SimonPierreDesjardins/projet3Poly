@@ -1,10 +1,8 @@
 ﻿////////////////////////////////////////////////
-/// @file   ModeEnum.cs
-/// @author Philippe Marcotte
+/// @file   VehiculePiece.cs
+/// @author Frédéric Grégoire
 /// @date   2016-03-01
 ///
-/// @addtogroup inf2990 INF2990
-/// @{
 ////////////////////////////////////////////////
 #if !__LINE__
 
@@ -12,16 +10,16 @@
 namespace VehiculePiece
 {
     public
-#endif
+    #endif
 
-/// Enum représentant le mode dans lequel le programme se trouve
-enum VehiculePiece
-    {
-        WHEELS,
-        BODY
-    };
+    /// Enum représentant la piece d'un véhicule
+    enum VehiculePiece
+        {
+            WHEELS,
+            BODY
+        };
 
-#if !__LINE__
+    #if !__LINE__
 }
 #endif
 ////////////////////////////////////////////////

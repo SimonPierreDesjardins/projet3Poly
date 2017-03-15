@@ -8,6 +8,7 @@ using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
+using System.Collections.Generic;
 
 namespace ui
 {
@@ -16,13 +17,25 @@ namespace ui
         public Configure configuration;
 
         public UserTabChat userChat;
+        public string userName = "";
 
         public MainMenu mainMenu;
+        public MapMenu mapMenu;
         public PersonnalisationSideMenu personnalisationSideMenu;
         public SimulationMenuStrip simulationMenuStrip;
         public TestMenuStrip testMenuStrip;
+
         public EditionSideMenu editionSideMenu;
         public EditionMenuStrip editionMenuStrip;
+        public EditionModificationPanel editionModificationPanel;
+
+        public EditionTutorielMenuStrip editionTutorielMenuStrip;
+        public EditionTutorielSideMenu editionTutorielSideMenu;
+        public EditionTutorielInstructions editionTutorielInstructions;
+        public TutorialEditionModificationPanel editionTutorielModificationPanel;
+
+        public Dictionary<string, MapPresentator> offlineMaps_ = new Dictionary<string, MapPresentator>();
+        public Dictionary<int, MapPresentator> onlineMaps_ = new Dictionary<int, MapPresentator>();
 
         public object timerLock_ = new object();
         public bool lockWasTaken = false;
@@ -81,13 +94,13 @@ namespace ui
             viewPort.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
 
-            userChat = new UserTabChat(this);
-
             Program.peutAfficher = false;
 
             InitialiserAnimation();
-            panneauOperation_.Visible = false;
             configuration = new Configure(this);
+
+            mInstance = new CallbackForNewMap(addNewMap);
+            SetCallbackForNewMap(mInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -166,128 +179,6 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void textBoxPositionY__KeyDown(object sender, EventArgs e)
-        ///
-        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
-        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
-        /// table
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventsArgs e: evenement du clavier
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxPositionY__KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                double donnee = 0.0;
-                if (!double.TryParse(textBoxPositionY_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirPositionRelativeY();
-                }
-
-                if (!(donnee < -23 || donnee > 23))
-                    FonctionsNatives.assignerPositionRelativeY(donnee);
-                else
-                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-
-                mettreAJourInformation();
-                textBoxPositionY_.Select(textBoxPositionY_.Text.Length, 0);
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxPositionX__KeyDown(object sender, EventArgs e)
-        ///
-        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
-        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
-        /// table
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventsArgs e: evenement du clavier
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxPositionX__KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                double donnee = 0.0;
-                if (!double.TryParse(textBoxPositionX_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirPositionRelativeX();
-                }
-
-                if (!(donnee < -47 || donnee > 47))
-                    FonctionsNatives.assignerPositionRelativeX(donnee);
-                else
-                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-
-                mettreAJourInformation();
-                textBoxPositionX_.Select(textBoxPositionX_.Text.Length, 0);
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxRotation__KeyDown(object sender, EventArgs e)
-        ///
-        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
-        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
-        /// table
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventsArgs e: evenement du clavier
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxRotation__KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                double donnee = 0.0;
-                if (!double.TryParse(textBoxRotation_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirAngleRotation();
-                }
-                FonctionsNatives.assignerAngleRotation(donnee);
-                mettreAJourInformation();
-                textBoxRotation_.Select(textBoxRotation_.Text.Length, 0);
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textboxDimension__KeyDown(object sender, EventArgs e)
-        ///
-        /// Lorsque la touche Enter du clavier est appuyé et que cette fenêtre à le focus
-        /// les données sont envoyées au modèle et vérifie que l'objet est toujours sur la 
-        /// table
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param KeyEventsArgs e: evenement du clavier
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textboxDimension__KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                double donnee = 0.0;
-                if (!double.TryParse(textboxDimension_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirFacteurGrandeur();
-                }
-                FonctionsNatives.assignerFacteurGrandeur(donnee);
-                mettreAJourInformation();
-                textboxDimension_.Select(textboxDimension_.Text.Length, 0);
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private void gererMessage(IntPtr keyDown)
         ///
         /// Gère les touches lorsque le viewPort_ panel à le focus selon le mode
@@ -297,35 +188,42 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void gererMessage(IntPtr keyDown)
         {
-            int mode = FonctionsNatives.obtenirMode();
+            if (!FonctionsNatives.obtenirAutorisationInputClavier())
+                return;
 
+            int mode = FonctionsNatives.obtenirMode();
             switch (mode)
             {
                 //Mode Menu_Principal
-                case 0:
+                case (int)Mode.MENU_PRINCIPAL:
                     break;
 
                 //Mode Simulation
-                case 1:
+                case (int)Mode.SIMULATION:
                     gererToucheSimulation(keyDown);
                     break;
 
                 //Mode Edition
-                case 2:
+                case (int)Mode.EDITION:
                     gererToucheEdition(keyDown);
                     break;
 
                 //Mode Configure
-                case 3:
+                case (int)Mode.CONFIGURE:
                     break;
 
                 //Mode Test
-                case 4:
+                case (int)Mode.TEST:
                     gererToucheTest(keyDown);
                     break;
 
                 //Mode Personalize
-                case 5:
+                case (int)Mode.PERSONALIZE:
+                    break;
+
+                //Mode Édition Tutoriel
+                case (int)Mode.TUTORIAL_EDITION:
+                    gererToucheEditionTutoriel(keyDown);
                     break;
 
                 default:
@@ -507,62 +405,100 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void textboxDimension__Enter(object sender, EventArgs e)
+        /// @fn private void gererToucheEditionTutoriel(IntPtr keyDown)
         ///
-        /// Empêche les inputs dans le code du c++
+        /// Gère les touches pour le mode Édition Tutoriel
         /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
+        /// @param IntPtr keyDown: evenement du clavier
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void textboxDimension__Enter(object sender, EventArgs e)
+        private void gererToucheEditionTutoriel(IntPtr keyDown)
         {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-        }
+            switch ((int)keyDown)
+            {
+                case Constants.Key_C:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.duplicateTool();
+                    }  
+                    break;
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxPositionX__Enter(object sender, EventArgs e)
-        ///
-        /// Empêche les inputs dans le code du c++
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxPositionX__Enter(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-        }
+                case Constants.Key_D:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_MOVE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.moveTool();
+                    }
+                    break;
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxRotation__Enter(object sender, EventArgs e)
-        ///
-        /// Empêche les inputs dans le code du c++
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxRotation__Enter(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-        }
+                case Constants.Key_E:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_SCALE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.scaleTool();
+                    }
+                    break;
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxPositionY__Enter(object sender, EventArgs e)
-        ///
-        /// Empêche les inputs dans le code du c++
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxPositionY__Enter(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
+                case Constants.Key_L:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_LINE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.lineObject();
+                    }
+                    break;
+
+                case Constants.Key_M:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_WALL_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.wallObject();
+                    }
+                    break;
+
+                case Constants.Key_P:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.postObject();
+                    }
+                    break;
+
+                case Constants.Key_R:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_ROTATION_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.rotateTool();
+                    }
+                    break;
+
+                case Constants.Key_S:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.selectTool();
+                    }
+                    break;
+
+                case Constants.Key_Del:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.DELETE_TOOL)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielSideMenu.deleteTool();
+                    }
+                    break;
+
+                case Constants.Key_2:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.CHANGE_VIEW)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionTutorielMenuStrip.orbiteView();
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -575,19 +511,33 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public void verificationDuNombreElementChoisi()
         {
-            FonctionsNatives.assignerAutorisationInputClavier(true);
+            int mode = FonctionsNatives.obtenirMode();
+            if (!(mode == (int)Mode.EDITION || mode == (int)Mode.TUTORIAL_EDITION))
+                return;
 
-            int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-            if (nbEnfant == 1)
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+            if (mode == (int)Mode.EDITION)
             {
-                mettreAJourInformation();
-                viewPort.Focus();
-                panneauOperation_.Visible = true;
+                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+                if (nbEnfant == 1)
+                {
+                    editionModificationPanel.mettreAJourInformation();
+                    editionModificationPanel.Visible = true;
+                }
+                else
+                    editionModificationPanel.Visible = false;
             }
-            else if (nbEnfant > 1)
-                panneauOperation_.Visible = false;
             else
-                panneauOperation_.Visible = false;
+            {
+                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+                if (nbEnfant == 1)
+                {
+                    editionTutorielModificationPanel.mettreAJourInformation();
+                    editionTutorielModificationPanel.Visible = true;
+                }
+                else
+                    editionTutorielModificationPanel.Visible = false;
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -608,21 +558,6 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void mettreAJourInformation()
-        ///
-        /// Met à jour les informations dans le panneau d'opération
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void mettreAJourInformation()
-        {
-            textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-            textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-            textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-            textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private void viewPort__MouseMove(object sender, MouseEventArgs e)
         ///
         /// Vérifie le nombre d'objet sélectionné, s'il en a seulement un et que le clique
@@ -636,66 +571,6 @@ namespace ui
         {
             if (e.Button == MouseButtons.Left)
                 verificationDuNombreElementChoisi();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textboxDimension__Leave(object sender, EventArgs e)
-        ///
-        /// Permet les inputs dans le code du c++
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textboxDimension__Leave(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxRotation__Leave(object sender, EventArgs e)
-        ///
-        /// Permet les inputs dans le code du c++
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxRotation__Leave(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxPositionX__Leave(object sender, EventArgs e)
-        ///
-        /// Permet les inputs dans le code du c++
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxPositionX__Leave(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void textBoxPositionY__Leave(object sender, EventArgs e)
-        ///
-        /// Permet les inputs dans le code du c++
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du focus
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void textBoxPositionY__Leave(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -719,6 +594,36 @@ namespace ui
                 int h = viewPort.Height;
             }
         }
+
+        public void Test(string mapName, bool connectionState, int mode, int nbPlayers, int id)
+        {
+            AddMap(mapName, connectionState, mode, nbPlayers, id);
+        }
+
+        private delegate void CallbackForNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, int id);
+        // Ensure it doesn't get garbage collected
+        private CallbackForNewMap mInstance;
+        private void addNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, int id)
+        {
+            if (!onlineMaps_.ContainsKey(id))
+            {
+                Byte[] tmp = new Byte[mapNameSize];
+                Marshal.Copy(mapName, tmp, 0, mapNameSize);
+                var str = System.Text.Encoding.Default.GetString(tmp);
+
+                MapPresentator newMap = new MapPresentator(this, str, connectionState, mode, nbPlayers, id);
+                onlineMaps_.Add(id, newMap);
+
+                //Only for debug
+                Console.WriteLine("\n AddingNewMapToDictionary \n");
+            }
+        }
+
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForNewMap(CallbackForNewMap fn);
+
+        [DllImport("model.dll")]
+        private static extern void AddMap(string mapName, bool connectionState, int mode, int nbPlayers, int id);
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -756,18 +661,6 @@ namespace ui
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void repartirMessage(int msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern double obtenirAngleRotation();
-
-        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern double obtenirFacteurGrandeur();
-
-        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern double obtenirPositionRelativeX();
-
-        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern double obtenirPositionRelativeY();
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void assignerAngleRotation(double angle);
@@ -827,6 +720,9 @@ namespace ui
         public static extern int obtenirTypeVue();
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void sendMessage(String message, int size);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool connectToServer(String hostName, String port);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
@@ -840,5 +736,16 @@ namespace ui
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool isConnected();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool createMap(String mapName, int size, char mapType);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool joinMap(int mapId);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool leaveMap();
+
+
     }
 }

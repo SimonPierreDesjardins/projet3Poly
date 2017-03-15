@@ -78,6 +78,38 @@
     <Compile Include="Chat\ChatWindow.Designer.cs">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditionTutoriel\TutorialEditionModificationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\TutorialEditionModificationPanel.Designer.cs">
+      <DependentUpon>TutorialEditionModificationPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Edition\EditionModificationPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Edition\EditionModificationPanel.Designer.cs">
+      <DependentUpon>EditionModificationPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielMenuStrip.Designer.cs">
+      <DependentUpon>EditionTutorielMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielSideMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielSideMenu.Designer.cs">
+      <DependentUpon>EditionTutorielSideMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielInstructions.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EditionTutoriel\EditionTutorielInstructions.Designer.cs">
+      <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="enum\EditionTutorialState.cs" />
+    <Compile Include="enum\TypeOfTool.cs" />
     <Compile Include="Personalize\ModeleSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -117,6 +149,11 @@
     <Compile Include="Edition\EditionSideMenu.Designer.cs">
       <DependentUpon>EditionSideMenu.cs</DependentUpon>
     </Compile>
+    <Compile Include="enum\ConfigureControlEnum.cs" />
+    <Compile Include="enum\ModeEnum.cs" />
+    <Compile Include="enum\TypeCommandeEnum.cs" />
+    <Compile Include="enum\TypeComportementEnum.cs" />
+    <Compile Include="enum\VehiculePiece.cs" />
     <Compile Include="FormulairesSysFichiers\ExplorateurOuverture.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,16 +178,16 @@
     <Compile Include="MainMenu\MainMenu.Designer.cs">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu\MapMenu.cs">
+    <Compile Include="MapSelector\MapMenu.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainMenu\MapMenu.Designer.cs">
+    <Compile Include="MapSelector\MapMenu.Designer.cs">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu\MapPresentator.cs">
+    <Compile Include="MapSelector\MapPresentator.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainMenu\MapPresentator.Designer.cs">
+    <Compile Include="MapSelector\MapPresentator.Designer.cs">
       <DependentUpon>MapPresentator.cs</DependentUpon>
     </Compile>
     <Compile Include="Personalize\PersonnalisationSideMenu.cs">
@@ -211,6 +248,21 @@
     <EmbeddedResource Include="Chat\ChatWindow.resx">
       <DependentUpon>ChatWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\EditionTutorielMenuStrip.resx">
+      <DependentUpon>EditionTutorielMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\EditionTutorielSideMenu.resx">
+      <DependentUpon>EditionTutorielSideMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\EditionTutorielInstructions.resx">
+      <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditionTutoriel\TutorialEditionModificationPanel.resx">
+      <DependentUpon>TutorialEditionModificationPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Edition\EditionModificationPanel.resx">
+      <DependentUpon>EditionModificationPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ColorSelector.resx">
       <DependentUpon>ColorSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -241,10 +293,10 @@
     <EmbeddedResource Include="MainMenu\MainMenu.resx">
       <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu\MapMenu.resx">
+    <EmbeddedResource Include="MapSelector\MapMenu.resx">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu\MapPresentator.resx">
+    <EmbeddedResource Include="MapSelector\MapPresentator.resx">
       <DependentUpon>MapPresentator.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ModeleSelector.resx">
@@ -295,10 +347,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="Enum\Enum.csproj">
-      <Project>{c6fb0f99-403a-43a9-86b5-c8ca99ac438a}</Project>
-      <Name>Enum</Name>
-    </ProjectReference>
+    <None Include="Resources\pauseNoire.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">

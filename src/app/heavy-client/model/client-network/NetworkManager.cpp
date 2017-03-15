@@ -1,7 +1,86 @@
+#include <iostream>
+
 #include "NetworkManager.h"
 
 namespace client_network
 {
 
+NetworkManager::NetworkManager(event_handler::EventHandler* eventHandler)
+	: dispatcher_(eventHandler)
+{
+	connection_.setOnMessageReceivedHandler(&MessageDispatcher::handleReceivedMessage, &dispatcher_);
+	dispatcher_.startDispatching();
+}
+
+void NetworkManager::handleServerMessage(const std::string& message)
+{
+}
+
+void NetworkManager::authenticate(const std::string& username)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(username.size() + 6), message);
+	message.append("ul" + username);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::createProfile(const std::string& username)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(username.size() + 6), message);
+	message.append("uc");
+	message.append(username);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestMapCreation(const std::string& mapName, uint8_t mapType)
+{
+	std::string message;
+	serializer_.serialize((uint32_t)(mapName.size() + 7), message);
+	message.append("mc");
+	serializer_.serialize(mapType, message);
+	message.append(mapName);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestToJoinMapSession(uint32_t mapId)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(10), message);
+	message.append("mj");
+	serializer_.serialize(mapId, message);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestToleaveMapSession()
+{
+	std::string message;
+	serializer_.serialize(uint32_t(6), message);
+	message.append("ml");
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestEntityCreation(uint8_t type, uint32_t parentId,
+	const glm::vec3& absolutePosition, const glm::vec3& relativePosition,
+	const glm::vec3& rotation, const glm::vec3& scale)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(59), message);
+	message.append("ec");
+	serializer_.serialize(type, message);
+	serializer_.serialize(parentId, message);
+	serializer_.serialize(absolutePosition, message);
+	serializer_.serialize(relativePosition, message);
+	serializer_.serialize(rotation, message);
+	serializer_.serialize(scale, message);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::sendSizePrefixedMessage(std::string& message)
+{
+	std::string size;
+	serializer_.serialize((uint32_t)(message.size() + 4), size);
+	sendMessage(message.insert(0, size));
+}
 
 }

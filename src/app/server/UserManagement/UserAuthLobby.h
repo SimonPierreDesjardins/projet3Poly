@@ -3,62 +3,73 @@
 #define __USER_AUTH_LOBBY_H
 
 #include <unordered_map>
+#include <memory>
+#include <string>
 
 #include "Networking.h"
+
+
 #include "User.h"
 #include "MultiUserSystem.h"
 
+namespace server 
+{
 
-namespace server {
-	// Wraps a connection to send connection reference on callbacks
-	class ConnectionWrapper {
-	public:
-		ConnectionWrapper(Networking::Connection* connection);
+class ConnectionWrapper;
 
-		Networking::Connection* GetConnection();
+class UserAuthLobby : private MultiUserSystem
+{
+public:
+	UserAuthLobby(Networking::ServerListener* listener, std::vector<MultiUserSystem*> mus);
+	virtual ~UserAuthLobby();
 
-		__event void OnDisconnect(ConnectionWrapper* wrapper);
+	void OnReceivedMessage(ConnectionWrapper* user, const std::string& message);
+	void OnDisconnection(ConnectionWrapper* user);
+protected:
+	virtual char GetSystemType();
+	virtual void TreatUserJoin(User* user);
+	virtual void TreatUserMessage(User* user, const std::string& message);
+	virtual void TreatUserDisconnect(User* user);
 
-		__event void OnMessageSent(ConnectionWrapper* wrapper, std::string& message);
+private:
 
-	private:
+	// ChatRoomManager here
 
-		void ListenToConnection(Networking::Connection* connection);
-		void StopListeningToConnection(Networking::Connection* connection);
+	std::vector<MultiUserSystem*> _userReceivers;
+	Networking::ServerListener* _listener;
 
-		void OnData(std::string& message);
+	// Connection reception treatment
+	void HookToListenerEvents(Networking::ServerListener* listener);
+	void UnhookFromListenerEvents(Networking::ServerListener* listener);
 
-		void OnDisco();
+	void handleConnection(Networking::Connection* handleConnection);
 
-		Networking::Connection* _connection;
+	void handleCreateUsernameRequest(ConnectionWrapper* sender, std::string message);
+	void handleLoginRequest(ConnectionWrapper* sender, std::string username);
+	//void handleModifiedPropertyRequest();
 
-	};
+	// created from all user infos in DB
+	std::unordered_map<std::string, User*> _users;
+};
 
-	class UserAuthLobby {
-	public:
-		///<summary>Creates a connection authentifier that listens on listener and forwards authenticated users to a multi-user system </summary>
-		UserAuthLobby(Networking::ServerListener* listener, MultiUserSystem& mus);
+// Wraps a connection to send connection reference on callbacks
+class ConnectionWrapper 
+{
+public:
+	ConnectionWrapper(Networking::Connection* connection, UserAuthLobby* authLobby);
 
-		~UserAuthLobby();
+	Networking::Connection* GetConnection();
 
-	private:
+	void OnDisconnect();
+	void OnMessageSent(const std::string& message);
 
-		// Connection reception treatment
-		void HookToListenerEvents(Networking::ServerListener* listener);
-		void UnhookFromListenerEvents(Networking::ServerListener* listener);
-		void TreatConnection(Networking::Connection* connectionToTreat);
+private:
 
-		void HookToWrapper(ConnectionWrapper* wrapper);
-		void UnhookFromWrapper(ConnectionWrapper* wrapper);
+	void HookToConnection(Networking::Connection* connectionToListenTo);
 
-		void OnReceivedMessage(ConnectionWrapper* user, std::string& message);
-		void OnUserDisconnect(ConnectionWrapper* user);
-
-		Networking::ServerListener* _listener;
-
-		// Contains the system authenticated users should be sent to
-		MultiUserSystem& _userReceiver;
-	};
+	Networking::Connection* _connection;
+	UserAuthLobby* _authLoby;
+};
 
 }
 

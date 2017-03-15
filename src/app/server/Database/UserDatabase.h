@@ -8,15 +8,15 @@
 
 namespace server {
 
-	class UserInformation:public DatalistElement {
+	class UserInformation : public DatalistElement 
+	{
 	public:
-		std::string UserName = "";
-		std::vector<std::string> privateMaps = std::vector<std::string>();
-		virtual std::string GetId();
+		std::string UserName;
+		std::vector<std::string> privateMaps;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
-	class UserDatabase:public BaseDatalist{
+	class UserDatabase:public BaseDatalist<DatalistElement>{
 		friend class Database;
 
 	protected:

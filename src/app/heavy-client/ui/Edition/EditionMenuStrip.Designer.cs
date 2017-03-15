@@ -30,17 +30,18 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.orbiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.informationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nouveauToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ouvrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enregistrerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enregistrerSousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modeTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuprincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.orbiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.informationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tutorielToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -55,7 +56,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fichierToolStripMenuItem,
             this.vuesToolStripMenuItem,
-            this.informationsToolStripMenuItem});
+            this.informationsToolStripMenuItem,
+            this.tutorielToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(793, 29);
@@ -76,41 +78,7 @@
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(71, 25);
             this.fichierToolStripMenuItem.Text = "Fichier";
-            // 
-            // vuesToolStripMenuItem
-            // 
-            this.vuesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.orthoToolStripMenuItem,
-            this.orbiteToolStripMenuItem});
-            this.vuesToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.vuesToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.vuesToolStripMenuItem.Name = "vuesToolStripMenuItem";
-            this.vuesToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
-            this.vuesToolStripMenuItem.Text = "Vues";
-            // 
-            // orthoToolStripMenuItem
-            // 
-            this.orthoToolStripMenuItem.Name = "orthoToolStripMenuItem";
-            this.orthoToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.orthoToolStripMenuItem.Text = "Orthographique";
-            this.orthoToolStripMenuItem.Click += new System.EventHandler(this.orthoToolStripMenuItem_Click);
-            // 
-            // orbiteToolStripMenuItem
-            // 
-            this.orbiteToolStripMenuItem.Name = "orbiteToolStripMenuItem";
-            this.orbiteToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
-            this.orbiteToolStripMenuItem.Text = "Orbite";
-            this.orbiteToolStripMenuItem.Click += new System.EventHandler(this.orbiteToolStripMenuItem_Click);
-            // 
-            // informationsToolStripMenuItem
-            // 
-            this.informationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.aideToolStripMenuItem});
-            this.informationsToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.informationsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.informationsToolStripMenuItem.Name = "informationsToolStripMenuItem";
-            this.informationsToolStripMenuItem.Size = new System.Drawing.Size(119, 25);
-            this.informationsToolStripMenuItem.Text = "Informations";
+            this.fichierToolStripMenuItem.Click += new System.EventHandler(this.fichierToolStripMenuItem_Click);
             // 
             // nouveauToolStripMenuItem
             // 
@@ -154,12 +122,58 @@
             this.menuprincipalToolStripMenuItem.Text = "Menuprincipal";
             this.menuprincipalToolStripMenuItem.Click += new System.EventHandler(this.menuprincipalToolStripMenuItem_Click);
             // 
+            // vuesToolStripMenuItem
+            // 
+            this.vuesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.orthoToolStripMenuItem,
+            this.orbiteToolStripMenuItem});
+            this.vuesToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.vuesToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.vuesToolStripMenuItem.Name = "vuesToolStripMenuItem";
+            this.vuesToolStripMenuItem.Size = new System.Drawing.Size(59, 25);
+            this.vuesToolStripMenuItem.Text = "Vues";
+            this.vuesToolStripMenuItem.Click += new System.EventHandler(this.vuesToolStripMenuItem_Click);
+            // 
+            // orthoToolStripMenuItem
+            // 
+            this.orthoToolStripMenuItem.Name = "orthoToolStripMenuItem";
+            this.orthoToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
+            this.orthoToolStripMenuItem.Text = "Orthographique";
+            this.orthoToolStripMenuItem.Click += new System.EventHandler(this.orthoToolStripMenuItem_Click);
+            // 
+            // orbiteToolStripMenuItem
+            // 
+            this.orbiteToolStripMenuItem.Name = "orbiteToolStripMenuItem";
+            this.orbiteToolStripMenuItem.Size = new System.Drawing.Size(208, 26);
+            this.orbiteToolStripMenuItem.Text = "Orbite";
+            this.orbiteToolStripMenuItem.Click += new System.EventHandler(this.orbiteToolStripMenuItem_Click);
+            // 
+            // informationsToolStripMenuItem
+            // 
+            this.informationsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aideToolStripMenuItem});
+            this.informationsToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.informationsToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.informationsToolStripMenuItem.Name = "informationsToolStripMenuItem";
+            this.informationsToolStripMenuItem.Size = new System.Drawing.Size(119, 25);
+            this.informationsToolStripMenuItem.Text = "Informations";
+            this.informationsToolStripMenuItem.Click += new System.EventHandler(this.informationsToolStripMenuItem_Click);
+            // 
             // aideToolStripMenuItem
             // 
             this.aideToolStripMenuItem.Name = "aideToolStripMenuItem";
             this.aideToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
             this.aideToolStripMenuItem.Text = "Aide";
             this.aideToolStripMenuItem.Click += new System.EventHandler(this.aideToolStripMenuItem_Click);
+            // 
+            // tutorielToolStripMenuItem
+            // 
+            this.tutorielToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tutorielToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
+            this.tutorielToolStripMenuItem.Name = "tutorielToolStripMenuItem";
+            this.tutorielToolStripMenuItem.Size = new System.Drawing.Size(78, 25);
+            this.tutorielToolStripMenuItem.Text = "Tutoriel";
+            this.tutorielToolStripMenuItem.Click += new System.EventHandler(this.tutorielToolStripMenuItem_Click);
             // 
             // BottomToolStripPanel
             // 
@@ -231,5 +245,6 @@
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
+        private System.Windows.Forms.ToolStripMenuItem tutorielToolStripMenuItem;
     }
 }

@@ -6,17 +6,26 @@
 #include "rapidjson\filereadstream.h"
 #include "BaseDatalist.h"
 
+enum MAP_TYPE
+{
+	// Utiliser les mêmes enums que sur le client lourd.
+	SIMULATION_MAP = 1,
+	EDITION_MAP = 2,
+};
+
 namespace server {
 
-	class MapInfo{
+	class MapInfo : public DatalistElement{
 	public:
-		std::string mapId;
+
+		MapInfo();
 		std::string mapName;
+		char mapType{ EDITION_MAP };
 		bool isPrivate;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
-	class MapDatabase:public BaseDatalist{
+	class MapDatabase:public BaseDatalist<MapInfo>{
 	
 		//Class is built by the database class and database calls saving
 		friend class Database;
@@ -24,6 +33,10 @@ namespace server {
 	private:
 		//Loads up user information from stream
 		MapDatabase(std::string basePath);
+
+		virtual void WriteObject(DatalistElement& element);
+
+
 	};
 }
 

@@ -106,6 +106,7 @@ namespace ui
 
             if (continuConnexion)
             {
+                parent_.userChat = new UserTabChat(parent_);
                 if (FonctionsNatives.connectToServer(IPTextBox.Text, "5000"))
                 {
                     onConnectionSucces();
@@ -120,9 +121,6 @@ namespace ui
         private void onConnectionSucces()
         {
             connectPanel.Visible = false;
-
-            this.Location = new Point((parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - Width / 2,
-                                       parent_.viewPort.Height / 2 - Height / 2);
 
             authenticatePanel.Visible = true;
             newAccountWarningLabel.Visible = false;
@@ -199,6 +197,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void createAndConnectNewUser()
         {
+            FonctionsNatives.createProfile(newAccountTextBox.Text);
+            FonctionsNatives.authenticate(newAccountTextBox.Text);
+
+            parent_.userName = newAccountTextBox.Text;
             goBackToMainMenu();
 
             parent_.viewPort.Controls.Add(parent_.userChat);
@@ -289,6 +291,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void connectExistingUser()
         {
+            FonctionsNatives.authenticate(ExistingAccountTextBox.Text);
+
+            parent_.userName = newAccountTextBox.Text;
             goBackToMainMenu();
 
             parent_.viewPort.Controls.Add(parent_.userChat);
@@ -350,6 +355,7 @@ namespace ui
 
         private void removeChat()
         {
+            parent_.userName = "";
             if (parent_.userChat.inMainWindow)
                 parent_.viewPort.Controls.Remove(parent_.userChat);
             else

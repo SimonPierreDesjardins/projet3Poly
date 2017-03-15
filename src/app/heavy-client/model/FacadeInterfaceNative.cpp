@@ -22,6 +22,7 @@
 #include "CommandeRobot.h"
 #include "EnginSon.h"
 #include "Projection.h"
+#include "ModeTypes.h"
 
 #include "FacadeInterfaceNative.h"
 
@@ -46,7 +47,7 @@ extern "C"
 		if (handle == nullptr) {
 			return;
 		}
-		FacadeModele::obtenirInstance()->initialiserOpenGL((HWND)(handle));
+		FacadeModele::obtenirInstance()->initialize((HWND)(handle));
         //executerTests();
 	}
 
@@ -924,29 +925,214 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str());
 	}
 
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType)
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
+	}
+
+	__declspec(dllexport) void __cdecl joinMap(int mapId)
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(mapId);
+	}
+
+	__declspec(dllexport) void __cdecl leaveMap()
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
+	}
+
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)
+	///
+	/// Fonction qui permet de lancer une tentative de connexion avec le serveur.
+	///
+	/// @param hostName : L'adresse ip du serveur.
+	/// @param port     : Le port du serveur.
+	/// @return bool    : True si la tentative a réussi.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port)
 	{
 		return FacadeModele::obtenirInstance()->getNetworkManager()->requestConnection(std::string(hostName), std::string(port));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl createProfile(char* profileName)
+	///
+	/// Fonction qui permet d'envoyer une requête de création de profile au serveur.
+	///
+	/// @param profileName : Le nom du profile.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl createProfile(char* profileName)
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->createProfile(std::string(profileName));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl authenticate(char* profileName)
+	///
+	/// Fonction qui permet d'envoyer une requête d'authentification au serveur.
+	///
+	/// @param profileName : Le nom du profile.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl authenticate(char* profileName)
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->authenticate(std::string(profileName));
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl disconnectFromServer()
+	///
+	/// Fonction qui ferme la connexion du client.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl disconnectFromServer()
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->closeConnection();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl isConnected()
+	///
+	/// Fonction qui retourne si le client est connecté.
+	///
+	/// @return bool : True si le client est connecté.
+	///
+	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) bool __cdecl isConnected()
 	{
 		return FacadeModele::obtenirInstance()->getNetworkManager()->isConnected();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl sendMessage(char const* message, int size)
+	///
+	/// Fonction qui permet d'envoyer un message au serveur
+	///
+	/// @param message : Un pointeur sur un array de char 
+	/// @param size : La taille du message 
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl sendMessage(char* message, int size)
+	{
+		// Need the size of the array so the string builder doesn't stop at 
+		// the first \0 (likely in the serialized message size)
+		FacadeModele::obtenirInstance()->getNetworkManager()->sendSizePrefixedMessage(std::string(message, size));
+	}
+
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl SetCallback(Callback function)
+	///
+	/// Fonction qui assigne une référence vers une fonction du c#. 
+	///
+	/// @param Callback function: reference de la fonction du c#
+	///
+	////////////////////////////////////////////////////////////////////////
+	Callback InterfaceFunctionChangeStateTutoriel = 0;
+	__declspec(dllexport) void __cdecl SetCallback(Callback function)
+	{
+		InterfaceFunctionChangeStateTutoriel = function;
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl ChangeEditionTutorialState()
+	///
+	/// Cette fonction appel la méthode InterfaceFunctionChangeStateTutoriel du c#
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl ChangeEditionTutorialState()
+	{
+		InterfaceFunctionChangeStateTutoriel();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState)
+	///
+	/// Cette fonction assigne l'état du tutoriel au mode
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState)
+	{
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == TUTORIAL_EDITION)
+			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::setCurrentTutorialState(currentState);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl UnselectCurrentTool()
+	///
+	/// Cette fonction désélectionne l'outil utilisé dans le tutoriel du mode
+	/// édition
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl UnselectCurrentTool()
+	{
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == TUTORIAL_EDITION)
+			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::unselectCurrentTool();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl UnselectAllObjects()
+	///
+	/// Cette fonction désélectionne tous les objets présent dans la simulation
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl UnselectAllObjects()
+	{
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl SelectAllTutorialObjects()
+	///
+	/// Cette fonction permet de sélectionner tous les objets créé lors du tutoriel
+	/// du mode édition
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl SelectAllTutorialObjects()
+	{
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == TUTORIAL_EDITION)
+			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::selectAllTutorialObjects();
+	}
+
+	CallbackForChat Handler = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForChat(CallbackForChat handler)
+	{
+		Handler = handler;
+	}
+
+	__declspec(dllexport) void __cdecl TestCallback(std::string message)
+	{
+		message = message.substr(5);
+		const unsigned char* bytes = (const unsigned char*)message.data();
+		Handler(bytes, message.size());
+	}
+
+	CallbackForNewMap AddNewMap = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap)
+	{
+		AddNewMap = addNewMap;
+	}
+
+	__declspec(dllexport) void __cdecl AddMap(std::string message, bool connectionState, int mode, int nbPlayers, int id)
+	{
+		message = message.substr(5);
+		const unsigned char* bytes = (const unsigned char*)message.data();
+		AddNewMap(bytes, message.size(), connectionState, mode, nbPlayers, id);
 	}
 }
 

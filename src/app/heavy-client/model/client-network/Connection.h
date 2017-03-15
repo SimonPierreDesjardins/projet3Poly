@@ -38,7 +38,7 @@ public:
 
 private:	
 
-	std::function<void(std::string)> onMessageReceived_;
+	std::function<void(char const*, int32_t)> onMessageReceived_;
 	std::function<void(void)> onConnectionLost_;
 
 	timeval timeout_{ 0, 20000 };
@@ -50,10 +50,14 @@ private:
 	static const int DEFAULT_BUFF_LEN = 4096;
 	std::array<char, DEFAULT_BUFF_LEN> rcvBuffer_;
 
+	std::string message_;
+	uint32_t currentMessageSize_ = DEFAULT_BUFF_LEN;
+
 	void listen();
 	void readData();
 
-	void receiveMessage(const std::string& message);
+	void fetchSocketMessage();
+	void receiveMessage(char const* data, int32_t size);
 	void lostConnection();
 
 };
@@ -61,13 +65,13 @@ private:
 template<class F, class T>
 void Connection::setOnMessageReceivedHandler(F&& handler, T&& instance)
 {
-	onMessageReceived_ = std::bind(handler, instance, std::placeholders::_1);
+	onMessageReceived_ = std::bind(handler, instance, std::placeholders::_1, std::placeholders::_2);
 }
 
 template<class F>
 void Connection::setOnMessageReceivedHandler(F&& handler)
 {
-	onMessageReceived_ = std::bind(handler, std::placeholders::_1);
+	onMessageReceived_ = std::bind(handler, std::placeholders::_1, std::placeholders::_2);
 }
 
 template<class F, class T>

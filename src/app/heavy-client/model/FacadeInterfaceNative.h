@@ -108,7 +108,31 @@ extern "C"
 	__declspec(dllexport) void __cdecl authenticate(char* profileName);
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
+	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
 
+	// Map management
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType);
+	__declspec(dllexport) void __cdecl joinMap(int mapId);
+	__declspec(dllexport) void __cdecl leaveMap();
+
+	//Edition Tutorial
+	typedef int(__stdcall * Callback)();
+	__declspec(dllexport) void __cdecl SetCallback(Callback function);
+	__declspec(dllexport) void __cdecl ChangeEditionTutorialState();
+	__declspec(dllexport) void __cdecl UpdateEditionTutorialState(int currentState);
+	__declspec(dllexport) void __cdecl UnselectCurrentTool();
+	__declspec(dllexport) void __cdecl UnselectAllObjects();
+	__declspec(dllexport) void __cdecl SelectAllTutorialObjects();
+
+	//Chat System
+	typedef void(__stdcall * CallbackForChat)(const unsigned char* text, int size);
+	__declspec(dllexport) void __cdecl SetCallbackForChat(CallbackForChat handler);
+	__declspec(dllexport) void __cdecl TestCallback(std::string message);
+
+	//Map System
+	typedef void(__stdcall * CallbackForNewMap)(const unsigned char* text, int size, bool connectionState, int mode, int nbPlayers, int id);
+	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap);
+	__declspec(dllexport) void __cdecl AddMap(std::string message, bool connectionState, int mode, int nbPlayers, int id);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

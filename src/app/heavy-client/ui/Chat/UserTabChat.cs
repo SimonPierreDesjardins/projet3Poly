@@ -5,7 +5,9 @@
 ///
 ////////////////////////////////////////////////
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ui
@@ -14,6 +16,8 @@ namespace ui
     {
         Window parent_;
         public ChatWindow chatWindow_;
+        Dictionary<string, UserChatChannel> channels_;
+
         public Boolean inMainWindow = true;
 
         ////////////////////////////////////////////////////////////////////////
@@ -30,9 +34,11 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
+            channels_ = new Dictionary<string, UserChatChannel>();
             createNewChannel("General");
 
-
+            mInstance = new CallbackForChat(Handler);
+            SetCallbackForChat(mInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -185,9 +191,14 @@ namespace ui
             newTabPage.Margin = new System.Windows.Forms.Padding(0);
 
             //Add the content of the tab
-            UserChatChannel newChannel = new UserChatChannel(parent_);
-            newTabPage.Controls.Add(newChannel);
+            UserChatChannel newChannel = new UserChatChannel(parent_, name);
+            channels_.Add(name, newChannel);
+
             newChannel.Dock = DockStyle.Fill;
+            newTabPage.Controls.Add(newChannel);
+
+            string tmp = "cj" + name;
+            FonctionsNatives.sendMessage(tmp, tmp.Length);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -207,6 +218,7 @@ namespace ui
                 if (tabName == tabControl.TabPages[i].Text)
                 {
                     tabControl.TabPages.Remove(tabControl.TabPages[i]);
+                    channels_.Remove(tabName);
                     leftChannel = true;
                 }
             }
@@ -234,5 +246,109 @@ namespace ui
             }
             return unique;
         }
+
+        private void handleChatMessage(string message)
+        {
+            switch(message[0])
+            {
+                case 'm':
+                    userSentAMessage(message);
+                    break;
+
+                case 'l':
+                    channelList(message);
+                    break;
+
+                case 'u':
+                    userList(message);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void userSentAMessage(string message)
+        {
+            int begin = 1;
+            int lenght = message.IndexOf(';');
+            string user = message.Substring(begin, lenght - 1);
+            begin += lenght;
+
+            lenght = message.IndexOf(';', begin) - begin;
+            string channelName = message.Substring(begin, lenght);
+            begin += lenght + 1;
+
+            lenght = message.IndexOf(';', begin) - begin;
+            string time = message.Substring(begin, lenght);
+            begin += lenght + 1;
+
+            lenght = message.IndexOf(';', begin) - begin;
+            string date = message.Substring(begin, lenght);
+            begin += lenght + 1;
+
+            string sent = message.Substring(begin);
+
+            UserChatChannel channel;
+            bool isValid = channels_.TryGetValue(channelName, out channel);
+            if (isValid)
+            {
+                parent_.Invoke((MethodInvoker)delegate {
+                    channel.addMessageToChat(user + " a envoyé a " + time + " " + date + ":\r\n" + sent + "\r\n");
+                });
+            }
+        }
+
+        private void channelList(string message)
+        {
+            message = message.Substring(1);
+            string[] channels = message.Split(';');
+
+            parent_.Invoke((MethodInvoker)delegate {
+                    foreach (KeyValuePair<string, UserChatChannel> entry in channels_)
+                    {
+                            entry.Value.setChannelList(channels);
+                    }
+                });
+        }
+
+        private void userList(string message)
+        {
+            string[] users = message.Split(';');
+            string channelName = users[0].Substring(1);
+
+            UserChatChannel channel;
+            bool isValid = channels_.TryGetValue(channelName, out channel);
+            if (isValid)
+            {
+                parent_.Invoke((MethodInvoker)delegate {
+                    channel.addUsersToChannel(users);
+                });
+            }
+        }
+
+        public void Test(string message)
+        {
+            TestCallback(message);
+        }
+
+        private delegate void CallbackForChat(IntPtr text, int size);
+        // Ensure it doesn't get garbage collected
+        private CallbackForChat mInstance;   
+        private void Handler(IntPtr message, int size)
+        {
+            // Do something...
+            Byte[] tmp = new Byte[size];
+            Marshal.Copy(message, tmp, 0, size);
+            var str = System.Text.Encoding.Default.GetString(tmp);
+
+            handleChatMessage(str);
+        }
+
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForChat(CallbackForChat fn);
+
+        [DllImport("model.dll")]
+        private static extern void TestCallback(string message);
     }
 }

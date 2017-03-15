@@ -33,7 +33,7 @@ namespace ui
             "D                            Choisit l'outil de déplacement.\n"+
             "S                            Choisit l'outil de sélection.\n"+
             "R                            Choisit l'outil de rotation.\n"+
-            "E                            Choisit l'outil de rotation.\n"+
+            "E                            Choisit l'outil de mise à échelle.\n"+
             "C                            Choisit l'outil de duplication.\n"+
             "Z                            Choisit l'outil de zoom.\n"+
             "T                            Baslcule en mode test.\n\n"+

@@ -1,62 +1,66 @@
 ﻿set(AFFICHAGE_TEXTE_SRC
-    AffichageTexte/AffichageTexte.h
-    AffichageTexte/AffichageTexte.cpp
+    simulation-engine/AffichageTexte/AffichageTexte.h
+    simulation-engine/AffichageTexte/AffichageTexte.cpp
 )
         
 set(ARBRE_SRC
-    Arbre/ArbreRendu.h
-    Arbre/ArbreRendu.cpp
-    Arbre/ArbreRenduINF2990.h
-    Arbre/ArbreRenduINF2990.cpp
+    simulation-engine/Arbre/ArbreRendu.h
+    simulation-engine/Arbre/ArbreRendu.cpp
+    simulation-engine/Arbre/ArbreRenduINF2990.h
+    simulation-engine/Arbre/ArbreRenduINF2990.cpp
 )
 
 set(NOEUDS_SRC
-    Arbre/Noeuds/NoeudAbstrait.h
-    Arbre/Noeuds/NoeudAbstrait.cpp
-    Arbre/Noeuds/NoeudComposite.h
-    Arbre/Noeuds/NoeudComposite.cpp
-    Arbre/Noeuds/NoeudDepart.h
-    Arbre/Noeuds/NoeudDepart.cpp
-    Arbre/Noeuds/NoeudDuplication.h
-    Arbre/Noeuds/NoeudDuplication.cpp
-    Arbre/Noeuds/NoeudJonction.h
-    Arbre/Noeuds/NoeudJonction.cpp
-    Arbre/Noeuds/NoeudLigne.h
-    Arbre/Noeuds/NoeudLigne.cpp
-    Arbre/Noeuds/NoeudMur.h
-    Arbre/Noeuds/NoeudMur.cpp
-    Arbre/Noeuds/NoeudPoteau.h
-    Arbre/Noeuds/NoeudPoteau.cpp
-    Arbre/Noeuds/NoeudRobot.h
-    Arbre/Noeuds/NoeudRobot.cpp
-    Arbre/Noeuds/NoeudRoues.h
-    Arbre/Noeuds/NoeudRoues.cpp
-    Arbre/Noeuds/NoeudSegment.h
-    Arbre/Noeuds/NoeudSegment.cpp
-    Arbre/Noeuds/NoeudTable.h
-    Arbre/Noeuds/NoeudTable.cpp
-    Arbre/Noeuds/NoeudTypes.h
-    Arbre/Noeuds/NoeudTruck.cpp
-    Arbre/Noeuds/NoeudTruck.h
-    Arbre/Noeuds/NoeudF1.cpp
-    Arbre/Noeuds/NoeudF1.h
-    Arbre/Noeuds/NoeudAudi.cpp
-    Arbre/Noeuds/NoeudAudi.h
-    Arbre/Noeuds/NoeudTeleporteur.h
-    Arbre/Noeuds/NoeudTeleporteur.cpp
+
+    simulation-engine/Arbre/Noeuds/NoeudAbstrait.h
+    simulation-engine/Arbre/Noeuds/NoeudAbstrait.cpp
+    simulation-engine/Arbre/Noeuds/NoeudComposite.h
+    simulation-engine/Arbre/Noeuds/NoeudComposite.cpp
+    simulation-engine/Arbre/Noeuds/NoeudDepart.h
+    simulation-engine/Arbre/Noeuds/NoeudDepart.cpp
+    simulation-engine/Arbre/Noeuds/NoeudDuplication.h
+    simulation-engine/Arbre/Noeuds/NoeudDuplication.cpp
+    simulation-engine/Arbre/Noeuds/NoeudJonction.h
+    simulation-engine/Arbre/Noeuds/NoeudJonction.cpp
+    simulation-engine/Arbre/Noeuds/NoeudLigne.h
+    simulation-engine/Arbre/Noeuds/NoeudLigne.cpp
+    simulation-engine/Arbre/Noeuds/NoeudMur.h
+    simulation-engine/Arbre/Noeuds/NoeudMur.cpp
+    simulation-engine/Arbre/Noeuds/NoeudPoteau.h
+    simulation-engine/Arbre/Noeuds/NoeudPoteau.cpp
+    simulation-engine/Arbre/Noeuds/NoeudRobot.h
+    simulation-engine/Arbre/Noeuds/NoeudRobot.cpp
+    simulation-engine/Arbre/Noeuds/NoeudRoues.h
+    simulation-engine/Arbre/Noeuds/NoeudRoues.cpp
+    simulation-engine/Arbre/Noeuds/NoeudSegment.h
+    simulation-engine/Arbre/Noeuds/NoeudSegment.cpp
+    simulation-engine/Arbre/Noeuds/NoeudTable.h
+    simulation-engine/Arbre/Noeuds/NoeudTable.cpp
+    simulation-engine/Arbre/Noeuds/NoeudTypes.h
+    simulation-engine/Arbre/Noeuds/NoeudTruck.cpp
+    simulation-engine/Arbre/Noeuds/NoeudTruck.h
+    simulation-engine/Arbre/Noeuds/NoeudF1.cpp
+    simulation-engine/Arbre/Noeuds/NoeudF1.h
+    simulation-engine/Arbre/Noeuds/NoeudVolks.cpp
+    simulation-engine/Arbre/Noeuds/NoeudVolks.h
+    simulation-engine/Arbre/Noeuds/NoeudTeleporteur.cpp
+    simulation-engine/Arbre/Noeuds/NoeudTeleporteur.h
+    simulation-engine/Arbre/Noeuds/NoeudAudi.h
+    simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
 )
 
 set(USINES_SRC
-    Arbre/Usines/UsineNoeud.h
+    simulation-engine/Arbre/Usines/UsineNoeud.h
+    simulation-engine/Arbre/Usines/UsineNoeud.cpp
 )
 
 set(CAPTEUR_SRC
-    Capteur/CapteurDistance.h
-    Capteur/CapteurDistance.cpp
-    Capteur/CapteurOptique.h
-    Capteur/CapteurOptique.cpp
-    Capteur/SuiveurLigne.h
-    Capteur/SuiveurLigne.cpp
+    simulation-engine/Capteur/CapteurDistance.h
+    simulation-engine/Capteur/CapteurDistance.cpp
+    simulation-engine/Capteur/CapteurOptique.h
+    simulation-engine/Capteur/CapteurOptique.cpp
+    simulation-engine/Capteur/SuiveurLigne.h
+    simulation-engine/Capteur/SuiveurLigne.cpp
 )
 
 set(CONFIGURATION_SRC
@@ -65,95 +69,101 @@ set(CONFIGURATION_SRC
 )
 
 set(CONTROLE_ROBOT_SRC
-    ControleRobot/ControleRobot.h
-    ControleRobot/ControleRobot.cpp
+    simulation-engine/ControleRobot/ControleRobot.h
+    simulation-engine/ControleRobot/ControleRobot.cpp
 )
 
 set(COMMANDE_SRC
-    ControleRobot/Commande/CommandeRobot.h
-    ControleRobot/Commande/CommandeRobot.cpp
+    simulation-engine/ControleRobot/Commande/CommandeRobot.h
+    simulation-engine/ControleRobot/Commande/CommandeRobot.cpp
 )
 
 set(COMPORTEMENT_SRC
-    ControleRobot/Comportement/ComportementAbstrait.h
-    ControleRobot/Comportement/ComportementAbstrait.cpp
-    ControleRobot/Comportement/ComportementBalayage.h
-    ControleRobot/Comportement/ComportementBalayage.cpp
-    ControleRobot/Comportement/ComportementDefaut.h
-    ControleRobot/Comportement/ComportementDefaut.cpp
-    ControleRobot/Comportement/ComportementDeviation.h
-    ControleRobot/Comportement/ComportementDeviation.cpp
-    ControleRobot/Comportement/ComportementEvitement.h
-    ControleRobot/Comportement/ComportementEvitement.cpp
-    ControleRobot/Comportement/ComportementSuiviLigne.h
-    ControleRobot/Comportement/ComportementSuiviLigne.cpp
-    ControleRobot/Comportement/ComportementTypes.h
+    simulation-engine/ControleRobot/Comportement/ComportementAbstrait.h
+    simulation-engine/ControleRobot/Comportement/ComportementAbstrait.cpp
+    simulation-engine/ControleRobot/Comportement/ComportementBalayage.h
+    simulation-engine/ControleRobot/Comportement/ComportementBalayage.cpp
+    simulation-engine/ControleRobot/Comportement/ComportementDefaut.h
+    simulation-engine/ControleRobot/Comportement/ComportementDefaut.cpp
+    simulation-engine/ControleRobot/Comportement/ComportementDeviation.h
+    simulation-engine/ControleRobot/Comportement/ComportementDeviation.cpp
+    simulation-engine/ControleRobot/Comportement/ComportementEvitement.h
+    simulation-engine/ControleRobot/Comportement/ComportementEvitement.cpp
+    simulation-engine/ControleRobot/Comportement/ComportementSuiviLigne.h
+    simulation-engine/ControleRobot/Comportement/ComportementSuiviLigne.cpp
+    simulation-engine/ControleRobot/Comportement/ComportementTypes.h
 )
 
 set(ENGIN_SON_SRC
-    EnginSon/EnginSon.h
-    EnginSon/EnginSon.cpp
+    simulation-engine/EnginSon/EnginSon.h
+    simulation-engine/EnginSon/EnginSon.cpp
 )
 
 set(LUMIERE_SRC
-    Lumiere/ControleurLumiere.h
-    Lumiere/ControleurLumiere.cpp
+    simulation-engine/Lumiere/ControleurLumiere.h
+    simulation-engine/Lumiere/ControleurLumiere.cpp
 )
 
 set(MACHINE_A_ETATS_SRC
-    MachineAEtats/EtatAbstrait.h
-    MachineAEtats/EtatAbstrait.cpp
-    MachineAEtats/EtatCreationLigne.h
-    MachineAEtats/EtatCreationLigne.cpp
-    MachineAEtats/EtatCreationMur.h
-    MachineAEtats/EtatCreationMur.cpp
-    MachineAEtats/EtatCreationPoteau.h
-    MachineAEtats/EtatCreationPoteau.cpp
-    MachineAEtats/EtatDeplacement.h
-    MachineAEtats/EtatDeplacement.cpp
-    MachineAEtats/EtatDuplication.h
-    MachineAEtats/EtatDuplication.cpp
-    MachineAEtats/EtatLoupe.h
-    MachineAEtats/EtatLoupe.cpp
-    MachineAEtats/EtatMiseAEchelle.h
-    MachineAEtats/EtatMiseAEchelle.cpp
-    MachineAEtats/EtatRotation.h
-    MachineAEtats/EtatRotation.cpp
-    MachineAEtats/EtatSelection.h
-    MachineAEtats/EtatSelection.cpp
-    MachineAEtats/EtatTypes.h
-    MachineAEtats/EtatCreationTeleporteur.h
-    MachineAEtats/EtatCreationTeleporteur.cpp
+    edition-tools/EtatAbstrait.h
+    edition-tools/EtatAbstrait.cpp
+    edition-tools/EtatCreationLigne.h
+    edition-tools/EtatCreationLigne.cpp
+    edition-tools/EtatCreationMur.h
+    edition-tools/EtatCreationMur.cpp
+    edition-tools/EtatCreationPoteau.h
+    edition-tools/EtatCreationPoteau.cpp
+    edition-tools/EtatDeplacement.h
+    edition-tools/EtatDeplacement.cpp
+    edition-tools/EtatDuplication.h
+    edition-tools/EtatDuplication.cpp
+    edition-tools/EtatLoupe.h
+    edition-tools/EtatLoupe.cpp
+    edition-tools/EtatMiseAEchelle.h
+    edition-tools/EtatMiseAEchelle.cpp
+    edition-tools/EtatRotation.h
+    edition-tools/EtatRotation.cpp
+    edition-tools/EtatSelection.h
+    edition-tools/EtatSelection.cpp
+	edition-tools/OnlineTool.h
+	edition-tools/OnlineTool.cpp
+    edition-tools/EtatTypes.h
+    edition-tools/EtatCreationTeleporteur.h
+    edition-tools/EtatCreationTeleporteur.cpp
+
 )
 
-set(MACHINE_A_MODES_SRC
-    MachineAModes/ModeAbstrait.h
-    MachineAModes/ModeAbstrait.cpp
-    MachineAModes/ModeConfigure.h
-    MachineAModes/ModeConfigure.cpp
-    MachineAModes/ModeEdition.h
-    MachineAModes/ModeEdition.cpp
-    MachineAModes/ModeMenuPrincipal.h
-    MachineAModes/ModeMenuPrincipal.cpp
-    MachineAModes/ModeSimulation.h
-    MachineAModes/ModeSimulation.cpp
-    MachineAModes/ModeTest.cpp
-    MachineAModes/ModeTypes.h
-    MachineAModes/ModePersonalize.cpp
-    MachineAModes/ModePersonalize.h
-    MachineAModes/ModeTutorialEdition.h
-    MachineAModes/ModeTutorialEdition.cpp
-    MachineAModes/ModeTutorialSimulation.h
-    MachineAModes/ModeTutorialSimulation.cpp
+set(MODES_SRC
+    modes/ModeAbstrait.h
+    modes/ModeAbstrait.cpp
+    modes/ModeConfigure.h
+    modes/ModeConfigure.cpp
+    modes/ModeEdition.h
+    modes/ModeEdition.cpp
+    modes/ModeMenuPrincipal.h
+    modes/ModeMenuPrincipal.cpp
+    modes/ModeSimulation.h
+    modes/ModeSimulation.cpp
+    modes/ModeTest.cpp
+    modes/ModeTypes.h
+    modes/ModePersonalize.cpp
+    modes/ModePersonalize.h
+    modes/ModeTutorialEdition.h
+    modes/ModeTutorialEdition.cpp
+    modes/ModeMapSelection.h
+    modes/ModeMapSelection.cpp
+    modes/OnlineMapMode.h
+    modes/OnlineMapMode.cpp
 )
+source_group("modes" FILES ${MODES_SRC})
 
 set(PHYSIQUE_SRC
-    Physique/CercleEnglobant.h
-    Physique/CercleEnglobant.cpp
-    Physique/FormeEnglobanteAbstraite.h
-    Physique/FormeEnglobanteAbstraite.cpp
-    Physique/RectangleEnglobant.h
-    Physique/RectangleEnglobant.cpp
+    simulation-engine/Physique/CercleEnglobant.h
+    simulation-engine/Physique/CercleEnglobant.cpp
+    simulation-engine/Physique/FormeEnglobanteAbstraite.h
+    simulation-engine/Physique/FormeEnglobanteAbstraite.cpp
+    simulation-engine/Physique/RectangleEnglobant.h
+    simulation-engine/Physique/RectangleEnglobant.cpp
 )
 
 set(PROFIL_UTILISATEUR_SRC
@@ -162,42 +172,56 @@ set(PROFIL_UTILISATEUR_SRC
 )
 
 set(VISITEUR_SRC
-    Visiteur/VisiteurAbstrait.h
-    Visiteur/VisiteurAbstrait.cpp
-    Visiteur/VisiteurCreationLigne.h
-    Visiteur/VisiteurCreationLigne.cpp
-    Visiteur/VisiteurCreationMur.h
-    Visiteur/VisiteurCreationMur.cpp
-    Visiteur/VisiteurCreationPoteau.h
-    Visiteur/VisiteurCreationPoteau.cpp
-    Visiteur/VisiteurDeplacement.h
-    Visiteur/VisiteurDeplacement.cpp
-    Visiteur/VisiteurDetectionRobot.h
-    Visiteur/VisiteurDetectionRobot.cpp
-    Visiteur/VisiteurDuplication.h
-    Visiteur/VisiteurDuplication.cpp
-    Visiteur/VisiteurMiseAEchelle.h
-    Visiteur/VisiteurMiseAEchelle.cpp
-    Visiteur/VisiteurRotation.h
-    Visiteur/VisiteurRotation.cpp
-    Visiteur/VisiteurSauvegarde.h
-    Visiteur/VisiteurSauvegarde.cpp
-    Visiteur/VisiteurSelection.h
-    Visiteur/VisiteurSelection.cpp
-    Visiteur/VisiteurSuppression.h
-    Visiteur/VisiteurSuppression.cpp
-    Visiteur/VisiteurVerificationQuad.h
-    Visiteur/VisiteurVerificationQuad.cpp
-    Visiteur/VisiteurTypes.h
-    Visiteur/VisiteurCreationTeleporteur.h
-    Visiteur/VisiteurCreationTeleporteur.cpp
+
+    simulation-engine/Visiteur/VisiteurAbstrait.h
+    simulation-engine/Visiteur/VisiteurAbstrait.cpp
+    simulation-engine/Visiteur/VisiteurCreationLigne.h
+    simulation-engine/Visiteur/VisiteurCreationLigne.cpp
+    simulation-engine/Visiteur/VisiteurCreationMur.h
+    simulation-engine/Visiteur/VisiteurCreationMur.cpp
+    simulation-engine/Visiteur/VisiteurCreationPoteau.h
+    simulation-engine/Visiteur/VisiteurCreationPoteau.cpp
+    simulation-engine/Visiteur/VisiteurDeplacement.h
+    simulation-engine/Visiteur/VisiteurDeplacement.cpp
+    simulation-engine/Visiteur/VisiteurDetectionRobot.h
+    simulation-engine/Visiteur/VisiteurDetectionRobot.cpp
+    simulation-engine/Visiteur/VisiteurDuplication.h
+    simulation-engine/Visiteur/VisiteurDuplication.cpp
+    simulation-engine/Visiteur/VisiteurMiseAEchelle.h
+    simulation-engine/Visiteur/VisiteurMiseAEchelle.cpp
+    simulation-engine/Visiteur/VisiteurRotation.h
+    simulation-engine/Visiteur/VisiteurRotation.cpp
+    simulation-engine/Visiteur/VisiteurSauvegarde.h
+    simulation-engine/Visiteur/VisiteurSauvegarde.cpp
+    simulation-engine/Visiteur/VisiteurSelection.h
+    simulation-engine/Visiteur/VisiteurSelection.cpp
+    simulation-engine/Visiteur/VisiteurSuppression.h
+    simulation-engine/Visiteur/VisiteurSuppression.cpp
+    simulation-engine/Visiteur/VisiteurVerificationQuad.h
+    simulation-engine/Visiteur/VisiteurVerificationQuad.cpp
+    simulation-engine/Visiteur/VisiteurTypes.h
+    simulation-engine/Visiteur/VisiteurCreationTeleporteur.h
+    simulation-engine/Visiteur/VisiteurCreationTeleporteur.cpp
+
 )
+
+set(MAP_SESSION_SRC
+	client-network/map-session/MapSession.h
+	client-network/map-session/MapSession.cpp
+	client-network/map-session/MapSessionManager.h
+	client-network/map-session/MapSessionManager.cpp
+)
+source_group("client-network\\map-session" FILES ${MAP_SESSION_SRC})
 
 set(CLIENT_NETWORK_SRC
 	client-network/Connection.h
 	client-network/Connection.cpp
 	client-network/NetworkManager.h
 	client-network/NetworkManager.cpp
+	client-network/MessageDispatcher.h
+	client-network/MessageDispatcher.cpp
+    client-network/Serializer.h
+    client-network/Serializer.cpp
 )
 source_group("client-network" FILES ${CLIENT_NETWORK_SRC})
 
@@ -212,54 +236,66 @@ source_group("" FILES ${MODEL_SRC})
 set(EVENT_HANDLER_SRC
     event-handler/EventHandler.h
     event-handler/EventHandler.cpp
+    event-handler/MessageSerializer.h
+    event-handler/MessageSerializer.cpp
+    event-handler/Observer.h
+    event-handler/Observer.cpp
+    event-handler/Observable.h
+    event-handler/Observable.cpp
+    event-handler/LocalEvent.h
+    event-handler/LocalEvent.cpp
 )
 source_group("event-handler" FILES ${EVENT_HANDLER_SRC})
 
+set(SIMULATION_ENGINE_SRC
+    simulation-engine/SimulationEngine.h 
+    simulation-engine/SimulationEngine.cpp
+)
+source_group("simulation-engine" FILES ${SIMULATION_ENGINE_SRC})
 
 # Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
 	.
-    AffichageTexte
-    Application
-    Arbre
-    Arbre/Noeuds
-    Arbre/Usines
-    Capteur
+    simulation-engine
+    simulation-engine/AffichageTexte
+    simulation-engine/Arbre
+    simulation-engine/Arbre/Noeuds
+    simulation-engine/Arbre/Usines
+    simulation-engine/Capteur
+    simulation-engine/ControleRobot
+    simulation-engine/ControleRobot/Commande
+    simulation-engine/ControleRobot/Comportement
+    simulation-engine/EnginSon
+    simulation-engine/Lumiere
+    simulation-engine/Physique
+    simulation-engine/Visiteur
     Configuration
-    ControleRobot
-    ControleRobot/Commande
-    ControleRobot/Comportement
-	event-handler
-	client-network
-    EnginSon
-    Interface
-    Lumiere
-    MachineAEtats
-    MachineAModes
-    Physique
+    event-handler
+    client-network
+    client-network/map-session
+    edition-tools
+    modes
     ProfilUtilisateur
-    Visiteur
 )
 
 # Ajouter les filtres dans le projet visual studio
 source_group("affichage-texte" FILES ${AFFICHAGE_TEXTE_SRC})
 source_group("application" FILES ${APPLICATION_SRC})
-source_group("arbre" FILES ${ARBRE_SRC})
-source_group("arbre\\noeuds" FILES ${NOEUDS_SRC})
-source_group("arbre\\usines" FILES ${USINES_SRC})
-source_group("capteur" FILES ${CAPTEUR_SRC})
+source_group("simulation-engine\\arbre" FILES ${ARBRE_SRC})
+source_group("simulation-engine\\arbre\\noeuds" FILES ${NOEUDS_SRC})
+source_group("simulation-engine\\arbre\\usines" FILES ${USINES_SRC})
+source_group("simulation-engine\\capteur" FILES ${CAPTEUR_SRC})
 source_group("config" FILES ${CONFIGURATION_SRC})
-source_group("controle-robot" FILES ${CONTROLE_ROBOT_SRC})
-source_group("controle-robot\\commande" FILES ${COMMANDE_SRC})
-source_group("controle-robot\\comportement" FILES ${COMPORTEMENT_SRC})
-source_group("engin-son" FILES ${ENGIN_SON_SRC})
+source_group("simulation-engine\\controle-robot" FILES ${CONTROLE_ROBOT_SRC})
+source_group("simulation-engine\\controle-robot\\commande" FILES ${COMMANDE_SRC})
+source_group("simulation-engine\\controle-robot\\comportement" FILES ${COMPORTEMENT_SRC})
+source_group("simulation-engine\\engin-son" FILES ${ENGIN_SON_SRC})
 source_group("interface" FILES ${INTERFACE_SRC})
-source_group("lumiere" FILES ${LUMIERE_SRC})
+source_group("simulation-engine\\lumiere" FILES ${LUMIERE_SRC})
 source_group("etats" FILES ${MACHINE_A_ETATS_SRC})
-source_group("modes" FILES ${MACHINE_A_MODES_SRC})
-source_group("physique" FILES ${PHYSIQUE_SRC})
+source_group("simulation-engine\\physique" FILES ${PHYSIQUE_SRC})
 source_group("profil-utilisateur" FILES ${PROFIL_UTILISATEUR_SRC})
-source_group("visiteur" FILES ${VISITEUR_SRC})
+source_group("simulation-engine\\visiteur" FILES ${VISITEUR_SRC})
 
 # Compiler les fichiers sources dans une dll
 add_library(model SHARED
@@ -276,14 +312,16 @@ add_library(model SHARED
     ${INTERFACE_SRC}
     ${LUMIERE_SRC}
     ${MACHINE_A_ETATS_SRC}
-    ${MACHINE_A_MODES_SRC}
+    ${MODES_SRC}
     ${PHYSIQUE_SRC}
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
     ${EVENT_HANDLER_SRC}
 	${UI_INTERFACE_SRC}
+    ${MAP_SESSION_SRC}
 	${CLIENT_NETWORK_SRC}
 	${MODEL_SRC}
+    ${SIMULATION_ENGINE_SRC}
     CMakelists.txt
 )
 

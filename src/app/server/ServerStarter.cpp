@@ -1,5 +1,7 @@
 #include "UserManagement\UserAuthLobby.h"
-#include "MapSystem\MapEditingSession.h"
+#include "ChatSystem\ChatSystem.h"
+#include "MapSystem.h"
+#include "NetworkStandard.h"
 #include <iostream>
 
 void SetupServer() {
@@ -11,17 +13,21 @@ void SetupServer() {
 	// create listener
 	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
 
-	//Make map system
-	server::MapEditingSession session;
-
-	// create User auth system
-	server::UserAuthLobby UserLobby(listener, session);
-
-	// create UserLobby
-
 	// create ChatSystem
+	server::ChatSystem chatSystem;
 
 	// create MapSystem
+	server::MapSystem mapSystem;
+
+	// create vector of systems to pass the user to when authenticated
+	std::vector<server::MultiUserSystem*> newUserReceivers;
+	newUserReceivers.push_back(&chatSystem);
+	newUserReceivers.push_back(&mapSystem);
+
+	// create User auth system
+	server::UserAuthLobby UserLobby(listener, newUserReceivers);
+
+	// create UserLobby
 
 	std::cout << "Starting listener" << std::endl;
 	listener->StartAccepting();
@@ -33,25 +39,56 @@ void SetupServer() {
 		std::getline(std::cin, command);
 	}
 
+
 	Networking::NetworkObjects::Dispose(listener);
 }
 
+
+class ResolverContainer{
+public:
+	ResolverContainer() {
+		_resolver = Networking::NetworkObjects::BuildResolver();
+		__hook(&Networking::ConnectionResolver::OnConnection, _resolver, &ResolverContainer::OnConnectionEstablished);
+		_resolver->Resolve("localhost", "5000");
+	}
+
+	void SendThroughConnection(std::string message) {
+		_connection->SendData(Networking::MessageStandard::AddMessageLengthHeader(message));
+	}
+
+	~ResolverContainer() {
+		Networking::NetworkObjects::Dispose(_resolver);
+		Networking::NetworkObjects::Dispose(_connection);
+	}
+
+private:
+	void OnConnectionEstablished(Networking::Connection* connection, asio::error_code error){
+		_connection = connection;
+		connection->hookOnReceivedMessage(&ResolverContainer::OnMessageReceived, this);
+	}
+
+	void OnMessageReceived(const std::string& message) {
+		std::cout << message.substr(Networking::MessageStandard::SYSTEM) << std::endl;
+	}
+
+	Networking::ConnectionResolver* _resolver;
+
+	Networking::Connection* _connection;
+};
 
 // builds a resolver for connections purely intended for testing
 void SetupTestClient() {
 	std::cout << "Setting up resolver" << std::endl;
 
-	Networking::ConnectionResolver* res = Networking::NetworkObjects::BuildResolver();
-	res->Resolve("localhost", "5000");
+	ResolverContainer container;
 
 	// listen for commands
 	std::string command = "";
 
 	while (command != "exit") {
 		std::getline(std::cin, command);
+		container.SendThroughConnection(command);
 	}
-
-	Networking::NetworkObjects::Dispose(res);
 }
 
 int main(int argc, char* argv[]) {
