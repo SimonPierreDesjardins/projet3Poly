@@ -169,7 +169,21 @@ void NoeudRobot::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
     controleurLumiere_->afficherLumiereSpotRobot();
-    controleurLumiere_->afficherLumiereSpotGyro();
+    
+
+	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
+	{
+		controleurLumiere_->afficherLumiereSpotGyro();
+
+		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
+		{
+			// Débugage des capteurs de distance.
+			for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+			{
+				capteursDistance_->at(i).afficher();
+			}
+		}
+	}
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -177,15 +191,8 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-    // Débugage des capteurs de distance.
-	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
-	{
-		// Débugage des capteurs de distance.
-		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
-		{
-			capteursDistance_->at(i).afficher();
-		}
-	}        
+   
+	      
 	// Restauration de la matrice.
 	glPopMatrix();
 }
@@ -237,12 +244,10 @@ void NoeudRobot::animer(float dt)
     }
     mettreAJourFormeEnglobante();
 
-	controleurLumiere_->assignerLumiereSpotGyro(false);
-	if (mode_ != PERSONALIZE)
-	{
-		mettreAJourCapteurs();
-		controleurLumiere_->assignerLumiereSpotGyro(true);
-	}
+	mettreAJourCapteurs();
+	controleurLumiere_->assignerLumiereSpotGyro(true);
+	
+
 	
 	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(), dt);
 	
