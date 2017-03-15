@@ -40,6 +40,22 @@ namespace ui
             chatListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             chatListBox.MeasureItem += chatBox_MeasureItem;
             chatListBox.DrawItem += chatBox_DrawItem;
+
+            chatTextBox.GotFocus += OnFocus;
+            chatTextBox.LostFocus += OnDefocus;
+
+            addChannelTextBox.GotFocus += OnFocus;
+            addChannelTextBox.LostFocus += OnDefocus;
+        }
+
+        private void OnFocus(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+        }
+
+        private void OnDefocus(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
         public ListBox.ObjectCollection getChannelListBoxInfo()
@@ -218,12 +234,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void chatTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-
             if (e.KeyCode == Keys.Enter)
                 sendText();
-
-            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -291,11 +303,6 @@ namespace ui
             }
 
             addChannelTextBox.Clear();
-        }
-
-        private void addChannelTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -400,6 +407,11 @@ namespace ui
             userListBox.Items.Clear();
             for (int i = 1; i < users.Length; i++)
                 userListBox.Items.Add(users[i]);
+        }
+
+        private void addChannelTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
         }
     }
 }

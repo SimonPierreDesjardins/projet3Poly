@@ -54,35 +54,6 @@ namespace ui
             }
         }
 
-        //Delete this button. only for testing
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-            parent_.viewPort.Controls.Remove(this);
-            parent_.editionSideMenu = new EditionSideMenu(parent_);
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
-            parent_.editionSideMenu.Dock = DockStyle.Left;
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
-            parent_.editionMenuStrip.Dock = DockStyle.Top;
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-            String name = "coucou";
-            FonctionsNatives.createMap(name, name.Length, (char)(2));
-
-            Program.peutAfficher = true;
-            parent_.verificationDuNombreElementChoisi();
-
-            /*
-            MapPresentator newMap = new MapPresentator(parent_);
-            this.mapPanel.Controls.Add(newMap);
-            newMap.Size = new Size(this.mapPanel.Width, newMap.Height);
-            newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
-            newMap.Location = new Point(0, numberOfMaps_++ * 150);
-            */
-        }
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void returnButton_Click(object sender, MeasureItemEventArgs e)
@@ -167,6 +138,38 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
+        /// @fn private void offlineCheckBox_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Sélectionne l'option hors ligne et met le l'option enligne à false;
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void offlineCheckBox_Click(object sender, EventArgs e)
+        {
+            offlineCheckBox.Checked = true;
+            onlineCheckBox.Checked = false;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void onlineCheckBox_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Sélectionne l'option enligne et met le l'option hors ligne à false;
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void onlineCheckBox_Click(object sender, EventArgs e)
+        {
+            onlineCheckBox.Checked = true;
+            offlineCheckBox.Checked = false;
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
         /// @fn private void publicCheckBox_Click(object sender, MeasureItemEventArgs e)
         ///
         /// Sélectionne l'option public et met le l'option privée à false;
@@ -193,7 +196,6 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void privateCheckBox_Click(object sender, EventArgs e)
         {
-
             publicCheckBox.Checked = false;
             privateCheckBox.Checked = true;
         }

@@ -267,7 +267,7 @@ namespace ui
 
                 if (!parent_.offlineMaps_.ContainsKey(text))
                 {
-                    MapPresentator newMap = new MapPresentator(parent_, text, false, 0, 1, 0);
+                    MapPresentator newMap = new MapPresentator(parent_, text, false, -1, 0, -1);
                     newMap.setPath(((FileInfo)listView1.Items[i].Tag).FullName);
                     parent_.offlineMaps_.Add(text, newMap);
                 }

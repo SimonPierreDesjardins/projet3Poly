@@ -55,6 +55,9 @@
             this.createButton = new ui.PanelButton();
             this.customLabel1 = new ui.CustomLabel();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.onlineCheckBox = new System.Windows.Forms.CheckBox();
+            this.offlineCheckBox = new System.Windows.Forms.CheckBox();
+            this.customLabel6 = new ui.CustomLabel();
             ((System.ComponentModel.ISupportInitialize)(this.returnPictureBox)).BeginInit();
             this.panel1.SuspendLayout();
             this.addPanel.SuspendLayout();
@@ -90,7 +93,6 @@
             this.button1.TabIndex = 1;
             this.button1.Text = "Test";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // returnPictureBox
             // 
@@ -136,6 +138,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.addPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.addPanel.Controls.Add(this.onlineCheckBox);
+            this.addPanel.Controls.Add(this.offlineCheckBox);
+            this.addPanel.Controls.Add(this.customLabel6);
             this.addPanel.Controls.Add(this.confirmeButton);
             this.addPanel.Controls.Add(this.privateCheckBox);
             this.addPanel.Controls.Add(this.publicCheckBox);
@@ -192,7 +197,7 @@
             this.privateCheckBox.AutoSize = true;
             this.privateCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.privateCheckBox.ForeColor = System.Drawing.Color.Silver;
-            this.privateCheckBox.Location = new System.Drawing.Point(204, 235);
+            this.privateCheckBox.Location = new System.Drawing.Point(317, 234);
             this.privateCheckBox.Name = "privateCheckBox";
             this.privateCheckBox.Size = new System.Drawing.Size(76, 25);
             this.privateCheckBox.TabIndex = 15;
@@ -208,7 +213,7 @@
             this.publicCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
             this.publicCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.publicCheckBox.ForeColor = System.Drawing.Color.Silver;
-            this.publicCheckBox.Location = new System.Drawing.Point(204, 204);
+            this.publicCheckBox.Location = new System.Drawing.Point(317, 203);
             this.publicCheckBox.Name = "publicCheckBox";
             this.publicCheckBox.Size = new System.Drawing.Size(96, 25);
             this.publicCheckBox.TabIndex = 14;
@@ -222,7 +227,7 @@
             this.customLabel4.AutoSize = true;
             this.customLabel4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel4.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel4.Location = new System.Drawing.Point(200, 180);
+            this.customLabel4.Location = new System.Drawing.Point(313, 179);
             this.customLabel4.Name = "customLabel4";
             this.customLabel4.Size = new System.Drawing.Size(182, 21);
             this.customLabel4.TabIndex = 13;
@@ -380,6 +385,48 @@
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
             // 
+            // onlineCheckBox
+            // 
+            this.onlineCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.onlineCheckBox.AutoSize = true;
+            this.onlineCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.onlineCheckBox.ForeColor = System.Drawing.Color.Silver;
+            this.onlineCheckBox.Location = new System.Drawing.Point(119, 234);
+            this.onlineCheckBox.Name = "onlineCheckBox";
+            this.onlineCheckBox.Size = new System.Drawing.Size(85, 25);
+            this.onlineCheckBox.TabIndex = 18;
+            this.onlineCheckBox.Text = "Enligne";
+            this.onlineCheckBox.UseVisualStyleBackColor = true;
+            this.onlineCheckBox.Click += new System.EventHandler(this.onlineCheckBox_Click);
+            // 
+            // offlineCheckBox
+            // 
+            this.offlineCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.offlineCheckBox.AutoSize = true;
+            this.offlineCheckBox.Checked = true;
+            this.offlineCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.offlineCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.offlineCheckBox.ForeColor = System.Drawing.Color.Silver;
+            this.offlineCheckBox.Location = new System.Drawing.Point(119, 203);
+            this.offlineCheckBox.Name = "offlineCheckBox";
+            this.offlineCheckBox.Size = new System.Drawing.Size(106, 25);
+            this.offlineCheckBox.TabIndex = 17;
+            this.offlineCheckBox.Text = "Hors Ligne";
+            this.offlineCheckBox.UseVisualStyleBackColor = true;
+            this.offlineCheckBox.Click += new System.EventHandler(this.offlineCheckBox_Click);
+            // 
+            // customLabel6
+            // 
+            this.customLabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customLabel6.AutoSize = true;
+            this.customLabel6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel6.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel6.Location = new System.Drawing.Point(115, 179);
+            this.customLabel6.Name = "customLabel6";
+            this.customLabel6.Size = new System.Drawing.Size(157, 21);
+            this.customLabel6.TabIndex = 16;
+            this.customLabel6.Text = "Paramètre réseau :";
+            // 
             // MapMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -441,5 +488,8 @@
         private PanelButton confirmeButton;
         private CustomLabel customLabel5;
         private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.CheckBox onlineCheckBox;
+        private System.Windows.Forms.CheckBox offlineCheckBox;
+        private CustomLabel customLabel6;
     }
 }
