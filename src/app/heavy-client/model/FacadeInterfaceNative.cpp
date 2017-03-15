@@ -1128,11 +1128,10 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(std::string message, bool connectionState, int mode, int nbPlayers, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool connectionState, int mode, int nbPlayers, int id)
 	{
-		message = message.substr(5);
-		const unsigned char* bytes = (const unsigned char*)message.data();
-		AddNewMap(bytes, message.size(), connectionState, mode, nbPlayers, id);
+		const unsigned char* bytes = (const unsigned char*)name.data();
+		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);
 	}
 }
 

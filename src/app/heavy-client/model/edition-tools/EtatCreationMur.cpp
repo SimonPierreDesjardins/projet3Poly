@@ -22,7 +22,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationMur::EtatCreationMur()
+EtatCreationMur::EtatCreationMur(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(CREATION_MUR);
 	visiteurCreationMur_ = std::make_unique<VisiteurCreationMur>();
@@ -81,6 +82,7 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 			visiteurCreationMur_->assignerPositionRelative(positionPremierClic_);
 			arbre_->accepterVisiteur(visiteurCreationMur_.get());
 			mur_ = visiteurCreationMur_->obtenirReferenceNoeud();
+			mapSession_->localEntityCreated(mur_);
 		}
 		//Deuxieme clic
 		else
@@ -88,6 +90,7 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 			if (visiteurVerificationQuad_->objetsDansZoneSimulation())
 			{
+				// TODO: mapSession->selectEntity(false);
 				enCreation_ = false;
 				mur_ = nullptr;
 			}
@@ -107,6 +110,7 @@ void EtatCreationMur::gererToucheEchappe()
 	if (enCreation_)
 	{
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(mur_);
+		// TODO: message delete pour le mur
 		enCreation_ = false;
 		mur_ = nullptr;
 	}
@@ -137,14 +141,19 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 		// Calculer et assigner de l'angle de rotation.
 		double angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
 		mur_->assignerAngleRotation(angle);
+		mapSession_->localEntityPropertyUpdated(mur_, Networking::ROTATION, { 0.0, 0.0, angle });
 		
 		// Calculer et assigner le facteur de mise à échelle.
 		double distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
 		mur_->assignerFacteurMiseAEchelle(distance);
+		mapSession_->localEntityPropertyUpdated(mur_, Networking::SCALE, { distance, 0.0, 0.0 });
 
 		// Calculer et assigner la position relative.
 		glm::dvec3 nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
 		mur_->assignerPositionRelative(nouvellePosition);
+		mur_->assignerPositionCourante(nouvellePosition);
+		mapSession_->localEntityPropertyUpdated(mur_, Networking::RELATIVE_POSITION, { nouvellePosition.x, nouvellePosition.y, nouvellePosition.z });
+		mapSession_->localEntityPropertyUpdated(mur_, Networking::ABSOLUTE_POSITION, { nouvellePosition.x, nouvellePosition.y, nouvellePosition.z });
 	}
 }
 

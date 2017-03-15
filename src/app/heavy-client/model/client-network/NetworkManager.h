@@ -42,6 +42,8 @@ public:
 		                       const glm::vec3& relPos, const glm::vec3& absPos,
 		                       const glm::vec3& rotation, const glm::vec3& scale);
 
+	void requestEntityPropertyUpdate(uint32_t entityId, char propertyType, const::glm::vec3& propertyValue);
+
 	inline void sendMessage(const std::string& message);
 	void sendSizePrefixedMessage(std::string& message);
 

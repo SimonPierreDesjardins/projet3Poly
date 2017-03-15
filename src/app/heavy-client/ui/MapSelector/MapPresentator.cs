@@ -6,6 +6,8 @@
 ////////////////////////////////////////////////
 
 using System;
+using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace ui
@@ -67,30 +69,77 @@ namespace ui
 
         private void mapButton_Click(object sender, EventArgs e)
         {
-            //Check for offline or online
-            //Add function to send id_ somewhere
+            switch (modeType_)
+            {
+                case (int)ModeEnum.Mode.SIMULATION:
+                    loadOnlineSimulationMode();
+                    break;
 
-            FonctionsNatives.assignerCheminFichierZone(pathToFile_);
-            FonctionsNatives.charger();
+                case (int)ModeEnum.Mode.EDITION:
+                    loadOnlineEditionMode();
+                    break;
 
-            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-            parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
-
-            parent_.viewPort.Controls.Remove(parent_.mapMenu);
-
-            parent_.simulationMenuStrip.Dock = DockStyle.Top;
-            parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
-            
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
-
-            Program.peutAfficher = true;
+                default:
+                    parent_.mapMenu.choseOfflineMode(this);
+                    break;
+            }
         }
 
         internal void setPath(string path)
         {
             pathToFile_ = path;
+        }
+
+        public void loadOnlineSimulationMode()
+        {
+            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
+            parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
+
+            parent_.viewPort.Controls.Remove(parent_.mapMenu);
+            parent_.mapMenu.defaultView();
+
+            parent_.simulationMenuStrip.Dock = DockStyle.Top;
+            parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+
+            Program.peutAfficher = true;
+
+            if (connectionState_)
+            {
+                FonctionsNatives.joinMap(mapId_);
+            }
+        }
+
+        public void loadOnlineEditionMode()
+        {
+            parent_.editionSideMenu = new EditionSideMenu(parent_);
+            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
+            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
+
+            parent_.viewPort.Controls.Remove(parent_.mapMenu);
+            parent_.mapMenu.defaultView();
+
+            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
+            parent_.editionSideMenu.Dock = DockStyle.Left;
+
+            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
+            parent_.editionMenuStrip.Dock = DockStyle.Top;
+
+            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
+                                                                  parent_.editionMenuStrip.Height);
+            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            parent_.editionModificationPanel.Visible = false;
+            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
+
+            Program.peutAfficher = true;
+            parent_.verificationDuNombreElementChoisi();
+
+            if (connectionState_)
+            {
+                FonctionsNatives.joinMap(mapId_);
+            }
         }
     }
 }

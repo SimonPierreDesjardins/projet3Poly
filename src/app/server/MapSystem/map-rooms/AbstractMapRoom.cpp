@@ -1,6 +1,9 @@
+#include <cassert>
+#include <queue>
+
+#include "NetworkStandard.h"
 #include "AbstractMapRoom.h"
 #include "TypeSerializerDeserializer.h"
-#include <cassert>
 
 namespace server
 {
@@ -25,12 +28,31 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 
-	// Send all the entities except the first one (which is the root).
-	for (auto it = ++tree_.begin(); it != tree_.end(); ++it)
+	// Non-recursive pre order traversal of the tree.
+	std::queue<Entity*> sendingQueue;
+
+	for (auto it = tree_.begin(); it != tree_.end(); ++it)
 	{
+		// We don't send the tree itself.
+		if (it->second.entityId_ != 0)
+		{
+			sendingQueue.push(&it->second);
+		}
+	}
+
+	while (!sendingQueue.empty())
+	{
+		Entity* tosend = sendingQueue.front();
+		sendingQueue.pop();
+
 		std::string message;
-		buildEntityCreationMessage(&it->second, message);
+		buildEntityCreationMessage(tosend, message);
 		user->ForwardMessage(message);
+
+		for (auto it = tosend->begin(); it != tosend->end(); ++it)
+		{
+			sendingQueue.push(it->second);
+		}
 	}
 }
 
@@ -56,10 +78,34 @@ void AbstractMapRoom::TreatUserMessage(User* sender, const std::string& message)
 	}
 }
 
+void AbstractMapRoom::updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value)
+{
+	entity->updatePhysicProperty((Networking::PropertyType)(property), value);
+}
+
 void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& message)
 {
 	assert(message[4] == PHYSIC_MESSAGE);
 
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	Entity* updatedEntity = tree_.findEntity(entityId);
+
+	// If the entity id exists and it is selected by this user.
+	if (updatedEntity && updatedEntity->userId_ == sender->Info.GetId())
+	{
+		Eigen::Vector3f updatedPropertyValue;
+		updatedPropertyValue.x() =
+			Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 4);
+		updatedPropertyValue.y() =
+			Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 8);
+		updatedPropertyValue.z() =
+			Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 12);
+
+		updateEntityProperty(message[Networking::MessageStandard::COMMAND], updatedEntity, updatedPropertyValue);
+
+		// Update other users.
+		broadcastMessage(sender, message);
+	}
 }
 
 void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& message)
@@ -84,20 +130,57 @@ void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& m
 void AbstractMapRoom::buildEntityCreationMessage(Entity* entity, std::string& message)
 {
 	message.clear();
-	Networking::serialize((uint32_t)(79), message);
+	Networking::serialize((uint32_t)(67), message);
 	message.append("ec");
 	message.append(1, entity->entityType_);
 	Networking::serialize(entity->getParent()->entityId_, message);
-	Networking::serialize(entity->absolutePosition_, message);
-	Networking::serialize(entity->relativePosition_, message);
-	Networking::serialize(entity->rotation_, message);
-	Networking::serialize(entity->scale_, message);
+	Networking::serialize(*entity->getProperty(Networking::ABSOLUTE_POSITION), message);
+	Networking::serialize(*entity->getProperty(Networking::RELATIVE_POSITION), message);
+	Networking::serialize(*entity->getProperty(Networking::ROTATION), message);
+	Networking::serialize(*entity->getProperty(Networking::SCALE), message);
 	Networking::serialize(entity->entityId_, message);
-	message.append(entity->selectingUserId_);
+	Networking::serialize(entity->userId_, message);
 }
 
 void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::string& message)
 {
+	uint32_t size = Networking::deserializeInteger(message.data());
+	char entityType = message[Networking::MessageStandard::DATA_START];
+	uint32_t parentId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START + 1);
+	Entity* newEntity = tree_.createEntity(entityType, parentId);
+
+	newEntity->userId_ = sender->Info.GetId();
+
+
+	Eigen::Vector3f* absPos = newEntity->getProperty(Networking::ABSOLUTE_POSITION);
+	absPos->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 5);
+	absPos->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 9);
+	absPos->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 13);
+
+	Eigen::Vector3f* relPos = newEntity->getProperty(Networking::RELATIVE_POSITION);
+	relPos->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 17);
+	relPos->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 21);
+	relPos->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 25);
+
+	Eigen::Vector3f* rotation = newEntity->getProperty(Networking::ROTATION);
+	rotation->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 29);
+	rotation->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 33);
+	rotation->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 37);
+
+	Eigen::Vector3f* scale = newEntity->getProperty(Networking::SCALE);
+	scale->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 41);
+	scale->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 45);
+	scale->z() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 49);
+
+	std::string response(message);
+
+	std::string newSize;
+	Networking::serialize((uint32_t)(size + 8), newSize);
+	response.replace(0, newSize.size(), newSize);
+	Networking::serialize(newEntity->entityId_, response);
+	Networking::serialize(newEntity->userId_, response);
+
+	broadcastMessage(response);
 }
 
 void AbstractMapRoom::handleEntityDeletionMessage(User* sender, const std::string& message)
@@ -105,30 +188,6 @@ void AbstractMapRoom::handleEntityDeletionMessage(User* sender, const std::strin
 }
 
 void AbstractMapRoom::handleEntitySelectionMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleRelativePositionUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleAbsolutePositionUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleLinearVelocityUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleAngularVelocityUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleRotationUpdateMessage(User* sender, const std::string& message)
-{
-}
-
-void AbstractMapRoom::handleScaleUpdateMessage(User* sender, const std::string& message)
 {
 }
 

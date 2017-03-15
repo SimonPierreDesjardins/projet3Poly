@@ -245,6 +245,7 @@ source_group("simulation-engine" FILES ${SIMULATION_ENGINE_SRC})
 
 # Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
+    ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 	.
     simulation-engine
     simulation-engine/AffichageTexte
@@ -319,6 +320,10 @@ add_library(model SHARED
 target_link_libraries(model util ${EXTERNAL_LIBRARIES})
 
 # Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew et ftgl)
-target_compile_definitions(model PRIVATE GLEW_BUILD _USRDLL FTGL_LIBRARY_STATIC)
+target_compile_definitions(model 
+    PRIVATE 
+    GLEW_BUILD 
+    _USRDLL 
+    FTGL_LIBRARY_STATIC)
 
 set_property(TARGET model PROPERTY FOLDER "app/heavy-client")

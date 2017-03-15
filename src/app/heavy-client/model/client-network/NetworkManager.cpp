@@ -76,6 +76,17 @@ void NetworkManager::requestEntityCreation(uint8_t type, uint32_t parentId,
 	connection_.sendMessage(message);
 }
 
+void NetworkManager::requestEntityPropertyUpdate(uint32_t entityId, char propertyType, const::glm::vec3& propertyValue)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(22), message);
+	message.append(1, 'p');
+	message.append(1, propertyType);
+	serializer_.serialize(entityId, message);
+	serializer_.serialize(propertyValue, message);
+	connection_.sendMessage(message);
+}
+
 void NetworkManager::sendSizePrefixedMessage(std::string& message)
 {
 	std::string size;

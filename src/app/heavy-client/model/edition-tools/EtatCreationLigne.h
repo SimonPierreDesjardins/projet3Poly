@@ -11,7 +11,7 @@
 #ifndef ETAT_CREATION_LIGNE_H
 #define ETAT_CREATION_LIGNE_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurTypes.h"
 #include <iostream>
 #include <vector>
@@ -23,10 +23,10 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatCreationLigne: public EtatAbstrait
+class EtatCreationLigne : public OnlineTool
 {
 public:
-	EtatCreationLigne();
+	EtatCreationLigne(client_network::MapSession* mapSession);
 	virtual ~EtatCreationLigne();
 
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

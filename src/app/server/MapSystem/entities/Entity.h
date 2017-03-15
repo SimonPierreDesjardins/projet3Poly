@@ -3,6 +3,7 @@
 
 #include <Eigen/Dense>
 #include <unordered_map>
+#include "NetworkStandard.h"
 
 namespace server
 {
@@ -10,13 +11,10 @@ namespace server
 class Entity
 {
 public:
-	Eigen::Vector3f relativePosition_{ 0.0, 0.0, 0.0 };
-	Eigen::Vector3f absolutePosition_{ 0.0, 0.0, 0.0 };
-	Eigen::Vector3f rotation_{ 0.0, 0.0, 0.0 };
-	Eigen::Vector3f scale_{ 1.0, 1.0, 1.0 };
+	using ChildrenContainer = std::unordered_map<uint32_t, Entity*>;
 
 	char entityType_ { 0 };
-	std::string selectingUserId_;
+	uint32_t userId_{ 0 };
 	uint32_t entityId_{ 0 };
 
 	Entity();
@@ -27,10 +25,16 @@ public:
 	inline void addChild(Entity* child);
 	inline void removeChild(Entity* child);
 
-private:
+	inline ChildrenContainer::iterator begin();
+	inline ChildrenContainer::iterator end();
 
+	inline void updatePhysicProperty(Networking::PropertyType propertyType, const Eigen::Vector3f& propertyValue);
+	inline Eigen::Vector3f* getProperty(Networking::PropertyType propertyType);
+
+private:
 	Entity* parent_{ nullptr };
 	std::unordered_map<uint32_t, Entity*> children_;
+	std::unordered_map<Networking::PropertyType, Eigen::Vector3f> properties_;
 };
 
 inline void Entity::setParent(Entity* parent)
@@ -51,6 +55,36 @@ inline void Entity::addChild(Entity* child)
 inline void Entity::removeChild(Entity* child)
 {
 	children_.erase(child->entityId_);
+}
+
+inline Entity::ChildrenContainer::iterator Entity::begin()
+{
+	return children_.begin();
+}
+
+inline Entity::ChildrenContainer::iterator Entity::end()
+{
+	return children_.end();
+}
+
+inline void Entity::updatePhysicProperty(Networking::PropertyType propertyType, const Eigen::Vector3f& propertyValue)
+{
+	auto it = properties_.find(propertyType);
+	if (it != properties_.end())
+	{
+		it->second = propertyValue;
+	}
+}
+
+inline Eigen::Vector3f* Entity::getProperty(Networking::PropertyType propertyType)
+{
+	Eigen::Vector3f* property = nullptr;
+	auto it = properties_.find(propertyType);
+	if (it != properties_.end())
+	{
+		property = &it->second;
+	}
+	return property;
 }
 
 }

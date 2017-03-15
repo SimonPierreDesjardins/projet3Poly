@@ -1,3 +1,5 @@
+#include "NetworkStandard.h"
+
 #include "EventHandler.h"
 #include "FacadeInterfaceNative.h"
 #include <iostream>
@@ -72,6 +74,17 @@ void MessageDispatcher::lookupMessage()
 	}
 }
 
+void MessageDispatcher::handlePhysicMessage(const std::string& message)
+{
+	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	char propertyType = message[Networking::MessageStandard::COMMAND];
+	glm::vec3 updatedProperty;
+	updatedProperty.x = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 4);
+	updatedProperty.y = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 8);
+	updatedProperty.z = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 12);
+	eventHandler_->onEntityPropertyUpdated(entityId, propertyType, updatedProperty);
+}
+
 void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
 {
 	uint8_t  entityType = serializer_.deserializeChar(message[6]);
@@ -133,6 +146,34 @@ void MessageDispatcher::handleMapQuitMessage(const std::string& message)
 
 }
 
+void MessageDispatcher::handleMapListMessage(const std::string& message)
+{
+	uint32_t mapId = 0;
+	std::string mapName;
+	char mapType = 0;
+	char nUsers = 0;
+	size_t iCurrentEntry = 6;
+	bool continueParsing = message.size() >= 12;
+
+	while (continueParsing)
+	{
+		mapId = serializer_.deserializeInteger(message.data() + iCurrentEntry);
+		mapType = message[iCurrentEntry + 4];
+		nUsers = message[iCurrentEntry + 5];
+
+		size_t nameBegin = iCurrentEntry + 6;
+		size_t nameEnd = message.find(';', nameBegin);
+		if (nameEnd == std::string::npos)
+		{
+			nameEnd = message.size();
+			continueParsing = false;
+		}
+		mapName = message.substr(nameBegin, nameEnd - nameBegin);
+		eventHandler_->onNewMapCreated(mapType, mapId, mapName, nUsers);
+		iCurrentEntry = nameEnd + 1;
+	}
+}
+
 void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 {
 	switch (message[5])
@@ -148,6 +189,9 @@ void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 	case 'c':
 		handleMapCreationMessage(message);
 		break;
+
+	case 'l':
+		handleMapListMessage(message);
 
 	default:
 		std::cout << "Unexpected message received" << message << std::endl;
@@ -185,7 +229,7 @@ void MessageDispatcher::dispatch(const std::string& message)
 {
 	// Check message validity.
 	uint32_t messageSize = serializer_.deserializeInteger(message.c_str());
-	std::cout << "Message received: " << message << std::endl;
+	//std::cout << "Message received: " << message << std::endl;
 	if (message.size() <= 5)
 	{
 		std::cout << "Unexpected message received :" << message << std::endl;
@@ -210,6 +254,7 @@ void MessageDispatcher::dispatch(const std::string& message)
 		break;
 
 	case 'p':
+		handlePhysicMessage(message);
 		break;
 
 	default:

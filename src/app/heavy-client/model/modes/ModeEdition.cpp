@@ -128,11 +128,11 @@ void ModeEdition::assignerEtat(Tool etat)
 		break;
 
 	case CREATION_MUR:
-		etat_ = std::make_unique<EtatCreationMur>();
+		etat_ = std::make_unique<EtatCreationMur>(mapSession_);
 		break;
 	
 	case CREATION_LIGNE_NOIRE:
-		etat_ = std::make_unique<EtatCreationLigne>();
+		etat_ = std::make_unique<EtatCreationLigne>(mapSession_);
 		break;
 	
 	case LOUPE:

@@ -25,12 +25,7 @@ void MapSession::localEntityCreated(NoeudAbstrait* entity)
 	{
 		sendEntityCreationRequest(entity);
 	}
-	// If we're offline or other creation requests are already queued,
-	// we queue this request.
-	else
-	{
-		pendingEntityCreationRequests_.push(entity);
-	}
+	pendingEntityCreationRequests_.push(entity);
 }
 
 void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
@@ -51,15 +46,25 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			newEntity->assignerPositionRelative({ relPos.x, relPos.y, relPos.z });
 			newEntity->assignerAngleRotation(rotation.z);
 			newEntity->assignerFacteurMiseAEchelle(scale.x);
+			newEntity->setId(entityId);
 			confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
 		}
 	}
 	// This is a confirmation for the object to be created.
 	else
 	{
+		// Insert server confirmed entity.
 		NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.back();
 		pendingEntityCreationRequests_.pop();
 		confirmedEntities_.insert(std::make_pair(entityId, entityToInsert));
+		entityToInsert->setId(entityId);
+
+		// Send next entity in pending.
+		if (!pendingEntityCreationRequests_.empty())
+		{
+			NoeudAbstrait* entityToConfirm = pendingEntityCreationRequests_.back();
+			sendEntityCreationRequest(entityToConfirm);
+		}
 	}
 }
 
@@ -85,6 +90,45 @@ void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 		network_->requestEntityCreation(entity->getType(),
 										entity->obtenirParent()->getId(),
 										absPos, relPos, rotation, scale);
+}
+
+void MapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking::PropertyType type, const glm::vec3& updatedProperty)
+{
+	auto it = confirmedEntities_.find(entityId);
+	if (it != confirmedEntities_.end())
+	{
+		switch (type)
+		{
+		case Networking::ABSOLUTE_POSITION:
+			it->second->assignerPositionCourante({ updatedProperty.x, updatedProperty.y, updatedProperty.z });
+			break;
+
+		case Networking::RELATIVE_POSITION:
+			it->second->assignerPositionRelative({ updatedProperty.x, updatedProperty.y, updatedProperty.z });
+			break;
+
+		case Networking::ROTATION:
+			it->second->assignerAngleRotation(updatedProperty.z);
+			break;
+
+		case Networking::SCALE:
+			it->second->assignerFacteurMiseAEchelle(updatedProperty.x);
+			break;
+
+		case Networking::LINEAR_VELOCITY:
+			// TODO
+			break;
+
+		case Networking::ANGULAR_VELOCITY:
+			// TODO
+			break;
+		}
+	}
+}
+
+void MapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType type, const glm::vec3& updatedProperty)
+{
+	network_->requestEntityPropertyUpdate(entity->getId(), (char)(type), updatedProperty);
 }
 
 }

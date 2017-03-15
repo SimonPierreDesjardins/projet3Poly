@@ -45,6 +45,11 @@ private:
 
 	void pushMessage(const std::string& message);
 	void dispatch(const std::string& message);
+
+	// Physic message
+	void handlePhysicMessage(const std::string& message);
+
+	// Map idition message
 	void handleMapEditionMessage(const std::string& message);
 	void handleEntityCreationMessage(const std::string& message);
 
@@ -57,6 +62,7 @@ private:
 	void handleMapCreationMessage(const std::string& message);
 	void handleMapJoinMessage(const std::string& message);
 	void handleMapQuitMessage(const std::string& message);
+	void handleMapListMessage(const std::string& message);
 
 	MessageDispatcher() = delete;
 };

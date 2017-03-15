@@ -39,6 +39,9 @@ namespace ui
 
             mInstance = new CallbackForChat(Handler);
             SetCallbackForChat(mInstance);
+
+            //To minimize chat on creation
+            minizeOrMaximizeChat();
         }
 
         ////////////////////////////////////////////////////////////////////////

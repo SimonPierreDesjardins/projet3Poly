@@ -29,6 +29,7 @@ MapSession* MapSessionManager::createServerSession(uint32_t mapId, char mapType,
 	newMapSession.info.mapId = mapId;
 	newMapSession.info.mapType = mapType;
 	newMapSession.info.mapName = mapName;
+	newMapSession.setIsOnlineSession(true);
 	auto pair = serverMapSessions_.insert(std::make_pair(mapId, std::move(newMapSession)));
 	if (pair.second)
 	{
