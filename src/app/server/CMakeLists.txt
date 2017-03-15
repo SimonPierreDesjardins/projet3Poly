@@ -6,6 +6,7 @@
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/boost
     ${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/include
+    ${CMAKE_SOURCE_DIR}/ext/mongo-c-driver/include
     ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
 	${CMAKE_SOURCE_DIR}/ext/Eigen/include
 	${CMAKE_SOURCE_DIR}/ext/glm/include
@@ -19,6 +20,51 @@ include_directories(
 	message-dispatcher
 	.
 )
+
+# Trouve les librairies
+find_library(libbsoncxx_LIB 
+libbsoncxx
+${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/lib)
+
+find_library(bsoncxx_LIB 
+bsoncxx
+${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/lib)
+
+find_library(libmongocxx_LIB 
+libmongocxx
+${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/lib)
+
+find_library(mongocxx_LIB 
+mongocxx
+${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/lib)
+
+find_library(mongoc_LIB 
+mongoc-1.0
+${CMAKE_SOURCE_DIR}/ext/mongo-c-driver/lib)
+
+find_library(mongoc_static_LIB
+mongoc-static-1.0
+${CMAKE_SOURCE_DIR}/ext/mongo-c-driver/lib)
+
+find_library(bson_LIB 
+bson-1.0
+${CMAKE_SOURCE_DIR}/ext/mongo-c-driver/lib)
+
+find_library(bson_static_LIB
+bson-static-1.0
+${CMAKE_SOURCE_DIR}/ext/mongo-c-driver/lib)
+
+set(MONGO_LIBS
+${bsoncxx_LIB}
+${libbsoncxx_LIB}
+${libmongocxx_LIB}
+${mongocxx_LIB}
+${bson_LIB}
+${bson_static_LIB}
+${mongoc_LIB}
+${mongoc_static_LIB}
+)
+
 
 set(USER_MANAGEMENT_SRC
 	UserManagement/User.h
@@ -100,7 +146,11 @@ add_executable(Server
 	${SERVER_SRC}
 )
 
-target_link_libraries(Server PRIVATE networkUtils)
+target_link_libraries(Server 
+PRIVATE networkUtils
+${MONGO_LIBS}
+)
+
 
 set_property(TARGET Server PROPERTY FOLDER "app/server")
 
@@ -109,4 +159,6 @@ target_compile_definitions(Server
     ASIO_STANDALONE
 	_WIN32_WINNT=0x0501
     _WINSOCK_DEPRECATED_NO_WARNINGS
+	MONGOCXX_STATIC
+	BSONCXX_STATIC
 )
