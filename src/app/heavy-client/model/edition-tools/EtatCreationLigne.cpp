@@ -76,10 +76,12 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 			enCreation_ = true;
 			arbre_->accepterVisiteur(visiteurCreationLigne_.get());
 			ligne_ = visiteurCreationLigne_->obtenirReferenceNoeud();
+			mapSession_->localEntityCreated(ligne_);
 
 			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 			segment_ = nouveauNoeud.get();
 			ligne_->ajouter(nouveauNoeud);
+			mapSession_->localEntityCreated(segment_);
 
 		}
 		// Clic subsequent avec CTRL enfoncee.
@@ -90,6 +92,10 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 			ligne_->ajouter(jonction);
 			ligne_->ajouter(nouveauNoeud);
 			segment_ = nouveauNoeud.get();
+
+			mapSession_->localEntityCreated(segment_);
+			mapSession_->localEntityCreated(jonction.get());
+
 		}
 		// Clic subsequent sans CTRL enfoncee (dernier clic).
 		else if (enCreation_ && !toucheCtrlEnfonce_) {
@@ -145,14 +151,19 @@ void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 		// Calculer et assigner l'angle de rotation.
 		double angle = utilitaire::calculerAngleRotation(positionsClic_.back(), positionVirtuelle);
 		segment_->assignerAngleRotation(angle);
+		mapSession_->localEntityPropertyUpdated(segment_, Networking::ROTATION, { 0.0, 0.0, angle });
 		
 		// Calculer et assigner le facteur de mise à échelle.
 		double distance = utilitaire::calculerDistanceHypothenuse(positionsClic_.back(), positionVirtuelle);
 		segment_->assignerFacteurMiseAEchelle(distance);
+		mapSession_->localEntityPropertyUpdated(segment_, Networking::SCALE, { distance, 0.0, 0.0 });
 
 		// Calculer et assigner la position relative.
 		glm::dvec3 positionRelative = utilitaire::calculerPositionEntreDeuxPoints(positionsClic_.back(), positionVirtuelle);
 		segment_->assignerPositionRelative(positionRelative);
+		segment_->assignerPositionCourante(positionRelative);
+		mapSession_->localEntityPropertyUpdated(segment_, Networking::RELATIVE_POSITION, { positionRelative.x, positionRelative.y, positionRelative.z });
+		mapSession_->localEntityPropertyUpdated(segment_, Networking::ABSOLUTE_POSITION, { positionRelative.x, positionRelative.y, positionRelative.z });
 	}
 }
 
@@ -224,7 +235,9 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 	for (unsigned int i = 0; i < ligne_->obtenirNombreEnfants(); i++) {
 		positionEnfant = ligne_->chercher(i)->obtenirPositionRelative();
 		positionEnfant -= centre;
-		ligne_->chercher(i)->assignerPositionRelative(positionEnfant);
+		NoeudAbstrait* segment = ligne_->chercher(i);
+		segment->assignerPositionRelative(positionEnfant);
+		mapSession_->localEntityPropertyUpdated(segment, Networking::RELATIVE_POSITION, { positionEnfant.x, positionEnfant.y, positionEnfant.z });
 	}
 }
 

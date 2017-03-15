@@ -1,4 +1,5 @@
 #include <cassert>
+#include <queue>
 
 #include "NetworkStandard.h"
 #include "AbstractMapRoom.h"
@@ -27,14 +28,30 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 
+	// Non-recursive pre order traversal of the tree.
+	std::queue<Entity*> sendingQueue;
+
 	for (auto it = tree_.begin(); it != tree_.end(); ++it)
 	{
-		// Send all the entities except the root.
+		// We don't send the tree itself.
 		if (it->second.entityId_ != 0)
 		{
-			std::string message;
-			buildEntityCreationMessage(&it->second, message);
-			user->ForwardMessage(message);
+			sendingQueue.push(&it->second);
+		}
+	}
+
+	while (!sendingQueue.empty())
+	{
+		Entity* tosend = sendingQueue.front();
+		sendingQueue.pop();
+
+		std::string message;
+		buildEntityCreationMessage(tosend, message);
+		user->ForwardMessage(message);
+
+		for (auto it = tosend->begin(); it != tosend->end(); ++it)
+		{
+			sendingQueue.push(it->second);
 		}
 	}
 }
