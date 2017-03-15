@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
@@ -33,7 +34,16 @@ namespace ui
             {
                 DeconnectPanel.Visible = true;
                 connectPanel.Visible = false;
-            }              
+            }
+
+            mInstance = new CallbackDisconnect(DisconnectHandler);
+            SetCallbackForDisconnect(mInstance);
+
+            connectSuccess = new CallbackConnectionSuccess(ConnectionSuccessHandler);
+            SetCallbackForConnectionSuccess(connectSuccess);
+
+            connectFail = new CallbackConnectionFail(ConnectionFailHandler);
+            SetCallbackForConnectionFail(connectFail);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -109,11 +119,11 @@ namespace ui
                 parent_.userChat = new UserTabChat(parent_);
                 if (FonctionsNatives.connectToServer(IPTextBox.Text, "5000"))
                 {
-                    onConnectionSucces();
+                    ConnectionSuccessHandler();
                 }
                 else
                 {
-                    onConnectionFailure();
+                    ConnectionFailHandler();
                 }
             }
         }
@@ -147,7 +157,6 @@ namespace ui
         {
             goBackToMainMenu();
         }
-
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -221,8 +230,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void cancelNewUserButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.disconnectFromServer();
-            removeChat();
+            deconnectFromServer();
             goBackToMainMenu();
         }
 
@@ -261,9 +269,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void cancelExistingUserButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.disconnectFromServer();
-            removeChat();
-            goBackToMainMenu();
+            deconnectFromServer();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -314,7 +320,13 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void DeconnectButton_Click(object sender, EventArgs e)
         {
+            deconnectFromServer();
+        }
+
+        private void deconnectFromServer()
+        {
             FonctionsNatives.disconnectFromServer();
+            parent_.mapMenu.onlineMaps_.Clear();
             removeChat();
             goBackToMainMenu();
         }
@@ -362,5 +374,77 @@ namespace ui
                 parent_.userChat.chatWindow_.Dispose();
         }
 
+        public void Test()
+        {
+            GotDisconnected();
+        }
+
+        private delegate void CallbackDisconnect();
+        // Ensure it doesn't get garbage collected
+        private CallbackDisconnect mInstance;
+        private void DisconnectHandler()
+        {
+            // Do something...
+            if (parent_.viewPort.Controls.Contains(parent_.mainMenu))
+            {
+                parent_.mainMenu.connexionPictureBox.Image = parent_.mainMenu.ChangeColor((Bitmap)parent_.mainMenu.connexionPictureBox.Image, Color.Red);
+                parent_.mainMenu.achievementButton.Visible = false;
+            }
+
+            parent_.mapMenu.onlineMaps_.Clear();
+
+            parent_.disconnectedWarning = new DisconnetedPanel(parent_);
+            parent_.disconnectedWarning.Location = new Point(parent_.viewPort.Width / 2 - parent_.disconnectedWarning.Width / 2,
+                                                             parent_.viewPort.Height / 2 - parent_.disconnectedWarning.Height / 2);
+            parent_.viewPort.Controls.Add(parent_.disconnectedWarning);
+        }
+
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForDisconnect(CallbackDisconnect fn);
+
+        [DllImport("model.dll")]
+        private static extern void GotDisconnected();
+
+        public void Test1()
+        {
+            connectionWasSuccess();
+        }
+
+        private delegate void CallbackConnectionSuccess();
+        // Ensure it doesn't get garbage collected
+        private CallbackConnectionSuccess connectSuccess;
+        private void ConnectionSuccessHandler()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                onConnectionSucces();
+            });
+        }
+
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForConnectionSuccess(CallbackConnectionSuccess fn);
+
+        [DllImport("model.dll")]
+        private static extern void connectionWasSuccess();
+
+        public void Test2()
+        {
+            connectionWasFail();
+        }
+
+        private delegate void CallbackConnectionFail();
+        // Ensure it doesn't get garbage collected
+        private CallbackConnectionFail connectFail;
+        private void ConnectionFailHandler()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                onConnectionFailure();
+            });
+        }
+
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForConnectionFail(CallbackConnectionFail fn);
+
+        [DllImport("model.dll")]
+        private static extern void connectionWasFail();
     }
 }

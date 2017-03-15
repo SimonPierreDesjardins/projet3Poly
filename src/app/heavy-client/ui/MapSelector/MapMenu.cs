@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ui
@@ -51,15 +52,29 @@ namespace ui
             fileDirLabel.Text = "";
         }
 
+        public void initMapList()
+        {
+            mapPanel.Controls.Clear();
+            foreach (KeyValuePair<int, MapPresentator> pair in onlineMaps_)
+            {
+                mapPanel.Controls.Add(pair.Value);
+            }
+            foreach (KeyValuePair<string, MapPresentator> pair in offlineMaps_)
+            {
+                mapPanel.Controls.Add(pair.Value);
+            }
+        }
+
         public void addOnlineMapEntry(int mapId, MapPresentator newMap)
         { 
             if (!onlineMaps_.ContainsKey(mapId))
             {
+                mapPanel.VerticalScroll.Value = 0;
                 newMap.Size = new Size(this.mapPanel.Width, newMap.Height);
                 newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
                 newMap.Location = new Point(0, numberOfMaps_++ * 150);
                 onlineMaps_.Add(mapId, newMap);
-                //this.mapPanel.Controls.Add(newMap);
+                this.mapPanel.Controls.Add(newMap);
 
                 parent_.Invoke((MethodInvoker)delegate {
                     this.mapPanel.Controls.Add(newMap);
@@ -71,6 +86,7 @@ namespace ui
         {
             if (!offlineMaps_.ContainsKey(name))
             {
+                mapPanel.VerticalScroll.Value = 0;
                 newMap.Size = new Size(this.mapPanel.Width, newMap.Height);
                 newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
                 newMap.Location = new Point(0, numberOfMaps_++ * 150);
@@ -111,8 +127,20 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void createButton_Click(object sender, EventArgs e)
         {
+            offlineModePanel.Visible = false;
             mapPanel.Visible = false;
             addPanel.Visible = true;
+        }
+
+        private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.ToString() == "\r")
+                createMap();
+            else if (e.KeyChar.ToString() != "\b")
+            {
+                Regex regex = new Regex("[A-zÀ-ÿ0-9._]+");
+                e.Handled = !regex.IsMatch(e.KeyChar.ToString());
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -253,6 +281,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void confirmeButton_Click(object sender, EventArgs e)
         {
+            createMap();
+        }
+
+        private void createMap()
+        {
             String mapName = textBox.Text;
             if (mapName.Equals(""))
             {
@@ -286,7 +319,7 @@ namespace ui
             //Online map
             else
             {
-                switch(modeComboBox.SelectedIndex)
+                switch (modeComboBox.SelectedIndex)
                 {
                     //Edition
                     case 0:
@@ -323,6 +356,9 @@ namespace ui
             mapPanel.Visible = true;
             addPanel.Visible = false;
             offlineModePanel.Visible = false;
+
+            numberOfMaps_ = 0;
+            mapPanel.Controls.Clear();
         }
 
         public void choseOfflineMode(MapPresentator selectedMap)
@@ -357,6 +393,9 @@ namespace ui
             parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             parent_.editionModificationPanel.Visible = false;
             parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
 
             Program.peutAfficher = true;
             parent_.verificationDuNombreElementChoisi();
@@ -417,6 +456,15 @@ namespace ui
             mapPanel.Visible = true;
             addPanel.Visible = false;
             offlineModePanel.Visible = false;
+        }
+
+        private void mapPanel_Resize(object sender, EventArgs e)
+        {
+            foreach (Control map in mapPanel.Controls)
+            {
+                if (map is MapPresentator)
+                    map.Width = mapPanel.Width;
+            }
         }
     }
 }

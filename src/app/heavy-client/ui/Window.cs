@@ -8,7 +8,6 @@ using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
-using System.Collections.Generic;
 using System.Text;
 
 namespace ui
@@ -19,6 +18,8 @@ namespace ui
 
         public UserTabChat userChat;
         public string userName = "";
+
+        public DisconnetedPanel disconnectedWarning;
 
         public MainMenu mainMenu;
         public MapMenu mapMenu;

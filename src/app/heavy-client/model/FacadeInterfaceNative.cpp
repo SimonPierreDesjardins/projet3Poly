@@ -1028,6 +1028,38 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->sendSizePrefixedMessage(std::string(message, size));
 	}
 
+	CallbackDisconnect DisconnectHandler = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForDisconnect(CallbackDisconnect disconnectHandler)
+	{
+		DisconnectHandler = disconnectHandler;
+	}
+
+	__declspec(dllexport) void __cdecl GotDisconnected()
+	{
+		DisconnectHandler();
+	}
+
+	CallbackConnectionSuccess ConnectionSuccessHandler = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForConnectionSuccess(CallbackConnectionSuccess connectionSuccessHandler)
+	{
+		ConnectionSuccessHandler = connectionSuccessHandler;
+	}
+
+	__declspec(dllexport) void __cdecl connectionWasSuccess()
+	{
+		ConnectionSuccessHandler();
+	}
+
+	CallbackConnectionFail ConnectionFailHandler = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForConnectionFail(CallbackConnectionFail connectionFailHandler)
+	{
+		ConnectionFailHandler = connectionFailHandler;
+	}
+
+	__declspec(dllexport) void __cdecl connectionWasFail()
+	{
+		ConnectionFailHandler();
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///

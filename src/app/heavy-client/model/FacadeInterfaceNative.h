@@ -109,6 +109,15 @@ extern "C"
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
 	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
+	typedef int(__stdcall * CallbackDisconnect)();
+	__declspec(dllexport) void __cdecl SetCallbackForDisconnect(CallbackDisconnect disconnectHandler);
+	__declspec(dllexport) void __cdecl GotDisconnected();
+	typedef int(__stdcall * CallbackConnectionSuccess)();
+	__declspec(dllexport) void __cdecl SetCallbackForConnectionSuccess(CallbackConnectionSuccess connectionSuccessHandler);
+	__declspec(dllexport) void __cdecl connectionWasSuccess();
+	typedef int(__stdcall * CallbackConnectionFail)();
+	__declspec(dllexport) void __cdecl SetCallbackForConnectionFail(CallbackConnectionFail connectionFailHandler);
+	__declspec(dllexport) void __cdecl connectionWasFail();
 
 	// Map management
 	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType);

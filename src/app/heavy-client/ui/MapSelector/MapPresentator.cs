@@ -133,6 +133,9 @@ namespace ui
             parent_.editionModificationPanel.Visible = false;
             parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
 
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+
             Program.peutAfficher = true;
             parent_.verificationDuNombreElementChoisi();
 
