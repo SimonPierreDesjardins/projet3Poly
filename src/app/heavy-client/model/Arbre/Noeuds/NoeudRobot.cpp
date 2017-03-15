@@ -410,7 +410,6 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 			teleporteurCollision_ = true;
 			teleporteurCourant_ = teleporteur;
 			rectangle->assignerEnCollision(enCollision);
-
 			glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
 			calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
@@ -420,16 +419,15 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 		else
 		{
 			enIntersection = false;
-		}
-		
+		}	
 	}
 	// Le teleporteur n'est pas en intersection et il se trouvait en collision.
 	else 
 	{
-		//Ce if permet 
+		//Ce if permet de laisser le robot sortir du teleporteur avant de reprendre en considération les collisions
 		if (teleporteurCourant_ != nullptr && teleporteur == teleporteurCourant_ && !rectangleEnglobant_.calculerIntersection(*(teleporteurCourant_->obtenirProchainTeleporteur()->obtenirFormeEnglobante())))
 		{
-			teleporteurCourant_ = nullptr; 
+			teleporteurCourant_ = nullptr;
 			teleporteurCollision_ = false;
 			teleportationFaite_ = false;
 		}
