@@ -7,9 +7,13 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////
-#include "VisiteurDeplacement.h"
+#include <queue>
+
+#include "MapSession.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
+
+#include "VisiteurDeplacement.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -41,6 +45,12 @@ VisiteurDeplacement::~VisiteurDeplacement()
 {
 }
 
+void VisiteurDeplacement::shiftSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession)
+{
+	mapSession_ = mapSession;
+	tree->accepterVisiteur(this);
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurDeplacement::visiter(ArbreRendu* noeud)
@@ -70,17 +80,50 @@ void VisiteurDeplacement::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDeplacement::visiter(NoeudTable* noeud)
 {
-	NoeudAbstrait* enfant;
-	glm::dvec3 positionVirtuelle;
+	std::queue<NoeudAbstrait*> entitiesToMove;
+
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
-		enfant = noeud->chercher(i);
-		if (enfant->estSelectionne()) {
-			positionVirtuelle = enfant->obtenirPositionRelative();
-			enfant->assignerPositionRelative(positionVirtuelle + positionRelative_);
-			enfant->assignerPositionCourante(positionVirtuelle + positionRelative_);
+		NoeudAbstrait* enfant = noeud->chercher(i);
+
+		// If the node is selected and the owner is me.
+		if (enfant->estSelectionne() && enfant->getOwnerId() == mapSession_->getThisUserId()) 
+		{
+			entitiesToMove.push(enfant);
+			glm::dvec3 positionRelative = enfant->obtenirPositionRelative();
+			positionRelative += positionRelative_;
+			enfant->assignerPositionRelative(positionRelative);
+			if (mapSession_)
+			{
+				mapSession_->localEntityPropertyUpdated(enfant, Networking::RELATIVE_POSITION, glm::vec3(positionRelative));
+			}
+		}
+	}
+
+	// Update absolute position of the entities.
+	while (!entitiesToMove.empty())
+	{
+		NoeudAbstrait* entityToUpdate = entitiesToMove.front();
+		entitiesToMove.pop();
+		NoeudAbstrait* parent = entityToUpdate->obtenirParent();
+
+		glm::dvec3 updatedAbsolutePosition = entityToUpdate->obtenirPositionRelative() +
+											 parent->obtenirPositionCourante();
+
+		entityToUpdate->assignerPositionCourante(updatedAbsolutePosition);
+		if (mapSession_)
+		{
+			mapSession_->localEntityPropertyUpdated(entityToUpdate, Networking::ABSOLUTE_POSITION, 
+													glm::vec3(updatedAbsolutePosition));
+		}
+
+		uint32_t nChildren = entityToUpdate->obtenirNombreEnfants();
+		for (int i = 0; i < nChildren; ++i)
+		{
+			entitiesToMove.push(entityToUpdate->chercher(i));
 		}
 	}
 }
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

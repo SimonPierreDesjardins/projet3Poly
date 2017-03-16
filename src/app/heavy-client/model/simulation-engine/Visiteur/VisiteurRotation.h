@@ -13,6 +13,11 @@
 
 #include "VisiteurAbstrait.h"
 
+namespace client_network
+{
+	class MapSession;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurRotation
 /// @brief Visiteur permettant d'effectuer la rotation d'un objet
@@ -29,6 +34,8 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurRotation();
 
+	void rotateSelectedObjects(ArbreRendu* tree, client_network::MapSession* mapSession);
+
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
@@ -37,6 +44,8 @@ public:
 	virtual void visiter(NoeudDepart* noeud);
 
 private:
+
+	client_network::MapSession* mapSession_{ nullptr };
 
 	void assignerNouvellePositionRelative(NoeudAbstrait* noeud);
 	

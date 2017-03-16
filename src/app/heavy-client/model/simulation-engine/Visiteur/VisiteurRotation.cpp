@@ -8,10 +8,10 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 #include "VisiteurRotation.h"
-#include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
+#include "MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -26,8 +26,6 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurRotation::VisiteurRotation()
 {
-	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-	calculerCentreSelection(noeud);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -43,6 +41,12 @@ VisiteurRotation::VisiteurRotation()
 ////////////////////////////////////////////////////////////////////////
 VisiteurRotation::~VisiteurRotation()
 {
+}
+
+void VisiteurRotation::rotateSelectedObjects(ArbreRendu* tree, client_network::MapSession* mapSession)
+{
+	mapSession_ = mapSession;
+	tree->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -74,10 +78,13 @@ void VisiteurRotation::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurRotation::visiter(NoeudTable* noeud)
 {
+	calculerCentreSelection(noeud);
 	NoeudAbstrait* enfant = nullptr;
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
-		if (enfant != nullptr && enfant->estSelectionne()) {
+		// Child has to be selected by me.
+		if (enfant != nullptr && enfant->estSelectionne() &&
+			enfant->getOwnerId() == mapSession_->getThisUserId()) {
 			enfant->accepterVisiteur(this);
 		}
 	}
@@ -115,6 +122,7 @@ void VisiteurRotation::visiter(NoeudMur* noeud)
 	// Assigner le nouvel angle de rotation.
 	double angle = noeud->obtenirAngleRotation() + angleRotation_;
 	noeud->assignerAngleRotation(angle);
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(0, 0, angle));
 	assignerNouvellePositionRelative(noeud);
 }
 
@@ -134,6 +142,7 @@ void VisiteurRotation::visiter(NoeudDepart* noeud)
 	// Assigner le nouvel angle de rotation.
 	double angle = noeud->obtenirAngleRotation() + angleRotation_;
 	noeud->assignerAngleRotation(angle);
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(0, 0, angle));
 	assignerNouvellePositionRelative(noeud);
 }
 
@@ -151,17 +160,27 @@ void VisiteurRotation::visiter(NoeudDepart* noeud)
 void VisiteurRotation::visiter(NoeudLigne* ligne)
 {
 	assignerNouvellePositionRelative(ligne);
-	glm::dvec3 nouvellePositionRelative = { 0.0, 0.0, 0.0 };
+	glm::dvec3 lineAbsolutePosition = ligne->obtenirPositionCourante();
 	for (unsigned int i = 0; i < ligne->obtenirNombreEnfants(); i++) 
     {
 		NoeudAbstrait* enfant = ligne->chercher(i);
-		utilitaire::calculerPositionApresRotation(enfant->obtenirPositionRelative(), nouvellePositionRelative, angleRotation_);
-		enfant->assignerPositionRelative(nouvellePositionRelative);
-		double angle = enfant->obtenirAngleRotation() + angleRotation_;
-		enfant->assignerAngleRotation(angle);
+
+		glm::dvec3 updatedChildRelativePosition{ 0.0, 0.0, 0.0 };
+		utilitaire::calculerPositionApresRotation(enfant->obtenirPositionRelative(), updatedChildRelativePosition, angleRotation_);
+		enfant->assignerPositionRelative(updatedChildRelativePosition);
+		mapSession_->localEntityPropertyUpdated(enfant, Networking::RELATIVE_POSITION, glm::vec3(updatedChildRelativePosition));
+
+		glm::dvec3 updatedChildAbsolutePosition = lineAbsolutePosition + updatedChildRelativePosition;
+		enfant->assignerPositionCourante(updatedChildAbsolutePosition);
+		mapSession_->localEntityPropertyUpdated(enfant, Networking::ABSOLUTE_POSITION, glm::vec3(updatedChildAbsolutePosition));
+		
+		double updatedRotation = enfant->obtenirAngleRotation() + angleRotation_;
+		enfant->assignerAngleRotation(updatedRotation);
+		mapSession_->localEntityPropertyUpdated(enfant, Networking::ROTATION, glm::vec3(0.0, 0.0, updatedRotation));
 	}
     double angleLigne = ligne->obtenirAngleRotation() + angleRotation_;
     ligne->assignerAngleRotation(angleLigne);
+	mapSession_->localEntityPropertyUpdated(ligne, Networking::ROTATION, glm::vec3(0.0, 0.0, angleLigne));
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -195,7 +214,9 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 	for (unsigned int i = 0; i < nEnfants; i++)
 	{
 		enfant = noeud->chercher(i);
-		if (enfant != nullptr && enfant->estSelectionne())
+		// If the object is selected by me.
+		if (enfant != nullptr && enfant->estSelectionne() &&
+			enfant->getOwnerId() == mapSession_->getThisUserId())
 		{
             glm::dvec3 positionCourante = enfant->obtenirPositionCourante();
 
@@ -243,9 +264,13 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 void VisiteurRotation::assignerNouvellePositionRelative(NoeudAbstrait* noeud)
 {
 	glm::dvec3 distanceCentreSelection = noeud->obtenirPositionRelative() - centreSelection_;
-	glm::dvec3 nouvelleDistanceCentreSelection = { 0.0, 0.0, 0.0 };
-	utilitaire::calculerPositionApresRotation(distanceCentreSelection, nouvelleDistanceCentreSelection, angleRotation_);
-	noeud->assignerPositionRelative(nouvelleDistanceCentreSelection + centreSelection_);
+	glm::dvec3 updatedPosition = { 0.0, 0.0, 0.0 };
+	utilitaire::calculerPositionApresRotation(distanceCentreSelection, updatedPosition, angleRotation_);
+	updatedPosition += centreSelection_;
+	noeud->assignerPositionRelative(updatedPosition);
+	noeud->assignerPositionCourante(updatedPosition);
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::ABSOLUTE_POSITION, glm::vec3(updatedPosition));
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::RELATIVE_POSITION, glm::vec3(updatedPosition));
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

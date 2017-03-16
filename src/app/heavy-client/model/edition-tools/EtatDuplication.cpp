@@ -21,7 +21,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatDuplication::EtatDuplication()
+EtatDuplication::EtatDuplication(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(DUPLICATION);
 	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();

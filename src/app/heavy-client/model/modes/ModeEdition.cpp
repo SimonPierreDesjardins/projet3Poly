@@ -108,19 +108,19 @@ void ModeEdition::assignerEtat(Tool etat)
 		break;
 
 	case DEPLACEMENT:
-		etat_ = std::make_unique<EtatDeplacement>();
+		etat_ = std::make_unique<EtatDeplacement>(mapSession_);
 		break;
 
 	case ROTATION:
-		etat_ = std::make_unique<EtatRotation>();
+		etat_ = std::make_unique<EtatRotation>(mapSession_);
 		break;
 
 	case MISE_A_ECHELLE:
-		etat_ = std::make_unique<EtatMiseAEchelle>();
+		etat_ = std::make_unique<EtatMiseAEchelle>(mapSession_);
 		break;
 	
 	case DUPLICATION:
-		etat_ = std::make_unique<EtatDuplication>();
+		etat_ = std::make_unique<EtatDuplication>(mapSession_);
 		break;
 
 	case CREATION_POTEAU:
@@ -188,7 +188,7 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_D:
-				etat_ = std::make_unique<EtatDeplacement>();
+				assignerEtat(DEPLACEMENT);
 				break;
 
 			case VK_KEY_S:

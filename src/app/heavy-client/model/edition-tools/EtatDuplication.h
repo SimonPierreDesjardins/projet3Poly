@@ -11,7 +11,7 @@
 #ifndef ETAT_DUPLICATION_H
 #define ETAT_DUPLICATION_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurDuplication.h"
 #include "VisiteurVerificationQuad.h"
 
@@ -22,10 +22,11 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatDuplication : public EtatAbstrait
+class EtatDuplication : public OnlineTool
 {
 public:
-	EtatDuplication();
+	EtatDuplication(client_network::MapSession* mapSession);
+
 	virtual ~EtatDuplication();
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);

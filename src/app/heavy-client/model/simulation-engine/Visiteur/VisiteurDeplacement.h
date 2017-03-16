@@ -13,6 +13,11 @@
 
 #include "VisiteurAbstrait.h"
 
+namespace client_network
+{
+	class MapSession;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDeplacement
 /// @brief Visiteur permettant d'effectuer le déplacement d'un objet
@@ -29,8 +34,14 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurDeplacement();
 
+	void shiftSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession);
+
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
+
+private:
+	client_network::MapSession* mapSession_;
+
 };
 
 

@@ -133,7 +133,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_D:
 				if (getCurrentTutorialState() == (int)SELECT_MOVE_TOOL)
 				{
-					etat_ = std::make_unique<EtatDeplacement>();
+					etat_ = std::make_unique<EtatDeplacement>(mapSession_);
 					currentPosition_ = getPositionOfTutorialObject();
 				}
 				break;
@@ -151,7 +151,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_R:
 				if (getCurrentTutorialState() == (int)SELECT_ROTATION_TOOL)
 				{
-					etat_ = std::make_unique<EtatRotation>();
+					etat_ = std::make_unique<EtatRotation>(mapSession_);
 					currentObjectAttribut_ = getRotationOfTutorialObject();
 				}
 				break;
@@ -159,7 +159,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_E:
 				if (getCurrentTutorialState() == (int)SELECT_SCALE_TOOL)
 				{
-					etat_ = std::make_unique<EtatMiseAEchelle>();
+					etat_ = std::make_unique<EtatMiseAEchelle>(mapSession_);
 					currentObjectAttribut_ = getScaleOfTutorialObject();
 				}
 				break;
@@ -167,7 +167,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_C:
 				if (getCurrentTutorialState() == (int)SELECT_DUPLICATE_TOOL)
 				{
-					etat_ = std::make_unique<EtatDuplication>();
+					etat_ = std::make_unique<EtatDuplication>(mapSession_);
 					numberOfObjects_ = getNomberOfObjects("mur");
 				}
 				break;

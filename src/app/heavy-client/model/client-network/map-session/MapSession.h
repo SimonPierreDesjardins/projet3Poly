@@ -7,14 +7,13 @@
 #include <mutex>
 #include "glm/glm.hpp"
 #include "NetworkStandard.h"
+#include "NetworkManager.h"
 
 class ArbreRendu;
 class NoeudAbstrait;
 
 namespace client_network
 {
-
-class NetworkManager;
 
 class MapSession
 {
@@ -39,6 +38,8 @@ public:
 
 	MapSession(ArbreRendu* tree, NetworkManager* network);
 	virtual ~MapSession() = default;
+
+	inline uint32_t getThisUserId() const;
 
 	// Entity created
 	void localEntityCreated(NoeudAbstrait* entity);
@@ -81,6 +82,11 @@ private:
 
 	MapSession() = delete;
 };
+
+inline uint32_t MapSession::getThisUserId() const
+{
+	return network_->getUserId();
+}
 
 }
 

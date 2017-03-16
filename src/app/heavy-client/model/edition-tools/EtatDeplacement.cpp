@@ -20,7 +20,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatDeplacement::EtatDeplacement()
+EtatDeplacement::EtatDeplacement(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(DEPLACEMENT);
 	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
@@ -100,7 +101,7 @@ void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 	
 	if (clicGaucheEnfonce_) {
 		visiteurDeplacement_->assignerPositionRelative(positionVirtuelle - dernierePositionVirtuelle_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurDeplacement_.get());
+		visiteurDeplacement_->shiftSelectedEntities(arbre_, mapSession_);
 		dernierePositionVirtuelle_ = positionVirtuelle;
 	}
 }
@@ -115,7 +116,7 @@ void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 void EtatDeplacement::reinitialiser()
 {
 	visiteurDeplacement_->assignerPositionRelative(positionVirtuelleInitiale_ - dernierePositionVirtuelle_);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurDeplacement_.get());
+	visiteurDeplacement_->shiftSelectedEntities(arbre_, mapSession_);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

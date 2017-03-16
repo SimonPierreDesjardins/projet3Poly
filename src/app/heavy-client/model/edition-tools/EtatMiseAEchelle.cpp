@@ -20,7 +20,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatMiseAEchelle::EtatMiseAEchelle()
+EtatMiseAEchelle::EtatMiseAEchelle(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(MISE_A_ECHELLE);
 	visiteurMiseAEchelle_ = std::make_unique<VisiteurMiseAEchelle>();

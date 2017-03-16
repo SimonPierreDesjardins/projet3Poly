@@ -11,7 +11,7 @@
 #ifndef ETAT_MISE_A_ECHELLE_H
 #define ETAT_MISE_A_ECHELLE_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurVerificationQuad.h"
 #include "VisiteurMiseAEchelle.h"
 
@@ -22,10 +22,10 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatMiseAEchelle : public EtatAbstrait
+class EtatMiseAEchelle : public OnlineTool
 {
 public:
-	EtatMiseAEchelle();
+	EtatMiseAEchelle(client_network::MapSession* mapSession);
 	virtual ~EtatMiseAEchelle();
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
