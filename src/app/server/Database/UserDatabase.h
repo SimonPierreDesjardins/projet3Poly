@@ -20,11 +20,11 @@ namespace server {
 		friend class Database;
 
 	protected:
-		virtual void WriteObject(DatalistElement& element);
+		virtual void WriteObject(const UserInformation* element, bsoncxx::builder::stream::document& objectBuilder);
 
 	private:
 		//Loads up user information from stream
-		UserDatabase(std::string basePath);
+		UserDatabase(mongocxx::collection& userCollection);
 	};
 }
 

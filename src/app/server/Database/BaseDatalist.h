@@ -1,12 +1,10 @@
 #ifndef __BASE_DATALIST_H
 #define __BASE_DATALIST_H
 
-#include "rapidjson\writer.h"
-#include "rapidjson\filewritestream.h"
-#include "rapidjson\filereadstream.h"
-#include "rapidjson\document.h"
 #include "IdGenerator.h"
 #include <unordered_map>
+#include <mongocxx\collection.hpp>
+#include <bsoncxx\builder\stream\document.hpp>
 
 namespace server {
 
@@ -27,38 +25,15 @@ namespace server {
 	///<summary>Base implementation for lists of data in databases where elements extend DatalistElement</summary>
 	template<class EType> class BaseDatalist{
 		static_assert(std::is_base_of<DatalistElement, EType>::value, "Datalist template class is not derived from DatalistElement");
+		
 		typedef std::unordered_map<uint32_t, EType*> ElementMap;
 
 	public:
-		BaseDatalist(const std::string& filePath) {
-			/*
-			// open file and build data list
-			_filePath = filePath;
-			FILE* file;
-			if (fopen_s(&file, _filePath.c_str(), "r") != 0) {
-				//error occured, if file absent, ignore as file will be created on save. create default doc
-				return;
-			}
-			else {
-				//file opened, build database
-				char readBuffer[65536];
-				rapidjson::FileReadStream is(file, readBuffer, sizeof(readBuffer));
-				doc.ParseStream(is);
-				fclose(file);
-			}
-
-			if (doc.HasMember("elementList")) {
-				rapidjson::Value elementList = doc["elementList"];
-				for (rapidjson::Value::ConstValueIterator itr = elementList.Begin(); itr != elementList.End(); ++itr) {
-					printf("%d ", itr->GetInt());
-
-				}
-			}
-			else {
-				doc.
-			}
-			// read data
-			*/
+		BaseDatalist(mongocxx::collection& container):_collection(container) {
+			// build list from contents of collection
+			/*for (int i = 0; i < _collection.count(); i++) {
+				_collection[1]
+			}*/
 		}
 
 		~BaseDatalist() {
@@ -77,44 +52,30 @@ namespace server {
 
 	protected:
 
-		//virtual void WriteObject(DatalistElement& element) = 0;
+		virtual void WriteObject(const EType* element, bsoncxx::builder::stream::document& objectBuilder) = 0;
 
 		//virtual DatalistElement& GetObject(rapidjson::Value value) = 0;
-
-		/// Objet pour écrire dans un fichier.
-		rapidjson::Writer<rapidjson::FileWriteStream>* writer;
-		rapidjson::Document doc;
-
+		
 		//Saves user information into file
 		void SaveDataList() {
-			/*
-			FILE* file;
-			if (fopen_s(&file, _filePath.c_str(), "w") != 0) {
-				//error occured, maybe create a file at filepath?
-				return;
+			
+			std::vector<bsoncxx::document::value> documents;
+
+			bsoncxx::builder::stream::document docStream;
+
+			for each (auto element in _infoList)
+			{
+				docStream << "ID" << static_cast<int>(element.first);
+				WriteObject(element.second, docStream);
+				documents.push_back(docStream << bsoncxx::builder::stream::finalize);
+				// TODO: enque tasks into database class
 			}
-			char writeBuffer[65536];
-			rapidjson::FileWriteStream os(file, writeBuffer, sizeof(writeBuffer));
-			writer = new rapidjson::Writer<rapidjson::FileWriteStream>(os);
-			writer->StartObject();
-			writer->Key("data");
-			writer->StartArray();
-			for each(auto infoPair in _infoList) {
-				writer->StartObject();
-				WriteObject(infoPair.second);
-				writer->EndObject();
-			}
-			writer->EndArray();
-			writer->EndObject();
-			fclose(file);
-			*/
 		}
 
 		// Map of info
 		ElementMap _infoList;
 
-		// info to keep file close by
-		std::string _filePath;
+		mongocxx::collection& _collection;
 	};
 }
 

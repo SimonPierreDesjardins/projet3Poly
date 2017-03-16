@@ -31,8 +31,8 @@ namespace server {
 		friend class Database;
 
 	private:
-		//Loads up user information from stream
-		MapDatabase(std::string basePath);
+		//Loads up map data from collection
+		MapDatabase(mongocxx::collection mapCollection);
 
 		virtual void WriteObject(DatalistElement& element);
 
