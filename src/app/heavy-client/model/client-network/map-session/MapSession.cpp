@@ -218,6 +218,12 @@ void MapSession::serverEntitySelected(uint32_t entityId, bool isSelected, uint32
 	{
 		entityIt->second->setOwnerId(userId);
 		entityIt->second->assignerSelection(isSelected);
+
+		auto userIt = users_.find(userId);
+		if (userIt != users_.end())
+		{
+			entityIt->second->setSelectionColor(userIt->second.selectionColor);
+		}
 	}
 }
 

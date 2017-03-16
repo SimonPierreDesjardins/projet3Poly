@@ -104,7 +104,7 @@ void ModeEdition::assignerEtat(Tool etat)
 	switch(etat)
 	{
 	case SELECTION:
-		etat_ = std::make_unique<EtatSelection>();
+		etat_ = std::make_unique<EtatSelection>(mapSession_);
 		break;
 
 	case DEPLACEMENT:
@@ -194,12 +194,12 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_S:
 				// Verification de controle pour ne pas changer d'outils lors du ctrl+s
 				if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
-					etat_ = std::make_unique<EtatSelection>();
+					assignerEtat(SELECTION);
 				}
 				break;
 
 			case VK_KEY_R:
-				assignerEtat(SELECTION);
+				assignerEtat(ROTATION);
 				break;
 
 			case VK_KEY_E:

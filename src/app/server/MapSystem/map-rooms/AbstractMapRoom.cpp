@@ -208,17 +208,21 @@ void AbstractMapRoom::handleEntitySelectionMessage(User* sender, const std::stri
 		if (selectionState && entity->userId_ == 0)
 		{
 			entity->userId_ = sender->Info.GetId();
+			std::string response(message);
+			Networking::serialize(entity->userId_, response);
+			Networking::MessageStandard::UpdateLengthHeader(response);
+			broadcastMessage(response);
 		}
 		// If we have the object selected and we want to unselect it.
 		else if (!selectionState && entity->userId_ == sender->Info.GetId())
 		{
 			entity->userId_ = 0;
+			std::string response(message);
+			Networking::serialize(entity->userId_, response);
+			Networking::MessageStandard::UpdateLengthHeader(response);
+			broadcastMessage(response);
 		}
-
-		std::string response(message);
-		Networking::serialize(entity->userId_, response);
-		Networking::MessageStandard::UpdateLengthHeader(response);
-		broadcastMessage(response);
+		// Any other message is not accepted.
 	}
 }
 

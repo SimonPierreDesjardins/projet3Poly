@@ -47,7 +47,7 @@ ModeTutorialEdition::ModeTutorialEdition(client_network::MapSession * mapSession
 	: OnlineMapMode(mapSession)
 {
 	typeMode_ = TUTORIAL_EDITION;
-	etat_ = std::make_unique <EtatAbstrait>();
+	etat_ = std::make_unique<EtatAbstrait>();
 	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
 	table_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"));
@@ -143,7 +143,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				if (getCurrentTutorialState() == (int)SELECT_TOOL)
 				{
 					if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
-						etat_ = std::make_unique<EtatSelection>();
+						etat_ = std::make_unique<EtatSelection>(mapSession_);
 					}
 				}
 				break;

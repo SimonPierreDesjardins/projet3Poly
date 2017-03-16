@@ -8,6 +8,9 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
+#include <iterator>
+#include <unordered_set>
+
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "VisiteurSelection.h"
@@ -16,8 +19,7 @@
 #include "Utilitaire.h"
 #include "Modele3D.h"
 #include "FormeEnglobanteAbstraite.h"
-#include <iterator>
-
+#include "MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -62,10 +64,11 @@ VisiteurSelection::~VisiteurSelection()
 /// @param[in] fin : L'itérateur qui pointe sur la fin du vecteur de selection.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSelection::selectionner(Iterateur debut, Iterateur fin)
+void VisiteurSelection::selectionner(Iterateur debut, Iterateur fin, client_network::MapSession* mapSession)
 {
     debut_ = debut;
     fin_ = fin;
+	mapSession_ = mapSession;
     FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(this);
 }
 
@@ -98,34 +101,36 @@ void VisiteurSelection::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSelection::visiter(NoeudTable* table)
 {	
-	if (!ctrlAppuye_) 
-    {
-		table->deselectionnerTout();
+	std::unordered_set<int> selectedIndexes;
+	selectedIndexes.insert(debut_, fin_);
+
+	uint32_t nChildren = table->obtenirNombreEnfants();
+	for (int i = 0; i < nChildren; ++i)
+	{
+		bool estSelectionne = table->chercher(i)->estSelectionne();
+		// If this node is not being selected
+		if (selectedIndexes.find(i) == selectedIndexes.end())
+		{
+			// Node is being unselected and was selected (default behavior)
+			if (!ctrlAppuye_ && estSelectionne)
+			{
+				mapSession_->updateSelectionStateLocalEntityAndChildren(table->chercher(i), false);
+			}
+		} 
+		else 
+		{
+			// Node was not selected and is now being selected (default behavior)
+			if (!ctrlAppuye_ && !estSelectionne)
+			{
+				mapSession_->updateSelectionStateLocalEntityAndChildren(table->chercher(i), true);
+			}
+			// Node is being clicked on, selection is inverted (ctrl behavior)
+			else if (ctrlAppuye_)
+			{
+				mapSession_->updateSelectionStateLocalEntityAndChildren(table->chercher(i), !estSelectionne);
+			} 
+		}
 	}
-    
-    Iterateur it;
-    for (it = debut_; it != fin_; it++)
-    {
-        NoeudAbstrait* enfant = nullptr;
-        enfant = table->chercher(*it);
-        assert(enfant);
-        if (!ctrlAppuye_)
-        {
-            enfant->selectionnerTout();
-        }
-        else
-        {
-            bool estSelectionne = enfant->estSelectionne();
-            if (estSelectionne)
-            {
-                enfant->deselectionnerTout();
-            }
-            else
-            {
-                enfant->selectionnerTout();
-            }
-        }
-    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
