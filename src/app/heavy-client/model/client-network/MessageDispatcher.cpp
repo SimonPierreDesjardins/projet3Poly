@@ -64,6 +64,7 @@ void MessageDispatcher::lookupMessage()
 	{
 		// Wait if the queue is empty and we are still dispatching.
 		lookupcv_.wait(lck, [this] { return !messageQueue_.empty() || !isDispatching_; });
+
 		queueLock_.lock();
 		if (!messageQueue_.empty())
 		{
@@ -116,12 +117,38 @@ void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
 	eventHandler_->onEntityCreated(entityType, parentId, absPos, relPos, rotation, scale, entityId, userId);
 }
 
+void MessageDispatcher::handleEntityDeletionMessage(const std::string& message)
+{
+	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	eventHandler_->onEntityDeleted(entityId);
+}
+
+void MessageDispatcher::handleEntitySelectionMessage(const std::string& message)
+{
+	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	char selectionState = message[Networking::MessageStandard::DATA_START + 4];
+	uint32_t userId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START + 5);
+	eventHandler_->onEntitySelected(entityId, (bool)(selectionState), userId);
+}
+
 void MessageDispatcher::handleMapEditionMessage(const std::string& message)
 {
 	switch (message[5])
 	{
 	case 'c':
 		handleEntityCreationMessage(message);
+		break;
+
+	case 'd':
+		handleEntityDeletionMessage(message);
+		break;
+		
+	case 's':
+		handleEntitySelectionMessage(message);
+		break;
+
+	default:
+		std::cout << "Unexpected message received - " << message << std::endl;
 		break;
 	}
 }

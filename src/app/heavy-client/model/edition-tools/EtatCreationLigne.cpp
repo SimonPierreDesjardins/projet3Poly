@@ -76,30 +76,51 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 			enCreation_ = true;
 			arbre_->accepterVisiteur(visiteurCreationLigne_.get());
 			ligne_ = visiteurCreationLigne_->obtenirReferenceNoeud();
+			ligne_->assignerSelection(true);
 			mapSession_->localEntityCreated(ligne_);
 
 			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 			segment_ = nouveauNoeud.get();
+			segment_->assignerPositionRelative(positionVirtuelle);
+			segment_->assignerPositionCourante(positionVirtuelle);
 			ligne_->ajouter(nouveauNoeud);
+			segment_->assignerSelection(true);
 			mapSession_->localEntityCreated(segment_);
 
 		}
 		// Clic subsequent avec CTRL enfoncee.
 		else if (enCreation_ && toucheCtrlEnfonce_) {		
-			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
+			std::shared_ptr<NoeudAbstrait> segment = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 			std::shared_ptr<NoeudAbstrait> jonction = arbre_->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
+
 			jonction->assignerPositionRelative(positionVirtuelle);
+			jonction->assignerPositionCourante(positionVirtuelle);
+			segment->assignerPositionRelative(positionVirtuelle);
+			segment->assignerPositionCourante(positionVirtuelle);
+
 			ligne_->ajouter(jonction);
-			ligne_->ajouter(nouveauNoeud);
-			segment_ = nouveauNoeud.get();
+			ligne_->ajouter(segment);
 
-			mapSession_->localEntityCreated(segment_);
-			mapSession_->localEntityCreated(jonction.get());
-
+			if (ligneEstSurTable())
+			{
+				segment_ = segment.get();
+				segment_->assignerSelection(true);
+				jonction->assignerSelection(true);
+				mapSession_->localEntityCreated(segment_);
+				mapSession_->localEntityCreated(jonction.get());
+			} 
+			else
+			{
+				ligne_->effacer(jonction.get());
+				ligne_->effacer(segment.get());
+				positionsClic_.pop_back();
+			}
 		}
 		// Clic subsequent sans CTRL enfoncee (dernier clic).
-		else if (enCreation_ && !toucheCtrlEnfonce_) {
+		else if (enCreation_ && !toucheCtrlEnfonce_) 
+		{
 			calculerPositionCentreLigne();
+			mapSession_->updateSelectionStateLocalEntityAndChildren(ligne_, false);
 			ligne_ = nullptr;
 			segment_ = nullptr;
 			enCreation_ = false;
@@ -118,7 +139,7 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 void EtatCreationLigne::gererToucheEchappe()
 {
 	if (enCreation_) {
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(ligne_);
+		mapSession_->deleteLocalEntity(ligne_);
 		ligne_ = nullptr;
 		segment_ = nullptr;
 		enCreation_ = false;
@@ -228,10 +249,6 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 	}
 	// Calculer et assigner la position relative à la ligne
 	glm::dvec3 centre = { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0 };
-	ligne_->assignerPositionRelative(centre);
-	ligne_->assignerPositionCourante(centre);
-	mapSession_->localEntityPropertyUpdated(ligne_, Networking::RELATIVE_POSITION, { centre.x, centre.y, centre.z });
-	mapSession_->localEntityPropertyUpdated(ligne_, Networking::ABSOLUTE_POSITION, { centre.x, centre.y, centre.z });
 
 	// Ajuster la position relative des segments.
 	glm::dvec3 positionEnfant;
@@ -242,6 +259,11 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 		segment->assignerPositionRelative(positionEnfant);
 		mapSession_->localEntityPropertyUpdated(segment, Networking::RELATIVE_POSITION, { positionEnfant.x, positionEnfant.y, positionEnfant.z });
 	}
+
+	ligne_->assignerPositionRelative(centre);
+	ligne_->assignerPositionCourante(centre);
+	mapSession_->localEntityPropertyUpdated(ligne_, Networking::RELATIVE_POSITION, { centre.x, centre.y, centre.z });
+	mapSession_->localEntityPropertyUpdated(ligne_, Networking::ABSOLUTE_POSITION, { centre.x, centre.y, centre.z });
 }
 
 ////////////////////////////////////////////////////////////////////////

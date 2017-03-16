@@ -118,7 +118,7 @@ void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& m
 		break;
 
 	case 'd':
-		handleEntityDeletionMessage(sender, message);
+		handleEntityRemovalMessage(sender, message);
 		break;
 
 	case 's':
@@ -183,13 +183,43 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	broadcastMessage(response);
 }
 
-void AbstractMapRoom::handleEntityDeletionMessage(User* sender, const std::string& message)
+void AbstractMapRoom::handleEntityRemovalMessage(User* sender, const std::string& message)
 {
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+
+	Entity* deletedEntity = tree_.findEntity(entityId);
+	// If the entity exists and the user is selecting it.
+	if (deletedEntity && deletedEntity->userId_ == sender->Info.GetId())
+	{
+		tree_.deleteEntity(entityId);
+	}
+	broadcastMessage(sender, message);
 }
 
 void AbstractMapRoom::handleEntitySelectionMessage(User* sender, const std::string& message)
 {
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	char selectionState = message[Networking::MessageStandard::DATA_START + 4];
+
+	Entity* entity = tree_.findEntity(entityId);
+	if (entity)
+	{
+		// If we want to select the object and it's not selected.
+		if (selectionState && entity->userId_ == 0)
+		{
+			entity->userId_ = sender->Info.GetId();
+		}
+		// If we have the object selected and we want to unselect it.
+		else if (!selectionState && entity->userId_ == sender->Info.GetId())
+		{
+			entity->userId_ = 0;
+		}
+
+		std::string response(message);
+		Networking::serialize(entity->userId_, response);
+		Networking::MessageStandard::UpdateLengthHeader(response);
+		broadcastMessage(response);
+	}
 }
 
 }
-

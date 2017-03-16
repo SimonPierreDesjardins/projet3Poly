@@ -86,11 +86,11 @@ public:
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 	/// Assigne la position relative du noeud.
-	virtual void assignerPositionRelative(const glm::dvec3& positionRelative);	
+	inline void assignerPositionRelative(const glm::dvec3& positionRelative);	
     /// Obtient la position courante du noeud.
     inline const glm::dvec3& obtenirPositionCourante() const;
     /// Assigne la position courante du noeud.
-    virtual void assignerPositionCourante(const glm::dvec3& positionRelative);
+    inline void assignerPositionCourante(const glm::dvec3& positionRelative);
 	/// Obtient l'angle de rotation du noeud.
 	inline double obtenirAngleRotation() const;
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
@@ -115,6 +115,10 @@ public:
 	/// Obtient le type du noeud.
 	inline const std::string& obtenirNom() const;
 	inline EntityType getType() const;
+
+	inline void setSelectionColor(const glm::vec4& color);
+	inline uint32_t getOwnerId() const;
+	inline void setOwnerId(uint32_t userId);
 
 	/// Écrit l'état de l'affichage du du noeud.
 	inline void assignerAffiche(bool affiche);
@@ -217,7 +221,12 @@ protected:
 	/// Nom du noeud.
 	std::string				name_;
 
+	// Id du noeud
 	uint32_t	            id_;
+
+	uint32_t				ownerId_{ 0 };
+
+	glm::vec4				selectionColor_;
 
 	/// Mode d'affichage des polygones.
 	GLenum					modePolygones_{ GL_FILL };
@@ -330,6 +339,23 @@ inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
+///
+/// Cette fonction permet d'assigner la position relative du noeud par
+/// rapport à son parent.
+///
+/// @param positionRelative : La position relative.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudAbstrait::assignerPositionRelative(const glm::dvec3& positionRelative)
+{
+	positionRelative_ = positionRelative;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
 ///
 /// Cette fonction retourne la position courante du noeud dans l'espace virtuel.
@@ -342,6 +368,22 @@ inline const glm::dvec3& NoeudAbstrait::obtenirPositionCourante() const
     return positionCourante_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
+///
+/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
+///
+/// @param positionRelative : La position courante.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionCourante)
+{
+    positionCourante_ = positionCourante;
+	mettreAJourFormeEnglobante();
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -444,6 +486,21 @@ inline const std::string& NoeudAbstrait::obtenirNom() const
 inline EntityType NoeudAbstrait::getType() const
 {
 	return type_;
+}
+
+inline void NoeudAbstrait::setSelectionColor(const glm::vec4& color)
+{
+	selectionColor_ = color;
+}
+
+inline uint32_t NoeudAbstrait::getOwnerId() const
+{
+	return ownerId_;
+}
+
+inline void NoeudAbstrait::setOwnerId(uint32_t userId)
+{
+	ownerId_ = userId;
 }
 
 ////////////////////////////////////////////////////////////////////////

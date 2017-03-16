@@ -131,7 +131,7 @@ void NoeudJonction::afficherConcret() const
 	if (selectionne_) 
     {
         glDisable(GL_COLOR_MATERIAL);
-		glColor4d(1.0, 0.20, 0.0, 1.0);
+		glColor4f(selectionColor_.w, selectionColor_.x, selectionColor_.y, selectionColor_.z);
         glEnable(GL_COLOR_MATERIAL);
 	}
 
@@ -141,7 +141,7 @@ void NoeudJonction::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //cercleEnglobant_.afficher(positionCourante_);
+    cercleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////

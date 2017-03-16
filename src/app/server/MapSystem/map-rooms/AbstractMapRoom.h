@@ -27,7 +27,7 @@ protected:
 	virtual void handleMapEditionMessage(User* sender, const std::string& message);
 
 	virtual void handleEntityCreationMessage(User* sender, const std::string& message);
-	virtual void handleEntityDeletionMessage(User* sender, const std::string& message);
+	virtual void handleEntityRemovalMessage(User* sender, const std::string& message);
 	virtual void handleEntitySelectionMessage(User* sender, const std::string& message);
 
 	void updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value);

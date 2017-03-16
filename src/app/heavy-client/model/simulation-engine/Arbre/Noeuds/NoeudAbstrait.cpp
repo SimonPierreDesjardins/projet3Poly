@@ -11,9 +11,7 @@
 #include "Utilitaire.h"
 #include "rapidjson\filewritestream.h"
 #include <iterator>
-#include <iostream>
 #include "FormeEnglobanteAbstraite.h"
-#include "LocalEvent.h"
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -577,45 +575,8 @@ void NoeudAbstrait::assignerObjetRendu(modele::Modele3D const* modele, opengl::V
     mettreAJourFormeEnglobante();
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
-///
-/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
-///
-/// @param positionRelative : La position courante.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::assignerPositionCourante(
-    const glm::dvec3& positionCourante)
-{
-    positionCourante_ = positionCourante;
-	LocalEvent localEvent;
-	localEvent.buildUpdateAbsolutePositionMessage(0, { positionCourante.x, positionCourante.y, positionCourante.z });
-}
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
-///
-/// Cette fonction permet d'assigner la position relative du noeud par
-/// rapport à son parent.
-///
-/// @param positionRelative : La position relative.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudAbstrait::assignerPositionRelative(
-	const glm::dvec3& positionRelative
-	)
-{
-	positionRelative_ = positionRelative;
-	LocalEvent localEvent;
-	localEvent.buildUpdateRelativePositionMessage(0, { positionRelative.x, positionRelative.y, positionRelative.z });
-}
+
 
 ////////////////////////////////////////////////
 /// @}

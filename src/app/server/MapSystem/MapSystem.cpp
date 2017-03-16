@@ -173,20 +173,35 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 {
 	unsigned int mapId = Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START);
 
-	auto it = _mapList.find(mapId);
-	if (it != _mapList.end())
+	auto mapIt = _mapList.find(mapId);
+	if (mapIt != _mapList.end())
 	{
-		// Send joined response.
+		// Send joined response to new user.
 		std::string response;
 		Networking::serialize(uint32_t(14), response);
 		response.append("mj");
 		Networking::serialize(mapId,response);
 		Networking::serialize(user->Info.GetId(), response);
 		user->ForwardMessage(response);
-		it->second.getCurrentSession()->broadcastMessage(response);
+
+		// Broadcast user joined to users in the room.
+		AbstractMapRoom* currentSession = mapIt->second.getCurrentSession();
+		currentSession->broadcastMessage(response);
+
+		// Send user list to the new User.
+		for (auto it = currentSession->userListBegin(); it != currentSession->userListEnd(); ++it)
+		{
+			// Send joined response to new user.
+			std::string userEntry;
+			Networking::serialize(uint32_t(14), userEntry);
+			userEntry.append("mj");
+			Networking::serialize(mapId, userEntry);
+			Networking::serialize(it->second->Info.GetId(), userEntry);
+			user->ForwardMessage(userEntry);
+		}
 
 		// Add the user.
-		it->second.AddUser(user);
+		currentSession->AddUser(user);
 	}
 }
 void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& message)

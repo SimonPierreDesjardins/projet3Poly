@@ -492,25 +492,6 @@ NoeudComposite::conteneur_enfants& NoeudComposite::getEnfants()
 	return enfants_;
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn NoeudComposite::assignerPositionCourante(const glm::dvec3& positionRelative)
-///
-/// Permet d'ajuster la position absolue des enfants d'un noeud composite
-///
-/// @param positionCourante: La position courante du noeud
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudComposite::assignerPositionCourante(const glm::dvec3& positionCourante)
-{
-	positionCourante_ = positionCourante;
-	for (int i = 0; i < enfants_.size(); ++i)
-	{
-		glm::dvec3 positionRelativeEnfant = enfants_[i]->obtenirPositionRelative();
-		enfants_[i]->assignerPositionCourante(positionCourante_ + positionRelativeEnfant);
-	}
-}
-
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

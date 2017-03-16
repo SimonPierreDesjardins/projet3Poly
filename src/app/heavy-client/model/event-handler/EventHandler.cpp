@@ -25,12 +25,29 @@ void EventHandler::onEntityCreated(uint8_t entityType, uint32_t parentId,
 	}
 }
 
+void EventHandler::onEntityDeleted(uint32_t entityId)
+{
+	if (currentSession_ != nullptr)
+	{
+		currentSession_->serverEntityDeleted(entityId);
+	}
+}
+
+void EventHandler::onEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId)
+{
+	if (currentSession_ != nullptr)
+	{
+		currentSession_->serverEntitySelected(entityId, isSelected, userId);
+	}
+}
+
 void EventHandler::onUserJoinedMap(uint32_t mapId, uint32_t userId)
 {
 	client_network::MapSession* mapSession = mapSessionManager_->getServerSession(mapId);
 	// The map exists on the client.
 	if (mapSession != nullptr)
 	{
+		mapSession->addUser(userId);
 		// If the user that joined the map is me.
 		if (userId == networkManager_->getUserId())
 		{

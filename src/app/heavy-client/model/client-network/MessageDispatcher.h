@@ -52,6 +52,8 @@ private:
 	// Map idition message
 	void handleMapEditionMessage(const std::string& message);
 	void handleEntityCreationMessage(const std::string& message);
+	void handleEntityDeletionMessage(const std::string& message);
+	void handleEntitySelectionMessage(const std::string& message);
 
 	// User sustem message
 	void handleUserAuthentificationConfirmation(const std::string& message);

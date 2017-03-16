@@ -80,12 +80,14 @@ void EtatCreationPoteau::gererClicGaucheRelache(const int& x, const int& y)
 		arbre_->accepterVisiteur(visiteurCreationPoteau_.get());
 
 		NoeudAbstrait* poteau = visiteurCreationPoteau_->obtenirReferenceNoeud();
+		poteau->assignerSelection(false);
 		// Mettre à jour les quads et vérifier si le nouveau poteau se situe à l'extérieur de la table.
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 		if (visiteurVerificationQuad_->objetsDansZoneSimulation()) 
 		{
 			// On confirme la création d'objet avec le serveur.
 			mapSession_->localEntityCreated(poteau);
+			//mapSession_->updateSelectionStateLocalEntity(poteau, false);
 		}
 		else 
 		{
