@@ -128,6 +128,13 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void onConnectionSucces()
+        ///
+        /// Fonction qui passe à l'authentification du user si la connection reussi
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void onConnectionSucces()
         {
             connectPanel.Visible = false;
@@ -137,6 +144,13 @@ namespace ui
             existingAccountWarningLabel.Visible = false;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void onConnectionFailure()
+        ///
+        /// Fonction qui indique un message d'erreur la connection echoue
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void onConnectionFailure()
         {
             IPWarningLabel.Visible = true;
@@ -323,6 +337,13 @@ namespace ui
             deconnectFromServer();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void deconnectFromServer()
+        ///
+        /// Deconnect du server et retourne au menu-principale.
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void deconnectFromServer()
         {
             FonctionsNatives.disconnectFromServer();
@@ -365,6 +386,13 @@ namespace ui
             parent_.mainMenu.Dock = DockStyle.Left;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void removeChat()
+        ///
+        /// Enleve le chat de l'application.
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void removeChat()
         {
             parent_.userName = "";
@@ -399,19 +427,43 @@ namespace ui
             parent_.viewPort.Controls.Add(parent_.disconnectedWarning);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void SetCallbackForDisconnect(CallbackDisconnect fn);
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void GotDisconnected();
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void Test1()
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void Test1()
         {
             connectionWasSuccess();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ConnectionSuccessHandler()
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        /// Il indique que la connection au serveur a reussi
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private delegate void CallbackConnectionSuccess();
-        // Ensure it doesn't get garbage collected
         private CallbackConnectionSuccess connectSuccess;
         private void ConnectionSuccessHandler()
         {
@@ -420,19 +472,43 @@ namespace ui
             });
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void SetCallbackForConnectionSuccess(CallbackConnectionSuccess fn);
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void connectionWasSuccess();
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void Test2()
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void Test2()
         {
             connectionWasFail();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void ConnectionFailHandler()
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        /// Il indique que la connection au serveur a echoue
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private delegate void CallbackConnectionFail();
-        // Ensure it doesn't get garbage collected
         private CallbackConnectionFail connectFail;
         private void ConnectionFailHandler()
         {
@@ -441,9 +517,19 @@ namespace ui
             });
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void SetCallbackForConnectionFail(CallbackConnectionFail fn);
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void connectionWasFail();
     }

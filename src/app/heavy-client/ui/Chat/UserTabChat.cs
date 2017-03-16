@@ -130,7 +130,15 @@ namespace ui
                 chatToMainWindow();
             }
         }
-        
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void chatToseperateWindow()
+        ///
+        /// Applique les changements au control et cree une nouvelle fenetre pour
+        /// le chat pour qu'il soit en mode fenêtré
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void chatToseperateWindow()
         {
             inMainWindow = false;
@@ -154,6 +162,14 @@ namespace ui
             chatWindow_.Show();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void chatToMainWindow()
+        ///
+        /// Applique les changements au control et cree ferme la fenetre de chat et pour
+        /// que le chat soit en mode integre
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void chatToMainWindow()
         {
             inMainWindow = true;
@@ -250,6 +266,16 @@ namespace ui
             return unique;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void handleChatMessage(string message)
+        ///
+        /// Redistribu le message recu pour le chat en fonction de la commande au debut
+        /// du message
+        /// 
+        /// @param string message: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void handleChatMessage(string message)
         {
             switch(message[0])
@@ -271,6 +297,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void userSentAMessage(string message)
+        ///
+        /// Gere le message recu du serveur indiquant qu'un utilisateur a envoyer
+        /// un message
+        /// 
+        /// @param string message: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void userSentAMessage(string message)
         {
             int begin = 1;
@@ -302,6 +338,15 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void channelList(string message)
+        ///
+        /// Gere le message recu du serveur indiquant tous les channels disponibles
+        /// 
+        /// @param string message: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void channelList(string message)
         {
             message = message.Substring(1);
@@ -315,6 +360,16 @@ namespace ui
                 });
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void userList(string message)
+        ///
+        /// Gere le message recu du serveur indiquant tous les utilisateurs
+        /// present dans un certain channel
+        /// 
+        /// @param string message: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void userList(string message)
         {
             string[] users = message.Split(';');
@@ -330,17 +385,35 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void Test(string message)
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        /// 
+        /// @param string message: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void Test(string message)
         {
             TestCallback(message);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void Handler(IntPtr message, int size)
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        /// Il indique qu'un message doit etre gere par le chat
+        /// 
+        /// @param IntPtr text: pointeur vers le message
+        /// @param int size: taille du message
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private delegate void CallbackForChat(IntPtr text, int size);
-        // Ensure it doesn't get garbage collected
         private CallbackForChat mInstance;   
         private void Handler(IntPtr message, int size)
         {
-            // Do something...
             Byte[] tmp = new Byte[size];
             Marshal.Copy(message, tmp, 0, size);
             var str = System.Text.Encoding.Default.GetString(tmp);
@@ -348,9 +421,19 @@ namespace ui
             handleChatMessage(str);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void SetCallbackForChat(CallbackForChat fn);
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void TestCallback(string message);
     }

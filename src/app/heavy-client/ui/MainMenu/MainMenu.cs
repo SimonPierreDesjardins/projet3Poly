@@ -45,6 +45,17 @@ namespace ui
             ShowMenuTimer.Start();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mainMenu_mapsButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction permet de voir les cartes disponnible hors ligne et enligne
+        /// sur l"application. Enleve les controles du menu principale
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mainMenu_mapsButton_Click(object sender, EventArgs e)
         {
             animationChangingMenu();
@@ -81,6 +92,17 @@ namespace ui
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction ouvre une nouvelle fenetre qui permet a l'utilisateur de configurer
+        /// son robot et les touches utiliser.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerMode(Mode.CONFIGURE);
@@ -93,6 +115,17 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mainMenu_ConnexionButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction enleve les controles de mode principale et ajoute les controles
+        /// pour permettre a l'utilisateur de se connecter au server.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mainMenu_ConnexionButton_Click(object sender, EventArgs e)
         {
             animationChangingMenu();
@@ -103,11 +136,32 @@ namespace ui
             connectOptions_.Dock = DockStyle.Fill;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void achievementButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction enleve les controles de mode principale et ajoute les controles
+        /// pour permettre a l'utilisateur de voir ses accomplissement
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void achievementButton_Click(object sender, EventArgs e)
         {
 
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mainMenu_QuitButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction termine l'application
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mainMenu_QuitButton_Click(object sender, EventArgs e)
         {
             parent_.configuration.Dispose();

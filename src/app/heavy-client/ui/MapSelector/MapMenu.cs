@@ -52,6 +52,13 @@ namespace ui
             fileDirLabel.Text = "";
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void initMapList()
+        ///
+        /// Ajoute les maps presentes dans les dictionnaires au mapPanel
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public void initMapList()
         {
             mapPanel.Controls.Clear();
@@ -66,6 +73,16 @@ namespace ui
             verifyMapsAttributes();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void addOnlineMapEntry(int mapId, MapPresentator newMap)
+        ///
+        /// Cette fonction ajoute une map enligne au dictionnaire
+        ///
+        /// @param int mapId: numero unique representant une map
+        /// @param MapPresentator newMap: la map a ajouter
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public void addOnlineMapEntry(int mapId, MapPresentator newMap)
         { 
             if (!onlineMaps_.ContainsKey(mapId))
@@ -82,7 +99,17 @@ namespace ui
                 });
             }
         }
-        
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void addOfflineMapEntry(int mapId, MapPresentator newMap)
+        ///
+        /// Cette fonction ajoute une map hors ligne au dictionnaire
+        ///
+        /// @param int mapId: numero unique representant une map
+        /// @param MapPresentator newMap: la map a ajouter
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public void addOfflineMapEntry(string name, MapPresentator newMap)
         {
             if (!offlineMaps_.ContainsKey(name))
@@ -133,6 +160,16 @@ namespace ui
             addPanel.Visible = true;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void textBox_KeyPress(object sender, KeyPressEventArgs e)
+        ///
+        /// Gere les touches accepter par cette textBox
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param KeyPressEventArgs e: evenement d'un keydown
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar.ToString() == "\r")
@@ -285,6 +322,14 @@ namespace ui
             createMap();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void createMap()
+        ///
+        /// Cree une map selon les choix de l'utilisateur. Fait egalement de la gestion
+        /// d'erreur si ses choix ne peuvent pas etre executer.
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void createMap()
         {
             String mapName = textBox.Text;
@@ -340,6 +385,15 @@ namespace ui
             offlineModePanel.Visible = false;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void showOnlineFeatures(bool visibility)
+        ///
+        /// Change la visibilite des options de creation pour une map enligne
+        /// 
+        /// @param bool visibility: Bool indiquant si les composantes sont visible ou non
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         private void showOnlineFeatures(bool visibility)
         {
             modeSelectionLabel.Visible = visibility;
@@ -353,6 +407,13 @@ namespace ui
             fileDirLabel.Visible = visibility;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void defaultView()
+        ///
+        /// Remet la vue par defaut pour le controle
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public void defaultView()
         {
             mapPanel.Visible = true;
@@ -363,6 +424,16 @@ namespace ui
             mapPanel.Controls.Clear();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void choseOfflineMode(MapPresentator selectedMap)
+        ///
+        /// Montre le panel pour choisir entre edition / simulation lorsqu'une 
+        /// map est appuyer
+        /// 
+        /// @param MapPresentator selectedMap: map selectionne par l'utilisateur
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public void choseOfflineMode(MapPresentator selectedMap)
         {
             selectedMap_ = selectedMap;
@@ -372,6 +443,17 @@ namespace ui
             offlineModePanel.Visible = true;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void offlineEditionModeButton_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Fonction qui change le ui pour aller en mode edition et charge la carte selectionner
+        /// par l'utilisateur.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void offlineEditionModeButton_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
@@ -405,6 +487,17 @@ namespace ui
             FonctionsNatives.assignerMode(ModeEnum.Mode.EDITION);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void offlineSimulationModeButton_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Fonction qui change le ui pour aller en mode simulation et charge la carte selectionner
+        /// par l'utilisateur.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void offlineSimulationModeButton_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
@@ -427,6 +520,17 @@ namespace ui
             FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void addPanel_VisibleChanged(object sender, EventArgs e)
+        ///
+        /// Fonction qui remet par defaut les options de creation d'une map lorsque
+        /// sa visibiliter change
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du changement de visibiliter
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void addPanel_VisibleChanged(object sender, EventArgs e)
         {
             if (addPanel.Visible)
@@ -453,6 +557,17 @@ namespace ui
             fileDirLabel.Text = "";
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void cancelJoiningButton_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Fonction qui remontre le choix des maps lorsque l'utilisateur choisi de ne pas
+        /// joindre une map
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void cancelJoiningButton_Click(object sender, EventArgs e)
         {
             mapPanel.Visible = true;
@@ -460,12 +575,19 @@ namespace ui
             offlineModePanel.Visible = false;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void verifyMapsAttributes()
+        ///
+        /// Fonction qui ajuste toutes les maps presenter a l'utilisateur
+        /// en fonction des dimensions du mapPanel
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void verifyMapsAttributes()
         {
-            foreach (Control map in mapPanel.Controls)
+            foreach (MapPresentator map in mapPanel.Controls)
             {
-                if (map is MapPresentator)
-                    map.Width = mapPanel.Width;
+                map.Width = mapPanel.Width;
             }
         }
     }

@@ -266,6 +266,16 @@ namespace ui
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void vuesToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Donne le focus au menustrip lorsqu'il est appuyer
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void vuesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Focus();
@@ -368,6 +378,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void informationsToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Donne le focus au menustrip lorsqu'il est appuyer
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void informationsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Focus();
@@ -398,6 +418,17 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void tutorielToolStripMenuItem_Click(object sender, EventArgs e)
+        ///
+        /// Change le mode pour le mode Edition Tutoriel et enleve les controls pour le mode
+        /// edition.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void tutorielToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Focus();

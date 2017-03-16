@@ -25,11 +25,16 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public MapPresentator(Window parent)
+        /// @fn public MapPresentator(Window parent, String mapName, bool connectionState, int modeType, int numberOfPlayers, int id)
         ///
         /// Cette fonction initialize les controles sur user control et assigne les attributs.
         ///
         /// @param Window parent: reference a la fenetre principal du programme
+        /// @param String mapName: nom de la map
+        /// @param bool connectionState: true si enligne, sinon false
+        /// @param int modeType: Le mode dans lequel la map est
+        /// @param int numberOfPlayers: le nombre de joueur dans la map
+        /// @param int id: numero unique pour les maps enligne
         /// 
         ////////////////////////////////////////////////////////////////////////
         public MapPresentator(Window parent, String mapName, bool connectionState, int modeType, int numberOfPlayers, int id)
@@ -67,6 +72,18 @@ namespace ui
             numberOfPlayersLabel.Text = numberOfPlayers_.ToString();
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mapButton_Click(object sender, MeasureItemEventArgs e)
+        ///
+        /// Assigne le mode, si la carte est en ligne, selon le mode de la carte.
+        /// Si la carte est hors ligne, l'utilisateur a le choix entre le mode
+        /// edition ou simulation
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mapButton_Click(object sender, EventArgs e)
         {
             switch (modeType_)
@@ -85,12 +102,30 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn internal void setPath(string path)
+        ///
+        /// Assigne le chemin vers le fichier contenant les informations de sauvegarde
+        /// de la map
+        /// 
+        /// @param string path: Chemin vers le fichier
+        ///
+        ////////////////////////////////////////////////////////////////////////
         internal void setPath(string path)
         {
             pathToFile_ = path;
         }
 
-        public void loadOnlineSimulationMode()
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void loadOnlineSimulationMode()
+        ///
+        /// Assigne le mode de simulation pour une carte enligne et change le ui
+        /// pour aller en simulation
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void loadOnlineSimulationMode()
         {
             parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
             parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
@@ -112,7 +147,15 @@ namespace ui
             }
         }
 
-        public void loadOnlineEditionMode()
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void loadOnlineEditionMode()
+        ///
+        /// Assigne le mode de edition pour une carte enligne et change le ui
+        /// pour aller en edition
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void loadOnlineEditionMode()
         {
             parent_.editionSideMenu = new EditionSideMenu(parent_);
             parent_.editionMenuStrip = new EditionMenuStrip(parent_);

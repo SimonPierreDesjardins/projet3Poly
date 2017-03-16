@@ -48,26 +48,45 @@ namespace ui
             addChannelTextBox.LostFocus += OnDefocus;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void OnFocus(object sender, MeasureItemEventArgs e)
+        ///
+        /// Evenement quand le control est utiliser
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void OnFocus(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInputClavier(false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void OnDefocus(object sender, MeasureItemEventArgs e)
+        ///
+        /// Evenement quand le control n'est plus utiliser
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void OnDefocus(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
-        public ListBox.ObjectCollection getChannelListBoxInfo()
-        {
-            return ChannelListBox.Items;
-        }
-
-        public void addNewChannel(String newChannelName)
-        {
-            ChannelListBox.Items.Add(newChannelName);
-        }
-
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void setChannelList(string[] listOfChannels)
+        ///
+        /// Met a jour le liste de channel disponible
+        /// 
+        /// @param string[] listOfChannels: Liste de channel
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void setChannelList(string[] listOfChannels)
         {
             ChannelListBox.Items.Clear();
@@ -396,12 +415,30 @@ namespace ui
             warningLabel.Text = "";
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void addMessageToChat(string message)
+        ///
+        /// Fonction permettant d'ajouter un message au chat
+        /// 
+        /// @param string message: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void addMessageToChat(string message)
         {
             chatListBox.Items.Add(message);
             chatListBox.TopIndex = chatListBox.Items.Count - 1;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void addUsersToChannel(string[] message)
+        ///
+        /// Fonction permettant d'ajouter les utilisateurs au chat
+        /// 
+        /// @param string[] users: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void addUsersToChannel(string[] users)
         {
             userListBox.Items.Clear();
