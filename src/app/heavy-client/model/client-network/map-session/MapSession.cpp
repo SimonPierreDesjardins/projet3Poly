@@ -12,9 +12,9 @@ MapSession::MapSession(ArbreRendu* tree, NetworkManager* network)
 	: entityTree_(tree), network_(network)
 {
 	confirmedEntities_.insert(std::make_pair(0, entityTree_));
-	selectionColors.push({ 1.0, 0.0, 0.0, 1.0 });
-	selectionColors.push({ 0.0, 0.0, 1.0, 1.0 });
-	selectionColors.push({ 0.0, 1.0, 0.0, 1.0 });
+	selectionColors.push({ 1.0, 1.0, 0.0, 1.0 });
+	selectionColors.push({ 0.5, 0.0, 1.0, 1.0 });
+	selectionColors.push({ 0.0, 0.75, 1.0, 1.0 });
 	selectionColors.push({ 1.0, 0.2, 0.0, 1.0 });
 }
 

@@ -142,7 +142,7 @@ void NoeudSegment::afficherConcret() const
 	if (selectionne_)
     {
         glDisable(GL_COLOR_MATERIAL);
-		glColor4f(selectionColor_.w, selectionColor_.x, selectionColor_.y, selectionColor_.z);
+		glColor4f(selectionColor_.x, selectionColor_.y, selectionColor_.z, selectionColor_.w);
         glEnable(GL_COLOR_MATERIAL);
 	}
 
@@ -154,8 +154,6 @@ void NoeudSegment::afficherConcret() const
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
-
-    rectangleEnglobant_.afficher();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
