@@ -174,7 +174,16 @@ void NoeudRobot::afficherConcret() const
 	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
+	}
 
+	// Affichage du modèle.
+	vbo_->dessiner();
+	
+	// Appel à la version de la classe de base pour l'affichage des enfants.
+	NoeudComposite::afficherConcret();
+
+	if (mode_ != PERSONALIZE)
+	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
 			// Débugage des capteurs de distance.
@@ -184,14 +193,6 @@ void NoeudRobot::afficherConcret() const
 			}
 		}
 	}
-
-	// Affichage du modèle.
-	vbo_->dessiner();
-	
-	// Appel à la version de la classe de base pour l'affichage des enfants.
-	NoeudComposite::afficherConcret();
-
-   
 	      
 	// Restauration de la matrice.
 	glPopMatrix();

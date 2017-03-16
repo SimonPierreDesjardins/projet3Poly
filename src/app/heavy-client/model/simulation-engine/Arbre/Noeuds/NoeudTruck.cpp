@@ -134,7 +134,10 @@ void NoeudTruck::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
-	controleurLumiere_->afficherLumiereSpotGyro();
+	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
+	{
+		controleurLumiere_->afficherLumiereSpotGyro();
+	}
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -142,15 +145,18 @@ void NoeudTruck::afficherConcret() const
 	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	// Dï¿½bugage des capteurs de distance.
-	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
+	if (mode_ != PERSONALIZE)
 	{
-		// Dï¿½bugage des capteurs de distance.
-		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
-			capteursDistance_->at(i).afficher();
+			// Débugage des capteurs de distance.
+			for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+			{
+				capteursDistance_->at(i).afficher();
+			}
 		}
 	}
+
 	// Restauration de la matrice.
 	glPopMatrix();
 }

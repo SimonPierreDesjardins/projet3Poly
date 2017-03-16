@@ -133,7 +133,10 @@ void NoeudAudi::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
-	controleurLumiere_->afficherLumiereSpotGyro();
+	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
+	{
+		controleurLumiere_->afficherLumiereSpotGyro();
+	}
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -142,14 +145,18 @@ void NoeudAudi::afficherConcret() const
 	NoeudComposite::afficherConcret();
 
 	// Débugage des capteurs de distance.
-	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
+	if (mode_ != PERSONALIZE)
 	{
-		// Débugage des capteurs de distance.
-		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
-			capteursDistance_->at(i).afficher();
+			// Débugage des capteurs de distance.
+			for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+			{
+				capteursDistance_->at(i).afficher();
+			}
 		}
 	}
+	
 	// Restauration de la matrice.
 	glPopMatrix();
 }
