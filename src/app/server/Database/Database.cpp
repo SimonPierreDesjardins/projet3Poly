@@ -27,9 +27,7 @@ server::Database::Database()
 
 	// connect to mongoLabs Database
 	_mongoClient = mongocxx::client(mongocxx::uri("mongodb://runtime_server:projet3db@ds145118.mlab.com:45118"));
-	mongocxx::database db = _mongoClient.database("projet3");
-	
-	_userDatabase = new UserDatabase(db.collection("Users"));
+	_database = _mongoClient.database("projet3");
 }
 
 server::Database::~Database()
@@ -43,9 +41,25 @@ server::Database::~Database()
 	_taskThread.join();
 }
 
-server::UserDatabase* server::Database::GetUserDatabase()
+mongocxx::collection server::Database::GetCollection(std::string collectionName)
 {
-	return _userDatabase;
+	return _database.collection(collectionName);
+}
+
+void server::Database::ReplaceEntry(std::string collectionName, server::DatalistElement* element)
+{
+
+	AddTask(
+		[this, collectionName, element]() {
+		bsoncxx::builder::stream::document docBuilder;
+		mongocxx::options::update up;
+		up.upsert(true);
+		_database.collection(collectionName).replace_one(
+			docBuilder << "ID" << static_cast<int>(element->GetId()) << bsoncxx::builder::stream::finalize,
+			element->GetBSON(),
+			up
+		);
+	});
 }
 
 void server::Database::AddTask(Task newTask)

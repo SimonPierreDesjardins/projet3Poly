@@ -12,19 +12,22 @@ namespace server {
 	{
 	public:
 		std::string UserName;
-		std::vector<std::string> privateMaps;
+		std::vector<std::string> PrivateMaps;
+
+		// Inherited via DatalistElement
+		virtual void WritePropertiesToBSON(bsoncxx::builder::stream::document & docBuilder) override;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
 	class UserDatabase:public BaseDatalist<UserInformation>{
-		friend class Database;
+	public:
+		//Loads up user information from stream
+		UserDatabase(Database* database);
 
 	protected:
-		virtual void WriteObject(const UserInformation* element, bsoncxx::builder::stream::document& objectBuilder);
 
-	private:
-		//Loads up user information from stream
-		UserDatabase(mongocxx::collection& userCollection);
+		virtual std::string GetCollectionName();
+
 	};
 }
 

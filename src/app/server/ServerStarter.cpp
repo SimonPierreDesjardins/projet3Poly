@@ -7,13 +7,14 @@
 
 void SetupServer() {
 
-	std::cout << "Setting up server" << std::endl;
-
 	Networking::Logger::SetDebugLevel(Networking::Logger::ALL);
 
 	//Load up all databases
+	std::cout << "Loading databases" << std::endl;
 	server::Database database;
+	server::UserDatabase userDB(&database);
 
+	std::cout << "Setting up server" << std::endl;
 	// create ChatSystem
 	server::ChatSystem chatSystem;
 
@@ -29,7 +30,7 @@ void SetupServer() {
 	Networking::ServerListener* listener = Networking::NetworkObjects::BuildListener(5000);
 
 	// create User auth system
-	server::UserAuthLobby UserLobby(listener, database.GetUserDatabase() , newUserReceivers);
+	server::UserAuthLobby UserLobby(listener, &userDB , newUserReceivers);
 
 	// create UserLobby
 

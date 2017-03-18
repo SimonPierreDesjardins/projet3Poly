@@ -5,22 +5,10 @@
 #include <unordered_map>
 #include <mongocxx\collection.hpp>
 #include <bsoncxx\builder\stream\document.hpp>
+#include "Database\Database.h"
+//#include <bsoncxx\view_or_value.hpp>
 
 namespace server {
-
-	class DatalistElement{
-	public:
-		DatalistElement() {
-			_id = IdGenerator::GenerateId();
-		}
-
-		uint32_t GetId() const {
-			return _id;
-		}
-
-	private:
-		uint32_t _id;
-	};
 
 	///<summary>Base implementation for lists of data in databases where elements extend DatalistElement</summary>
 	template<class EType> class BaseDatalist{
@@ -29,21 +17,20 @@ namespace server {
 		typedef std::unordered_map<uint32_t, EType*> ElementMap;
 
 	public:
-		BaseDatalist(mongocxx::collection& container):_collection(container) {
+		BaseDatalist(Database* database) {
+			_database = database;
 			// build list from contents of collection
 			/*for (int i = 0; i < _collection.count(); i++) {
 				_collection[1]
 			}*/
 		}
-
-		~BaseDatalist() {
-			SaveDataList(); // Make sure to save database before closing
-		};
 		
 		//Adds elements to the database
 		//Should save information on change
 		void CreateEntry(EType* newEntry) {
 			_infoList.insert_or_assign(newEntry -> GetId(), newEntry);
+			// Write new entry to db
+			_database->ReplaceEntry(GetCollectionName(), newEntry);
 		}
 
 		ElementMap& GetElements() {
@@ -52,30 +39,23 @@ namespace server {
 
 	protected:
 
-		virtual void WriteObject(const EType* element, bsoncxx::builder::stream::document& objectBuilder) = 0;
+		virtual std::string GetCollectionName() = 0;
 
 		//virtual DatalistElement& GetObject(rapidjson::Value value) = 0;
 		
 		//Saves user information into file
 		void SaveDataList() {
-			
-			std::vector<bsoncxx::document::value> documents;
-
-			bsoncxx::builder::stream::document docStream;
 
 			for each (auto element in _infoList)
 			{
-				docStream << "ID" << static_cast<int>(element.first);
-				WriteObject(element.second, docStream);
-				documents.push_back(docStream << bsoncxx::builder::stream::finalize);
-				// TODO: enque tasks into database class
+				_database->ReplaceEntry(GetCollectionName(), element.second);
 			}
 		}
 
 		// Map of info
 		ElementMap _infoList;
 
-		mongocxx::collection& _collection;
+		Database* _database;
 	};
 }
 

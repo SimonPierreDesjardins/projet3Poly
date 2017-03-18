@@ -1,11 +1,12 @@
 #ifndef __DATABASE_H
 #define __DATABASE_H
-#include "UserDatabase.h"
 #include <mongocxx\client.hpp>
 #include <mongocxx\instance.hpp>
 #include <queue>
 #include <thread>
 #include <mutex>
+
+#include "DatalistElement.h"
 
 
 namespace server {
@@ -20,19 +21,22 @@ namespace server {
 
 		~Database();
 
-		UserDatabase* GetUserDatabase();
+		mongocxx::collection GetCollection(std::string collectionName);
 
-		void AddTask(Task newTask);
+		// Asynchronous Replace entry method that adds replacement task to a worker
+		void ReplaceEntry(std::string collectionName, DatalistElement* element);
 
 	private:
-		UserDatabase* _userDatabase;
 
+		void AddTask(Task newTask);
 
 		static bool _mongoInstantiated;
 
 		static mongocxx::instance* _mongoInstance; // need single instance of this running for client to work
 
 		mongocxx::client _mongoClient;
+
+		mongocxx::database _database;
 
 		// Thread in charge of performing writes into database
 		TaskList _databaseTasks;

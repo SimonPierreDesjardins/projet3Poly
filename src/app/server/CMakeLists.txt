@@ -119,6 +119,8 @@ set(DB
 	Database/BaseDatalist.cpp
 	Database/IdGenerator.h
 	Database/IdGenerator.cpp
+	Database/DatalistElement.h
+	Database/DatalistElement.cpp
 )
 source_group(Database FILES ${DB})
 

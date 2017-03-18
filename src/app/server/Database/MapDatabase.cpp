@@ -7,3 +7,11 @@ server::MapInfo::MapInfo()
 	mapName = GetId();
 }
 
+void server::MapInfo::WritePropertiesToBSON(bsoncxx::builder::stream::document & docBuilder)
+{
+	docBuilder
+		<< "mapName" << mapName
+		<< "mapType" << mapType
+		<< "isPrivate" << isPrivate;
+}
+
