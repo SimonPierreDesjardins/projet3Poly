@@ -26,7 +26,7 @@ server::Database::Database()
 
 
 	// connect to mongoLabs Database
-	_mongoClient = mongocxx::client(mongocxx::uri("mongodb://runtime_server:projet3db@ds145118.mlab.com:45118"));
+	_mongoClient = mongocxx::client(mongocxx::uri("mongodb://runtime_server:projet3db@ds145118.mlab.com:45118/?authSource=projet3"));
 	_database = _mongoClient.database("projet3");
 }
 
