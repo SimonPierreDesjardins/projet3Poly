@@ -883,7 +883,6 @@ extern "C"
 		couleurPieceInt[2] = (int)(couleurPieceFloat[2] * 255);
 		couleurPieceInt[3] = (int)(couleurPieceFloat[3] * 255);
 
-		//delete couleurPieceFloat;
 		return couleurPieceInt;
 	}
 
