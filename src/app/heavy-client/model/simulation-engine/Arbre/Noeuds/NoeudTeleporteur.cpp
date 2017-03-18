@@ -21,6 +21,12 @@
 
 #include "FacadeModele.h"
 
+#define coinMinX -48
+#define coinMaxX  48
+#define coinMinY -24
+#define coinMaxY  24
+
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
@@ -69,6 +75,12 @@ void NoeudTeleporteur::mettreAJourFormeEnglobante()
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
 	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
 	rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
+
+	hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
+	largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
+	double rayon = hauteur > largeur ? hauteur : largeur;
+	rayon = 11;
+	cercleEnglobant_.mettreAJour(positionCourante_, rayon);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -121,6 +133,36 @@ const RectangleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante()
+///
+/// Cette fonction permet d'obtenir le cercle englobant pour le teleporteur.
+///
+/// @return Pointeur sur un cercle englobant.
+///
+////////////////////////////////////////////////////////////////////////
+CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante()
+{
+	return &cercleEnglobant_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante() const
+///
+/// Cette fonction permet d'obtenir le cercle englobant pour le teleporteur.
+///
+/// @return Pointeur const  sur un cercle englobant.
+///
+////////////////////////////////////////////////////////////////////////
+const CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante() const
+{
+	return &cercleEnglobant_;
+}
+
+
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn void NoeudTeleporteur::afficherConcret() const
 ///
 /// Cette fonction effectue le véritable rendu de l'objet.
@@ -158,6 +200,7 @@ void NoeudTeleporteur::afficherConcret() const
 	glPopMatrix();
 
     //rectangleEnglobant_.afficher(positionCourante_);
+	cercleEnglobant_.afficher(positionCourante_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -239,6 +282,30 @@ void NoeudTeleporteur::assignerTeleporteur(NoeudAbstrait* teleporteur)
 NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
 {
 	return teleporteur_;
+}
+
+
+bool NoeudTeleporteur::collisionTeleporteur()
+{
+	if (!this->obtenirCercleEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY))
+	{
+		return true;
+	}
+	for (unsigned int i = 0; i < FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->obtenirNombreEnfants() -1; i++) //on vérifie le cercle englobant des autres téléporteurs afin d'éviter d'avoir un téléporter dans ceux-ci
+	{
+		if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i) != this)
+		{
+			if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i)->obtenirNom() == "teleporteur" && ((NoeudTeleporteur*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i))->obtenirCercleEnglobante()->calculerIntersection(cercleEnglobant_))
+			{
+				return true;
+			}
+			else if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(cercleEnglobant_))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

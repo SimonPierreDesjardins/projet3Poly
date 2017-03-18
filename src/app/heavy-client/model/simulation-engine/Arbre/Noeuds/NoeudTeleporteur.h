@@ -34,6 +34,9 @@ public:
 
     virtual RectangleEnglobant* obtenirFormeEnglobante();
     virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
+
+	virtual CercleEnglobant* obtenirCercleEnglobante();
+	virtual const CercleEnglobant* obtenirCercleEnglobante() const;
      
     virtual void animer(float dt);
 	/// Affiche la table.
@@ -46,12 +49,16 @@ public:
 	int getId();
 	void setId(int id);
 
+	bool collisionTeleporteur();
+
 private:
     CercleEnglobant cercleEnglobant_;
 	int idTeleporteur_;
     virtual void mettreAJourFormeEnglobante();
 	RectangleEnglobant rectangleEnglobant_;
 	NoeudTeleporteur* teleporteur_;
+
+	
 };
  
 

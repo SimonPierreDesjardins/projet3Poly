@@ -410,7 +410,7 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 	// Le teleporteur est en intersection et il ne se trouve pas déjà en collision.
 	if (enIntersection)
 	{
-		if (!teleportationFaite_)
+		if (!teleportationFaite_  && !teleporteur->obtenirProchainTeleporteur()->collisionTeleporteur())
 		{
 			EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
 			// On calcule les composantes de la collision.
