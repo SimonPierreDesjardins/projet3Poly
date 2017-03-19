@@ -1978,7 +1978,7 @@ input[type=checkbox].w3-check, input[type=radio].w3-radio {
 
 .w3-black, .w3-hover-black:hover {
     color: #fff !important;
-    background-color: #000 !important;
+    background-color: #2d2c2c !important;
 }
 
 .w3-grey, .w3-hover-grey:hover, .w3-gray, .w3-hover-gray:hover {

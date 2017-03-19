@@ -95,7 +95,7 @@
         </header>
 
         <!-- Presentation Section -->
-        <div class="w3-content w3-justify w3-text-grey w3-padding-64">
+        <div class="w3-content w3-justify w3-text-light-grey w3-padding-64">
             <h2 class="w3-text-light-grey">Notre Projet</h2>
             <hr style="width: 200px" class="w3-opacity">
             <p>
@@ -339,7 +339,7 @@
         <!-- End Achievement Section -->
 
         <!-- Connect Section -->
-        <div class="w3-padding-64 w3-content w3-text-grey" id="connect">
+        <div class="w3-padding-64 w3-content w3-text-white" id="connect">
             <h2 class="w3-text-light-grey">S'authentifier au serveur</h2>
             <hr style="width: 200px" class="w3-opacity">
 
@@ -363,13 +363,13 @@
         <!-- End Connect Section -->
 
         <!-- Footer -->
-        <footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
-            <p class="w3-large" style="display:inline"><a href="https://www.facebook.com/" target="_blank" class="w3-hover-text-green"><i class="fa fa-facebook-official w3-hover-text-indigo"></i></a></p>
-            <p class="w3-large" style="display:inline"><a href="https://www.instagram.com/?hl=fr" target="_blank" class="w3-hover-text-green"><i class="fa fa-instagram w3-hover-text-purple"></i></a></p>
-            <p class="w3-large" style="display:inline"><a href="https://www.snapchat.com" target="_blank" class="w3-hover-text-green"><i class="fa fa-snapchat w3-hover-text-yellow"></i></a></p>
-            <p class="w3-large" style="display:inline"><a href="https://www.pinterest.com/" target="_blank" class="w3-hover-text-green"><i class="fa fa-pinterest-p w3-hover-text-red"></i></a></p>
-            <p class="w3-large" style="display:inline"><a href="https://twitter.com" target="_blank" class="w3-hover-text-green"><i class="fa fa-twitter w3-hover-text-light-blue"></i></a></p>
-            <p class="w3-large" style="display:inline"><a href="https://www.linkedin.com" target="_blank" class="w3-hover-text-green"><i class="fa fa-linkedin w3-hover-text-indigo"></i></a></p>
+        <footer class="w3-content w3-padding-64 w3-text-white w3-xlarge">
+            <p class="w3-large" style="display:inline"><a href="https://www.facebook.com/" target="_blank"><i class="fa fa-facebook-official w3-hover-text-indigo"></i></a></p>
+            <p class="w3-large" style="display:inline"><a href="https://www.instagram.com/?hl=fr" target="_blank"><i class="fa fa-instagram w3-hover-text-purple"></i></a></p>
+            <p class="w3-large" style="display:inline"><a href="https://www.snapchat.com" target="_blank"><i class="fa fa-snapchat w3-hover-text-yellow"></i></a></p>
+            <p class="w3-large" style="display:inline"><a href="https://www.pinterest.com/" target="_blank"><i class="fa fa-pinterest-p w3-hover-text-red"></i></a></p>
+            <p class="w3-large" style="display:inline"><a href="https://twitter.com" target="_blank"><i class="fa fa-twitter w3-hover-text-light-blue"></i></a></p>
+            <p class="w3-large" style="display:inline"><a href="https://www.linkedin.com" target="_blank"><i class="fa fa-linkedin w3-hover-text-indigo"></i></a></p>
             
             <p class="w3-medium">Projet crée par la <a href="http://www.polymtl.ca/" target="_blank" class="w3-hover-text-green">Polytechnique de Montréal</a></p>
         </footer>
