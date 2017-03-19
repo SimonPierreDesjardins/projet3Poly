@@ -22,6 +22,9 @@ namespace server {
 		std::string mapName;
 		char mapType{ EDITION_MAP };
 		bool isPrivate;
+
+		// Inherited via DatalistElement
+		virtual void WritePropertiesToBSON(bsoncxx::builder::basic::document & docBuilder) override;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
@@ -31,12 +34,12 @@ namespace server {
 		friend class Database;
 
 	private:
-		//Loads up user information from stream
-		MapDatabase(std::string basePath);
+		//Loads up map data from collection
+		MapDatabase(mongocxx::collection mapCollection);
 
-		virtual void WriteObject(DatalistElement& element);
-
-
+		// Inherited via BaseDatalist
+		virtual std::string GetCollectionName() override;
+		virtual void GetObjectPropertiesFromBSON(bsoncxx::document::view docView, MapInfo* mapInfo) override;
 	};
 }
 
