@@ -24,7 +24,7 @@ namespace server {
 		bool isPrivate;
 
 		// Inherited via DatalistElement
-		virtual void WritePropertiesToBSON(bsoncxx::builder::stream::document & docBuilder) override;
+		virtual void WritePropertiesToBSON(bsoncxx::builder::basic::document & docBuilder) override;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
@@ -36,6 +36,10 @@ namespace server {
 	private:
 		//Loads up map data from collection
 		MapDatabase(mongocxx::collection mapCollection);
+
+		// Inherited via BaseDatalist
+		virtual std::string GetCollectionName() override;
+		virtual void GetObjectPropertiesFromBSON(bsoncxx::document::view docView, MapInfo* mapInfo) override;
 	};
 }
 

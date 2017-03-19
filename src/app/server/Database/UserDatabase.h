@@ -11,11 +11,13 @@ namespace server {
 	class UserInformation : public DatalistElement 
 	{
 	public:
+		UserInformation();
+		UserInformation(unsigned int id);
 		std::string UserName;
 		std::vector<std::string> PrivateMaps;
 
 		// Inherited via DatalistElement
-		virtual void WritePropertiesToBSON(bsoncxx::builder::stream::document & docBuilder) override;
+		virtual void WritePropertiesToBSON(bsoncxx::builder::basic::document & docBuilder) override;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
@@ -27,6 +29,10 @@ namespace server {
 	protected:
 
 		virtual std::string GetCollectionName();
+
+
+		// Inherited via BaseDatalist
+		virtual void GetObjectPropertiesFromBSON(bsoncxx::document::view docView, UserInformation* userInfo) override;
 
 	};
 }

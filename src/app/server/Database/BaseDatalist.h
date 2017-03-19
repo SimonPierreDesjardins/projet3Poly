@@ -6,6 +6,7 @@
 #include <mongocxx\collection.hpp>
 #include <bsoncxx\builder\stream\document.hpp>
 #include "Database\Database.h"
+#include <bsoncxx\json.hpp>
 //#include <bsoncxx\view_or_value.hpp>
 
 namespace server {
@@ -19,10 +20,6 @@ namespace server {
 	public:
 		BaseDatalist(Database* database) {
 			_database = database;
-			// build list from contents of collection
-			/*for (int i = 0; i < _collection.count(); i++) {
-				_collection[1]
-			}*/
 		}
 		
 		//Adds elements to the database
@@ -39,9 +36,26 @@ namespace server {
 
 	protected:
 
+		void BuildDatabaseFromCollection(std::string CollectionName) {
+			auto collection = _database->GetCollection(GetCollectionName());
+			for (auto doc : collection.find((bsoncxx::builder::basic::document{}).extract())) {
+				EType* obj = ObjectFromBSON(doc);
+				_infoList.insert_or_assign(obj->GetId(), obj);
+			}
+		}
+
 		virtual std::string GetCollectionName() = 0;
 
-		//virtual DatalistElement& GetObject(rapidjson::Value value) = 0;
+		// Extracts an object of template type from the document and manages Id tracking
+		EType* ObjectFromBSON(bsoncxx::document::view docView) {
+			unsigned int objectId = docView["ID"].get_int32();
+			EType* object = new EType(objectId);
+			GetObjectPropertiesFromBSON(docView, object);
+			return object;
+		}
+
+		// Gets all non-Id elements from the document before adding the object to the item list
+		virtual void GetObjectPropertiesFromBSON(bsoncxx::document::view docView, EType* object) = 0;
 		
 		//Saves user information into file
 		void SaveDataList() {

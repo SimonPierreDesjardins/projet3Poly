@@ -7,4 +7,11 @@ unsigned int server::IdGenerator::GenerateId()
 	return nextId;
 }
 
+void server::IdGenerator::SetNextId(unsigned int nId)
+{
+	if (nId > nextId) {
+		nextId = nId;
+	}
+}
+
 unsigned int server::IdGenerator::nextId = 1;

@@ -4,11 +4,16 @@
 
 server::Database::Database()
 {
+
 	// instantiate mongo thread
 	if (!_mongoInstantiated) {
 		_mongoInstance = new mongocxx::instance();
 		_mongoInstantiated = true;
 	}
+
+	// connect to mongoLabs Database
+	_mongoClient = mongocxx::client(mongocxx::uri("mongodb://runtime_server:projet3db@ds145118.mlab.com:45118/?authSource=projet3"));
+	_database = _mongoClient.database("projet3");
 
 	// start the database work thread
 	_doTasks = true;
@@ -23,11 +28,6 @@ server::Database::Database()
 		}
 		_databaseTasks.empty();
 	});
-
-
-	// connect to mongoLabs Database
-	_mongoClient = mongocxx::client(mongocxx::uri("mongodb://runtime_server:projet3db@ds145118.mlab.com:45118/?authSource=projet3"));
-	_database = _mongoClient.database("projet3");
 }
 
 server::Database::~Database()
