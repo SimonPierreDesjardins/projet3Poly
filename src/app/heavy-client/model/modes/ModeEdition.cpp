@@ -95,7 +95,7 @@ void ModeEdition::sauvegarder()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererToucheSupprimer()
 {
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
+	visiteurSuppression_->deleteSelectedEntities(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990(), mapSession_);
 }
 
 /// Modifie l'etat courant.

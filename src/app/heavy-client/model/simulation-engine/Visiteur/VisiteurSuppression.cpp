@@ -10,12 +10,15 @@
 
 #include "FacadeModele.h"
 #include "Vue.h"
-#include "VisiteurSuppression.h"
+#include <iostream>
+
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
 #include "Modele3D.h"
-#include <iostream>
+#include "MapSession.h"
+
+#include "VisiteurSuppression.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -47,6 +50,17 @@ VisiteurSuppression::~VisiteurSuppression()
 {
 }
 
+void VisiteurSuppression::deleteSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession)
+{
+	mapSession_ = mapSession;
+	tree->accepterVisiteur(this);
+}
+
+void VisiteurSuppression::visiter(ArbreRendu* tree)
+{
+	tree->chercher(0)->accepterVisiteur(this);
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurSuppression::visiter(NoeudTable* noeud)
@@ -58,9 +72,28 @@ VisiteurSuppression::~VisiteurSuppression()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSuppression::visiter(NoeudTable* noeud)
+void VisiteurSuppression::visiter(NoeudTable* table)
 {
-	noeud->effacerSelection();
+	// When a node is deleted, indexes of the chilren are invalidated.
+	// We don't want to search again from the beginning (O(n^2)) so we use a 2 pass algorithm (O(n)).
+	std::vector<NoeudAbstrait*> toDeleteList;
+	
+	// First pass to list the nodes to delete.
+	uint32_t nChildren = table->obtenirNombreEnfants();
+	for (int i = 0; i < nChildren; ++i)
+	{
+		NoeudAbstrait* child = table->chercher(i);
+		if (child->estSelectionne() && child->getOwnerId() == mapSession_->getThisUserId())
+		{
+			toDeleteList.push_back(child);
+		}
+	}
+
+	// Second pas to delete the listed nodes.
+	for (int i = 0; i < toDeleteList.size(); ++i)
+	{
+		mapSession_->deleteLocalEntity(toDeleteList[i]);
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -413,6 +413,7 @@ inline double NoeudAbstrait::obtenirAngleRotation() const
 inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
 {
 	angleRotation_ = angleRotation;
+	mettreAJourFormeEnglobante();
 }
 
 
@@ -444,6 +445,7 @@ inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
 {
 	facteurMiseAEchelle_ = facteurDimension;
+	mettreAJourFormeEnglobante();
 }
 
 ////////////////////////////////////////////////////////////////////////

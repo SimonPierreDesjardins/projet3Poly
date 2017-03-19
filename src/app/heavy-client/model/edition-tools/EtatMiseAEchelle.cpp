@@ -37,8 +37,9 @@ EtatMiseAEchelle::EtatMiseAEchelle(client_network::MapSession* mapSession)
 ////////////////////////////////////////////////////////////////////////
 EtatMiseAEchelle::~EtatMiseAEchelle()
 {
-	if (clicGaucheEnfonce_) {
-		visiteurMiseAEchelle_->reinitialiser(arbre_);
+	if (clicGaucheEnfonce_) 
+	{
+		visiteurMiseAEchelle_->reinitialiser(arbre_, mapSession_);
 	}
 }
 
@@ -80,11 +81,16 @@ void EtatMiseAEchelle::gererClicGaucheRelache(const int& x, const int& y)
 	vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	dernierePositionY_ = positionVirtuelle.y;
 
-	if (arbre_ != nullptr) {
+	if (arbre_ != nullptr) 
+	{
+		visiteurMiseAEchelle_->resizeSelectedEntities(arbre_, mapSession_);
 		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 	}
-	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
-		visiteurMiseAEchelle_->reinitialiser(arbre_);
+
+	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) 
+	{
+		//visiteurMiseAEchelle_->reinitialiser(arbre_, mapSession_);
+		reinitialiser();
 	}
 }
 
@@ -108,7 +114,7 @@ void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
 		vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 
 		visiteurMiseAEchelle_->assignerFacteurMiseAEchelle(positionVirtuelle.y - dernierePositionY_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAEchelle_.get());
+		visiteurMiseAEchelle_->resizeSelectedEntities(arbre_, mapSession_);
 
 		dernierePositionY_ = positionVirtuelle.y;
 	}
@@ -124,7 +130,7 @@ void EtatMiseAEchelle::gererMouvementSouris(const int& x, const int& y)
 void EtatMiseAEchelle::reinitialiser()
 {
 	visiteurMiseAEchelle_->assignerFacteurMiseAEchelle(positionInitialeY_ - dernierePositionY_);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurMiseAEchelle_.get());
+	visiteurMiseAEchelle_->resizeSelectedEntities(arbre_, mapSession_);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
