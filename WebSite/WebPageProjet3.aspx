@@ -5,6 +5,7 @@
 -->
 <%@ Page Language="C#" AutoEventWireup="true" CodeFile="wEBpAGEpROJET3.aspx.cs" Inherits="Projet3" %>
 
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -40,6 +41,39 @@
                 }
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script>
+            //Called "onLoad"
+            $(document).ready(function () {
+
+                $.getJSON("https://api.mlab.com/api/1/databases/projet3/collections/Users?apiKey=6dyiG1KR3iv5bFvxlJDL79N0PC6ijGDx", function (data) {
+                    console.log(data);
+                    //data = $.parseJSON(data);
+                    $.each(data, function(i, user) {
+                        $("#girdOfUsers").append(user.Username);
+                        //items.push("<li id='" + key + "'>" + val + "</li>");
+                    });
+
+                    /*$("<ul/>", {
+                        "class": "my-new-list",
+                        html: items.join("")
+                    }).appendTo("body");*/
+                });
+
+                /*var i;
+                for(i = 0; i < 2; i++)
+                {
+                    $("#girdOfUsers").append('fred fred ');
+                }*/
+                
+                /*
+                $("button").click(function () {
+                    $("#girdOfUsers").append('<div class="w3-row-padding" style="margin: 0 -16px"><div class="w3-half w3-margin-bottom"><ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off"><li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #1</li><li class="w3-padding-16">Cartes modifiées: </li><li class="w3-padding-16">Cartes publiées: 0</li><li class="w3-padding-16">Nombre de simulations: 0</li><li class="w3-padding-16">Autre: 0</li></ul></div><div class="w3-half"><ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off"><li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #2</li><li class="w3-padding-16">Cartes modifiées: </li><li class="w3-padding-16">Cartes publiées: 0</li><li class="w3-padding-16">Nombre de simulations: 0</li><li class="w3-padding-16">Autre: 0</li></ul></div></div>');
+                });
+                */
+                
+            });
+        </script>
     </head>
 <body class="w3-black">
 
@@ -90,6 +124,8 @@
         <!-- Header/Home -->
         <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
             <h1 class="w3-jumbo">Projet Intégrateur 3</h1>
+            
+            <button>Get External Content</button>
             <p>LOG3900: Projet d'évolution d'un logiciel. Polytechnique de Montréal</p>
             <img src="Pictures/03-GiGL.jpg" alt="boy" class="w3-image" width="950" height="370">
         </header>
@@ -158,25 +194,27 @@
             <h2 class="w3-text-light-grey">Utilisateurs sur le server</h2>
             <hr style="width: 200px" class="w3-opacity">
 
-            <div class="w3-row-padding" style="margin: 0 -16px">
-                <div class="w3-half w3-margin-bottom">
-                    <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-                        <li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #1</li>
-                        <li class="w3-padding-16">Cartes modifiées: </li>
-                        <li class="w3-padding-16">Cartes publiées: 0</li>
-                        <li class="w3-padding-16">Nombre de simulations: 0</li>
-                        <li class="w3-padding-16">Autre: 0</li>
-                    </ul>
-                </div>
+            <div id="girdOfUsers">
+                <div class="w3-row-padding" style="margin: 0 -16px">
+                    <div class="w3-half w3-margin-bottom">
+                        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
+                            <li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #1</li>
+                            <li class="w3-padding-16">Cartes modifiées: </li>
+                            <li class="w3-padding-16">Cartes publiées: 0</li>
+                            <li class="w3-padding-16">Nombre de simulations: 0</li>
+                            <li class="w3-padding-16">Autre: 0</li>
+                        </ul>
+                    </div>
 
-                <div class="w3-half">
-                    <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-                        <li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #2</li>
-                        <li class="w3-padding-16">Cartes modifiées: </li>
-                        <li class="w3-padding-16">Cartes publiées: 0</li>
-                        <li class="w3-padding-16">Nombre de simulations: 0</li>
-                        <li class="w3-padding-16">Autre: 0</li>
-                    </ul>
+                    <div class="w3-half">
+                        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
+                            <li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #2</li>
+                            <li class="w3-padding-16">Cartes modifiées: </li>
+                            <li class="w3-padding-16">Cartes publiées: 0</li>
+                            <li class="w3-padding-16">Nombre de simulations: 0</li>
+                            <li class="w3-padding-16">Autre: 0</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
