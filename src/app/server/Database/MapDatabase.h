@@ -19,23 +19,32 @@ namespace server {
 	public:
 
 		MapInfo();
+		MapInfo(unsigned int id);
+
 		std::string mapName;
 		char mapType{ EDITION_MAP };
 		bool isPrivate;
+		unsigned int nbPoteaux = 0;
+		unsigned int nbLignes = 0;
+		unsigned int nbMurs = 0;
+		std::string password; // password to join map if private
+		unsigned int Admin = 0; // UserId of the map's creator
+		unsigned int MapId = 0; // Id of the map json
+		
 
 		// Inherited via DatalistElement
 		virtual void WritePropertiesToBSON(bsoncxx::builder::basic::document & docBuilder) override;
 	};
 
 	///<summary>Holds the list of users and their infos</summary>
-	class MapDatabase:public BaseDatalist<MapInfo>{
+	class MapInfoDatabase:public BaseDatalist<MapInfo>{
 	
-		//Class is built by the database class and database calls saving
-		friend class Database;
+	public:
+		MapInfoDatabase(Database* database);
 
 	private:
 		//Loads up map data from collection
-		MapDatabase(mongocxx::collection mapCollection);
+		MapInfoDatabase(mongocxx::collection mapCollection);
 
 		// Inherited via BaseDatalist
 		virtual std::string GetCollectionName() override;

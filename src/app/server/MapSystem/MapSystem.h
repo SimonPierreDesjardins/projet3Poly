@@ -13,9 +13,9 @@ namespace server
 class MapEntry 
 {
 public:
-	MapInfo Info;
+	MapInfo* Info;
 
-	MapEntry(const MapInfo& info);
+	MapEntry(MapInfo* info);
 	void GetSerializedInfo(std::string& message);
 
 	void updateSessionType();
@@ -36,6 +36,9 @@ inline AbstractMapRoom* MapEntry::getCurrentSession()
 
 class MapSystem : public MultiUserSystem
 {
+public:
+	MapSystem(MapInfoDatabase* mapDB);
+
 protected:
 	virtual void TreatUserJoin(User* user);
 
@@ -75,6 +78,8 @@ private:
 
 	// map json string with users ids as keys to send transfers to the right 
 	std::unordered_map<unsigned int, std::string> _mapsInTransfer;
+
+	MapInfoDatabase* _mapInfoDatabase;
 };
 }
 

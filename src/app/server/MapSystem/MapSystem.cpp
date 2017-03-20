@@ -10,7 +10,7 @@ namespace server
 
 
 
-MapEntry::MapEntry(const MapInfo& info)
+MapEntry::MapEntry(MapInfo* info)
 	: Info(info)
 {
 	updateSessionType();
@@ -18,7 +18,7 @@ MapEntry::MapEntry(const MapInfo& info)
 
 void MapEntry::updateSessionType()
 {
-	switch (Info.mapType)
+	switch (Info->mapType)
 	{
 	case SIMULATION_MAP:
 		// TODO
@@ -32,15 +32,15 @@ void MapEntry::updateSessionType()
 
 void MapEntry::GetSerializedInfo(std::string& message)
 {
-	Networking::serialize(Info.GetId(), message);
+	Networking::serialize(Info->GetId(), message);
 	message.append(1, getSessionType());
 	message.append(1, getNumberOfUsers());
-	message.append(Info.mapName);
+	message.append(Info->mapName);
 }
 
 char MapEntry::getSessionType()
 {
-	return Info.mapType;
+	return Info->mapType;
 }
 
 char MapEntry::getNumberOfUsers()
@@ -51,6 +51,18 @@ char MapEntry::getNumberOfUsers()
 void MapEntry::AddUser(User * user)
 {
 	currentSession_->AddUser(user);
+}
+
+MapSystem::MapSystem(MapInfoDatabase * mapDB)
+{
+	_mapInfoDatabase = mapDB;
+
+
+	// populate map entries from DB
+	for (auto mapInfo : _mapInfoDatabase->GetElements()) {
+		MapEntry newSession(mapInfo.second);
+		_mapList.insert({mapInfo.second->GetId(),std::move(newSession)});
+	}
 }
 
 void MapSystem::TreatUserJoin(User * user)
@@ -104,7 +116,6 @@ char MapSystem::GetSystemType()
 
 std::string MapSystem::GetMapListMessage()
 {
-
 	std::string mapListString = "ml";
 	// Prevent crash from checking for previous of end() in empty list. 
 	if (!_mapList.empty())
@@ -133,9 +144,9 @@ void MapSystem::NotifyMapCreation(const MapEntry& mapSession)
 {
 	// Build the message.
 	std::string message = "mc";
-	message.append(1, mapSession.Info.mapType);
-	Networking::serialize(mapSession.Info.GetId(), message);
-	message.append(mapSession.Info.mapName);
+	message.append(1, mapSession.Info->mapType);
+	Networking::serialize(mapSession.Info->GetId(), message);
+	message.append(mapSession.Info->mapName);
 
 	// Broadcast.
 	broadcastMessage(Networking::MessageStandard::AddMessageLengthHeader(message));
@@ -147,21 +158,28 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	char type = message[Networking::MessageStandard::DATA_START];
 	std::string name = message.substr(Networking::MessageStandard::DATA_START + 1);
 
-	MapInfo info;
-	info.mapName = name;
-	info.mapType = type;
+	// create map info
+	MapInfo* info = new MapInfo();
+	info -> mapName = name;
+	info -> mapType = type;
+	info->Admin = user->Info.GetId();
+
+	// Update database with new info
+	_mapInfoDatabase->CreateEntry(info);
+
+	
 	MapEntry newSession(info);
 
 	// check if user had map transfer in progress
 	if (_mapsInTransfer.count(user->Info.GetId()) > 0) {
-		 // Add map data to entry.
+		 // Add map data to entry and map JSONDatabase.
 		 // destroy map transfer since it is over
 		_mapsInTransfer.erase(user->Info.GetId());
 	}
 
 	// Get reference before inserting
 	MapEntry* map = nullptr;
-	auto pair = _mapList.insert({ newSession.Info.GetId(), std::move(newSession) });
+	auto pair = _mapList.insert({ newSession.Info->GetId(), std::move(newSession) });
 	if (pair.second)
 	{
 		map = &pair.first->second;
