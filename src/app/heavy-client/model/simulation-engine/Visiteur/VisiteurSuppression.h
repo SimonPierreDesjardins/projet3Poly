@@ -29,20 +29,25 @@ class VisiteurSuppression : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurSuppression();
+	VisiteurSuppression(client_network::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurSuppression();
 
-	void deleteSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession);
-
 	virtual void visiter(ArbreRendu* tree);
 
 	/// Parcours du noeudTable.
-	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudTable* table);
+
+	virtual void visiter(NoeudDuplication* duplication);
 
 private:
+	VisiteurSuppression() = delete;
+
 	client_network::MapSession* mapSession_;
+
+	void deleteSelectedEntityAndChildren(NoeudAbstrait* entity);
+
 };
 
 #endif // VISITEUR_SUPPRESSION_H

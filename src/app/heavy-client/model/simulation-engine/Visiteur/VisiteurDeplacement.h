@@ -29,18 +29,20 @@ class VisiteurDeplacement : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurDeplacement();
+	VisiteurDeplacement(client_network::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurDeplacement();
 
-	void shiftSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession);
-
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudDuplication* noeud);
 
 private:
+	VisiteurDeplacement() = delete;
 	client_network::MapSession* mapSession_;
+
+	void moveSelectedChildren(NoeudAbstrait* entity);
 
 };
 

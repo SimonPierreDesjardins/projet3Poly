@@ -8,12 +8,15 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
+#include <queue>
+#include <memory>
 
-#include "VisiteurDuplication.h"
+#include "MapSession.h"
 #include "FacadeModele.h"
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
-#include <memory>
+
+#include "VisiteurDuplication.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -26,7 +29,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDuplication::VisiteurDuplication()
+VisiteurDuplication::VisiteurDuplication(client_network::MapSession* mapSession)
+	: mapSession_(mapSession)
 {
 	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	calculerCentreSelection(noeud);
@@ -79,12 +83,15 @@ void VisiteurDuplication::visiter(NoeudTable* noeud)
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_DUPLICATION);
 	noeud->ajouter(nouveauNoeud);
-
+	mapSession_->localEntityCreated(nouveauNoeud.get());
 	duplication_ = nouveauNoeud.get();
+
 	NoeudAbstrait* enfant = nullptr;
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
-		if (enfant->estSelectionne()) {
+		// The child has to be selected and owned by this user.
+		if (enfant->estSelectionne() && enfant->getOwnerId() == mapSession_->getThisUserId()) 
+		{
 			enfant->accepterVisiteur(this);
 		}
 	}
@@ -107,9 +114,12 @@ void VisiteurDuplication::visiter(NoeudPoteau* noeud)
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
 	
 	nouveauNoeud->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
-	// Assigner la position à la table dans la duplication si il y a plus qu'un noeud.
 	nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative() - centreSelection_);
+	nouveauNoeud->assignerPositionCourante(noeud->obtenirPositionCourante());
+	nouveauNoeud->assignerSelection(noeud->estSelectionne());
 	duplication_->ajouter(nouveauNoeud);
+
+	mapSession_->localEntityCreated(nouveauNoeud.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -130,9 +140,12 @@ void VisiteurDuplication::visiter(NoeudMur* noeud)
 
 	nouveauNoeud->assignerAngleRotation(noeud->obtenirAngleRotation());
 	nouveauNoeud->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
-	// Assigner la position à la table dans la duplication si il y a plus qu'un noeud.
 	nouveauNoeud->assignerPositionRelative(noeud->obtenirPositionRelative() - centreSelection_);
+	nouveauNoeud->assignerPositionCourante(noeud->obtenirPositionCourante());
+	nouveauNoeud->assignerSelection(noeud->estSelectionne());
 	duplication_->ajouter(nouveauNoeud);
+
+	mapSession_->localEntityCreated(nouveauNoeud.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -153,40 +166,16 @@ void VisiteurDuplication::visiter(NoeudLigne* noeud)
 
 	nouvelleLigne->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
 	nouvelleLigne->assignerPositionRelative(noeud->obtenirPositionRelative() - centreSelection_);
-	// Appeler le visiteur des enfants.
+	nouvelleLigne->assignerPositionCourante(noeud->obtenirPositionCourante());
+	nouvelleLigne->assignerSelection(noeud->estSelectionne());
+
 	nouvelleLigne_ = nouvelleLigne.get();
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {		
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) 
+	{		
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 	duplication_->ajouter(nouvelleLigne);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn VisiteurDuplication::visiter(NoeudDuplication* noeud)
-///
-/// Fonction qui crée et ajoute un noeud Duplication au noeud Table passé en paramètre.
-///
-/// @param[in] noeud : Le noeud Duplication que l'on veut ajouter.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void VisiteurDuplication::visiter(NoeudDuplication* noeud)
-{
-	NoeudAbstrait* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	NoeudAbstrait* table = arbre->chercher("table");
-	
-	// Ajouter les noeuds sur la table, puis détruire la duplication.
-	std::shared_ptr<NoeudAbstrait> enfant = nullptr;
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
-		enfant = noeud->obtenirDuplication(i);
-		// Assigner la position relative du noeud à la table avant de l'ajouter.
-		enfant->assignerPositionRelative(noeud->obtenirPositionRelative() + enfant->obtenirPositionRelative());
-		table->ajouter(enfant);
-	}
-	table->effacer(noeud);
-	arbre->accepterVisiteur(this);
+	mapSession_->localEntityCreated(nouvelleLigne.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -209,7 +198,11 @@ void VisiteurDuplication::visiter(NoeudSegment* noeud)
 	nouveauSegment->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
 	nouveauSegment->assignerAngleRotation(noeud->obtenirAngleRotation());
 	nouveauSegment->assignerPositionRelative(noeud->obtenirPositionRelative());
+	nouveauSegment->assignerPositionCourante(noeud->obtenirPositionCourante());
+	nouveauSegment->assignerSelection(noeud->estSelectionne());
 	nouvelleLigne_->ajouter(nouveauSegment);
+
+	mapSession_->localEntityCreated(nouveauSegment.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -230,7 +223,51 @@ void VisiteurDuplication::visiter(NoeudJonction* noeud)
 	// Creer la nouvelle jonction et copier la position relative.
 	std::shared_ptr<NoeudAbstrait> nouvelleJonction = arbre->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
 	nouvelleJonction->assignerPositionRelative(noeud->obtenirPositionRelative());
+	nouvelleJonction->assignerPositionCourante(noeud->obtenirPositionCourante());
+	nouvelleJonction->assignerSelection(noeud->estSelectionne());
 	nouvelleLigne_->ajouter(nouvelleJonction);
+
+	mapSession_->localEntityCreated(nouvelleJonction.get());
+}
+
+void VisiteurDuplication::copyDuplicatedObjects(NoeudAbstrait* duplication)
+{
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	NoeudAbstrait* table = arbre->chercher("table");
+
+	std::queue<NoeudAbstrait*> entitiesToCopy;
+
+	// Ajouter les enfants de la duplication dans la queue de copies.
+	for (unsigned int i = 0; i < duplication->obtenirNombreEnfants(); i++) 
+	{
+		entitiesToCopy.push(duplication->chercher(i));
+	}
+
+	// Non-recurisve top-down copy of all the children and sub-children of the
+	// duplication onto the table.
+	while (!entitiesToCopy.empty())
+	{
+		NoeudAbstrait* toCopy = entitiesToCopy.front();
+		entitiesToCopy.pop();
+
+		std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(toCopy->getType());
+
+		// Copy the properties.
+		NoeudAbstrait* toCopyParent = toCopy->obtenirParent();
+		copy->assignerPositionRelative(toCopyParent->obtenirPositionCourante() - toCopy->obtenirPositionCourante());
+		copy->assignerPositionCourante(toCopy->obtenirPositionCourante());
+		copy->assignerFacteurMiseAEchelle(toCopy->obtenirFacteurMiseAEchelle());
+		copy->assignerAngleRotation(toCopy->obtenirAngleRotation());
+
+		table->ajouter(copy);
+		mapSession_->localEntityCreated(copy.get());
+
+		// Push the children into the queue.
+		for (unsigned int i = 0; i < toCopy->obtenirNombreEnfants(); i++) 
+		{
+			entitiesToCopy.push(toCopy->chercher(i));
+		}
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

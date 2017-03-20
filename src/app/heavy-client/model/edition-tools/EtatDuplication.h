@@ -13,7 +13,9 @@
 
 #include "OnlineTool.h"
 #include "VisiteurDuplication.h"
+#include "VisiteurDeplacement.h"
 #include "VisiteurVerificationQuad.h"
+#include "VisiteurSuppression.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EtatDuplication
@@ -34,8 +36,10 @@ public:
 	virtual void assignerSymboleCurseur();
 
 private:
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
-	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
+	VisiteurVerificationQuad visiteurVerificationQuad_;
+	VisiteurDuplication visiteurDuplication_;
+	VisiteurDeplacement visiteurDeplacement_;
+	VisiteurSuppression visiteurSuppression_;
 
 	NoeudAbstrait* duplication_{ nullptr };
 	bool enDuplication_{ false };

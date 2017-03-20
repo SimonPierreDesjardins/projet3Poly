@@ -26,7 +26,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDeplacement::VisiteurDeplacement()
+VisiteurDeplacement::VisiteurDeplacement(client_network::MapSession * mapSession)
+	: mapSession_(mapSession)
 {
 }
 
@@ -43,12 +44,6 @@ VisiteurDeplacement::VisiteurDeplacement()
 ////////////////////////////////////////////////////////////////////////
 VisiteurDeplacement::~VisiteurDeplacement()
 {
-}
-
-void VisiteurDeplacement::shiftSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession)
-{
-	mapSession_ = mapSession;
-	tree->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -78,44 +73,61 @@ void VisiteurDeplacement::visiter(ArbreRendu* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurDeplacement::visiter(NoeudTable* noeud)
+void VisiteurDeplacement::visiter(NoeudTable* table)
 {
-	std::queue<NoeudAbstrait*> entitiesToMove;
+	moveSelectedChildren(table);
+}
 
-	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
-		NoeudAbstrait* enfant = noeud->chercher(i);
+void VisiteurDeplacement::visiter(NoeudDuplication* duplication)
+{
+	glm::dvec3 relativePosition = duplication->obtenirPositionRelative() + positionRelative_;
+	duplication->assignerPositionRelative(relativePosition);
+	mapSession_->localEntityPropertyUpdated(duplication, Networking::RELATIVE_POSITION, glm::vec3(relativePosition));
+	
+	glm::dvec3 absolutePosition = duplication->obtenirParent()->obtenirPositionCourante() + relativePosition;
+	duplication->assignerPositionCourante(absolutePosition);
+	mapSession_->localEntityPropertyUpdated(duplication, Networking::ABSOLUTE_POSITION, glm::vec3(absolutePosition));
+
+	// Update children.
+	moveSelectedChildren(duplication);
+}
+
+void VisiteurDeplacement::moveSelectedChildren(NoeudAbstrait* entity)
+{
+	// Update the relative position of all the children and push them in the queue.
+	std::queue<NoeudAbstrait*> entitiesToMove;
+	for (unsigned int i = 0; i < entity->obtenirNombreEnfants(); i++) {
+		NoeudAbstrait* child = entity->chercher(i);
 
 		// If the node is selected and the owner is me.
-		if (enfant->estSelectionne() && enfant->getOwnerId() == mapSession_->getThisUserId()) 
+		if (child->estSelectionne() && child->getOwnerId() == mapSession_->getThisUserId()) 
 		{
-			entitiesToMove.push(enfant);
-			glm::dvec3 positionRelative = enfant->obtenirPositionRelative();
+			entitiesToMove.push(child);
+			glm::dvec3 positionRelative = child->obtenirPositionRelative();
 			positionRelative += positionRelative_;
-			enfant->assignerPositionRelative(positionRelative);
-			if (mapSession_)
-			{
-				mapSession_->localEntityPropertyUpdated(enfant, Networking::RELATIVE_POSITION, glm::vec3(positionRelative));
-			}
+			child->assignerPositionRelative(positionRelative);
+			mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, glm::vec3(positionRelative));
 		}
 	}
 
-	// Update absolute position of the entities.
+	// Non-recursive top down update of the absolute position. 
 	while (!entitiesToMove.empty())
 	{
+		// Get the entity in front of the queue.
 		NoeudAbstrait* entityToUpdate = entitiesToMove.front();
 		entitiesToMove.pop();
+
 		NoeudAbstrait* parent = entityToUpdate->obtenirParent();
 
+		// Update the absolute position (absolute from parent + child relative position)
 		glm::dvec3 updatedAbsolutePosition = entityToUpdate->obtenirPositionRelative() +
 											 parent->obtenirPositionCourante();
-
 		entityToUpdate->assignerPositionCourante(updatedAbsolutePosition);
-		if (mapSession_)
-		{
-			mapSession_->localEntityPropertyUpdated(entityToUpdate, Networking::ABSOLUTE_POSITION, 
-													glm::vec3(updatedAbsolutePosition));
-		}
 
+		mapSession_->localEntityPropertyUpdated(entityToUpdate, Networking::ABSOLUTE_POSITION, 
+												glm::vec3(updatedAbsolutePosition));
+
+		// Push the children in the queue.
 		uint32_t nChildren = entityToUpdate->obtenirNombreEnfants();
 		for (int i = 0; i < nChildren; ++i)
 		{

@@ -44,11 +44,11 @@ const int VK_KEY_M = 'M';
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeTutorialEdition::ModeTutorialEdition(client_network::MapSession * mapSession)
-	: OnlineMapMode(mapSession)
+	: OnlineMapMode(mapSession),
+	  visiteurSuppression_(mapSession)
 {
 	typeMode_ = TUTORIAL_EDITION;
 	etat_ = std::make_unique<EtatAbstrait>();
-	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
 	table_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"));
 	startIndexOfTutorialObjects_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->obtenirNombreEnfants();
@@ -79,7 +79,7 @@ ModeTutorialEdition::~ModeTutorialEdition()
 ////////////////////////////////////////////////////////////////////////
 void ModeTutorialEdition::gererToucheSupprimer()
 {
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
+	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(&visiteurSuppression_);
 }
 
 ////////////////////////////////////////////////////////////////////////

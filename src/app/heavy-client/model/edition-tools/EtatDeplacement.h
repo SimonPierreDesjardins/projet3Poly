@@ -34,8 +34,8 @@ protected:
 	virtual void reinitialiser();
 
 private:
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
-	std::unique_ptr<VisiteurDeplacement> visiteurDeplacement_{ nullptr };
+	VisiteurVerificationQuad visiteurVerificationQuad_;
+	VisiteurDeplacement visiteurDeplacement_;
 
 	glm::dvec3 dernierePositionVirtuelle_{ glm::dvec3() };
 	glm::dvec3 positionVirtuelleInitiale_{ glm::dvec3() };

@@ -91,6 +91,18 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 		entityToInsert->setId(entityId);
 
 		// Update entity data.
+		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::ABSOLUTE_POSITION, 
+			                                  glm::vec3(entityToInsert->obtenirPositionCourante()));
+
+		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::RELATIVE_POSITION, 
+			                                  glm::vec3(entityToInsert->obtenirPositionRelative()));
+
+		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::ROTATION, 
+			                                  glm::vec3(0.0, 0.0, entityToInsert->obtenirAngleRotation()));
+
+		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::SCALE, 
+			                                  glm::vec3(entityToInsert->obtenirFacteurMiseAEchelle(), 0.0, 0.0));
+
 		network_->requestEntitySelection(entityToInsert->getId(), entityToInsert->estSelectionne());
 
 		// Update selection color.

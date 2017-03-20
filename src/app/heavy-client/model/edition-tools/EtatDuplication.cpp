@@ -22,18 +22,14 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 EtatDuplication::EtatDuplication(client_network::MapSession* mapSession)
-	: OnlineTool(mapSession)
+	: OnlineTool(mapSession), 
+	  visiteurDeplacement_(mapSession),
+	  visiteurDuplication_(mapSession),
+	  visiteurSuppression_(mapSession)
 {
 	setType(DUPLICATION);
-	visiteurDuplication_ = std::make_unique<VisiteurDuplication>();
-	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
-
-	// On commence une duplication.
-	arbre_->accepterVisiteur(visiteurDuplication_.get());
-	duplication_ = visiteurDuplication_->obtenirDuplication();
-	glm::dvec3 positionVirtuelle;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(currentPosition_.x, currentPosition_.y, positionVirtuelle);
-	duplication_->assignerPositionRelative(positionVirtuelle);
+	arbre_->accepterVisiteur(&visiteurDuplication_);
+	duplication_ = visiteurDuplication_.obtenirDuplication();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -45,8 +41,9 @@ EtatDuplication::EtatDuplication(client_network::MapSession* mapSession)
 ////////////////////////////////////////////////////////////////////////
 EtatDuplication::~EtatDuplication()
 {
-	if (duplication_ != nullptr && arbre_ != nullptr) {
-		arbre_->chercher("table")->effacer(duplication_);
+	if (duplication_)
+	{
+		duplication_->accepterVisiteur(&visiteurSuppression_);
 	}
 	duplication_ = nullptr;
 	arbre_ = nullptr;
@@ -95,13 +92,13 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 	// Si le curseur n'est pas sur la table, on ne gere par le clic gauche.
 	if (curseurEstSurTable_ && !estClickDrag()) {
 		if (arbre_ != nullptr) {
-			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+			arbre_->accepterVisiteur(&visiteurVerificationQuad_);
 		}
-		bool objetsDansZoneSimulation =	visiteurVerificationQuad_->objetsDansZoneSimulation();
+		bool objetsDansZoneSimulation =	visiteurVerificationQuad_.objetsDansZoneSimulation();
 		// Ajouter la duplication sur la table.
 		if (objetsDansZoneSimulation) {
-			duplication_->accepterVisiteur(visiteurDuplication_.get());
-			duplication_ = visiteurDuplication_->obtenirDuplication();
+			visiteurDuplication_.copyDuplicatedObjects(duplication_);
+			duplication_->accepterVisiteur(&visiteurDuplication_);
 		}
 	}
 }
@@ -119,11 +116,13 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
-	glm::dvec3 positionVirtuelle;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
+	glm::dvec3 positionRelative;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
 	
-	gererPositionCurseur(positionVirtuelle);
-	duplication_->assignerPositionRelative(positionVirtuelle);
+	gererPositionCurseur(positionRelative);
+
+	visiteurDeplacement_.assignerPositionRelative(positionRelative);
+	duplication_->accepterVisiteur(&visiteurDeplacement_);
 }
 
 ////////////////////////////////////////////////////////////////////////
