@@ -100,6 +100,10 @@ namespace ui
             wheelColorLabel.ForeColor = Color.Silver;
             wheelColor_Button.BackColor = Color.FromArgb(0, 102, 204);
 
+            if (parent_.viewPort.Controls.Contains(wheelColorSelector))
+                return;
+
+            wheelColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.WHEELS);
             parent_.viewPort.Controls.Add(wheelColorSelector);
             wheelColorSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             wheelColorSelector.Location = new Point(parent_.viewPort.Width - wheelColorSelector.Width, 0);
@@ -122,6 +126,10 @@ namespace ui
             robotColorLabel.ForeColor = Color.Silver;
             carColor_Button.BackColor = Color.FromArgb(0, 102, 204);
 
+            if (parent_.viewPort.Controls.Contains(robotColorSelector))
+                return;
+
+            robotColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.BODY);
             parent_.viewPort.Controls.Add(robotColorSelector);
             robotColorSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             robotColorSelector.Location = new Point(parent_.viewPort.Width - robotColorSelector.Width, 0);

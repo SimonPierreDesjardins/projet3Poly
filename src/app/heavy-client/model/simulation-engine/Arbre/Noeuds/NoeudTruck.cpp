@@ -246,6 +246,33 @@ void NoeudTruck::assignerCouleurs(int modele, int a, int r, int g, int b)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudTruck::setCouleurDefault(int piece, bool default)
+///
+/// Cette fonction permet de remettre la couleur par default
+///
+/// @param[in] bool true si par default et int indiquant la piece
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudTruck::setCouleurDefault(int piece, bool default)
+{
+	if (piece == WHEELS)
+	{
+		roueDroite_->setCouleurDefault(piece, default);
+		roueGauche_->setCouleurDefault(piece, default);
+		roueDroite2_->setCouleurDefault(piece, default);
+		roueGauche2_->setCouleurDefault(piece, default);
+	}
+	else if (piece == BODY)
+	{
+		estCouleurDefaut_ = default;
+	}
+
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

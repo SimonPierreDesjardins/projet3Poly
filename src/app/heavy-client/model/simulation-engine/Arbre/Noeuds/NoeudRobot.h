@@ -90,7 +90,7 @@ public:
     inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
-	void setCouleurDefault(int piece,bool default);
+	virtual void setCouleurDefault(int piece,bool default);
 
 
 protected:
