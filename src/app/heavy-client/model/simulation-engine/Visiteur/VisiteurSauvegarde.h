@@ -15,6 +15,8 @@
 
 #include "rapidjson\writer.h"
 
+#include <unordered_set>
+
 class NoeudComposite;
 
 
@@ -71,6 +73,7 @@ public:
 
 private:
 
+	std::unordered_set<NoeudTeleporteur*> teleporteursDejaSauves;
 	/// Objet pour écrire dans un fichier.
 	rapidjson::Writer<rapidjson::FileWriteStream>* writer ;
 

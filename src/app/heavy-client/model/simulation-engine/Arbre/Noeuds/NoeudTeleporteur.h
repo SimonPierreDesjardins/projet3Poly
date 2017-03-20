@@ -57,6 +57,8 @@ private:
     virtual void mettreAJourFormeEnglobante();
 	RectangleEnglobant rectangleEnglobant_;
 	NoeudTeleporteur* teleporteur_;
+	double compteurHauteurTeleporteur{0.0};
+	bool versLeHaut{ true };
 
 	
 };

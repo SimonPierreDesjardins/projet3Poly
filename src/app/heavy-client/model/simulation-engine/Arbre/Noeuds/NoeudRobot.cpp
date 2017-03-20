@@ -799,7 +799,8 @@ void NoeudRobot::effectuerCollision(const double& dt)
 	{
 		if (teleportationFaite_ == false)
 		{
-			positionCourante_ = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante();
+			positionCourante_.x = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante().x;
+			positionCourante_.y = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante().y;
 			positionRelative_ = positionCourante_;
 			mettreAJourPosition(dt);
 			mettreAJourFormeEnglobante();

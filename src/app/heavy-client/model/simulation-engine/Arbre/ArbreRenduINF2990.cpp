@@ -210,6 +210,12 @@ void ArbreRenduINF2990::chargerZone(FILE* fp)
 ///
 ////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, std::shared_ptr<NoeudAbstrait> parent){
+	if (noeudJSON->HasMember("PaireTeleporteurs"))
+	{
+		chargerTeleporteurs(noeudJSON->FindMember("PaireTeleporteurs")->value, parent);
+		return;
+	}
+
 	std::shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
 	noeud->fromJson(noeudJSON);
 	parent->ajouter(noeud);
@@ -221,6 +227,19 @@ void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJS
 		itr != enfants.End(); ++itr) {
 		chargerZone(itr, noeud);
 	}
+}
+
+void ArbreRenduINF2990::chargerTeleporteurs(const rapidjson::Value& noeudJSON, std::shared_ptr<NoeudAbstrait> parent)
+{
+	auto heyo = noeudJSON.IsArray();
+	std::shared_ptr<NoeudAbstrait> noeud1 = { creerNoeud(noeudJSON[0].FindMember("type")->value.GetString()) };
+	noeud1->fromJson(&noeudJSON[0]);
+	std::shared_ptr<NoeudAbstrait> noeud2 = { creerNoeud(noeudJSON[1].FindMember("type")->value.GetString()) };
+	noeud2->fromJson(&noeudJSON[1]);
+	noeud1->assignerTeleporteur(noeud2.get());
+	noeud2->assignerTeleporteur(noeud1.get());
+	parent->ajouter(noeud1);
+	parent->ajouter(noeud2);
 }
 
 

@@ -56,7 +56,6 @@ VisiteurSauvegarde::~VisiteurSauvegarde()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(ArbreRendu* noeud)
 {
-
 	FILE* fp = noeud->obtenirFichierZone("w");
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
@@ -110,23 +109,6 @@ void VisiteurSauvegarde::visiter(NoeudPoteau* noeud)
 	writer->EndObject();
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn  void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
-///
-/// Sauvegarde les noeuds teleporteur d'un arbre de rendu dans un fichier Json
-///
-/// @param[in] noeud : Pointeur vers le noeud teleporteur de l'arbre.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
-{
-	writer->StartObject();
-	noeud->toJson(*writer);
-	writer->EndObject();
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -240,6 +222,38 @@ void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
 	writer->StartObject();
 	noeud->toJson(*writer);
 	writer->EndObject();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
+///
+/// Sauvegarde les noeuds lignes d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud mur de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
+{
+	if (teleporteursDejaSauves.find(noeud) == teleporteursDejaSauves.end())
+	{
+		writer->StartObject();
+		writer->Key("PaireTeleporteurs");
+		writer->StartArray();
+		writer->StartObject();
+		noeud->toJson(*writer);
+		writer->EndObject();
+		writer->StartObject();
+		noeud->obtenirProchainTeleporteur()->toJson(*writer);
+		writer->EndObject();
+		writer->EndArray();
+		writer->EndObject();
+		teleporteursDejaSauves.insert(noeud);
+		teleporteursDejaSauves.insert(noeud->obtenirProchainTeleporteur());
+
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////
