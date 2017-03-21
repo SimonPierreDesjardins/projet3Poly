@@ -47,11 +47,47 @@
             $(document).ready(function () {
 
                 //Load all maps
-                $.getJSON("https://api.mlab.com/api/1/databases/projet3/collections/Maps?apiKey=6dyiG1KR3iv5bFvxlJDL79N0PC6ijGDx", function (data) {
+                $.getJSON("https://api.mlab.com/api/1/databases/projet3/collections/MapInfos?apiKey=6dyiG1KR3iv5bFvxlJDL79N0PC6ijGDx", function (data) {
                     console.log(data);
+                    var i;
+                    var mapVar;
                     $.each(data, function (i, map) {
-                        $("#girdOfMaps").append(map.Mapname);
+                        //Left map
+                        if (i % 2 == 0)
+                        {
+                            mapVar = 'mapBloc' + i.toString();
+                            $("#gridOfMaps").append('<div id="' + mapVar + '" class="w3-row-padding" style="margin: 0 -16px">\
+                                                          <div class="w3-half w3-margin-bottom">\
+                                                              <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">\
+                                                                  <li class="w3-dark-grey w3-xlarge w3-padding-32">' + map.mapName + '</li>\
+                                                                  <li class="w3-padding-16">Nombre de poteaux: ' + map.nbPoteaux + '</li>\
+                                                                  <li class="w3-padding-16">Nombre de murs: ' + map.nbMurs + '</li>\
+                                                                  <li class="w3-padding-16">Nombre de lignes: ' + map.nbLignes + '</li>\
+                                                                  <li class="w3-padding-16">Confidentialité: ' + map.isPrivate + '</li>\
+                                                                  <li class="w3-padding-16">Mode: ' + map.mapType + '</li>\
+                                                              </ul>\
+                                                          </div>');
+                        }
+                        //Right map
+                        else
+                        {
+                            $("#" + mapVar).append('<div class="w3-half">\
+                                                          <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">\
+                                                              <li class="w3-dark-grey w3-xlarge w3-padding-32">' + map.mapName + '</li>\
+                                                              <li class="w3-padding-16">Nombre de poteaux: ' + map.nbPoteaux + '</li>\
+                                                              <li class="w3-padding-16">Nombre de murs: ' + map.nbMurs + '</li>\
+                                                              <li class="w3-padding-16">Nombre de lignes: ' + map.nbLignes + '</li>\
+                                                              <li class="w3-padding-16">Confidentialité: ' + map.isPrivate + '</li>\
+                                                              <li class="w3-padding-16">Mode: ' + map.mapType + '</li>\
+                                                          </ul>\
+                                                      </div>\
+                                                  </div>');
+                        }
                     });
+                    if (i % 2 == 0)
+                    {
+                        $("#gridOfMaps").append('</div>');
+                    }
                 });
 
                 //Load all users
@@ -64,7 +100,6 @@
                         if (i % 2 == 0)
                         {
                             userVar = 'userBloc' + i.toString();
-                            console.log("Left user with index: " + i + ", userVar is: " + userVar);
                             $("#girdOfUsers").append('<div id="' + userVar + '" class="w3-row-padding" style="margin: 0 -16px">\
                                                           <div class="w3-half w3-margin-bottom">\
                                                               <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">\
@@ -79,7 +114,6 @@
                         //Right user
                         else
                         {
-                            console.log("Right user with index: " + i + ", userVar is: " + userVar);
                             $("#" + userVar).append('<div class="w3-half">\
                                                           <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">\
                                                               <li class="w3-dark-grey w3-xlarge w3-padding-32">' + user.Username + '</li>\
@@ -94,7 +128,6 @@
                     });
                     if (i % 2 == 0)
                     {
-                        console.log("Closing div, cause ended with left user: " + i);
                         $("#girdOfUsers").append('</div>');
                     }
                         
@@ -164,7 +197,7 @@
         <!-- Header/Home -->
         <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
             <h1 class="w3-jumbo">Projet Intégrateur 3</h1>
-            <button>Get External Content</button>
+            <!--<button>Get External Content</button>-->
             <p>LOG3900: Projet d'évolution d'un logiciel. Polytechnique de Montréal</p>
             <img src="Pictures/03-GiGL.jpg" alt="boy" class="w3-image" width="950" height="370">
         </header>
@@ -244,28 +277,7 @@
             <hr style="width: 200px" class="w3-opacity">
 
             <!-- Grid for maps on the server -->
-            <div class="w3-row-padding" style="margin: 0 -16px">
-                <div class="w3-half w3-margin-bottom">
-                    <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-                        <li class="w3-dark-grey w3-xlarge w3-padding-32">Nom de la carte #1</li>
-                        <li class="w3-padding-16">Nombre de poteaux: 0</li>
-                        <li class="w3-padding-16">Nombre de murs: 0</li>
-                        <li class="w3-padding-16">Nombre de lignes: 0</li>
-                        <li class="w3-padding-16">Nombre de joueurs: 0</li>
-                        <li class="w3-padding-16">Mode: Édition</li>
-                    </ul>
-                </div>
-
-                <div class="w3-half">
-                    <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-                        <li class="w3-dark-grey w3-xlarge w3-padding-32">Nom de la carte #2</li>
-                        <li class="w3-padding-16">Nombre de poteaux: 0</li>
-                        <li class="w3-padding-16">Nombre de murs: 0</li>
-                        <li class="w3-padding-16">Nombre de lignes: 0</li>
-                        <li class="w3-padding-16">Nombre de joueurs: 0</li>
-                        <li class="w3-padding-16">Mode: Édition</li>
-                    </ul>
-                </div>
+            <div id="gridOfMaps">
             </div>
             <!-- End Grid for maps on the server -->
 
