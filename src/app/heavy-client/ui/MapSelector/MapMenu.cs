@@ -92,7 +92,6 @@ namespace ui
                 newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
                 newMap.Location = new Point(0, numberOfMaps_++ * 150);
                 onlineMaps_.Add(mapId, newMap);
-                this.mapPanel.Controls.Add(newMap);
 
                 parent_.Invoke((MethodInvoker)delegate {
                     this.mapPanel.Controls.Add(newMap);

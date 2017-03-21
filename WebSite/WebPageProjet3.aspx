@@ -46,18 +46,58 @@
             //Called "onLoad"
             $(document).ready(function () {
 
+                //Load all maps
+                $.getJSON("https://api.mlab.com/api/1/databases/projet3/collections/Maps?apiKey=6dyiG1KR3iv5bFvxlJDL79N0PC6ijGDx", function (data) {
+                    console.log(data);
+                    $.each(data, function (i, map) {
+                        $("#girdOfMaps").append(map.Mapname);
+                    });
+                });
+
+                //Load all users
                 $.getJSON("https://api.mlab.com/api/1/databases/projet3/collections/Users?apiKey=6dyiG1KR3iv5bFvxlJDL79N0PC6ijGDx", function (data) {
                     console.log(data);
-                    //data = $.parseJSON(data);
-                    $.each(data, function(i, user) {
-                        $("#girdOfUsers").append(user.Username);
-                        //items.push("<li id='" + key + "'>" + val + "</li>");
+                    var i;
+                    var userVar;
+                    $.each(data, function (i, user) {
+                        //Left user
+                        if (i % 2 == 0)
+                        {
+                            userVar = 'userBloc' + i.toString();
+                            console.log("Left user with index: " + i + ", userVar is: " + userVar);
+                            $("#girdOfUsers").append('<div id="' + userVar + '" class="w3-row-padding" style="margin: 0 -16px">\
+                                                          <div class="w3-half w3-margin-bottom">\
+                                                              <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">\
+                                                                  <li class="w3-dark-grey w3-xlarge w3-padding-32">' + user.Username + '</li>\
+                                                                  <li class="w3-padding-16">Cartes modifiées: ' + user.ModifiedMaps + '</li>\
+                                                                  <li class="w3-padding-16">Cartes publiées: ' + user.CreatedMaps + '</li>\
+                                                                  <li class="w3-padding-16">Nombre de simulations: ' + user.NumberOfSimulations + '</li>\
+                                                                  <li class="w3-padding-16">Autre: 0</li>\
+                                                              </ul>\
+                                                          </div>');
+                        }
+                        //Right user
+                        else
+                        {
+                            console.log("Right user with index: " + i + ", userVar is: " + userVar);
+                            $("#" + userVar).append('<div class="w3-half">\
+                                                          <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">\
+                                                              <li class="w3-dark-grey w3-xlarge w3-padding-32">' + user.Username + '</li>\
+                                                              <li class="w3-padding-16">Cartes modifiées: ' + user.ModifiedMaps + '</li>\
+                                                              <li class="w3-padding-16">Cartes publiées: ' + user.CreatedMaps + '</li>\
+                                                              <li class="w3-padding-16">Nombre de simulations: ' + user.NumberOfSimulations + '</li>\
+                                                              <li class="w3-padding-16">Autre: 0</li>\
+                                                          </ul>\
+                                                      </div>\
+                                                  </div>');
+                        }
                     });
-
-                    /*$("<ul/>", {
-                        "class": "my-new-list",
-                        html: items.join("")
-                    }).appendTo("body");*/
+                    if (i % 2 == 0)
+                    {
+                        console.log("Closing div, cause ended with left user: " + i);
+                        $("#girdOfUsers").append('</div>');
+                    }
+                        
                 });
 
                 /*var i;
@@ -124,7 +164,6 @@
         <!-- Header/Home -->
         <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
             <h1 class="w3-jumbo">Projet Intégrateur 3</h1>
-            
             <button>Get External Content</button>
             <p>LOG3900: Projet d'évolution d'un logiciel. Polytechnique de Montréal</p>
             <img src="Pictures/03-GiGL.jpg" alt="boy" class="w3-image" width="950" height="370">
@@ -195,27 +234,6 @@
             <hr style="width: 200px" class="w3-opacity">
 
             <div id="girdOfUsers">
-                <div class="w3-row-padding" style="margin: 0 -16px">
-                    <div class="w3-half w3-margin-bottom">
-                        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-                            <li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #1</li>
-                            <li class="w3-padding-16">Cartes modifiées: </li>
-                            <li class="w3-padding-16">Cartes publiées: 0</li>
-                            <li class="w3-padding-16">Nombre de simulations: 0</li>
-                            <li class="w3-padding-16">Autre: 0</li>
-                        </ul>
-                    </div>
-
-                    <div class="w3-half">
-                        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">
-                            <li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #2</li>
-                            <li class="w3-padding-16">Cartes modifiées: </li>
-                            <li class="w3-padding-16">Cartes publiées: 0</li>
-                            <li class="w3-padding-16">Nombre de simulations: 0</li>
-                            <li class="w3-padding-16">Autre: 0</li>
-                        </ul>
-                    </div>
-                </div>
             </div>
         </div>
         <!-- End Users Section -->
