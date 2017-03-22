@@ -92,11 +92,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void mapButton_Click(object sender, EventArgs e)
         {
-            passwordBox.PasswordChar = '\u25CF';
-            passwordPanel.Visible = true;
+            //passwordBox.PasswordChar = '\u25CF';
+            //passwordPanel.Visible = true;
 
-
-            /*switch (modeType_)
+            switch (modeType_)
             {
                 case (int)ModeEnum.Mode.SIMULATION:
                     loadOnlineSimulationMode();
@@ -109,7 +108,7 @@ namespace ui
                 default:
                     parent_.mapMenu.choseOfflineMode(this);
                     break;
-            }*/
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////

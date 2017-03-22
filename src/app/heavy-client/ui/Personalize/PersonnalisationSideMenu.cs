@@ -17,6 +17,7 @@ namespace ui
         ColorSelector wheelColorSelector;
         ColorSelector robotColorSelector;
         ModeleSelector carSelector;
+        MusicSelector musicSelector;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -96,17 +97,17 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void wheelColor_Button_Click(object sender, System.EventArgs e)
         {
+            if (parent_.viewPort.Controls.Contains(wheelColorSelector))
+                return;
+
             setDefaultUnselectedColors();
             wheelColorLabel.ForeColor = Color.Silver;
             wheelColor_Button.BackColor = Color.FromArgb(0, 102, 204);
 
-            if (parent_.viewPort.Controls.Contains(wheelColorSelector))
-                return;
-
             wheelColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.WHEELS);
-            parent_.viewPort.Controls.Add(wheelColorSelector);
             wheelColorSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             wheelColorSelector.Location = new Point(parent_.viewPort.Width - wheelColorSelector.Width, 0);
+            parent_.viewPort.Controls.Add(wheelColorSelector);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -122,17 +123,17 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void carColor_Button_Click(object sender, System.EventArgs e)
         {
+            if (parent_.viewPort.Controls.Contains(robotColorSelector))
+                return;
+
             setDefaultUnselectedColors();
             robotColorLabel.ForeColor = Color.Silver;
             carColor_Button.BackColor = Color.FromArgb(0, 102, 204);
 
-            if (parent_.viewPort.Controls.Contains(robotColorSelector))
-                return;
-
             robotColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.BODY);
-            parent_.viewPort.Controls.Add(robotColorSelector);
             robotColorSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             robotColorSelector.Location = new Point(parent_.viewPort.Width - robotColorSelector.Width, 0);
+            parent_.viewPort.Controls.Add(robotColorSelector);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -151,9 +152,9 @@ namespace ui
             robotChangeLabel.ForeColor = Color.Silver;
             carChange_Button.BackColor = Color.FromArgb(0, 102, 204);
 
-            parent_.viewPort.Controls.Add(carSelector);
             carSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             carSelector.Location = new Point(parent_.viewPort.Width - carSelector.Width, 0);
+            parent_.viewPort.Controls.Add(carSelector);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -185,9 +186,18 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void musicChange_Button_Click(object sender, System.EventArgs e)
         {
+            if (parent_.viewPort.Controls.Contains(musicSelector))
+                return;
+
             setDefaultUnselectedColors();
             musicChangeLabel.ForeColor = Color.Silver;
             musicChange_Button.BackColor = Color.FromArgb(0, 102, 204);
+
+            musicSelector = new MusicSelector();
+            musicSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            musicSelector.Location = new Point(parent_.viewPort.Width - robotColorSelector.Width, 0);
+            parent_.viewPort.Controls.Add(musicSelector);
+
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -227,6 +237,10 @@ namespace ui
             else if (parent_.viewPort.Controls.Contains(carSelector))
             {
                 parent_.viewPort.Controls.Remove(carSelector);
+            }
+            else if (parent_.viewPort.Controls.Contains(musicSelector))
+            {
+                parent_.viewPort.Controls.Remove(musicSelector);
             }
 
         }
