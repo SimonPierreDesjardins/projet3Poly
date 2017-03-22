@@ -25,7 +25,7 @@ void MapEntry::updateSessionType()
 		break;
 
 	case EDITION_MAP:
-		currentSession_ = std::make_unique<EditionRoom>();
+		currentSession_ = std::make_unique<EditionRoom>(Info);
 		break;
 	}
 }
@@ -167,7 +167,9 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	// Update database with new info
 	_mapInfoDatabase->CreateEntry(info);
 
-	
+	// update user with this map as its created map
+	user->Info.CreatedMaps.insert(info->GetId());
+
 	MapEntry newSession(info);
 
 	// check if user had map transfer in progress
@@ -205,6 +207,16 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 
 		// Add the user.
 		it->second.AddUser(user);
+
+		// Adjust user stats according to map joined
+		switch (it->second.getSessionType()) {
+		case 1 /* Simulation */:
+			user->Info.NumberOfSimulations++;
+			break;
+		case 2 /* Edition */ :
+			user->Info.ModifiedMaps.insert(it->second.Info->GetId());
+			break;
+		}
 	}
 }
 void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& message)
@@ -222,6 +234,11 @@ void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& mess
 
 void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)
 {
+	unsigned int mapId = Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START);
+	
+	// update the user's created maps 
+	user->Info.CreatedMaps.erase(mapId);
+
 	_mapList.erase(Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START));
 }
 

@@ -8,10 +8,11 @@
 namespace server
 {
 
-AbstractMapRoom::AbstractMapRoom()
+AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo)
 {
 	Entity* table = tree_.createEntity(0, 0);
 	Entity* start = tree_.createEntity(1, table->entityId_);
+	mapInfo_ = mapInfo;
 }
 
 AbstractMapRoom::~AbstractMapRoom()
@@ -151,7 +152,6 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 
 	newEntity->userId_ = sender->Info.GetId();
 
-
 	Eigen::Vector3f* absPos = newEntity->getProperty(Networking::ABSOLUTE_POSITION);
 	absPos->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 5);
 	absPos->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 9);
@@ -181,6 +181,19 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	Networking::serialize(newEntity->userId_, response);
 
 	broadcastMessage(response);
+
+	// update mapinfo with new Item
+	switch (entityType) {
+	case Networking::MessageStandard::ItemTypes::POST_ENTITY:
+		mapInfo_->nbPoteaux++;
+		break;
+	case Networking::MessageStandard::ItemTypes::WALL_ENTITY:
+		mapInfo_->nbMurs++;
+		break;
+	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
+		mapInfo_->nbLignes++;
+		break;
+	}
 }
 
 void AbstractMapRoom::handleEntityDeletionMessage(User* sender, const std::string& message)

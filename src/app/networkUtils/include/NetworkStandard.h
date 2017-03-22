@@ -31,6 +31,27 @@ namespace MessageStandard {
 	void AddMessageLengthHeader(size_t size, std::string& message);
 
 	int GetMessageLength(std::string& message);
+
+	namespace ItemTypes{
+		enum EntityType
+		{
+			TABLE_ENTITY,
+			START_ENTITY,
+			DUPLICATION_ENTITY,
+			POST_ENTITY,
+			WALL_ENTITY,
+			BLACK_LINE_ENTITY,
+			SEGMENT_ENTITY,
+			JUNCTION_ENTITY,
+			WHEEL_ENTITY,
+			ROBOT_ENTITY,
+			F1_ENTITY,
+			TRUCK_ENTITY,
+			VOLKS_ENTITY,
+			AUDI_ENTITY,
+			TELEPORT_ENTITY
+		};
+	}
 }
 
 }

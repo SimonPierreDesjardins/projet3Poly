@@ -33,8 +33,6 @@ void SetupServer() {
 	// create User auth system
 	server::UserAuthLobby UserLobby(listener, &userDB , newUserReceivers);
 
-	// create UserLobby
-
 	std::cout << "Starting listener" << std::endl;
 	listener->StartAccepting();
 

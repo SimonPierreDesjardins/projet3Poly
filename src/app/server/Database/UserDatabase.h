@@ -4,7 +4,7 @@
 #include "rapidjson\filewritestream.h"
 #include "rapidjson\filereadstream.h"
 #include "BaseDatalist.h"
-#include <vector>
+#include <set>
 
 namespace server {
 
@@ -14,8 +14,8 @@ namespace server {
 		UserInformation();
 		UserInformation(unsigned int id);
 		std::string UserName;
-		std::vector<std::string> ModifiedMaps; // list of maps this user modified
-		std::vector<std::string> CreatedMaps; // list of maps this user created
+		std::set<unsigned int> ModifiedMaps; // list of mapIds this user modified
+		std::set<unsigned int> CreatedMaps; // list of mapIds this user created
 		unsigned int NumberOfSimulations = 0; // number of simulations performed by the user
 		unsigned int AchievementProgressList = 0; // id of the list holding this user's achievement progress
 		float DistanceTraveled = 0.0f; // distance traveled during simulation by this user.

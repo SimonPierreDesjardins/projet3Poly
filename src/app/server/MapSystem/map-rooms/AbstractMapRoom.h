@@ -3,6 +3,7 @@
 
 #include "MultiUserSystem.h"
 #include "EntityTree.h"
+#include "Database\MapDatabase.h"
 
 namespace server
 {
@@ -10,7 +11,7 @@ namespace server
 class AbstractMapRoom : public MultiUserSystem
 {
 public:	
-	AbstractMapRoom();
+	AbstractMapRoom(MapInfo* mapInfo);
 	virtual ~AbstractMapRoom() = 0;
 
 protected:
@@ -33,6 +34,9 @@ protected:
 	void updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value);
 
 	virtual void buildEntityCreationMessage(Entity* entity, std::string& message);
+
+	// reference to the current map info
+	MapInfo* mapInfo_ = nullptr;
 };
 
 }

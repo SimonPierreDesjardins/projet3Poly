@@ -13,10 +13,10 @@ void server::UserDatabase::GetObjectPropertiesFromBSON(bsoncxx::document::view d
 	
 	// populate array
 	for (auto element : docView["ModifiedMaps"].get_array().value) {
-		userInfo-> ModifiedMaps.push_back(element.get_utf8().value.to_string());
+		userInfo-> ModifiedMaps.insert(element.get_int32());
 	}
 	for (auto element : docView["CreatedMaps"].get_array().value) {
-		userInfo->CreatedMaps.push_back(element.get_utf8().value.to_string());
+		userInfo->CreatedMaps.insert(element.get_int32());
 	}
 
 	userInfo->AchievementProgressList = docView["AchievementProgressList"].get_int32();
@@ -46,7 +46,7 @@ void server::UserInformation::WritePropertiesToBSON(bsoncxx::builder::basic::doc
 	docBuilder.append(kvp("ModifiedMaps" ,
 		[&docBuilder, this](bsoncxx::builder::basic::sub_array child) {
 		for (auto map : ModifiedMaps) {
-			child.append(map);
+			child.append(static_cast<int>(map));
 		}
 	}
 	));
@@ -54,7 +54,7 @@ void server::UserInformation::WritePropertiesToBSON(bsoncxx::builder::basic::doc
 	docBuilder.append(kvp("CreatedMaps",
 		[&docBuilder, this](bsoncxx::builder::basic::sub_array child) {
 		for (auto map : CreatedMaps) {
-			child.append(map);
+			child.append(static_cast<int>(map));
 		}
 	}
 	));

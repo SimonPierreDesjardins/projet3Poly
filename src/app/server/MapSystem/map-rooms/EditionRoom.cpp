@@ -3,5 +3,7 @@
 
 namespace server
 {
-
+	EditionRoom::EditionRoom(MapInfo * mapInfo):AbstractMapRoom(mapInfo)
+	{
+	}
 }
