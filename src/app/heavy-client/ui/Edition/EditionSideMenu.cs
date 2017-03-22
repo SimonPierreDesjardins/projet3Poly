@@ -195,7 +195,7 @@ namespace ui
             setDefaultCurrentTool();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
+            //FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
         }
 
         ////////////////////////////////////////////////////////////////////////

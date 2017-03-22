@@ -40,7 +40,7 @@ void MapSession::localEntityCreated(NoeudAbstrait* entity)
 }
 
 void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
-	const glm::vec3& relPos, const glm::vec3& absPos,
+	const glm::vec3& absPos, const glm::vec3& relPos,
 	const glm::vec3& rotation, const glm::vec3& scale,
 	uint32_t entityId, uint32_t userId)
 {
@@ -73,6 +73,16 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
 			std::cout << "Server entity created : " << newEntity->obtenirNom() <<
 				" id : " << newEntity->getId() << " parentid : " << parent->getId() << std::endl;
+
+			std::cout << "absolute position : " <<
+				newEntity->obtenirPositionCourante().x << " " <<
+				newEntity->obtenirPositionCourante().y << " " <<
+				newEntity->obtenirPositionCourante().z << std::endl;
+
+			std::cout << "relative position : " <<
+				newEntity->obtenirPositionRelative().x << " " <<
+				newEntity->obtenirPositionRelative().y << " " <<
+				newEntity->obtenirPositionRelative().z << std::endl << std::endl;
 		}
 	}
 	// This is a confirmation for the object to be created.
@@ -109,6 +119,17 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 
 		std::cout << "Local entity creation confirmed : " << entityToInsert->obtenirNom() <<
 			" id : " << entityToInsert->getId() << " parentid : " << entityToInsert->obtenirParent()->getId() << std::endl;
+
+		std::cout << "absolute position : " <<
+			entityToInsert->obtenirPositionCourante().x << " " <<
+			entityToInsert->obtenirPositionCourante().y << " " <<
+			entityToInsert->obtenirPositionCourante().z << std::endl;
+
+		std::cout << "relative position : " <<
+			entityToInsert->obtenirPositionRelative().x << " " <<
+			entityToInsert->obtenirPositionRelative().y << " " <<
+			entityToInsert->obtenirPositionRelative().z << std::endl << std::endl;
+
 
 		// Send next entity in pending.
 		NoeudAbstrait* entityToConfirm = nullptr;
@@ -275,7 +296,11 @@ void MapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking::Prop
 void MapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType type, const glm::vec3& updatedProperty)
 {
 	pendingQueueLock_.lock();
-	network_->requestEntityPropertyUpdate(entity->getId(), (char)(type), updatedProperty);
+	uint32_t entityId = entity->getId();
+	if (entityId != 0 && confirmedEntities_.find(entityId) != confirmedEntities_.end())
+	{
+		network_->requestEntityPropertyUpdate(entity->getId(), (char)(type), updatedProperty);
+	}
 	pendingQueueLock_.unlock();
 }
 

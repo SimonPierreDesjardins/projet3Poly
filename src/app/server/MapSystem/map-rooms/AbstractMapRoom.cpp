@@ -28,18 +28,14 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 
-	// Non-recursive pre order traversal of the tree.
 	std::queue<Entity*> sendingQueue;
-
-	for (auto it = tree_.begin(); it != tree_.end(); ++it)
+	Entity* table = tree_.findEntity(1);
+	if (table)
 	{
-		// We don't send the tree itself.
-		if (it->second.entityId_ != 0)
-		{
-			sendingQueue.push(&it->second);
-		}
+		sendingQueue.push(table);
 	}
 
+	// Non-recursive top-down traversale of the tree.
 	while (!sendingQueue.empty())
 	{
 		Entity* tosend = sendingQueue.front();

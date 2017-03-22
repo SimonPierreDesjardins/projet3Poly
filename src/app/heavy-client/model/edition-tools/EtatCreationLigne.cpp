@@ -253,11 +253,11 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 	// Ajuster la position relative des segments.
 	glm::dvec3 positionEnfant;
 	for (unsigned int i = 0; i < ligne_->obtenirNombreEnfants(); i++) {
-		positionEnfant = ligne_->chercher(i)->obtenirPositionRelative();
+		NoeudAbstrait* child = ligne_->chercher(i);
+		positionEnfant = child->obtenirPositionRelative();
 		positionEnfant -= centre;
-		NoeudAbstrait* segment = ligne_->chercher(i);
-		segment->assignerPositionRelative(positionEnfant);
-		mapSession_->localEntityPropertyUpdated(segment, Networking::RELATIVE_POSITION, { positionEnfant.x, positionEnfant.y, positionEnfant.z });
+		child->assignerPositionRelative(positionEnfant);
+		mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, { positionEnfant.x, positionEnfant.y, positionEnfant.z });
 	}
 
 	ligne_->assignerPositionRelative(centre);

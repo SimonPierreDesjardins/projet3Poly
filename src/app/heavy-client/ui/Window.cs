@@ -67,6 +67,10 @@ namespace ui
                     m.Msg == WM_MOUSEWHEEL)
                 {
                     FonctionsNatives.repartirMessage(m.Msg, m.WParam, m.LParam);
+                    if (m.Msg == WM_KEYDOWN)
+                    {
+                        gererMessage(m.WParam);
+                    }
                 }
                 return false;
             }
