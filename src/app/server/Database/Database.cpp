@@ -32,13 +32,13 @@ server::Database::Database()
 
 server::Database::~Database()
 {
-	if (_mongoInstantiated) {
-		delete _mongoInstance;
-	}
-
 	_doTasks = false;
 	while (!_taskThread.joinable()) {}
 	_taskThread.join();
+
+	if (_mongoInstantiated) {
+		delete _mongoInstance;
+	}
 }
 
 mongocxx::collection server::Database::GetCollection(std::string collectionName)
