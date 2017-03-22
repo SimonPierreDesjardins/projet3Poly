@@ -1,39 +1,38 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file ModeSimulation.h
-/// @author Frédéric Grégoire
-/// @date 2016-02-02
+/// @file ModePieces.h
+/// @author Simon-Pierre Desjardins
+/// @date 2017-03-22
 /// @version 1.0
 ///
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef MODE_SIMULATION_H
-#define MODE_SIMULATION_H
+#ifndef MODE_PIECES_H
+#define MODE_PIECES_H
 
 #include <memory>
 #include "glm\glm.hpp"
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
-#include "FacadeModele.h"
-#include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
+#include "FacadeModele.h"
 
 class ProfilUtilisateur;
 class AffichageTexte;
 class ControleurLumiere;
 
 //////////////////////////////////////////////////////////////////////////
-/// @class ModeSimulation
-/// @brief Classe qui représente le mode simulation de notre machine à modes
+/// @class ModePieces
+/// @brief Classe qui représente le mode de jeu pieces de notre machine à modes
 ///
-///        Cette classe s'occupe d'implémenter les fonctions du mode simulation
+///        Cette classe s'occupe d'implémenter les fonctions du mode pieces
 ///
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeSimulation : public ModeAbstrait 
+class ModePieces : public ModeAbstrait
 {
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
@@ -45,19 +44,21 @@ private:
 	bool lumiereDirectionnelle { true };
 	bool lumiereSpot { true };
 
-	VisiteurDetectionRobot visiteur_;
+	std::shared_ptr<NoeudAbstrait> noeudCoinCourant;
 
+	ArbreRenduINF2990* arbre_{nullptr};
     AffichageTexte* affichageTexte_{ nullptr };
-
+	glm::dvec3 positionNoeudCourant;
 	ControleurLumiere* controleurLumiere_{ nullptr };
 
-	ArbreRenduINF2990* arbre_{ nullptr };
+
+	VisiteurDetectionRobot visiteur_;
 
 public:
 	//Constructeur par défaut
-	ModeSimulation();
+	ModePieces();
 	//Destructeur
-	virtual ~ModeSimulation();
+	virtual ~ModePieces();
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
@@ -68,12 +69,14 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
+	glm::dvec3 genererPositionCoin();
+
 	virtual void postAnimer();
 
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
 };
 
-std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()
+std::array<char, 11>* ModePieces::getTouchesNonConfigurable()
 {
 	return &touchesNonConfigurable_;
 }

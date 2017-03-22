@@ -227,6 +227,11 @@ namespace ui
                     gererToucheEditionTutoriel(keyDown);
                     break;
 
+                //Mode Édition Tutoriel
+                case (int)Mode.PIECES:
+                    gererTouchePieces(keyDown);
+                    break;
+
                 default:
                     break;
             }
@@ -495,6 +500,45 @@ namespace ui
                         editionTutorielInstructions.nextState();
                         editionTutorielMenuStrip.orbiteView();
                     }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void gererTouchePieces(IntPtr keyDown)
+        ///
+        /// Gère les touches pour le mode Simulation
+        /// 
+        /// @param IntPtr keyDown: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void gererTouchePieces(IntPtr keyDown)
+        {
+            switch ((int)keyDown)
+            {
+                case Constants.Key_1:
+                    simulationMenuStrip.orthoView();
+                    break;
+
+                case Constants.Key_2:
+                    simulationMenuStrip.orbiteView();
+                    break;
+
+                case Constants.Key_3:
+                    simulationMenuStrip.firstPersonView();
+                    break;
+
+                case Constants.Key_Q:
+                    if (ModifierKeys.HasFlag(Keys.Control))
+                        simulationMenuStrip.goMenuPrincipal();
+                    break;
+
+                case Constants.Key_Esc:
+                    simulationMenuStrip.goIntoPause();
                     break;
 
                 default:

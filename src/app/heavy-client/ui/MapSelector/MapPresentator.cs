@@ -58,6 +58,10 @@ namespace ui
                     ModeLabel.Text = "Edition";
                     break;
 
+                case (int)ModeEnum.Mode.PIECES:
+                    ModeLabel.Text = "Collection Pièces";
+                    break;
+
                 default:
                     ModeLabel.Text = "Edition / Simulation";
                     break;
@@ -94,6 +98,10 @@ namespace ui
 
                 case (int)ModeEnum.Mode.EDITION:
                     loadOnlineEditionMode();
+                    break;
+
+                case (int)ModeEnum.Mode.PIECES:
+                    loadOnlinePieceMode();
                     break;
 
                 default:
@@ -186,6 +194,26 @@ namespace ui
             {
                 FonctionsNatives.joinMap(mapId_);
             }
+        }
+
+        private void loadOnlinePieceMode()
+        {
+            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
+            parent_.viewPort.Controls.Remove(parent_.mapMenu);
+            parent_.mapMenu.defaultView();
+
+            parent_.simulationMenuStrip.Dock = DockStyle.Top;
+            parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
+
+            FonctionsNatives.assignerCheminFichierZone(pathToFile_);
+            FonctionsNatives.charger();
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+
+            Program.peutAfficher = true;
+
+            FonctionsNatives.assignerMode(ModeEnum.Mode.PIECES);
         }
     }
 }

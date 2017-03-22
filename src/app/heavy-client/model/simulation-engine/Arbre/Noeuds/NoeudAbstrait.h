@@ -54,7 +54,8 @@ enum EntityType
 	TRUCK_ENTITY,
 	VOLKS_ENTITY,
 	AUDI_ENTITY,
-	TELEPORT_ENTITY
+	TELEPORT_ENTITY,
+	COIN_ENTITY
 };
 
 ///////////////////////////////////////////////////////////////////////////

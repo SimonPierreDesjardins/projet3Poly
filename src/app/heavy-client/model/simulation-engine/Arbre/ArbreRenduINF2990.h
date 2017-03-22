@@ -85,6 +85,8 @@ public:
 
 	static const std::string NOM_TELEPORTEUR;
 
+	static const std::string NOM_PIECE;
+
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre
 	void chargerZone(FILE* fp);

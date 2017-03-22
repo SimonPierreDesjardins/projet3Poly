@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file ModeSimulation.cpp
-/// @author Frédéric Grégoire
-/// @date 2016-02-02
+/// @file ModePieces.cpp
+/// @author Simon-Pierre Desjardins
+/// @date 2017-03-22
 /// @version 1.0
 ///
 /// @addtogroup inf2990 INF2990
@@ -11,10 +11,11 @@
 
 #include <math.h>
 
-#include "ModeSimulation.h"
+#include "ModePieces.h"
 #include "Utilitaire.h"
 #include "Vue.h"
 #include "Projection.h"
+
 
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
@@ -29,34 +30,45 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
-std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
+std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
   
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ModeSimulation::ModeSimulation()
+/// @fn ModePieces::ModePieces()
 ///
-/// Constructeur par défaut pour le mode simulation
+/// Constructeur par défaut pour le mode pieces
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeSimulation::ModeSimulation()
+ModePieces::ModePieces()
 {
-
-	typeMode_ = SIMULATION;
+	typeMode_ = PIECES;
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	// On fait démarrer le robot en mode manuel
 	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
-	EnginSon::obtenirInstance()->jouerMusique();
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
+	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
+	srand(time(NULL));
+	for (int i = 0; i < 10; i++)
+	{
+		
+		noeudCoinCourant = arbre_->creerNoeud(COIN_ENTITY);
+		positionNoeudCourant = genererPositionCoin();
+		noeudCoinCourant->assignerPositionRelative(positionNoeudCourant);
+		noeudCoinCourant->assignerPositionCourante(positionNoeudCourant);
+		noeudCoinCourant->mettreAJourFormeEnglobante();
+		arbre_->chercher(0)->ajouter(noeudCoinCourant);
+	}
 
     affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
     affichageTexte_->assignerProfilEstAffiche(true);
     affichageTexte_->assignerTempsEstAffiche(true);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
+	
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 
@@ -69,15 +81,14 @@ ModeSimulation::ModeSimulation()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ModeSimulation::~ModeSimulation()
+/// @fn ModePieces::~ModePieces()
 ///
-/// Destructeur de la classe ModeSimulation
+/// Destructeur de la classe ModePieces
 /// @return Aucune (destructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeSimulation::~ModeSimulation()
+ModePieces::~ModePieces()
 {
-	EnginSon::obtenirInstance()->stopMusique();
 	controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
@@ -91,14 +102,14 @@ ModeSimulation::~ModeSimulation()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeSimulation::inverserLumiereAmbiante()
+/// @fn void ModePieces::inverserLumiereAmbiante()
 ///
 /// Fonction qui permet d'alterner l'état de la lumière ambiante 
 ///
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::inverserLumiereAmbiante()
+void ModePieces::inverserLumiereAmbiante()
 {
 	lumiereAmbiante = !lumiereAmbiante;
 
@@ -117,14 +128,14 @@ void ModeSimulation::inverserLumiereAmbiante()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeSimulation::inverserLumiereDirectionnelle()
+/// @fn void ModePieces::inverserLumiereDirectionnelle()
 ///
 /// Fonction qui permet d'alterner l'état de la lumière directionnelle 
 ///
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::inverserLumiereDirectionnelle()
+void ModePieces::inverserLumiereDirectionnelle()
 {
 	lumiereDirectionnelle = !lumiereDirectionnelle;
 	
@@ -143,14 +154,14 @@ void ModeSimulation::inverserLumiereDirectionnelle()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeSimulation::inverserLumiereSpot()
+/// @fn void ModePieces::inverserLumiereSpot()
 ///
 /// Fonction qui permet d'alterner l'état de la lumière spot
 ///
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::inverserLumiereSpot()
+void ModePieces::inverserLumiereSpot()
 {
 	lumiereSpot = !lumiereSpot;
 	controleurLumiere_->assignerLumiereSpotRobot(lumiereSpot);
@@ -167,28 +178,28 @@ void ModeSimulation::inverserLumiereSpot()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeSimulation::preChangementDeProfil()
+/// @fn void ModePieces::preChangementDeProfil()
 ///
 /// Fonction appelée avant qu'il y ait changement de profil pour arrêter les accès. Arrête aussi le thread du robot.
 ///
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::preChangementDeProfil(){
+void ModePieces::preChangementDeProfil(){
 	//Terminer le thread du robot et préparer à un changement au mode automatique
 	controleRobot_->passerAModeManuel();
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeSimulation::postChangementDeProfil()
+/// @fn void ModePieces::postChangementDeProfil()
 ///
-/// Fonction appelée après qu'il y ait changement de profil pour repartir la simulation. Passe le robot en mode automatique.
+/// Fonction appelée après qu'il y ait changement de profil pour repartir le mode piece. Passe le robot en mode automatique.
 ///
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::postChangementDeProfil(){
+void ModePieces::postChangementDeProfil(){
 	// On met à jour le profil
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	// Le robot charge la référence aux nouveaux comportements
@@ -199,14 +210,14 @@ void ModeSimulation::postChangementDeProfil(){
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+/// @fn ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
 /// Fonction qui permet de traiter les entrées utilisateur en mode simulation. 
 ///
 /// @return Aucune (destructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
+void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	if (!FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier())
 		return;
@@ -262,7 +273,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			controleRobot_->passerAModeManuel();
 			controleurLumiere_->assignerLumiereSpotGyro(true);
 			affichageTexte_->reinitialiserChrono();
-			controleRobot_->robot_->positionDepart();
+			controleRobot_->obtenirNoeud()->positionDepart();
 			break;
 
         case VK_ESCAPE:
@@ -353,21 +364,34 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
+glm::dvec3 ModePieces::genererPositionCoin() 
+{
+
+		double x = rand() % 90;
+		double y = rand() % 44;
+
+		x = x - 45.0;
+		y = y - 22.0;
+
+		return{ x, y, 0.0 };
+
+
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModeSimulation::postAnimer()
+/// @fn void ModePieces::postAnimer()
 ///
 /// Fonction qui permet de visiter les noeuds et detecter collision
 ///
 /// @return Aucune 
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::postAnimer()
+void ModePieces::postAnimer()
 {
 	arbre_->accepterVisiteur(&visiteur_);
 
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

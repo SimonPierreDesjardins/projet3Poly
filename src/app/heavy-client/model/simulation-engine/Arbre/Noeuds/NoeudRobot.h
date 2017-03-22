@@ -19,6 +19,7 @@
 #include <mutex>
 #include <array>
 #include "ControleurLumiere.h"
+#include <stack>
 
 class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
@@ -61,6 +62,7 @@ public:
     bool verifierCollision(NoeudMur* noeud);
     bool verifierCollision(NoeudTable* noeud);
 	bool verifierCollision(NoeudTeleporteur* noeud);
+	bool verifierCollision(NoeudPiece* piece);
     
 	//Permet de modifier les paramètres du robot
 	inline void assignerVitesseRotation(float vitesse);
@@ -91,6 +93,10 @@ public:
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
 	virtual void setCouleurDefault(int piece,bool default);
+
+	std::stack <NoeudAbstrait*> getTableauCoins();
+
+	std::stack <NoeudAbstrait*> tableauCoins;
 
 
 protected:
@@ -147,6 +153,8 @@ protected:
 	int mode_;
 	bool teleporteurCollision_ = false;
 	bool teleportationFaite_ = false;
+
+	
 	
 	ControleurLumiere* controleurLumiere_{ nullptr };
 };
