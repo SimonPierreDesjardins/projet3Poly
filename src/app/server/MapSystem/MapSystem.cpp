@@ -196,6 +196,18 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 	auto it = _mapList.find(mapId);
 	if (it != _mapList.end())
 	{
+		// check if map is private
+		if (it->second.Info->isPrivate) {
+			// get password from message after the join Id
+			std::string password = message.substr(Networking::MessageStandard::DATA_START + 4);
+			if (password != it->second.Info->password) {
+				// send error message
+				user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader("mjd"));
+				return;
+			}
+		}
+
+
 		// Send joined response.
 		std::string response;
 		Networking::serialize(uint32_t(14), response);
@@ -271,7 +283,35 @@ void MapSystem::HandleCancelMapTransferMessage(User * user, const std::string & 
 
 void MapSystem::HandleMapPermissionChange(User * user, const std::string & message)
 {
-	// Eventually manage user permissions
+	unsigned int mapId = Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START);
+
+	auto mapKvp = _mapList.find(mapId);
+	if (mapKvp != _mapList.end()) {
+		
+		//start building reply message
+		std::string reply = Networking::MessageStandard::AddMessageLengthHeader(message.substr(Networking::MessageStandard::SYSTEM, 7));
+
+		// check if user is admin
+		if (mapKvp->second.Info->Admin != user->Info.GetId()) {
+
+			// change result char to error
+			reply[Networking::MessageStandard::DATA_START + 4] = 'd';
+
+			// send error
+			user->ForwardMessage(reply);
+			return;
+		}
+		
+		char permission = message[Networking::MessageStandard::DATA_START + 4];
+		mapKvp->second.Info->isPrivate = (permission == 'c');
+		// set password if necessary
+		if (permission == 'c') {
+			mapKvp -> second.Info->password = message.substr(Networking::MessageStandard::DATA_START + 5);
+		}
+
+		// tell user everything went as planned
+		user->ForwardMessage(reply);
+	}
 }
 
 }

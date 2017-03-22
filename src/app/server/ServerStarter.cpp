@@ -3,6 +3,7 @@
 #include "ChatSystem\ChatSystem.h"
 #include "MapSystem.h"
 #include "NetworkStandard.h"
+#include <TypeSerializerDeserializer.h>
 #include <iostream>
 
 void SetupServer() {
@@ -91,7 +92,24 @@ void SetupTestClient() {
 
 	while (command != "exit") {
 		std::getline(std::cin, command);
-		container.SendThroughConnection(command);
+		if (command.substr(0, 7) == "chgperm") {
+			// get mapId from four following chars
+			unsigned int mapId = std::stoi(command.substr(7, 11));
+
+			std::string message("mp");
+			Networking::serialize(mapId, message);
+			message+= command[11];
+
+			if (command[11] == 'c') {
+				//rest of command is password
+				message += command.substr(12);
+			}
+
+			container.SendThroughConnection(message);
+		}
+		else {
+			container.SendThroughConnection(command);
+		}
 	}
 }
 
