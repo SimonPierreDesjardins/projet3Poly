@@ -35,7 +35,7 @@ public:
 
 	void requestMapCreation(const std::string& mapName, uint8_t mapType);
 	void requestToJoinMapSession(uint32_t mapId);
-	void requestToleaveMapSession();
+	void requestToQuitMapSession();
 
 	void requestEntityCreation(uint8_t type, uint32_t parentId, 
 		                       const glm::vec3& relPos, const glm::vec3& absPos,

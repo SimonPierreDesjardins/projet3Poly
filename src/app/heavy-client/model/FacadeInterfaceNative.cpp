@@ -937,7 +937,7 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl leaveMap()
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToQuitMapSession();
 	}
 
 

@@ -59,7 +59,7 @@ private:
 
 	void HandleMapJoinMessage(User* user, const std::string& message);
 
-	void HandleLeaveMapSessionRequest(User* user, const std::string& message);
+	void HandleMapQuitMessage(User* user, const std::string& message);
 
 	void HandleMapDeleteMessage(User* user, const std::string& message);
 

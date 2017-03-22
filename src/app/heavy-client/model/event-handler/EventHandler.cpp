@@ -41,6 +41,12 @@ void EventHandler::onEntitySelected(uint32_t entityId, bool isSelected, uint32_t
 	}
 }
 
+void EventHandler::onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers)
+{
+	mapSessionManager_->createServerSession(mapId, mapType, name);
+	AddMap(name, true, mapType, nUsers, mapId);
+}
+
 void EventHandler::onUserJoinedMap(uint32_t mapId, uint32_t userId)
 {
 	client_network::MapSession* mapSession = mapSessionManager_->getServerSession(mapId);
@@ -57,17 +63,20 @@ void EventHandler::onUserJoinedMap(uint32_t mapId, uint32_t userId)
 	}
 }
 
-void EventHandler::onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers)
+void EventHandler::onUserLeftCurrentMapSession(uint32_t userId)
 {
-	mapSessionManager_->createServerSession(mapId, mapType, name);
-	// TODO: Remove this and use the ui.
-	//networkManager_->requestToJoinMapSession(mapId);
-	AddMap(name, true, mapType, nUsers, mapId);
+	if (currentSession_)
+	{
+		currentSession_->serverUserLeftMapSession(userId);
+		if (userId == networkManager_->getUserId())
+		{
+			currentSession_ = nullptr;
+		}
+	}
 }
 
 void EventHandler::onUserAuthentified(uint32_t userId)
 {
-	// TODO: notify the ui here.
 	networkManager_->setUserId(userId);
 }
 

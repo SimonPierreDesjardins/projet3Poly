@@ -65,29 +65,41 @@ void MapSystem::TreatUserMessage(User * user, const std::string & message)
 		// create map
 		HandleMapCreationMessage(user, message);
 		break;
+
 	case 'j':
 		// join map session
 		HandleMapJoinMessage(user, message);
 		break;
+
+	case 'q':
+		// Quit map session
+		HandleMapQuitMessage(user, message);
+		break;
+
 	case 'd':
 		// delete map session
 		HandleMapDeleteMessage(user, message);
 		break;
+
 	case 'g':
 		// get map's graph
 		HandleMapGraphRequestMessage(user, message);
 		break;
+
 	case 't':
 		// forward to map currently constructed by user
 		HandleMapTransferMessage(user, message);
 		break;
+
 	case 'x':
 		// Cancel map transfer
 		HandleCancelMapTransferMessage(user, message);
 		break;
+
 	case 'p':
 		// Change permissions
 		HandleMapPermissionChange(user, message);
+		break;
 	}
 }
 
@@ -204,17 +216,28 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 		currentSession->AddUser(user);
 	}
 }
-void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& message)
+void MapSystem::HandleMapQuitMessage(User* user, const std::string& message)
 {
 	// Search for the room that contains the user.
-	for (auto it = _mapList.begin(); it != _mapList.end(); ++it)
+	bool isMapSessionFound = false;
+	AbstractMapRoom* foundMapSession = nullptr;
+
+	// There should only be one map session found.
+	for (auto it = _mapList.begin(); it != _mapList.end() && !isMapSessionFound; ++it)
 	{
-		AbstractMapRoom* currentSession = it->second.getCurrentSession();
-		if (currentSession)
+		AbstractMapRoom* mapSession = it->second.getCurrentSession();
+		if (mapSession)
 		{
-			currentSession->RemoveUser(user);
+			isMapSessionFound = mapSession->RemoveUser(user);
+			foundMapSession = mapSession;
 		}
 	}
+
+	// Send Reply to every user in the mapSession.
+	std::string reply(message);
+	Networking::serialize(user->Info.GetId(), reply);
+	Networking::MessageStandard::UpdateLengthHeader(reply);
+	foundMapSession->broadcastMessage(reply);
 }
 
 void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)

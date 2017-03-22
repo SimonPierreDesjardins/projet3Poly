@@ -40,6 +40,7 @@ public:
 	// Map system
 	void onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers = 0);
 	void onUserJoinedMap(uint32_t mapId, uint32_t userId);
+	void onUserLeftCurrentMapSession(uint32_t userId);
 	void onUserAuthentified(uint32_t userId);
 
 	// Entity properties

@@ -56,6 +56,18 @@ void AbstractMapRoom::TreatUserDisconnect(User* user)
 {
 	// Unsub from physic and map edition messages.
 	user->removeSystemObserver(MAP_EDITION_MESSAGE);
+	
+	for (auto it = tree_.begin(); it != tree_.end(); ++it)
+	{
+		Entity* entity = &it->second;
+		if (entity->userId_ == user->Info.GetId()) 
+		{
+			entity->userId_ = 0;
+			std::string message;
+			buildEntitySelectedMessage(entity, message);
+			broadcastMessage(message);
+		}
+	}
 }
 
 void AbstractMapRoom::TreatUserMessage(User* sender, const std::string& message)
@@ -134,6 +146,14 @@ void AbstractMapRoom::buildEntityCreationMessage(Entity* entity, std::string& me
 	Networking::serialize(*entity->getProperty(Networking::RELATIVE_POSITION), message);
 	Networking::serialize(*entity->getProperty(Networking::ROTATION), message);
 	Networking::serialize(*entity->getProperty(Networking::SCALE), message);
+	Networking::serialize(entity->entityId_, message);
+	Networking::serialize(entity->userId_, message);
+}
+
+void AbstractMapRoom::buildEntitySelectedMessage(Entity* entity, std::string& message)
+{
+	Networking::serialize((uint32_t)(14), message);
+	message.append("es");
 	Networking::serialize(entity->entityId_, message);
 	Networking::serialize(entity->userId_, message);
 }

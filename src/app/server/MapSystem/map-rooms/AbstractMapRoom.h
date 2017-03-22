@@ -33,6 +33,7 @@ protected:
 	void updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value);
 
 	virtual void buildEntityCreationMessage(Entity* entity, std::string& message);
+	void buildEntitySelectedMessage(Entity* entity, std::string& message);
 };
 
 }

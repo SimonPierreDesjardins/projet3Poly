@@ -61,7 +61,8 @@ public:
 
 	void setIsOnlineSession(bool isOnline);
 
-	void leave();
+	void requestToLeaveMapSession();
+	void serverUserLeftMapSession(uint32_t userId);
 
 	void addUser(uint32_t userId, const std::string& userName = "");
 	void removeUser(uint32_t userId);
@@ -81,6 +82,7 @@ private:
 	std::queue<NoeudAbstrait*> pendingEntityCreationRequests_;
 
 	void sendEntityCreationRequest(NoeudAbstrait* entity);
+	void clearMapSession();
 
 	MapSession() = delete;
 };

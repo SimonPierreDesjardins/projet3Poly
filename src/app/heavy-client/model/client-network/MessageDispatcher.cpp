@@ -126,9 +126,9 @@ void MessageDispatcher::handleEntityDeletionMessage(const std::string& message)
 void MessageDispatcher::handleEntitySelectionMessage(const std::string& message)
 {
 	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
-	char selectionState = message[Networking::MessageStandard::DATA_START + 4];
+	bool selectionState = message[Networking::MessageStandard::DATA_START + 4] != 0;
 	uint32_t userId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START + 5);
-	eventHandler_->onEntitySelected(entityId, (bool)(selectionState), userId);
+	eventHandler_->onEntitySelected(entityId, selectionState, userId);
 }
 
 void MessageDispatcher::handleMapEditionMessage(const std::string& message)
@@ -170,7 +170,8 @@ void MessageDispatcher::handleMapJoinMessage(const std::string& message)
 
 void MessageDispatcher::handleMapQuitMessage(const std::string& message)
 {
-
+	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	eventHandler_->onUserLeftCurrentMapSession(userId);
 }
 
 void MessageDispatcher::handleMapListMessage(const std::string& message)

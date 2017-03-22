@@ -11,6 +11,7 @@ namespace client_network
 MapSession::MapSession(ArbreRendu* tree, NetworkManager* network)
 	: entityTree_(tree), network_(network)
 {
+	isOnline_ = network_->isConnected();
 	confirmedEntities_.insert(std::make_pair(0, entityTree_));
 	selectionColors.push({ 1.0, 1.0, 0.0, 1.0 });
 	selectionColors.push({ 0.5, 0.0, 1.0, 1.0 });
@@ -304,9 +305,36 @@ void MapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::P
 	pendingQueueLock_.unlock();
 }
 
-void MapSession::leave()
+void MapSession::requestToLeaveMapSession()
 {
-	network_->requestToleaveMapSession();
+	if (isOnline_)
+	{
+		network_->requestToQuitMapSession();
+	}
+}
+
+void MapSession::serverUserLeftMapSession(uint32_t userId)
+{
+	// Another user left the room.
+	if (userId != network_->getUserId())
+	{
+		auto it = users_.find(userId);
+		if (it != users_.end())
+		{
+			UserInfo* leavingUser = &it->second;
+			selectionColors.push(leavingUser->selectionColor);
+			users_.erase(it);
+		}
+	}
+	// I left the room.
+	else
+	{
+		clearMapSession();
+	}
+}
+
+void MapSession::clearMapSession()
+{
 	while (!pendingEntityCreationRequests_.empty())
 		pendingEntityCreationRequests_.pop();
 	confirmedEntities_.clear();

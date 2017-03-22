@@ -16,7 +16,8 @@ public:
 	using UserContainer = std::unordered_map<unsigned int, User*>;
 
 	void AddUser(User* user);
-	void RemoveUser(User* user);
+	bool RemoveUser(User* user);
+
 	inline size_t GetNumberOfUsers() const;
 
 	void broadcastMessage(const std::string& message);

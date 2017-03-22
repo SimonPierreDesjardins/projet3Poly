@@ -52,11 +52,11 @@ void NetworkManager::requestToJoinMapSession(uint32_t mapId)
 	connection_.sendMessage(message);
 }
 
-void NetworkManager::requestToleaveMapSession()
+void NetworkManager::requestToQuitMapSession()
 {
 	std::string message;
 	serializer_.serialize(uint32_t(6), message);
-	message.append("ml");
+	message.append("mq");
 	connection_.sendMessage(message);
 }
 
