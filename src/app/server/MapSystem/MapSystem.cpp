@@ -35,6 +35,7 @@ void MapEntry::GetSerializedInfo(std::string& message)
 	Networking::serialize(Info->GetId(), message);
 	message.append(1, getSessionType());
 	message.append(1, getNumberOfUsers());
+	message.append(1, Info->isPrivate ? 0x01:0x00);
 	message.append(Info->mapName);
 }
 
