@@ -45,6 +45,8 @@
         <script>
             //Called "onLoad"
             $(document).ready(function () {
+                //Dictionary for <mapID, mapName>
+                var mapDictionary = {};
 
                 //Load all maps
                 $.getJSON("https://api.mlab.com/api/1/databases/projet3/collections/MapInfos?apiKey=6dyiG1KR3iv5bFvxlJDL79N0PC6ijGDx", function (data) {
@@ -52,6 +54,30 @@
                     var i;
                     var mapVar;
                     $.each(data, function (i, map) {
+
+                        //Add mapID to mapName in mpaDictionary
+                        mapDictionary[map.ID] = map.mapName;
+
+                        //Change map bool privacy to string
+                        var mapPrivacy;
+                        if (map.isPrivate)
+                            mapPrivacy = "Public";
+                        else
+                            mapPrivacy = "Privée";
+
+                        //Change map int mode to string
+                        var mapMode;
+                        switch (map.mapType)
+                        {
+                            case 2:
+                                mapMode = "Édition";
+                                break;
+
+                            default:
+                                mapMode = "Simulation";
+                                break;
+                        }
+
                         //Left map
                         if (i % 2 == 0)
                         {
@@ -63,8 +89,8 @@
                                                                   <li class="w3-padding-16">Nombre de poteaux: ' + map.nbPoteaux + '</li>\
                                                                   <li class="w3-padding-16">Nombre de murs: ' + map.nbMurs + '</li>\
                                                                   <li class="w3-padding-16">Nombre de lignes: ' + map.nbLignes + '</li>\
-                                                                  <li class="w3-padding-16">Confidentialité: ' + map.isPrivate + '</li>\
-                                                                  <li class="w3-padding-16">Mode: ' + map.mapType + '</li>\
+                                                                  <li class="w3-padding-16">Confidentialité: ' + mapPrivacy + '</li>\
+                                                                  <li class="w3-padding-16">Mode: ' + mapMode + '</li>\
                                                               </ul>\
                                                           </div>');
                         }
@@ -77,8 +103,8 @@
                                                               <li class="w3-padding-16">Nombre de poteaux: ' + map.nbPoteaux + '</li>\
                                                               <li class="w3-padding-16">Nombre de murs: ' + map.nbMurs + '</li>\
                                                               <li class="w3-padding-16">Nombre de lignes: ' + map.nbLignes + '</li>\
-                                                              <li class="w3-padding-16">Confidentialité: ' + map.isPrivate + '</li>\
-                                                              <li class="w3-padding-16">Mode: ' + map.mapType + '</li>\
+                                                              <li class="w3-padding-16">Confidentialité: ' + mapPrivacy + '</li>\
+                                                              <li class="w3-padding-16">Mode: ' + mapMode + '</li>\
                                                           </ul>\
                                                       </div>\
                                                   </div>');
@@ -132,18 +158,45 @@
                     }
                         
                 });
-
-                /*var i;
-                for(i = 0; i < 2; i++)
-                {
-                    $("#girdOfUsers").append('fred fred ');
-                }*/
                 
-                /*
+                
                 $("button").click(function () {
-                    $("#girdOfUsers").append('<div class="w3-row-padding" style="margin: 0 -16px"><div class="w3-half w3-margin-bottom"><ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off"><li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #1</li><li class="w3-padding-16">Cartes modifiées: </li><li class="w3-padding-16">Cartes publiées: 0</li><li class="w3-padding-16">Nombre de simulations: 0</li><li class="w3-padding-16">Autre: 0</li></ul></div><div class="w3-half"><ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off"><li class="w3-dark-grey w3-xlarge w3-padding-32">Utilisateur #2</li><li class="w3-padding-16">Cartes modifiées: </li><li class="w3-padding-16">Cartes publiées: 0</li><li class="w3-padding-16">Nombre de simulations: 0</li><li class="w3-padding-16">Autre: 0</li></ul></div></div>');
+                    //Get user input
+                    var userName = document.getElementById("connectionUser").value;
+                    console.log(userName);
+                    //Remove current connected user
+                    $("#connectionUser").val('');
+                    var foundUser = 0;
+                    //Check for user in DataBase
+                    $.getJSON("https://api.mlab.com/api/1/databases/projet3/collections/Users?apiKey=6dyiG1KR3iv5bFvxlJDL79N0PC6ijGDx", function (data)
+                    {
+                        $.each(data, function (i, user)
+                        {
+                            //Found user in DataBase
+                            if (user.Username == userName)
+                            {
+                                foundUser = 1;
+                                $("#connectedUser").text("");
+                                $("#connectedUser").append('<div class="w3-row-padding" style="margin: 0 -16px">\
+                                                                    <div class="w3-half w3-margin-bottom">\
+                                                                        <ul class="w3-ul w3-white w3-center w3-opacity w3-hover-opacity-off">\
+                                                                            <li class="w3-green w3-xlarge w3-padding-32">' + user.Username + '</li>\
+                                                                            <li class="w3-padding-16">Cartes modifiées: ' + user.ModifiedMaps + '</li>\
+                                                                            <li class="w3-padding-16">Cartes publiées: ' + user.CreatedMaps + '</li>\
+                                                                            <li class="w3-padding-16">Nombre de simulations: ' + user.NumberOfSimulations + '</li>\
+                                                                            <li class="w3-padding-16">Autre: 0</li>\
+                                                                        </ul>\
+                                                                    </div>\
+                                                            </div>');
+                            }
+                        });
+                    });
+                    if (!foundUser) {
+                        $("#connectedUser").text("");
+                        $("#connectedUser").append('<p><font color="red">Cet utilisateur n\'existe pas dans notre base de données</font></p>');
+                    }
                 });
-                */
+                
                 
             });
         </script>
@@ -153,7 +206,10 @@
     <!-- Icon Bar (Sidebar - hidden on small screens) -->
     <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
         <!-- Avatar image in top left corner -->
-        <img src="/w3images/avatar_smoke.jpg" style="width: 100%">
+        <a class="w3-bar-item w3-padding-large">
+            <i class="fa w3-xxlarge"></i>
+            <br /><br /><br /><br /><br /><br />
+        </a>
         <a href="#" class="w3-bar-item w3-button w3-padding-large w3-black">
             <i class="fa fa-home w3-xxlarge"></i>
             <p>PRÉSENTATION</p>
@@ -263,7 +319,7 @@
 
         <!-- Users Section -->
         <div class="w3-padding-64 w3-content" id="users">
-            <h2 class="w3-text-light-grey">Utilisateurs sur le server</h2>
+            <h2 class="w3-text-light-grey">Utilisateurs sur le serveur</h2>
             <hr style="width: 200px" class="w3-opacity">
 
             <div id="girdOfUsers">
@@ -273,7 +329,7 @@
 
         <!-- Map Section -->
         <div class="w3-padding-64 w3-content" id="maps">
-            <h2 class="w3-text-light-grey">Cartes sur le server</h2>
+            <h2 class="w3-text-light-grey">Cartes sur le serveur</h2>
             <hr style="width: 200px" class="w3-opacity">
 
             <!-- Grid for maps on the server -->
@@ -417,16 +473,17 @@
             <br>
             <p>Connectez vous au serveur:</p>
 
-            <form action="/action_page.php" target="_blank">
-                <p>
-                    <input class="w3-input w3-padding-16" type="text" placeholder="Nom d'utilisateur" required name="Name">
-                </p>
-                <p>
-                    <button class="w3-button w3-padding-large" type="submit">
-                        <i class="fa fa-user-circle-o"></i> Connexion
-                    </button>
-                </p>
-            </form>
+            <p>
+                <input id="connectionUser" class="w3-input w3-padding-16" type="text" placeholder="Nom d'utilisateur" name="Name">
+            </p>
+            <p>
+                <button class="w3-button w3-padding-large">
+                    <i class="fa fa-user-circle-o"></i> Connexion
+                </button>
+            </p>
+
+            <div id="connectedUser">
+            </div>
         </div>
         <!-- End Connect Section -->
 
