@@ -29,5 +29,7 @@ namespace server{
 
 	private:
 		uint32_t _id;
+
+		std::string _collectionName;
 	};
 }
