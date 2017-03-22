@@ -240,60 +240,42 @@ void VisiteurDuplication::copyDuplicatedObjects(NoeudAbstrait* duplication)
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	NoeudAbstrait* table = arbre->chercher(0);
 
-	std::queue<NoeudAbstrait*> entitiesToCopy;
-
-	// Ajouter les enfants de la duplication dans la queue de copies.
+	// Iterate over the duplication children
 	uint32_t nDuplicationChildren = duplication->obtenirNombreEnfants();
 	for (uint32_t i = 0; i < nDuplicationChildren; i++) 
 	{
 		NoeudAbstrait* child = duplication->chercher(i);
 
-		std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(child->getType());
-
 		// Copy the properties.
+		std::shared_ptr<NoeudAbstrait> childCopy = arbre->creerNoeud(child->getType());
 
 		// Relative position of duplication to table is added to relative position from child to duplication.
-		copy->assignerPositionRelative(duplication->obtenirPositionRelative() + child->obtenirPositionRelative());
+		childCopy->assignerPositionRelative(duplication->obtenirPositionRelative() + child->obtenirPositionRelative());
+
 		// Everything else is copied.
-		copy->assignerPositionCourante(child->obtenirPositionCourante());
-		copy->assignerFacteurMiseAEchelle(child->obtenirFacteurMiseAEchelle());
-		copy->assignerAngleRotation(child->obtenirAngleRotation());
+		childCopy->assignerPositionCourante(child->obtenirPositionCourante());
+		childCopy->assignerFacteurMiseAEchelle(child->obtenirFacteurMiseAEchelle());
+		childCopy->assignerAngleRotation(child->obtenirAngleRotation());
 
 		// Add to table and notify the server.
-		table->ajouter(copy);
-		mapSession_->localEntityCreated(copy.get());
+		table->ajouter(childCopy);
+		mapSession_->localEntityCreated(childCopy.get());
 
 		// We need to copy all the children (probably only if this is a line).
 		uint32_t nGrandChildren = child->obtenirNombreEnfants();
 		for (uint32_t j = 0; j < nGrandChildren; ++j)
 		{
-			entitiesToCopy.push(child->chercher(j));
-		}
-	}
+			NoeudAbstrait* grandChild = child->chercher(j);
+			std::shared_ptr<NoeudAbstrait> grandChildCopy = arbre->creerNoeud(grandChild->getType());
 
-	// Non-recurisve top-down copy of all the children and sub-children of the
-	// duplication onto the table.
-	while (!entitiesToCopy.empty())
-	{
-		NoeudAbstrait* toCopy = entitiesToCopy.front();
-		entitiesToCopy.pop();
+			// Copy the properties.
+			grandChildCopy->assignerPositionRelative(grandChild->obtenirPositionRelative());
+			grandChildCopy->assignerPositionCourante(grandChild->obtenirPositionCourante());
+			grandChildCopy->assignerFacteurMiseAEchelle(grandChild->obtenirFacteurMiseAEchelle());
+			grandChildCopy->assignerAngleRotation(grandChild->obtenirAngleRotation());
 
-		std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(toCopy->getType());
-
-		// Copy the properties.
-		NoeudAbstrait* toCopyParent = toCopy->obtenirParent();
-		copy->assignerPositionRelative(toCopyParent->obtenirPositionCourante() - toCopy->obtenirPositionCourante());
-		copy->assignerPositionCourante(toCopy->obtenirPositionCourante());
-		copy->assignerFacteurMiseAEchelle(toCopy->obtenirFacteurMiseAEchelle());
-		copy->assignerAngleRotation(toCopy->obtenirAngleRotation());
-
-		table->ajouter(copy);
-		mapSession_->localEntityCreated(copy.get());
-
-		// Push the children into the queue.
-		for (unsigned int i = 0; i < toCopy->obtenirNombreEnfants(); i++) 
-		{
-			entitiesToCopy.push(toCopy->chercher(i));
+			childCopy->ajouter(grandChildCopy);
+			mapSession_->localEntityCreated(grandChildCopy.get());
 		}
 	}
 }
