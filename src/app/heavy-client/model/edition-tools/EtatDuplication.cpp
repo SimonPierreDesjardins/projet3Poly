@@ -30,6 +30,7 @@ EtatDuplication::EtatDuplication(client_network::MapSession* mapSession)
 	setType(DUPLICATION);
 	arbre_->accepterVisiteur(&visiteurDuplication_);
 	duplication_ = visiteurDuplication_.obtenirDuplication();
+	duplication_->setIsErasable(false);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -116,12 +117,12 @@ void EtatDuplication::gererClicGaucheRelache(const int& x, const int& y)
 void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 {
 	EtatAbstrait::gererMouvementSouris(x, y);
-	glm::dvec3 positionRelative;
-	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionRelative);
+	glm::dvec3 currentPosition;
+	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, currentPosition);
 	
-	gererPositionCurseur(positionRelative);
+	gererPositionCurseur(currentPosition);
 
-	visiteurDeplacement_.assignerPositionRelative(positionRelative);
+	visiteurDeplacement_.assignerPositionRelative(currentPosition - duplication_->obtenirPositionCourante());
 	duplication_->accepterVisiteur(&visiteurDeplacement_);
 }
 

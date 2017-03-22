@@ -36,6 +36,7 @@ NoeudDepart::NoeudDepart(uint32_t id, const std::string& typeNoeud)
 {
 	type_ = START_ENTITY;
 	estDuplicable_ = false;
+	isErasable_ = false;
 }
 
 

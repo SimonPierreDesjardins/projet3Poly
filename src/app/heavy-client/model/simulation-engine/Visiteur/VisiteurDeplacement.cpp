@@ -88,8 +88,40 @@ void VisiteurDeplacement::visiter(NoeudDuplication* duplication)
 	duplication->assignerPositionCourante(absolutePosition);
 	mapSession_->localEntityPropertyUpdated(duplication, Networking::ABSOLUTE_POSITION, glm::vec3(absolutePosition));
 
-	// Update children.
-	moveSelectedChildren(duplication);
+	// Update the relative position of all the children and push them in the queue.
+	std::queue<NoeudAbstrait*> entitiesToMove;
+	uint32_t nChildren = duplication->obtenirNombreEnfants();
+	
+	for (uint32_t i = 0; i < nChildren; ++i) 
+	{
+		// All the child will be selected and me move them all.
+		entitiesToMove.push(duplication->chercher(i));
+	}
+
+	// Non-recursive top down update of the absolute position. 
+	while (!entitiesToMove.empty())
+	{
+		// Get the entity in front of the queue.
+		NoeudAbstrait* entityToUpdate = entitiesToMove.front();
+		entitiesToMove.pop();
+
+		NoeudAbstrait* parent = entityToUpdate->obtenirParent();
+
+		// Update the absolute position (absolute from parent + child relative position)
+		glm::dvec3 updatedAbsolutePosition = entityToUpdate->obtenirPositionRelative() +
+											 parent->obtenirPositionCourante();
+		entityToUpdate->assignerPositionCourante(updatedAbsolutePosition);
+
+		mapSession_->localEntityPropertyUpdated(entityToUpdate, Networking::ABSOLUTE_POSITION, 
+												glm::vec3(updatedAbsolutePosition));
+
+		// Push the children in the queue.
+		uint32_t nChildren = entityToUpdate->obtenirNombreEnfants();
+		for (int i = 0; i < nChildren; ++i)
+		{
+			entitiesToMove.push(entityToUpdate->chercher(i));
+		}
+	}
 }
 
 void VisiteurDeplacement::moveSelectedChildren(NoeudAbstrait* entity)

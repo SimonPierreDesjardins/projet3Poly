@@ -45,9 +45,6 @@ private:
 	VisiteurSuppression() = delete;
 
 	client_network::MapSession* mapSession_;
-
-	void deleteSelectedEntityAndChildren(NoeudAbstrait* entity);
-
 };
 
 #endif // VISITEUR_SUPPRESSION_H

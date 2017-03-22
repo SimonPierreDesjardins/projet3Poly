@@ -141,6 +141,9 @@ public:
 	/// Vérifie si l'objet peut être dupliqué.
 	inline bool estDuplicable() const;
 
+	inline bool isErasable() const;
+	inline void setIsErasable(bool isErasable);
+
 	/// Assigne le modèle3D et la liste d'affichage du noeud courant
 	void assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste);
 
@@ -260,6 +263,8 @@ protected:
 
 	/// Détermine si l'objet peut être dupliqué
 	bool				    estDuplicable_{ true };
+
+	bool                    isErasable_{ true };
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
 
@@ -666,6 +671,16 @@ inline bool NoeudAbstrait::assignerEstDuplicable(bool estDuplicable)
 inline bool NoeudAbstrait::estDuplicable() const
 {
 	return estDuplicable_;
+}
+
+inline bool NoeudAbstrait::isErasable() const
+{
+	return isErasable_;
+}
+
+inline void NoeudAbstrait::setIsErasable(bool isErasable)
+{
+	isErasable_ = isErasable;
 }
 
 ////////////////////////////////////////////////////////////////////////

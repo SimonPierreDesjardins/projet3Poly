@@ -41,6 +41,8 @@ private:
 	VisiteurDeplacement visiteurDeplacement_;
 	VisiteurSuppression visiteurSuppression_;
 
+	glm::dvec3 lastPosition_{ glm::dvec3() };
+
 	NoeudAbstrait* duplication_{ nullptr };
 	bool enDuplication_{ false };
 };

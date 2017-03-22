@@ -82,6 +82,9 @@ void VisiteurDuplication::visiter(NoeudTable* noeud)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_DUPLICATION);
+	nouveauNoeud->assignerPositionCourante(centreSelection_);
+	nouveauNoeud->assignerPositionRelative(centreSelection_);
+	nouveauNoeud->assignerSelection(true);
 	noeud->ajouter(nouveauNoeud);
 	mapSession_->localEntityCreated(nouveauNoeud.get());
 	duplication_ = nouveauNoeud.get();
@@ -170,12 +173,13 @@ void VisiteurDuplication::visiter(NoeudLigne* noeud)
 	nouvelleLigne->assignerSelection(noeud->estSelectionne());
 
 	nouvelleLigne_ = nouvelleLigne.get();
+	duplication_->ajouter(nouvelleLigne);
+	mapSession_->localEntityCreated(nouvelleLigne.get());
+
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) 
 	{		
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
-	duplication_->ajouter(nouvelleLigne);
-	mapSession_->localEntityCreated(nouvelleLigne.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -195,6 +199,7 @@ void VisiteurDuplication::visiter(NoeudSegment* noeud)
 
 	// Creer le nouveau segment et copier les attributs du segment.
 	std::shared_ptr<NoeudAbstrait> nouveauSegment = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);	
+
 	nouveauSegment->assignerFacteurMiseAEchelle(noeud->obtenirFacteurMiseAEchelle());
 	nouveauSegment->assignerAngleRotation(noeud->obtenirAngleRotation());
 	nouveauSegment->assignerPositionRelative(noeud->obtenirPositionRelative());
@@ -233,14 +238,37 @@ void VisiteurDuplication::visiter(NoeudJonction* noeud)
 void VisiteurDuplication::copyDuplicatedObjects(NoeudAbstrait* duplication)
 {
 	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	NoeudAbstrait* table = arbre->chercher("table");
+	NoeudAbstrait* table = arbre->chercher(0);
 
 	std::queue<NoeudAbstrait*> entitiesToCopy;
 
 	// Ajouter les enfants de la duplication dans la queue de copies.
-	for (unsigned int i = 0; i < duplication->obtenirNombreEnfants(); i++) 
+	uint32_t nDuplicationChildren = duplication->obtenirNombreEnfants();
+	for (uint32_t i = 0; i < nDuplicationChildren; i++) 
 	{
-		entitiesToCopy.push(duplication->chercher(i));
+		NoeudAbstrait* child = duplication->chercher(i);
+
+		std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(child->getType());
+
+		// Copy the properties.
+
+		// Relative position of duplication to table is added to relative position from child to duplication.
+		copy->assignerPositionRelative(duplication->obtenirPositionRelative() + child->obtenirPositionRelative());
+		// Everything else is copied.
+		copy->assignerPositionCourante(child->obtenirPositionCourante());
+		copy->assignerFacteurMiseAEchelle(child->obtenirFacteurMiseAEchelle());
+		copy->assignerAngleRotation(child->obtenirAngleRotation());
+
+		// Add to table and notify the server.
+		table->ajouter(copy);
+		mapSession_->localEntityCreated(copy.get());
+
+		// We need to copy all the children (probably only if this is a line).
+		uint32_t nGrandChildren = child->obtenirNombreEnfants();
+		for (uint32_t j = 0; j < nGrandChildren; ++j)
+		{
+			entitiesToCopy.push(child->chercher(j));
+		}
 	}
 
 	// Non-recurisve top-down copy of all the children and sub-children of the

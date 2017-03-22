@@ -69,44 +69,28 @@ void VisiteurSuppression::visiter(ArbreRendu* tree)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSuppression::visiter(NoeudTable* table)
 {
+	std::vector<NoeudAbstrait*> toDeleteList;
+
 	uint32_t nChildren = table->obtenirNombreEnfants();
-	for (int i = 0; i < nChildren; ++i)
+	for (uint32_t i = 0; i < nChildren; ++i)
 	{
 		NoeudAbstrait* child = table->chercher(i);
-		if (child->estSelectionne() && child->getOwnerId() == mapSession_->getThisUserId())
-		{
-			deleteSelectedEntityAndChildren(child);
-		}
-	}
-}
-
-void VisiteurSuppression::visiter(NoeudDuplication * duplication)
-{
-	deleteSelectedEntityAndChildren(duplication);
-}
-
-void VisiteurSuppression::deleteSelectedEntityAndChildren(NoeudAbstrait* entity)
-{
-	// When a node is deleted, indexes of the chilren are invalidated.
-	// We don't want to search again from the beginning (O(n^2)) so we use a 2 pass algorithm (O(n)).
-	std::vector<NoeudAbstrait*> toDeleteList;
-	
-	// First pass to list the nodes to delete.
-	uint32_t nChildren = entity->obtenirNombreEnfants();
-	for (int i = 0; i < nChildren; ++i)
-	{
-		NoeudAbstrait* child = entity->chercher(i);
-		if (child->estSelectionne() && child->getOwnerId() == mapSession_->getThisUserId())
+		if (child->estSelectionne() && child->isErasable() &&
+			child->getOwnerId() == mapSession_->getThisUserId())
 		{
 			toDeleteList.push_back(child);
 		}
 	}
 
-	// Second pass to delete the listed nodes.
 	for (int i = 0; i < toDeleteList.size(); ++i)
 	{
 		mapSession_->deleteLocalEntity(toDeleteList[i]);
 	}
+}
+
+void VisiteurSuppression::visiter(NoeudDuplication* duplication)
+{
+	mapSession_->deleteLocalEntity(duplication);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
