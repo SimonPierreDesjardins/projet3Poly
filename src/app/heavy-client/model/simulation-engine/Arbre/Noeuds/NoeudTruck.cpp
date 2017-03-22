@@ -127,14 +127,17 @@ void NoeudTruck::afficherConcret() const
 	else
 	{
 		glDisable(GL_COLOR_MATERIAL);
-		glColor4f(0.980392158, 0.721568644, 0.0235294122, 1.0);
+		glColor4f(0.980392158f, 0.721568644f, 0.0235294122f, 1.0f);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
-	controleurLumiere_->afficherLumiereSpotGyro();
+	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
+	{
+		controleurLumiere_->afficherLumiereSpotGyro();
+	}
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -142,15 +145,18 @@ void NoeudTruck::afficherConcret() const
 	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	// Dï¿½bugage des capteurs de distance.
-	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
+	if (mode_ != PERSONALIZE)
 	{
-		// Dï¿½bugage des capteurs de distance.
-		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
-			capteursDistance_->at(i).afficher();
+			// Débugage des capteurs de distance.
+			for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+			{
+				capteursDistance_->at(i).afficher();
+			}
 		}
 	}
+
 	// Restauration de la matrice.
 	glPopMatrix();
 }
@@ -238,6 +244,33 @@ void NoeudTruck::assignerCouleurs(int modele, int a, int r, int g, int b)
 		couleur_[3] = (float)b / (float)255;
 		estCouleurDefaut_ = false;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudTruck::setCouleurDefault(int piece, bool default)
+///
+/// Cette fonction permet de remettre la couleur par default
+///
+/// @param[in] bool true si par default et int indiquant la piece
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudTruck::setCouleurDefault(int piece, bool default)
+{
+	if (piece == WHEELS)
+	{
+		roueDroite_->setCouleurDefault(piece, default);
+		roueGauche_->setCouleurDefault(piece, default);
+		roueDroite2_->setCouleurDefault(piece, default);
+		roueGauche2_->setCouleurDefault(piece, default);
+	}
+	else if (piece == BODY)
+	{
+		estCouleurDefaut_ = default;
+	}
+
 }
 
 

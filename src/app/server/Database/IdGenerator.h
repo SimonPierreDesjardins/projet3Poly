@@ -11,6 +11,8 @@ namespace server {
 	public:
 		static unsigned int GenerateId();
 
+		static void SetNextId(unsigned int nId);
+
 	private:
 		static unsigned int nextId;
 	};

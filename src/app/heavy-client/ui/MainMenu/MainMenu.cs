@@ -16,8 +16,6 @@ namespace ui
         Window parent_;
         ConnectToServer connectOptions_;
 
-        private bool PasserEnSimulation = false;
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public MainMenu(Window parent)
@@ -33,9 +31,15 @@ namespace ui
             parent_ = parent;
 
             if (FonctionsNatives.isConnected())
+            {
                 connexionPictureBox.Image = ChangeColor((Bitmap)connexionPictureBox.Image, Color.Green);
+                achievementButton.Visible = true;
+            } 
             else
+            {
                 connexionPictureBox.Image = ChangeColor((Bitmap)connexionPictureBox.Image, Color.Red);
+                achievementButton.Visible = false;
+            }
 
             this.Width = 0;
             ShowMenuTimer.Start();
@@ -43,115 +47,23 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void mainMenu_SimulationButton_Click(object sender, EventArgs e)
+        /// @fn private void mainMenu_mapsButton_Click(object sender, EventArgs e)
         ///
-        /// Ouvrir une fenêtre permettant a l'usager de choisir une zone. Si une zone est
-        /// choisi, cette fonction enlève les composantes du mode principal, ajoute ceux du
-        /// du mode simulation et change de mode. Sinon rien.
+        /// Cette fonction permet de voir les cartes disponnible hors ligne et enligne
+        /// sur l"application. Enleve les controles du menu principale
         /// 
         /// @param objet sender: control qui gère l'action
         /// @param EventsArgs e: evenement du click
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void mainMenu_SimulationButton_Click(object sender, EventArgs e)
-        {
-            ouvrirZone(true);
-
-            if (PasserEnSimulation)
-            {
-                animationChangingMenu();
-                parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-                parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
-                parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
-                parent_.simulationMenuStrip.Dock = DockStyle.Top;
-
-                FonctionsNatives.assignerVueOrtho();
-                FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-                FonctionsNatives.assignerMode(Mode.SIMULATION);
-
-                parent_.viewPort.Visible = true;
-                Program.peutAfficher = true;
-            }
-            parent_.viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void ouvrirZone(bool afficherZoneDefaut)
-        ///
-        /// Ouvre un explorateur de ficher pour charger la zone sauvegarder lorsque 
-        /// le bouton ouvrir est appuyer sur le menu
-        /// 
-        /// @param bool afficherZoneDefaut: bool qui indique si la fenetre affiche
-        ///                                 la zone par defaut
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void ouvrirZone(bool afficherZoneDefaut)
-        {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            DialogResult dialogresult = explorateur.ShowDialog();
-            if (dialogresult == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
-                FonctionsNatives.charger();
-                PasserEnSimulation = true;
-            }
-            if (dialogresult == DialogResult.Cancel)
-                PasserEnSimulation = false;
-
-            explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void mainMenu_EditionButton_Click(object sender, EventArgs e)
-        ///
-        /// Cette fonction enlève les composantes du mode principal, ajoute ceux du
-        /// du mode edition et change de mode.
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void mainMenu_EditionButton_Click(object sender, EventArgs e)
+        private void mainMenu_mapsButton_Click(object sender, EventArgs e)
         {
             animationChangingMenu();
-            parent_.editionSideMenu = new EditionSideMenu(parent_);
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
-            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
-
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
-            parent_.editionSideMenu.Dock = DockStyle.Left;
-
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
-            parent_.editionMenuStrip.Dock = DockStyle.Top;
-
-            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
-                                                                  parent_.editionMenuStrip.Height);
-            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-
-            Program.peutAfficher = true;
-
-            FonctionsNatives.assignerMode(Mode.EDITION);
-            parent_.verificationDuNombreElementChoisi();
-        }
-
-        private void mainMenu_cardsOnlineButton_Click(object sender, EventArgs e)
-        {
-            animationChangingMenu();
+            //Adds offline maps to dictionary
             ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
-            //parent_.mapMenu = new MapMenu(parent_);
 
             parent_.mapMenu.Dock = DockStyle.Fill;
+            parent_.mapMenu.initMapList();
             parent_.viewPort.Controls.Add(parent_.mapMenu);
         }
 
@@ -180,6 +92,17 @@ namespace ui
             FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction ouvre une nouvelle fenetre qui permet a l'utilisateur de configurer
+        /// son robot et les touches utiliser.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mainMenu_ConfigurationButton_Click(object sender, EventArgs e)
         {
             FonctionsNatives.assignerMode(Mode.CONFIGURE);
@@ -192,6 +115,17 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mainMenu_ConnexionButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction enleve les controles de mode principale et ajoute les controles
+        /// pour permettre a l'utilisateur de se connecter au server.
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mainMenu_ConnexionButton_Click(object sender, EventArgs e)
         {
             animationChangingMenu();
@@ -202,6 +136,32 @@ namespace ui
             connectOptions_.Dock = DockStyle.Fill;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void achievementButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction enleve les controles de mode principale et ajoute les controles
+        /// pour permettre a l'utilisateur de voir ses accomplissement
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void achievementButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void mainMenu_QuitButton_Click(object sender, EventArgs e)
+        ///
+        /// Cette fonction termine l'application
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void mainMenu_QuitButton_Click(object sender, EventArgs e)
         {
             parent_.configuration.Dispose();

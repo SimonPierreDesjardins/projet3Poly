@@ -128,14 +128,17 @@ void NoeudF1::afficherConcret() const
 	else
 	{
 		glDisable(GL_COLOR_MATERIAL);
-		glColor4f(0.996078432, 0.0196078438, 0.0, 1.0);
+		glColor4f(0.996078432f, 0.0196078438f, 0.0f, 1.0f);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
-	controleurLumiere_->afficherLumiereSpotGyro();
+	if (mode_ != PERSONALIZE)  //empêche lumiere spot
+	{
+		controleurLumiere_->afficherLumiereSpotGyro();
+	}
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -143,15 +146,18 @@ void NoeudF1::afficherConcret() const
 	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	// Dï¿½bugage des capteurs de distance.
-	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
+	if (mode_ != PERSONALIZE)
 	{
-		// Dï¿½bugage des capteurs de distance.
-		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
-			capteursDistance_->at(i).afficher();
+			// Débugage des capteurs de distance.
+			for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+			{
+				capteursDistance_->at(i).afficher();
+			}
 		}
 	}
+
 	// Restauration de la matrice.
 	glPopMatrix();
 }
@@ -241,7 +247,32 @@ void NoeudF1::assignerCouleurs(int modele, int a, int r, int g, int b)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudF1::setCouleurDefault(int piece, bool default)
+///
+/// Cette fonction permet de remettre la couleur par default
+///
+/// @param[in] bool true si par default et int indiquant la piece
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudF1::setCouleurDefault(int piece, bool default)
+{
+	if (piece == WHEELS)
+	{
+		roueDroite_->setCouleurDefault(piece, default);
+		roueGauche_->setCouleurDefault(piece, default);
+		roueDroite2_->setCouleurDefault(piece, default);
+		roueGauche2_->setCouleurDefault(piece, default);
+	}
+	else if (piece == BODY)
+	{
+		estCouleurDefaut_ = default;
+	}
 
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

@@ -126,14 +126,17 @@ void NoeudAudi::afficherConcret() const
 	else
 	{
 		glDisable(GL_COLOR_MATERIAL);
-		glColor4f(0.0862745121, 0.407843143, 0.701960802, 1.0);
+		glColor4f(0.0862745121f, 0.407843143f, 0.701960802f, 1.0f);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
-	controleurLumiere_->afficherLumiereSpotGyro();
+	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
+	{
+		controleurLumiere_->afficherLumiereSpotGyro();
+	}
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -142,14 +145,18 @@ void NoeudAudi::afficherConcret() const
 	NoeudComposite::afficherConcret();
 
 	// Débugage des capteurs de distance.
-	if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
+	if (mode_ != PERSONALIZE)
 	{
-		// Débugage des capteurs de distance.
-		for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
-			capteursDistance_->at(i).afficher();
+			// Débugage des capteurs de distance.
+			for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
+			{
+				capteursDistance_->at(i).afficher();
+			}
 		}
 	}
+	
 	// Restauration de la matrice.
 	glPopMatrix();
 }
@@ -240,6 +247,32 @@ void NoeudAudi::assignerCouleurs(int modele, int a, int r, int g, int b)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudAudi::setCouleurDefault(int piece, bool default)
+///
+/// Cette fonction permet de remettre la couleur par default
+///
+/// @param[in] bool true si par default et int indiquant la piece
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudAudi::setCouleurDefault(int piece, bool default)
+{
+	if (piece == WHEELS)
+	{
+		roueDroite_->setCouleurDefault(piece, default);
+		roueGauche_->setCouleurDefault(piece, default);
+		roueDroite2_->setCouleurDefault(piece, default);
+		roueGauche2_->setCouleurDefault(piece, default);
+	}
+	else if (piece == BODY)
+	{
+		estCouleurDefaut_ = default;
+	}
+
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -40,18 +40,53 @@ namespace ui
             chatListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             chatListBox.MeasureItem += chatBox_MeasureItem;
             chatListBox.DrawItem += chatBox_DrawItem;
+
+            chatTextBox.GotFocus += OnFocus;
+            chatTextBox.LostFocus += OnDefocus;
+
+            addChannelTextBox.GotFocus += OnFocus;
+            addChannelTextBox.LostFocus += OnDefocus;
         }
 
-        public ListBox.ObjectCollection getChannelListBoxInfo()
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void OnFocus(object sender, MeasureItemEventArgs e)
+        ///
+        /// Evenement quand le control est utiliser
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void OnFocus(object sender, EventArgs e)
         {
-            return ChannelListBox.Items;
+            FonctionsNatives.assignerAutorisationInputClavier(false);
         }
 
-        public void addNewChannel(String newChannelName)
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void OnDefocus(object sender, MeasureItemEventArgs e)
+        ///
+        /// Evenement quand le control n'est plus utiliser
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void OnDefocus(object sender, EventArgs e)
         {
-            ChannelListBox.Items.Add(newChannelName);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void setChannelList(string[] listOfChannels)
+        ///
+        /// Met a jour le liste de channel disponible
+        /// 
+        /// @param string[] listOfChannels: Liste de channel
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void setChannelList(string[] listOfChannels)
         {
             ChannelListBox.Items.Clear();
@@ -218,12 +253,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void chatTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-
             if (e.KeyCode == Keys.Enter)
                 sendText();
-
-            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -291,11 +322,6 @@ namespace ui
             }
 
             addChannelTextBox.Clear();
-        }
-
-        private void addChannelTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -389,17 +415,40 @@ namespace ui
             warningLabel.Text = "";
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void addMessageToChat(string message)
+        ///
+        /// Fonction permettant d'ajouter un message au chat
+        /// 
+        /// @param string message: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void addMessageToChat(string message)
         {
             chatListBox.Items.Add(message);
             chatListBox.TopIndex = chatListBox.Items.Count - 1;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void addUsersToChannel(string[] message)
+        ///
+        /// Fonction permettant d'ajouter les utilisateurs au chat
+        /// 
+        /// @param string[] users: message recu du serveur
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void addUsersToChannel(string[] users)
         {
             userListBox.Items.Clear();
             for (int i = 1; i < users.Length; i++)
                 userListBox.Items.Add(users[i]);
+        }
+
+        private void addChannelTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
         }
     }
 }

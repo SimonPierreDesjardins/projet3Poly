@@ -440,8 +440,26 @@ namespace ui
         /// @param EventsArgs e: evenement du click
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void teleportObjectButton_Click(object sender, EventArgs e)
+        private void teleportorObjectButton_Click(object sender, EventArgs e)
         {
+            teleportorObjet();
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void teleportObjet()
+        ///
+        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
+        /// qui correspond à l'état, creation teleporteur mur
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        public void teleportorObjet()
+        {
+            hideObjectMenu();
+            setDefaultUnselectedColors();
+            wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
+            setCurrentObjet(teleportorPictureBox);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_O, (IntPtr)3276801);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -499,7 +517,7 @@ namespace ui
             redLineObjectButton.BackColor = Color.Transparent;
             postObjectButton.BackColor = Color.Transparent;
             wallObjectButton.BackColor = Color.Transparent;
-            teleportObjectButton.BackColor = Color.Transparent;
+            teleportorObjectButton.BackColor = Color.Transparent;
             bridgeObjectButton.BackColor = Color.Transparent;
         }
 
@@ -595,7 +613,7 @@ namespace ui
             redLineObjectButton.toolTip.SetToolTip(redLinePictureBox, "Objet ligne rouge []");
             postObjectButton.toolTip.SetToolTip(postObjectPicture, "Objet poteau [P]");
             wallObjectButton.toolTip.SetToolTip(wallObjectPicture, "Objet mur [M]");
-            teleportObjectButton.toolTip.SetToolTip(teleportorPictureBox, "Objet téléporteur []");
+            teleportorObjectButton.toolTip.SetToolTip(teleportorPictureBox, "Objet téléporteur [O]");
             bridgeObjectButton.toolTip.SetToolTip(bridgePictureBox, "Objet viaduc []");
         }
 

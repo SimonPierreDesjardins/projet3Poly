@@ -642,6 +642,13 @@ namespace ui
             return newBitmap;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void disableAllControls()
+        ///
+        /// Desactive tous les controls present dans le tutoriel edition
+        ///
+        ////////////////////////////////////////////////////////////////////////
         public void disableAllControls()
         {
             //Tools

@@ -47,6 +47,8 @@ public:
 
 	void suivreCamera();
 
+	void setCouleurDefault(int piece, bool default);
+
 private:
 
 	// Les attributs du robot.

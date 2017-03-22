@@ -1,120 +1,103 @@
 #ifndef __BASE_DATALIST_H
 #define __BASE_DATALIST_H
 
-#include "rapidjson\writer.h"
-#include "rapidjson\filewritestream.h"
-#include "rapidjson\filereadstream.h"
-#include "rapidjson\document.h"
 #include "IdGenerator.h"
 #include <unordered_map>
+#include <mongocxx\collection.hpp>
+#include <bsoncxx\builder\stream\document.hpp>
+#include "Database\Database.h"
+#include <bsoncxx\json.hpp>
+#include <thread>
 
 namespace server {
-
-	class DatalistElement{
-	public:
-		DatalistElement() {
-			_id = IdGenerator::GenerateId();
-		}
-
-		uint32_t GetId() const {
-			return _id;
-		}
-
-	private:
-		uint32_t _id;
-	};
 
 	///<summary>Base implementation for lists of data in databases where elements extend DatalistElement</summary>
 	template<class EType> class BaseDatalist{
 		static_assert(std::is_base_of<DatalistElement, EType>::value, "Datalist template class is not derived from DatalistElement");
-		typedef std::unordered_map<uint32_t, EType> ElementMap;
+		
+		typedef std::unordered_map<uint32_t, EType*> ElementMap;
 
 	public:
-		BaseDatalist(const std::string& filePath) {
-			/*
-			// open file and build data list
-			_filePath = filePath;
-			FILE* file;
-			if (fopen_s(&file, _filePath.c_str(), "r") != 0) {
-				//error occured, if file absent, ignore as file will be created on save. create default doc
-				return;
-			}
-			else {
-				//file opened, build database
-				char readBuffer[65536];
-				rapidjson::FileReadStream is(file, readBuffer, sizeof(readBuffer));
-				doc.ParseStream(is);
-				fclose(file);
-			}
-
-			if (doc.HasMember("elementList")) {
-				rapidjson::Value elementList = doc["elementList"];
-				for (rapidjson::Value::ConstValueIterator itr = elementList.Begin(); itr != elementList.End(); ++itr) {
-					printf("%d ", itr->GetInt());
-
-				}
-			}
-			else {
-				doc.
-			}
-			// read data
-			*/
+		BaseDatalist(Database* database) {
+			_database = database;
 		}
 
 		~BaseDatalist() {
-			SaveDataList(); // Make sure to save database before closing
-		};
+			_runUpdateThread = false;
+			while (!_updateThread.joinable()) {
+			}
+			_updateThread.join();
+		}
 		
 		//Adds elements to the database
-		//Should save user information on change
-		void AddElement(EType& element) {
-			_infoList.insert_or_assign(element.GetId(), element);
+		//Should save information on change
+		void CreateEntry(EType* newEntry) {
+			_infoList.insert_or_assign(newEntry -> GetId(), newEntry);
+			// Write new entry to db
+			_database->ReplaceEntry(GetCollectionName(), newEntry);
 		}
 
-		ElementMap& GetElements() const {
+		ElementMap& GetElements() {
 			return _infoList;
 		}
 
 	protected:
 
-		//virtual void WriteObject(DatalistElement& element) = 0;
+		void BuildDatabaseFromCollection(std::string CollectionName) {
+			auto collection = _database->GetCollection(GetCollectionName());
+			for (auto doc : collection.find((bsoncxx::builder::basic::document{}).extract())) {
+				EType* obj = ObjectFromBSON(doc);
+				_infoList.insert_or_assign(obj->GetId(), obj);
+			}
+			// Start updating thread that calls an update task for all entries once per second;
+			RunDatabaseSaveThread();
+		}
 
-		//virtual DatalistElement& GetObject(rapidjson::Value value) = 0;
+		virtual std::string GetCollectionName() = 0;
 
-		/// Objet pour écrire dans un fichier.
-		rapidjson::Writer<rapidjson::FileWriteStream>* writer;
-		rapidjson::Document doc;
+		// Extracts an object of template type from the document and manages Id tracking
+		EType* ObjectFromBSON(bsoncxx::document::view docView) {
+			unsigned int objectId = docView["ID"].get_int32();
+			EType* object = new EType(objectId);
+			GetObjectPropertiesFromBSON(docView, object);
+			return object;
+		}
 
+		// Gets all non-Id elements from the document before adding the object to the item list
+		virtual void GetObjectPropertiesFromBSON(bsoncxx::document::view docView, EType* object) = 0;
+		
 		//Saves user information into file
-		void SaveDataList() {
-			/*
-			FILE* file;
-			if (fopen_s(&file, _filePath.c_str(), "w") != 0) {
-				//error occured, maybe create a file at filepath?
+		void RunDatabaseSaveThread() {
+			if (_runUpdateThread) {
 				return;
 			}
-			char writeBuffer[65536];
-			rapidjson::FileWriteStream os(file, writeBuffer, sizeof(writeBuffer));
-			writer = new rapidjson::Writer<rapidjson::FileWriteStream>(os);
-			writer->StartObject();
-			writer->Key("data");
-			writer->StartArray();
-			for each(auto infoPair in _infoList) {
-				writer->StartObject();
-				WriteObject(infoPair.second);
-				writer->EndObject();
-			}
-			writer->EndArray();
-			writer->EndObject();
-			fclose(file);
-			*/
+
+			_runUpdateThread = true;
+
+			_updateThread = std::thread([this]() {
+				while (_runUpdateThread) {
+					// sleep thread
+					std::this_thread::sleep_for(std::chrono::seconds(2));
+					// update DB elements
+					for each (auto element in _infoList)
+					{
+						if (!_runUpdateThread) {
+							break;
+						}
+
+						_database->ReplaceEntry(GetCollectionName(), element.second);
+					}
+				}
+			});
 		}
 
 		// Map of info
 		ElementMap _infoList;
 
-		// info to keep file close by
-		std::string _filePath;
+		Database* _database;
+
+		std::thread _updateThread;
+		bool _runUpdateThread = false;
 	};
 }
 

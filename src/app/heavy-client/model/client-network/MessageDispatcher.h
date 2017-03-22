@@ -25,7 +25,7 @@ public:
 
 	void startDispatching();
 	void stopDispatching();
-	void handleReceivedMessage(char const* message, int32_t size);
+	void handleReceivedMessage(char const* message, uint32_t size);
 
 
 private:

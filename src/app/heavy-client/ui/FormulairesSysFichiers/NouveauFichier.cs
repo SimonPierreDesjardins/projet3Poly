@@ -71,7 +71,7 @@ namespace ui
         public NouveauFichier()
         {
             StringBuilder str = new StringBuilder(100);
-            FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
+            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
             cheminFichierZoneDefaut = str.ToString();
             cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             extensionFichierZone = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("."));
@@ -125,7 +125,7 @@ namespace ui
             Close();
         }
 
-        static partial class FonctionNative
+        static partial class FonctionsNatives
         {
             [System.Runtime.InteropServices.DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
             public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);

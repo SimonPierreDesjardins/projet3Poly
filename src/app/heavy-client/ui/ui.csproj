@@ -110,6 +110,12 @@
     </Compile>
     <Compile Include="enum\EditionTutorialState.cs" />
     <Compile Include="enum\TypeOfTool.cs" />
+    <Compile Include="Connection\DisconnetedPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Connection\DisconnetedPanel.Designer.cs">
+      <DependentUpon>DisconnetedPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Personalize\ModeleSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -128,10 +134,10 @@
     <Compile Include="Other\Configure.Designer.cs">
       <DependentUpon>Configure.cs</DependentUpon>
     </Compile>
-    <Compile Include="MainMenu\ConnectToServer.cs">
+    <Compile Include="Connection\ConnectToServer.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MainMenu\ConnectToServer.Designer.cs">
+    <Compile Include="Connection\ConnectToServer.Designer.cs">
       <DependentUpon>ConnectToServer.cs</DependentUpon>
     </Compile>
     <Compile Include="Other\CustomClass.cs">
@@ -263,6 +269,9 @@
     <EmbeddedResource Include="Edition\EditionModificationPanel.resx">
       <DependentUpon>EditionModificationPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Connection\DisconnetedPanel.resx">
+      <DependentUpon>DisconnetedPanel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ColorSelector.resx">
       <DependentUpon>ColorSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,7 +279,7 @@
       <DependentUpon>Configure.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainMenu\ConnectToServer.resx">
+    <EmbeddedResource Include="Connection\ConnectToServer.resx">
       <DependentUpon>ConnectToServer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Edition\EditionMenuStrip.resx">

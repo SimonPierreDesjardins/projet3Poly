@@ -128,6 +128,25 @@ void VisiteurRotation::visiter(NoeudMur* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn VisiteurRotation::visiter(NoeudTeleporteur* noeud)
+///
+/// Fonction qui modifie la position et l'angle de rotation du noeud teleporteur passé en paramètre selon la rotation effectuée.
+///
+/// @param[in] noeud : Le noeud teleporteur auquel ont veut appliquer une rotation.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurRotation::visiter(NoeudTeleporteur* noeud)
+{
+	// Assigner le nouvel angle de rotation.
+	double angle = noeud->obtenirAngleRotation() + angleRotation_;
+	noeud->assignerAngleRotation(angle);
+	assignerNouvellePositionRelative(noeud);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn VisiteurRotation::visiter(NoeudDepart* noeud)
 ///
 /// Fonction qui modifie la position et l'angle de rotation du noeud Depart passé en paramètre selon la rotation effectuée.
@@ -210,6 +229,7 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
     double maxY = 0;
     
     bool premierEnSelection = true;
+	
 	// Trouver les min / max dans les positions des noeuds sur la table.
 	for (unsigned int i = 0; i < nEnfants; i++)
 	{

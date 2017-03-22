@@ -15,6 +15,8 @@
 
 #include "rapidjson\writer.h"
 
+#include <unordered_set>
+
 class NoeudComposite;
 
 
@@ -67,8 +69,11 @@ public:
 	/// Sauvegarde en JSON d'un NoeudRobot
 	virtual void visiter(NoeudRobot* noeud);
 
+	virtual void visiter(NoeudTeleporteur* noeud);
+
 private:
 
+	std::unordered_set<NoeudTeleporteur*> teleporteursDejaSauves;
 	/// Objet pour écrire dans un fichier.
 	rapidjson::Writer<rapidjson::FileWriteStream>* writer ;
 

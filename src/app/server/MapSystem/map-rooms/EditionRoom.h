@@ -9,7 +9,7 @@ namespace server
 class EditionRoom : public AbstractMapRoom
 {
 public:
-	EditionRoom() = default;
+	EditionRoom(MapInfo* mapInfo);
 	virtual ~EditionRoom() = default;
 
 };

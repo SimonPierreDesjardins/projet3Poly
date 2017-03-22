@@ -47,6 +47,7 @@ public:
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudJonction* noeud);
+	virtual void visiter(NoeudTeleporteur* noeud);
 
 private:
 

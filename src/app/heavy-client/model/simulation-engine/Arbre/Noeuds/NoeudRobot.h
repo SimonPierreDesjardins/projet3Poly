@@ -60,6 +60,7 @@ public:
     bool verifierCollision(NoeudPoteau* poteau);
     bool verifierCollision(NoeudMur* noeud);
     bool verifierCollision(NoeudTable* noeud);
+	bool verifierCollision(NoeudTeleporteur* noeud);
     
 	//Permet de modifier les paramètres du robot
 	inline void assignerVitesseRotation(float vitesse);
@@ -89,7 +90,7 @@ public:
     inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 
-	void setCouleurDefault(int piece,bool default);
+	virtual void setCouleurDefault(int piece,bool default);
 
 
 protected:
@@ -140,9 +141,12 @@ protected:
 	NoeudRoues* roueDroite_;
 	NoeudRoues* roueGauche2_;
 	NoeudRoues* roueDroite2_;
+	NoeudTeleporteur* teleporteurCourant_{nullptr};
 	float* couleur_;
 	bool estCouleurDefaut_ = true;
 	int mode_;
+	bool teleporteurCollision_ = false;
+	bool teleportationFaite_ = false;
 	
 	ControleurLumiere* controleurLumiere_{ nullptr };
 };

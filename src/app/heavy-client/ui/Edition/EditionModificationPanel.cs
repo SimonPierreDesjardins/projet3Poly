@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   EditionModificationPanel.cs
+/// @author Frédéric Grégoire
+/// @date   2017-03-05
+///
+////////////////////////////////////////////////
+using System;
 using System.Windows.Forms;
 
 namespace ui
@@ -7,6 +13,15 @@ namespace ui
     {
         Window parent_;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public EditionModificationPanel(Window parent)
+        ///
+        /// Cette fonction initialize les controles sur user control et assigne les attributs.
+        ///
+        /// @param Window parent: reference a la fenetre principal du programme
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public EditionModificationPanel(Window parent)
         {
             InitializeComponent();
@@ -25,11 +40,31 @@ namespace ui
             textBoxPositionY_.LostFocus += OnDefocus;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void OnFocus(object sender, MeasureItemEventArgs e)
+        ///
+        /// Evenement quand le control est utiliser
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void OnFocus(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInputClavier(false);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void OnDefocus(object sender, MeasureItemEventArgs e)
+        ///
+        /// Evenement quand le control n'est plus utiliser
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventArgs e: evenement du clique
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void OnDefocus(object sender, EventArgs e)
         {
             FonctionsNatives.assignerAutorisationInputClavier(true);

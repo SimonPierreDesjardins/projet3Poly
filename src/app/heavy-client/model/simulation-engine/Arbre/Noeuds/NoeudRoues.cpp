@@ -82,11 +82,11 @@ void NoeudRoues::afficherConcret() const
 	// Sauvegarde de la matrice.
 	glPushMatrix();
 	if(profil_->getModele() == "audi" )
-		glScalef(0.95, 0.95, 0.85);
+		glScalef(0.95f, 0.95f, 0.85f);
 	if(profil_->getModele() == "f1")
-		glScalef(0.6, 0.8, 0.75);
+		glScalef(0.6f, 0.8f, 0.75f);
 	if (profil_->getModele() == "truck")
-		glScalef(1.25, 1.25, 1.25);
+		glScalef(1.25f, 1.25f, 1.25f);
 	if (!estCouleurDefaut_)
 	{
 		glDisable(GL_COLOR_MATERIAL);

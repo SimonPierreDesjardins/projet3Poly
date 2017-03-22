@@ -49,6 +49,8 @@ public:
     /// Visiter un mur.
     virtual void visiter(NoeudMur* noeud);
 
+	virtual void visiter(NoeudTeleporteur* noeud);
+
 private:
     NoeudRobot* robot_{ nullptr };
     SuiveurLigne* suiveurLigne_;

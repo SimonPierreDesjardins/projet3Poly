@@ -8,7 +8,7 @@ using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using ModeEnum;
-using System.Collections.Generic;
+using System.Text;
 
 namespace ui
 {
@@ -18,6 +18,8 @@ namespace ui
 
         public UserTabChat userChat;
         public string userName = "";
+
+        public DisconnetedPanel disconnectedWarning;
 
         public MainMenu mainMenu;
         public MapMenu mapMenu;
@@ -100,7 +102,6 @@ namespace ui
             InitialiserAnimation();
             configuration = new Configure(this);
             mapMenu = new MapMenu(this);
-
 
             mInstance = new CallbackForNewMap(addNewMap);
             SetCallbackForNewMap(mInstance);
@@ -746,6 +747,8 @@ namespace ui
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool leaveMap();
 
+        [DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
+        public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
 
     }
 }

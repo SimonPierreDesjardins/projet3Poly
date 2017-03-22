@@ -66,6 +66,7 @@ const std::string ArbreRenduINF2990::NOM_TELEPORTEUR{ "teleporteur" };
 ////////////////////////////////////////////////////////////////////////
 ArbreRenduINF2990::ArbreRenduINF2990()
 {
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -109,6 +110,7 @@ void ArbreRenduINF2990::initialiser()
 	ajouterUsine(F1_ENTITY, NOM_F1, std::make_unique<UsineNoeud<NoeudF1>>(NOM_F1, std::string{ "media/modeles/ferrari-f1-race-car.obj" }));
 	ajouterUsine(TRUCK_ENTITY, NOM_TRUCK, std::make_unique<UsineNoeud<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }));
 	ajouterUsine(AUDI_ENTITY, NOM_AUDI, std::make_unique<UsineNoeud<NoeudAudi>>(NOM_AUDI, std::string{ "media/modeles/audi_r8.obj" }));
+	ajouterUsine(TELEPORT_ENTITY, NOM_TELEPORTEUR, std::make_unique<UsineNoeud<NoeudTeleporteur>>(NOM_TELEPORTEUR, std::string{ "media/modeles/teleporter.obj" }));
 
 	//chargerZoneDefaut();
 }
@@ -208,6 +210,12 @@ void ArbreRenduINF2990::chargerZone(FILE* fp)
 ///
 ////////////////////////////////////////////////////////////////////////
 void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, std::shared_ptr<NoeudAbstrait> parent){
+	if (noeudJSON->HasMember("PaireTeleporteurs"))
+	{
+		chargerTeleporteurs(noeudJSON->FindMember("PaireTeleporteurs")->value, parent);
+		return;
+	}
+
 	std::shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
 	noeud->fromJson(noeudJSON);
 	parent->ajouter(noeud);
@@ -219,6 +227,19 @@ void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJS
 		itr != enfants.End(); ++itr) {
 		chargerZone(itr, noeud);
 	}
+}
+
+void ArbreRenduINF2990::chargerTeleporteurs(const rapidjson::Value& noeudJSON, std::shared_ptr<NoeudAbstrait> parent)
+{
+	auto heyo = noeudJSON.IsArray();
+	std::shared_ptr<NoeudAbstrait> noeud1 = { creerNoeud(noeudJSON[0].FindMember("type")->value.GetString()) };
+	noeud1->fromJson(&noeudJSON[0]);
+	std::shared_ptr<NoeudAbstrait> noeud2 = { creerNoeud(noeudJSON[1].FindMember("type")->value.GetString()) };
+	noeud2->fromJson(&noeudJSON[1]);
+	noeud1->assignerTeleporteur(noeud2.get());
+	noeud2->assignerTeleporteur(noeud1.get());
+	parent->ajouter(noeud1);
+	parent->ajouter(noeud2);
 }
 
 

@@ -8,10 +8,11 @@
 namespace server
 {
 
-AbstractMapRoom::AbstractMapRoom()
+AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo)
 {
 	Entity* table = tree_.createEntity(0, 0);
 	Entity* start = tree_.createEntity(1, table->entityId_);
+	mapInfo_ = mapInfo;
 }
 
 AbstractMapRoom::~AbstractMapRoom()
@@ -27,6 +28,22 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 {
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
+
+	// Send user list to the new User.
+	for (auto it = _connectedUserList.begin(); it != _connectedUserList.end(); ++it)
+	{
+		if (it->second != user)
+		{
+			// Send joined response to new user.
+			std::string userEntry(4, '\0');
+			userEntry.append("mjs");
+			Networking::serialize(mapInfo_->GetId(), userEntry);
+			Networking::serialize(it->second->Info.GetId(), userEntry);
+			userEntry.append(it->second->Info.UserName);
+			Networking::MessageStandard::UpdateLengthHeader(userEntry);
+			user->ForwardMessage(userEntry);
+		}
+	}
 
 	std::queue<Entity*> sendingQueue;
 	Entity* table = tree_.findEntity(1);
@@ -167,7 +184,6 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 
 	newEntity->userId_ = sender->Info.GetId();
 
-
 	Eigen::Vector3f* absPos = newEntity->getProperty(Networking::ABSOLUTE_POSITION);
 	absPos->x() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 5);
 	absPos->y() = Networking::deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 9);
@@ -197,6 +213,19 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	Networking::serialize(newEntity->userId_, response);
 
 	broadcastMessage(response);
+
+	// update mapinfo with new Item
+	switch (entityType) {
+	case Networking::MessageStandard::ItemTypes::POST_ENTITY:
+		mapInfo_->nbPoteaux++;
+		break;
+	case Networking::MessageStandard::ItemTypes::WALL_ENTITY:
+		mapInfo_->nbMurs++;
+		break;
+	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
+		mapInfo_->nbLignes++;
+		break;
+	}
 }
 
 void AbstractMapRoom::handleEntityRemovalMessage(User* sender, const std::string& message)

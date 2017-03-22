@@ -11,6 +11,7 @@ set(ARBRE_SRC
 )
 
 set(NOEUDS_SRC
+
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.h
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.cpp
     simulation-engine/Arbre/Noeuds/NoeudComposite.h
@@ -42,6 +43,8 @@ set(NOEUDS_SRC
     simulation-engine/Arbre/Noeuds/NoeudF1.h
     simulation-engine/Arbre/Noeuds/NoeudVolks.cpp
     simulation-engine/Arbre/Noeuds/NoeudVolks.h
+    simulation-engine/Arbre/Noeuds/NoeudTeleporteur.cpp
+    simulation-engine/Arbre/Noeuds/NoeudTeleporteur.h
     simulation-engine/Arbre/Noeuds/NoeudAudi.h
     simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
 )
@@ -125,6 +128,9 @@ set(MACHINE_A_ETATS_SRC
 	edition-tools/OnlineTool.h
 	edition-tools/OnlineTool.cpp
     edition-tools/EtatTypes.h
+    edition-tools/EtatCreationTeleporteur.h
+    edition-tools/EtatCreationTeleporteur.cpp
+
 )
 
 set(MODES_SRC
@@ -166,6 +172,7 @@ set(PROFIL_UTILISATEUR_SRC
 )
 
 set(VISITEUR_SRC
+
     simulation-engine/Visiteur/VisiteurAbstrait.h
     simulation-engine/Visiteur/VisiteurAbstrait.cpp
     simulation-engine/Visiteur/VisiteurCreationLigne.h
@@ -193,6 +200,9 @@ set(VISITEUR_SRC
     simulation-engine/Visiteur/VisiteurVerificationQuad.h
     simulation-engine/Visiteur/VisiteurVerificationQuad.cpp
     simulation-engine/Visiteur/VisiteurTypes.h
+    simulation-engine/Visiteur/VisiteurCreationTeleporteur.h
+    simulation-engine/Visiteur/VisiteurCreationTeleporteur.cpp
+
 )
 
 set(MAP_SESSION_SRC

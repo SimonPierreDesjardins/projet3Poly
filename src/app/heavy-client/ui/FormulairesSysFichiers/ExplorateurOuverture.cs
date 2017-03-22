@@ -58,7 +58,7 @@ namespace ui
             parent_ = parent;
 
             StringBuilder str = new StringBuilder(100);
-            FonctionNative.obtenirCheminFichierZoneDefaut(str, str.Capacity);
+            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
             cheminFichierZoneDefaut = str.ToString();
             cheminDossierZone = cheminFichierZoneDefaut.Substring(0, cheminFichierZoneDefaut.LastIndexOf("/") + 1);
             nomFichierZoneDefaut = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("/") + 1);
@@ -67,6 +67,7 @@ namespace ui
             afficherZoneDefaut = true;
             PopulateTreeView();
 
+            parent_.mapMenu.offlineMaps_.Clear();
             populateLocalMapList();
         }
 
@@ -265,13 +266,16 @@ namespace ui
                 string text = listView1.Items[i].Text;
                 text = text.Replace(extensionFichierZone, "");
 
-                MapPresentator newMap = new MapPresentator(parent_, text, false, 0, 1, 0);
-                newMap.setPath(((FileInfo)listView1.Items[i].Tag).FullName);
-                parent_.mapMenu.addOfflineMapEntry(text, newMap);
+                if (!parent_.mapMenu.offlineMaps_.ContainsKey(text))
+                {
+                    MapPresentator newMap = new MapPresentator(parent_, text, false, -1, 0, -1);
+                    newMap.setPath(((FileInfo)listView1.Items[i].Tag).FullName);
+                    parent_.mapMenu.addOfflineMapEntry(text, newMap);
+                }
             }
         }
 
-        static partial class FonctionNative
+        static partial class FonctionsNatives
         {
             [System.Runtime.InteropServices.DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
             public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);

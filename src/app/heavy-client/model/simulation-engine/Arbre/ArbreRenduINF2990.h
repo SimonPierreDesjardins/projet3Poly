@@ -92,6 +92,9 @@ private:
 	/// Fonction récursive pour créer tous les noeuds selon l'arbre Json qui se trouve dans le fichier de sauvegarde
 	void chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, std::shared_ptr<NoeudAbstrait> parent);
 
+
+	void chargerTeleporteurs(const rapidjson::Value& noeudJSON, std::shared_ptr<NoeudAbstrait> parent);
+
 	/// Charge le fichier zone_par_defaut.json qui contient la structure de base de l'arbre de rendu
 	void chargerZoneDefaut();
 };
