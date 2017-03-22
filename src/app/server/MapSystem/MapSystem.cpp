@@ -196,24 +196,28 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 	auto it = _mapList.find(mapId);
 	if (it != _mapList.end())
 	{
+
+		// prepare response
+		std::string response("mjs");
+		Networking::serialize(mapId, response);
+		Networking::serialize(user->Info.GetId(), response);
+		response.append(user->Info.UserName);
+		response = Networking::MessageStandard::AddMessageLengthHeader(response);
+
 		// check if map is private
 		if (it->second.Info->isPrivate) {
 			// get password from message after the join Id
 			std::string password = message.substr(Networking::MessageStandard::DATA_START + 4);
 			if (password != it->second.Info->password) {
 				// send error message
-				user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader("mjd"));
+				response[10] = 'd';
+				user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader(response));
 				return;
 			}
 		}
 
 
-		// Send joined response.
-		std::string response;
-		Networking::serialize(uint32_t(14), response);
-		response.append("mj");
-		Networking::serialize(mapId,response);
-		Networking::serialize(user->Info.GetId(), response);
+		
 		user->ForwardMessage(response);
 		it->second.getCurrentSession()->broadcastMessage(response);
 
