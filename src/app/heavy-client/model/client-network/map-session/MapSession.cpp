@@ -304,6 +304,16 @@ void MapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::P
 	pendingQueueLock_.unlock();
 }
 
+void MapSession::leave()
+{
+	network_->requestToleaveMapSession();
+	while (!pendingEntityCreationRequests_.empty())
+		pendingEntityCreationRequests_.pop();
+	confirmedEntities_.clear();
+	users_.clear();
+	entityTree_->vider();
+}
+
 void MapSession::addUser(uint32_t userId, const std::string& userName)
 {
 	if (!selectionColors.empty())

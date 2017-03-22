@@ -57,7 +57,6 @@ ModeEdition::~ModeEdition()
 	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()  != nullptr) {
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 	}
-	FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
 }
 
 ////////////////////////////////////////////////////////////////////////

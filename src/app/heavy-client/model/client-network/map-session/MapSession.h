@@ -61,6 +61,8 @@ public:
 
 	void setIsOnlineSession(bool isOnline);
 
+	void leave();
+
 	void addUser(uint32_t userId, const std::string& userName = "");
 	void removeUser(uint32_t userId);
 	void clearUsers();
