@@ -6,6 +6,7 @@
 #include <memory>
 #include "AbstractMapRoom.h"
 #include "Database\MapDatabase.h"
+#include "Database\MapFileDatabase.h"
 
 namespace server 
 {
@@ -15,7 +16,7 @@ class MapEntry
 public:
 	MapInfo* Info;
 
-	MapEntry(MapInfo* info);
+	MapEntry(MapInfo* info, MapFileEntry* mapFile);
 	void GetSerializedInfo(std::string& message);
 
 	void updateSessionType();
@@ -37,7 +38,7 @@ inline AbstractMapRoom* MapEntry::getCurrentSession()
 class MapSystem : public MultiUserSystem
 {
 public:
-	MapSystem(MapInfoDatabase* mapDB);
+	MapSystem(MapInfoDatabase* mapInfoDB, MapFileDatabase* mapFileDB);
 
 protected:
 	virtual void TreatUserJoin(User* user);
@@ -80,6 +81,8 @@ private:
 	std::unordered_map<unsigned int, std::string> _mapsInTransfer;
 
 	MapInfoDatabase* _mapInfoDatabase;
+
+	MapFileDatabase* _mapFileDatabase;
 };
 }
 
