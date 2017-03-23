@@ -23,7 +23,7 @@ namespace server {
 
 		std::string mapName;
 		char mapType{ EDITION_MAP };
-		bool isPrivate;
+		bool isPrivate = false;
 		unsigned int nbPoteaux = 0;
 		unsigned int nbLignes = 0;
 		unsigned int nbMurs = 0;
