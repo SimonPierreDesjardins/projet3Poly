@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ui
@@ -10,6 +12,7 @@ namespace ui
             InitializeComponent();
 
             defaultCheckBox.Checked = true;
+            string test = FonctionsNatives.getMusic();
         }
 
         private void defaultCheckBox_Click(object sender, EventArgs e)
@@ -43,6 +46,7 @@ namespace ui
             {
                 string path = dialog.FileName;
                 string fileName = System.IO.Path.GetFileName(path);
+                FonctionsNatives.setMusic(path);
 
                 fileDirLabel.Text = fileName;
                 fileDirLabel.Visible = true;
@@ -50,6 +54,28 @@ namespace ui
                 pictureBox.Visible = true;
                 pictureBox.Image = Properties.Resources.confirm;
             }
+        }
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    ///
+    /// @fn FonctionsNatives
+    ///
+    /// Communication avec le modèle C++
+    ///
+    ////////////////////////////////////////////////////////////////////////
+    static partial class FonctionsNatives
+    {
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setMusic(String path);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        private static extern void getMusic(StringBuilder str, int size);
+        public static string getMusic()
+        {
+            StringBuilder str = new StringBuilder(100);
+            getMusic(str, str.Capacity);
+            return str.ToString();
         }
     }
 }

@@ -924,6 +924,34 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str());
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl  setMusic(char* path)
+	///
+	///	Fonction qui set la musique de simulation
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setMusic(char* path)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCheminVersMusiqueSimulation(path);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl getMusic(char* path, int size)
+	///
+	///	Fonction qui get la musique de simulation
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl getMusic(char* path, int size)
+	{
+		strcpy_s(path, size, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCheminVersMusiqueSimulation().c_str());
+	}
+
 	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType)
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
