@@ -59,22 +59,28 @@ NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
 
 void NoeudTeleporteur::animer(float dt)
 {
-	if (compteurHauteurTeleporteur <= 0.02)
-		versLeHaut = true;
+	if (!FacadeModele::obtenirInstance()->obtenirMode()->obtenirModeEnPause())
+	{
+		if (compteurHauteurTeleporteur <= 0.02)
+			versLeHaut = true;
 
-	if (compteurHauteurTeleporteur >= 1.5)
-		versLeHaut = false;
+		if (compteurHauteurTeleporteur >= 1.5)
+			versLeHaut = false;
 
-	if (versLeHaut)
-		compteurHauteurTeleporteur = compteurHauteurTeleporteur+0.02;
+		if (versLeHaut)
+			compteurHauteurTeleporteur = compteurHauteurTeleporteur + 0.02;
 
-	if (!versLeHaut)
-		compteurHauteurTeleporteur = compteurHauteurTeleporteur-0.02;
+		if (!versLeHaut)
+			compteurHauteurTeleporteur = compteurHauteurTeleporteur - 0.02;
 
+		
+		positionCourante_.z = compteurHauteurTeleporteur;
+		positionRelative_.z = compteurHauteurTeleporteur;
+		
+	}
 	positionCourante_ = positionRelative_;
-	positionCourante_.z = compteurHauteurTeleporteur;
-	positionRelative_.z = compteurHauteurTeleporteur;
-    mettreAJourFormeEnglobante();
+	mettreAJourFormeEnglobante();
+	
 }
 ////////////////////////////////////////////////////////////////////////
 ///

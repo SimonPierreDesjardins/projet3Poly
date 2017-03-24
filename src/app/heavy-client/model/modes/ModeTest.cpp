@@ -251,6 +251,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             bool estEnPause = controleRobot_->getEnPause();
             controleRobot_->setEnPause(!estEnPause);
 			controleurLumiere_->setEnPause(!estEnPause);
+			modeEnPause = !modeEnPause;
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();
@@ -349,6 +350,21 @@ void ModeTest::postAnimer()
 	arbre_->accepterVisiteur(&visiteur_);
 
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ModeTest::obtenirModeEnPause()
+///
+/// Fonction qui permet de dire si le mode est en pause ou non
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+bool ModeTest::obtenirModeEnPause()
+{
+	return modeEnPause;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

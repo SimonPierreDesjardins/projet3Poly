@@ -89,6 +89,7 @@ ModePieces::ModePieces()
 ////////////////////////////////////////////////////////////////////////
 ModePieces::~ModePieces()
 {
+	profil_->setPiece(0);
 	controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
@@ -281,6 +282,7 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             bool estEnPause = controleRobot_->getEnPause();
             controleRobot_->setEnPause(!estEnPause);
 			controleurLumiere_->setEnPause(!estEnPause);
+			modeEnPause = !modeEnPause;
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();      
@@ -391,6 +393,21 @@ void ModePieces::postAnimer()
 {
 	arbre_->accepterVisiteur(&visiteur_);
 
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ModePieces::obtenirModeEnPause()
+///
+/// Fonction qui permet de dire si le mode est en pause ou non
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+bool ModePieces::obtenirModeEnPause()
+{
+	return modeEnPause;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

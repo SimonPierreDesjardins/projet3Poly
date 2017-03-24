@@ -111,18 +111,10 @@ void VisiteurDetectionRobot::visiter(NoeudTable* table)
         capteursDistance_->at(i).verifierDetection(table);
     }
 	
-    for (int i = 0; i < table->obtenirNombreEnfants(); i++)
+    for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
     {
         table->chercher(i)->accepterVisiteur(this);
     }
-
-
-	/*while (!robot_->getTableauCoins().empty())
-	{
-		NoeudAbstrait* temp = robot_->getTableauCoins().top();
-		table->effacer(temp);
-		robot_->tableauCoins.pop();
-	}*/
 
 
     if (estEnCollision_)

@@ -51,7 +51,7 @@ private:
 	glm::dvec3 positionNoeudCourant;
 	ControleurLumiere* controleurLumiere_{ nullptr };
 
-
+	bool modeEnPause{ false };
 	VisiteurDetectionRobot visiteur_;
 
 public:
@@ -74,6 +74,8 @@ public:
 	virtual void postAnimer();
 
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
+
+	bool obtenirModeEnPause();
 };
 
 std::array<char, 11>* ModePieces::getTouchesNonConfigurable()

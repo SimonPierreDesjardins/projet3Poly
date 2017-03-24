@@ -57,6 +57,8 @@ private:
 	ArbreRenduINF2990* arbre_{ nullptr };
 	VisiteurDetectionRobot visiteur_;
 
+	bool modeEnPause{ false };
+
 public:
 
 	//Constructeur par défaut
@@ -75,6 +77,8 @@ public:
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	void postAnimer();
+
+	bool obtenirModeEnPause();
 	
 protected:
 	inline static std::array<char, 11>* getTouchesNonConfigurable();

@@ -53,6 +53,8 @@ private:
 
 	ArbreRenduINF2990* arbre_{ nullptr };
 
+	bool modeEnPause{ false };
+
 public:
 	//Constructeur par défaut
 	ModeSimulation();
@@ -71,6 +73,8 @@ public:
 	virtual void postAnimer();
 
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
+
+	bool obtenirModeEnPause();
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

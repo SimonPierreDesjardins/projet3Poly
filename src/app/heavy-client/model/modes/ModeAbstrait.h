@@ -84,6 +84,8 @@ public:
 
 	virtual void postAnimer() {};
 
+	virtual bool obtenirModeEnPause() { return true; };
+
 protected:
 	int typeMode_;
 	bool clicDroitEnfonce_{ false };

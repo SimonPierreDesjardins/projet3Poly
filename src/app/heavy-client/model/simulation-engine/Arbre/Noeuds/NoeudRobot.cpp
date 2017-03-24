@@ -568,6 +568,7 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 		EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
 		// On calcule les composantes de la collision.
 		table_->effacer(piece);
+		profil_->setPiece(profil_->obtenirPieces() + 1);
 	}
 	// Le poteau n'est pas en intersection et il se trouvait en collision.
 	else // if (!enIntersection)

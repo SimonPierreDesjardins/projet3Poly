@@ -111,6 +111,9 @@ class ProfilUtilisateur
 		void setModele(std::string modele);
 		std::string getModele();
 
+		void setPiece(int piece);
+		int obtenirPieces();
+
 	private:
 		bool creationDossierDonnees();
 
@@ -198,6 +201,8 @@ class ProfilUtilisateur
 		bool estDefautRobot_ = true;
 
 		std::string modele_{"robot"};
+
+		int piecesCollectees = 0;
 		
 };
 
