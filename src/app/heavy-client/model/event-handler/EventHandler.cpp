@@ -44,7 +44,7 @@ void EventHandler::onEntitySelected(uint32_t entityId, bool isSelected, uint32_t
 void EventHandler::onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, std::string& name)
 {
 	mapSessionManager_->createServerSession(mapId, mapType, name);
-	AddMap(name, true, mapType, nUsers, mapId);
+	AddMap(name, (bool)(permissions), true, mapType, nUsers, mapId);
 }
 
 void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
