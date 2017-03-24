@@ -41,13 +41,13 @@ void EventHandler::onEntitySelected(uint32_t entityId, bool isSelected, uint32_t
 	}
 }
 
-void EventHandler::onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers)
+void EventHandler::onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, std::string& name)
 {
 	mapSessionManager_->createServerSession(mapId, mapType, name);
 	AddMap(name, true, mapType, nUsers, mapId);
 }
 
-void EventHandler::onUserJoinedMap(uint32_t mapId, uint32_t userId)
+void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 {
 	client_network::MapSession* mapSession = mapSessionManager_->getServerSession(mapId);
 	// The map exists on the client.

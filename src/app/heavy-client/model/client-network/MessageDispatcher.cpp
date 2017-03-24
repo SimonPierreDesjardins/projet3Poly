@@ -155,17 +155,20 @@ void MessageDispatcher::handleMapEditionMessage(const std::string& message)
 
 void MessageDispatcher::handleMapCreationMessage(const std::string& message)
 {
-	char type = message[6];
-	uint32_t mapId = serializer_.deserializeInteger(&message[7]);
-	std::string name = message.substr(11);
-	eventHandler_->onNewMapCreated(type, mapId, name);
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	char type = message[Networking::MessageStandard::DATA_START + 4];
+	char nUsers = message[Networking::MessageStandard::DATA_START + 5];
+	char permission = message[Networking::MessageStandard::DATA_START + 6];
+	std::string name = message.substr(Networking::MessageStandard::DATA_START + 7);
+	eventHandler_->onNewMapCreated(mapId, type, mapId, permission, name);
 }
 
 void MessageDispatcher::handleMapJoinMessage(const std::string& message)
 {
-	uint32_t mapId = serializer_.deserializeInteger(&message[6]);
-	uint32_t userId = serializer_.deserializeInteger(&message[10]);
-	eventHandler_->onUserJoinedMap(mapId, userId);
+	char result = message[Networking::MessageStandard::DATA_START];
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 1]);
+	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 5]);
+	eventHandler_->onUserJoinedMap(result, mapId, userId);
 }
 
 void MessageDispatcher::handleMapQuitMessage(const std::string& message)
@@ -176,28 +179,25 @@ void MessageDispatcher::handleMapQuitMessage(const std::string& message)
 
 void MessageDispatcher::handleMapListMessage(const std::string& message)
 {
-	uint32_t mapId = 0;
-	std::string mapName;
-	char mapType = 0;
-	char nUsers = 0;
-	size_t iCurrentEntry = 6;
+	size_t iCurrentEntry = Networking::MessageStandard::DATA_START;
 	bool continueParsing = message.size() >= 12;
 
 	while (continueParsing)
 	{
-		mapId = serializer_.deserializeInteger(message.data() + iCurrentEntry);
-		mapType = message[iCurrentEntry + 4];
-		nUsers = message[iCurrentEntry + 5];
+		uint32_t mapId = serializer_.deserializeInteger(message.data() + iCurrentEntry);
+		char mapType = message[iCurrentEntry + 4];
+		char nUsers = message[iCurrentEntry + 5];
+		char permission = message[iCurrentEntry + 6];
 
-		size_t nameBegin = iCurrentEntry + 6;
+		size_t nameBegin = iCurrentEntry + 7;
 		size_t nameEnd = message.find(';', nameBegin);
 		if (nameEnd == std::string::npos)
 		{
 			nameEnd = message.size();
 			continueParsing = false;
 		}
-		mapName = message.substr(nameBegin, nameEnd - nameBegin);
-		eventHandler_->onNewMapCreated(mapType, mapId, mapName, nUsers);
+		std::string mapName = message.substr(nameBegin, nameEnd - nameBegin);
+		eventHandler_->onNewMapCreated(mapId, mapType, nUsers, permission, mapName);
 		iCurrentEntry = nameEnd + 1;
 	}
 }

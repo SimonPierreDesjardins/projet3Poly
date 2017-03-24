@@ -28,7 +28,7 @@ void MapEntry::updateSessionType()
 	}
 }
 
-void MapEntry::GetSerializedInfo(std::string& message)
+void MapEntry::GetSerializedInfo(std::string& message) const
 {
 	Networking::serialize(Info->GetId(), message);
 	message.append(1, getSessionType());
@@ -37,12 +37,12 @@ void MapEntry::GetSerializedInfo(std::string& message)
 	message.append(Info->mapName);
 }
 
-char MapEntry::getSessionType()
+char MapEntry::getSessionType() const
 {
 	return Info->mapType;
 }
 
-char MapEntry::getNumberOfUsers()
+char MapEntry::getNumberOfUsers() const
 {
 	return currentSession_->GetNumberOfUsers();
 }
@@ -158,9 +158,7 @@ void MapSystem::NotifyMapCreation(const MapEntry& mapSession)
 {
 	// Build the message.
 	std::string message = "mc";
-	message.append(1, mapSession.Info->mapType);
-	Networking::serialize(mapSession.Info->GetId(), message);
-	message.append(mapSession.Info->mapName);
+	mapSession.GetSerializedInfo(message);
 
 	// Broadcast.
 	broadcastMessage(Networking::MessageStandard::AddMessageLengthHeader(message));

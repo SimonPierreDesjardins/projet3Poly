@@ -38,8 +38,8 @@ public:
 	void onEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId);
 
 	// Map system
-	void onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers = 0);
-	void onUserJoinedMap(uint32_t mapId, uint32_t userId);
+	void onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, std::string& name);
+	void onUserJoinedMap(char result, uint32_t mapId, uint32_t userId);
 	void onUserLeftCurrentMapSession(uint32_t userId);
 	void onUserAuthentified(uint32_t userId);
 

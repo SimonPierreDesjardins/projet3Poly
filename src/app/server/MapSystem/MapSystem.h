@@ -17,13 +17,13 @@ public:
 	MapInfo* Info;
 
 	MapEntry(MapInfo* info, MapFileEntry* mapFile);
-	void GetSerializedInfo(std::string& message);
+	void GetSerializedInfo(std::string& message) const;
 
 	void updateSessionType();
 	inline AbstractMapRoom* getCurrentSession();
 
-	char getSessionType();
-	char getNumberOfUsers();
+	char getSessionType() const;
+	char getNumberOfUsers() const;
 	void AddUser(User* user);
 
 private:
