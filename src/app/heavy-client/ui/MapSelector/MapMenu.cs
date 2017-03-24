@@ -62,12 +62,20 @@ namespace ui
         public void initMapList()
         {
             mapPanel.Controls.Clear();
+            numberOfMaps_ = 0;
+            mapPanel.VerticalScroll.Value = 0;
             foreach (KeyValuePair<int, MapPresentator> pair in onlineMaps_)
             {
+                pair.Value.Size = new Size(this.mapPanel.Width, pair.Value.Height);
+                pair.Value.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+                pair.Value.Location = new Point(0, numberOfMaps_++ * 150);
                 mapPanel.Controls.Add(pair.Value);
             }
             foreach (KeyValuePair<string, MapPresentator> pair in offlineMaps_)
             {
+                pair.Value.Size = new Size(this.mapPanel.Width, pair.Value.Height);
+                pair.Value.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
+                pair.Value.Location = new Point(0, numberOfMaps_++ * 150);
                 mapPanel.Controls.Add(pair.Value);
             }
             verifyMapsAttributes();
