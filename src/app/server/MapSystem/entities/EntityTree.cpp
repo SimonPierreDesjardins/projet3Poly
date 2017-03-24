@@ -31,6 +31,7 @@ Entity* EntityTree::createEntity(char entityType, uint32_t parentId)
 		{
 			newEntityPtr = &result.first->second;
 		}
+		it->second.addChild(newEntityPtr);
 	}
 	return newEntityPtr;
 }

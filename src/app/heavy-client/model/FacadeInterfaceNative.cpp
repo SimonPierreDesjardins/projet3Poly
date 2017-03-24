@@ -978,7 +978,7 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl leaveMap()
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToQuitMapSession();
 	}
 
 
@@ -1201,7 +1201,7 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool connectionState, int mode, int nbPlayers, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
 		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);

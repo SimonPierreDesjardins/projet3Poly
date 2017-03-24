@@ -52,7 +52,7 @@ public:
 
 protected:
 	//Visiteur pour la suppression d'un noeud
-	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
+	VisiteurSuppression visiteurSuppression_;
 
 	//État du tutoriel d'Édition
 	int startIndexOfTutorialObjects_ = 0;

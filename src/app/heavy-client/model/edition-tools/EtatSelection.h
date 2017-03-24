@@ -11,7 +11,7 @@
 #ifndef ETAT_SELECTION_H
 #define ETAT_SELECTION_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurTypes.h"
 #include <vector>
 
@@ -24,10 +24,10 @@ class FacadeModele;
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatSelection : public EtatAbstrait
+class EtatSelection : public OnlineTool
 {
 public:
-	EtatSelection();
+	EtatSelection(client_network::MapSession* mapSession);
 	virtual ~EtatSelection();
 
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

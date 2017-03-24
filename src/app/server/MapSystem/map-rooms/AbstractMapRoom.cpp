@@ -29,18 +29,30 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
 
-	// Non-recursive pre order traversal of the tree.
-	std::queue<Entity*> sendingQueue;
-
-	for (auto it = tree_.begin(); it != tree_.end(); ++it)
+	// Send user list to the new User.
+	for (auto it = _connectedUserList.begin(); it != _connectedUserList.end(); ++it)
 	{
-		// We don't send the tree itself.
-		if (it->second.entityId_ != 0)
+		if (it->second != user)
 		{
-			sendingQueue.push(&it->second);
+			// Send joined response to new user.
+			std::string userEntry(4, '\0');
+			userEntry.append("mjs");
+			Networking::serialize(mapInfo_->GetId(), userEntry);
+			Networking::serialize(it->second->Info.GetId(), userEntry);
+			userEntry.append(it->second->Info.UserName);
+			Networking::MessageStandard::UpdateLengthHeader(userEntry);
+			user->ForwardMessage(userEntry);
 		}
 	}
 
+	std::queue<Entity*> sendingQueue;
+	Entity* table = tree_.findEntity(1);
+	if (table)
+	{
+		sendingQueue.push(table);
+	}
+
+	// Non-recursive top-down traversale of the tree.
 	while (!sendingQueue.empty())
 	{
 		Entity* tosend = sendingQueue.front();
@@ -61,6 +73,18 @@ void AbstractMapRoom::TreatUserDisconnect(User* user)
 {
 	// Unsub from physic and map edition messages.
 	user->removeSystemObserver(MAP_EDITION_MESSAGE);
+	
+	for (auto it = tree_.begin(); it != tree_.end(); ++it)
+	{
+		Entity* entity = &it->second;
+		if (entity->userId_ == user->Info.GetId()) 
+		{
+			entity->userId_ = 0;
+			std::string message;
+			buildEntitySelectedMessage(entity, message);
+			broadcastMessage(message);
+		}
+	}
 }
 
 void AbstractMapRoom::TreatUserMessage(User* sender, const std::string& message)
@@ -119,7 +143,7 @@ void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& m
 		break;
 
 	case 'd':
-		handleEntityDeletionMessage(sender, message);
+		handleEntityRemovalMessage(sender, message);
 		break;
 
 	case 's':
@@ -139,6 +163,14 @@ void AbstractMapRoom::buildEntityCreationMessage(Entity* entity, std::string& me
 	Networking::serialize(*entity->getProperty(Networking::RELATIVE_POSITION), message);
 	Networking::serialize(*entity->getProperty(Networking::ROTATION), message);
 	Networking::serialize(*entity->getProperty(Networking::SCALE), message);
+	Networking::serialize(entity->entityId_, message);
+	Networking::serialize(entity->userId_, message);
+}
+
+void AbstractMapRoom::buildEntitySelectedMessage(Entity* entity, std::string& message)
+{
+	Networking::serialize((uint32_t)(14), message);
+	message.append("es");
 	Networking::serialize(entity->entityId_, message);
 	Networking::serialize(entity->userId_, message);
 }
@@ -196,13 +228,47 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	}
 }
 
-void AbstractMapRoom::handleEntityDeletionMessage(User* sender, const std::string& message)
+void AbstractMapRoom::handleEntityRemovalMessage(User* sender, const std::string& message)
 {
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+
+	Entity* deletedEntity = tree_.findEntity(entityId);
+	// If the entity exists and the user is selecting it.
+	if (deletedEntity && deletedEntity->userId_ == sender->Info.GetId())
+	{
+		tree_.deleteEntity(entityId);
+	}
+	broadcastMessage(sender, message);
 }
 
 void AbstractMapRoom::handleEntitySelectionMessage(User* sender, const std::string& message)
 {
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	char selectionState = message[Networking::MessageStandard::DATA_START + 4];
+
+	Entity* entity = tree_.findEntity(entityId);
+	if (entity)
+	{
+		// If we want to select the object and it's not selected.
+		if (selectionState && entity->userId_ == 0)
+		{
+			entity->userId_ = sender->Info.GetId();
+			std::string response(message);
+			Networking::serialize(entity->userId_, response);
+			Networking::MessageStandard::UpdateLengthHeader(response);
+			broadcastMessage(response);
+		}
+		// If we have the object selected and we want to unselect it.
+		else if (!selectionState && entity->userId_ == sender->Info.GetId())
+		{
+			entity->userId_ = 0;
+			std::string response(message);
+			Networking::serialize(entity->userId_, response);
+			Networking::MessageStandard::UpdateLengthHeader(response);
+			broadcastMessage(response);
+		}
+		// Any other message is not accepted.
+	}
 }
 
 }
-

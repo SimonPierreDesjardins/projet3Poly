@@ -1,7 +1,6 @@
 #ifndef MAP_SESSION_MANAGER
 #define MAP_SESSION_MANAGER
 
-#include <unordered_map>
 #include <memory>
 
 #include "MapSession.h"
@@ -20,8 +19,8 @@ public:
 	~MapSessionManager() = default;
 
 	inline MapSession* getLocalMapSession();
-
 	MapSession* getServerSession(uint32_t mapId);
+
 	MapSession* createServerSession(uint32_t mapId, char mapType, const std::string& mapName);
 	void deleteServerSession(uint32_t mapid);
 

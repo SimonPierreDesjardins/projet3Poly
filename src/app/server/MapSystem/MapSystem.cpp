@@ -28,7 +28,7 @@ void MapEntry::updateSessionType()
 	}
 }
 
-void MapEntry::GetSerializedInfo(std::string& message)
+void MapEntry::GetSerializedInfo(std::string& message) const
 {
 	Networking::serialize(Info->GetId(), message);
 	message.append(1, getSessionType());
@@ -37,12 +37,12 @@ void MapEntry::GetSerializedInfo(std::string& message)
 	message.append(Info->mapName);
 }
 
-char MapEntry::getSessionType()
+char MapEntry::getSessionType() const
 {
 	return Info->mapType;
 }
 
-char MapEntry::getNumberOfUsers()
+char MapEntry::getNumberOfUsers() const
 {
 	return currentSession_->GetNumberOfUsers();
 }
@@ -79,29 +79,41 @@ void MapSystem::TreatUserMessage(User * user, const std::string & message)
 		// create map
 		HandleMapCreationMessage(user, message);
 		break;
+
 	case 'j':
 		// join map session
 		HandleMapJoinMessage(user, message);
 		break;
+
+	case 'q':
+		// Quit map session
+		HandleMapQuitMessage(user, message);
+		break;
+
 	case 'd':
 		// delete map session
 		HandleMapDeleteMessage(user, message);
 		break;
+
 	case 'g':
 		// get map's graph
 		HandleMapGraphRequestMessage(user, message);
 		break;
+
 	case 't':
 		// forward to map currently constructed by user
 		HandleMapTransferMessage(user, message);
 		break;
+
 	case 'x':
 		// Cancel map transfer
 		HandleCancelMapTransferMessage(user, message);
 		break;
+
 	case 'p':
 		// Change permissions
 		HandleMapPermissionChange(user, message);
+		break;
 	}
 }
 
@@ -146,9 +158,7 @@ void MapSystem::NotifyMapCreation(const MapEntry& mapSession)
 {
 	// Build the message.
 	std::string message = "mc";
-	message.append(1, mapSession.Info->mapType);
-	Networking::serialize(mapSession.Info->GetId(), message);
-	message.append(mapSession.Info->mapName);
+	mapSession.GetSerializedInfo(message);
 
 	// Broadcast.
 	broadcastMessage(Networking::MessageStandard::AddMessageLengthHeader(message));
@@ -205,8 +215,8 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 {
 	unsigned int mapId = Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START);
 
-	auto it = _mapList.find(mapId);
-	if (it != _mapList.end())
+	auto mapIt = _mapList.find(mapId);
+	if (mapIt != _mapList.end())
 	{
 
 		// prepare response
@@ -217,47 +227,56 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 		response = Networking::MessageStandard::AddMessageLengthHeader(response);
 
 		// check if map is private
-		if (it->second.Info->isPrivate) {
+		if (mapIt->second.Info->isPrivate) {
 			// get password from message after the join Id
 			std::string password = message.substr(Networking::MessageStandard::DATA_START + 4);
-			if (password != it->second.Info->password) {
+			if (password != mapIt->second.Info->password) {
 				// send error message
 				response[10] = 'd';
-				user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader(response));
+				user->ForwardMessage(response);
 				return;
 			}
 		}
 
-
-		
 		user->ForwardMessage(response);
-		it->second.getCurrentSession()->broadcastMessage(response);
 
-		// Add the user.
-		it->second.AddUser(user);
+		mapIt->second.AddUser(user);
+
+
 
 		// Adjust user stats according to map joined
-		switch (it->second.getSessionType()) {
+		switch (mapIt->second.getSessionType()) {
 		case 1 /* Simulation */:
 			user->Info.NumberOfSimulations++;
 			break;
 		case 2 /* Edition */ :
-			user->Info.ModifiedMaps.insert(it->second.Info->GetId());
+			user->Info.ModifiedMaps.insert(mapIt->second.Info->GetId());
 			break;
 		}
 	}
 }
-void MapSystem::HandleLeaveMapSessionRequest(User* user, const std::string& message)
+void MapSystem::HandleMapQuitMessage(User* user, const std::string& message)
 {
 	// Search for the room that contains the user.
-	for (auto it = _mapList.begin(); it != _mapList.end(); ++it)
+	bool isMapSessionFound = false;
+	AbstractMapRoom* foundMapSession = nullptr;
+
+	// There should only be one map session found.
+	for (auto it = _mapList.begin(); it != _mapList.end() && !isMapSessionFound; ++it)
 	{
-		AbstractMapRoom* currentSession = it->second.getCurrentSession();
-		if (currentSession)
+		AbstractMapRoom* mapSession = it->second.getCurrentSession();
+		if (mapSession)
 		{
-			currentSession->RemoveUser(user);
+			isMapSessionFound = mapSession->RemoveUser(user);
+			foundMapSession = mapSession;
 		}
 	}
+
+	// Send Reply to every user in the mapSession.
+	std::string reply(message);
+	Networking::serialize(user->Info.GetId(), reply);
+	Networking::MessageStandard::UpdateLengthHeader(reply);
+	foundMapSession->broadcastMessage(reply);
 }
 
 void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)

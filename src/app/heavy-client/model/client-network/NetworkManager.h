@@ -31,16 +31,17 @@ public:
 	inline bool requestConnection(const std::string& hostName, const std::string& port);
 
 	void createProfile(const std::string& profileName);
-
 	void authenticate(const std::string& profileName);
 
 	void requestMapCreation(const std::string& mapName, uint8_t mapType);
 	void requestToJoinMapSession(uint32_t mapId);
-	void requestToleaveMapSession();
+	void requestToQuitMapSession();
 
 	void requestEntityCreation(uint8_t type, uint32_t parentId, 
 		                       const glm::vec3& relPos, const glm::vec3& absPos,
 		                       const glm::vec3& rotation, const glm::vec3& scale);
+	void requestEntityRemoval(uint32_t entityId);
+	void requestEntitySelection(uint32_t entityId, char selectionState);
 
 	void requestEntityPropertyUpdate(uint32_t entityId, char propertyType, const::glm::vec3& propertyValue);
 

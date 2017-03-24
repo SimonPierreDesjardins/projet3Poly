@@ -13,6 +13,11 @@
 
 #include "VisiteurAbstrait.h"
 
+namespace client_network
+{
+	class MapSession;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurSuppression
 /// @brief Visiteur permettant d'effectuer la supression d'un objet
@@ -24,14 +29,22 @@ class VisiteurSuppression : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurSuppression();
+	VisiteurSuppression(client_network::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurSuppression();
 
+	virtual void visiter(ArbreRendu* tree);
 
 	/// Parcours du noeudTable.
-	virtual void visiter(NoeudTable* noeud);
+	virtual void visiter(NoeudTable* table);
+
+	virtual void visiter(NoeudDuplication* duplication);
+
+private:
+	VisiteurSuppression() = delete;
+
+	client_network::MapSession* mapSession_;
 };
 
 #endif // VISITEUR_SUPPRESSION_H

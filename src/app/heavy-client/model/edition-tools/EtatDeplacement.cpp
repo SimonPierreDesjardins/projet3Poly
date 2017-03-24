@@ -20,11 +20,11 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatDeplacement::EtatDeplacement()
+EtatDeplacement::EtatDeplacement(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession),
+	  visiteurDeplacement_(mapSession)
 {
 	setType(DEPLACEMENT);
-	visiteurDeplacement_ = std::make_unique<VisiteurDeplacement>();
-	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -74,9 +74,9 @@ void EtatDeplacement::gererClicGaucheRelache(const int& x, const int& y)
 {
 	clicGaucheEnfonce_ = false;
 	if (arbre_ != nullptr) {
-		arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+		arbre_->accepterVisiteur(&visiteurVerificationQuad_);
 	}
-	if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
+	if (!visiteurVerificationQuad_.objetsDansZoneSimulation()) {
 		reinitialiser();
 	}
 }
@@ -99,8 +99,8 @@ void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 	FacadeModele::obtenirInstance()->obtenirVue()->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 	
 	if (clicGaucheEnfonce_) {
-		visiteurDeplacement_->assignerPositionRelative(positionVirtuelle - dernierePositionVirtuelle_);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurDeplacement_.get());
+		visiteurDeplacement_.assignerPositionRelative(positionVirtuelle - dernierePositionVirtuelle_);
+		arbre_->accepterVisiteur(&visiteurDeplacement_);
 		dernierePositionVirtuelle_ = positionVirtuelle;
 	}
 }
@@ -114,8 +114,8 @@ void EtatDeplacement::gererMouvementSouris(const int& x, const int& y)
 ////////////////////////////////////////////////////////////////////////
 void EtatDeplacement::reinitialiser()
 {
-	visiteurDeplacement_->assignerPositionRelative(positionVirtuelleInitiale_ - dernierePositionVirtuelle_);
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteurDeplacement_.get());
+	visiteurDeplacement_.assignerPositionRelative(positionVirtuelleInitiale_ - dernierePositionVirtuelle_);
+	arbre_->accepterVisiteur(&visiteurDeplacement_);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

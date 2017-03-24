@@ -31,15 +31,16 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeEdition::ModeEdition(client_network::MapSession* mapSession)
-	: OnlineMapMode(mapSession)
+	: OnlineMapMode(mapSession),
+	  visiteurSuppression_(mapSession)
 {
 	typeMode_ = EDITION;
 	assignerEtat(SELECTION);
-	visiteurSuppression_ = std::make_unique<VisiteurSuppression>();
 
 	FacadeModele* facade = FacadeModele::obtenirInstance();
 	facade->assignerEnvironnement(2);
 	eventHandler_ = facade->getEventHandler();
+	tree_ = facade->obtenirArbreRenduINF2990();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -56,7 +57,7 @@ ModeEdition::~ModeEdition()
 	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()  != nullptr) {
 		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
 	}
-	FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
+	mapSession_->requestToLeaveMapSession();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -95,7 +96,7 @@ void ModeEdition::sauvegarder()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererToucheSupprimer()
 {
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->accepterVisiteur(visiteurSuppression_.get());
+	tree_->accepterVisiteur(&visiteurSuppression_);
 }
 
 /// Modifie l'etat courant.
@@ -104,39 +105,39 @@ void ModeEdition::assignerEtat(Tool etat)
 	switch(etat)
 	{
 	case SELECTION:
-		etat_ = std::make_unique<EtatSelection>();
+		etat_ = std::move(std::make_unique<EtatSelection>(mapSession_));
 		break;
 
 	case DEPLACEMENT:
-		etat_ = std::make_unique<EtatDeplacement>();
+		etat_ = std::move(std::make_unique<EtatDeplacement>(mapSession_));
 		break;
 
 	case ROTATION:
-		etat_ = std::make_unique<EtatRotation>();
+		etat_ = std::move(std::make_unique<EtatRotation>(mapSession_));
 		break;
 
 	case MISE_A_ECHELLE:
-		etat_ = std::make_unique<EtatMiseAEchelle>();
+		etat_ = std::move(std::make_unique<EtatMiseAEchelle>(mapSession_));
 		break;
 	
 	case DUPLICATION:
-		etat_ = std::make_unique<EtatDuplication>();
+		etat_ = std::move(std::make_unique<EtatDuplication>(mapSession_));
 		break;
 
 	case CREATION_POTEAU:
-		etat_ = std::make_unique<EtatCreationPoteau>(mapSession_);
+		etat_ = std::move(std::make_unique<EtatCreationPoteau>(mapSession_));
 		break;
 
 	case CREATION_MUR:
-		etat_ = std::make_unique<EtatCreationMur>(mapSession_);
+		etat_ = std::move(std::make_unique<EtatCreationMur>(mapSession_));
 		break;
 	
 	case CREATION_LIGNE_NOIRE:
-		etat_ = std::make_unique<EtatCreationLigne>(mapSession_);
+		etat_ = std::move(std::make_unique<EtatCreationLigne>(mapSession_));
 		break;
 	
 	case LOUPE:
-		etat_ = std::make_unique<EtatLoupe>();
+		etat_ = std::move(std::make_unique<EtatLoupe>());
 		break;
 	}
 }
@@ -188,18 +189,18 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_D:
-				etat_ = std::make_unique<EtatDeplacement>();
+				assignerEtat(DEPLACEMENT);
 				break;
 
 			case VK_KEY_S:
 				// Verification de controle pour ne pas changer d'outils lors du ctrl+s
 				if (!(GetKeyState(VK_CONTROL) && GetKeyState(VK_LCONTROL) && GetKeyState(VK_RCONTROL))) {
-					etat_ = std::make_unique<EtatSelection>();
+					assignerEtat(SELECTION);
 				}
 				break;
 
 			case VK_KEY_R:
-				assignerEtat(SELECTION);
+				assignerEtat(ROTATION);
 				break;
 
 			case VK_KEY_E:
