@@ -15,13 +15,14 @@ void SetupServer() {
 	server::Database database;
 	server::UserDatabase userDB(&database);
 	server::MapInfoDatabase mapInfoDB(&database);
+	server::MapFileDatabase mapFileDB(&database);
 
 	std::cout << "Setting up server" << std::endl;
 	// create ChatSystem
 	server::ChatSystem chatSystem;
 
 	// create MapSystem
-	server::MapSystem mapSystem(&mapInfoDB);
+	server::MapSystem mapSystem(&mapInfoDB, &mapFileDB);
 
 	// create vector of systems to pass the user to when authenticated
 	std::vector<server::MultiUserSystem*> newUserReceivers;

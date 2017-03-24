@@ -8,9 +8,7 @@
 namespace server
 {
 
-
-
-MapEntry::MapEntry(MapInfo* info)
+MapEntry::MapEntry(MapInfo* info, MapFileEntry* mapFile)
 	: Info(info)
 {
 	updateSessionType();
@@ -35,6 +33,7 @@ void MapEntry::GetSerializedInfo(std::string& message)
 	Networking::serialize(Info->GetId(), message);
 	message.append(1, getSessionType());
 	message.append(1, getNumberOfUsers());
+	message.append(1, Info->isPrivate ? 0x01:0x00);
 	message.append(Info->mapName);
 }
 
@@ -53,14 +52,17 @@ void MapEntry::AddUser(User * user)
 	currentSession_->AddUser(user);
 }
 
-MapSystem::MapSystem(MapInfoDatabase * mapDB)
+MapSystem::MapSystem(MapInfoDatabase * mapInfoDB, MapFileDatabase * mapFileDB)
 {
-	_mapInfoDatabase = mapDB;
+	_mapInfoDatabase = mapInfoDB;
+
+	_mapFileDatabase = mapFileDB;
 
 
 	// populate map entries from DB
 	for (auto mapInfo : _mapInfoDatabase->GetElements()) {
-		MapEntry newSession(mapInfo.second);
+		// find associated map file in db
+		MapEntry newSession(mapInfo.second, mapFileDB->GetElements()[mapInfo.second->MapId]);
 		_mapList.insert({mapInfo.second->GetId(),std::move(newSession)});
 	}
 }
@@ -170,26 +172,36 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	char type = message[Networking::MessageStandard::DATA_START];
 	std::string name = message.substr(Networking::MessageStandard::DATA_START + 1);
 
+
+	// create map file reference
+	MapFileEntry* mapFile = new MapFileEntry();
+
+	// check if user had map transfer in progress
+	if (_mapsInTransfer.count(user->Info.GetId()) > 0) {
+		// Add map data to entry and map JSONDatabase.
+		mapFile->MapData = std::move(_mapsInTransfer.at(user->Info.GetId()));
+		// destroy map transfer since it is over
+		_mapsInTransfer.erase(user->Info.GetId());
+	}
+	else {
+		//load default map?
+	}
+
 	// create map info
 	MapInfo* info = new MapInfo();
 	info -> mapName = name;
 	info -> mapType = type;
 	info->Admin = user->Info.GetId();
+	info->MapId = mapFile->GetId();
 
 	// Update database with new info
 	_mapInfoDatabase->CreateEntry(info);
+	_mapFileDatabase->CreateEntry(mapFile);
 
 	// update user with this map as its created map
 	user->Info.CreatedMaps.insert(info->GetId());
 
-	MapEntry newSession(info);
-
-	// check if user had map transfer in progress
-	if (_mapsInTransfer.count(user->Info.GetId()) > 0) {
-		 // Add map data to entry and map JSONDatabase.
-		 // destroy map transfer since it is over
-		_mapsInTransfer.erase(user->Info.GetId());
-	}
+	MapEntry newSession(info, mapFile);
 
 	// Get reference before inserting
 	MapEntry* map = nullptr;

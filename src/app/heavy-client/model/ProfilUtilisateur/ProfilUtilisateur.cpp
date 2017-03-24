@@ -59,6 +59,8 @@ ProfilUtilisateur::ProfilUtilisateur(){
             NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE,
             NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE
         }};
+
+	pathToMusic_ = EnginSon::obtenirInstance()->getDefaultMusic();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -803,6 +805,17 @@ void ProfilUtilisateur::setModele(std::string modele)
 std::string ProfilUtilisateur::getModele()
 {
 	return modele_;
+}
+
+std::string ProfilUtilisateur::obtenirCheminVersMusiqueSimulation()
+{
+	return pathToMusic_;
+}
+
+void ProfilUtilisateur::assignerCheminVersMusiqueSimulation(std::string chemin)
+{
+	pathToMusic_ = chemin;
+	EnginSon::obtenirInstance()->setSimulationMusic(chemin);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -18,7 +18,7 @@ enum PropertyType
 namespace MessageStandard {
 
 	//Buffer size constant
-	const int BUFFER_SIZE = 1024;
+	const int BUFFER_SIZE = 64000; //hueg buffer for hueg filez swiggidy
 
 	//Index of the system indicator byte in the message
 	const int LENGTH_END = 0;

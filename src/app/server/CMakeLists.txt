@@ -115,6 +115,8 @@ set(DB
 	Database/UserDatabase.cpp
 	Database/MapDatabase.h
 	Database/MapDatabase.cpp
+	Database/MapFileDatabase.h
+	Database/MapFileDatabase.cpp
 	Database/BaseDatalist.h
 	Database/BaseDatalist.cpp
 	Database/IdGenerator.h

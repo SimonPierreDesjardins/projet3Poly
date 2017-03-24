@@ -101,6 +101,9 @@ extern "C"
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece);
 	__declspec(dllexport) void __cdecl setModele(char *modele);
 	__declspec(dllexport) void __cdecl getModele(char* chemin, int longueur);
+	__declspec(dllexport) void __cdecl setMusic(char* path);
+	__declspec(dllexport) void __cdecl getMusic(char* path, int size);
+	__declspec(dllexport) void __cdecl getDefaultMusic(char* path, int size);
 	
 	// Network
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port);
