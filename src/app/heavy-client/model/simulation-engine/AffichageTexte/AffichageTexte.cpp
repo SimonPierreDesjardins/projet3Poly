@@ -138,26 +138,26 @@ void AffichageTexte::afficher()
     {
         std::chrono::time_point<std::chrono::system_clock> courant = std::chrono::system_clock::now();
 
-        double duree = 0.0;
+		duree_ = 0.0;
         if (!enPause_)
         {
             // Si on ne se trouve pas en pause, on affiche la durée entre le début et le temps courant.
-            duree = std::chrono::duration<double>(courant - debut_).count() + duree;
+			duree_ = std::chrono::duration<double>(courant - debut_).count() + duree_;
         }
         else
         {
             // Si on se trouve en pause, on affiche la durée entre la pause et le temps courant.
-            duree = std::chrono::duration<double>(pause_ - debut_).count();
+			duree_ = std::chrono::duration<double>(pause_ - debut_).count();
         }
 
-        std::string secondes{ std::to_string((int)duree % 60) };
+        std::string secondes{ std::to_string((int)duree_ % 60) };
         // Conserver le format SS si le temps est moins de 10 sec.
         if (secondes.size() < 2)
         {
             secondes.insert(0, "0");
         }
 
-        std::string minutes{ std::to_string(((int)duree / 60) % 60) };
+        std::string minutes{ std::to_string(((int)duree_ / 60) % 60) };
         // Conserver le format MM si le temps est moins de 10 minutes.
         if (minutes.size() < 2)
         {
@@ -169,6 +169,20 @@ void AffichageTexte::afficher()
         font_.Render(compteur.c_str(), -1, positionTemps);
     }
     glPopAttrib();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void AffichageTexte::obtenirDuree()
+///
+/// Fonction qui permet d'obtenir la durée écoulé du mode.
+///
+/// @return durée écoulée (double)
+///
+////////////////////////////////////////////////////////////////////////
+double AffichageTexte::obtenirDuree()
+{
+	return duree_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -12,12 +12,16 @@
 #define MODE_PIECES_H
 
 #include <memory>
+#include <thread>
+#include <vector>
+#include <mutex>
 #include "glm\glm.hpp"
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
 #include <unordered_map>
 #include <array>
 #include "FacadeModele.h"
+#include "Minuterie.h"
 
 class ProfilUtilisateur;
 class AffichageTexte;
@@ -47,12 +51,23 @@ private:
 	std::shared_ptr<NoeudAbstrait> noeudCoinCourant;
 
 	ArbreRenduINF2990* arbre_{nullptr};
+	NoeudAbstrait* table_{ nullptr };
     AffichageTexte* affichageTexte_{ nullptr };
 	glm::dvec3 positionNoeudCourant;
 	ControleurLumiere* controleurLumiere_{ nullptr };
 
 	bool modeEnPause{ false };
 	VisiteurDetectionRobot visiteur_;
+
+	Minuterie minuterie_;
+
+	std::thread th;
+
+	bool objectsReadyToSpawn{ false };
+
+	std::vector <std::shared_ptr <NoeudAbstrait>> objectsToSpawn;
+
+	std::mutex spawnLock;
 
 public:
 	//Constructeur par défaut
@@ -76,6 +91,11 @@ public:
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
 
 	bool obtenirModeEnPause();
+	void creerPieces();
+
+	void startThread();
+
+	void spawnObjects();
 };
 
 std::array<char, 11>* ModePieces::getTouchesNonConfigurable()

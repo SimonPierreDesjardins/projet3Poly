@@ -1,6 +1,8 @@
 ﻿set(AFFICHAGE_TEXTE_SRC
     simulation-engine/AffichageTexte/AffichageTexte.h
     simulation-engine/AffichageTexte/AffichageTexte.cpp
+    simulation-engine/AffichageTexte/Minuterie.h
+    simulation-engine/AffichageTexte/Minuterie.cpp
 )
         
 set(ARBRE_SRC

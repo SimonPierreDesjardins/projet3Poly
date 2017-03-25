@@ -8,7 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-
+#include <iostream>
 #include <math.h>
 
 #include "ModePieces.h"
@@ -22,13 +22,12 @@
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
-
-#include <iostream>
-
 #include "EnginSon.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
+
+
 
 std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
   
@@ -49,26 +48,19 @@ ModePieces::ModePieces()
 	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	table_ = arbre_->chercher(0);
 	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
 	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
 	srand(time(NULL));
-	for (int i = 0; i < 10; i++)
-	{
-		
-		noeudCoinCourant = arbre_->creerNoeud(COIN_ENTITY);
-		positionNoeudCourant = genererPositionCoin();
-		noeudCoinCourant->assignerPositionRelative(positionNoeudCourant);
-		noeudCoinCourant->assignerPositionCourante(positionNoeudCourant);
-		noeudCoinCourant->mettreAJourFormeEnglobante();
-		arbre_->chercher(0)->ajouter(noeudCoinCourant);
-	}
+	startThread();
 
     affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
     affichageTexte_->assignerProfilEstAffiche(true);
     affichageTexte_->assignerTempsEstAffiche(true);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
-	
+
+	minuterie_.reinitialiserChrono();
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 
@@ -366,14 +358,23 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	}
 }
 
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn glm::dvec3 ModePieces::genererPositionCoin() 
+///
+/// Fonction qui génère une position aléatoire pour la piece
+///
+/// @return un vecteur contenant la position
+///
+////////////////////////////////////////////////////////////////////////
+
 glm::dvec3 ModePieces::genererPositionCoin() 
 {
 
-		double x = rand() % 90;
-		double y = rand() % 44;
+		double x = (rand() % 90) - 45;
+		double y = (rand() % 44) -22;
 
-		x = x - 45.0;
-		y = y - 22.0;
 
 		return{ x, y, 0.0 };
 
@@ -391,8 +392,19 @@ glm::dvec3 ModePieces::genererPositionCoin()
 ////////////////////////////////////////////////////////////////////////
 void ModePieces::postAnimer()
 {
-	arbre_->accepterVisiteur(&visiteur_);
+	if ((int)(minuterie_.obtenirDuree()) % 15 == 0 && (int)(minuterie_.obtenirDuree()) != 0)
+	{
+		arbre_->chercher(0)->effacerTypeNoeud("piece");
+		minuterie_.reinitialiserChrono();
+		startThread();
 
+	}
+	arbre_->accepterVisiteur(&visiteur_);
+	if (objectsReadyToSpawn)
+	{
+		spawnObjects();
+	}
+	
 }
 
 
@@ -409,6 +421,69 @@ bool ModePieces::obtenirModeEnPause()
 {
 	return modeEnPause;
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ModePieces::obtenirModeEnPause()
+///
+/// Fonction qui permet de dire si le mode est en pause ou non
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+void ModePieces::creerPieces()
+{
+	spawnLock.lock();
+	for (int i = 0; i < 10; i++)
+	{
+		
+		noeudCoinCourant = arbre_->creerNoeud(COIN_ENTITY);
+		positionNoeudCourant = genererPositionCoin();
+		noeudCoinCourant->assignerPositionRelative(positionNoeudCourant);
+		noeudCoinCourant->assignerPositionCourante(positionNoeudCourant);
+		noeudCoinCourant->mettreAJourFormeEnglobante();
+		objectsToSpawn.push_back(noeudCoinCourant);
+	}
+	objectsReadyToSpawn = true;
+	spawnLock.unlock();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModePieces::startThread()
+///
+/// Fonction qui permet de partir un thread
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+void ModePieces::startThread()
+{
+	th = std::thread(&ModePieces::creerPieces, this);
+	th.detach();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModePieces::spawnObjects()
+///
+/// Fonction qui rajoute les pieces a l'arbre
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+void ModePieces::spawnObjects()
+{
+	spawnLock.lock();
+	for (int i = 0; i < objectsToSpawn.size(); i++)
+	{
+		table_->ajouter(objectsToSpawn[i]);
+	}
+	objectsToSpawn.clear();
+	objectsReadyToSpawn = false;
+	spawnLock.unlock();
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

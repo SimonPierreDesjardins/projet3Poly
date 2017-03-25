@@ -511,6 +511,37 @@ void NoeudComposite::assignerPositionCourante(const glm::dvec3& positionCourante
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudComposite::effacerTypeNoeud(int type)
+///
+/// Cette fonction efface tous les noeuds d'un certain type
+///
+/// @param type du noeud
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudComposite::effacerTypeNoeud(std::string type)
+{
+	for (conteneur_enfants::iterator it{ enfants_.begin() };
+		it != enfants_.end();
+		) {
+		if ((*it)->obtenirNom() == type) {
+			NoeudAbstrait* enfant{ (*it).get() };
+			enfants_.erase(it);
+
+			// On ramène l'itération au début de la boucle, car le destructeur
+			// de l'enfant pourrait éventuellement avoir retiré d'autres
+			// enfants de l'arbre, ce qui briserait l'itération.  Pourrait
+			// éventuellement être évité avec des itérateurs plus robustes.
+			// Peut-être une liste chaînée?
+			it = enfants_.begin();
+		}
+		else {
+			++it;
+		}
+	}
+}
+
 ////////////////////////////////////////////////
 /// @}
 ////////////////////////////////////////////////

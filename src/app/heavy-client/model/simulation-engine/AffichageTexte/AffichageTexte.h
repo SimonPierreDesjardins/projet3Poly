@@ -48,6 +48,8 @@ public:
     inline void assignerTempsEstAffiche(const bool& tempsEstAffiche);
     inline void assignerProfilEstAffiche(const bool& tempsEstAffiche);
 
+	double obtenirDuree();
+
 private:
     const char* FONT_PATH{"./media/font/Consolas.ttf"};
     const int OFFSET_X{ 25 };
@@ -61,6 +63,8 @@ private:
     bool tempsEstAffiche_{ false };
     bool profilEstAffiche_{ false };
     bool enPause_{ true };
+
+	double duree_{ 0.0 };
 
     std::chrono::time_point<std::chrono::system_clock> debut_, pause_;
 
