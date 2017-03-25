@@ -19,7 +19,7 @@ void MapEntry::updateSessionType()
 	switch (Info->mapType)
 	{
 	case SIMULATION_MAP:
-		// TODO
+		currentSession_ = std::make_unique<EditionRoom>(Info);
 		break;
 
 	case EDITION_MAP:
@@ -203,6 +203,7 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	info -> mapName = name;
 	info -> mapType = type;
 	info->isPrivate = isPrivate;
+	info->password = password;
 	info->Admin = user->Info.GetId();
 	info->MapId = mapFile->GetId();
 
