@@ -158,7 +158,20 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 {
 	// parse for info
 	char type = message[Networking::MessageStandard::DATA_START];
-	std::string name = message.substr(Networking::MessageStandard::DATA_START + 1);
+	char isPrivate = message[Networking::MessageStandard::DATA_START + 1];
+
+	std::string name("");
+	std::string password("");
+	// if map is private, then we have to get the password too, otherwise, no need
+	if (isPrivate) {
+		auto namePos = Networking::MessageStandard::DATA_START + 2;
+		auto seperatorPos = message.find(';');
+		name.append(message.substr(namePos, seperatorPos - namePos));
+		password.append(message.substr(seperatorPos + 1));
+	}
+	else{
+		name.append(message.substr(Networking::MessageStandard::DATA_START + 2));
+	}
 
 
 	// create map file reference
@@ -179,6 +192,7 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	MapInfo* info = new MapInfo();
 	info -> mapName = name;
 	info -> mapType = type;
+	info->isPrivate = isPrivate;
 	info->Admin = user->Info.GetId();
 	info->MapId = mapFile->GetId();
 
