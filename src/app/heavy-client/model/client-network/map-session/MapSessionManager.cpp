@@ -24,18 +24,21 @@ MapSession* MapSessionManager::getServerSession(uint32_t mapId)
 
 MapSession* MapSessionManager::createServerSession(uint32_t mapId, char mapType, const std::string& mapName)
 {
-	MapSession* newMapSessionPtr = nullptr;
-	MapSession newMapSession(tree_, network_);
-	newMapSession.info.mapId = mapId;
-	newMapSession.info.mapType = mapType;
-	newMapSession.info.mapName = mapName;
-	newMapSession.setIsOnlineSession(true);
-	auto pair = serverMapSessions_.insert(std::make_pair(mapId, std::move(newMapSession)));
+	// Build the map inplace because move and copy contructor are deleted.
+	auto pair = serverMapSessions_.emplace(std::piecewise_construct,
+										   std::forward_as_tuple(mapId),
+		                                   std::forward_as_tuple(tree_, network_));
+
+	MapSession* newMapSession = nullptr;
 	if (pair.second)
 	{
-		newMapSessionPtr = &pair.first->second;
+		newMapSession = &pair.first->second;
+		newMapSession->info.mapId = mapId;
+		newMapSession->info.mapType = mapType;
+		newMapSession->info.mapName = mapName;
+		newMapSession->setIsOnlineSession(true);
 	}
-	return newMapSessionPtr;
+	return newMapSession;
 }
 
 void MapSessionManager::deleteServerSession(uint32_t mapId)

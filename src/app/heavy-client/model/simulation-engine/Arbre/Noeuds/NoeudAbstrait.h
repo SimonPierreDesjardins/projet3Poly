@@ -87,11 +87,11 @@ public:
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 	/// Assigne la position relative du noeud.
-	virtual void assignerPositionRelative(const glm::dvec3& positionRelative);	
+	inline void assignerPositionRelative(const glm::dvec3& positionRelative);	
     /// Obtient la position courante du noeud.
     inline const glm::dvec3& obtenirPositionCourante() const;
     /// Assigne la position courante du noeud.
-    virtual void assignerPositionCourante(const glm::dvec3& positionRelative);
+    inline void assignerPositionCourante(const glm::dvec3& positionRelative);
 	/// Obtient l'angle de rotation du noeud.
 	inline double obtenirAngleRotation() const;
 	/// Assigne l'angle de rotation du noeud par rapport au plan xy.
@@ -117,6 +117,10 @@ public:
 	inline const std::string& obtenirNom() const;
 	inline EntityType getType() const;
 
+	inline void setSelectionColor(const glm::vec4& color);
+	inline uint32_t getOwnerId() const;
+	inline void setOwnerId(uint32_t userId);
+
 	/// Écrit l'état de l'affichage du du noeud.
 	inline void assignerAffiche(bool affiche);
 	/// Vérifie si le noeud se fait afficher.
@@ -137,6 +141,9 @@ public:
 	inline bool assignerEstDuplicable(bool estDuplicable);
 	/// Vérifie si l'objet peut être dupliqué.
 	inline bool estDuplicable() const;
+
+	inline bool isErasable() const;
+	inline void setIsErasable(bool isErasable);
 
 	/// Assigne le modèle3D et la liste d'affichage du noeud courant
 	void assignerObjetRendu(modele::Modele3D const* modele, opengl::VBO const* liste);
@@ -220,7 +227,12 @@ protected:
 	/// Nom du noeud.
 	std::string				name_;
 
+	// Id du noeud
 	uint32_t	            id_;
+
+	uint32_t				ownerId_{ 0 };
+
+	glm::vec4				selectionColor_;
 
 	/// Mode d'affichage des polygones.
 	GLenum					modePolygones_{ GL_FILL };
@@ -254,6 +266,8 @@ protected:
 
 	/// Détermine si l'objet peut être dupliqué
 	bool				    estDuplicable_{ true };
+
+	bool                    isErasable_{ true };
 	/// Pointeur vers le parent.
 	NoeudAbstrait* parent_{ nullptr };
 
@@ -333,6 +347,23 @@ inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
+///
+/// Cette fonction permet d'assigner la position relative du noeud par
+/// rapport à son parent.
+///
+/// @param positionRelative : La position relative.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudAbstrait::assignerPositionRelative(const glm::dvec3& positionRelative)
+{
+	positionRelative_ = positionRelative;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
 ///
 /// Cette fonction retourne la position courante du noeud dans l'espace virtuel.
@@ -345,6 +376,22 @@ inline const glm::dvec3& NoeudAbstrait::obtenirPositionCourante() const
     return positionCourante_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
+///
+/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
+///
+/// @param positionRelative : La position courante.
+///
+/// @return Aucune
+///
+////////////////////////////////////////////////////////////////////////
+inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionCourante)
+{
+    positionCourante_ = positionCourante;
+	mettreAJourFormeEnglobante();
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -374,6 +421,7 @@ inline double NoeudAbstrait::obtenirAngleRotation() const
 inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
 {
 	angleRotation_ = angleRotation;
+	mettreAJourFormeEnglobante();
 }
 
 
@@ -405,6 +453,7 @@ inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
 inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
 {
 	facteurMiseAEchelle_ = facteurDimension;
+	mettreAJourFormeEnglobante();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -447,6 +496,21 @@ inline const std::string& NoeudAbstrait::obtenirNom() const
 inline EntityType NoeudAbstrait::getType() const
 {
 	return type_;
+}
+
+inline void NoeudAbstrait::setSelectionColor(const glm::vec4& color)
+{
+	selectionColor_ = color;
+}
+
+inline uint32_t NoeudAbstrait::getOwnerId() const
+{
+	return ownerId_;
+}
+
+inline void NoeudAbstrait::setOwnerId(uint32_t userId)
+{
+	ownerId_ = userId;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -610,6 +674,16 @@ inline bool NoeudAbstrait::assignerEstDuplicable(bool estDuplicable)
 inline bool NoeudAbstrait::estDuplicable() const
 {
 	return estDuplicable_;
+}
+
+inline bool NoeudAbstrait::isErasable() const
+{
+	return isErasable_;
+}
+
+inline void NoeudAbstrait::setIsErasable(bool isErasable)
+{
+	isErasable_ = isErasable;
 }
 
 ////////////////////////////////////////////////////////////////////////

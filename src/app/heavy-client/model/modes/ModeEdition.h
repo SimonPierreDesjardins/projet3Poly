@@ -71,10 +71,12 @@ public:
 
 protected:
 
+	ArbreRendu* tree_;
 	event_handler::EventHandler* eventHandler_;
 
 	//Visiteur pour la suppression d'un noeud
-	std::unique_ptr<VisiteurSuppression> visiteurSuppression_;
+	VisiteurSuppression visiteurSuppression_;
+
 
 	//Ancienne position en X et Y de la souris
 	int ancienSourisX_{ 0 };

@@ -30,7 +30,8 @@ EnginSon::EnginSon(){
 	systeme_->init(10, FMOD_INIT_NORMAL, NULL);
 	nomsSons_ = { { "musique_simulation.wav", "avancer_reculer.wav", "tourner.wav",
 					"deviation.wav", "changement_manuel.wav", "changement_automatique.wav",
-					"collision_poteau.wav", "collision_mur.wav", "collision_table.wav", "collision_teleporteur.wave" } };
+					"collision_poteau.wav", "collision_mur.wav", "collision_table.wav", "collision_teleporteur.wav" } };
+	
 	for (int i = 0; i < sons_.size(); i++)
 	{
 		systeme_->createSound((CHEMIN_SONS + nomsSons_.at(i)).c_str(), FMOD_CREATESAMPLE, 0, &sons_.at(i));
@@ -190,6 +191,26 @@ void EnginSon::stopMusique(){
 void EnginSon::stopRobotSon(){
 	dernierSonRobot = ARRETER_SON;
 	robotChannel->stop();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void EnginSon::getDefaultMusic()
+///
+/// Trouve le chemin pour la musique par defaut du mode simulation
+///
+/// @return std::string vers la musique par defaut pour la simulation
+///
+////////////////////////////////////////////////////////////////////////
+std::string EnginSon::getDefaultMusic()
+{
+	return CHEMIN_SONS + nomsSons_.at(0).c_str();
+}
+
+void EnginSon::setSimulationMusic(std::string path)
+{
+	sons_.at(0)->release();
+	systeme_->createSound(path.c_str(), FMOD_CREATESAMPLE, 0, &sons_.at(0));
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

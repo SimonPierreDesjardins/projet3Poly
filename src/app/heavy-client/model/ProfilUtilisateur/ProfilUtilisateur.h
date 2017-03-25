@@ -111,6 +111,9 @@ class ProfilUtilisateur
 		void setModele(std::string modele);
 		std::string getModele();
 
+		std::string obtenirCheminVersMusiqueSimulation();
+		void assignerCheminVersMusiqueSimulation(std::string chemin);
+
 	private:
 		bool creationDossierDonnees();
 
@@ -190,6 +193,8 @@ class ProfilUtilisateur
 
 		/// Tableau contenant si les options de débogages sont actives ou non et l'état de chacune des options
 		std::array<bool, 4> optionsDebogages_;
+
+		std::string pathToMusic_;
 
 		float couleurRobot_[4];
 		float couleurRoues_[4];

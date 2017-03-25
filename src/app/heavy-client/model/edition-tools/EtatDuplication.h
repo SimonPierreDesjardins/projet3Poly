@@ -11,9 +11,11 @@
 #ifndef ETAT_DUPLICATION_H
 #define ETAT_DUPLICATION_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurDuplication.h"
+#include "VisiteurDeplacement.h"
 #include "VisiteurVerificationQuad.h"
+#include "VisiteurSuppression.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EtatDuplication
@@ -22,10 +24,11 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatDuplication : public EtatAbstrait
+class EtatDuplication : public OnlineTool
 {
 public:
-	EtatDuplication();
+	EtatDuplication(client_network::MapSession* mapSession);
+
 	virtual ~EtatDuplication();
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
 	virtual void gererMouvementSouris(const int& x, const int& y);
@@ -33,8 +36,12 @@ public:
 	virtual void assignerSymboleCurseur();
 
 private:
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
-	std::unique_ptr<VisiteurDuplication> visiteurDuplication_{ nullptr };
+	VisiteurVerificationQuad visiteurVerificationQuad_;
+	VisiteurDuplication visiteurDuplication_;
+	VisiteurDeplacement visiteurDeplacement_;
+	VisiteurSuppression visiteurSuppression_;
+
+	glm::dvec3 lastPosition_{ glm::dvec3() };
 
 	NoeudAbstrait* duplication_{ nullptr };
 	bool enDuplication_{ false };

@@ -12,7 +12,13 @@
 #define VISITEUR_DUPLICATION_H
 
 #include "VisiteurAbstrait.h"
- 
+
+namespace client_network
+{
+	class MapSession;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDuplication
 /// @brief Visiteur permettant d'effectuer une duplication d'un objet
@@ -24,13 +30,15 @@ class VisiteurDuplication : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurDuplication();
+	VisiteurDuplication(client_network::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurDuplication();
 
 	inline void assignerEnDuplication(bool enDuplication);
+
 	inline NoeudAbstrait* obtenirDuplication();
+	void copyDuplicatedObjects(NoeudAbstrait* noeud);
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);	
@@ -39,10 +47,13 @@ public:
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudJonction* noeud);
-	virtual void visiter(NoeudDuplication* noeud);
 	virtual void visiter(NoeudTeleporteur* noeud);
 
 private:
+
+	VisiteurDuplication() = delete;
+
+	client_network::MapSession* mapSession_;
 
 	void calculerCentreSelection(NoeudAbstrait* noeud);
 	glm::dvec3 centreSelection_{ 0.0, 0.0, 0.0 };

@@ -52,11 +52,11 @@ void NetworkManager::requestToJoinMapSession(uint32_t mapId)
 	connection_.sendMessage(message);
 }
 
-void NetworkManager::requestToleaveMapSession()
+void NetworkManager::requestToQuitMapSession()
 {
 	std::string message;
 	serializer_.serialize(uint32_t(6), message);
-	message.append("ml");
+	message.append("mq");
 	connection_.sendMessage(message);
 }
 
@@ -73,6 +73,25 @@ void NetworkManager::requestEntityCreation(uint8_t type, uint32_t parentId,
 	serializer_.serialize(relativePosition, message);
 	serializer_.serialize(rotation, message);
 	serializer_.serialize(scale, message);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestEntityRemoval(uint32_t entityId)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(10), message);
+	message.append("ed");
+	serializer_.serialize(entityId, message);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestEntitySelection(uint32_t entityId, char selectionState)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(11), message);
+	message.append("es");
+	serializer_.serialize(entityId, message);
+	message.append(1, selectionState);
 	connection_.sendMessage(message);
 }
 

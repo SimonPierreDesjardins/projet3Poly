@@ -17,13 +17,13 @@ public:
 	MapInfo* Info;
 
 	MapEntry(MapInfo* info, MapFileEntry* mapFile);
-	void GetSerializedInfo(std::string& message);
+	void GetSerializedInfo(std::string& message) const;
 
 	void updateSessionType();
 	inline AbstractMapRoom* getCurrentSession();
 
-	char getSessionType();
-	char getNumberOfUsers();
+	char getSessionType() const;
+	char getNumberOfUsers() const;
 	void AddUser(User* user);
 
 private:
@@ -63,7 +63,7 @@ private:
 
 	void HandleMapJoinMessage(User* user, const std::string& message);
 
-	void HandleLeaveMapSessionRequest(User* user, const std::string& message);
+	void HandleMapQuitMessage(User* user, const std::string& message);
 
 	void HandleMapDeleteMessage(User* user, const std::string& message);
 

@@ -17,6 +17,7 @@ namespace ui
         ColorSelector wheelColorSelector;
         ColorSelector robotColorSelector;
         ModeleSelector carSelector;
+        MusicSelector musicSelector;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -96,17 +97,17 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void wheelColor_Button_Click(object sender, System.EventArgs e)
         {
+            if (parent_.viewPort.Controls.Contains(wheelColorSelector))
+                return;
+
             setDefaultUnselectedColors();
             wheelColorLabel.ForeColor = Color.Silver;
             wheelColor_Button.BackColor = Color.FromArgb(0, 102, 204);
 
-            if (parent_.viewPort.Controls.Contains(wheelColorSelector))
-                return;
-
             wheelColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.WHEELS);
-            parent_.viewPort.Controls.Add(wheelColorSelector);
             wheelColorSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             wheelColorSelector.Location = new Point(parent_.viewPort.Width - wheelColorSelector.Width, 0);
+            parent_.viewPort.Controls.Add(wheelColorSelector);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -122,17 +123,17 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void carColor_Button_Click(object sender, System.EventArgs e)
         {
+            if (parent_.viewPort.Controls.Contains(robotColorSelector))
+                return;
+
             setDefaultUnselectedColors();
             robotColorLabel.ForeColor = Color.Silver;
             carColor_Button.BackColor = Color.FromArgb(0, 102, 204);
 
-            if (parent_.viewPort.Controls.Contains(robotColorSelector))
-                return;
-
             robotColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.BODY);
-            parent_.viewPort.Controls.Add(robotColorSelector);
             robotColorSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             robotColorSelector.Location = new Point(parent_.viewPort.Width - robotColorSelector.Width, 0);
+            parent_.viewPort.Controls.Add(robotColorSelector);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -151,26 +152,9 @@ namespace ui
             robotChangeLabel.ForeColor = Color.Silver;
             carChange_Button.BackColor = Color.FromArgb(0, 102, 204);
 
-            parent_.viewPort.Controls.Add(carSelector);
             carSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
             carSelector.Location = new Point(parent_.viewPort.Width - carSelector.Width, 0);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void tableChange_Button_Click(object sender, EventArgs e)
-        ///
-        /// Permet a l'utilisateur de changer la table (modele obj)
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void tableChange_Button_Click(object sender, System.EventArgs e)
-        {
-            setDefaultUnselectedColors();
-            changeTableLabel.ForeColor = Color.Silver;
-            tableChange_Button.BackColor = Color.FromArgb(0, 102, 204);
+            parent_.viewPort.Controls.Add(carSelector);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -185,9 +169,18 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void musicChange_Button_Click(object sender, System.EventArgs e)
         {
+            if (parent_.viewPort.Controls.Contains(musicSelector))
+                return;
+
             setDefaultUnselectedColors();
             musicChangeLabel.ForeColor = Color.Silver;
             musicChange_Button.BackColor = Color.FromArgb(0, 102, 204);
+
+            musicSelector = new MusicSelector(parent_);
+            musicSelector.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            musicSelector.Location = new Point(parent_.viewPort.Width - musicSelector.Width, 0);
+            parent_.viewPort.Controls.Add(musicSelector);
+
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -204,14 +197,12 @@ namespace ui
             wheelColor_Button.BackColor = Color.Transparent;
             carColor_Button.BackColor = Color.Transparent;
             carChange_Button.BackColor = Color.Transparent;
-            tableChange_Button.BackColor = Color.Transparent;
             musicChange_Button.BackColor = Color.Transparent;
 
             returnLabel.ForeColor = Color.Silver;
             wheelColorLabel.ForeColor = Color.Silver;
             robotColorLabel.ForeColor = Color.Silver;
             robotChangeLabel.ForeColor = Color.Silver;
-            changeTableLabel.ForeColor = Color.Silver;
             musicChangeLabel.ForeColor = Color.Silver;
 
             if (parent_.viewPort.Controls.Contains(wheelColorSelector))
@@ -228,7 +219,20 @@ namespace ui
             {
                 parent_.viewPort.Controls.Remove(carSelector);
             }
+            else if (parent_.viewPort.Controls.Contains(musicSelector))
+            {
+                parent_.viewPort.Controls.Remove(musicSelector);
+            }
 
+        }
+
+        public void controlsEnabled(bool permission)
+        {
+            returnMainMenu_Button.Enabled = permission;
+            wheelColor_Button.Enabled = permission;
+            carColor_Button.Enabled = permission;
+            carChange_Button.Enabled = permission;
+            musicChange_Button.Enabled = permission;
         }
     }
 }

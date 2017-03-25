@@ -82,6 +82,7 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 			visiteurCreationMur_->assignerPositionRelative(positionPremierClic_);
 			arbre_->accepterVisiteur(visiteurCreationMur_.get());
 			mur_ = visiteurCreationMur_->obtenirReferenceNoeud();
+			mur_->assignerSelection(true);
 			mapSession_->localEntityCreated(mur_);
 		}
 		//Deuxieme clic
@@ -90,7 +91,7 @@ void EtatCreationMur::gererClicGaucheRelache(const int& x, const int& y)
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 			if (visiteurVerificationQuad_->objetsDansZoneSimulation())
 			{
-				// TODO: mapSession->selectEntity(false);
+				mapSession_->updateSelectionStateLocalEntityAndChildren(mur_, false);
 				enCreation_ = false;
 				mur_ = nullptr;
 			}
@@ -109,8 +110,7 @@ void EtatCreationMur::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(mur_);
-		// TODO: message delete pour le mur
+		mapSession_->deleteLocalEntity(mur_);
 		enCreation_ = false;
 		mur_ = nullptr;
 	}

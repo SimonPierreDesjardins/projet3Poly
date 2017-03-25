@@ -36,6 +36,7 @@ NoeudDepart::NoeudDepart(uint32_t id, const std::string& typeNoeud)
 {
 	type_ = START_ENTITY;
 	estDuplicable_ = false;
+	isErasable_ = false;
 }
 
 
@@ -98,7 +99,7 @@ void NoeudDepart::afficherConcret() const
 	if (estSelectionne()) 
     {
         glDisable(GL_COLOR_MATERIAL);
-		glColor4d(1.0, 0.20, 0.0, 1.0);
+		glColor4f(selectionColor_.x, selectionColor_.y, selectionColor_.z, selectionColor_.w);
         glEnable(GL_COLOR_MATERIAL);
 	}
 	glRotated(angleRotation_, 0, 0, 1);

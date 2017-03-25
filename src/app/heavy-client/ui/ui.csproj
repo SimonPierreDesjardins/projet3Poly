@@ -116,6 +116,18 @@
     <Compile Include="Connection\DisconnetedPanel.Designer.cs">
       <DependentUpon>DisconnetedPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Loading\loadingPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Loading\loadingPanel.Designer.cs">
+      <DependentUpon>loadingPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Personalize\MusicSelector.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Personalize\MusicSelector.Designer.cs">
+      <DependentUpon>MusicSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="Personalize\ModeleSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -271,6 +283,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Connection\DisconnetedPanel.resx">
       <DependentUpon>DisconnetedPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Loading\loadingPanel.resx">
+      <DependentUpon>loadingPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Personalize\MusicSelector.resx">
+      <DependentUpon>MusicSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ColorSelector.resx">
       <DependentUpon>ColorSelector.cs</DependentUpon>

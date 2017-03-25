@@ -10,12 +10,15 @@
 
 #include "FacadeModele.h"
 #include "Vue.h"
-#include "VisiteurSuppression.h"
+#include <iostream>
+
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
 #include "Modele3D.h"
-#include <iostream>
+#include "MapSession.h"
+
+#include "VisiteurSuppression.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -28,7 +31,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurSuppression::VisiteurSuppression()
+VisiteurSuppression::VisiteurSuppression(client_network::MapSession * mapSession)
+	: mapSession_(mapSession)
 {
 }
 
@@ -47,6 +51,11 @@ VisiteurSuppression::~VisiteurSuppression()
 {
 }
 
+void VisiteurSuppression::visiter(ArbreRendu* tree)
+{
+	tree->chercher(0)->accepterVisiteur(this);
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn VisiteurSuppression::visiter(NoeudTable* noeud)
@@ -58,10 +67,32 @@ VisiteurSuppression::~VisiteurSuppression()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSuppression::visiter(NoeudTable* noeud)
+void VisiteurSuppression::visiter(NoeudTable* table)
 {
-	noeud->effacerSelection();
+	std::vector<NoeudAbstrait*> toDeleteList;
+
+	uint32_t nChildren = table->obtenirNombreEnfants();
+	for (uint32_t i = 0; i < nChildren; ++i)
+	{
+		NoeudAbstrait* child = table->chercher(i);
+		if (child->estSelectionne() && child->isErasable() &&
+			child->getOwnerId() == mapSession_->getThisUserId())
+		{
+			toDeleteList.push_back(child);
+		}
+	}
+
+	for (int i = 0; i < toDeleteList.size(); ++i)
+	{
+		mapSession_->deleteLocalEntity(toDeleteList[i]);
+	}
 }
+
+void VisiteurSuppression::visiter(NoeudDuplication* duplication)
+{
+	mapSession_->deleteLocalEntity(duplication);
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

@@ -13,12 +13,19 @@ namespace server
 class MultiUserSystem : public Observer
 {
 public:
+	using UserContainer = std::unordered_map<unsigned int, User*>;
+
 	void AddUser(User* user);
-	void RemoveUser(User* user);
+	bool RemoveUser(User* user);
+
 	inline size_t GetNumberOfUsers() const;
 
 	void broadcastMessage(const std::string& message);
 	void broadcastMessage(User* excludedUser, const std::string& message);
+
+	inline UserContainer::iterator userListBegin();
+	inline UserContainer::iterator userListEnd();
+
 
 protected:
 
@@ -27,7 +34,7 @@ protected:
 	virtual void TreatUserMessage(User* user, const std::string& message) = 0;
 	virtual void TreatUserDisconnect(User* user) = 0;
 
-	std::unordered_map<unsigned int, User*> _connectedUserList;
+	UserContainer _connectedUserList;
 
 private:
 	virtual void onUserDisconnected(User* user);
@@ -40,6 +47,15 @@ inline size_t MultiUserSystem::GetNumberOfUsers() const
 	return _connectedUserList.size();
 }
 
+inline MultiUserSystem::UserContainer::iterator MultiUserSystem::userListBegin()
+{
+	return _connectedUserList.begin();
+}
+
+inline MultiUserSystem::UserContainer::iterator MultiUserSystem::userListEnd()
+{
+	return _connectedUserList.end();
+}
 
 }
 

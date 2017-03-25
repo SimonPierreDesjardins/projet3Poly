@@ -14,6 +14,11 @@
 #include "VisiteurAbstrait.h"
 #include <vector>
 
+namespace client_network
+{
+	class MapSession;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurMiseAEchelle
 /// @brief Visiteur permettant d'effectuer une mise à échelle d'un objet
@@ -30,14 +35,17 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurMiseAEchelle();
 
+	void resizeSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession);
+
 	void initialiser(ArbreRendu* arbre);
-	void reinitialiser(ArbreRendu* arbre);
+	void reinitialiser(ArbreRendu* arbre, client_network::MapSession* mapSession);
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 private:
 	std::vector<double> facteursDimensionsInitiaux_;
+	client_network::MapSession* mapSession_;
 };
 
 

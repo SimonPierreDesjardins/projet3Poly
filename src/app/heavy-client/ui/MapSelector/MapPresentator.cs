@@ -6,7 +6,6 @@
 ////////////////////////////////////////////////
 
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -17,6 +16,7 @@ namespace ui
         Window parent_;
         private string mapName_;
         private bool connectionState_;
+        private bool confidentiality_;
         private int modeType_;
         private int numberOfPlayers_;
         private int mapId_;
@@ -68,6 +68,12 @@ namespace ui
             else
                 connectionLabel.Text = "Hors Ligne";
 
+            confidentiality_ = false;
+            if (confidentiality_)
+                privacyLabel.Text = "Publique";
+            else
+                privacyLabel.Text = "Privée";
+
             NameMapLabel.Text = mapName_;
             numberOfPlayersLabel.Text = numberOfPlayers_.ToString();
         }
@@ -86,6 +92,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void mapButton_Click(object sender, EventArgs e)
         {
+            //passwordBox.PasswordChar = '\u25CF';
+            //passwordPanel.Visible = true;
+
             switch (modeType_)
             {
                 case (int)ModeEnum.Mode.SIMULATION:
@@ -186,6 +195,18 @@ namespace ui
             {
                 FonctionsNatives.joinMap(mapId_);
             }
+        }
+
+        private void publicCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            publicCheckBox.Checked = true;
+            privateCheckBox.Checked = false;
+        }
+
+        private void privateCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            publicCheckBox.Checked = false;
+            privateCheckBox.Checked = true;
         }
     }
 }
