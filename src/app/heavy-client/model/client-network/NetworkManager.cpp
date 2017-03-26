@@ -39,6 +39,8 @@ void NetworkManager::requestMapCreation(const std::string& mapName, uint8_t mapT
 	serializer_.serialize((uint32_t)(mapName.size() + 7), message);
 	message.append("mc");
 	serializer_.serialize(mapType, message);
+	// TODO: pass privacy and password, currently public by default
+	message.append(0x00);
 	message.append(mapName);
 	connection_.sendMessage(message);
 }
