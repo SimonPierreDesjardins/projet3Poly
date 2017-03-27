@@ -111,11 +111,11 @@ void VisiteurDetectionRobot::visiter(NoeudTable* table)
         capteursDistance_->at(i).verifierDetection(table);
     }
 	
-    int nEnfants = table->obtenirNombreEnfants();
-    for (int i = 0; i < nEnfants; i++)
+    for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++)
     {
         table->chercher(i)->accepterVisiteur(this);
     }
+
 
     if (estEnCollision_)
     {
@@ -209,6 +209,27 @@ void VisiteurDetectionRobot::visiter(NoeudTeleporteur* teleporteur)
 	{
 		capteursDistance_->at(i).verifierDetection(teleporteur);
 	}*/
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudPiece* piece)
+///
+/// Fonction qui vérifie si le robot est en collision avec un teleporteur et si le capteur du robot détecte un teleporteur.
+///
+/// @param[in] teleporteur:  Pointeur sur un noeud teleporteur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurDetectionRobot::visiter(NoeudPiece* piece)
+{
+	bool estEnCollision = robot_->verifierCollision(piece);
+	if (!estEnCollision_)
+	{
+		estEnCollision_ = estEnCollision;
+	}
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////

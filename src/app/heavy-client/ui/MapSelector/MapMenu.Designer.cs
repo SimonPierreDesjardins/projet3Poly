@@ -197,7 +197,8 @@
             this.modeComboBox.FormattingEnabled = true;
             this.modeComboBox.Items.AddRange(new object[] {
             "Édition",
-            "Simulation"});
+            "Simulation",
+            "Pièce"});
             this.modeComboBox.Location = new System.Drawing.Point(329, 102);
             this.modeComboBox.Name = "modeComboBox";
             this.modeComboBox.Size = new System.Drawing.Size(189, 29);

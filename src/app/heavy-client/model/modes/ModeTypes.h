@@ -18,6 +18,7 @@
 #include "ModeSimulation.h"
 #include "ModeTest.h"
 #include "ModePersonalize.h"
+#include "ModePieces.h"
 
 #endif /// MODE_TYPES_H
 

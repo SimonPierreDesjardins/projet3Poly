@@ -54,7 +54,8 @@ enum EntityType
 	TRUCK_ENTITY,
 	VOLKS_ENTITY,
 	AUDI_ENTITY,
-	TELEPORT_ENTITY
+	TELEPORT_ENTITY,
+	COIN_ENTITY
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -157,6 +158,8 @@ public:
 	virtual void vider();
 	/// Efface le noeud passé en paramètre.
 	virtual void effacer(const NoeudAbstrait* noeud);
+
+	virtual void effacerTypeNoeud(std::string type) {};
 
 	/// Cherche un noeud par le type (sur un noeud constant).
 	virtual const NoeudAbstrait* chercher(const std::string& typeNoeud) const;

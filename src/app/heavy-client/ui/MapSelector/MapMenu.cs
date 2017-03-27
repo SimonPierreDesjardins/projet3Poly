@@ -1,3 +1,4 @@
+
 ﻿////////////////////////////////////////////////
 /// @file   MapMenu.cs
 /// @author Frédéric Grégoire
@@ -63,7 +64,6 @@ namespace ui
         {
             mapPanel.Controls.Clear();
             numberOfMaps_ = 0;
-            mapPanel.VerticalScroll.Value = 0;
             foreach (KeyValuePair<int, MapPresentator> pair in onlineMaps_)
             {
                 pair.Value.Size = new Size(this.mapPanel.Width, pair.Value.Height);
@@ -384,6 +384,12 @@ namespace ui
                     case 1:
                         FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
                         break;
+
+                    //Piece
+                    case 2:
+                        createMapPieceMode();
+                        //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
+                        break;
                 }
             }
 
@@ -596,6 +602,41 @@ namespace ui
             {
                 map.Width = mapPanel.Width;
             }
+        }
+
+        private void createMapPieceMode()
+        {
+            String mapName = textBox.Text;
+            if (mapName.Equals(""))
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte ne peut avoir ce nom.";
+                textBox.Clear();
+                return;
+            }
+
+            bool a = System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone));
+
+            if (!System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone)) && !parent_.mapMenu.offlineMaps_.ContainsKey(mapName))
+            {
+                //Create the map and Copy the default map
+                File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
+                MapPresentator newMap = new MapPresentator(parent_, mapName, false, (int)ModeEnum.Mode.PIECES, 0, -1);
+                newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
+                parent_.mapMenu.addOnlineMapEntry(-1, newMap);
+                verifyMapsAttributes();
+            }
+            else
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte avec ce nom existe déjà.";
+                textBox.Clear();
+                return;
+            }
+
+            mapPanel.Visible = true;
+            addPanel.Visible = false;
+            offlineModePanel.Visible = false;
         }
     }
 }

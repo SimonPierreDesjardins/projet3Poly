@@ -17,6 +17,8 @@
 
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
+#include "FacadeModele.h"
+#include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
 
@@ -52,6 +54,11 @@ private:
 
 	ControleurLumiere* controleurLumiere_{ nullptr };
 
+	ArbreRenduINF2990* arbre_{ nullptr };
+	VisiteurDetectionRobot visiteur_;
+
+	bool modeEnPause{ false };
+
 public:
 
 	//Constructeur par défaut
@@ -68,6 +75,10 @@ public:
 
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
+	void postAnimer();
+
+	bool obtenirModeEnPause();
 	
 protected:
 	inline static std::array<char, 11>* getTouchesNonConfigurable();

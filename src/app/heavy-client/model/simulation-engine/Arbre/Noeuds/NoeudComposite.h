@@ -79,6 +79,8 @@ public:
    virtual void afficherConcret() const;
    /// Anime le noeud.
    virtual void animer( float dt );
+
+   virtual void effacerTypeNoeud(std::string type);
    
    //Recherche un enfant par indice
    std::shared_ptr<const NoeudAbstrait> getEnfant(int indice) const;

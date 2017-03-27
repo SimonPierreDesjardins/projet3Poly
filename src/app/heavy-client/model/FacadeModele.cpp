@@ -518,6 +518,8 @@ void FacadeModele::animer(float temps)
 	// Mise à jour des objets.
 	arbre_.animer(temps);
 
+	mode_->postAnimer();
+	
 	// Mise à jour de la vue.
 	vue_->animer(temps);
 }
@@ -579,6 +581,11 @@ void FacadeModele::assignerMode(Mode mode)
 		case TUTORIAL_EDITION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeTutorialEdition>(mapSessionManager_.getLocalMapSession());
+			break;
+		
+		case PIECES:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModePieces>();
 			break;
 
 		default:

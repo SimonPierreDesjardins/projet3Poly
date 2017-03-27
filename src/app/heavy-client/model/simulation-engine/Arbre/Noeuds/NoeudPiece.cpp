@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-/// @file NoeudTeleporteur.cpp
+/// @file NoeudPiece.cpp
 /// @author Simon-Pierre Desjardins
 /// @date 2017-03-08
 /// @version 1.0
@@ -7,7 +7,7 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
-#include "NoeudTeleporteur.h"
+#include "NoeudPiece.h"
 #include "Utilitaire.h"
 
 #include "GL/glew.h"
@@ -21,15 +21,12 @@
 
 #include "FacadeModele.h"
 
-#define coinMinX -48
-#define coinMaxX  48
-#define coinMinY -24
-#define coinMaxY  24
+
 
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
+/// @fn NoeudPiece::NoeudPiece(uint32_t id, const std::string& typeNoeud)
 ///
 /// Ce constructeur ne fait qu'appeler la version de la classe et base
 /// et donner des valeurs par défaut aux variables membres.
@@ -39,15 +36,15 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
+NoeudPiece::NoeudPiece(uint32_t id, const std::string& typeNoeud)
 	: NoeudAbstrait{ id, typeNoeud }
 {
-	type_ = TELEPORT_ENTITY;
+	type_ = COIN_ENTITY;
 }
 
 ///////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudTeleporteur::animer(float dt)
+/// @fn void NoeudPiece::animer(float dt)
 ///
 /// Cette fonction permet d'appeler la mise a jour lors de l'animation.
 ///
@@ -57,9 +54,9 @@ NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
 ///
 ////////////////////////////////////////////////////////////////////////
 
-void NoeudTeleporteur::animer(float dt)
+void NoeudPiece::animer(float dt)
 {
-	if (!FacadeModele::obtenirInstance()->obtenirMode()->obtenirModeEnPause())
+	if(!FacadeModele::obtenirInstance()->obtenirMode()->obtenirModeEnPause())
 	{
 		if (compteurHauteurTeleporteur <= 0.02)
 			versLeHaut = true;
@@ -73,25 +70,24 @@ void NoeudTeleporteur::animer(float dt)
 		if (!versLeHaut)
 			compteurHauteurTeleporteur = compteurHauteurTeleporteur - 0.02;
 
-		
+		positionCourante_ = positionRelative_;
 		positionCourante_.z = compteurHauteurTeleporteur;
 		positionRelative_.z = compteurHauteurTeleporteur;
-		
+		mettreAJourFormeEnglobante();
 	}
-	positionCourante_ = positionRelative_;
-	mettreAJourFormeEnglobante();
+
 	
 }
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudPoteau::mettreAJourFormeEnglobante()
+/// @fn void NoeudPiece::mettreAJourFormeEnglobante()
 ///
-/// Cette fonction permet de faire la mise à jour de la forme englobante pour le teleporteur.
+/// Cette fonction permet de faire la mise à jour de la forme englobante pour la piece.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudTeleporteur::mettreAJourFormeEnglobante()
+void NoeudPiece::mettreAJourFormeEnglobante()
 {
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
 	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
@@ -106,47 +102,42 @@ void NoeudTeleporteur::mettreAJourFormeEnglobante()
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn NoeudTeleporteur::~NoeudTeleporteur()
+/// @fn NoeudPiece::~NoeudPiece()
 ///
 /// Ce destructeur désallouee la liste d'affichage du teleporteur.
 ///
 /// @return Aucune (destructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudTeleporteur::~NoeudTeleporteur()
+NoeudPiece::~NoeudPiece()
 {
-	if (teleporteur_ != nullptr && !teleporteur_->estSelectionne())
-	{
-		teleporteur_->assignerTeleporteur(nullptr);
-		teleporteur_->assignerSelection(true); //permet de supprimer le noeud de la meme paire
-		
-	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn CercleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante()
+/// @fn CercleEnglobant* NoeudPiece::obtenirFormeEnglobante()
 ///
 /// Cette fonction permet d'obtenir la forme englobante pour le teleporteur.
 ///
 /// @return Pointeur sur un cercle englobant.
 ///
 ////////////////////////////////////////////////////////////////////////
-RectangleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante()
+RectangleEnglobant* NoeudPiece::obtenirFormeEnglobante()
 {
     return &rectangleEnglobant_;
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn const CercleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante() const
+/// @fn const CercleEnglobant* NoeudPiece::obtenirFormeEnglobante() const
 ///
 /// Cette fonction permet d'obtenir la forme englobante pour le teleporteur.
 ///
 /// @return Pointeur const  sur un cercle englobant.
 ///
 ////////////////////////////////////////////////////////////////////////
-const RectangleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante() const
+const RectangleEnglobant* NoeudPiece::obtenirFormeEnglobante() const
 {
     return &rectangleEnglobant_;
 }
@@ -154,28 +145,28 @@ const RectangleEnglobant* NoeudTeleporteur::obtenirFormeEnglobante() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante()
+/// @fn CercleEnglobant* NoeudPiece::obtenirCercleEnglobante()
 ///
 /// Cette fonction permet d'obtenir le cercle englobant pour le teleporteur.
 ///
 /// @return Pointeur sur un cercle englobant.
 ///
 ////////////////////////////////////////////////////////////////////////
-CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante()
+CercleEnglobant* NoeudPiece::obtenirCercleEnglobante()
 {
 	return &cercleEnglobant_;
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn const CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante() const
+/// @fn const CercleEnglobant* NoeudPiece::obtenirCercleEnglobante() const
 ///
 /// Cette fonction permet d'obtenir le cercle englobant pour le teleporteur.
 ///
 /// @return Pointeur const  sur un cercle englobant.
 ///
 ////////////////////////////////////////////////////////////////////////
-const CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante() const
+const CercleEnglobant* NoeudPiece::obtenirCercleEnglobante() const
 {
 	return &cercleEnglobant_;
 }
@@ -183,14 +174,14 @@ const CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante() const
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudTeleporteur::afficherConcret() const
+/// @fn void NoeudPiece::afficherConcret() const
 ///
 /// Cette fonction effectue le véritable rendu de l'objet.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudTeleporteur::afficherConcret() const
+void NoeudPiece::afficherConcret() const
 {
 
 	// Sauvegarde de la matrice.
@@ -205,7 +196,7 @@ void NoeudTeleporteur::afficherConcret() const
 	else
 	{
 		glDisable(GL_COLOR_MATERIAL);
-		glColor4f(0.0862745121f, 0.407843143f, 0.701960802f, 1.0f);
+		glColor4f(0.797f, 0.8f, 0.0f, 1.0f);
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
@@ -219,17 +210,13 @@ void NoeudTeleporteur::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //rectangleEnglobant_.afficher(positionCourante_);
-	if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == 2) //montre les cercles des teleporteurs si dans le mode edition
-	{
-		cercleEnglobant_.afficher(positionCourante_);
-	}
+    rectangleEnglobant_.afficher(positionCourante_);
 	
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void NoeudTeleporteur::accepterVisiteur(VisiteurAbstrait* visiteur)
+/// @fn void NoeudPiece::accepterVisiteur(VisiteurAbstrait* visiteur)
 ///
 /// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
 /// sa tâche à la méthode qui se charge de ce type de noeud.
@@ -239,98 +226,11 @@ void NoeudTeleporteur::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudTeleporteur::accepterVisiteur(VisiteurAbstrait* visiteur)
+void NoeudPiece::accepterVisiteur(VisiteurAbstrait* visiteur)
 {
 	visiteur->visiter(this);
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudTeleporteur::setId(int id)
-///
-/// Cette fonction attribue un id au téléporteur
-///
-/// @param[in] id: numéro du téléporteur
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudTeleporteur::setId(int id)
-{
-	idTeleporteur_ = id;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn int NoeudTeleporteur::getId()
-///
-/// Cette fonction retourne le id du téléporteur
-///
-/// @param[in] aucun
-///
-/// @return id du téléporteur
-///
-////////////////////////////////////////////////////////////////////////
-int NoeudTeleporteur::getId()
-{
-	return idTeleporteur_;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudTeleporteur::assignerTeleporteur(NoeudAbstrait* teleporteur)
-///
-/// Cette fonction assigne le teleporteur lie a celui ci
-///
-/// @param[in] NoeudAbstrait* teleporteur
-///
-/// @return Aucun
-///
-////////////////////////////////////////////////////////////////////////
-void NoeudTeleporteur::assignerTeleporteur(NoeudAbstrait* teleporteur)
-{
-	teleporteur_ = (NoeudTeleporteur*)teleporteur;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
-///
-/// Cette fonction retourne teleporteur associe a celui-ci
-///
-/// @param[in] aucun
-///
-/// @return le noeud teleporteur associe a celui-ci
-///
-////////////////////////////////////////////////////////////////////////
-NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
-{
-	return teleporteur_;
-}
-
-
-bool NoeudTeleporteur::collisionTeleporteur()
-{
-	if (!this->obtenirCercleEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY))
-	{
-		return true;
-	}
-	for (unsigned int i = 0; i < FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->obtenirNombreEnfants() -1; i++) //on vérifie le cercle englobant des autres téléporteurs afin d'éviter d'avoir un téléporter dans ceux-ci
-	{
-		if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i) != this)
-		{
-			if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i)->obtenirNom() == "teleporteur" && ((NoeudTeleporteur*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i))->obtenirCercleEnglobante()->calculerIntersection(cercleEnglobant_))
-			{
-				return true;
-			}
-			else if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(cercleEnglobant_))
-			{
-				return true;
-			}
-		}
-	}
-	return false;
-}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
