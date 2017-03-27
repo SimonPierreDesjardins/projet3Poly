@@ -103,6 +103,7 @@ void AffichageTexte::reinitialiserChrono()
 {
     debut_ = std::chrono::system_clock::now();
     pause_ = std::chrono::system_clock::now();
+	duree_ = 0.0;
 }
 
 ////////////////////////////////////////////////////////////////////////

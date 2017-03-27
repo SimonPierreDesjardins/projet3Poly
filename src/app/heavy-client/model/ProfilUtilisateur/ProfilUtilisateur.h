@@ -114,6 +114,7 @@ class ProfilUtilisateur
 
 		void setPiece(int piece);
 		int obtenirPieces();
+		int obtenirMaxPieces();
 
 		std::string obtenirCheminVersMusiqueSimulation();
 		void assignerCheminVersMusiqueSimulation(std::string chemin);
@@ -210,6 +211,7 @@ class ProfilUtilisateur
 		std::string modele_{"robot"};
 
 		int piecesCollectees = 0;
+		int plusGrandNombrePieces = 0;
 		
 };
 
