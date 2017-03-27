@@ -29,13 +29,21 @@ public:
 
 	virtual void onEntityCreated();
 
+	// Map edition
 	void onEntityCreated(uint8_t entityType, uint32_t parentId, const glm::vec3& absPos,
 		const glm::vec3& relPos, const glm::vec3& rotation, const glm::vec3& scale, 
 		uint32_t entityId, uint32_t userId);
 
-	void onNewMapCreated(char mapType, uint32_t mapId, std::string& name, char nUsers = 0);
-	void onUserJoinedMap(uint32_t mapId, uint32_t userId);
+	void onEntityDeleted(uint32_t entityId);
+	void onEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId);
+
+	// Map system
+	void onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, std::string& name);
+	void onUserJoinedMap(char result, uint32_t mapId, uint32_t userId);
+	void onUserLeftCurrentMapSession(uint32_t userId);
 	void onUserAuthentified(uint32_t userId);
+
+	// Entity properties
 	void onEntityPropertyUpdated(uint32_t entityId, char propertyType, const glm::vec3& propertyValue);
 
 private:

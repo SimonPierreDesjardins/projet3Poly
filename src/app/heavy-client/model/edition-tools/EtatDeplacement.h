@@ -11,7 +11,7 @@
 #ifndef ETAT_DEPLACEMENT_H
 #define ETAT_DEPLACEMENT_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurTypes.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -21,10 +21,10 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatDeplacement : public EtatAbstrait
+class EtatDeplacement : public OnlineTool
 {
 public:
-	EtatDeplacement();
+	EtatDeplacement(client_network::MapSession* mapSession);
 	virtual ~EtatDeplacement();
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
@@ -34,8 +34,8 @@ protected:
 	virtual void reinitialiser();
 
 private:
-	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
-	std::unique_ptr<VisiteurDeplacement> visiteurDeplacement_{ nullptr };
+	VisiteurVerificationQuad visiteurVerificationQuad_;
+	VisiteurDeplacement visiteurDeplacement_;
 
 	glm::dvec3 dernierePositionVirtuelle_{ glm::dvec3() };
 	glm::dvec3 positionVirtuelleInitiale_{ glm::dvec3() };

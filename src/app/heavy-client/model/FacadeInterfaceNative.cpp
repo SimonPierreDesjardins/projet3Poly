@@ -924,6 +924,48 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele().c_str());
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl  setMusic(char* path)
+	///
+	///	Fonction qui set la musique de simulation
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setMusic(char* path)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCheminVersMusiqueSimulation(path);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl getMusic(char* path, int size)
+	///
+	///	Fonction qui get la musique de simulation
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl getMusic(char* path, int size)
+	{
+		strcpy_s(path, size, FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCheminVersMusiqueSimulation().c_str());
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl getDefaultMusic(char* path, int size)
+	///
+	///	Fonction qui get la musique de simulation par défaut
+	///
+	/// @return Aucune
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl getDefaultMusic(char* path, int size)
+	{
+		strcpy_s(path, size, EnginSon::obtenirInstance()->getDefaultMusic().c_str());
+	}
+
 	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType)
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
@@ -936,7 +978,7 @@ extern "C"
 
 	__declspec(dllexport) void __cdecl leaveMap()
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestToleaveMapSession();
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToQuitMapSession();
 	}
 
 
@@ -1159,7 +1201,7 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool connectionState, int mode, int nbPlayers, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
 		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);

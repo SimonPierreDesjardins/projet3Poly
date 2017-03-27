@@ -105,6 +105,12 @@ public:
 
 	/// Retourne référence vers le système de son
 	inline FMOD::System* obtenirSystemeSon();
+
+	/// Retourne la musique par défault pour la simulation
+	std::string getDefaultMusic();
+
+	/// Change la musique de simulation
+	void setSimulationMusic(std::string path);
 };
 
 ////////////////////////////////////////////////////////////////////////

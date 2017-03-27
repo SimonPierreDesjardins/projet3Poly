@@ -11,7 +11,7 @@
 #ifndef ETAT_ROTATION_H
 #define ETAT_ROTATION_H
 
-#include "EtatAbstrait.h"
+#include "OnlineTool.h"
 #include "VisiteurTypes.h"
 
 ///////////////////////////////////////////////////////////////////////////
@@ -21,10 +21,10 @@
 /// @author Frédéric Grégoire
 /// @date 2016-02-15
 ///////////////////////////////////////////////////////////////////////////
-class EtatRotation : public EtatAbstrait
+class EtatRotation : public OnlineTool
 {
 public:
-	EtatRotation();
+	EtatRotation(client_network::MapSession* mapSession);
 	virtual ~EtatRotation();
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

@@ -7,10 +7,16 @@ void server::MultiUserSystem::AddUser(User * user)
 	TreatUserJoin(user);
 }
 
-void server::MultiUserSystem::RemoveUser(User* user)
+bool server::MultiUserSystem::RemoveUser(User* user)
 {
-	_connectedUserList.erase(user->Info.GetId());
-	user->removeSystemObserver(GetSystemType());
+	uint32_t nErased = _connectedUserList.erase(user->Info.GetId());
+	bool userFound = nErased != 0;
+	if (userFound)
+	{
+		user->removeSystemObserver(GetSystemType());
+		TreatUserDisconnect(user);
+	}
+	return userFound;
 }
 
 void server::MultiUserSystem::onUserDisconnected(User * user)

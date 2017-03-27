@@ -17,6 +17,11 @@
 #include <vector>
 #include <iterator>
 
+namespace client_network
+{
+	class MapSession;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurSelection
 /// @brief Visiteur permettant d'effectuer la sélection d'un objet
@@ -36,7 +41,7 @@ public:
 	virtual ~VisiteurSelection();
 	
     // Initialiser la sélection.
-    void selectionner(Iterateur debut, Iterateur fin);
+    void selectionner(Iterateur debut, Iterateur fin, client_network::MapSession* mapSession);
 
 	/// Parcours du noeudTable.
 	virtual void visiter(ArbreRendu* noeud);
@@ -48,7 +53,7 @@ public:
 private:
 	bool ctrlAppuye_ = false;
     Iterateur debut_, fin_;
-
+	client_network::MapSession* mapSession_;
 };
 
 ////////////////////////////////////////////////////////////////////////

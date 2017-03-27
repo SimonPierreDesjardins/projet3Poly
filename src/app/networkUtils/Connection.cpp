@@ -36,7 +36,7 @@ void Connection::ReadData()
 		{
 
 			unsigned int messageStartIndex = 0;
-			while (messageStartIndex != length) {
+			while (messageStartIndex < length) {
 				uint32_t msgLength = Networking::deserializeInteger(_buffer + messageStartIndex);
 				std::string data(_buffer + messageStartIndex, msgLength);
 				onReceivedMessage_(data);

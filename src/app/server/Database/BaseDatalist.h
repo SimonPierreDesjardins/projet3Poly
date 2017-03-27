@@ -7,7 +7,7 @@
 #include <bsoncxx\builder\stream\document.hpp>
 #include "Database\Database.h"
 #include <bsoncxx\json.hpp>
-//#include <bsoncxx\view_or_value.hpp>
+#include <thread>
 
 namespace server {
 
@@ -20,6 +20,13 @@ namespace server {
 	public:
 		BaseDatalist(Database* database) {
 			_database = database;
+		}
+
+		~BaseDatalist() {
+			_runUpdateThread = false;
+			while (!_updateThread.joinable()) {
+			}
+			_updateThread.join();
 		}
 		
 		//Adds elements to the database
@@ -42,6 +49,8 @@ namespace server {
 				EType* obj = ObjectFromBSON(doc);
 				_infoList.insert_or_assign(obj->GetId(), obj);
 			}
+			// Start updating thread that calls an update task for all entries once per second;
+			RunDatabaseSaveThread();
 		}
 
 		virtual std::string GetCollectionName() = 0;
@@ -58,18 +67,37 @@ namespace server {
 		virtual void GetObjectPropertiesFromBSON(bsoncxx::document::view docView, EType* object) = 0;
 		
 		//Saves user information into file
-		void SaveDataList() {
-
-			for each (auto element in _infoList)
-			{
-				_database->ReplaceEntry(GetCollectionName(), element.second);
+		void RunDatabaseSaveThread() {
+			if (_runUpdateThread) {
+				return;
 			}
+
+			_runUpdateThread = true;
+
+			_updateThread = std::thread([this]() {
+				while (_runUpdateThread) {
+					// sleep thread
+					std::this_thread::sleep_for(std::chrono::seconds(2));
+					// update DB elements
+					for each (auto element in _infoList)
+					{
+						if (!_runUpdateThread) {
+							break;
+						}
+
+						_database->ReplaceEntry(GetCollectionName(), element.second);
+					}
+				}
+			});
 		}
 
 		// Map of info
 		ElementMap _infoList;
 
 		Database* _database;
+
+		std::thread _updateThread;
+		bool _runUpdateThread = false;
 	};
 }
 

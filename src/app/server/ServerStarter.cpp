@@ -3,6 +3,7 @@
 #include "ChatSystem\ChatSystem.h"
 #include "MapSystem.h"
 #include "NetworkStandard.h"
+#include <TypeSerializerDeserializer.h>
 #include <iostream>
 
 void SetupServer() {
@@ -14,13 +15,14 @@ void SetupServer() {
 	server::Database database;
 	server::UserDatabase userDB(&database);
 	server::MapInfoDatabase mapInfoDB(&database);
+	server::MapFileDatabase mapFileDB(&database);
 
 	std::cout << "Setting up server" << std::endl;
 	// create ChatSystem
 	server::ChatSystem chatSystem;
 
 	// create MapSystem
-	server::MapSystem mapSystem(&mapInfoDB);
+	server::MapSystem mapSystem(&mapInfoDB, &mapFileDB);
 
 	// create vector of systems to pass the user to when authenticated
 	std::vector<server::MultiUserSystem*> newUserReceivers;
@@ -32,8 +34,6 @@ void SetupServer() {
 
 	// create User auth system
 	server::UserAuthLobby UserLobby(listener, &userDB , newUserReceivers);
-
-	// create UserLobby
 
 	std::cout << "Starting listener" << std::endl;
 	listener->StartAccepting();
@@ -93,7 +93,24 @@ void SetupTestClient() {
 
 	while (command != "exit") {
 		std::getline(std::cin, command);
-		container.SendThroughConnection(command);
+		if (command.substr(0, 7) == "chgperm") {
+			// get mapId from four following chars
+			unsigned int mapId = std::stoi(command.substr(7, 11));
+
+			std::string message("mp");
+			Networking::serialize(mapId, message);
+			message+= command[11];
+
+			if (command[11] == 'c') {
+				//rest of command is password
+				message += command.substr(12);
+			}
+
+			container.SendThroughConnection(message);
+		}
+		else {
+			container.SendThroughConnection(command);
+		}
 	}
 }
 

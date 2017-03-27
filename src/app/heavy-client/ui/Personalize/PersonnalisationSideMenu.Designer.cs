@@ -35,9 +35,6 @@
             this.musicChange_Button = new ui.PanelButton();
             this.pictureBox6 = new System.Windows.Forms.PictureBox();
             this.musicChangeLabel = new ui.CustomLabel();
-            this.tableChange_Button = new ui.PanelButton();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.changeTableLabel = new ui.CustomLabel();
             this.carChange_Button = new ui.PanelButton();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.robotChangeLabel = new ui.CustomLabel();
@@ -52,8 +49,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.musicChange_Button.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            this.tableChange_Button.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
             this.carChange_Button.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.carColor_Button.SuspendLayout();
@@ -98,7 +93,7 @@
             this.musicChange_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.musicChange_Button.Controls.Add(this.pictureBox6);
             this.musicChange_Button.Controls.Add(this.musicChangeLabel);
-            this.musicChange_Button.Location = new System.Drawing.Point(0, 350);
+            this.musicChange_Button.Location = new System.Drawing.Point(3, 344);
             this.musicChange_Button.Name = "musicChange_Button";
             this.musicChange_Button.Size = new System.Drawing.Size(200, 50);
             this.musicChange_Button.TabIndex = 1;
@@ -125,44 +120,12 @@
             this.musicChangeLabel.TabIndex = 0;
             this.musicChangeLabel.Text = "Choix de musique";
             // 
-            // tableChange_Button
-            // 
-            this.tableChange_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.tableChange_Button.Controls.Add(this.pictureBox5);
-            this.tableChange_Button.Controls.Add(this.changeTableLabel);
-            this.tableChange_Button.Location = new System.Drawing.Point(0, 290);
-            this.tableChange_Button.Name = "tableChange_Button";
-            this.tableChange_Button.Size = new System.Drawing.Size(200, 50);
-            this.tableChange_Button.TabIndex = 1;
-            this.tableChange_Button.Click += new System.EventHandler(this.tableChange_Button_Click);
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Enabled = false;
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(10, 12);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(25, 25);
-            this.pictureBox5.TabIndex = 5;
-            this.pictureBox5.TabStop = false;
-            // 
-            // changeTableLabel
-            // 
-            this.changeTableLabel.AutoSize = true;
-            this.changeTableLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.changeTableLabel.ForeColor = System.Drawing.Color.Silver;
-            this.changeTableLabel.Location = new System.Drawing.Point(45, 15);
-            this.changeTableLabel.Name = "changeTableLabel";
-            this.changeTableLabel.Size = new System.Drawing.Size(125, 21);
-            this.changeTableLabel.TabIndex = 0;
-            this.changeTableLabel.Text = "Choix de table";
-            // 
             // carChange_Button
             // 
             this.carChange_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.carChange_Button.Controls.Add(this.pictureBox4);
             this.carChange_Button.Controls.Add(this.robotChangeLabel);
-            this.carChange_Button.Location = new System.Drawing.Point(0, 230);
+            this.carChange_Button.Location = new System.Drawing.Point(0, 275);
             this.carChange_Button.Name = "carChange_Button";
             this.carChange_Button.Size = new System.Drawing.Size(200, 50);
             this.carChange_Button.TabIndex = 1;
@@ -194,7 +157,7 @@
             this.carColor_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.carColor_Button.Controls.Add(this.pictureBox3);
             this.carColor_Button.Controls.Add(this.robotColorLabel);
-            this.carColor_Button.Location = new System.Drawing.Point(0, 170);
+            this.carColor_Button.Location = new System.Drawing.Point(0, 206);
             this.carColor_Button.Name = "carColor_Button";
             this.carColor_Button.Size = new System.Drawing.Size(200, 50);
             this.carColor_Button.TabIndex = 1;
@@ -226,7 +189,7 @@
             this.wheelColor_Button.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.wheelColor_Button.Controls.Add(this.pictureBox2);
             this.wheelColor_Button.Controls.Add(this.wheelColorLabel);
-            this.wheelColor_Button.Location = new System.Drawing.Point(0, 110);
+            this.wheelColor_Button.Location = new System.Drawing.Point(0, 137);
             this.wheelColor_Button.Name = "wheelColor_Button";
             this.wheelColor_Button.Size = new System.Drawing.Size(200, 50);
             this.wheelColor_Button.TabIndex = 0;
@@ -261,7 +224,6 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.Controls.Add(this.returnMainMenu_Button);
             this.Controls.Add(this.musicChange_Button);
-            this.Controls.Add(this.tableChange_Button);
             this.Controls.Add(this.carChange_Button);
             this.Controls.Add(this.carColor_Button);
             this.Controls.Add(this.wheelColor_Button);
@@ -273,9 +235,6 @@
             this.musicChange_Button.ResumeLayout(false);
             this.musicChange_Button.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            this.tableChange_Button.ResumeLayout(false);
-            this.tableChange_Button.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
             this.carChange_Button.ResumeLayout(false);
             this.carChange_Button.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -298,8 +257,6 @@
         private CustomLabel robotColorLabel;
         private PanelButton carChange_Button;
         private CustomLabel robotChangeLabel;
-        private PanelButton tableChange_Button;
-        private CustomLabel changeTableLabel;
         private PanelButton musicChange_Button;
         private CustomLabel musicChangeLabel;
         private PanelButton returnMainMenu_Button;
@@ -307,7 +264,6 @@
         private CustomLabel returnLabel;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox5;
         private System.Windows.Forms.PictureBox pictureBox6;
         private System.Windows.Forms.ColorDialog colorDialog1;
     }

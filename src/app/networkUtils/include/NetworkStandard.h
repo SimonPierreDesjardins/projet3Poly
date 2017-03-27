@@ -18,7 +18,7 @@ enum PropertyType
 namespace MessageStandard {
 
 	//Buffer size constant
-	const int BUFFER_SIZE = 1024;
+	const int BUFFER_SIZE = 64000; //hueg buffer for hueg filez swiggidy
 
 	//Index of the system indicator byte in the message
 	const int LENGTH_END = 0;
@@ -29,8 +29,30 @@ namespace MessageStandard {
 
 	std::string AddMessageLengthHeader(const std::string& message);
 	void AddMessageLengthHeader(size_t size, std::string& message);
+	void UpdateLengthHeader(std::string& message);
 
 	int GetMessageLength(std::string& message);
+
+	namespace ItemTypes {
+		enum EntityType
+		{
+			TABLE_ENTITY,
+			START_ENTITY,
+			DUPLICATION_ENTITY,
+			POST_ENTITY,
+			WALL_ENTITY,
+			BLACK_LINE_ENTITY,
+			SEGMENT_ENTITY,
+			JUNCTION_ENTITY,
+			WHEEL_ENTITY,
+			ROBOT_ENTITY,
+			F1_ENTITY,
+			TRUCK_ENTITY,
+			VOLKS_ENTITY,
+			AUDI_ENTITY,
+			TELEPORT_ENTITY
+		};
+	}
 }
 
 }

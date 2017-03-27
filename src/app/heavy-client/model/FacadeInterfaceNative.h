@@ -101,6 +101,9 @@ extern "C"
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece);
 	__declspec(dllexport) void __cdecl setModele(char *modele);
 	__declspec(dllexport) void __cdecl getModele(char* chemin, int longueur);
+	__declspec(dllexport) void __cdecl setMusic(char* path);
+	__declspec(dllexport) void __cdecl getMusic(char* path, int size);
+	__declspec(dllexport) void __cdecl getDefaultMusic(char* path, int size);
 	
 	// Network
 	__declspec(dllexport) bool __cdecl connectToServer(char* hostName, char* port);
@@ -141,7 +144,7 @@ extern "C"
 	//Map System
 	typedef void(__stdcall * CallbackForNewMap)(const unsigned char* text, int size, bool connectionState, int mode, int nbPlayers, int id);
 	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap);
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool connectionState, int mode, int nbPlayers, int id);
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

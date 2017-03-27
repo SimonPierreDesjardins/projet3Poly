@@ -10,6 +10,7 @@
 #include "VisiteurMiseAEchelle.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
+#include "MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -39,6 +40,12 @@ VisiteurMiseAEchelle::VisiteurMiseAEchelle()
 ////////////////////////////////////////////////////////////////////////
 VisiteurMiseAEchelle::~VisiteurMiseAEchelle()
 {
+}
+
+void VisiteurMiseAEchelle::resizeSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession)
+{
+	mapSession_ = mapSession;
+	tree->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -75,11 +82,13 @@ void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud)
+void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud, client_network::MapSession* mapSession)
 {
 	NoeudAbstrait* table = noeud->chercher("table");
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
-		table->chercher(i)->assignerFacteurMiseAEchelle(facteursDimensionsInitiaux_[i]);
+		NoeudAbstrait* child = table->chercher(i);
+		child->assignerFacteurMiseAEchelle(facteursDimensionsInitiaux_[i]);
+		mapSession->localEntityPropertyUpdated(child, Networking::SCALE, glm::vec3(facteursDimensionsInitiaux_[i], 0.0, 0.0));
 	}
 }
 
@@ -116,7 +125,9 @@ void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 	glm::dvec3 positionVirtuelle = { 0.0, 0.0, 0.0 };
 	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
 		enfant = noeud->chercher(i);
-		if (enfant->estSelectionne()) {
+		if (enfant->estSelectionne() && 
+			enfant->getOwnerId() == mapSession_->getThisUserId())
+		{
 			enfant->accepterVisiteur(this);
 		}
 	}
@@ -138,6 +149,7 @@ void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_;
 	if (facteurMiseAEchelle >= 0) {
 		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+		mapSession_->localEntityPropertyUpdated(noeud, Networking::SCALE, glm::vec3(facteurMiseAEchelle, facteurMiseAEchelle, 0.0));
 	}
 }
 
@@ -156,8 +168,10 @@ void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 void VisiteurMiseAEchelle::visiter(NoeudMur* noeud)
 {
 	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_ * 2;
-	if (facteurMiseAEchelle >= 0) {
+	if (facteurMiseAEchelle >= 0) 
+	{
 		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+		mapSession_->localEntityPropertyUpdated(noeud, Networking::SCALE, glm::vec3(facteurMiseAEchelle, 0.0, 0.0));
 	}
 }
 ///////////////////////////////////////////////////////////////////////////////
