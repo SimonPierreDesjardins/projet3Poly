@@ -50,8 +50,12 @@ public:
 
 	double obtenirDuree();
 
+	void assignerPiecesEstAfficher(bool estAffiche);
+	void assignerFinModePiecesEstAfficher(bool estAffiche);
+
 private:
     const char* FONT_PATH{"./media/font/Consolas.ttf"};
+	const char* FONT_PATH_CENTURY{ "./media/font/CenturyGothic.ttf" };
     const int OFFSET_X{ 25 };
     const int OFFSET_Y{ 50 };
 
@@ -59,9 +63,12 @@ private:
     ProfilUtilisateur* profil_{ nullptr };
 
     FTGLPixmapFont font_{FONT_PATH};
+	FTGLPixmapFont fontCentury_{ FONT_PATH_CENTURY };
 
     bool tempsEstAffiche_{ false };
     bool profilEstAffiche_{ false };
+	bool piecesEstAffiche_{ false };
+	bool finModePieces_{ false };
     bool enPause_{ true };
 
 	double duree_{ 0.0 };

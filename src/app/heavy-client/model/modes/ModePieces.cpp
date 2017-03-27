@@ -51,12 +51,12 @@ ModePieces::ModePieces()
 	table_ = arbre_->chercher(0);
 	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
 	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
-	srand(time(NULL));
 	startThread();
 
     affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
     affichageTexte_->assignerProfilEstAffiche(true);
     affichageTexte_->assignerTempsEstAffiche(true);
+	affichageTexte_->assignerPiecesEstAfficher(true);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
 
@@ -85,12 +85,16 @@ ModePieces::~ModePieces()
 	controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
+	affichageTexte_->assignerPiecesEstAfficher(false);
+	affichageTexte_->assignerFinModePiecesEstAfficher(false);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->pauseChrono();
 	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+	FacadeModele::obtenirInstance()->assignerAutorisationInputClavier(true);
+	FacadeModele::obtenirInstance()->assignerAutorisationInputSouris(true);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -391,18 +395,30 @@ glm::dvec3 ModePieces::genererPositionCoin()
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModePieces::postAnimer()
-{
-	if ((int)(minuterie_.obtenirDuree()) % 15 == 0 && (int)(minuterie_.obtenirDuree()) != 0)
+{	
+	if(affichageTexte_->obtenirDuree() <= 60)
 	{
-		arbre_->chercher(0)->effacerTypeNoeud("piece");
-		minuterie_.reinitialiserChrono();
-		startThread();
+		if ((int)(minuterie_.obtenirDuree()) % 15 == 0 && (int)(minuterie_.obtenirDuree()) != 0)
+		{
+			arbre_->chercher(0)->effacerTypeNoeud("piece");
+			minuterie_.reinitialiserChrono();
+			startThread();
 
+		}
+		arbre_->accepterVisiteur(&visiteur_);
+		if (objectsReadyToSpawn)
+		{
+			spawnObjects();
+		}
 	}
-	arbre_->accepterVisiteur(&visiteur_);
-	if (objectsReadyToSpawn)
+	else 
 	{
-		spawnObjects();
+		affichageTexte_->assignerFinModePiecesEstAfficher(true);
+		controleRobot_->setEnPause(true);
+		std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
+		controleRobot_->traiterCommande(commandeArreter.get(), true);
+		modeEnPause = true;
+		affichageTexte_->pauseChrono();
 	}
 	
 }
@@ -434,6 +450,7 @@ bool ModePieces::obtenirModeEnPause()
 void ModePieces::creerPieces()
 {
 	spawnLock.lock();
+	srand(time(NULL));
 	for (int i = 0; i < 10; i++)
 	{
 		
