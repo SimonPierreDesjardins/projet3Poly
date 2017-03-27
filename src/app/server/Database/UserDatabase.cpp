@@ -21,7 +21,7 @@ void server::UserDatabase::GetObjectPropertiesFromBSON(bsoncxx::document::view d
 
 	userInfo->AchievementProgressList = docView["AchievementProgressList"].get_int32();
 	userInfo->NumberOfSimulations = docView["AchievementProgressList"].get_int32();
-	userInfo->DistanceTraveled = docView["DistanceTraveled"].get_double();
+	userInfo->DistanceTraveled = docView["DistanceTraveled"].get_int32();
 
 }
 
@@ -60,5 +60,5 @@ void server::UserInformation::WritePropertiesToBSON(bsoncxx::builder::basic::doc
 	));
 	docBuilder.append(kvp("NumberOfSimulations", static_cast<int>(NumberOfSimulations)));
 	docBuilder.append(kvp("AchievementProgressList", static_cast<int>(AchievementProgressList)));
-	docBuilder.append(kvp("DistanceTraveled", DistanceTraveled));
+	docBuilder.append(kvp("DistanceTraveled", static_cast<int>(DistanceTraveled)));
 }
