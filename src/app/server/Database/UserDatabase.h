@@ -18,7 +18,7 @@ namespace server {
 		std::set<unsigned int> CreatedMaps; // list of mapIds this user created
 		unsigned int NumberOfSimulations = 0; // number of simulations performed by the user
 		unsigned int AchievementProgressList = 0; // id of the list holding this user's achievement progress
-		float DistanceTraveled = 0.0f; // distance traveled during simulation by this user.
+		unsigned int DistanceTraveled = 0; // distance traveled during simulation by this user.
 
 		// Inherited via DatalistElement
 		virtual void WritePropertiesToBSON(bsoncxx::builder::basic::document & docBuilder) override;

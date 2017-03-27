@@ -66,6 +66,12 @@ namespace server {
 		// Gets all non-Id elements from the document before adding the object to the item list
 		virtual void GetObjectPropertiesFromBSON(bsoncxx::document::view docView, EType* object) = 0;
 		
+		//converts list of bytes to string for storage of info to avoid encoding shenanigans
+		std::string GetStringFromDoc(bsoncxx::document::view docView, std::string key) {
+			auto stringElement = docView[key].get_utf8().value.to_string();
+			return stringElement;
+		}
+
 		//Saves user information into file
 		void RunDatabaseSaveThread() {
 			if (_runUpdateThread) {
