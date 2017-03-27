@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditionSideMenu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditionTutorielSideMenu));
             this.editionToolsMenu = new System.Windows.Forms.Panel();
             this.deleteToolButton = new ui.PanelButton();
             this.deletePictureBox = new System.Windows.Forms.PictureBox();
@@ -368,6 +368,7 @@
             this.teleportObjectButton.Name = "teleportObjectButton";
             this.teleportObjectButton.Size = new System.Drawing.Size(35, 40);
             this.teleportObjectButton.TabIndex = 7;
+            this.teleportObjectButton.Click += new System.EventHandler(this.teleportObjectButton_Click);
             // 
             // teleportorPictureBox
             // 
@@ -499,7 +500,7 @@
             this.pictureBox4.TabIndex = 1;
             this.pictureBox4.TabStop = false;
             // 
-            // EditionSideMenu
+            // EditionTutorielSideMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -507,7 +508,7 @@
             this.BackColor = System.Drawing.Color.Transparent;
             this.Controls.Add(this.editionObjectMenu);
             this.Controls.Add(this.editionToolsMenu);
-            this.Name = "EditionSideMenu";
+            this.Name = "EditionTutorielSideMenu";
             this.Size = new System.Drawing.Size(70, 521);
             this.editionToolsMenu.ResumeLayout(false);
             this.deleteToolButton.ResumeLayout(false);

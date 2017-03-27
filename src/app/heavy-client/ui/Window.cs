@@ -287,6 +287,8 @@ namespace ui
                 case Constants.Key_O:
                     if (ModifierKeys.HasFlag(Keys.Control))
                         editionMenuStrip.ouvrirZone(false);
+                    else
+                        editionSideMenu.teleportorObjet();
                     break;
 
                 case Constants.Key_N:
@@ -466,6 +468,14 @@ namespace ui
                         editionTutorielSideMenu.wallObject();
                     }
                     break;
+
+                case Constants.Key_O:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TELEPORTOR)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionSideMenu.teleportorObjet();
+                    }
+                    break;    
 
                 case Constants.Key_P:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)

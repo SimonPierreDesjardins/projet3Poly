@@ -35,6 +35,7 @@ const int VK_KEY_T = 'T';
 const int VK_KEY_P = 'P';
 const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
+const int VK_KEY_O = 'O';
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -135,6 +136,14 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				{
 					etat_ = std::make_unique<EtatDeplacement>(mapSession_);
 					currentPosition_ = getPositionOfTutorialObject();
+				}
+				break;
+
+			case VK_KEY_O:
+				if (getCurrentTutorialState() == (int)SELECT_TELEPORTOR)
+				{
+					etat_ = std::make_unique<EtatCreationTeleporteur>();
+					numberOfObjects_ = getNomberOfObjects("teleporteur");
 				}
 				break;
 
@@ -473,6 +482,17 @@ void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
 	etat_->gererClicGaucheRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 	switch (etat_->getType())
 	{
+		case CREATION_TELEPORTOR:
+		{
+			EtatCreationTeleporteur* creationTeleportorTool(static_cast<EtatCreationTeleporteur*>(etat_.get()));
+			if (!creationTeleportorTool->isInCreation())
+			{
+				if (numberOfObjects_ != getNomberOfObjects("teleporteur"))
+					ChangeEditionTutorialState();
+			}
+		}
+		break;
+
 		case CREATION_LIGNE_NOIRE:
 		{
 			EtatCreationLigne* creationLineTool(static_cast<EtatCreationLigne*>(etat_.get()));

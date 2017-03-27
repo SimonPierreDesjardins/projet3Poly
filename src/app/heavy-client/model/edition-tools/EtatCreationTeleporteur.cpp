@@ -23,6 +23,7 @@
 ////////////////////////////////////////////////////////////////////////
 EtatCreationTeleporteur::EtatCreationTeleporteur()
 {
+	setType(CREATION_TELEPORTOR);
 	visiteurCreationTeleporteur_ = std::make_unique<VisiteurCreationTeleporteur>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
