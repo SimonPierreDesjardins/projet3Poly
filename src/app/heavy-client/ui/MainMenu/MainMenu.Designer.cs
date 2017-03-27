@@ -33,7 +33,9 @@
             this.HideMenuTimer = new System.Windows.Forms.Timer(this.components);
             this.ShowMenuTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
-            this.achievementButton = new ui.PanelButton();
+            this.mainMenu_TutoEditionButton = new ui.PanelButton();
+            this.customLabel7 = new ui.CustomLabel();
+            this.mainMenu_TutoSimulationButton = new ui.PanelButton();
             this.customLabel1 = new ui.CustomLabel();
             this.mainMenu_ConnexionButton = new ui.PanelButton();
             this.connexionPictureBox = new System.Windows.Forms.PictureBox();
@@ -47,7 +49,8 @@
             this.mainMenu_mapsButton = new ui.PanelButton();
             this.customLabel2 = new ui.CustomLabel();
             this.panel1.SuspendLayout();
-            this.achievementButton.SuspendLayout();
+            this.mainMenu_TutoEditionButton.SuspendLayout();
+            this.mainMenu_TutoSimulationButton.SuspendLayout();
             this.mainMenu_ConnexionButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.connexionPictureBox)).BeginInit();
             this.mainMenu_QuitButton.SuspendLayout();
@@ -70,7 +73,8 @@
             // 
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.panel1.Controls.Add(this.achievementButton);
+            this.panel1.Controls.Add(this.mainMenu_TutoEditionButton);
+            this.panel1.Controls.Add(this.mainMenu_TutoSimulationButton);
             this.panel1.Controls.Add(this.mainMenu_ConnexionButton);
             this.panel1.Controls.Add(this.mainMenu_QuitButton);
             this.panel1.Controls.Add(this.mainMenu_ConfigurationButton);
@@ -81,27 +85,51 @@
             this.panel1.Size = new System.Drawing.Size(200, 471);
             this.panel1.TabIndex = 0;
             // 
-            // achievementButton
+            // mainMenu_TutoEditionButton
             // 
-            this.achievementButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.achievementButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.achievementButton.Controls.Add(this.customLabel1);
-            this.achievementButton.Location = new System.Drawing.Point(0, 275);
-            this.achievementButton.Name = "achievementButton";
-            this.achievementButton.Size = new System.Drawing.Size(200, 50);
-            this.achievementButton.TabIndex = 6;
-            this.achievementButton.Click += new System.EventHandler(this.achievementButton_Click);
+            this.mainMenu_TutoEditionButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mainMenu_TutoEditionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.mainMenu_TutoEditionButton.Controls.Add(this.customLabel7);
+            this.mainMenu_TutoEditionButton.Location = new System.Drawing.Point(0, 107);
+            this.mainMenu_TutoEditionButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.mainMenu_TutoEditionButton.Name = "mainMenu_TutoEditionButton";
+            this.mainMenu_TutoEditionButton.Size = new System.Drawing.Size(200, 50);
+            this.mainMenu_TutoEditionButton.TabIndex = 8;
+            this.mainMenu_TutoEditionButton.Click += new System.EventHandler(this.mainMenu_TutoEditionButton_Click);
+            // 
+            // customLabel7
+            // 
+            this.customLabel7.AutoSize = true;
+            this.customLabel7.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel7.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel7.Location = new System.Drawing.Point(50, 15);
+            this.customLabel7.Name = "customLabel7";
+            this.customLabel7.Size = new System.Drawing.Size(123, 21);
+            this.customLabel7.TabIndex = 0;
+            this.customLabel7.Text = "Tutoriel Édition";
+            // 
+            // mainMenu_TutoSimulationButton
+            // 
+            this.mainMenu_TutoSimulationButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.mainMenu_TutoSimulationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.mainMenu_TutoSimulationButton.Controls.Add(this.customLabel1);
+            this.mainMenu_TutoSimulationButton.Location = new System.Drawing.Point(0, 166);
+            this.mainMenu_TutoSimulationButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
+            this.mainMenu_TutoSimulationButton.Name = "mainMenu_TutoSimulationButton";
+            this.mainMenu_TutoSimulationButton.Size = new System.Drawing.Size(200, 50);
+            this.mainMenu_TutoSimulationButton.TabIndex = 7;
+            this.mainMenu_TutoSimulationButton.Click += new System.EventHandler(this.mainMenu_TutoSimulationButton_Click);
             // 
             // customLabel1
             // 
             this.customLabel1.AutoSize = true;
             this.customLabel1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel1.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel1.Location = new System.Drawing.Point(55, 15);
+            this.customLabel1.Location = new System.Drawing.Point(50, 15);
             this.customLabel1.Name = "customLabel1";
-            this.customLabel1.Size = new System.Drawing.Size(72, 21);
+            this.customLabel1.Size = new System.Drawing.Size(150, 21);
             this.customLabel1.TabIndex = 0;
-            this.customLabel1.Text = "Réussite";
+            this.customLabel1.Text = "Tutoriel Simulation";
             // 
             // mainMenu_ConnexionButton
             // 
@@ -109,7 +137,7 @@
             this.mainMenu_ConnexionButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.mainMenu_ConnexionButton.Controls.Add(this.connexionPictureBox);
             this.mainMenu_ConnexionButton.Controls.Add(this.customLabel6);
-            this.mainMenu_ConnexionButton.Location = new System.Drawing.Point(0, 331);
+            this.mainMenu_ConnexionButton.Location = new System.Drawing.Point(0, 343);
             this.mainMenu_ConnexionButton.Name = "mainMenu_ConnexionButton";
             this.mainMenu_ConnexionButton.Size = new System.Drawing.Size(200, 50);
             this.mainMenu_ConnexionButton.TabIndex = 5;
@@ -130,7 +158,7 @@
             this.customLabel6.AutoSize = true;
             this.customLabel6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel6.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel6.Location = new System.Drawing.Point(55, 15);
+            this.customLabel6.Location = new System.Drawing.Point(50, 15);
             this.customLabel6.Name = "customLabel6";
             this.customLabel6.Size = new System.Drawing.Size(94, 21);
             this.customLabel6.TabIndex = 0;
@@ -152,7 +180,7 @@
             this.customLabel5.AutoSize = true;
             this.customLabel5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel5.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel5.Location = new System.Drawing.Point(55, 15);
+            this.customLabel5.Location = new System.Drawing.Point(50, 15);
             this.customLabel5.Name = "customLabel5";
             this.customLabel5.Size = new System.Drawing.Size(66, 21);
             this.customLabel5.TabIndex = 0;
@@ -163,7 +191,8 @@
             this.mainMenu_ConfigurationButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_ConfigurationButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.mainMenu_ConfigurationButton.Controls.Add(this.customLabel4);
-            this.mainMenu_ConfigurationButton.Location = new System.Drawing.Point(0, 194);
+            this.mainMenu_ConfigurationButton.Location = new System.Drawing.Point(0, 284);
+            this.mainMenu_ConfigurationButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             this.mainMenu_ConfigurationButton.Name = "mainMenu_ConfigurationButton";
             this.mainMenu_ConfigurationButton.Size = new System.Drawing.Size(200, 50);
             this.mainMenu_ConfigurationButton.TabIndex = 4;
@@ -174,7 +203,7 @@
             this.customLabel4.AutoSize = true;
             this.customLabel4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel4.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel4.Location = new System.Drawing.Point(55, 15);
+            this.customLabel4.Location = new System.Drawing.Point(50, 15);
             this.customLabel4.Name = "customLabel4";
             this.customLabel4.Size = new System.Drawing.Size(118, 21);
             this.customLabel4.TabIndex = 0;
@@ -185,7 +214,8 @@
             this.mainMenu_PersoButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_PersoButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.mainMenu_PersoButton.Controls.Add(this.customLabel3);
-            this.mainMenu_PersoButton.Location = new System.Drawing.Point(0, 138);
+            this.mainMenu_PersoButton.Location = new System.Drawing.Point(0, 225);
+            this.mainMenu_PersoButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             this.mainMenu_PersoButton.Name = "mainMenu_PersoButton";
             this.mainMenu_PersoButton.Size = new System.Drawing.Size(200, 50);
             this.mainMenu_PersoButton.TabIndex = 5;
@@ -196,7 +226,7 @@
             this.customLabel3.AutoSize = true;
             this.customLabel3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel3.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel3.Location = new System.Drawing.Point(55, 15);
+            this.customLabel3.Location = new System.Drawing.Point(50, 15);
             this.customLabel3.Name = "customLabel3";
             this.customLabel3.Size = new System.Drawing.Size(134, 21);
             this.customLabel3.TabIndex = 0;
@@ -207,7 +237,8 @@
             this.mainMenu_mapsButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.mainMenu_mapsButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
             this.mainMenu_mapsButton.Controls.Add(this.customLabel2);
-            this.mainMenu_mapsButton.Location = new System.Drawing.Point(0, 82);
+            this.mainMenu_mapsButton.Location = new System.Drawing.Point(0, 48);
+            this.mainMenu_mapsButton.Margin = new System.Windows.Forms.Padding(3, 3, 3, 6);
             this.mainMenu_mapsButton.Name = "mainMenu_mapsButton";
             this.mainMenu_mapsButton.Size = new System.Drawing.Size(200, 50);
             this.mainMenu_mapsButton.TabIndex = 6;
@@ -218,7 +249,7 @@
             this.customLabel2.AutoSize = true;
             this.customLabel2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.customLabel2.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel2.Location = new System.Drawing.Point(55, 15);
+            this.customLabel2.Location = new System.Drawing.Point(50, 15);
             this.customLabel2.Name = "customLabel2";
             this.customLabel2.Size = new System.Drawing.Size(62, 21);
             this.customLabel2.TabIndex = 0;
@@ -233,8 +264,10 @@
             this.Name = "MainMenu";
             this.Size = new System.Drawing.Size(200, 471);
             this.panel1.ResumeLayout(false);
-            this.achievementButton.ResumeLayout(false);
-            this.achievementButton.PerformLayout();
+            this.mainMenu_TutoEditionButton.ResumeLayout(false);
+            this.mainMenu_TutoEditionButton.PerformLayout();
+            this.mainMenu_TutoSimulationButton.ResumeLayout(false);
+            this.mainMenu_TutoSimulationButton.PerformLayout();
             this.mainMenu_ConnexionButton.ResumeLayout(false);
             this.mainMenu_ConnexionButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.connexionPictureBox)).EndInit();
@@ -264,8 +297,10 @@
         private System.Windows.Forms.Panel panel1;
         private PanelButton mainMenu_ConnexionButton;
         private CustomLabel customLabel6;
-        private CustomLabel customLabel1;
         public System.Windows.Forms.PictureBox connexionPictureBox;
-        public PanelButton achievementButton;
+        private PanelButton mainMenu_TutoEditionButton;
+        private CustomLabel customLabel7;
+        private PanelButton mainMenu_TutoSimulationButton;
+        private CustomLabel customLabel1;
     }
 }

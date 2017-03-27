@@ -692,34 +692,20 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void finishTutorial()
         {
-            parent_.editionSideMenu = new EditionSideMenu(parent_);
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
-            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
+            parent_.mainMenu = new MainMenu(parent_);
 
             parent_.viewPort.Controls.Remove(this);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielModificationPanel);
 
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
-            parent_.editionSideMenu.Dock = DockStyle.Left;
+            parent_.viewPort.Controls.Add(parent_.mainMenu);
+            parent_.mainMenu.Dock = DockStyle.Left;
 
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
-            parent_.editionMenuStrip.Dock = DockStyle.Top;
+            Program.peutAfficher = false;
+            parent_.viewPort.Refresh();
 
-            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
-                                                                  parent_.editionMenuStrip.Height);
-            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-
-            Program.peutAfficher = true;
-            FonctionsNatives.assignerMode(Mode.EDITION);
-
-            FonctionsNatives.dessinerOpenGL();
+            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
         
         ////////////////////////////////////////////////////////////////////////

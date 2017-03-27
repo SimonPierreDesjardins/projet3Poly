@@ -31,6 +31,8 @@ namespace ui
         public EditionMenuStrip editionMenuStrip;
         public EditionModificationPanel editionModificationPanel;
 
+        public TutorialSimulation simulationTutorial;
+
         public EditionTutorielMenuStrip editionTutorielMenuStrip;
         public EditionTutorielSideMenu editionTutorielSideMenu;
         public EditionTutorielInstructions editionTutorielInstructions;
