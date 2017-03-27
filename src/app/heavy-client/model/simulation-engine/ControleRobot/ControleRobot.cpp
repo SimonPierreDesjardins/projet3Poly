@@ -12,9 +12,9 @@
 
 #include <iostream>
 
+#include "ProfilUtilisateur.h"
 #include "CommandeRobot.h"
 #include "NoeudRobot.h"
-#include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
 // Inclusion pour l'Enum de comportements
@@ -31,24 +31,20 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ControleRobot::ControleRobot()
+ControleRobot::ControleRobot(ArbreRendu* tree, ProfilUtilisateur* profile, 
+	ControleurLumiere* lightController, client_network::MapSession* mapSession)
+	: arbre_(tree), 
+	  profil_(profile), 
+	  controleurLumiere_(lightController), 
+	  mapSession_(mapSession)
 {
-	table_ = nullptr;
 	robot_ = nullptr;
-	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	if (arbre != nullptr){
-		table_ = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
 
-		if (table_ != nullptr){
-			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
+	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
+	robotPhysic_.init(arbre_, robot.get());
 
-			table_->ajouter(robot);
-
-            robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
-            robot_->assignerMutex(&mutexComportement);
-		}
-	}
+	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+	robot_->assignerMutex(&mutexComportement);
 
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
@@ -57,9 +53,6 @@ ControleRobot::ControleRobot()
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 2; j++)
 			flagCapteur[i][j] = false;
-
-	
-    controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 ////////////////////////////////////////////////////////////////////////

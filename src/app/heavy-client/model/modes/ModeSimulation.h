@@ -13,7 +13,7 @@
 
 #include <memory>
 #include "glm\glm.hpp"
-#include "ModeAbstrait.h"
+#include "OnlineMapMode.h"
 #include "ControleRobot.h"
 #include <unordered_map>
 #include <array>
@@ -31,25 +31,10 @@ class ControleurLumiere;
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeSimulation : public ModeAbstrait 
+class ModeSimulation : public OnlineMapMode
 {
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_{ nullptr };
-	static std::array<char, 11> touchesNonConfigurable_;
-    std::array<bool, 5> actionsAppuyees_;
-
-	bool lumiereAmbiante { true };
-	bool lumiereDirectionnelle { true };
-	bool lumiereSpot { true };
-
-    AffichageTexte* affichageTexte_{ nullptr };
-
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
 public:
-	//Constructeur par défaut
-	ModeSimulation();
+	ModeSimulation(client_network::MapSession* mapSession);
 	//Destructeur
 	virtual ~ModeSimulation();
 	//Gestion des entrées utilisateur
@@ -63,6 +48,23 @@ public:
 	void postChangementDeProfil();
 
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
+
+private:
+	ControleRobot controleRobot_;
+	ProfilUtilisateur* profil_{ nullptr };
+	static std::array<char, 11> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
+
+	bool lumiereAmbiante { true };
+	bool lumiereDirectionnelle { true };
+	bool lumiereSpot { true };
+
+    AffichageTexte* affichageTexte_{ nullptr };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
+	
+	//Constructeur par défaut
+	ModeSimulation() = delete;
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

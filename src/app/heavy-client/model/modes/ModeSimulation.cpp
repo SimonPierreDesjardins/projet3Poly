@@ -22,7 +22,6 @@
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
-
 #include <iostream>
 
 #include "EnginSon.h"
@@ -39,14 +38,12 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 /// Constructeur par défaut pour le mode simulation
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeSimulation::ModeSimulation()
+ModeSimulation::ModeSimulation(client_network::MapSession* mapSession)
+	: OnlineMapMode(mapSession)
 {
 	typeMode_ = SIMULATION;
-	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode manuel
-	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
 
@@ -59,10 +56,15 @@ ModeSimulation::ModeSimulation()
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 
 	FacadeModele::obtenirInstance()->assignerEnvironnement(0);
-
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
+
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+
+	controleRobot_ = ControleRobot(arbre, profil_, controleurLumiere_, mapSession_);
+	controleRobot_.passerAModeManuel();
+	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
 }
 
 ////////////////////////////////////////////////////////////////////////

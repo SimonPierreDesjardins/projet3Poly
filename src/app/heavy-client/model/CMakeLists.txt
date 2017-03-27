@@ -11,7 +11,6 @@ set(ARBRE_SRC
 )
 
 set(NOEUDS_SRC
-
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.h
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.cpp
     simulation-engine/Arbre/Noeuds/NoeudComposite.h
@@ -164,6 +163,8 @@ set(PHYSIQUE_SRC
     simulation-engine/Physique/FormeEnglobanteAbstraite.cpp
     simulation-engine/Physique/RectangleEnglobant.h
     simulation-engine/Physique/RectangleEnglobant.cpp
+    simulation-engine/Physique/RobotPhysic.h
+    simulation-engine/Physique/RobotPhysic.cpp
 )
 
 set(PROFIL_UTILISATEUR_SRC
@@ -172,7 +173,6 @@ set(PROFIL_UTILISATEUR_SRC
 )
 
 set(VISITEUR_SRC
-
     simulation-engine/Visiteur/VisiteurAbstrait.h
     simulation-engine/Visiteur/VisiteurAbstrait.cpp
     simulation-engine/Visiteur/VisiteurCreationLigne.h

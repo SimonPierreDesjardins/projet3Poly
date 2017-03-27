@@ -13,9 +13,11 @@
 
 #include <memory>
 #include <thread>
-#include "ComportementAbstrait.h"
 #include <mutex>
 #include <vector>
+
+#include "RobotPhysic.h"
+#include "ComportementAbstrait.h"
 
 class CommandeRobot;
 class NoeudAbstrait;
@@ -23,6 +25,10 @@ class NoeudRobot;
 class ArbreRendu;
 class ProfilUtilisateur;
 class ControleurLumiere;
+namespace client_network
+{
+	class MapSession;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -42,7 +48,7 @@ class ControleRobot
 	friend class ControleRobotTest;
 	
 public:
-	ControleRobot();
+	ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profile, ControleurLumiere* lightController, client_network::MapSession* mapSession);
 	~ControleRobot();
 
 	// Demande au robot de traiter une commande donnée
@@ -93,6 +99,7 @@ private:
 
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;
+	client_network::MapSession* mapSession_;
 
 	// pointeur vers le noeud du robot
 	NoeudRobot* robot_;
@@ -101,8 +108,9 @@ private:
     // Pointeur sur le controleur de lumière.
     ControleurLumiere* controleurLumiere_{ nullptr };
 
-
 	std::vector<std::unique_ptr<ComportementAbstrait>>* vecteurComportements_;
+
+	RobotPhysic robotPhysic_;
 
 	// Pointeur vers le comportement présentement adopté par le robot.
 	ComportementAbstrait* comportement_;
@@ -119,6 +127,8 @@ private:
 	* X: 0 = droite, 1 = centre, 2 = gauche
 	* Y: 0 = zone securitaire, 1 = zone danger */
 	bool flagCapteur[3][2];
+
+	ControleRobot() = delete;
 };
 
 #endif // CONTROLE_ROBOT_H
