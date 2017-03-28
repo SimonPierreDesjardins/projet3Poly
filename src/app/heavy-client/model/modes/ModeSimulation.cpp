@@ -21,7 +21,7 @@
 #include "CommandeRobot.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
-
+#include "MapSession.h"
 
 #include <iostream>
 
@@ -39,10 +39,11 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 /// Constructeur par défaut pour le mode simulation
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeSimulation::ModeSimulation()
+ModeSimulation::ModeSimulation(client_network::MapSession* mapSession)
+	: OnlineMapMode(mapSession)
 {
 	typeMode_ = SIMULATION;
-	controleRobot_ = std::make_unique<ControleRobot>();
+	controleRobot_ = std::make_unique<ControleRobot>(mapSession);
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode manuel

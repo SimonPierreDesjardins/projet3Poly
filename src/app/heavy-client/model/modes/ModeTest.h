@@ -15,7 +15,7 @@
 #include <array>
 #include "glm\glm.hpp"
 
-#include "ModeAbstrait.h"
+#include "OnlineMapMode.h"
 #include "ControleRobot.h"
 #include <unordered_map>
 #include <array>
@@ -35,27 +35,11 @@ class ControleurLumiere;
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
 
-class ModeTest : public ModeAbstrait
+class ModeTest : public OnlineMapMode
 {
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-
-	ProfilUtilisateur* profil_{ nullptr };
-    AffichageTexte* affichageTexte_{ nullptr };
-
-	static std::array<char, 11> touchesNonConfigurable_;
-    std::array<bool, 5> actionsAppuyees_;
-
-	bool lumiereAmbiante{ true };
-	bool lumiereDirectionnelle{ true };
-	bool lumiereSpot{ true };
-
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
 public:
+	ModeTest(client_network::MapSession* mapSession);
 
-	//Constructeur par défaut
-	ModeTest();
 	//Destructeur
 	virtual ~ModeTest();
 	
@@ -71,6 +55,23 @@ public:
 	
 protected:
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
+
+private:
+	std::unique_ptr<ControleRobot> controleRobot_;
+
+	ProfilUtilisateur* profil_{ nullptr };
+    AffichageTexte* affichageTexte_{ nullptr };
+
+	static std::array<char, 11> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
+
+	bool lumiereAmbiante{ true };
+	bool lumiereDirectionnelle{ true };
+	bool lumiereSpot{ true };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
+
+	ModeTest() = delete;
 };
 
 std::array<char, 11>* ModeTest::getTouchesNonConfigurable()

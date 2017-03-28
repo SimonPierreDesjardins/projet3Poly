@@ -13,7 +13,7 @@
 
 #include <memory>
 #include "glm\glm.hpp"
-#include "ModeAbstrait.h"
+#include "OnlineMapMode.h"
 #include "ControleRobot.h"
 #include <unordered_map>
 #include <array>
@@ -31,8 +31,25 @@ class ControleurLumiere;
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeSimulation : public ModeAbstrait 
+class ModeSimulation : public OnlineMapMode 
 {
+public:
+	ModeSimulation(client_network::MapSession* mapSession);
+
+	//Destructeur
+	virtual ~ModeSimulation();
+	//Gestion des entrées utilisateur
+	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
+	void inverserLumiereAmbiante();
+	void inverserLumiereDirectionnelle();
+	void inverserLumiereSpot();
+
+	void preChangementDeProfil();
+	void postChangementDeProfil();
+
+	inline static std::array<char, 11>* getTouchesNonConfigurable();
+
 private:
 	std::unique_ptr<ControleRobot> controleRobot_;
 	ProfilUtilisateur* profil_{ nullptr };
@@ -47,22 +64,9 @@ private:
 
 	ControleurLumiere* controleurLumiere_{ nullptr };
 
-public:
 	//Constructeur par défaut
-	ModeSimulation();
-	//Destructeur
-	virtual ~ModeSimulation();
-	//Gestion des entrées utilisateur
-	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+	ModeSimulation() = delete;
 
-	void inverserLumiereAmbiante();
-	void inverserLumiereDirectionnelle();
-	void inverserLumiereSpot();
-
-	void preChangementDeProfil();
-	void postChangementDeProfil();
-
-	inline static std::array<char, 11>* getTouchesNonConfigurable();
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

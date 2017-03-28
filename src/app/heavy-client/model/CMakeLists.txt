@@ -11,7 +11,6 @@ set(ARBRE_SRC
 )
 
 set(NOEUDS_SRC
-
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.h
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.cpp
     simulation-engine/Arbre/Noeuds/NoeudComposite.h
@@ -54,14 +53,6 @@ set(USINES_SRC
     simulation-engine/Arbre/Usines/UsineNoeud.cpp
 )
 
-set(CAPTEUR_SRC
-    simulation-engine/Capteur/CapteurDistance.h
-    simulation-engine/Capteur/CapteurDistance.cpp
-    simulation-engine/Capteur/CapteurOptique.h
-    simulation-engine/Capteur/CapteurOptique.cpp
-    simulation-engine/Capteur/SuiveurLigne.h
-    simulation-engine/Capteur/SuiveurLigne.cpp
-)
 
 set(CONFIGURATION_SRC
     Configuration/ConfigScene.h
@@ -71,6 +62,15 @@ set(CONFIGURATION_SRC
 set(CONTROLE_ROBOT_SRC
     simulation-engine/ControleRobot/ControleRobot.h
     simulation-engine/ControleRobot/ControleRobot.cpp
+)
+
+set(CAPTEUR_SRC
+    simulation-engine/ControleRobot/Capteur/CapteurDistance.h
+    simulation-engine/ControleRobot/Capteur/CapteurDistance.cpp
+    simulation-engine/ControleRobot/Capteur/CapteurOptique.h
+    simulation-engine/ControleRobot/Capteur/CapteurOptique.cpp
+    simulation-engine/ControleRobot/Capteur/SuiveurLigne.h
+    simulation-engine/ControleRobot/Capteur/SuiveurLigne.cpp
 )
 
 set(COMMANDE_SRC
@@ -92,6 +92,15 @@ set(COMPORTEMENT_SRC
     simulation-engine/ControleRobot/Comportement/ComportementSuiviLigne.h
     simulation-engine/ControleRobot/Comportement/ComportementSuiviLigne.cpp
     simulation-engine/ControleRobot/Comportement/ComportementTypes.h
+)
+
+set(PHYSIQUE_SRC
+    simulation-engine/ControleRobot/Physique/CercleEnglobant.h
+    simulation-engine/ControleRobot/Physique/CercleEnglobant.cpp
+    simulation-engine/ControleRobot/Physique/FormeEnglobanteAbstraite.h
+    simulation-engine/ControleRobot/Physique/FormeEnglobanteAbstraite.cpp
+    simulation-engine/ControleRobot/Physique/RectangleEnglobant.h
+    simulation-engine/ControleRobot/Physique/RectangleEnglobant.cpp
 )
 
 set(ENGIN_SON_SRC
@@ -130,7 +139,6 @@ set(MACHINE_A_ETATS_SRC
     edition-tools/EtatTypes.h
     edition-tools/EtatCreationTeleporteur.h
     edition-tools/EtatCreationTeleporteur.cpp
-
 )
 
 set(MODES_SRC
@@ -144,6 +152,7 @@ set(MODES_SRC
     modes/ModeMenuPrincipal.cpp
     modes/ModeSimulation.h
     modes/ModeSimulation.cpp
+    modes/ModeTest.h
     modes/ModeTest.cpp
     modes/ModeTypes.h
     modes/ModePersonalize.cpp
@@ -157,14 +166,6 @@ set(MODES_SRC
 )
 source_group("modes" FILES ${MODES_SRC})
 
-set(PHYSIQUE_SRC
-    simulation-engine/Physique/CercleEnglobant.h
-    simulation-engine/Physique/CercleEnglobant.cpp
-    simulation-engine/Physique/FormeEnglobanteAbstraite.h
-    simulation-engine/Physique/FormeEnglobanteAbstraite.cpp
-    simulation-engine/Physique/RectangleEnglobant.h
-    simulation-engine/Physique/RectangleEnglobant.cpp
-)
 
 set(PROFIL_UTILISATEUR_SRC
     ProfilUtilisateur/ProfilUtilisateur.h      
@@ -172,7 +173,6 @@ set(PROFIL_UTILISATEUR_SRC
 )
 
 set(VISITEUR_SRC
-
     simulation-engine/Visiteur/VisiteurAbstrait.h
     simulation-engine/Visiteur/VisiteurAbstrait.cpp
     simulation-engine/Visiteur/VisiteurCreationLigne.h
@@ -262,13 +262,13 @@ include_directories(
     simulation-engine/Arbre
     simulation-engine/Arbre/Noeuds
     simulation-engine/Arbre/Usines
-    simulation-engine/Capteur
     simulation-engine/ControleRobot
     simulation-engine/ControleRobot/Commande
     simulation-engine/ControleRobot/Comportement
+    simulation-engine/ControleRobot/Physique
+    simulation-engine/ControleRobot/Capteur
     simulation-engine/EnginSon
     simulation-engine/Lumiere
-    simulation-engine/Physique
     simulation-engine/Visiteur
     Configuration
     event-handler
@@ -282,21 +282,21 @@ include_directories(
 # Ajouter les filtres dans le projet visual studio
 source_group("affichage-texte" FILES ${AFFICHAGE_TEXTE_SRC})
 source_group("application" FILES ${APPLICATION_SRC})
+source_group("config" FILES ${CONFIGURATION_SRC})
 source_group("simulation-engine\\arbre" FILES ${ARBRE_SRC})
 source_group("simulation-engine\\arbre\\noeuds" FILES ${NOEUDS_SRC})
 source_group("simulation-engine\\arbre\\usines" FILES ${USINES_SRC})
-source_group("simulation-engine\\capteur" FILES ${CAPTEUR_SRC})
-source_group("config" FILES ${CONFIGURATION_SRC})
 source_group("simulation-engine\\controle-robot" FILES ${CONTROLE_ROBOT_SRC})
 source_group("simulation-engine\\controle-robot\\commande" FILES ${COMMANDE_SRC})
 source_group("simulation-engine\\controle-robot\\comportement" FILES ${COMPORTEMENT_SRC})
+source_group("simulation-engine\\controle-robot\\physique" FILES ${PHYSIQUE_SRC})
+source_group("simulation-engine\\controle-robot\\capteur" FILES ${CAPTEUR_SRC})
 source_group("simulation-engine\\engin-son" FILES ${ENGIN_SON_SRC})
-source_group("interface" FILES ${INTERFACE_SRC})
 source_group("simulation-engine\\lumiere" FILES ${LUMIERE_SRC})
-source_group("etats" FILES ${MACHINE_A_ETATS_SRC})
-source_group("simulation-engine\\physique" FILES ${PHYSIQUE_SRC})
-source_group("profil-utilisateur" FILES ${PROFIL_UTILISATEUR_SRC})
 source_group("simulation-engine\\visiteur" FILES ${VISITEUR_SRC})
+source_group("interface" FILES ${INTERFACE_SRC})
+source_group("etats" FILES ${MACHINE_A_ETATS_SRC})
+source_group("profil-utilisateur" FILES ${PROFIL_UTILISATEUR_SRC})
 
 # Compiler les fichiers sources dans une dll
 add_library(model SHARED

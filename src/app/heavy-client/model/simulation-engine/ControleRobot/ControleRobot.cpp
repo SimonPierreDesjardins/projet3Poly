@@ -8,7 +8,7 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "ControleRobot.h"
+
 
 #include <iostream>
 
@@ -17,8 +17,12 @@
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
+#include "MapSession.h"
+
 // Inclusion pour l'Enum de comportements
 #include "ComportementAbstrait.h"
+
+#include "ControleRobot.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -35,13 +39,14 @@ ControleRobot::ControleRobot()
 {
 	table_ = nullptr;
 	robot_ = nullptr;
-	ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	if (arbre != nullptr){
-		table_ = arbre->chercher(ArbreRenduINF2990::NOM_TABLE);
-
-		if (table_ != nullptr){
-			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
+	if (arbre_ != nullptr)
+	{
+		table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
+		if (table_ != nullptr)
+		{
+			std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
 
 			table_->ajouter(robot);
 
@@ -49,7 +54,6 @@ ControleRobot::ControleRobot()
             robot_->assignerMutex(&mutexComportement);
 		}
 	}
-
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -60,6 +64,25 @@ ControleRobot::ControleRobot()
 
 	
     controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
+}
+
+ControleRobot::ControleRobot(client_network::MapSession* mapSession)
+{
+	if (!robot_)
+	{
+		std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele());
+		robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+		robot_->assignerMutex(&mutexComportement);
+	}
+
+	mapSession->localEntityCreated(robot_);
+	NoeudAbstrait* leftWheel = robot_->chercher(0);
+	NoeudAbstrait* rightWheel = robot_->chercher(1);
+	if (leftWheel && rightWheel)
+	{
+		mapSession->localEntityCreated(leftWheel);
+		mapSession->localEntityCreated(rightWheel);
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////

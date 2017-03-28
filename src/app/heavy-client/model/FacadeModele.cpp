@@ -526,9 +526,12 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 {
 	switch (mode)
 	{
-		// TODO: do simulation mode here too.
 	case EDITION:
 		mode_ = std::make_unique<ModeEdition>(mapSession);
+		break;
+
+	case SIMULATION:
+		mode_ = std::make_unique<ModeSimulation>(mapSession);
 		break;
 	}
 }
@@ -544,7 +547,8 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerMode(Mode mode)
 {
-	switch (mode) {
+	switch (mode) 
+	{
 		case MENU_PRINCIPAL:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
@@ -552,12 +556,11 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case SIMULATION:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeSimulation>();
+			mode_ = std::make_unique<ModeSimulation>(mapSessionManager_.getLocalMapSession());
 			break;
 
 		case EDITION:
 			mode_.reset(nullptr);
-			// Use the local offline map session for default edition mode. 
 			mode_ = std::make_unique<ModeEdition>(mapSessionManager_.getLocalMapSession());
 			break;
 
@@ -568,7 +571,7 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case TEST:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeTest>();
+			mode_ = std::make_unique<ModeTest>(mapSessionManager_.getLocalMapSession());
 			break;
 
 		case PERSONALIZE:

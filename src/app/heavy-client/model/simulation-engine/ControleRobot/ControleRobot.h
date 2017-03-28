@@ -23,6 +23,10 @@ class NoeudRobot;
 class ArbreRendu;
 class ProfilUtilisateur;
 class ControleurLumiere;
+namespace client_network
+{
+	class MapSession;
+}
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
@@ -43,6 +47,7 @@ class ControleRobot
 	
 public:
 	ControleRobot();
+	ControleRobot(client_network::MapSession* mapSession);
 	~ControleRobot();
 
 	// Demande au robot de traiter une commande donnée
@@ -74,16 +79,6 @@ public:
 	bool getManuel();
 
 private:
-	// Joue le son approprié du robot
-	void jouerSonRobot(double vit_G, double vit_D);
-
-	// Fonctions pour gérer multithreading robot
-	void initialiserBoucleRobot();
-	void terminerBoucleRobot();
-	void boucleInfinieLogiqueRobot();
-
-	// Fonction qui verifie et effectue les changements en fonction des capteurs à obstacles
-	void verifierCapteurs();
 
 	// définit si oui ou non le robot est en mode manuel
 	bool manuel{ false };
@@ -119,6 +114,17 @@ private:
 	* X: 0 = droite, 1 = centre, 2 = gauche
 	* Y: 0 = zone securitaire, 1 = zone danger */
 	bool flagCapteur[3][2];
+
+	// Joue le son approprié du robot
+	void jouerSonRobot(double vit_G, double vit_D);
+
+	// Fonctions pour gérer multithreading robot
+	void initialiserBoucleRobot();
+	void terminerBoucleRobot();
+	void boucleInfinieLogiqueRobot();
+
+	// Fonction qui verifie et effectue les changements en fonction des capteurs à obstacles
+	void verifierCapteurs();
 };
 
 #endif // CONTROLE_ROBOT_H

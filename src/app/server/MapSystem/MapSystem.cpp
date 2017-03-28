@@ -2,6 +2,7 @@
 #include "TypeSerializerDeserializer.h"
 #include "../Database/IdGenerator.h"
 #include "EditionRoom.h"
+#include "SimulationRoom.h"
 
 #include "MapSystem.h"
 
@@ -19,7 +20,7 @@ void MapEntry::updateSessionType()
 	switch (Info->mapType)
 	{
 	case SIMULATION_MAP:
-		// TODO
+		currentSession_ = std::make_unique<SimulationRoom>(Info);
 		break;
 
 	case EDITION_MAP:

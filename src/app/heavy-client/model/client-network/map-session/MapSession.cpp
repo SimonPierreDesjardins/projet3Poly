@@ -111,6 +111,11 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 
 		network_->requestEntitySelection(entityToInsert->getId(), entityToInsert->estSelectionne());
 
+		auto itParent = confirmedEntities_.find(parentId);
+		if (itParent != confirmedEntities_.end())
+		{
+		}
+
 		// Update selection color.
 		auto userIt = users_.find(userId);
 		if (userIt != users_.end())
@@ -163,8 +168,14 @@ void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 							0.0,
 							0.0 };
 
+		NoeudAbstrait* parent = entity->obtenirParent();
+		uint32_t parentId = 1;
+		if (parent) {
+			uint32_t parendId = parent->getId();
+		}
+
 		network_->requestEntityCreation(entity->getType(),
-										entity->obtenirParent()->getId(),
+										parentId,
 										absPos, relPos, rotation, scale);
 }
 
