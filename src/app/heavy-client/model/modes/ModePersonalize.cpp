@@ -31,14 +31,20 @@ ModePersonalize::ModePersonalize()
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	FacadeModele::obtenirInstance()->assignerVueOrbitePerso();
 
-	controleRobot_ = std::make_unique<ControleRobot>();
+	tree_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	std::shared_ptr<NoeudAbstrait> table = tree_->creerNoeud(ArbreRenduINF2990::NOM_TABLE);
+	tree_->ajouter(table);
+
+	std::shared_ptr<NoeudAbstrait> robot = tree_->creerNoeud(profil_->getModele());
+	table->ajouter(robot);
+
 	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
-	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
+
 }
 
 
@@ -52,11 +58,11 @@ ModePersonalize::ModePersonalize()
 ////////////////////////////////////////////////////////////////////////
 ModePersonalize::~ModePersonalize()
 {
-	controleRobot_ = nullptr;
 	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+	tree_->vider();
 }
 
 
@@ -222,9 +228,9 @@ void ModePersonalize::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ////////////////////////////////////////////////////////////////////////
 void ModePersonalize::creerControleRobot()
 {
-	controleRobot_ = nullptr;
-	controleRobot_ = std::make_unique<ControleRobot>();
-	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
+	//controleRobot_ = nullptr;
+	//controleRobot_ = std::make_unique<ControleRobot>();
+	//controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

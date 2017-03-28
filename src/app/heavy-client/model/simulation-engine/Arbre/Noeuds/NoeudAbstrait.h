@@ -15,10 +15,13 @@
 #include <string>
 #include <memory>
 #include <iterator>
+
 #include "Utilitaire.h"
 #include "glm\glm.hpp"
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
+
+#include "PhysicsComponent.h"
 #include "RectangleEnglobant.h"
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
@@ -84,6 +87,9 @@ public:
 	/// Assigne le parent de ce noeud.
 	inline void assignerParent(NoeudAbstrait* parent);
 
+	inline PhysicsComponent& getPhysicsComponent();
+
+	/*	
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 	/// Assigne la position relative du noeud.
@@ -100,6 +106,7 @@ public:
 	inline double obtenirFacteurMiseAEchelle() const;
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
+	*/
 
 	// Obtenir l'identifiant local.
 	inline uint32_t getId() const;
@@ -237,17 +244,7 @@ protected:
 	/// Mode d'affichage des polygones.
 	GLenum					modePolygones_{ GL_FILL };
 
-	/// Position relative du noeud à son parent.
-	glm::dvec3				positionRelative_{ 0.0, 0.0, 0.0 };
-
-    /// Position courante du noeud dans l'espace virtuel.
-    glm::dvec3              positionCourante_{ 0.0, 0.0, 0.0 };
-
-	/// Angle de rotation sur le plan xy
-	double					angleRotation_{ 0 };
-		
-	/// Facteur de dimension sur le plan xy
-	double					facteurMiseAEchelle_{ 1 };
+	PhysicsComponent		physics_;
 
     /// La boite englobante du modèle.
     utilitaire::BoiteEnglobante boiteEnglobanteModele_;
@@ -328,7 +325,21 @@ inline void NoeudAbstrait::assignerParent(NoeudAbstrait* parent)
 	parent_ = parent;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline PhysicsComponent& NoeudAbstrait::getPhysicsComponent()
+///
+/// Cette fonction retourne une référence sur la composante physique.
+///
+/// @return Une référence sur la composante physique du noeud.
+///
+////////////////////////////////////////////////////////////////////////
+inline PhysicsComponent& NoeudAbstrait::getPhysicsComponent()
+{
+	return physics_;
+}
 
+/*
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
@@ -341,7 +352,7 @@ inline void NoeudAbstrait::assignerParent(NoeudAbstrait* parent)
 ////////////////////////////////////////////////////////////////////////
 inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
 {
-	return positionRelative_;
+	return physics_.relativePosition;
 }
 
 
@@ -455,6 +466,7 @@ inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDime
 	facteurMiseAEchelle_ = facteurDimension;
 	mettreAJourFormeEnglobante();
 }
+*/
 
 ////////////////////////////////////////////////////////////////////////
 ///

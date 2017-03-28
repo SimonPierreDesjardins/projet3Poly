@@ -57,7 +57,7 @@ protected:
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
 
 private:
-	std::unique_ptr<ControleRobot> controleRobot_;
+	//std::unique_ptr<ControleRobot> controleRobot_;
 
 	ProfilUtilisateur* profil_{ nullptr };
     AffichageTexte* affichageTexte_{ nullptr };

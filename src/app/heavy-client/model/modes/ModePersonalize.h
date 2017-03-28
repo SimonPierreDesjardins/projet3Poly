@@ -37,25 +37,12 @@ class ControleurLumiere;
 
 class ModePersonalize : public ModeAbstrait
 {
-private:
-	ProfilUtilisateur* profil_{ nullptr };
-
-	bool lumiereAmbiante{ true };
-	bool lumiereDirectionnelle{ true };
-	bool lumiereSpot{ true };
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
 public:
-
 	//Constructeur par défaut
 	ModePersonalize();
+
 	//Destructeur
 	virtual ~ModePersonalize();
-	/*
-	void gererMouvementSouris(const int & x, const int & y);*/
-
-
 
 	void gererMoletteSouris(const int & delta);
 
@@ -67,7 +54,18 @@ public:
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	void creerControleRobot();
-	
+
+private:
+	ProfilUtilisateur* profil_{ nullptr };
+
+	ArbreRendu* tree_{ nullptr };
+
+	bool lumiereAmbiante{ true };
+	bool lumiereDirectionnelle{ true };
+	bool lumiereSpot{ true };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
+
 };
 
 #endif /// MODE_PERSONALIZE_H

@@ -531,7 +531,7 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 		break;
 
 	case SIMULATION:
-		mode_ = std::make_unique<ModeSimulation>(mapSession);
+		mode_ = std::make_unique<ModeSimulation>(&arbre_, profil_.get(), controleurLumiere_.get(), mapSession);
 		break;
 	}
 }
@@ -556,7 +556,7 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case SIMULATION:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeSimulation>(mapSessionManager_.getLocalMapSession());
+			mode_ = std::make_unique<ModeSimulation>(&arbre_, profil_.get(), controleurLumiere_.get(), mapSessionManager_.getLocalMapSession());
 			break;
 
 		case EDITION:
@@ -571,7 +571,7 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case TEST:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeTest>(mapSessionManager_.getLocalMapSession());
+			mode_ = std::make_unique<ModeSimulation>(&arbre_, profil_.get(), controleurLumiere_.get(), mapSessionManager_.getLocalMapSession());
 			break;
 
 		case PERSONALIZE:

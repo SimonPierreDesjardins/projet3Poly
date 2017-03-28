@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 /// @file ModeSimulation.h
-/// @author Frédéric Grégoire
+/// @author Frï¿½dï¿½ric Grï¿½goire
 /// @date 2016-02-02
 /// @version 1.0
 ///
@@ -24,58 +24,27 @@ class ControleurLumiere;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeSimulation
-/// @brief Classe qui représente le mode simulation de notre machine à modes
+/// @brief Classe qui reprï¿½sente le mode simulation de notre machine ï¿½ modes
 ///
-///        Cette classe s'occupe d'implémenter les fonctions du mode simulation
+///        Cette classe s'occupe d'implï¿½menter les fonctions du mode simulation
 ///
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-<<<<<<< HEAD
-class ModeSimulation : public OnlineMapMode 
-{
-public:
-	ModeSimulation(client_network::MapSession* mapSession);
-
-=======
 class ModeSimulation : public OnlineMapMode
 {
 public:
-	ModeSimulation(client_network::MapSession* mapSession);
->>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
+	ModeSimulation(ArbreRendu* arbre, ProfilUtilisateur* profil,
+		           ControleurLumiere* lighting, 
+		           client_network::MapSession* mapSession);
 	//Destructeur
 	virtual ~ModeSimulation();
-	//Gestion des entrées utilisateur
+	//Gestion des entrï¿½es utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	void inverserLumiereAmbiante();
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();
-<<<<<<< HEAD
-
-	void preChangementDeProfil();
-	void postChangementDeProfil();
-
-	inline static std::array<char, 11>* getTouchesNonConfigurable();
-
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_{ nullptr };
-	static std::array<char, 11> touchesNonConfigurable_;
-    std::array<bool, 5> actionsAppuyees_;
-
-	bool lumiereAmbiante { true };
-	bool lumiereDirectionnelle { true };
-	bool lumiereSpot { true };
-
-    AffichageTexte* affichageTexte_{ nullptr };
-
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
-	//Constructeur par défaut
-	ModeSimulation() = delete;
-
-=======
 
 	void preChangementDeProfil();
 	void postChangementDeProfil();
@@ -96,9 +65,8 @@ private:
 
 	ControleurLumiere* controleurLumiere_{ nullptr };
 	
-	//Constructeur par défaut
+	//Constructeur par dï¿½faut
 	ModeSimulation() = delete;
->>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

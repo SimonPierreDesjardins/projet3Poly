@@ -16,7 +16,7 @@
 #include <mutex>
 #include <vector>
 
-#include "RobotPhysic.h"
+#include "RobotPhysics.h"
 #include "ComportementAbstrait.h"
 
 class CommandeRobot;
@@ -32,10 +32,10 @@ namespace client_network
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ControleRobot
-/// @brief Classe qui permet de contrôler le robot. 
+/// @brief Classe qui permet de contrï¿½ler le robot. 
 ///
-///        Cette classe permet de contrôler le robot de façon automatique ou 
-///		   de façon manuelle em recevant des commandes.
+///        Cette classe permet de contrï¿½ler le robot de faï¿½on automatique ou 
+///		   de faï¿½on manuelle em recevant des commandes.
 ///		   
 /// @author Olivier St-Amour, Camille Gendreau
 /// @date 2016-02-22
@@ -48,33 +48,28 @@ class ControleRobot
 	friend class ControleRobotTest;
 	
 public:
-<<<<<<< HEAD
-	ControleRobot();
-	ControleRobot(client_network::MapSession* mapSession);
-=======
 	ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profile, ControleurLumiere* lightController, client_network::MapSession* mapSession);
->>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 	~ControleRobot();
 
-	// Demande au robot de traiter une commande donnée
+	// Demande au robot de traiter une commande donnï¿½e
 	void traiterCommande(CommandeRobot* commande, bool provientUtilisateur);
 
-	// Assigne le comportement correspondant à l'enum à l'IA du robot.
+	// Assigne le comportement correspondant ï¿½ l'enum ï¿½ l'IA du robot.
 	void assignerComportement(TypeComportement nouveauComportement, std::wstring declencheur);
 
-	// perme d'obtenir le noeud du robot. Souvent appelé par les comportements pour vérifier des conditions.
+	// perme d'obtenir le noeud du robot. Souvent appelï¿½ par les comportements pour vï¿½rifier des conditions.
 	NoeudRobot* obtenirNoeud();
 
-	// Fonctions permettant d'alterner entre les modes de contrôle
+	// Fonctions permettant d'alterner entre les modes de contrï¿½le
 	void inverserModeControle();
 	void passerAModeManuel();
 	void passerAModeAutomatique();
 
-	// Peut-être rendre ceci privé, l'ajustement de moteurs devrait se faire par commandes
+	// Peut-ï¿½tre rendre ceci privï¿½, l'ajustement de moteurs devrait se faire par commandes
 	void assignerVitessesMoteurs(double vit_G, double vit_D);
     void ajouterVitessesMoteurs(double vit_G, double vit_D);
 
-	// Permet aux comportements de savoir si une ligne est détectée
+	// Permet aux comportements de savoir si une ligne est dï¿½tectï¿½e
 	bool ligneDetectee();
 
 	void assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur);
@@ -86,57 +81,56 @@ public:
 
 private:
 
-	// définit si oui ou non le robot est en mode manuel
+	// dï¿½finit si oui ou non le robot est en mode manuel
 	bool manuel{ false };
 
-	// définit si en mode debug
+	// dï¿½finit si en mode debug
 	bool enPause{ false };
 
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;
-	client_network::MapSession* mapSession_;
+	NoeudRobot* robot_;
+
+	ProfilUtilisateur* profil_{ nullptr };
+    ControleurLumiere* controleurLumiere_{ nullptr };
+	client_network::MapSession* mapSession_{ nullptr };
 
 	// pointeur vers le noeud du robot
-	NoeudRobot* robot_;
 	// Pointeur sur un profil
-	ProfilUtilisateur* profil_{ nullptr };
-    // Pointeur sur le controleur de lumière.
-    ControleurLumiere* controleurLumiere_{ nullptr };
+    // Pointeur sur le controleur de lumiï¿½re.
 
 	std::vector<std::unique_ptr<ComportementAbstrait>>* vecteurComportements_;
 
-	RobotPhysic robotPhysic_;
+	RobotPhysics robotPhysic_;
 
-	// Pointeur vers le comportement présentement adopté par le robot.
+	// Pointeur vers le comportement prï¿½sentement adoptï¿½ par le robot.
 	ComportementAbstrait* comportement_;
 
-	//Mutex servant à traiter l'accès au comportement du robot.
+	//Mutex servant ï¿½ traiter l'accï¿½s au comportement du robot.
 	std::mutex mutexComportement;
 
-	// Pointeur vers le thread d'exécution du robot
+	// Pointeur vers le thread d'exï¿½cution du robot
 	std::unique_ptr<std::thread> logiqueRobot;
 
 	/*
-	* Représente les flags des capteurs, évite de capter plusieurs fois dans le debugger
+	* Reprï¿½sente les flags des capteurs, ï¿½vite de capter plusieurs fois dans le debugger
 	* flagCapteur[X][Y]
 	* X: 0 = droite, 1 = centre, 2 = gauche
 	* Y: 0 = zone securitaire, 1 = zone danger */
 	bool flagCapteur[3][2];
 
-<<<<<<< HEAD
-	// Joue le son approprié du robot
+	// Joue le son appropriï¿½ du robot
 	void jouerSonRobot(double vit_G, double vit_D);
 
-	// Fonctions pour gérer multithreading robot
+	// Fonctions pour gï¿½rer multithreading robot
 	void initialiserBoucleRobot();
 	void terminerBoucleRobot();
 	void boucleInfinieLogiqueRobot();
 
-	// Fonction qui verifie et effectue les changements en fonction des capteurs à obstacles
+	// Fonction qui verifie et effectue les changements en fonction des capteurs ï¿½ obstacles
 	void verifierCapteurs();
-=======
+
 	ControleRobot() = delete;
->>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 };
 
 #endif // CONTROLE_ROBOT_H

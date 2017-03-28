@@ -64,10 +64,10 @@ NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud)
 
 	roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche2).get();
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
-	roueDroite_->assignerPositionRelative({ 2.5, 0.2, 0.7 });
-	roueGauche_->assignerPositionRelative({ 2.5,  -0.2, 0.7 });
-	roueGauche2_->assignerPositionRelative({ -3.1,  -0.2, 0.7 });
-	roueDroite2_->assignerPositionRelative({ -3.1,  0.2, 0.7 });
+	roueDroite_->getPhysicsComponent().relativePosition = { 2.5, 0.2, 0.7 };
+	roueGauche_->getPhysicsComponent().relativePosition = { 2.5,  -0.2, 0.7 };
+	roueGauche2_->getPhysicsComponent().relativePosition = { -3.1,  -0.2, 0.7 };
+	roueDroite2_->getPhysicsComponent().relativePosition = { -3.1,  0.2, 0.7 };
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);
@@ -130,7 +130,7 @@ void NoeudAudi::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z(), 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
 	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
@@ -182,10 +182,12 @@ void NoeudAudi::suivreCamera()
 
 		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 3.0 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z() * PI / 180), 
+			                     sin(physics_.rotation.z() * PI / 180), 3.0 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 3, sin(angleRotation_* PI / 180) * 3, -3.0 });
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z() * PI / 180) * 3, 
+			                     sin(physics_.rotation.z() * PI / 180) * 3, -3.0 });
 	}
 }
 
@@ -203,18 +205,17 @@ void NoeudAudi::suivreCamera()
 ////////////////////////////////////////////////////////////////////////
 void NoeudAudi::positionnerRoues()
 {
+	roueGauche_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
+	roueGauche2_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
 
-	roueGauche_->assignerAngleRotation(angleRotation_);
-	roueGauche2_->assignerAngleRotation(angleRotation_);
+	roueGauche_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
+	roueGauche2_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
 
-	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
-	roueGauche2_->setVitesseCourante(vitesseCouranteGauche_);
+	roueDroite_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
+	roueDroite2_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
 
-	roueDroite_->assignerAngleRotation(angleRotation_);
-	roueDroite2_->assignerAngleRotation(angleRotation_);
-
-	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
-	roueDroite2_->setVitesseCourante(vitesseCouranteDroite_);
+	roueDroite_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
+	roueDroite2_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
 }
 
 ////////////////////////////////////////////////////////////////////////

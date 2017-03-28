@@ -12,6 +12,7 @@
 
 #include <iostream>
 
+#include "Vue.h"
 #include "ProfilUtilisateur.h"
 #include "CommandeRobot.h"
 #include "NoeudRobot.h"
@@ -19,7 +20,6 @@
 
 #include "MapSession.h"
 
-// Inclusion pour l'Enum de comportements
 #include "ComportementAbstrait.h"
 
 #include "ControleRobot.h"
@@ -35,39 +35,20 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ControleRobot::ControleRobot(ArbreRendu* tree, ProfilUtilisateur* profile, 
-	ControleurLumiere* lightController, client_network::MapSession* mapSession)
+ControleRobot::ControleRobot(ArbreRendu* tree, ProfilUtilisateur* profil, 
+	ControleurLumiere* lightController,
+	client_network::MapSession* mapSession)
 	: arbre_(tree), 
-	  profil_(profile), 
+	  profil_(profil), 
 	  controleurLumiere_(lightController), 
 	  mapSession_(mapSession)
 {
-	robot_ = nullptr;
-<<<<<<< HEAD
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	if (arbre_ != nullptr)
-	{
-		table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
-		if (table_ != nullptr)
-		{
-			std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
-
-			table_->ajouter(robot);
-
-            robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
-            robot_->assignerMutex(&mutexComportement);
-		}
-	}
-=======
-
 	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
-	robotPhysic_.init(arbre_, robot.get());
+	//robotPhysic_.init(arbre_, robot.get());
 
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 	robot_->assignerMutex(&mutexComportement);
 
->>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -75,25 +56,6 @@ ControleRobot::ControleRobot(ArbreRendu* tree, ProfilUtilisateur* profile,
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 2; j++)
 			flagCapteur[i][j] = false;
-}
-
-ControleRobot::ControleRobot(client_network::MapSession* mapSession)
-{
-	if (!robot_)
-	{
-		std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele());
-		robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
-		robot_->assignerMutex(&mutexComportement);
-	}
-
-	mapSession->localEntityCreated(robot_);
-	NoeudAbstrait* leftWheel = robot_->chercher(0);
-	NoeudAbstrait* rightWheel = robot_->chercher(1);
-	if (leftWheel && rightWheel)
-	{
-		mapSession->localEntityCreated(leftWheel);
-		mapSession->localEntityCreated(rightWheel);
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -119,11 +81,11 @@ ControleRobot::~ControleRobot()
 /// @fn ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilisateur)
 ///
 /// Demande au controlleur du robot de traiter la commande donnee.
-/// Le traitement de la commande dépend du mode du robot. Si le robot est en manuel, les commandes utilisateurs sont traitées et ceux de l'IA ignorées.
-/// Sinon, les commandes de l'IA sont traitées et ceux de l'utilisateur ignorées. La commande d'inversion de mode est une exception car elle est toujours traitée.
+/// Le traitement de la commande dï¿½pend du mode du robot. Si le robot est en manuel, les commandes utilisateurs sont traitï¿½es et ceux de l'IA ignorï¿½es.
+/// Sinon, les commandes de l'IA sont traitï¿½es et ceux de l'utilisateur ignorï¿½es. La commande d'inversion de mode est une exception car elle est toujours traitï¿½e.
 ///
 /// @param[in] commande: La commande que doit traiter le robot, soit un changement des vitesses ou une alternance du mode manuel
-/// @param[in] provientUtilisateur: Booléen indiquant que la commande provient d'un uitilisateur.
+/// @param[in] provientUtilisateur: Boolï¿½en indiquant que la commande provient d'un uitilisateur.
 ///
 /// @return Aucune.
 ///
@@ -134,7 +96,7 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 	{
 		TypeCommande typeCommande = commande->obtenirTypeCommande();
         
-		// Execute la commande que si elle sert à inverser le mode de contrôle.
+		// Execute la commande que si elle sert ï¿½ inverser le mode de contrï¿½le.
 		if ((typeCommande == INVERSER_MODE_CONTROLE) || (manuel == provientUtilisateur))
 		{
 			commande->executer(this);
@@ -151,7 +113,7 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 ///
 /// @fn ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur)
 ///
-/// Assigne un vecteur de comportements au controleur du robot auquel il se réfèrera lors de son éxécution.
+/// Assigne un vecteur de comportements au controleur du robot auquel il se rï¿½fï¿½rera lors de son ï¿½xï¿½cution.
 ///
 /// @param[in] vecteur: Le pointeur au vecteur de comportements que le controlleur devra utiliser.
 ///
@@ -166,17 +128,17 @@ void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<Com
 ///
 /// @fn ControleRobot::assignerComportement(TypeComportement nouveauComportement, std::string declencheur)
 ///
-/// Assigne un nouveau comportement à suivre au robot de façon threadsafe et memory safe.
+/// Assigne un nouveau comportement ï¿½ suivre au robot de faï¿½on threadsafe et memory safe.
 ///
-/// @param nouveauComportement: Le pointeur au comportement assigné.
-/// @param declencheur: Indique la raison du changement de comportement. Utilisé pour le deboguage.
+/// @param nouveauComportement: Le pointeur au comportement assignï¿½.
+/// @param declencheur: Indique la raison du changement de comportement. Utilisï¿½ pour le deboguage.
 ///
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::assignerComportement(TypeComportement nouveauComportement, std::wstring declencheur)
 {
-	// Nous devons vérouiller l'accès au comportement temporairement pour sa modification
+	// Nous devons vï¿½rouiller l'accï¿½s au comportement temporairement pour sa modification
 	mutexComportement.lock();
 
 	//ComportementAbstrait* ancienComportement = comportement_;
@@ -191,7 +153,7 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 	comportement_->assignerRobot(this);
 	comportement_->initialiser();
 
-	// Libération du mutex, l'accès au comportement redevient valide
+	// Libï¿½ration du mutex, l'accï¿½s au comportement redevient valide
 	mutexComportement.unlock();
 }
 
@@ -248,7 +210,7 @@ void ControleRobot::passerAModeManuel(){
 ///
 /// @fn ControleRobot::initialiserBoucleRobot()
 ///
-/// Initialise le thread de boucle d'éxécution du robot. Appel à l'exécution de boucleInfinieLogiqueRobot.
+/// Initialise le thread de boucle d'ï¿½xï¿½cution du robot. Appel ï¿½ l'exï¿½cution de boucleInfinieLogiqueRobot.
 ///
 /// @return Aucune.
 ///
@@ -261,7 +223,7 @@ void ControleRobot::initialiserBoucleRobot(){
 ///
 /// @fn ControleRobot::terminerBoucleRobot()
 ///
-/// Termine le thread de boucle d'éxécution du robot. Aleterne temporairement manuel pour join le thread.
+/// Termine le thread de boucle d'ï¿½xï¿½cution du robot. Aleterne temporairement manuel pour join le thread.
 ///
 /// @return Aucune.
 ///
@@ -280,7 +242,7 @@ void ControleRobot::terminerBoucleRobot(){
 		logiqueRobot = nullptr;
 	}
 
-	// Nous redonnons à manuel sa valeur de départ
+	// Nous redonnons ï¿½ manuel sa valeur de dï¿½part
 	manuel = man;
 	
 	assignerVitessesMoteurs(0, 0);
@@ -290,7 +252,7 @@ void ControleRobot::terminerBoucleRobot(){
 ///
 /// @fn ControleRobot::boucleInfinieLogiqueRobot()
 ///
-/// Appel la mise à jour du comportement tant que manuel est faux. S'exécute normalement dans un thread différent.
+/// Appel la mise ï¿½ jour du comportement tant que manuel est faux. S'exï¿½cute normalement dans un thread diffï¿½rent.
 ///
 /// @return Aucune.
 ///
@@ -315,7 +277,7 @@ void ControleRobot::boucleInfinieLogiqueRobot()
 ///
 /// @fn ControleRobot::verifierCapteurs()
 ///
-/// Vérifie l'état des capteurs à obstacles et change de comportement au besoin.
+/// Vï¿½rifie l'ï¿½tat des capteurs ï¿½ obstacles et change de comportement au besoin.
 ///
 /// @return Aucune.
 ///
@@ -325,7 +287,7 @@ void ControleRobot::verifierCapteurs(){
 	std::wstring declencheur;
 	for (int i = 0; i < capteurs->size(); i++)
 	{
-		declencheur = L"Obstacle capté à ";
+		declencheur = L"Obstacle captï¿½ ï¿½ ";
 		switch (i)
 		{
 		case 0:
@@ -338,7 +300,7 @@ void ControleRobot::verifierCapteurs(){
 			declencheur += L"gauche: ";
 			break;
 		}
-		// Si le robot est en plein mise à jour, attendre qu'il ait terminé sa mise à jour.
+		// Si le robot est en plein mise ï¿½ jour, attendre qu'il ait terminï¿½ sa mise ï¿½ jour.
         mutexComportement.lock();
         EtatCapteurDistance etat = capteurs->at(i).obtenirEtat();
         mutexComportement.unlock();
@@ -346,7 +308,7 @@ void ControleRobot::verifierCapteurs(){
 		if (etat == DETECTION_ZONE_SECURITAIRE )
 		{
 			if (!flagCapteur[i][0]){
-				// On empêche plusieurs detections à la fois
+				// On empï¿½che plusieurs detections ï¿½ la fois
 				flagCapteur[i][0] = true;
 				declencheur += L"Zone securitaire";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneSecuritaire(), declencheur);
@@ -361,11 +323,11 @@ void ControleRobot::verifierCapteurs(){
 			flagCapteur[i][0] = false;
 		}
 
-		// vérifions la zone dangereuse
+		// vï¿½rifions la zone dangereuse
 		if (etat == DETECTION_ZONE_DANGER)
 		{
 			if (!flagCapteur[i][1]){
-				// On empêche plusieurs detections à la fois
+				// On empï¿½che plusieurs detections ï¿½ la fois
 				flagCapteur[i][1] = true;
 				declencheur += L"Zone dangereuse";
 				assignerComportement(capteurs->at(i).obtenirComportementZoneDanger(), declencheur);
@@ -388,8 +350,8 @@ void ControleRobot::verifierCapteurs(){
 ///
 /// Assigne une nouvelle vitesse aux roues du noeud du robot
 ///
-/// @param vit_G: La vitesse à la roue gauche
-/// @param vit_D: La vitesse à la roue droite
+/// @param vit_G: La vitesse ï¿½ la roue gauche
+/// @param vit_D: La vitesse ï¿½ la roue droite
 ///
 /// @return Aucune.
 ///
@@ -409,8 +371,8 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 ///
 /// Assigne une nouvelle vitesse aux roues du noeud du robot
 ///
-/// @param vit_G: La vitesse à la roue gauche
-/// @param vit_D: La vitesse à la roue droite
+/// @param vit_G: La vitesse ï¿½ la roue gauche
+/// @param vit_D: La vitesse ï¿½ la roue droite
 ///
 /// @return Aucune.
 ///
@@ -430,10 +392,10 @@ void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
 ///
 /// @fn void ControleRobot::jouerSonRobot(double vit_G, double vit_D)
 ///
-/// Joue le son approprié du robot en fonction des vitesses de ses moteurs
+/// Joue le son appropriï¿½ du robot en fonction des vitesses de ses moteurs
 ///
-/// @param vit_G: La vitesse à la roue gauche
-/// @param vit_D: La vitesse à la roue droite
+/// @param vit_G: La vitesse ï¿½ la roue gauche
+/// @param vit_D: La vitesse ï¿½ la roue droite
 ///
 /// @return Aucune.
 ///
@@ -456,7 +418,7 @@ void ControleRobot::jouerSonRobot(double vit_G, double vit_D){
 ///
 /// @fn ControleRobot::obtenirNoeud()
 ///
-/// Retourne la référence au noeud du robot dans l'arbre de rendu.
+/// Retourne la rï¿½fï¿½rence au noeud du robot dans l'arbre de rendu.
 ///
 /// @return Pointeur vers le noeud de noeud de rendu du robot.
 ///
@@ -469,8 +431,8 @@ NoeudRobot* ControleRobot::obtenirNoeud(){
 ///
 /// @fn ControleRobot::ligneDetectee()
 ///
-/// Fonction indiquant si le robot détecte une ligne. Utilisée par les comportements pour ne pas qu'ils aient
-/// à passer par le noeud du robot.
+/// Fonction indiquant si le robot dï¿½tecte une ligne. Utilisï¿½e par les comportements pour ne pas qu'ils aient
+/// ï¿½ passer par le noeud du robot.
 ///
 /// @return Si oui ou non une ligne est detectee.
 ///
@@ -487,7 +449,7 @@ bool ControleRobot::ligneDetectee(){
 ///
 /// @fn ControleRobot::setEnPause(bool pause)
 ///
-/// Fonction permettant d'assigner une valeur au booléen enPause;
+/// Fonction permettant d'assigner une valeur au boolï¿½en enPause;
 ///
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::setEnPause(bool pause)

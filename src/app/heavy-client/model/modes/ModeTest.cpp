@@ -20,8 +20,6 @@
 
 std::array<char, 11> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
 
-
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ModeTest::ModeTest()
@@ -33,11 +31,10 @@ ModeTest::ModeTest(client_network::MapSession* mapSession)
 	: OnlineMapMode(mapSession)
 {
 	typeMode_ = TEST;
-	controleRobot_ = std::make_unique<ControleRobot>(mapSession);
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	//controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode automatique
-	controleRobot_->passerAModeManuel();
+	//controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 
     affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
@@ -52,6 +49,10 @@ ModeTest::ModeTest(client_network::MapSession* mapSession)
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
+
+	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+
+	//controleRobot_ = std::make_unique<ControleRobot>(arbre, profil_, controleurLumiere_, mapSession);
 }
 
 
@@ -65,7 +66,7 @@ ModeTest::ModeTest(client_network::MapSession* mapSession)
 ////////////////////////////////////////////////////////////////////////
 ModeTest::~ModeTest()
 {
-	controleRobot_ = nullptr;
+	//controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
     affichageTexte_->reinitialiserChrono();
@@ -87,7 +88,7 @@ ModeTest::~ModeTest()
 ////////////////////////////////////////////////////////////////////////
 void ModeTest::preChangementDeProfil(){
 	//Terminer le thread du robot et préparer à un changement au mode automatique
-	controleRobot_->passerAModeManuel();
+	//controleRobot_->passerAModeManuel();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -101,7 +102,7 @@ void ModeTest::preChangementDeProfil(){
 ////////////////////////////////////////////////////////////////////////
 void ModeTest::postChangementDeProfil(){
 	//Repartir le thread en mode automatique, comportement defaut
-	controleRobot_->passerAModeAutomatique();
+	//controleRobot_->passerAModeAutomatique();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -235,21 +236,22 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case '\b':
-			controleRobot_ = nullptr;
-			controleRobot_ = std::make_unique<ControleRobot>();
-			profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-			controleRobot_->passerAModeManuel();
+			//controleRobot_ = nullptr;
+			//controleRobot_ = std::make_unique<ControleRobot>();
+			//profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+			//controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+			//controleRobot_->passerAModeManuel();
 			controleurLumiere_->assignerLumiereSpotGyro(true);
             affichageTexte_->reinitialiserChrono();
-			controleRobot_->robot_->positionDepart();
+			//controleRobot_->robot_->positionDepart();
 			break;
 
         case VK_ESCAPE:
         {
-            bool estEnPause = controleRobot_->getEnPause();
-            controleRobot_->setEnPause(!estEnPause);
-			controleurLumiere_->setEnPause(!estEnPause);
+			/*
+            //bool estEnPause = controleRobot_->getEnPause();
+            //controleRobot_->setEnPause(!estEnPause);
+			//controleurLumiere_->setEnPause(!estEnPause);
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();
@@ -258,8 +260,9 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             {
                 affichageTexte_->pauseChrono();
                 std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
-                controleRobot_->traiterCommande(commandeArreter.get(), true);
+                //controleRobot_->traiterCommande(commandeArreter.get(), true);
             }
+			*/
 			break;
         }
 
@@ -267,6 +270,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 
+		/*
 		if (!controleRobot_->getEnPause())
 		{
             const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
@@ -281,9 +285,11 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
                 controleRobot_->traiterCommande(commande, true);
             }
 		}
+		*/
 	}
 	else if (msg == WM_KEYUP)
 	{
+		/*
 		if (!controleRobot_->getEnPause())
 		{
 			CommandeRobot* commandeCourante = profil_->obtenirCommandeRobot(wParam);
@@ -308,6 +314,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
                 }
 			}
 		}
+		*/
 	}
 	// Répartition du traitement des messages provenant de la souris.
 	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris())

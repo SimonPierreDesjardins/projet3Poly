@@ -229,7 +229,6 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(float dt)
 {
-    mutexControleRobot_->lock();
     mettreAJourPosition(dt);
 
     if (estEnCollision_)
@@ -243,6 +242,7 @@ void NoeudRobot::animer(float dt)
 			estEnCollision_ = false;
 		}
     }
+
     mettreAJourFormeEnglobante();
 
 	mettreAJourCapteurs();
@@ -256,7 +256,6 @@ void NoeudRobot::animer(float dt)
 	
 	positionnerRoues();
 	suivreCamera();
-    mutexControleRobot_->unlock();
 }
 
 ////////////////////////////////////////////////////////////////////////
