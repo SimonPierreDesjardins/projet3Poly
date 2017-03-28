@@ -166,6 +166,19 @@ set(MODES_SRC
 )
 source_group("modes" FILES ${MODES_SRC})
 
+<<<<<<< HEAD
+=======
+set(PHYSIQUE_SRC
+    simulation-engine/Physique/CercleEnglobant.h
+    simulation-engine/Physique/CercleEnglobant.cpp
+    simulation-engine/Physique/FormeEnglobanteAbstraite.h
+    simulation-engine/Physique/FormeEnglobanteAbstraite.cpp
+    simulation-engine/Physique/RectangleEnglobant.h
+    simulation-engine/Physique/RectangleEnglobant.cpp
+    simulation-engine/Physique/RobotPhysic.h
+    simulation-engine/Physique/RobotPhysic.cpp
+)
+>>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 
 set(PROFIL_UTILISATEUR_SRC
     ProfilUtilisateur/ProfilUtilisateur.h      

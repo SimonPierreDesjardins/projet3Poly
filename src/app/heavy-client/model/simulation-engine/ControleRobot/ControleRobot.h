@@ -13,9 +13,11 @@
 
 #include <memory>
 #include <thread>
-#include "ComportementAbstrait.h"
 #include <mutex>
 #include <vector>
+
+#include "RobotPhysic.h"
+#include "ComportementAbstrait.h"
 
 class CommandeRobot;
 class NoeudAbstrait;
@@ -46,8 +48,12 @@ class ControleRobot
 	friend class ControleRobotTest;
 	
 public:
+<<<<<<< HEAD
 	ControleRobot();
 	ControleRobot(client_network::MapSession* mapSession);
+=======
+	ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profile, ControleurLumiere* lightController, client_network::MapSession* mapSession);
+>>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 	~ControleRobot();
 
 	// Demande au robot de traiter une commande donnée
@@ -88,6 +94,7 @@ private:
 
 	ArbreRendu* arbre_;
 	NoeudAbstrait* table_;
+	client_network::MapSession* mapSession_;
 
 	// pointeur vers le noeud du robot
 	NoeudRobot* robot_;
@@ -96,8 +103,9 @@ private:
     // Pointeur sur le controleur de lumière.
     ControleurLumiere* controleurLumiere_{ nullptr };
 
-
 	std::vector<std::unique_ptr<ComportementAbstrait>>* vecteurComportements_;
+
+	RobotPhysic robotPhysic_;
 
 	// Pointeur vers le comportement présentement adopté par le robot.
 	ComportementAbstrait* comportement_;
@@ -115,6 +123,7 @@ private:
 	* Y: 0 = zone securitaire, 1 = zone danger */
 	bool flagCapteur[3][2];
 
+<<<<<<< HEAD
 	// Joue le son approprié du robot
 	void jouerSonRobot(double vit_G, double vit_D);
 
@@ -125,6 +134,9 @@ private:
 
 	// Fonction qui verifie et effectue les changements en fonction des capteurs à obstacles
 	void verifierCapteurs();
+=======
+	ControleRobot() = delete;
+>>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 };
 
 #endif // CONTROLE_ROBOT_H

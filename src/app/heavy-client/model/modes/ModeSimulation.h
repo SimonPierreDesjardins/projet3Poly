@@ -31,11 +31,18 @@ class ControleurLumiere;
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
+<<<<<<< HEAD
 class ModeSimulation : public OnlineMapMode 
 {
 public:
 	ModeSimulation(client_network::MapSession* mapSession);
 
+=======
+class ModeSimulation : public OnlineMapMode
+{
+public:
+	ModeSimulation(client_network::MapSession* mapSession);
+>>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 	//Destructeur
 	virtual ~ModeSimulation();
 	//Gestion des entrées utilisateur
@@ -44,6 +51,7 @@ public:
 	void inverserLumiereAmbiante();
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();
+<<<<<<< HEAD
 
 	void preChangementDeProfil();
 	void postChangementDeProfil();
@@ -67,6 +75,30 @@ private:
 	//Constructeur par défaut
 	ModeSimulation() = delete;
 
+=======
+
+	void preChangementDeProfil();
+	void postChangementDeProfil();
+
+	inline static std::array<char, 11>* getTouchesNonConfigurable();
+
+private:
+	ControleRobot controleRobot_;
+	ProfilUtilisateur* profil_{ nullptr };
+	static std::array<char, 11> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
+
+	bool lumiereAmbiante { true };
+	bool lumiereDirectionnelle { true };
+	bool lumiereSpot { true };
+
+    AffichageTexte* affichageTexte_{ nullptr };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
+	
+	//Constructeur par défaut
+	ModeSimulation() = delete;
+>>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

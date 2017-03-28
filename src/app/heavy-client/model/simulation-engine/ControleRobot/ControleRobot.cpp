@@ -12,9 +12,9 @@
 
 #include <iostream>
 
+#include "ProfilUtilisateur.h"
 #include "CommandeRobot.h"
 #include "NoeudRobot.h"
-#include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
 #include "MapSession.h"
@@ -35,10 +35,15 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ControleRobot::ControleRobot()
+ControleRobot::ControleRobot(ArbreRendu* tree, ProfilUtilisateur* profile, 
+	ControleurLumiere* lightController, client_network::MapSession* mapSession)
+	: arbre_(tree), 
+	  profil_(profile), 
+	  controleurLumiere_(lightController), 
+	  mapSession_(mapSession)
 {
-	table_ = nullptr;
 	robot_ = nullptr;
+<<<<<<< HEAD
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	if (arbre_ != nullptr)
@@ -54,6 +59,15 @@ ControleRobot::ControleRobot()
             robot_->assignerMutex(&mutexComportement);
 		}
 	}
+=======
+
+	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
+	robotPhysic_.init(arbre_, robot.get());
+
+	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+	robot_->assignerMutex(&mutexComportement);
+
+>>>>>>> bb35c9e05cb51dc842caf3c73cffbdba26303e8d
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -61,9 +75,6 @@ ControleRobot::ControleRobot()
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 2; j++)
 			flagCapteur[i][j] = false;
-
-	
-    controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 ControleRobot::ControleRobot(client_network::MapSession* mapSession)
