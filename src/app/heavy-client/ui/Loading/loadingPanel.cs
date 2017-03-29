@@ -22,6 +22,11 @@ namespace ui
             load.Start();
         }
 
+        public void stop()
+        {
+            load.Stop();
+        }
+
         private void load_Tick(object sender, EventArgs e)
         {
             parent_.Invoke((MethodInvoker)delegate {

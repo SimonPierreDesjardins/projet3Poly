@@ -30,7 +30,8 @@ EnginSon::EnginSon(){
 	systeme_->init(10, FMOD_INIT_NORMAL, NULL);
 	nomsSons_ = { { "musique_simulation.wav", "avancer_reculer.wav", "tourner.wav",
 					"deviation.wav", "changement_manuel.wav", "changement_automatique.wav",
-					"collision_poteau.wav", "collision_mur.wav", "collision_table.wav", "collision_teleporteur.wav" } };
+					"collision_poteau.wav", "collision_mur.wav", "collision_table.wav", 
+					"collision_teleporteur.wav", "collision_coin.wav" } };
 	
 	for (int i = 0; i < sons_.size(); i++)
 	{

@@ -565,7 +565,7 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 	// Le piece est en intersection et il ne se trouve pas déjà en collision.
 	if (enIntersection)
 	{
-		EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_COIN_SON);
 		// On calcule les composantes de la collision.
 		table_->effacer(piece);
 		profil_->setPiece(profil_->obtenirPieces() + 1);
