@@ -30,6 +30,15 @@ private:
 	void OnConnectionLost();
 
 	Networking::Connection* _connection;
+
+	static void StartMessageReadThread();
+	static void StopMessageReadThread();
+
+	static std::queue<std::pair<User*, std::string>> _messageQueue;
+	static std::mutex _queueMutex;
+	static std::thread* _messageReaderThread;
+	static bool _runThread;
+	static int UserCount;
 };
 
 inline void User::ForwardMessage(const std::string& message)

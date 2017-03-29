@@ -37,6 +37,7 @@ server::Database::~Database()
 	_taskThread.join();
 
 	if (_mongoInstantiated) {
+		delete &_mongoClient;
 		delete _mongoInstance;
 	}
 }
