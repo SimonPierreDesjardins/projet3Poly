@@ -1,45 +1,38 @@
-#ifndef ABSTRACT_MAP_ROOM_H
-#define ABSTRACT_MAP_ROOM_H
+#ifndef __MAP_FILE_LOADER_H
+#define __MAP_FILE_LOADER_H
 
 #include "EntityTree.h"
 #include "Database\MapFileDatabase.h"
+#include "rapidjson\document.h"
+
 
 namespace server
 {
 
-class MapFileManipulator
+class MapFileLoader
 {
 public:	
-	MapFileManipulator(EntityTree* entity, MapFileEntry* mapInfo);
-	virtual ~AbstractMapRoom() = 0;
+	// Takes an entity tree and a map file and loads the tree with present objects
+	MapFileLoader(EntityTree* tree, MapFileEntry* mapFile);
+	~MapFileLoader();
 
-protected:
-	EntityTree tree_;
-	char systemType_{ 'p' };
+private:
+	void PopulateTreeFromJSON(const std::string& json);
+	void CreateEntities(rapidjson::Value::ConstValueIterator jsonNode, Entity* parent);
+	void LoadTeleporters(const rapidjson::Value& jsonNode, Entity* parent);
 
-	virtual char GetSystemType();
+	char GetEntityType(const std::string& itemType);
 
-	virtual void TreatUserJoin(User* user);
-	virtual void TreatUserDisconnect(User* user);
-	virtual void TreatUserMessage(User* sender, const std::string& message);
+	void StartSaveThread();
+	void StopSaveThread();
 
-	virtual void handlePhysicMessage(User* sender, const std::string& message);
-	virtual void handleMapEditionMessage(User* sender, const std::string& message);
-
-	virtual void handleEntityCreationMessage(User* sender, const std::string& message);
-	virtual void handleEntityRemovalMessage(User* sender, const std::string& message);
-	virtual void handleEntitySelectionMessage(User* sender, const std::string& message);
-
-	void updateEntityProperty(char property, Entity* entity, const Eigen::Vector3f& value);
-
-	virtual void buildEntityCreationMessage(Entity* entity, std::string& message);
-	void buildEntitySelectedMessage(Entity* entity, std::string& message);
-
-	// reference to the current map info
-	MapInfo* mapInfo_ = nullptr;
-
-	AbstractMapRoom() = delete;
+	// have thread that does saving
+	std::thread _mapSavingThread;
+	MapFileEntry* _mapFile;
+	
+	// The tree that is tracked for saving purposes
+	EntityTree* _entityTree;
 };
 
 }
-#endif // ABSTRACT_MAP_ROOM
+#endif // __MAP_FILE_LOADER_H

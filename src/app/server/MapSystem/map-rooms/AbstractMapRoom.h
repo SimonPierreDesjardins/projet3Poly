@@ -4,6 +4,7 @@
 #include "MultiUserSystem.h"
 #include "EntityTree.h"
 #include "Database\MapDatabase.h"
+#include "MapFileLoader.h"
 
 namespace server
 {
@@ -11,7 +12,7 @@ namespace server
 class AbstractMapRoom : public MultiUserSystem
 {
 public:	
-	AbstractMapRoom(MapInfo* mapInfo);
+	AbstractMapRoom(MapInfo* mapInfo, MapFileEntry* mapFile);
 	virtual ~AbstractMapRoom() = 0;
 
 protected:
@@ -38,6 +39,8 @@ protected:
 
 	// reference to the current map info
 	MapInfo* mapInfo_ = nullptr;
+
+	MapFileLoader* mapFileLoader_;
 
 	AbstractMapRoom() = delete;
 };

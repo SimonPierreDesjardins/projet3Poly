@@ -8,11 +8,11 @@
 namespace server
 {
 
-AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo)
+AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo, MapFileEntry* mapFile)
 {
-	Entity* table = tree_.createEntity(0, 0);
-	Entity* start = tree_.createEntity(1, table->entityId_);
 	mapInfo_ = mapInfo;
+	// load up the tree from the file
+	mapFileLoader_ = new MapFileLoader(&tree_, mapFile);
 }
 
 AbstractMapRoom::~AbstractMapRoom()

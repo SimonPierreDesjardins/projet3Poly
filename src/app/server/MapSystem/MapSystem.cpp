@@ -9,7 +9,7 @@ namespace server
 {
 
 MapEntry::MapEntry(MapInfo* info, MapFileEntry* mapFile)
-	: Info(info)
+	: Info(info), File(mapFile)
 {
 	updateSessionType();
 }
@@ -19,11 +19,11 @@ void MapEntry::updateSessionType()
 	switch (Info->mapType)
 	{
 	case SIMULATION_MAP:
-		currentSession_ = std::make_unique<EditionRoom>(Info);
+		currentSession_ = std::make_unique<EditionRoom>(Info, File);
 		break;
 
 	case EDITION_MAP:
-		currentSession_ = std::make_unique<EditionRoom>(Info);
+		currentSession_ = std::make_unique<EditionRoom>(Info, File);
 		break;
 	}
 }
@@ -202,7 +202,7 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	MapInfo* info = new MapInfo();
 	info -> mapName = name;
 	info -> mapType = type;
-	info->isPrivate = isPrivate;
+	info->isPrivate = isPrivate != 0;
 	info->password = password;
 	info->Admin = user->Info.GetId();
 	info->MapId = mapFile->GetId();
