@@ -214,13 +214,12 @@ void NoeudTeleporteur::afficherConcret() const
 	// Affichage du modèle.
 	vbo_->dessiner();
 
-    
-
 	// Restauration de la matrice.
 	glPopMatrix();
 
     //rectangleEnglobant_.afficher(positionCourante_);
-	if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == 2) //montre les cercles des teleporteurs si dans le mode edition
+	int mode = FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
+	if (mode == EDITION || mode == TUTORIAL_EDITION) //montre les cercles des teleporteurs si dans le mode edition
 	{
 		cercleEnglobant_.afficher(positionCourante_);
 	}

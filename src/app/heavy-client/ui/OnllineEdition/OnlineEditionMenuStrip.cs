@@ -1,5 +1,5 @@
 ﻿////////////////////////////////////////////////
-/// @file   EditionMenuStrip.cs
+/// @file   OnlineEditionMenuStrip.cs
 /// @author Frédéric Grégoire
 /// @date   2017-02-16
 ///
@@ -11,20 +11,20 @@ using System.Drawing;
 
 namespace ui
 {
-    public partial class EditionMenuStrip : UserControl
+    public partial class OnlineEditionMenuStrip : UserControl
     {
         Window parent_;
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public EditionMenuStrip(Window parent)
+        /// @fn public OnlineEditionMenuStrip(Window parent)
         ///
         /// Cette fonction initialize les controles sur user control et assigne les attributs.
         ///
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public EditionMenuStrip(Window parent)
+        public OnlineEditionMenuStrip(Window parent)
         {
             InitializeComponent();
             parent_ = parent;
@@ -37,85 +37,6 @@ namespace ui
         private void fichierToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'action de nouvelleZone
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void nouveauToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Focus();
-            nouvelleZone();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn public void nouvelleZone()
-        ///
-        /// Crée une nouvelle zone de céation si l'utilisateur appuie sur oui, 
-        /// sinon ne fait rien
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void nouvelleZone()
-        {
-            DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
-            {
-                FonctionsNatives.nouvelleTable();
-                enregistrerToolStripMenuItem.Enabled = false;
-                parent_.verificationDuNombreElementChoisi();
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void ouvrirToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'action de ouvrirZone
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void ouvrirToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Focus();
-            ouvrirZone(false);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void ouvrirZone()
-        ///
-        /// Ouvre un explorateur de ficher pour charger la zone sauvegarder lorsque 
-        /// le bouton ouvrir est appuyer sur le menu
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void ouvrirZone(bool afficherZoneDefaut)
-        {
-            ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-
-            DialogResult dialogresult = explorateur.ShowDialog();
-            if (dialogresult == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
-                FonctionsNatives.charger();
-                enregistrerToolStripMenuItem.Enabled = true;
-            }
-
-            explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
-            parent_.verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -184,46 +105,6 @@ namespace ui
             explorateur.Dispose();
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'action de retour vers le mode test
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Focus();
-            goTestMode();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn public void goTestMode()
-        ///
-        /// Cette fonction enlève les composantes du mode édition, ajoute ceux du
-        /// du mode test et change de mode
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void goTestMode()
-        {
-            parent_.testMenuStrip = new TestMenuStrip(parent_);
-
-            parent_.configuration.populerToolStripProfils(parent_.testMenuStrip.profilsToolStripMenuItem);
-            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
-            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
-            parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
-            parent_.viewPort.Refresh();
-
-            parent_.viewPort.Controls.Add(parent_.testMenuStrip);
-            parent_.testMenuStrip.Dock = DockStyle.Top;
-            
-            FonctionsNatives.assignerMode(Mode.TEST);
         }
 
         ////////////////////////////////////////////////////////////////////////

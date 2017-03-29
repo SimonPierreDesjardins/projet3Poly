@@ -1,5 +1,5 @@
 ﻿////////////////////////////////////////////////
-/// @file   SimulationMenuStrip.cs
+/// @file   OnlineSimulationMenuStrip.cs
 /// @author Frédéric Grégoire
 /// @date   2017-02-16
 ///
@@ -7,25 +7,23 @@
 using System;
 using System.Windows.Forms;
 using ModeEnum;
-using System.Drawing;
 
 namespace ui
 {
-    public partial class SimulationMenuStrip : UserControl
+    public partial class OnlineSimulationMenuStrip : UserControl
     {
         Window parent_;
-        public TutorialSimulation simulationTutorial;
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn public SimulationMenuStrip(Window parent)
+        /// @fn public OnlineSimulationMenuStrip(Window parent)
         ///
         /// Cette fonction initialize les controles sur user control et assigne les attributs.
         ///
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public SimulationMenuStrip(Window parent)
+        public OnlineSimulationMenuStrip(Window parent)
         {
             InitializeComponent();
             parent_ = parent;

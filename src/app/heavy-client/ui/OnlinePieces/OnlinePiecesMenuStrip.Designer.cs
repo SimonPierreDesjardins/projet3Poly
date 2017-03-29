@@ -1,6 +1,6 @@
 ﻿namespace ui
 {
-    partial class SimulationMenuStrip
+    partial class OnlinePiecesMenuStrip
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -30,6 +30,8 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeÉditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modePièceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +57,8 @@
             // fichierToolStripMenuItem
             // 
             this.fichierToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.modeÉditionToolStripMenuItem,
+            this.modePièceToolStripMenuItem,
             this.menuPrincipalToolStripMenuItem});
             this.fichierToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fichierToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
@@ -62,10 +66,22 @@
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(71, 25);
             this.fichierToolStripMenuItem.Text = "Fichier";
             // 
+            // modeÉditionToolStripMenuItem
+            // 
+            this.modeÉditionToolStripMenuItem.Name = "modeÉditionToolStripMenuItem";
+            this.modeÉditionToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.modeÉditionToolStripMenuItem.Text = "Mode Édition";
+            // 
+            // modePièceToolStripMenuItem
+            // 
+            this.modePièceToolStripMenuItem.Name = "modePièceToolStripMenuItem";
+            this.modePièceToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.modePièceToolStripMenuItem.Text = "Mode Simulation";
+            // 
             // menuPrincipalToolStripMenuItem
             // 
             this.menuPrincipalToolStripMenuItem.Name = "menuPrincipalToolStripMenuItem";
-            this.menuPrincipalToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
+            this.menuPrincipalToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.menuPrincipalToolStripMenuItem.Text = "Menu Principal";
             this.menuPrincipalToolStripMenuItem.Click += new System.EventHandler(this.menuPrincipalToolStripMenuItem_Click);
             // 
@@ -110,13 +126,13 @@
             this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
             this.profilsToolStripMenuItem.Text = "Profils";
             // 
-            // SimulationMenuStrip
+            // OnlinePiecesMenuStrip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.menuStrip1);
-            this.Name = "SimulationMenuStrip";
+            this.Name = "OnlinePiecesMenuStrip";
             this.Size = new System.Drawing.Size(793, 29);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -135,5 +151,7 @@
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem premierePersonneToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem profilsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modeÉditionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modePièceToolStripMenuItem;
     }
 }

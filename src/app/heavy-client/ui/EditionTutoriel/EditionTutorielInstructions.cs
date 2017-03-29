@@ -170,6 +170,14 @@ namespace ui
                     conclusionState();
                     break;
 
+                case (int)EditionTutorial.State.SELECT_TELEPORTOR:
+                    selectTeleportorState();
+                    break;
+
+                case (int)EditionTutorial.State.CREATING_TELEPORTOR:
+                    creatingTeleportorObjectState();
+                    break;
+
                 default:
                     finishTutorial();
                     break;
@@ -305,6 +313,37 @@ namespace ui
                                  "de le relâcher. Vous pouvez alors créer la ligne de la longueur que vous voulez. De plus, pour créer des " + 
                                  "segments à cette ligne, vous pouvez maintenir la touche 'CTRL' enfoncer et ré-appuyer sur le clique gauche de la souris. " +
                                  "Pour terminer la création de ligne, il suffit de lâcher la touche 'CTRL' et appuyer sur le clique gauche de la souris.";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void selectTeleportorState()
+        {
+            parent_.editionTutorielSideMenu.setDefaultUnselectedColors();
+            parent_.editionTutorielSideMenu.disableAllControls();
+            FonctionsNatives.UnselectCurrentTool();
+
+            parent_.editionTutorielSideMenu.createToolButton.Enabled = true;
+            parent_.editionTutorielSideMenu.createPictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.createPictureBox.Image, Color.White);
+            parent_.editionTutorielSideMenu.teleportObjectButton.Enabled = true;
+            parent_.editionTutorielSideMenu.teleportorPictureBox.Image =
+                parent_.editionTutorielSideMenu.ChangeColor((Bitmap)parent_.editionTutorielSideMenu.teleportorPictureBox.Image, Color.White);
+
+            instructionBox.Items.Clear();
+            string instruction = "Comme troisième tâche, vous devez sélectionner l'outil pour la création de téléporteur. \n" +
+                                 "Pour accéder à cet outil, vous devez cliquer sur l'icon créer objet dans le menu du côté, puis " +
+                                 "sélectionner la ligne dans le menu qui apparaîtra. \n" +
+                                 "Vous pouvez également utiliser la touche rapide 'O' afin de sélectionner l'outil création de téléporteur et " +
+                                 "ce dernier s'ajoutera au menu de gauche";
+            instructionBox.Items.Add(instruction);
+        }
+
+        private void creatingTeleportorObjectState()
+        {
+            instructionBox.Items.Clear();
+            string instruction = "Maintenant que vous avez l'outil pour la création de téléporteur, vous devez en ajouter deux à la carte. \n\n" +
+                                 "Pour ce faire, il suffit d'appuyer le button gauche de la souris sur un endroit disponible de la table et " +
+                                 "de le relâcher. Vous pouvez alors créer le deuxième téléporteur de la même façon.";
             instructionBox.Items.Add(instruction);
         }
 
@@ -692,34 +731,20 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void finishTutorial()
         {
-            parent_.editionSideMenu = new EditionSideMenu(parent_);
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
-            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
+            parent_.mainMenu = new MainMenu(parent_);
 
             parent_.viewPort.Controls.Remove(this);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielModificationPanel);
 
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
-            parent_.editionSideMenu.Dock = DockStyle.Left;
+            Program.peutAfficher = false;
+            parent_.viewPort.Refresh();
 
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
-            parent_.editionMenuStrip.Dock = DockStyle.Top;
-
-            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
-                                                                  parent_.editionMenuStrip.Height);
-            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-
-            Program.peutAfficher = true;
-            FonctionsNatives.assignerMode(Mode.EDITION);
-
-            FonctionsNatives.dessinerOpenGL();
+            parent_.viewPort.Controls.Add(parent_.mainMenu);
+            parent_.mainMenu.Dock = DockStyle.Left;
+            
+            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
         
         ////////////////////////////////////////////////////////////////////////
