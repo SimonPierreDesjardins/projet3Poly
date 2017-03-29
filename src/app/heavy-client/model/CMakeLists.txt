@@ -49,6 +49,12 @@ set(NOEUDS_SRC
     simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
     simulation-engine/Arbre/Noeuds/NoeudPiece.h
     simulation-engine/Arbre/Noeuds/NoeudPiece.cpp
+    simulation-engine/Arbre/Noeuds/NoeudLigneCourseAbstrait.cpp
+    simulation-engine/Arbre/Noeuds/NoeudLigneCourseAbstrait.h
+    simulation-engine/Arbre/Noeuds/NoeudLigneArrivee.h
+    simulation-engine/Arbre/Noeuds/NoeudLigneArrivee.cpp
+    simulation-engine/Arbre/Noeuds/NoeudCheckpoint.h
+    simulation-engine/Arbre/Noeuds/NoeudCheckpoint.cpp
 )
 
 set(USINES_SRC
@@ -147,6 +153,8 @@ set(MODES_SRC
     modes/ModeSimulation.h
     modes/ModeSimulation.cpp
     modes/ModePieces.h
+    modes/ModeCourse.cpp
+    modes/ModeCourse.h
     modes/ModePieces.cpp
     modes/ModeTest.cpp
     modes/ModeTypes.h

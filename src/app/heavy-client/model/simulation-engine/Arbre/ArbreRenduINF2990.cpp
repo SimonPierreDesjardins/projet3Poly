@@ -54,6 +54,10 @@ const std::string ArbreRenduINF2990::NOM_TELEPORTEUR{ "teleporteur" };
 
 const std::string ArbreRenduINF2990::NOM_PIECE{ "piece" };
 
+const std::string ArbreRenduINF2990::NOM_LIGNEARRIVEE{ "lignearrivee" };
+
+const std::string ArbreRenduINF2990::NOM_CHECKPOINT{ "checkpoint" };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ArbreRenduINF2990::ArbreRenduINF2990()
@@ -114,6 +118,8 @@ void ArbreRenduINF2990::initialiser()
 	ajouterUsine(AUDI_ENTITY, NOM_AUDI, std::make_unique<UsineNoeud<NoeudAudi>>(NOM_AUDI, std::string{ "media/modeles/audi_r8.obj" }));
 	ajouterUsine(TELEPORT_ENTITY, NOM_TELEPORTEUR, std::make_unique<UsineNoeud<NoeudTeleporteur>>(NOM_TELEPORTEUR, std::string{ "media/modeles/teleporter.obj" }));
 	ajouterUsine(COIN_ENTITY, NOM_PIECE, std::make_unique<UsineNoeud<NoeudPiece>>(NOM_PIECE, std::string{ "media/modeles/coin.obj" }));
+	ajouterUsine(FINISHLINE_ENTITY, NOM_LIGNEARRIVEE, std::make_unique<UsineNoeud<NoeudLigneArrivee>>(NOM_LIGNEARRIVEE, std::string{ "media/modeles/ligneArrive.obj" }));
+	ajouterUsine(CHECKPOINT_ENTITY, NOM_CHECKPOINT, std::make_unique<UsineNoeud<NoeudCheckpoint>>(NOM_CHECKPOINT, std::string{ "media/modeles/checkpoint.obj" }));
 
 	//chargerZoneDefaut();
 }

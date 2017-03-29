@@ -44,6 +44,7 @@ public:
 	virtual void visiter(NoeudSegment* noeud);
 	virtual void visiter(NoeudDepart* noeud);
 	virtual void visiter(NoeudTeleporteur* noeud);
+	virtual void visiter(NoeudLigneCourseAbstrait* noeud);
 
 private:
 	bool verifierPointEstSurTable(glm::dvec3 point);

@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-/// @file NoeudPiece.h
+/// @file NoeudLigneCourseAbstrait.h
 /// @author Simon-Pierre Desjardins
 /// @date 2017-03-08
 /// @version 1.0
@@ -8,8 +8,8 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#ifndef __ARBRE_NOEUDS_NOEUDPIECE_H__
-#define __ARBRE_NOEUDS_NOEUDPIECE_H__
+#ifndef __ARBRE_NOEUDS_NOEUDLIGNECOURSEABSTRAIT_H__
+#define __ARBRE_NOEUDS_NOEUDLIGNECOURSEABSTRAIT_H__
 
 #include "NoeudComposite.h"
 #include "CercleEnglobant.h"
@@ -18,27 +18,25 @@
 #include "VisiteurAbstrait.h"
 
 ///////////////////////////////////////////////////////////////////////////
-/// @class NoeudPiece
-/// @brief Noeud des pieces
+/// @class NoeudLigneCourseAbstrait
+/// @brief Noeud des lignes de la course
 ///
 /// @author Simon-Pierre Desjardins
 /// @date 2017-03-08
 ///////////////////////////////////////////////////////////////////////////
-class NoeudPiece : public NoeudAbstrait
+class NoeudLigneCourseAbstrait : public NoeudComposite
 {
 
 public:
 	/// Constructeur
-	NoeudPiece(uint32_t id, const std::string& typeNoeud);
+	NoeudLigneCourseAbstrait(uint32_t id, const std::string& typeNoeud = std::string{ "" });
 	/// Destructeur.
-	~NoeudPiece();
+	~NoeudLigneCourseAbstrait();
 
     virtual RectangleEnglobant* obtenirFormeEnglobante();
     virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
 
-	virtual CercleEnglobant* obtenirCercleEnglobante();
-	virtual const CercleEnglobant* obtenirCercleEnglobante() const;
-     
+
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
@@ -46,9 +44,9 @@ public:
 
 
 private:
-    CercleEnglobant cercleEnglobant_;
     virtual void mettreAJourFormeEnglobante();
 	RectangleEnglobant rectangleEnglobant_;
+
 	
 };
  

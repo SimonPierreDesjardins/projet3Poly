@@ -55,7 +55,9 @@ enum EntityType
 	VOLKS_ENTITY,
 	AUDI_ENTITY,
 	TELEPORT_ENTITY,
-	COIN_ENTITY
+	COIN_ENTITY,
+	FINISHLINE_ENTITY,
+	CHECKPOINT_ENTITY
 };
 
 ///////////////////////////////////////////////////////////////////////////

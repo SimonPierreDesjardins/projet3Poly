@@ -141,6 +141,22 @@ void VisiteurVerificationQuad::visiter(NoeudTeleporteur* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn VisiteurVerificationQuad::visiter(NoeudLigneCourseAbstrait* noeud)
+///
+/// Fonction qui vérifie que le NoeudLigneCourseAbstrait passé en paramètre se trouve dans les limites de la table.
+///
+/// @param[in] noeud : Le noeud NoeudLigneCourseAbstrait sur lequel on veut effectuer la vérication.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurVerificationQuad::visiter(NoeudLigneCourseAbstrait* noeud)
+{
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 ///
 /// Fonction qui vérifie que le mur passé en paramètre se trouve dans les limites de la table.

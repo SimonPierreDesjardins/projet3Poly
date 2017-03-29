@@ -26,6 +26,9 @@
 #include "NoeudAudi.h"
 #include "NoeudTeleporteur.h"
 #include "NoeudPiece.h"
+#include "NoeudCheckpoint.h"
+#include "NoeudLigneCourseAbstrait.h"
+#include "NoeudLigneArrivee.h"
 
 #endif /// __NOEUD_TYPES_H__
 

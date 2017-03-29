@@ -87,6 +87,10 @@ public:
 
 	static const std::string NOM_PIECE;
 
+	static const std::string NOM_LIGNEARRIVEE;
+
+	static const std::string NOM_CHECKPOINT;
+
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre
 	void chargerZone(FILE* fp);
