@@ -21,7 +21,7 @@ private:
 	void CreateEntities(rapidjson::Value::ConstValueIterator jsonNode, Entity* parent);
 	void LoadTeleporters(const rapidjson::Value& jsonNode, Entity* parent);
 
-	char GetEntityType(const std::string& itemType);
+	static char GetEntityType(const std::string& itemType);
 
 	void StartSaveThread();
 	void StopSaveThread();

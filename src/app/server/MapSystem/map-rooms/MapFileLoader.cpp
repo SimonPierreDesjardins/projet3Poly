@@ -10,6 +10,7 @@ server::MapFileLoader::MapFileLoader(EntityTree* tree, MapFileEntry * mapFile)
 
 	if (mapFile->MapData != "") {
 		//load the file
+		PopulateTreeFromJSON(mapFile->MapData);
 	}
 	else {
 		Entity* table = tree -> createEntity(0, 0); // create the table
@@ -75,10 +76,28 @@ void server::MapFileLoader::LoadTeleporters(const rapidjson::Value& jsonNode, En
 char server::MapFileLoader::GetEntityType(const std::string & itemType)
 {
 	//TODO: Implement this
-	if (itemType == "") {
-		return 0;
+	if (itemType == "poteau") {
+		return Networking::MessageStandard::ItemTypes::POST_ENTITY;
 	}
-	return 0;
+	if (itemType == "depart") {
+		return Networking::MessageStandard::ItemTypes::START_ENTITY;
+	}
+	if (itemType == "ligneNoire") {
+		return Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY;
+	}
+	if (itemType == "segment") {
+		return Networking::MessageStandard::ItemTypes::SEGMENT_ENTITY;
+	}
+	if (itemType == "jonction") {
+		return Networking::MessageStandard::ItemTypes::JUNCTION_ENTITY;
+	}
+	if (itemType == "mur") {
+		return Networking::MessageStandard::ItemTypes::WALL_ENTITY;
+	}
+	if (itemType == "teleporteur") {
+		return Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY;
+	}
+	return -1;
 }
 
 void server::MapFileLoader::StartSaveThread()
