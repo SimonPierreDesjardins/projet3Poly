@@ -1,6 +1,8 @@
 ﻿set(AFFICHAGE_TEXTE_SRC
     simulation-engine/AffichageTexte/AffichageTexte.h
     simulation-engine/AffichageTexte/AffichageTexte.cpp
+    simulation-engine/AffichageTexte/Minuterie.h
+    simulation-engine/AffichageTexte/Minuterie.cpp
 )
         
 set(ARBRE_SRC
@@ -41,12 +43,12 @@ set(NOEUDS_SRC
     simulation-engine/Arbre/Noeuds/NoeudTruck.h
     simulation-engine/Arbre/Noeuds/NoeudF1.cpp
     simulation-engine/Arbre/Noeuds/NoeudF1.h
-    simulation-engine/Arbre/Noeuds/NoeudVolks.cpp
-    simulation-engine/Arbre/Noeuds/NoeudVolks.h
     simulation-engine/Arbre/Noeuds/NoeudTeleporteur.cpp
     simulation-engine/Arbre/Noeuds/NoeudTeleporteur.h
     simulation-engine/Arbre/Noeuds/NoeudAudi.h
     simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
+    simulation-engine/Arbre/Noeuds/NoeudPiece.h
+    simulation-engine/Arbre/Noeuds/NoeudPiece.cpp
 )
 
 set(USINES_SRC
@@ -144,6 +146,8 @@ set(MODES_SRC
     modes/ModeMenuPrincipal.cpp
     modes/ModeSimulation.h
     modes/ModeSimulation.cpp
+    modes/ModePieces.h
+    modes/ModePieces.cpp
     modes/ModeTest.cpp
     modes/ModeTypes.h
     modes/ModePersonalize.cpp

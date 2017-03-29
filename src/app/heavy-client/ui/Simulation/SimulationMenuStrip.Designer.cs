@@ -36,7 +36,6 @@
             this.orbiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.premierePersonneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profilsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tutorielToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,8 +45,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fichierToolStripMenuItem,
             this.vuesToolStripMenuItem,
-            this.profilsToolStripMenuItem,
-            this.tutorielToolStripMenuItem});
+            this.profilsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(793, 29);
@@ -112,15 +110,6 @@
             this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
             this.profilsToolStripMenuItem.Text = "Profils";
             // 
-            // tutorielToolStripMenuItem
-            // 
-            this.tutorielToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tutorielToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.tutorielToolStripMenuItem.Name = "tutorielToolStripMenuItem";
-            this.tutorielToolStripMenuItem.Size = new System.Drawing.Size(78, 25);
-            this.tutorielToolStripMenuItem.Text = "Tutoriel";
-            this.tutorielToolStripMenuItem.Click += new System.EventHandler(this.tutorielToolStripMenuItem_Click);
-            // 
             // SimulationMenuStrip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -146,6 +135,5 @@
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem premierePersonneToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem profilsToolStripMenuItem;
-        public System.Windows.Forms.ToolStripMenuItem tutorielToolStripMenuItem;
     }
 }

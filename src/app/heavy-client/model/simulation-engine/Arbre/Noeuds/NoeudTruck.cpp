@@ -93,13 +93,13 @@ NoeudTruck::~NoeudTruck()
 	glLightfv(GL_LIGHT2, GL_DIFFUSE, glm::value_ptr(glm::vec4(0.0, 0.0, 0.0, 0.0)));
 
 	if ((table_ != nullptr) && (roueGauche_ != nullptr))
-		table_->effacer(roueGauche_);
+		effacer(roueGauche_);
 	if ((table_ != nullptr) && (roueDroite_ != nullptr))
-		table_->effacer(roueDroite_);
+		effacer(roueDroite_);
 	if ((table_ != nullptr) && (roueGauche2_ != nullptr))
-		table_->effacer(roueGauche2_);
+		effacer(roueGauche2_);
 	if ((table_ != nullptr) && (roueDroite2_ != nullptr))
-		table_->effacer(roueDroite2_);
+		effacer(roueDroite2_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ void NoeudTruck::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
+	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
@@ -145,7 +145,7 @@ void NoeudTruck::afficherConcret() const
 	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	if (mode_ != PERSONALIZE)
+	if (mode_ != PERSONALIZE && mode_ != PIECES)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{

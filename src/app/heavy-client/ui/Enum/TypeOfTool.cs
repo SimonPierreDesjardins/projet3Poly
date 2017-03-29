@@ -18,6 +18,7 @@ namespace TypeOfTool
             NONE,
             CREATION_LIGNE_NOIRE,
             CREATION_MUR,
+            CREATION_TELEPORTOR,
             CREATION_POTEAU,
             DEPLACEMENT,
             DUPLICATION,

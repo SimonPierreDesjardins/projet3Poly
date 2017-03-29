@@ -167,20 +167,6 @@ namespace ui
             crochetPourVue();
         }
 
-        private void tutorielToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (parent_.viewPort.Controls.Contains(simulationTutorial))
-                return;
-
-            simulationTutorial = new TutorialSimulation(parent_);
-            simulationTutorial.Location = new Point(parent_.viewPort.Width / 2 - simulationTutorial.Width / 2,
-                                                   parent_.viewPort.Height / 2 - simulationTutorial.Height / 2);
-            simulationTutorial.Anchor = AnchorStyles.None;
-            parent_.viewPort.Controls.Add(simulationTutorial);
-            
-            simulationTutorial.BringToFront();
-        }
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void crochetPourVue()

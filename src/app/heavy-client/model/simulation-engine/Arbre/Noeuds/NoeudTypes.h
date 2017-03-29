@@ -25,6 +25,7 @@
 #include "NoeudTruck.h"
 #include "NoeudAudi.h"
 #include "NoeudTeleporteur.h"
+#include "NoeudPiece.h"
 
 #endif /// __NOEUD_TYPES_H__
 

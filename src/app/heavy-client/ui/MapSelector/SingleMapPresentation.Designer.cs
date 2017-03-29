@@ -28,13 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.passwordPanel = new System.Windows.Forms.Panel();
-            this.publicCheckBox = new System.Windows.Forms.CheckBox();
-            this.privateCheckBox = new System.Windows.Forms.CheckBox();
-            this.passwordBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.mapButton = new ui.PanelButton();
+            this.button1 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.passwordBox = new System.Windows.Forms.TextBox();
+            this.privateCheckBox = new System.Windows.Forms.CheckBox();
+            this.publicCheckBox = new System.Windows.Forms.CheckBox();
             this.privacyLabel = new ui.CustomLabel();
             this.customLabel99 = new ui.CustomLabel();
             this.connectionLabel = new ui.CustomLabel();
@@ -42,85 +41,20 @@
             this.numberOfPlayersLabel = new ui.CustomLabel();
             this.NameMapLabel = new ui.CustomLabel();
             this.ModeLabel = new ui.CustomLabel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.customLabel3 = new ui.CustomLabel();
             this.customLabel2 = new ui.CustomLabel();
             this.customLabel1 = new ui.CustomLabel();
-            this.passwordPanel.SuspendLayout();
             this.mapButton.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // passwordPanel
-            // 
-            this.passwordPanel.Controls.Add(this.button1);
-            this.passwordPanel.Controls.Add(this.label1);
-            this.passwordPanel.Controls.Add(this.passwordBox);
-            this.passwordPanel.Controls.Add(this.privateCheckBox);
-            this.passwordPanel.Controls.Add(this.publicCheckBox);
-            this.passwordPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.passwordPanel.Location = new System.Drawing.Point(0, 0);
-            this.passwordPanel.Name = "passwordPanel";
-            this.passwordPanel.Size = new System.Drawing.Size(600, 150);
-            this.passwordPanel.TabIndex = 1;
-            this.passwordPanel.Visible = false;
-            // 
-            // publicCheckBox
-            // 
-            this.publicCheckBox.AutoSize = true;
-            this.publicCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.publicCheckBox.ForeColor = System.Drawing.Color.Silver;
-            this.publicCheckBox.Location = new System.Drawing.Point(419, 33);
-            this.publicCheckBox.Name = "publicCheckBox";
-            this.publicCheckBox.Size = new System.Drawing.Size(96, 25);
-            this.publicCheckBox.TabIndex = 0;
-            this.publicCheckBox.Text = "Publique";
-            this.publicCheckBox.UseVisualStyleBackColor = true;
-            this.publicCheckBox.CheckedChanged += new System.EventHandler(this.publicCheckBox_CheckedChanged);
-            // 
-            // privateCheckBox
-            // 
-            this.privateCheckBox.AutoSize = true;
-            this.privateCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.privateCheckBox.ForeColor = System.Drawing.Color.Silver;
-            this.privateCheckBox.Location = new System.Drawing.Point(419, 74);
-            this.privateCheckBox.Name = "privateCheckBox";
-            this.privateCheckBox.Size = new System.Drawing.Size(76, 25);
-            this.privateCheckBox.TabIndex = 1;
-            this.privateCheckBox.Text = "Privée";
-            this.privateCheckBox.UseVisualStyleBackColor = true;
-            this.privateCheckBox.CheckedChanged += new System.EventHandler(this.privateCheckBox_CheckedChanged);
-            // 
-            // passwordBox
-            // 
-            this.passwordBox.Location = new System.Drawing.Point(24, 68);
-            this.passwordBox.Name = "passwordBox";
-            this.passwordBox.PasswordChar = '*';
-            this.passwordBox.Size = new System.Drawing.Size(188, 20);
-            this.passwordBox.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Silver;
-            this.label1.Location = new System.Drawing.Point(24, 30);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(115, 21);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Mot de passe";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(137, 94);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Connecter";
-            this.button1.UseVisualStyleBackColor = true;
             // 
             // mapButton
             // 
             this.mapButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.mapButton.Controls.Add(this.button1);
+            this.mapButton.Controls.Add(this.label1);
+            this.mapButton.Controls.Add(this.passwordBox);
+            this.mapButton.Controls.Add(this.privateCheckBox);
+            this.mapButton.Controls.Add(this.publicCheckBox);
             this.mapButton.Controls.Add(this.privacyLabel);
             this.mapButton.Controls.Add(this.customLabel99);
             this.mapButton.Controls.Add(this.connectionLabel);
@@ -128,7 +62,6 @@
             this.mapButton.Controls.Add(this.numberOfPlayersLabel);
             this.mapButton.Controls.Add(this.NameMapLabel);
             this.mapButton.Controls.Add(this.ModeLabel);
-            this.mapButton.Controls.Add(this.panel1);
             this.mapButton.Controls.Add(this.customLabel3);
             this.mapButton.Controls.Add(this.customLabel2);
             this.mapButton.Controls.Add(this.customLabel1);
@@ -138,6 +71,65 @@
             this.mapButton.Size = new System.Drawing.Size(600, 150);
             this.mapButton.TabIndex = 0;
             this.mapButton.Click += new System.EventHandler(this.mapButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(468, 74);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Connecter";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Silver;
+            this.label1.Location = new System.Drawing.Point(351, 17);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(115, 21);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "Mot de passe";
+            // 
+            // passwordBox
+            // 
+            this.passwordBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.passwordBox.Location = new System.Drawing.Point(355, 48);
+            this.passwordBox.Name = "passwordBox";
+            this.passwordBox.PasswordChar = '*';
+            this.passwordBox.Size = new System.Drawing.Size(188, 20);
+            this.passwordBox.TabIndex = 13;
+            // 
+            // privateCheckBox
+            // 
+            this.privateCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.privateCheckBox.AutoSize = true;
+            this.privateCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.privateCheckBox.ForeColor = System.Drawing.Color.Silver;
+            this.privateCheckBox.Location = new System.Drawing.Point(468, 103);
+            this.privateCheckBox.Name = "privateCheckBox";
+            this.privateCheckBox.Size = new System.Drawing.Size(76, 25);
+            this.privateCheckBox.TabIndex = 12;
+            this.privateCheckBox.Text = "Privée";
+            this.privateCheckBox.UseVisualStyleBackColor = true;
+            this.privateCheckBox.Click += new System.EventHandler(this.privateCheckBox_Click);
+            // 
+            // publicCheckBox
+            // 
+            this.publicCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.publicCheckBox.AutoSize = true;
+            this.publicCheckBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.publicCheckBox.ForeColor = System.Drawing.Color.Silver;
+            this.publicCheckBox.Location = new System.Drawing.Point(355, 103);
+            this.publicCheckBox.Name = "publicCheckBox";
+            this.publicCheckBox.Size = new System.Drawing.Size(96, 25);
+            this.publicCheckBox.TabIndex = 11;
+            this.publicCheckBox.Text = "Publique";
+            this.publicCheckBox.UseVisualStyleBackColor = true;
+            this.publicCheckBox.Click += new System.EventHandler(this.publicCheckBox_Click);
             // 
             // privacyLabel
             // 
@@ -216,17 +208,6 @@
             this.ModeLabel.TabIndex = 4;
             this.ModeLabel.Text = "TypeMode";
             // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel1.BackColor = System.Drawing.Color.LightGray;
-            this.panel1.Enabled = false;
-            this.panel1.Location = new System.Drawing.Point(362, 10);
-            this.panel1.Margin = new System.Windows.Forms.Padding(10);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(200, 130);
-            this.panel1.TabIndex = 3;
-            // 
             // customLabel3
             // 
             this.customLabel3.AutoSize = true;
@@ -265,12 +246,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.Controls.Add(this.passwordPanel);
             this.Controls.Add(this.mapButton);
             this.Name = "MapPresentator";
             this.Size = new System.Drawing.Size(600, 150);
-            this.passwordPanel.ResumeLayout(false);
-            this.passwordPanel.PerformLayout();
             this.mapButton.ResumeLayout(false);
             this.mapButton.PerformLayout();
             this.ResumeLayout(false);
@@ -283,7 +261,6 @@
         private CustomLabel numberOfPlayersLabel;
         private CustomLabel NameMapLabel;
         private CustomLabel ModeLabel;
-        private System.Windows.Forms.Panel panel1;
         private CustomLabel customLabel3;
         private CustomLabel customLabel2;
         private CustomLabel customLabel1;
@@ -291,7 +268,6 @@
         private CustomLabel customLabel5;
         private CustomLabel privacyLabel;
         private CustomLabel customLabel99;
-        private System.Windows.Forms.Panel passwordPanel;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox passwordBox;

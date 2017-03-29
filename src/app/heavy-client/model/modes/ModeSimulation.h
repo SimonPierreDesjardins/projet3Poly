@@ -15,6 +15,8 @@
 #include "glm\glm.hpp"
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
+#include "FacadeModele.h"
+#include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
 
@@ -43,9 +45,15 @@ private:
 	bool lumiereDirectionnelle { true };
 	bool lumiereSpot { true };
 
+	VisiteurDetectionRobot visiteur_;
+
     AffichageTexte* affichageTexte_{ nullptr };
 
 	ControleurLumiere* controleurLumiere_{ nullptr };
+
+	ArbreRenduINF2990* arbre_{ nullptr };
+
+	bool modeEnPause{ false };
 
 public:
 	//Constructeur par défaut
@@ -62,7 +70,11 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
+	virtual void postAnimer();
+
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
+
+	bool obtenirModeEnPause();
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

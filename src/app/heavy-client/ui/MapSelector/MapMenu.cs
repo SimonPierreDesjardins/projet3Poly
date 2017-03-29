@@ -1,3 +1,4 @@
+
 ﻿////////////////////////////////////////////////
 /// @file   MapMenu.cs
 /// @author Frédéric Grégoire
@@ -63,7 +64,6 @@ namespace ui
         {
             mapPanel.Controls.Clear();
             numberOfMaps_ = 0;
-            mapPanel.VerticalScroll.Value = 0;
             foreach (KeyValuePair<int, MapPresentator> pair in onlineMaps_)
             {
                 pair.Value.Size = new Size(this.mapPanel.Width, pair.Value.Height);
@@ -179,9 +179,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar.ToString() == "\r")
-                createMap();
-            else if (e.KeyChar.ToString() != "\b")
+            if (e.KeyChar.ToString() != "\b")
             {
                 Regex regex = new Regex("[A-zÀ-ÿ0-9._]+");
                 e.Handled = !regex.IsMatch(e.KeyChar.ToString());
@@ -280,6 +278,12 @@ namespace ui
         {
             publicCheckBox.Checked = true;
             privateCheckBox.Checked = false;
+
+            //No password
+            passwordLabel.Visible = false;
+            passwordBox.Visible = false;
+            passwordBox.Clear();
+            passwordWarningLabel.Visible = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -296,6 +300,11 @@ namespace ui
         {
             publicCheckBox.Checked = false;
             privateCheckBox.Checked = true;
+
+            //Show password
+            passwordLabel.Visible = true;
+            passwordBox.Visible = true;
+            passwordWarningLabel.Visible = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -384,6 +393,12 @@ namespace ui
                     case 1:
                         FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
                         break;
+
+                    //Piece
+                    case 2:
+                        createMapPieceMode();
+                        //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
+                        break;
                 }
             }
 
@@ -403,6 +418,15 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void showOnlineFeatures(bool visibility)
         {
+            modeComboBox.SelectedIndex = 0;
+            publicCheckBox.Checked = true;
+            privateCheckBox.Checked = false;
+
+            passwordLabel.Visible = false;
+            passwordBox.Visible = false;
+            passwordBox.Clear();
+            passwordWarningLabel.Visible = false;
+
             modeSelectionLabel.Visible = visibility;
             modeComboBox.Visible = visibility;
 
@@ -596,6 +620,41 @@ namespace ui
             {
                 map.Width = mapPanel.Width;
             }
+        }
+
+        private void createMapPieceMode()
+        {
+            String mapName = textBox.Text;
+            if (mapName.Equals(""))
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte ne peut avoir ce nom.";
+                textBox.Clear();
+                return;
+            }
+
+            bool a = System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone));
+
+            if (!System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone)) && !parent_.mapMenu.offlineMaps_.ContainsKey(mapName))
+            {
+                //Create the map and Copy the default map
+                File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
+                MapPresentator newMap = new MapPresentator(parent_, mapName, false, (int)ModeEnum.Mode.PIECES, 0, -1);
+                newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
+                parent_.mapMenu.addOnlineMapEntry(-1, newMap);
+                verifyMapsAttributes();
+            }
+            else
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte avec ce nom existe déjà.";
+                textBox.Clear();
+                return;
+            }
+
+            mapPanel.Visible = true;
+            addPanel.Visible = false;
+            offlineModePanel.Visible = false;
         }
     }
 }

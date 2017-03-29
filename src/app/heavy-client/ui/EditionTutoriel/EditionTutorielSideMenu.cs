@@ -464,6 +464,19 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void teleportObjectButton_Click(object sender, EventArgs e)
         {
+            teleportorObject();
+        }
+
+        public void teleportorObject()
+        {
+            hideObjectMenu();
+            setDefaultUnselectedColors();
+            wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
+            setCurrentObjet(teleportorPictureBox);
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_O, (IntPtr)3276801);
+
+            if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TELEPORTOR)
+                parent_.editionTutorielInstructions.nextState();
         }
 
         ////////////////////////////////////////////////////////////////////////

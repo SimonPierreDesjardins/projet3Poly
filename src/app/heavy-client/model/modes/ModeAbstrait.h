@@ -82,6 +82,10 @@ public:
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
+	virtual void postAnimer() {};
+
+	virtual bool obtenirModeEnPause() { return true; };
+
 protected:
 	int typeMode_;
 	bool clicDroitEnfonce_{ false };

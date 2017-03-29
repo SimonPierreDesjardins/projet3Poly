@@ -36,13 +36,6 @@ namespace ui
             wheelColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.WHEELS);
             robotColorSelector = new ColorSelector((int)VehiculePiece.VehiculePiece.BODY);
             carSelector = new ModeleSelector();
-
-            StringBuilder str = new StringBuilder(100);
-            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
-            string PathToDefaultZone = str.ToString();
-
-            FonctionsNatives.assignerCheminFichierZone(PathToDefaultZone);
-            FonctionsNatives.charger();
         }
 
         ////////////////////////////////////////////////////////////////////////

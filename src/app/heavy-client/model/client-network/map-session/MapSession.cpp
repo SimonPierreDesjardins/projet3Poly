@@ -28,7 +28,10 @@ void MapSession::setIsOnlineSession(bool isOnline)
 void MapSession::localEntityCreated(NoeudAbstrait* entity)
 {
 	pendingQueueLock_.lock();
+
 	entity->setOwnerId(network_->getUserId());
+
+
 	// If the session is online and the pending queue is empty, send the request now.
 	if (isOnline_ && pendingEntityCreationRequests_.empty())
 	{
@@ -226,12 +229,23 @@ void MapSession::updateSelectionStateLocalEntityAndChildren(NoeudAbstrait* entit
 		NoeudAbstrait* toSelect = selectionQueue.front();
 		selectionQueue.pop();
 
-		uint32_t entityId = toSelect->getId();
-		auto entityIt = confirmedEntities_.find(entityId);
-		if (entityIt != confirmedEntities_.end())
+		if (isOnline_)
 		{
-			network_->requestEntitySelection(entityId, isSelected);
+			uint32_t entityId = toSelect->getId();
+			auto entityIt = confirmedEntities_.find(entityId);
+			if (entityIt != confirmedEntities_.end())
+			{
+				network_->requestEntitySelection(entityId, isSelected);
+			}
+		} 
+		else
+		{
+			toSelect->setOwnerId(0);
+			toSelect->assignerSelection(isSelected);
+			toSelect->setSelectionColor({ 1.0, 0.2, 0.0, 1.0 });
 		}
+			
+
 
 		// Push children in the queue.
 		uint32_t nChildren = toSelect->obtenirNombreEnfants();

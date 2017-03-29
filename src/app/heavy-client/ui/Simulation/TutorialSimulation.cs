@@ -324,14 +324,21 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void finishTutorial()
         {
+            parent_.mainMenu = new MainMenu(parent_);
+
             parent_.viewPort.Controls.Remove(this);
             parent_.simulationMenuStrip.Enabled = true;
+
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
 
-            parent_.simulationMenuStrip.tutorielToolStripMenuItem.Visible = false;
-            parent_.simulationMenuStrip.tutorielToolStripMenuItem.Visible = true;
-            FonctionsNatives.dessinerOpenGL();
+            parent_.viewPort.Controls.Add(parent_.mainMenu);
+            parent_.mainMenu.Dock = DockStyle.Left;
+
+            Program.peutAfficher = false;
+            parent_.viewPort.Refresh();
+
+            FonctionsNatives.assignerMode(ModeEnum.Mode.MENU_PRINCIPAL);
         }
     }
 }

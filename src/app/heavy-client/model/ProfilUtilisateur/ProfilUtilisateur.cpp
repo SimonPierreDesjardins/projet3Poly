@@ -807,6 +807,52 @@ std::string ProfilUtilisateur::getModele()
 	return modele_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn ProfilUtilisateur::ajouterPiece()
+///
+///	Fonction qui incremente l'attribut piecesCollectes
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::setPiece(int piece)
+{
+	piecesCollectees = piece;
+	if (piece > plusGrandNombrePieces)
+	{
+		plusGrandNombrePieces = piece;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn int ProfilUtilisateur::obtenirMaxPieces()
+///
+///	Fonction qui retourne l'attribut plusGrandNombrePieces
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+int ProfilUtilisateur::obtenirMaxPieces()
+{
+	return plusGrandNombrePieces;
+}
+
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn int ProfilUtilisateur::obtenirPieces()
+///
+///	Fonction qui retourne l'attribut piecesCollectes
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+int ProfilUtilisateur::obtenirPieces()
+{
+	return piecesCollectees;
+}
 std::string ProfilUtilisateur::obtenirCheminVersMusiqueSimulation()
 {
 	return pathToMusic_;
@@ -816,6 +862,7 @@ void ProfilUtilisateur::assignerCheminVersMusiqueSimulation(std::string chemin)
 {
 	pathToMusic_ = chemin;
 	EnginSon::obtenirInstance()->setSimulationMusic(chemin);
+
 }
 
 ///////////////////////////////////////////////////////////////////////////////
