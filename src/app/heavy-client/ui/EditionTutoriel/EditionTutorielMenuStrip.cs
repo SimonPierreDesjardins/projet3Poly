@@ -336,10 +336,10 @@ namespace ui
                     orbiteToolStripMenuItem.Checked = true;
                     orthoToolStripMenuItem.Checked = false;
 
-                    bmp = (Bitmap)parent_.editionSideMenu.zoomPictureBox.Image;
-                    bmp = parent_.editionSideMenu.ChangeColor(bmp, Color.Gray);
-                    parent_.editionSideMenu.zoomPictureBox.Image = bmp;
-                    parent_.editionSideMenu.zoomToolButton.Enabled = false;
+                    bmp = (Bitmap)parent_.editionTutorielSideMenu.zoomPictureBox.Image;
+                    bmp = parent_.editionTutorielSideMenu.ChangeColor(bmp, Color.Gray);
+                    parent_.editionTutorielSideMenu.zoomPictureBox.Image = bmp;
+                    parent_.editionTutorielSideMenu.zoomToolButton.Enabled = false;
                     break;
 
                 case 0:
@@ -347,10 +347,10 @@ namespace ui
                     orbiteToolStripMenuItem.Checked = false;
                     orthoToolStripMenuItem.Checked = true;
 
-                    bmp = (Bitmap)parent_.editionSideMenu.zoomPictureBox.Image;
-                    bmp = parent_.editionSideMenu.ChangeColor(bmp, Color.White);
-                    parent_.editionSideMenu.zoomPictureBox.Image = bmp;
-                    parent_.editionSideMenu.zoomToolButton.Enabled = true;
+                    bmp = (Bitmap)parent_.editionTutorielSideMenu.zoomPictureBox.Image;
+                    bmp = parent_.editionTutorielSideMenu.ChangeColor(bmp, Color.White);
+                    parent_.editionTutorielSideMenu.zoomPictureBox.Image = bmp;
+                    parent_.editionTutorielSideMenu.zoomToolButton.Enabled = true;
                     break;
             }
         }

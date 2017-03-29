@@ -1,6 +1,6 @@
 ﻿namespace ui
 {
-    partial class SimulationMenuStrip
+    partial class OnlineRaceMenuStrip
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -110,13 +110,13 @@
             this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
             this.profilsToolStripMenuItem.Text = "Profils";
             // 
-            // SimulationMenuStrip
+            // OnlineRaceMenuStrip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.Controls.Add(this.menuStrip1);
-            this.Name = "SimulationMenuStrip";
+            this.Name = "OnlineRaceMenuStrip";
             this.Size = new System.Drawing.Size(793, 29);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

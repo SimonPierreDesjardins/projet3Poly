@@ -1,6 +1,6 @@
 ﻿namespace ui
 {
-    partial class EditionMenuStrip
+    partial class OnlineEditionMenuStrip
     {
         /// <summary> 
         /// Variable nécessaire au concepteur.
@@ -30,11 +30,8 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.nouveauToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ouvrirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enregistrerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enregistrerSousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modeTestToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuprincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +43,8 @@
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
+            this.modeSimulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modePiècesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,11 +64,10 @@
             // fichierToolStripMenuItem
             // 
             this.fichierToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.nouveauToolStripMenuItem,
-            this.ouvrirToolStripMenuItem,
             this.enregistrerToolStripMenuItem,
             this.enregistrerSousToolStripMenuItem,
-            this.modeTestToolStripMenuItem,
+            this.modeSimulationToolStripMenuItem,
+            this.modePiècesToolStripMenuItem,
             this.menuprincipalToolStripMenuItem});
             this.fichierToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.fichierToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
@@ -77,20 +75,6 @@
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(71, 25);
             this.fichierToolStripMenuItem.Text = "Fichier";
             this.fichierToolStripMenuItem.Click += new System.EventHandler(this.fichierToolStripMenuItem_Click);
-            // 
-            // nouveauToolStripMenuItem
-            // 
-            this.nouveauToolStripMenuItem.Name = "nouveauToolStripMenuItem";
-            this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.nouveauToolStripMenuItem.Text = "Nouveau";
-            this.nouveauToolStripMenuItem.Click += new System.EventHandler(this.nouveauToolStripMenuItem_Click);
-            // 
-            // ouvrirToolStripMenuItem
-            // 
-            this.ouvrirToolStripMenuItem.Name = "ouvrirToolStripMenuItem";
-            this.ouvrirToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.ouvrirToolStripMenuItem.Text = "Ouvrir";
-            this.ouvrirToolStripMenuItem.Click += new System.EventHandler(this.ouvrirToolStripMenuItem_Click);
             // 
             // enregistrerToolStripMenuItem
             // 
@@ -106,18 +90,11 @@
             this.enregistrerSousToolStripMenuItem.Text = "Enregistrer sous";
             this.enregistrerSousToolStripMenuItem.Click += new System.EventHandler(this.enregistrerSousToolStripMenuItem_Click);
             // 
-            // modeTestToolStripMenuItem
-            // 
-            this.modeTestToolStripMenuItem.Name = "modeTestToolStripMenuItem";
-            this.modeTestToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.modeTestToolStripMenuItem.Text = "Mode test";
-            this.modeTestToolStripMenuItem.Click += new System.EventHandler(this.modeTestToolStripMenuItem_Click);
-            // 
             // menuprincipalToolStripMenuItem
             // 
             this.menuprincipalToolStripMenuItem.Name = "menuprincipalToolStripMenuItem";
-            this.menuprincipalToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.menuprincipalToolStripMenuItem.Text = "Menuprincipal";
+            this.menuprincipalToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.menuprincipalToolStripMenuItem.Text = "Menu Principal";
             this.menuprincipalToolStripMenuItem.Click += new System.EventHandler(this.menuprincipalToolStripMenuItem_Click);
             // 
             // vuesToolStripMenuItem
@@ -160,7 +137,7 @@
             // aideToolStripMenuItem
             // 
             this.aideToolStripMenuItem.Name = "aideToolStripMenuItem";
-            this.aideToolStripMenuItem.Size = new System.Drawing.Size(152, 26);
+            this.aideToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
             this.aideToolStripMenuItem.Text = "Aide";
             this.aideToolStripMenuItem.Click += new System.EventHandler(this.aideToolStripMenuItem_Click);
             // 
@@ -200,12 +177,24 @@
             // 
             this.ContentPanel.Size = new System.Drawing.Size(150, 150);
             // 
-            // EditionMenuStrip
+            // modeSimulationToolStripMenuItem
+            // 
+            this.modeSimulationToolStripMenuItem.Name = "modeSimulationToolStripMenuItem";
+            this.modeSimulationToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.modeSimulationToolStripMenuItem.Text = "Mode Simulation";
+            // 
+            // modePiècesToolStripMenuItem
+            // 
+            this.modePiècesToolStripMenuItem.Name = "modePiècesToolStripMenuItem";
+            this.modePiècesToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.modePiècesToolStripMenuItem.Text = "Mode Pièces";
+            // 
+            // OnlineEditionMenuStrip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.menuStrip1);
-            this.Name = "EditionMenuStrip";
+            this.Name = "OnlineEditionMenuStrip";
             this.Size = new System.Drawing.Size(793, 29);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -221,11 +210,8 @@
         private System.Windows.Forms.ToolStripMenuItem vuesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orthoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem orbiteToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem nouveauToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ouvrirToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem enregistrerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem enregistrerSousToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem modeTestToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem menuprincipalToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem informationsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aideToolStripMenuItem;
@@ -234,5 +220,7 @@
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
+        private System.Windows.Forms.ToolStripMenuItem modeSimulationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem modePiècesToolStripMenuItem;
     }
 }

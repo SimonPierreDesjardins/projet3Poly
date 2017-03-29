@@ -31,10 +31,17 @@ namespace ui
         public EditionMenuStrip editionMenuStrip;
         public EditionModificationPanel editionModificationPanel;
 
+        public TutorialSimulation simulationTutorial;
+
         public EditionTutorielMenuStrip editionTutorielMenuStrip;
         public EditionTutorielSideMenu editionTutorielSideMenu;
         public EditionTutorielInstructions editionTutorielInstructions;
         public TutorialEditionModificationPanel editionTutorielModificationPanel;
+
+        public OnlineEditionMenuStrip onlineEditionMenuStrip;
+        public OnlineSimulationMenuStrip onlineSimulationMenuStrip;
+        public OnlinePiecesMenuStrip onlinePiecesMenuStrip;
+        public OnlineRaceMenuStrip onlineRaceMenuStrip;
 
 
         public object timerLock_ = new object();
@@ -285,6 +292,8 @@ namespace ui
                 case Constants.Key_O:
                     if (ModifierKeys.HasFlag(Keys.Control))
                         editionMenuStrip.ouvrirZone(false);
+                    else
+                        editionSideMenu.teleportorObjet();
                     break;
 
                 case Constants.Key_N:
@@ -464,6 +473,14 @@ namespace ui
                         editionTutorielSideMenu.wallObject();
                     }
                     break;
+
+                case Constants.Key_O:
+                    if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TELEPORTOR)
+                    {
+                        editionTutorielInstructions.nextState();
+                        editionSideMenu.teleportorObjet();
+                    }
+                    break;    
 
                 case Constants.Key_P:
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)

@@ -179,9 +179,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar.ToString() == "\r")
-                createMap();
-            else if (e.KeyChar.ToString() != "\b")
+            if (e.KeyChar.ToString() != "\b")
             {
                 Regex regex = new Regex("[A-zÀ-ÿ0-9._]+");
                 e.Handled = !regex.IsMatch(e.KeyChar.ToString());
@@ -280,6 +278,12 @@ namespace ui
         {
             publicCheckBox.Checked = true;
             privateCheckBox.Checked = false;
+
+            //No password
+            passwordLabel.Visible = false;
+            passwordBox.Visible = false;
+            passwordBox.Clear();
+            passwordWarningLabel.Visible = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -296,6 +300,11 @@ namespace ui
         {
             publicCheckBox.Checked = false;
             privateCheckBox.Checked = true;
+
+            //Show password
+            passwordLabel.Visible = true;
+            passwordBox.Visible = true;
+            passwordWarningLabel.Visible = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -409,6 +418,15 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void showOnlineFeatures(bool visibility)
         {
+            modeComboBox.SelectedIndex = 0;
+            publicCheckBox.Checked = true;
+            privateCheckBox.Checked = false;
+
+            passwordLabel.Visible = false;
+            passwordBox.Visible = false;
+            passwordBox.Clear();
+            passwordWarningLabel.Visible = false;
+
             modeSelectionLabel.Visible = visibility;
             modeComboBox.Visible = visibility;
 

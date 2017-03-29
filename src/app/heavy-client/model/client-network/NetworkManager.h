@@ -54,7 +54,7 @@ private:
 	MessageDispatcher dispatcher_;
 	Connection connection_;
 	Serializer serializer_;
-	uint32_t userId_;
+	uint32_t userId_ = 0;
 
 	bool isAuthentified_ = false;
 
