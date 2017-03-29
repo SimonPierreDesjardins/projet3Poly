@@ -33,7 +33,9 @@ public:
 	void createProfile(const std::string& profileName);
 	void authenticate(const std::string& profileName);
 
-	void requestMapCreation(const std::string& mapName, uint8_t mapType);
+	/// upload map at pathto the server. Path is full file path. This method is synchronous
+	void uploadMap(const std::string& filePath);
+	void requestMapCreation(const std::string& mapName, uint8_t mapType, uint8_t isPrivate);
 	void requestToJoinMapSession(uint32_t mapId);
 	void requestToQuitMapSession();
 

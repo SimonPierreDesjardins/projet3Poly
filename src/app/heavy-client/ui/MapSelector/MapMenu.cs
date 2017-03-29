@@ -11,6 +11,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace ui
 {
@@ -373,16 +374,21 @@ namespace ui
             //Online map
             else
             {
+				if (!string.IsNullOrEmpty(fileDirLabel.Text))
+				{
+					// call file upload
+					FonctionsNatives.uploadMap(fileDirLabel.Text);
+				}
                 switch (modeComboBox.SelectedIndex)
                 {
                     //Edition
                     case 0:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.EDITION));
+                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.EDITION), (char)0);
                         break;
 
                     //Simulation
                     case 1:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
+                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION), (char)0);
                         break;
                 }
             }
@@ -598,4 +604,10 @@ namespace ui
             }
         }
     }
+
+	static partial class FonctionsNatives
+	{
+		[DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+		public static extern void uploadMap(string chemin);
+	}
 }

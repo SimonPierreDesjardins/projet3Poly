@@ -966,9 +966,9 @@ extern "C"
 		strcpy_s(path, size, EnginSon::obtenirInstance()->getDefaultMusic().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType)
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType, char isPrivate)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType, isPrivate);
 	}
 
 	__declspec(dllexport) void __cdecl joinMap(int mapId)
@@ -1067,6 +1067,13 @@ extern "C"
 		// Need the size of the array so the string builder doesn't stop at 
 		// the first \0 (likely in the serialized message size)
 		FacadeModele::obtenirInstance()->getNetworkManager()->sendSizePrefixedMessage(std::string(message, size));
+	}
+
+	__declspec(dllexport) void __cdecl uploadMap(char* filePath)
+	{
+		// Need the size of the array so the string builder doesn't stop at 
+		// the first \0 (likely in the serialized message size)
+		FacadeModele::obtenirInstance()->getNetworkManager()->uploadMap(std::string(filePath));
 	}
 
 	CallbackDisconnect DisconnectHandler = 0;
