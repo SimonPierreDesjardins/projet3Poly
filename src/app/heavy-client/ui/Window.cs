@@ -109,7 +109,7 @@ namespace ui
 
             InitialiserAnimation();
             configuration = new Configure(this);
-            mapMenu = new MapMenu(this);
+            //Load data from last launch
 
             mInstance = new CallbackForNewMap(addNewMap);
             SetCallbackForNewMap(mInstance);
@@ -179,8 +179,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
-            allowCommunication_ = false;
+            //Save data for next launch
 
+            allowCommunication_ = false;
             lock (Program.unLock)
             {
                 FonctionsNatives.libererOpenGL();

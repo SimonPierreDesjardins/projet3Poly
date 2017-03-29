@@ -127,8 +127,8 @@ set(MACHINE_A_ETATS_SRC
     edition-tools/EtatRotation.cpp
     edition-tools/EtatSelection.h
     edition-tools/EtatSelection.cpp
-	edition-tools/OnlineTool.h
-	edition-tools/OnlineTool.cpp
+    edition-tools/OnlineTool.h
+    edition-tools/OnlineTool.cpp
     edition-tools/EtatTypes.h
     edition-tools/EtatCreationTeleporteur.h
     edition-tools/EtatCreationTeleporteur.cpp
@@ -172,7 +172,9 @@ set(PHYSIQUE_SRC
 
 set(PROFIL_UTILISATEUR_SRC
     ProfilUtilisateur/ProfilUtilisateur.h      
-    ProfilUtilisateur/ProfilUtilisateur.cpp      
+    ProfilUtilisateur/ProfilUtilisateur.cpp 
+    ProfilUtilisateur/ApplicationSettings.h
+    ProfilUtilisateur/ApplicationSettings.cpp     
 )
 
 set(VISITEUR_SRC

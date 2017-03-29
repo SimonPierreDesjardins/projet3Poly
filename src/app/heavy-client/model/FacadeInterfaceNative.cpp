@@ -26,10 +26,6 @@
 
 #include "FacadeInterfaceNative.h"
 
-
-#include "BoiteEnvironnement.h"
-#include "Utilitaire.h"
-
 extern "C"
 {
 	////////////////////////////////////////////////////////////////////////
