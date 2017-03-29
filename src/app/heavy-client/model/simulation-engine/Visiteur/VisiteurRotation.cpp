@@ -147,6 +147,27 @@ void VisiteurRotation::visiter(NoeudTeleporteur* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void VisiteurRotation::visiter(NoeudLigneCourseAbstrait* noeud)
+///
+/// Fonction qui modifie la position et l'angle de rotation du noeud ligne de course passé en paramètre selon la rotation effectuée.
+///
+/// @param[in] noeud : Le noeud ligne de course auquel ont veut appliquer une rotation.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurRotation::visiter(NoeudLigneCourseAbstrait* noeud)
+{
+	// Assigner le nouvel angle de rotation.
+	double angle = noeud->obtenirAngleRotation() + angleRotation_;
+	noeud->assignerAngleRotation(angle);
+	assignerNouvellePositionRelative(noeud);
+}
+
+
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn VisiteurRotation::visiter(NoeudDepart* noeud)
 ///
 /// Fonction qui modifie la position et l'angle de rotation du noeud Depart passé en paramètre selon la rotation effectuée.

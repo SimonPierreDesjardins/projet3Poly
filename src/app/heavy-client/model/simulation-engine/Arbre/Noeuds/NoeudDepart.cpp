@@ -140,6 +140,7 @@ void NoeudDepart::animer(float dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudDepart::mettreAJourFormeEnglobante()
 {
+	positionCourante_ = positionRelative_;
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
 

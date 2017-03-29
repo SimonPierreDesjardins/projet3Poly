@@ -214,10 +214,11 @@ void EtatAbstrait::gererToucheAltRelachee()
 ////////////////////////////////////////////////////////////////////////
 void EtatAbstrait::gererPositionCurseur(const glm::dvec3& position)
 {
-	const int MIN_X = -48;
-	const int MAX_X =  48;
-	const int MIN_Y = -24;
-	const int MAX_Y =  24;
+	double facteur = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0)->obtenirFacteurMiseAEchelle();
+	const int MIN_X = -48*facteur;
+	const int MAX_X =  48*facteur;
+	const int MIN_Y = -24*facteur;
+	const int MAX_Y =  24*facteur;
 	bool positionEstSurTable = (MIN_X <= position.x && position.x <= MAX_X && MIN_Y <= position.y && position.y <= MAX_Y);
 
 	gererPositionCurseurConcret(positionEstSurTable);

@@ -130,6 +130,24 @@ void VisiteurSauvegarde::visiter(NoeudMur* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudLigneCourseAbstrait* noeud)
+///
+/// Sauvegarde les noeuds ligne course d'un arbre de rendu dans un fichier Json
+///
+/// @param[in] noeud : Pointeur vers le noeud de ligne course de l'arbre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudLigneCourseAbstrait* noeud)
+{
+	writer->StartObject();
+	noeud->toJson(*writer);
+	writer->EndObject();
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn  void VisiteurSauvegarde::visiter(NoeudLigne* noeud)
 ///
 /// Sauvegarde les noeuds lignes d'un arbre de rendu dans un fichier Json
