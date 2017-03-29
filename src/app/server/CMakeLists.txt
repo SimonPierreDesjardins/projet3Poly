@@ -97,6 +97,8 @@ source_group("MapSystem\\MapRooms" FILES ${MAP_ROOMS_SRC})
 set(MAP_SYST 
 	MapSystem/MapSystem.cpp 
 	MapSystem/MapSystem.h
+	MapSystem/map-rooms/MapFileLoader.cpp 
+	MapSystem/map-rooms/MapFileLoader.h
 )
 source_group(MapSystem FILES ${MAP_SYST})
 
