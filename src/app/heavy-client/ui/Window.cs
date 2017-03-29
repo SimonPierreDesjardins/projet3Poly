@@ -38,6 +38,11 @@ namespace ui
         public EditionTutorielInstructions editionTutorielInstructions;
         public TutorialEditionModificationPanel editionTutorielModificationPanel;
 
+        public OnlineEditionMenuStrip onlineEditionMenuStrip;
+        public OnlineSimulationMenuStrip onlineSimulationMenuStrip;
+        public OnlinePiecesMenuStrip onlinePiecesMenuStrip;
+        public OnlineRaceMenuStrip onlineRaceMenuStrip;
+
 
         public object timerLock_ = new object();
         public bool lockWasTaken = false;
