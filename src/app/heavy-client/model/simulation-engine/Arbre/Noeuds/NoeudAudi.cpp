@@ -73,7 +73,6 @@ NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud)
 	roueDroite2_->setRightWheel(true);
 
 	positionnerRoues();
-
 }
 
 
@@ -178,9 +177,9 @@ void NoeudAudi::suivreCamera()
 	if (vue->estPremierePersonne())
 	{
 		vue::Camera* camera = vue->obtenirCamera();
-		glm::dvec3 positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
+		Eigen::Vector3f positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
 
-		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
+		camera->assignerPosition(glm::dvec3(positionRectangle) + glm::dvec3{ 0.0, 0.0, 4.0 });
 
 		glm::dvec3 positionVise{ cos(physics_.rotation.z() * PI / 180), 
 			                     sin(physics_.rotation.z() * PI / 180), 3.0 };

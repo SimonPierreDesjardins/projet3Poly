@@ -33,9 +33,9 @@ class NoeudRobot : public NoeudComposite
 public:
     static const int N_CAPTEURS_DISTANCE{ 3 };
 
-    static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_DROITE;
-    static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_CENTRE;
-    static const glm::dvec3 POSITION_CAPTEUR_DISTANCE_GAUCHE;
+    static const Eigen::Vector3f POSITION_CAPTEUR_DISTANCE_DROITE;
+    static const Eigen::Vector3f POSITION_CAPTEUR_DISTANCE_CENTRE;
+    static const Eigen::Vector3f POSITION_CAPTEUR_DISTANCE_GAUCHE;
 
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE;
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE;
@@ -69,9 +69,9 @@ public:
     inline void assignerMutex(std::mutex* mutex);
 
     // Calculer les composantes courantes de vitesse du robot.
-    void calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslationCourante, double& vitesseAngulaireCourante) const;
+    void calculerComposantesVitesseCourante(Eigen::Vector3f& vitesseTranslationCourante, double& vitesseAngulaireCourante) const;
     // Calculer les composantes de d'une collision en fonction d'une normale de collision.
-    void calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& viteseTranslationCollision,
+    void calculerComposantesCollision(const Eigen::Vector3f& normale, Eigen::Vector3f& viteseTranslationCollision,
                                       double& vitesseAngulaireCollision) const;
 	//Permet de positionner les roues
 	virtual void positionnerRoues();
@@ -103,10 +103,10 @@ protected:
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 
-    glm::dvec3 vitesseTranslationCollision_{0.0, 0.0, 0.0};
+    Eigen::Vector3f vitesseTranslationCollision_{0.0, 0.0, 0.0};
     double vitesseAngulaireCollision_{ 0.0 };
 
-    glm::dvec3 dernierePositionRelative_;
+    Eigen::Vector3f dernierePositionRelative_;
     double dernierAngleRotation_;
 
 	float angle_{ 0.f };
