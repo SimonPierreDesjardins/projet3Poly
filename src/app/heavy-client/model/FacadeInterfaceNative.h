@@ -124,7 +124,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl connectionWasFail();
 
 	// Map management
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType, char isPrivate);
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNamesize, char* password, int passwordSize, char mapType, char isPrivate);
 	__declspec(dllexport) void __cdecl joinMap(int mapId);
 	__declspec(dllexport) void __cdecl leaveMap();
 

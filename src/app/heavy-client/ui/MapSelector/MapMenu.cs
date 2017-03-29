@@ -379,21 +379,28 @@ namespace ui
 					// call file upload
 					FonctionsNatives.uploadMap(fileDirLabel.Text);
 				}
+				String password = "";
+				char mapType = '\0';
+				if (privateCheckBox.Checked)
+				{
+					password = "defaultPassword";
+				}
                 switch (modeComboBox.SelectedIndex)
                 {
                     //Edition
                     case 0:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.EDITION), (char)0);
+						mapType = (char)(ModeEnum.Mode.EDITION);
                         break;
 
                     //Simulation
                     case 1:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION), (char)0);
+						mapType = (char)(ModeEnum.Mode.SIMULATION);
                         break;
                 }
-            }
+				FonctionsNatives.createMap(mapName, mapName.Length, password, password.Length, mapType, privateCheckBox.Checked?(char)1:(char)0);
+			}
 
-            mapPanel.Visible = true;
+			mapPanel.Visible = true;
             addPanel.Visible = false;
             offlineModePanel.Visible = false;
         }

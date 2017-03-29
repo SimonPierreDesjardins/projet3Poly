@@ -35,7 +35,7 @@ public:
 
 	/// upload map at pathto the server. Path is full file path. This method is synchronous
 	void uploadMap(const std::string& filePath);
-	void requestMapCreation(const std::string& mapName, uint8_t mapType, uint8_t isPrivate);
+	void requestMapCreation(const std::string& mapName, const std::string& password, uint8_t mapType, uint8_t isPrivate);
 	void requestToJoinMapSession(uint32_t mapId);
 	void requestToQuitMapSession();
 

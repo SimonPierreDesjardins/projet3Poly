@@ -966,9 +966,9 @@ extern "C"
 		strcpy_s(path, size, EnginSon::obtenirInstance()->getDefaultMusic().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType, char isPrivate)
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNameSize, char* password, int passwordSize, char mapType, char isPrivate)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType, isPrivate);
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, mapNameSize), std::string(password, passwordSize), mapType, isPrivate);
 	}
 
 	__declspec(dllexport) void __cdecl joinMap(int mapId)
