@@ -112,6 +112,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
 	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
+	__declspec(dllexport) void __cdecl uploadMap(char* filePath);
 	typedef int(__stdcall * CallbackDisconnect)();
 	__declspec(dllexport) void __cdecl SetCallbackForDisconnect(CallbackDisconnect disconnectHandler);
 	__declspec(dllexport) void __cdecl GotDisconnected();
@@ -123,7 +124,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl connectionWasFail();
 
 	// Map management
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType);
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNamesize, char* password, int passwordSize, char mapType, char isPrivate);
 	__declspec(dllexport) void __cdecl joinMap(int mapId);
 	__declspec(dllexport) void __cdecl leaveMap();
 

@@ -1,4 +1,3 @@
-
 ﻿////////////////////////////////////////////////
 /// @file   MapMenu.cs
 /// @author Frédéric Grégoire
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -382,16 +382,27 @@ namespace ui
             //Online map
             else
             {
+                if (!string.IsNullOrEmpty(fileDirLabel.Text))
+                {
+                    // call file upload
+                    FonctionsNatives.uploadMap(fileDirLabel.Text);
+                }
+                String password = "";
+                char mapType = '\0';
+                if (privateCheckBox.Checked)
+                {
+                    password = "defaultPassword";
+                }
                 switch (modeComboBox.SelectedIndex)
                 {
                     //Edition
                     case 0:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.EDITION));
+                        mapType = (char)(ModeEnum.Mode.EDITION);
                         break;
 
                     //Simulation
                     case 1:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
+                        mapType = (char)(ModeEnum.Mode.SIMULATION);
                         break;
 
                     //Piece
@@ -400,6 +411,7 @@ namespace ui
                         //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
                         break;
                 }
+                FonctionsNatives.createMap(mapName, mapName.Length, password, password.Length, mapType, privateCheckBox.Checked ? (char)1 : (char)0);
             }
 
             mapPanel.Visible = true;
@@ -656,5 +668,11 @@ namespace ui
             addPanel.Visible = false;
             offlineModePanel.Visible = false;
         }
+    }
+
+    static partial class FonctionsNatives
+    {
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void uploadMap(string chemin);
     }
 }
