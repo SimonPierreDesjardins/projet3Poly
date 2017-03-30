@@ -17,6 +17,12 @@ server::MapFileLoader::MapFileLoader(EntityTree* tree, MapFileEntry * mapFile)
 		Entity* start = tree -> createEntity(1, table->entityId_); // create the start point
 	}
 
+	StartSaveThread();
+}
+
+server::MapFileLoader::~MapFileLoader()
+{
+	StopSaveThread();
 }
 
 void server::MapFileLoader::PopulateTreeFromJSON(const std::string& json)
@@ -46,7 +52,7 @@ void server::MapFileLoader::CreateEntities(rapidjson::Value::ConstValueIterator 
 	}
 
 	Entity* newEntity = _entityTree->createEntity(GetEntityType(jsonNode->FindMember("type")->value.GetString()), parent->entityId_);
-	//TODO: have method that gets settings from json newEntity->fromJson(noeudJSON);
+	setEntityValues(newEntity, jsonNode);
 	parent->addChild(newEntity);
 	if (!jsonNode->HasMember("noeudsEnfants")) {
 		return;
@@ -58,19 +64,54 @@ void server::MapFileLoader::CreateEntities(rapidjson::Value::ConstValueIterator 
 	}
 }
 
+void server::MapFileLoader::setEntityValues(Entity * target, const rapidjson::Value::ConstValueIterator jsonNode)
+{
+	// quick loading from iteration
+	rapidjson::Value::ConstMemberIterator itr = jsonNode->MemberBegin() + 1;
+
+	//Set relative position
+	Eigen::Vector3f* relPos = target->getProperty(Networking::RELATIVE_POSITION);
+	relPos->x() = itr->value.GetDouble(); 
+	itr++;
+	relPos->y() = itr->value.GetDouble(); 
+	itr++;
+	relPos->z() = itr->value.GetDouble(); 
+	itr++;
+
+	//Set Absolute Position
+	Eigen::Vector3f* absPos = target->getProperty(Networking::ABSOLUTE_POSITION);
+	Eigen::Vector3f* parentAbsPos = target->getParent()->getProperty(Networking::ABSOLUTE_POSITION);
+	*absPos = *parentAbsPos + *relPos;
+
+	target->getProperty(Networking::ROTATION)->z() = itr->value.GetDouble();
+	itr++;
+
+	auto scaleValue = itr->value.GetDouble();
+	Eigen::Vector3f* scale = target->getProperty(Networking::SCALE);
+	scale->x() = scaleValue;
+	scale->y() = scaleValue;
+	scale->z() = scaleValue;
+
+}
+
 void server::MapFileLoader::LoadTeleporters(const rapidjson::Value& jsonNode, Entity* parent)
 {
-	auto heyo = jsonNode.IsArray();
-	Entity* tp1 = _entityTree->createEntity(GetEntityType(jsonNode[0].FindMember("type")->value.GetString()), parent->entityId_);
-	// TODO: generate item properties from JSON noeud1->fromJson(&noeudJSON[0]);
-	Entity* tp2 = _entityTree->createEntity(GetEntityType(jsonNode[1].FindMember("type")->value.GetString()), parent->entityId_);
-	// TODO: generate item properties from JSON noeud2->fromJson(&noeudJSON[1]);
+	auto jsonItr = jsonNode.Begin();
+
+	Entity* tp1 = _entityTree->createEntity(GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
+	parent->addChild(tp1);
+	setEntityValues(tp1, jsonItr);
+
+	jsonItr++;
+
+	Entity* tp2 = _entityTree->createEntity(GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
+	parent->addChild(tp2);
+	setEntityValues(tp2, jsonItr);
 
 	// this is disgusting, either cast or deal with the code being bad
 	//tp1->assignerTeleporteur(tp2);
 	//tp2->assignerTeleporteur(tp1);
-	parent->addChild(tp1);
-	parent->addChild(tp2);
+	
 }
 
 char server::MapFileLoader::GetEntityType(const std::string & itemType)

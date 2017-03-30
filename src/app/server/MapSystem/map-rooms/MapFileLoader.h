@@ -19,6 +19,7 @@ public:
 private:
 	void PopulateTreeFromJSON(const std::string& json);
 	void CreateEntities(rapidjson::Value::ConstValueIterator jsonNode, Entity* parent);
+	void setEntityValues(Entity* target, const rapidjson::Value::ConstValueIterator jsonNode);
 	void LoadTeleporters(const rapidjson::Value& jsonNode, Entity* parent);
 
 	static char GetEntityType(const std::string& itemType);
