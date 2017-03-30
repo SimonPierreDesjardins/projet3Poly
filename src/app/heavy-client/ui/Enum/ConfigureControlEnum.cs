@@ -6,7 +6,7 @@
 /// @addtogroup inf2990 INF2990
 /// @{
 ////////////////////////////////////////////////
-#if !__CONFIGURE_CONTROL_ENUM__
+#if !__LINE__
 
 /// Permet de partager cet enum entre le C# et le C++
 namespace ConfigureControlEnum
@@ -57,7 +57,7 @@ namespace ConfigureControlEnum
             DEBUG_CAPTEURS_CB
         };
 
-    #if !__CONFIGURE_CONTROL_ENUM__
+    #if !__LINE__
 }
 #endif
 ////////////////////////////////////////////////

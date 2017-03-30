@@ -13,13 +13,12 @@
 #include <windows.h>
 #include <locale>
 #include <codecvt>
-#include "ComportementTypes.h"
-#include "utilitaire.h"
 #include <string>
 #include <CommCtrl.h>
 #include <windowsx.h>
 #include <fstream>
 #include <sstream>
+#include "FacadeModele.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -29,7 +28,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 ApplicationSettings::ApplicationSettings() {
-	
+	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -51,7 +50,24 @@ ApplicationSettings::~ApplicationSettings(){}
 ///
 ////////////////////////////////////////////////////////////////////////
 void ApplicationSettings::load() {
+	if (!openSaves("rb"))
+		return;
+	rapidjson::Document doc;
+	char readBuffer[65536];
+	rapidjson::FileReadStream is(saves_, readBuffer, sizeof(readBuffer));
+	doc.ParseStream(is);
+	fclose(saves_);
 
+	rapidjson::Value::ConstMemberIterator itr = doc.MemberBegin();
+
+	//Edition Tutorial
+	profil_->setEditionTutorialState(itr->value.GetBool());
+
+	//Simulation Tutorial
+	profil_->setSimulationTutorialState((++itr)->value.GetBool());
+
+	//Simulation Tutorial
+	profil_->setModele((++itr)->value.GetString());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -64,29 +80,20 @@ void ApplicationSettings::load() {
 ///
 ////////////////////////////////////////////////////////////////////////
 void ApplicationSettings::save() {	
-	bool success = openSaves("wb");
-	if (!success)
-	{
-		std::ofstream o(pathToSaves_);
-		openSaves("wb");
-	}
+	openSaves("wb");
 
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(saves_, writeBuffer, sizeof(writeBuffer));
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 	writer.StartObject();
 		writer.Key("EditionTutorial");
-		writer.Bool(false);
-	writer.EndObject();
+		writer.Bool(profil_->getSimulationTutorialState());
 
-	writer.StartObject();
 		writer.Key("SimulationTutorial");
-		writer.Bool(false);
-	writer.EndObject();
+		writer.Bool(profil_->getSimulationTutorialState());
 
-	writer.StartObject();
 		writer.Key("CarModele");
-		writer.String("robot");
+		writer.String(profil_->getModele().c_str());
 	writer.EndObject();
 
 	fclose(saves_);

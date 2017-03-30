@@ -9,9 +9,9 @@
 
 #include <memory>
 #include <string>
-#include "ConfigureControlEnum.cs"
 #include "rapidjson\filereadstream.h"
 #include <Windows.h>
+#include "ProfilUtilisateur.h"
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -37,7 +37,8 @@ class ApplicationSettings
 	private:
 		/// Destripteur du fichier profil à sauvegarder ou charger
 		FILE* saves_;
-
+		/// Le profil utilisateur.
+		ProfilUtilisateur* profil_{ nullptr };
 		/// Chemin vers le fichier de sauvegarde
 		const std::string pathToSaves_ = "./Donnees/ApplicationSaves.save";
 };

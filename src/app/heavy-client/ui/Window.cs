@@ -101,6 +101,7 @@ namespace ui
             InitializeComponent();
 
             //Init all menus
+            mapMenu = new MapMenu(this);
             mainMenu = new MainMenu(this);
             viewPort.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
