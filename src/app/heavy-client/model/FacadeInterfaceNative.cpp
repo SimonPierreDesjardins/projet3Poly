@@ -1189,6 +1189,58 @@ extern "C"
 			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::selectAllTutorialObjects();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl getEditionTutorialState()
+	///
+	/// Cette fonction de savoir si le tutoriel edition est completer
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl getEditionTutorialState()
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getEditionTutorialState();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setEditionTutorialState(bool completed)
+	///
+	/// Cette fonction d'assigner l'état du tutoriel edition
+	///
+	///	@args bool compled: indique si le tutoriel est completé
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setEditionTutorialState(bool completed)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setEditionTutorialState(completed);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl getSimulationTutorialState()
+	///
+	/// Cette fonction de savoir si le tutoriel simulation est completer
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl getSimulationTutorialState()
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getSimulationTutorialState();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed)
+	///
+	/// Cette fonction d'assigner l'état du tutoriel simulation
+	///
+	///	@args bool compled: indique si le tutoriel est completé
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setSimulationTutorialState(completed);
+	}
+
 	CallbackForChat Handler = 0;
 	__declspec(dllexport) void __cdecl SetCallbackForChat(CallbackForChat handler)
 	{

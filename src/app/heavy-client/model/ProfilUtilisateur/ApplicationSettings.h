@@ -25,7 +25,6 @@ class ApplicationSettings
 {
 	public:
 		ApplicationSettings();
-
 		~ApplicationSettings();
 
 		void load();

@@ -42,11 +42,9 @@ ApplicationSettings::~ApplicationSettings(){}
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ApplicationSettings::sauvegarder(std::string nomProfil)
+/// @fn void ApplicationSettings::load()
 ///
-///	Fonction servant à sauvegarder ou créer le fichier d'un profil d'un certain nom.
-///
-/// @param[in] nomProfil : le nom du profil à sauvegarder
+///	Fonction servant à charger les parametes de l'application
 ///
 ////////////////////////////////////////////////////////////////////////
 void ApplicationSettings::load() {
@@ -72,11 +70,10 @@ void ApplicationSettings::load() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ApplicationSettings::sauvegarder(std::string nomProfil)
+/// @fn void ApplicationSettings::save()
 ///
-///	Fonction servant à sauvegarder ou créer le fichier d'un profil d'un certain nom.
-///
-/// @param[in] nomProfil : le nom du profil à sauvegarder
+///	Fonction servant à sauvegarder ou créer le fichier des parametres de
+/// l'application
 ///
 ////////////////////////////////////////////////////////////////////////
 void ApplicationSettings::save() {	
@@ -101,9 +98,9 @@ void ApplicationSettings::save() {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn bool ProfilUtilisateur::ouvrirProfil(std::string modeOuverture)
+/// @fn bool ApplicationSettings::openSave(std::string modeOuverture)
 ///
-///	Fonction permettant d'ouvrir le fichier du profil courant soit en lecture, soit en écriture
+///	Fonction permettant d'ouvrir le fichier du sauvegarde courant soit en lecture, soit en écriture
 ///
 /// @param[in] modeOuverture : mode lecture ou écriture
 ///
@@ -116,7 +113,7 @@ bool ApplicationSettings::openSaves(std::string modeOuverture) {
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn bool ProfilUtilisateur::ouvrir(std::string nomFichier, std::string modeOuverture, FILE*& fichier)
+/// @fn bool ApplicationSettings::open(std::string nomFichier, std::string modeOuverture, FILE*& fichier)
 ///
 ///	Fonction permettant d'ouvrir un fichier soit en lecture, soit en écriture
 ///

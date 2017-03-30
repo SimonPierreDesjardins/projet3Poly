@@ -136,6 +136,12 @@ extern "C"
 	__declspec(dllexport) void __cdecl UnselectCurrentTool();
 	__declspec(dllexport) void __cdecl UnselectAllObjects();
 	__declspec(dllexport) void __cdecl SelectAllTutorialObjects();
+	__declspec(dllexport) bool __cdecl getEditionTutorialState();
+	__declspec(dllexport) void __cdecl setEditionTutorialState(bool completed);
+
+	//Simulation Tutorial
+	__declspec(dllexport) bool __cdecl getSimulationTutorialState();
+	__declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed);
 
 	//Chat System
 	typedef void(__stdcall * CallbackForChat)(const unsigned char* text, int size);

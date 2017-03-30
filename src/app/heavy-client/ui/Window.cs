@@ -681,9 +681,6 @@ namespace ui
 
             MapPresentator newMap = new MapPresentator(this, str, connectionState, mode, nbPlayers, id);
             mapMenu.addOnlineMapEntry(id, newMap);
-
-            //Only for debug
-            Console.WriteLine("\n AddingNewMapToDictionary \n");
         }
 
         [DllImport("model.dll")]

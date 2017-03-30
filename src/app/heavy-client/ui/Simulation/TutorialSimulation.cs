@@ -5,6 +5,7 @@
 ///
 ////////////////////////////////////////////////
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ui
@@ -324,6 +325,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void finishTutorial()
         {
+            FonctionsNatives.setSimulationTutorialState(true);
+
             parent_.mainMenu = new MainMenu(parent_);
 
             parent_.viewPort.Controls.Remove(this);
@@ -340,5 +343,18 @@ namespace ui
 
             FonctionsNatives.assignerMode(ModeEnum.Mode.MENU_PRINCIPAL);
         }
+    }
+
+    ////////////////////////////////////////////////////////////////////////
+    ///
+    /// @fn  static partial class FonctionsNatives
+    ///
+    /// Permet de faire le lien avec les méthodes implémentées dans le C++
+    ///
+    ////////////////////////////////////////////////////////////////////////
+    static partial class FonctionsNatives
+    {
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setSimulationTutorialState(bool completed);
     }
 }

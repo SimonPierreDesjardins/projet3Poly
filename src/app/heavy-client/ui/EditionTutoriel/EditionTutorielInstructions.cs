@@ -731,6 +731,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void finishTutorial()
         {
+            FonctionsNatives.setEditionTutorialState(true);
+
             parent_.mainMenu = new MainMenu(parent_);
 
             parent_.viewPort.Controls.Remove(this);
@@ -951,5 +953,8 @@ namespace ui
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void SelectAllTutorialObjects();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void setEditionTutorialState(bool completed);
     }
 }

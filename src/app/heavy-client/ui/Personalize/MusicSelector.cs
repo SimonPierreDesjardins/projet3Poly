@@ -1,4 +1,10 @@
-﻿using System;
+﻿////////////////////////////////////////////////
+/// @file   MusicSelector.cs
+/// @author Frédéric Grégoire
+/// @date   2017-03-20
+///
+////////////////////////////////////////////////
+using System;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -14,6 +20,15 @@ namespace ui
 
         int ticks_ = 0;
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public MusicSelector(Window parent)
+        ///
+        /// Cette fonction initialize les controles sur user control et assigne les attributs.
+        ///
+        /// @param Window parent: reference a la fenetre principal du programme
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public MusicSelector(Window parent)
         {
             InitializeComponent();
@@ -35,8 +50,18 @@ namespace ui
                 defaultButton.Visible = true;
                 applyButton.Visible = false;
             }
-        } 
+        }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void importButton_Click(object sender, EventArgs e)
+        ///
+        /// Ouvre un explorateur de fichier qui permet de chercher pour une musique
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void importButton_Click(object sender, EventArgs e)
         {
             string homePath = (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
@@ -54,6 +79,16 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void defaultButton_Click(object sender, EventArgs e)
+        ///
+        /// Remet la musique par defaut pour la simulation
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void defaultButton_Click(object sender, EventArgs e)
         {
             string a = System.IO.Path.GetFileName(defaultMusicPath_);
@@ -67,6 +102,16 @@ namespace ui
             loadSong(defaultMusicPath_);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void applyButton_Click(object sender, EventArgs e)
+        ///
+        /// Met la musique de l'user en mémoire
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du click
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void applyButton_Click(object sender, EventArgs e)
         {
             applyButton.Visible = false;
@@ -78,6 +123,14 @@ namespace ui
             loadSong(customMusicPath_);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void loadSong(string path)
+        ///
+        /// Crée un thread pour charger le musique de l'user dans l'engin de son
+        /// 
+        /// @param string path: chemin vers la musique
+        ////////////////////////////////////////////////////////////////////////
         private void loadSong(string path)
         {
             parent_.personnalisationSideMenu.controlsEnabled(false);
@@ -116,6 +169,15 @@ namespace ui
             parent_.personnalisationSideMenu.controlsEnabled(true);
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void controlsEnabled(bool permission)
+        ///
+        /// Active ou desactive les controle pour changer la musique
+        /// 
+        /// @param bool permission: true pour activer, false pour desactiver
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void controlsEnabled(bool permission)
         {
             defaultButton.Enabled = permission;
@@ -123,6 +185,13 @@ namespace ui
             importButton.Enabled = permission;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn public void resetLoading()
+        ///
+        /// Remet le widget pour charger a son état initial
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void resetLoading()
         {
             dot1.ForeColor = System.Drawing.Color.Silver;
@@ -132,6 +201,16 @@ namespace ui
             ticks_ = 0;
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void LoadingTimer_Tick(object sender, EventArgs e)
+        ///
+        /// Change la couleur d'une lettre à chaque fois que le timer "tick"
+        /// 
+        /// @param objet sender: control qui gère l'action
+        /// @param EventsArgs e: evenement du tick
+        ///
+        ////////////////////////////////////////////////////////////////////////
         private void LoadingTimer_Tick(object sender, EventArgs e)
         {
             switch(++ticks_)
@@ -158,15 +237,38 @@ namespace ui
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// public class Worker
+        ///
+        /// Cette classe a pour but de changer la musique dans l'engin de son
+        /// 
+        ////////////////////////////////////////////////////////////////////////
         public class Worker
         {
             string path_;
 
+            ////////////////////////////////////////////////////////////////////////
+            ///
+            /// @fn public Worker(string path)
+            ///
+            /// Cette fonction initialize assigne les attributs.
+            ///
+            /// @param string path: Chemin vers la musique 
+            /// 
+            ////////////////////////////////////////////////////////////////////////
             public Worker(string path)
             {
                 path_ = path;
             }
-            // This method will be called when the thread is started.
+
+            ////////////////////////////////////////////////////////////////////////
+            ///
+            /// @fn public DoWork()
+            ///
+            /// Change la musique dans l'engin de son
+            /// 
+            ////////////////////////////////////////////////////////////////////////
             public void DoWork()
             {
                 FonctionsNatives.setMusic(path_);

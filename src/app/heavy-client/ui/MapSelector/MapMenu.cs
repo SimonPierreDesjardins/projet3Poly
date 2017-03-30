@@ -724,5 +724,11 @@ namespace ui
     {
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void uploadMap(string chemin);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool getEditionTutorialState();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool getSimulationTutorialState();
     }
 }
