@@ -110,6 +110,7 @@ namespace ui
             InitialiserAnimation();
             configuration = new Configure(this);
             //Load data from last launch
+            FonctionsNatives.LoadApplicationSettings();
 
             mInstance = new CallbackForNewMap(addNewMap);
             SetCallbackForNewMap(mInstance);
@@ -180,6 +181,7 @@ namespace ui
         private void Window_FormClosing(object sender, FormClosingEventArgs e)
         {
             //Save data for next launch
+            FonctionsNatives.SaveApplicationSettings();
 
             allowCommunication_ = false;
             lock (Program.unLock)
@@ -813,5 +815,10 @@ namespace ui
         [DllImport(@"model.dll", CallingConvention = System.Runtime.InteropServices.CallingConvention.Cdecl)]
         public static extern void obtenirCheminFichierZoneDefaut(StringBuilder str, int longueur);
 
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void LoadApplicationSettings();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void SaveApplicationSettings();
     }
 }

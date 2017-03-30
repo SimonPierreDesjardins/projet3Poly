@@ -4,7 +4,7 @@
 /// @date   2016-03-06
 ///
 ////////////////////////////////////////////////
-#if !__LINE__
+#if !__EDITION_TUTORIAL__
 
 /// Permet de partager cet enum entre le C# et le C++
 namespace EditionTutorial
@@ -39,7 +39,7 @@ namespace EditionTutorial
         CONCLUSION
     };
 
-    #if !__LINE__
+#if !__EDITION_TUTORIAL__
 }
 #endif
 ////////////////////////////////////////////////

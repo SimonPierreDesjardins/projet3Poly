@@ -28,15 +28,18 @@ class ApplicationSettings
 
 		~ApplicationSettings();
 
-		void charger();
-		void sauvegarder();
+		void load();
+		void save();
+
+		bool openSaves(std::string modeOuverture);
+		bool open(std::string nomFichier, std::string modeOuverture, FILE*& fichier);
 
 	private:
 		/// Destripteur du fichier profil à sauvegarder ou charger
 		FILE* saves_;
 
 		/// Chemin vers le fichier de sauvegarde
-		const std::string CHEMIN_PROFIL = "./Donnees/ApplicationSaves.save";
+		const std::string pathToSaves_ = "./Donnees/ApplicationSaves.save";
 };
 
 #endif // __APPLICATION_SETTINGS_H__

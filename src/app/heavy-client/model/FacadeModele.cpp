@@ -122,6 +122,7 @@ void FacadeModele::initialize(HWND hWnd)
 	assignerMode(MENU_PRINCIPAL);
 
 	profil_ = std::make_unique<ProfilUtilisateur>();
+	saves_ = std::make_unique<ApplicationSettings>();
 
 	controleurLumiere_ = std::make_unique<ControleurLumiere>();
 	// Lumière ambiante "globale"

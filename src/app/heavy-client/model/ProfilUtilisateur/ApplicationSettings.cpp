@@ -50,7 +50,7 @@ ApplicationSettings::~ApplicationSettings(){}
 /// @param[in] nomProfil : le nom du profil à sauvegarder
 ///
 ////////////////////////////////////////////////////////////////////////
-void ApplicationSettings::charger() {
+void ApplicationSettings::load() {
 
 }
 
@@ -63,7 +63,14 @@ void ApplicationSettings::charger() {
 /// @param[in] nomProfil : le nom du profil à sauvegarder
 ///
 ////////////////////////////////////////////////////////////////////////
-void ApplicationSettings::sauvegarder() {
+void ApplicationSettings::save() {	
+	bool success = openSaves("wb");
+	if (!success)
+	{
+		std::ofstream o(pathToSaves_);
+		openSaves("wb");
+	}
+
 	char writeBuffer[65536];
 	rapidjson::FileWriteStream os(saves_, writeBuffer, sizeof(writeBuffer));
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
@@ -82,12 +89,27 @@ void ApplicationSettings::sauvegarder() {
 		writer.String("robot");
 	writer.EndObject();
 
-	fclose(profil_);
+	fclose(saves_);
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn bool ApplicationSettings::ouvrir(std::string nomFichier, std::string modeOuverture, FILE*& fichier)
+/// @fn bool ProfilUtilisateur::ouvrirProfil(std::string modeOuverture)
+///
+///	Fonction permettant d'ouvrir le fichier du profil courant soit en lecture, soit en écriture
+///
+/// @param[in] modeOuverture : mode lecture ou écriture
+///
+/// @return Bool Représente si l'ouverture à réussi ou non
+///
+////////////////////////////////////////////////////////////////////////
+bool ApplicationSettings::openSaves(std::string modeOuverture) {
+	return open(pathToSaves_, modeOuverture, saves_);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::ouvrir(std::string nomFichier, std::string modeOuverture, FILE*& fichier)
 ///
 ///	Fonction permettant d'ouvrir un fichier soit en lecture, soit en écriture
 ///
@@ -98,11 +120,12 @@ void ApplicationSettings::sauvegarder() {
 /// @return Bool Représente si l'ouverture à réussi ou non
 ///
 ////////////////////////////////////////////////////////////////////////
-bool ApplicationSettings::ouvrir(std::string nomFichier, std::string modeOuverture, FILE*& fichier) {
+bool ApplicationSettings::open(std::string nomFichier, std::string modeOuverture, FILE*& fichier) {
 	errno_t err;
 	err = fopen_s(&fichier, (nomFichier).c_str(), modeOuverture.c_str());
 	return err == 0;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

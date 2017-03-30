@@ -15,7 +15,6 @@
 #include <unordered_map>
 #include "CommandeRobot.h"
 #include "ComportementAbstrait.h"
-#include "ConfigureControlEnum.cs"
 #include "rapidjson\filereadstream.h"
 #include <deque>
 #include <Windows.h>
@@ -24,6 +23,7 @@
 #include "NoeudRobot.h"
 #include <array>
 #include "VehiculePiece.cs"
+#include "ConfigureControlEnum.cs"
 
 /// Représente chaque option de débogage et permet des obtenirs plus intuitivement
 enum optionsDebogagesEnum

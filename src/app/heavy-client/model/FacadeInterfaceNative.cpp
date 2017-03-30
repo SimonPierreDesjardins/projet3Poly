@@ -1213,6 +1213,16 @@ extern "C"
 		const unsigned char* bytes = (const unsigned char*)name.data();
 		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);
 	}
+
+	__declspec(dllexport) void __cdecl LoadApplicationSettings()
+	{
+		FacadeModele::obtenirInstance()->getApplicationSettings()->load();
+	}
+
+	__declspec(dllexport) void __cdecl SaveApplicationSettings()
+	{
+		FacadeModele::obtenirInstance()->getApplicationSettings()->save();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////
