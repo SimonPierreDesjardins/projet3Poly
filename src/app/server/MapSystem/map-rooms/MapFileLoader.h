@@ -16,6 +16,9 @@ public:
 	MapFileLoader(EntityTree* tree, MapFileEntry* mapFile);
 	~MapFileLoader();
 
+	// tells the loader the ap as unsaved changes and will therefore save the map next time the thread wakes up
+	void SetMapDirty();
+
 private:
 	void PopulateTreeFromJSON(const std::string& json);
 	void CreateEntities(rapidjson::Value::ConstValueIterator jsonNode, Entity* parent);
@@ -33,6 +36,9 @@ private:
 	// have thread that does saving
 	std::thread _mapSavingThread;
 	MapFileEntry* _mapFile;
+
+	bool _runSaveThread = false;
+	bool _mapDirty = false;
 	
 	// The tree that is tracked for saving purposes
 	EntityTree* _entityTree;

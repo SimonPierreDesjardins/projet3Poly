@@ -25,6 +25,11 @@ server::MapFileLoader::~MapFileLoader()
 	StopSaveThread();
 }
 
+void server::MapFileLoader::SetMapDirty()
+{
+	_mapDirty = true;
+}
+
 void server::MapFileLoader::PopulateTreeFromJSON(const std::string& json)
 {
 	rapidjson::StringStream stream(json.data());
@@ -116,7 +121,6 @@ void server::MapFileLoader::LoadTeleporters(const rapidjson::Value& jsonNode, En
 
 char server::MapFileLoader::GetEntityType(const std::string & itemType)
 {
-	//TODO: Implement this
 	if (itemType == "poteau") {
 		return Networking::MessageStandard::ItemTypes::POST_ENTITY;
 	}
@@ -170,12 +174,24 @@ std::string server::MapFileLoader::GetEntityType(char itemType)
 
 void server::MapFileLoader::StartSaveThread()
 {
-	// TODO: implement this
+	_mapSavingThread = std::thread([this]() {
+		while (_runSaveThread) {
+			// I feel horrible, there must be a better way
+			std::this_thread::sleep_for(std::chrono::seconds(2));
+			// heck again after sleep
+			if (_mapDirty && _runSaveThread) {
+				SaveTree();
+			}
+		}
+	});
+	_runSaveThread = true;
 }
 
 void server::MapFileLoader::StopSaveThread()
 {
-	// TODO: impleent this
+	_runSaveThread = false;
+	while(!_mapSavingThread.joinable()){}
+	_mapSavingThread.join();
 }
 
 void server::MapFileLoader::SaveTree() {
@@ -184,7 +200,7 @@ void server::MapFileLoader::SaveTree() {
 	std::function<void(Entity*)> saveLambda;
 	saveLambda = [saveLambda, writer](Entity* entity) -> void{
 		writer->StartObject();
-
+		//TODO: expect teleporters 
 		// get type
 		writer -> Key("type");
 		writer -> String(GetEntityType(entity->entityType_).c_str());
@@ -220,4 +236,6 @@ void server::MapFileLoader::SaveTree() {
 	writer->StartObject();
 	saveLambda(&(_entityTree->begin()->second));
 	writer->EndObject();
+
+	_mapFile->MapData = buffer.GetString();
 }
