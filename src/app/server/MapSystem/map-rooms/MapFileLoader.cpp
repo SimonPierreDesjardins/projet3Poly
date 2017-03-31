@@ -1,6 +1,6 @@
 #include "MapFileLoader.h"
-#include "rapidjson\filereadstream.h"
 #include "rapidjson\stringbuffer.h"
+#include "rapidjson\writer.h"
 
 server::MapFileLoader::MapFileLoader(EntityTree* tree, MapFileEntry * mapFile)
 {
@@ -141,6 +141,33 @@ char server::MapFileLoader::GetEntityType(const std::string & itemType)
 	return -1;
 }
 
+std::string server::MapFileLoader::GetEntityType(char itemType)
+{
+	//TODO: Implement this
+	if (itemType == Networking::MessageStandard::ItemTypes::POST_ENTITY) {
+		return "poteau";
+	}
+	if (itemType == Networking::MessageStandard::ItemTypes::START_ENTITY) {
+		return "depart";
+	}
+	if (itemType == Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY) {
+		return "ligneNoire";
+	}
+	if (itemType == Networking::MessageStandard::ItemTypes::SEGMENT_ENTITY) {
+		return "segment";
+	}
+	if (itemType == Networking::MessageStandard::ItemTypes::JUNCTION_ENTITY) {
+		return "jonction";
+	}
+	if (itemType == Networking::MessageStandard::ItemTypes::WALL_ENTITY) {
+		return "mur";
+	}
+	if (itemType == Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
+		return "teleporteur";
+	}
+	return "";
+}
+
 void server::MapFileLoader::StartSaveThread()
 {
 	// TODO: implement this
@@ -151,3 +178,46 @@ void server::MapFileLoader::StopSaveThread()
 	// TODO: impleent this
 }
 
+void server::MapFileLoader::SaveTree() {
+	rapidjson::StringBuffer buffer;
+	auto writer = new rapidjson::Writer<rapidjson::StringBuffer>(buffer);
+	std::function<void(Entity*)> saveLambda;
+	saveLambda = [saveLambda, writer](Entity* entity) -> void{
+		writer->StartObject();
+
+		// get type
+		writer -> Key("type");
+		writer -> String(GetEntityType(entity->entityType_).c_str());
+		//get positons
+		auto pos = entity->getProperty(Networking::RELATIVE_POSITION);
+		writer->Key("posX");
+		writer->Double(pos->x());
+		writer->Key("posY");
+		writer->Double(pos->y());
+		writer->Key("posZ");
+		writer->Double(pos->z());
+		// get rotation
+		auto rot = entity->getProperty(Networking::ROTATION);
+		writer->Key("angleRotation");
+		writer->Double(rot -> z());
+		// get scale
+		auto scale = entity->getProperty(Networking::ROTATION);
+		writer->Key("facteurEchelle");
+		writer->Double(scale -> x());
+		//get children
+		if (entity->getChildCount() > 0) {
+			writer->Key("noeudsEnfants");
+			writer->StartArray();
+			for each (auto child in *entity)
+			{
+				saveLambda(child.second);
+			}
+			writer->EndArray();
+		}
+
+		writer->EndObject();
+	};
+	writer->StartObject();
+	saveLambda(&(_entityTree->begin()->second));
+	writer->EndObject();
+}

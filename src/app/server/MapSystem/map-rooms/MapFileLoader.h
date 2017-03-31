@@ -23,9 +23,12 @@ private:
 	void LoadTeleporters(const rapidjson::Value& jsonNode, Entity* parent);
 
 	static char GetEntityType(const std::string& itemType);
+	static std::string GetEntityType(char itemType);
 
 	void StartSaveThread();
 	void StopSaveThread();
+
+	void SaveTree();
 
 	// have thread that does saving
 	std::thread _mapSavingThread;
