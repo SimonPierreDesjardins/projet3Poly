@@ -30,6 +30,7 @@ class NoeudSkybox;
 class NoeudTeleporteur;
 class NoeudPiece;
 class NoeudLigneCourseAbstrait;
+class NoeudCheckpoint;
 
 namespace modele{
 	class Modele3D;

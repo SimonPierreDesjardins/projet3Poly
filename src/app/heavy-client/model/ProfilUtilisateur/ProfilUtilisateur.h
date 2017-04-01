@@ -119,6 +119,10 @@ class ProfilUtilisateur
 		std::string obtenirCheminVersMusiqueSimulation();
 		void assignerCheminVersMusiqueSimulation(std::string chemin);
 
+		bool obtenirCourseTerminee();
+
+		void assignerCourseTerminee(bool terminee);
+
 
 	private:
 		bool creationDossierDonnees();
@@ -212,6 +216,8 @@ class ProfilUtilisateur
 
 		int piecesCollectees = 0;
 		int plusGrandNombrePieces = 0;
+
+		bool courseTerminee = false;
 		
 };
 

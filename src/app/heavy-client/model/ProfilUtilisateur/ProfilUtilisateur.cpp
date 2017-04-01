@@ -839,6 +839,34 @@ int ProfilUtilisateur::obtenirMaxPieces()
 	return plusGrandNombrePieces;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::obtenirCourseTerminee()
+///
+///	Fonction qui retourne l'attribut courseTerminee
+///
+/// @return si la course est fini
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::obtenirCourseTerminee()
+{
+	return courseTerminee;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerCourseTerminee(bool terminee)
+///
+///	Fonction qui permet de changer la valeur de courseTerminee
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::assignerCourseTerminee(bool terminee)
+{
+	courseTerminee = terminee;
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///

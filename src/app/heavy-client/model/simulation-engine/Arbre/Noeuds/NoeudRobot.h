@@ -98,6 +98,10 @@ public:
 
 	std::stack <NoeudAbstrait*> tableauCoins;
 
+	virtual RectangleEnglobant* obtenirFormeEnglobante();
+	virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
+
+
 
 protected:
 	//Vitesse des moteurs du robot

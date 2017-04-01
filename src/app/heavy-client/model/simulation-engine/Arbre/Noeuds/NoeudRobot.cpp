@@ -952,6 +952,34 @@ std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
 	return tableauCoins;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le robot.
+///
+/// @return Pointeur sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
+RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante()
+{
+	return &rectangleEnglobant_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn const RectangleEnglobant* NoeudPiece::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le robot.
+///
+/// @return Pointeur const  sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
+const RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante() const
+{
+	return &rectangleEnglobant_;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
