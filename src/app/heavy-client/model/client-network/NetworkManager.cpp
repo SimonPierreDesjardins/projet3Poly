@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "NetworkStandard.h"
+
 #include "NetworkManager.h"
 
 namespace client_network
@@ -20,7 +22,8 @@ void NetworkManager::authenticate(const std::string& username)
 {
 	std::string message;
 	serializer_.serialize(uint32_t(username.size() + 6), message);
-	message.append("ul" + username);
+	message.append("ul");
+	message.append(username);
 	connection_.sendMessage(message);
 }
 
@@ -36,12 +39,13 @@ void NetworkManager::createProfile(const std::string& username)
 void NetworkManager::requestMapCreation(const std::string& mapName, uint8_t mapType)
 {
 	std::string message;
-	serializer_.serialize((uint32_t)(mapName.size() + 7), message);
+	serializer_.serialize((uint32_t)(0), message);
 	message.append("mc");
 	serializer_.serialize(mapType, message);
 	// TODO: pass privacy and password, currently public by default
-	message.append(0x00);
+	message.append(1, '\0');
 	message.append(mapName);
+	Networking::MessageStandard::UpdateLengthHeader(message);
 	connection_.sendMessage(message);
 }
 

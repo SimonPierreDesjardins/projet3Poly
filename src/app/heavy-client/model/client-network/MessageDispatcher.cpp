@@ -239,7 +239,7 @@ void MessageDispatcher::handleUserAuthentificationConfirmation(const std::string
 		break;
 
 	default:
-		std::cout << "user authentification failed." << std::endl;
+		std::cout << "User authentification failed." << std::endl;
 	}
 }
 

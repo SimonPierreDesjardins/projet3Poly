@@ -15,17 +15,24 @@
 #include <thread>
 #include <vector>
 #include <mutex>
-#include "glm\glm.hpp"
-#include "ModeAbstrait.h"
-#include "ControleRobot.h"
 #include <unordered_map>
 #include <array>
-#include "FacadeModele.h"
+
+#include "glm\glm.hpp"
+
+#include "VisiteurDetectionRobot.h"
+#include "ModeAbstrait.h"
+#include "ControleRobot.h"
 #include "Minuterie.h"
 
 class ProfilUtilisateur;
 class AffichageTexte;
 class ControleurLumiere;
+class ArbreRenduINF2990;
+
+namespace engine {
+	class SimulationEngine;
+}
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModePieces
@@ -38,40 +45,9 @@ class ControleurLumiere;
 ///////////////////////////////////////////////////////////////////////////
 class ModePieces : public ModeAbstrait
 {
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_{ nullptr };
-	static std::array<char, 11> touchesNonConfigurable_;
-    std::array<bool, 5> actionsAppuyees_;
-
-	bool lumiereAmbiante { true };
-	bool lumiereDirectionnelle { true };
-	bool lumiereSpot { true };
-
-	std::shared_ptr<NoeudAbstrait> noeudCoinCourant;
-
-	ArbreRenduINF2990* arbre_{nullptr};
-	NoeudAbstrait* table_{ nullptr };
-    AffichageTexte* affichageTexte_{ nullptr };
-	glm::dvec3 positionNoeudCourant;
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
-	bool modeEnPause{ false };
-	VisiteurDetectionRobot visiteur_;
-
-	Minuterie minuterie_;
-
-	std::thread th;
-
-	bool objectsReadyToSpawn{ false };
-
-	std::vector <std::shared_ptr <NoeudAbstrait>> objectsToSpawn;
-
-	std::mutex spawnLock;
-
 public:
 	//Constructeur par défaut
-	ModePieces();
+	ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profile);
 	//Destructeur
 	virtual ~ModePieces();
 	//Gestion des entrées utilisateur
@@ -96,9 +72,41 @@ public:
 	void startThread();
 
 	void spawnObjects();
+
+private:
+	std::unique_ptr<ControleRobot> controleRobot_;
+	ProfilUtilisateur* profil_{ nullptr };
+	static std::array<char, 11> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
+
+	bool lumiereAmbiante { true };
+	bool lumiereDirectionnelle { true };
+	bool lumiereSpot { true };
+
+	std::shared_ptr<NoeudAbstrait> noeudCoinCourant;
+
+	ArbreRenduINF2990* arbre_{nullptr};
+	NoeudAbstrait* table_{ nullptr };
+	ControleurLumiere* controleurLumiere_{ nullptr };
+
+    AffichageTexte* affichageTexte_{ nullptr };
+	glm::dvec3 positionNoeudCourant;
+
+	bool modeEnPause{ false };
+	VisiteurDetectionRobot visiteur_;
+
+	Minuterie minuterie_;
+
+	std::thread th;
+
+	bool objectsReadyToSpawn{ false };
+
+	std::vector<std::shared_ptr<NoeudAbstrait>> objectsToSpawn;
+
+	std::mutex spawnLock;
 };
 
-std::array<char, 11>* ModePieces::getTouchesNonConfigurable()
+inline std::array<char, 11>* ModePieces::getTouchesNonConfigurable()
 {
 	return &touchesNonConfigurable_;
 }

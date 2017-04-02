@@ -21,7 +21,6 @@
 #include "ControleurLumiere.h"
 #include <stack>
 
-class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
 /// @brief Classe qui représente le robot du premier projet intégrateur.
@@ -123,7 +122,6 @@ protected:
 	bool optionDebug{ true };
 
 	// Les attributs du robot.
-	ProfilUtilisateur* profil_{ nullptr };
     RectangleEnglobant rectangleEnglobant_;
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };

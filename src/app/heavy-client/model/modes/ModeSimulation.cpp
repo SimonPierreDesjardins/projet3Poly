@@ -11,7 +11,6 @@
 
 #include <math.h>
 
-#include "ModeSimulation.h"
 #include "Utilitaire.h"
 #include "Vue.h"
 #include "Projection.h"
@@ -29,6 +28,11 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.hpp"
 
+#include "ProfilUtilisateur.h"
+#include "SimulationEngine.h"
+
+#include "ModeSimulation.h"
+
 std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
   
 ////////////////////////////////////////////////////////////////////////
@@ -38,31 +42,27 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 /// Constructeur par d�faut pour le mode simulation
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeSimulation::ModeSimulation(ArbreRendu* tree, ProfilUtilisateur* profil, 
-	ControleurLumiere* lighting, 
-	client_network::MapSession* mapSession)
-	: OnlineMapMode(mapSession), profil_(profil),
-	  controleurLumiere_(lighting),
-	  controleRobot_(tree, profil, lighting, mapSession)
+ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
+	  : controleRobot_(engine, profil), OnlineMapMode(session)
 {
 
 	typeMode_ = SIMULATION;
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	profil_ = profil;
+	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	controleRobot_.passerAModeManuel();
+	//visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
+	//arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	// On fait d�marrer le robot en mode manuel
-	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
 
-    affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
+	affichageTexte_ = engine->getTextDisplay();
     affichageTexte_->assignerProfilEstAffiche(true);
     affichageTexte_->assignerTempsEstAffiche(true);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(0);
+	engine->setEnvironnement(0);
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
@@ -191,9 +191,8 @@ void ModeSimulation::preChangementDeProfil(){
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::postChangementDeProfil(){
-	// On met � jour le profil
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+void ModeSimulation::postChangementDeProfil()
+{
 	// Le robot charge la r�f�rence aux nouveaux comportements
 	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	//Repartir le thread en mode automatique, comportement defaut
@@ -211,9 +210,6 @@ void ModeSimulation::postChangementDeProfil(){
 ////////////////////////////////////////////////////////////////////////
 void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if (!FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier())
-		return;
-
 	if (msg == WM_KEYDOWN )
 	{
 		switch (wParam)
@@ -330,27 +326,24 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			}
 		}
 	}
-	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris())
+	switch (msg)
 	{
-		switch (msg)
-		{
-		case WM_RBUTTONDBLCLK:
-		case WM_RBUTTONDOWN:
-			gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+	case WM_RBUTTONDBLCLK:
+	case WM_RBUTTONDOWN:
+		gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
 
-		case WM_RBUTTONUP:
-			gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+	case WM_RBUTTONUP:
+		gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
 
-		case WM_MOUSEMOVE:
-			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+	case WM_MOUSEMOVE:
+		gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
 
-		case WM_MOUSEWHEEL:
-			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
-			break;
-		}
+	case WM_MOUSEWHEEL:
+		gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+		break;
 	}
 }
 
@@ -365,8 +358,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ////////////////////////////////////////////////////////////////////////
 void ModeSimulation::postAnimer()
 {
-	arbre_->accepterVisiteur(&visiteur_);
-
+	//arbre_->accepterVisiteur(&visiteur_);
 }
 ////////////////////////////////////////////////////////////////////////
 ///

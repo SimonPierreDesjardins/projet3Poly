@@ -71,12 +71,13 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 
 	NoeudAbstrait* depart_ = table_->chercher(ArbreRenduINF2990::NOM_DEPART);
 
-    profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	/*
 	couleur_ = profil_->obtenirCouleurs(BODY);
 	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(BODY);
     suiveurLigne_ = profil_->obtenirSuiveurLigne();
     capteursDistance_ = profil_->obtenirCapteursDistance();
 	profil_->setModele("robot");
+	*/
 
     // À modifier avec le merge du profile.
     visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
@@ -184,6 +185,7 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
+	/*
 	if (mode_ != PERSONALIZE && mode_ != PIECES)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
@@ -195,6 +197,7 @@ void NoeudRobot::afficherConcret() const
 			}
 		}
 	}
+	*/
 	      
 	// Restauration de la matrice.
 	glPopMatrix();
@@ -567,7 +570,7 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 		EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
 		// On calcule les composantes de la collision.
 		table_->effacer(piece);
-		profil_->setPiece(profil_->obtenirPieces() + 1);
+		//profil_->setPiece(profil_->obtenirPieces() + 1);
 	}
 	// Le poteau n'est pas en intersection et il se trouvait en collision.
 	else // if (!enIntersection)

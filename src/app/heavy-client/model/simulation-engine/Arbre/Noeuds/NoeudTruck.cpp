@@ -53,7 +53,6 @@ NoeudTruck::NoeudTruck(uint32_t id, const std::string& typeNoeud)
 	: NoeudRobot{ id, typeNoeud }
 {
 	type_ = TRUCK_ENTITY;
-	profil_->setModele("truck");
 	positionDepart();
 
 	std::shared_ptr<NoeudAbstrait> roueGauche2 = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -145,6 +144,7 @@ void NoeudTruck::afficherConcret() const
 	// Appel � la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
+	/*
 	if (mode_ != PERSONALIZE && mode_ != PIECES)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
@@ -156,6 +156,7 @@ void NoeudTruck::afficherConcret() const
 			}
 		}
 	}
+	*/
 
 	// Restauration de la matrice.
 	glPopMatrix();

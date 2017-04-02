@@ -53,7 +53,7 @@ NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud)
     : NoeudRobot { id, typeNoeud }
 {
 	type_ = F1_ENTITY;
-	profil_->setModele("f1");
+	//profil_->setModele("f1");
 	positionDepart();
 
 	std::shared_ptr<NoeudAbstrait> roueGauche2 = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -147,6 +147,7 @@ void NoeudF1::afficherConcret() const
 	// Appel � la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
+	/*
 	if (mode_ != PERSONALIZE && mode_ != PIECES)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
@@ -158,6 +159,7 @@ void NoeudF1::afficherConcret() const
 			}
 		}
 	}
+	*/
 
 	// Restauration de la matrice.
 	glPopMatrix();

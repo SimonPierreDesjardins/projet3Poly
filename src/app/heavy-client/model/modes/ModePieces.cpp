@@ -11,23 +11,25 @@
 #include <iostream>
 #include <math.h>
 
-#include "ModePieces.h"
-#include "Utilitaire.h"
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
+
 #include "Vue.h"
 #include "Projection.h"
 
+#include "ModePieces.h"
+#include "Utilitaire.h"
 
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
 
+#include "ArbreRenduINF2990.h"
+#include "ProfilUtilisateur.h"
+#include "SimulationEngine.h"
+
 #include "EnginSon.h"
-
-#include "glm/glm.hpp"
-#include "glm/gtc/type_ptr.hpp"
-
-
 
 std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
   
@@ -38,22 +40,22 @@ std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '
 /// Constructeur par défaut pour le mode pieces
 ///
 ////////////////////////////////////////////////////////////////////////
-ModePieces::ModePieces()
+ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profile)
 {
 	typeMode_ = PIECES;
 	controleRobot_ = std::make_unique<ControleRobot>();
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	profil_ = profile;
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode manuel
 	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	arbre_ = engine->getEntityTree();
 	table_ = arbre_->chercher(0);
 	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
 	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
 	startThread();
 
-    affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
+	affichageTexte_ = engine->getTextDisplay();
     affichageTexte_->assignerProfilEstAffiche(true);
     affichageTexte_->assignerTempsEstAffiche(true);
 	affichageTexte_->assignerPiecesEstAfficher(true);
@@ -62,9 +64,8 @@ ModePieces::ModePieces()
 
 	minuterie_.reinitialiserChrono();
 
-	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
-
-	FacadeModele::obtenirInstance()->assignerEnvironnement(0);
+	controleurLumiere_ = engine->getLightController();
+	engine->setEnvironnement(0);
 
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
@@ -93,8 +94,6 @@ ModePieces::~ModePieces()
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
-	FacadeModele::obtenirInstance()->assignerAutorisationInputClavier(true);
-	FacadeModele::obtenirInstance()->assignerAutorisationInputSouris(true);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -197,8 +196,6 @@ void ModePieces::preChangementDeProfil(){
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModePieces::postChangementDeProfil(){
-	// On met à jour le profil
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	// Le robot charge la référence aux nouveaux comportements
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	//Repartir le thread en mode automatique, comportement defaut
@@ -216,9 +213,6 @@ void ModePieces::postChangementDeProfil(){
 ////////////////////////////////////////////////////////////////////////
 void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	if (!FacadeModele::obtenirInstance()->obtenirAutorisationInputClavier())
-		return;
-
 	if (msg == WM_KEYDOWN )
 	{
 		switch (wParam)
@@ -265,7 +259,6 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		case '\b':
 			controleRobot_ = nullptr;
 			controleRobot_ = std::make_unique<ControleRobot>();
-			profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 			controleRobot_->passerAModeManuel();
 			controleurLumiere_->assignerLumiereSpotGyro(true);
@@ -338,27 +331,25 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			}
 		}
 	}
-	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris())
+
+	switch (msg)
 	{
-		switch (msg)
-		{
-		case WM_RBUTTONDBLCLK:
-		case WM_RBUTTONDOWN:
-			gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+	case WM_RBUTTONDBLCLK:
+	case WM_RBUTTONDOWN:
+		gererClicDroitEnfonce(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
 
-		case WM_RBUTTONUP:
-			gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+	case WM_RBUTTONUP:
+		gererClicDroitRelache(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
 
-		case WM_MOUSEMOVE:
-			gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-			break;
+	case WM_MOUSEMOVE:
+		gererMouvementSouris(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+		break;
 
-		case WM_MOUSEWHEEL:
-			gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
-			break;
-		}
+	case WM_MOUSEWHEEL:
+		gererMoletteSouris(GET_WHEEL_DELTA_WPARAM(wParam));
+		break;
 	}
 }
 
@@ -453,11 +444,11 @@ void ModePieces::creerPieces()
 	srand(time(NULL));
 	for (int i = 0; i < 10; i++)
 	{
-		
 		noeudCoinCourant = arbre_->creerNoeud(COIN_ENTITY);
 		positionNoeudCourant = genererPositionCoin();
-		noeudCoinCourant->assignerPositionRelative(positionNoeudCourant);
-		noeudCoinCourant->assignerPositionCourante(positionNoeudCourant);
+		PhysicsComponent& physics = noeudCoinCourant->getPhysicsComponent();
+		physics.absolutePosition = positionNoeudCourant;
+		physics.relativePosition = positionNoeudCourant;
 		noeudCoinCourant->mettreAJourFormeEnglobante();
 		objectsToSpawn.push_back(noeudCoinCourant);
 	}

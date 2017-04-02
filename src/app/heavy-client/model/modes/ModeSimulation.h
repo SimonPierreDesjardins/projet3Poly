@@ -15,7 +15,6 @@
 #include "glm\glm.hpp"
 #include "OnlineMapMode.h"
 #include "ControleRobot.h"
-#include "FacadeModele.h"
 #include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
@@ -23,6 +22,10 @@
 class ProfilUtilisateur;
 class AffichageTexte;
 class ControleurLumiere;
+
+namespace engine {
+	class SimulationEngine;
+}
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeSimulation
@@ -36,9 +39,8 @@ class ControleurLumiere;
 class ModeSimulation : public OnlineMapMode
 {
 public:
-	ModeSimulation(ArbreRendu* arbre, ProfilUtilisateur* profil,
-		           ControleurLumiere* lighting, 
-		           client_network::MapSession* mapSession);
+	ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session);
+
 	//Destructeur
 	virtual ~ModeSimulation();
 	//Gestion des entr�es utilisateur
@@ -61,12 +63,12 @@ private:
 	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
 
+	bool modeEnPause = false;
 	bool lumiereAmbiante { true };
 	bool lumiereDirectionnelle { true };
 	bool lumiereSpot { true };
 
     AffichageTexte* affichageTexte_{ nullptr };
-
 	ControleurLumiere* controleurLumiere_{ nullptr };
 	
 	//Constructeur par d�faut

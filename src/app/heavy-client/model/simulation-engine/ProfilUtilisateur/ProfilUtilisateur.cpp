@@ -22,7 +22,6 @@
 #include <string>
 #include <CommCtrl.h>
 #include <windowsx.h>
-//#include <atlstr.h>
 #include <fstream>
 #include <sstream>
 #include "NoeudRobot.h"

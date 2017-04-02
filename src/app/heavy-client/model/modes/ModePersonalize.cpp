@@ -38,8 +38,6 @@ ModePersonalize::ModePersonalize()
 	std::shared_ptr<NoeudAbstrait> robot = tree_->creerNoeud(profil_->getModele());
 	table->ajouter(robot);
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(2);
-
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);

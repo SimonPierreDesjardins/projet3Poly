@@ -31,10 +31,10 @@ ModeTest::ModeTest(client_network::MapSession* mapSession)
 	: OnlineMapMode(mapSession)
 {
 	typeMode_ = TEST;
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	//profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	//controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	//visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
+	//arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	// On fait d�marrer le robot en mode automatique
 	//controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
@@ -45,7 +45,7 @@ ModeTest::ModeTest(client_network::MapSession* mapSession)
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(1);
+	//FacadeModele::obtenirInstance()->assignerEnvironnement(1);
 
 	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
@@ -354,8 +354,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ////////////////////////////////////////////////////////////////////////
 void ModeTest::postAnimer()
 {
-	arbre_->accepterVisiteur(&visiteur_);
-
+	//arbre_->accepterVisiteur(&visiteur_);
 }
 
 ////////////////////////////////////////////////////////////////////////

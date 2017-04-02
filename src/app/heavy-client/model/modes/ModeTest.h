@@ -39,26 +39,6 @@ class ControleurLumiere;
 
 class ModeTest : public OnlineMapMode
 {
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-
-	ProfilUtilisateur* profil_{ nullptr };
-    AffichageTexte* affichageTexte_{ nullptr };
-
-	static std::array<char, 11> touchesNonConfigurable_;
-    std::array<bool, 5> actionsAppuyees_;
-
-	bool lumiereAmbiante{ true };
-	bool lumiereDirectionnelle{ true };
-	bool lumiereSpot{ true };
-
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
-	ArbreRenduINF2990* arbre_{ nullptr };
-	VisiteurDetectionRobot visiteur_;
-
-	bool modeEnPause{ false };
-
 public:
 	ModeTest(client_network::MapSession* mapSession);
 
@@ -87,6 +67,7 @@ private:
 
 	ProfilUtilisateur* profil_{ nullptr };
     AffichageTexte* affichageTexte_{ nullptr };
+	VisiteurDetectionRobot visiteur_;
 
 	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
@@ -94,6 +75,7 @@ private:
 	bool lumiereAmbiante{ true };
 	bool lumiereDirectionnelle{ true };
 	bool lumiereSpot{ true };
+	bool modeEnPause{ false };
 
 	ControleurLumiere* controleurLumiere_{ nullptr };
 

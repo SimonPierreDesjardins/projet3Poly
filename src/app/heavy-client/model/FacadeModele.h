@@ -18,13 +18,9 @@
 #include "OpenGL_Programme.h"
 #include "OpenGL_Nuanceur.h"
 
-#include "ArbreRenduINF2990.h"
 #include "EtatAbstrait.h"
 #include "ModeAbstrait.h"
 #include "ProfilUtilisateur.h"
-#include "BoiteEnvironnement.h"
-#include "AffichageTexte.h"
-#include "ControleurLumiere.h"
 
 #include "MapSessionManager.h"
 #include "NetworkManager.h"
@@ -34,6 +30,9 @@
 
 class NoeudAbstrait;
 class OnlineMapMode;
+class ArbreRenduINF2990;
+class AffichageTexte;
+class ControleurLumiere;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class FacadeModele
@@ -60,17 +59,12 @@ public:
 	/// Crée un contexte OpenGL et initialise celui-ci.
 	void initialiserOpenGL(HWND hWnd);
 
-	/// Charge la configuration à partir d'un fichier XML.
-	void chargerConfiguration() const;
-	/// Enregistre la configuration courante dans un fichier XML.
-	void enregistrerConfiguration() const;
-	/// Libère le contexte OpenGL.
 	void libererOpenGL();
 
+	void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
 	/// Affiche le contenu du modèle.
-	void afficher() const;
-	/// Affiche la base du contenu du modèle.
-	void afficherBase() const;
+	void afficher();
 
 	/// Modifie le Mode courant.
 	void assignerMode(Mode mode);
@@ -103,11 +97,11 @@ public:
 	/// Retourne l'arbre de rendu.
 	inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
 	/// Retourne le profil de l'utilisateur.
-	inline ProfilUtilisateur* obtenirProfilUtilisateur() const;
+	inline ProfilUtilisateur* obtenirProfilUtilisateur();
 	// Retourne l'affichage du texte.
-	inline AffichageTexte* obtenirAffichageTexte() const;
+	inline AffichageTexte* obtenirAffichageTexte();
 	// Retourne le controleur de lumière.
-	inline ControleurLumiere* obtenirControleurLumiere() const;
+	inline ControleurLumiere* obtenirControleurLumiere();
 	// Retourne le gestionnaire de la connection réseau
 	inline client_network::NetworkManager* getNetworkManager();
 	// Retourne le gestionnaire d'evenements
@@ -128,8 +122,7 @@ public:
 	void getDesktopResolution(int& horizontal, int& vertical);
 
 private:
-
-	bool peutAfficher_{true};
+	bool peutAfficher_{ true };
 	bool autorisationInputSouris_{ true };
 	bool autorisationInputClavier_{ true };
 	/// Constructeur copie désactivé.
@@ -150,30 +143,17 @@ private:
 	/// Poignée ("handle") vers le "device context".
 	HDC   hDC_{ nullptr };
 
+	event_handler::EventHandler eventHandler_;
 	client_network::MapSessionManager mapSessionManager_;
     client_network::NetworkManager network_;
-	event_handler::EventHandler eventHandler_;
 
-	/// Vue courante de la scène.
-	std::unique_ptr<vue::Vue> vue_{ nullptr };
-
-	/// Arbre de rendu contenant les différents objets de la scène.
-	ArbreRenduINF2990 arbre_;
+	engine::SimulationEngine engine_;
 
 	/// Le mode d'utilisation courant.
 	std::unique_ptr<ModeAbstrait> mode_{ nullptr };
 
 	/// Le profil utilisateur.
-	std::unique_ptr<ProfilUtilisateur> profil_{ nullptr };
-
-	/// La boite qui donne un environnement
-	std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
-
-	/// Le controle de l'affichage du texte.
-	std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
-	/// Le controle de l'affichage des lumières.
-	std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
-
+	ProfilUtilisateur profil_;
 
 	FacadeModele();
 };
@@ -205,7 +185,7 @@ inline ModeAbstrait* FacadeModele::obtenirMode()
 ////////////////////////////////////////////////////////////////////////
 inline vue::Vue* FacadeModele::obtenirVue()
 {
-   return vue_.get();
+	return engine_.getView();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -220,7 +200,7 @@ inline vue::Vue* FacadeModele::obtenirVue()
 ////////////////////////////////////////////////////////////////////////
 inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 {
-   return &arbre_;
+	return engine_.getEntityTree();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -232,9 +212,9 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur() const
+ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur()
 {
-	return profil_.get();
+	return &profil_;
 }
 
 
@@ -247,9 +227,9 @@ ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur() const
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
+inline AffichageTexte* FacadeModele::obtenirAffichageTexte()
 {
-    return affichageTexte_.get();
+	return engine_.getTextDisplay();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -261,9 +241,9 @@ inline AffichageTexte* FacadeModele::obtenirAffichageTexte() const
 /// @return le controleur de lumiere.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline ControleurLumiere* FacadeModele::obtenirControleurLumiere() const
+inline ControleurLumiere* FacadeModele::obtenirControleurLumiere()
 {
-	return controleurLumiere_.get();
+	return engine_.getLightController();
 }
 
 

@@ -8,19 +8,18 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////////
 
-
-
 #include <iostream>
 
+
 #include "Vue.h"
-#include "ProfilUtilisateur.h"
 #include "CommandeRobot.h"
 #include "NoeudRobot.h"
 #include "ArbreRenduINF2990.h"
 
-#include "MapSession.h"
-
 #include "ComportementAbstrait.h"
+
+#include "ProfilUtilisateur.h"
+#include "SimulationEngine.h"
 
 #include "ControleRobot.h"
 
@@ -35,15 +34,9 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ControleRobot::ControleRobot(ArbreRendu* tree, ProfilUtilisateur* profil, 
-	ControleurLumiere* lightController,
-	client_network::MapSession* mapSession)
-	: arbre_(tree), 
-	  profil_(profil), 
-	  controleurLumiere_(lightController), 
-	  mapSession_(mapSession)
+ControleRobot::ControleRobot(engine::SimulationEngine* engine, ProfilUtilisateur* profil)
 {
-	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele()); //ici qu'on change le modele selon celui dans le profil
+	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele());
 	//robotPhysic_.init(arbre_, robot.get());
 
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();

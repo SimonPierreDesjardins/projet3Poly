@@ -30,17 +30,15 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeEdition::ModeEdition(client_network::MapSession* mapSession)
+ModeEdition::ModeEdition(engine::SimulationEngine* engine, client_network::MapSession* mapSession)
 	: OnlineMapMode(mapSession),
 	  visiteurSuppression_(mapSession)
 {
 	typeMode_ = EDITION;
 	assignerEtat(SELECTION);
 
-	FacadeModele* facade = FacadeModele::obtenirInstance();
-	facade->assignerEnvironnement(2);
-	eventHandler_ = facade->getEventHandler();
-	tree_ = facade->obtenirArbreRenduINF2990();
+	engine->setEnvironnement(2);
+	tree_ = engine->getEntityTree();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -54,9 +52,6 @@ ModeEdition::ModeEdition(client_network::MapSession* mapSession)
 ////////////////////////////////////////////////////////////////////////
 ModeEdition::~ModeEdition()
 {
-	if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()  != nullptr) {
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->deselectionnerTout();
-	}
 	mapSession_->requestToLeaveMapSession();
 }
 
@@ -71,7 +66,6 @@ ModeEdition::~ModeEdition()
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererToucheT()
 {
-	//FacadeModele::obtenirInstance()->assignerMode(TEST);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -84,7 +78,7 @@ void ModeEdition::gererToucheT()
 void ModeEdition::sauvegarder()
 {
 	std::unique_ptr<VisiteurSauvegarde> visiteur = std::make_unique<VisiteurSauvegarde>();
-	FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(visiteur.get());
+	tree_->accepterVisiteur(visiteur.get());
 }
 
 ////////////////////////////////////////////////////////////////////////

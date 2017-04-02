@@ -6,6 +6,7 @@
 #include "OpenGL_Programme.h"
 #include "OpenGL_Nuanceur.h"
 #include "ArbreRenduINF2990.h"
+
 #include "BoiteEnvironnement.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
@@ -16,66 +17,52 @@ namespace engine
 class SimulationEngine
 {
 public:
-	SimulationEngine();
+	SimulationEngine() = default;
 	~SimulationEngine();
 
-	// Crée un contexte OpenGL et initialise celui-ci.
-	void initialiserOpenGL(HWND hWnd);
+	void initialize();
 
-	// Retourne la vue courante.
-	inline vue::Vue* obtenirVue();
-	//Assigne les parametres pour la vue ortho
-	void assignerVueOrtho();
-	//Assigne les parametres pour la vue orbite
-	void assignerVueOrbite();
+	void initializeRendering(HWND hWnd, ProfilUtilisateur* profile);
+	void free();
 
-	void assignerVueOrbitePerso();
+	void setOrthoView();
+	void setOrbitalView();
+	void setFirstPersonView(NoeudAbstrait* entity);
+	void setCloseOrbitalView();
+	void setEnvironnement(int environnementId);
 
-	//Assigne les parametres pour la vue à la première personne
-	void assignerVuePremierePersonne();
+	inline ArbreRenduINF2990* getEntityTree();
+	inline AffichageTexte* getTextDisplay();
+	inline ControleurLumiere* getLightController();
+	inline vue::Vue* getView();
 
-	// Retourne l'arbre de rendu.
-	inline ArbreRenduINF2990* obtenirArbreRenduINF2990() const;
+	void getDesktopResolution(int& horizontal, int& vertical);
 
-	// Retourne l'arbre de rendu.
-	inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
-
-	// Retourne l'affichage du texte.
-	inline AffichageTexte* obtenirAffichageTexte() const;
-	// Retourne le controleur de lumière.
-	inline ControleurLumiere* obtenirControleurLumiere() const;
-
+	void render();
+	void animate(double dt);
+	void stopRendering();
+	void resumeRendering();
 
 private:
-	std::unique_ptr<ArbreRenduINF2990> arbre_{ nullptr };
 
-	std::unique_ptr<vue::Vue> vue_{ nullptr };
+	bool isInitialized_{ false };
+	bool isRendering_{ false };
+	/// Poignée ("handle") vers la fenêtre où l'affichage se fait.
+	HWND  hWnd_{ nullptr };
+	/// Poignée ("handle") vers le contexte OpenGL.
+	HGLRC hGLRC_{ nullptr };
+	/// Poignée ("handle") vers le "device context".
+	HDC   hDC_{ nullptr };
 
+	ArbreRenduINF2990 tree_;
+	std::unique_ptr<vue::Vue> view_{ nullptr };
 	// La boite qui donne un environnement
 	std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
-
 	// Le controle de l'affichage du texte.
-	std::unique_ptr<AffichageTexte> affichageTexte_{ nullptr };
-
+	std::unique_ptr<AffichageTexte> textDisplay_{ nullptr };
 	// Le controle de l'affichage des lumières.
-	std::unique_ptr<ControleurLumiere> controleurLumiere_{ nullptr };
-
+	ControleurLumiere lightController_;
 };
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline const shared_ptr<ArbreRenduINF2990> FacadeModele::obtenirArbreRenduINF2990() const
-///
-/// Cette fonction retourne l'arbre de rendu de la scène (version constante
-/// de la fonction).
-///
-/// @return L'arbre de rendu de la scène.
-///
-////////////////////////////////////////////////////////////////////////
-inline ArbreRenduINF2990* SimulationEngine::obtenirArbreRenduINF2990() const
-{
-   return arbre_.get();
-}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -87,9 +74,9 @@ inline ArbreRenduINF2990* SimulationEngine::obtenirArbreRenduINF2990() const
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline ArbreRenduINF2990* SimulationEngine::obtenirArbreRenduINF2990()
+inline ArbreRenduINF2990* SimulationEngine::getEntityTree()
 {
-   return arbre_.get();
+	return &tree_;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -102,9 +89,9 @@ inline ArbreRenduINF2990* SimulationEngine::obtenirArbreRenduINF2990()
 /// @return La vue courante.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline vue::Vue* SimulationEngine::obtenirVue()
+inline vue::Vue* SimulationEngine::getView()
 {
-   return vue_.get();
+   return view_.get();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -116,9 +103,9 @@ inline vue::Vue* SimulationEngine::obtenirVue()
 /// @return L'arbre de rendu de la scène.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline AffichageTexte* SimulationEngine::obtenirAffichageTexte() const
+inline AffichageTexte* SimulationEngine::getTextDisplay()
 {
-    return affichageTexte_.get();
+    return textDisplay_.get();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -130,9 +117,9 @@ inline AffichageTexte* SimulationEngine::obtenirAffichageTexte() const
 /// @return le controleur de lumiere.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline ControleurLumiere* SimulationEngine::obtenirControleurLumiere() const
+inline ControleurLumiere* SimulationEngine::getLightController()
 {
-	return controleurLumiere_.get();
+	return &lightController_;
 }
 
 }

@@ -55,12 +55,6 @@ set(USINES_SRC
     simulation-engine/Arbre/Usines/UsineNoeud.cpp
 )
 
-
-set(CONFIGURATION_SRC
-    Configuration/ConfigScene.h
-    Configuration/ConfigScene.cpp
-)
-
 set(ROBOT_CONTROL_SRC
     simulation-engine/robot-control/ControleRobot.h
     simulation-engine/robot-control/ControleRobot.cpp
@@ -159,12 +153,14 @@ set(MODES_SRC
     modes/ModeMapSelection.cpp
     modes/OnlineMapMode.h
     modes/OnlineMapMode.cpp
+    modes/RobotControlMode.h
+    modes/RobotControlMode.cpp
 )
 source_group("modes" FILES ${MODES_SRC})
 
 set(PROFIL_UTILISATEUR_SRC
-    ProfilUtilisateur/ProfilUtilisateur.h      
-    ProfilUtilisateur/ProfilUtilisateur.cpp      
+    simulation-engine/ProfilUtilisateur/ProfilUtilisateur.h      
+    simulation-engine/ProfilUtilisateur/ProfilUtilisateur.cpp      
 )
 
 set(VISITEUR_SRC
@@ -255,6 +251,7 @@ include_directories(
 	.
     simulation-engine
     simulation-engine/AffichageTexte
+    simulation-engine/ProfilUtilisateur
     simulation-engine/Arbre
     simulation-engine/Arbre/Noeuds
     simulation-engine/Arbre/Usines
@@ -273,7 +270,6 @@ include_directories(
     client-network/map-session
     edition-tools
     modes
-    ProfilUtilisateur
 )
 
 # Ajouter les filtres dans le projet visual studio
@@ -288,7 +284,6 @@ source_group("simulation-engine\\lumiere" FILES ${LUMIERE_SRC})
 source_group("simulation-engine\\visiteur" FILES ${VISITEUR_SRC})
 source_group("interface" FILES ${INTERFACE_SRC})
 source_group("tools" FILES ${MACHINE_A_ETATS_SRC})
-source_group("profil-utilisateur" FILES ${PROFIL_UTILISATEUR_SRC})
 source_group("simulation-engine\\robot-control" 
              REGULAR_EXPRESSION 
              simulation-engine/robot-control/*)
@@ -312,6 +307,9 @@ source_group("simulation-engine\\robot-control\\physics"
 source_group("simulation-engine\\robot-control\\physics\\bounding-shapes" 
              REGULAR_EXPRESSION 
              simulation-engine/robot-control/physics/bounding-shapes/*)
+source_group("simulation-engine\\user-profile"
+             REGULAR_EXPRESSION 
+             simulation-engine/ProfilUtilisateur/*)
 
 # Compiler les fichiers sources dans une dll
 add_library(model SHARED
@@ -338,7 +336,7 @@ add_library(model SHARED
 )
 
 # Linker les librairies externes avec la dll
-target_link_libraries(model util ${EXTERNAL_LIBRARIES})
+target_link_libraries(model util networkUtils ${EXTERNAL_LIBRARIES})
 
 # Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew et ftgl)
 target_compile_definitions(model 

@@ -10,7 +10,6 @@
 #include "SuiveurLigne.h" 
 
 #include "CapteurOptique.h" 
-#include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 #include "rapidjson\filewritestream.h"
 
@@ -84,7 +83,6 @@ void SuiveurLigne::initialiser()
 	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_DROITE));
 	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_CENTRE));
 	capteursOptique_.push_back(CapteurOptique(POSITION_RELATIVE_GAUCHE));
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 }
 
 ////////////////////////////////////////////////////////////////////////////////

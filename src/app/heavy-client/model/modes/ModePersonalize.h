@@ -20,7 +20,6 @@
 #include <unordered_map>
 #include <array>
 
-
 class ProfilUtilisateur;
 class AffichageTexte;
 class ControleurLumiere;

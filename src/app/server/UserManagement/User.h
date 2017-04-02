@@ -33,10 +33,11 @@ private:
 
 	static void StartMessageReadThread();
 	static void StopMessageReadThread();
+	static void lookupMessage();
 
 	static std::queue<std::pair<User*, std::string>> _messageQueue;
 	static std::mutex _queueMutex;
-	static std::thread* _messageReaderThread;
+	static std::thread _messageReaderThread;
 	static bool _runThread;
 	static int UserCount;
 };

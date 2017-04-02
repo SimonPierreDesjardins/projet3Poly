@@ -38,6 +38,9 @@ const int VK_KEY_L = 'L';
 const int VK_KEY_M = 'M';
 const int VK_KEY_O = 'O';
 
+namespace engine {
+	class SimulationEngine;
+}
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeEdition
@@ -51,7 +54,7 @@ const int VK_KEY_O = 'O';
 class ModeEdition : public OnlineMapMode
 {
 public:
-	ModeEdition(client_network::MapSession* mapSession);
+	ModeEdition(engine::SimulationEngine* engine, client_network::MapSession* mapSession);
 
 	//Destructeur
 	virtual ~ModeEdition();
@@ -72,7 +75,6 @@ public:
 protected:
 
 	ArbreRendu* tree_;
-	event_handler::EventHandler* eventHandler_;
 
 	//Visiteur pour la suppression d'un noeud
 	VisiteurSuppression visiteurSuppression_;

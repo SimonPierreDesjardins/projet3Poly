@@ -214,14 +214,9 @@ void NoeudTeleporteur::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-<<<<<<< HEAD
-    //rectangleEnglobant_.afficher(physics_.absolutePosition);
-	if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == 2) //montre les cercles des teleporteurs si dans le mode edition
-=======
     //rectangleEnglobant_.afficher(positionCourante_);
 	int mode = FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
 	if (mode == EDITION || mode == TUTORIAL_EDITION) //montre les cercles des teleporteurs si dans le mode edition
->>>>>>> master
 	{
 		cercleEnglobant_.afficher(physics_.absolutePosition);
 	}

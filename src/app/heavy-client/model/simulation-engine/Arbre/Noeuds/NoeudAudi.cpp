@@ -52,7 +52,7 @@
 NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud)
 	: NoeudRobot{ id, typeNoeud }
 {
-	profil_->setModele("audi");
+	//profil_->setModele("audi");
 	positionDepart();
 
 	std::shared_ptr<NoeudAbstrait> roueGauche2 = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -143,6 +143,7 @@ void NoeudAudi::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
+	/*
 	// Débugage des capteurs de distance.
 	if (mode_ != PERSONALIZE && mode_ != PIECES)
 	{
@@ -155,6 +156,7 @@ void NoeudAudi::afficherConcret() const
 			}
 		}
 	}
+	*/
 	
 	// Restauration de la matrice.
 	glPopMatrix();

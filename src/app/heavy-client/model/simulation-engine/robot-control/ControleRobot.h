@@ -23,10 +23,14 @@ class CommandeRobot;
 class NoeudAbstrait;
 class NoeudRobot;
 class ArbreRendu;
-class ProfilUtilisateur;
 class ControleurLumiere;
-namespace client_network
-{
+class ProfilUtilisateur;
+
+namespace engine {
+	class SimulationEngine;
+}
+
+namespace client_network {
 	class MapSession;
 }
 
@@ -48,9 +52,10 @@ class ControleRobot
 	friend class ControleRobotTest;
 	
 public:
-	ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profile, ControleurLumiere* lightController, client_network::MapSession* mapSession);
-	~ControleRobot();
+	ControleRobot() = default;
+	ControleRobot(engine::SimulationEngine* engine, ProfilUtilisateur* profile);
 
+	~ControleRobot();
 	// Demande au robot de traiter une commande donn�e
 	void traiterCommande(CommandeRobot* commande, bool provientUtilisateur);
 
@@ -130,7 +135,6 @@ private:
 	// Fonction qui verifie et effectue les changements en fonction des capteurs � obstacles
 	void verifierCapteurs();
 
-	ControleRobot() = delete;
 };
 
 #endif // CONTROLE_ROBOT_H

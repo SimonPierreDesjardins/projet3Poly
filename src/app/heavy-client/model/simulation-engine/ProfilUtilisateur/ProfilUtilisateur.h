@@ -50,7 +50,7 @@ class ProfilUtilisateur
 	public:
 		ProfilUtilisateur();
 
-		ProfilUtilisateur(std::string cheminProfil);
+		//ProfilUtilisateur(std::string cheminProfil);
 
 		~ProfilUtilisateur();
 
@@ -118,7 +118,6 @@ class ProfilUtilisateur
 
 		std::string obtenirCheminVersMusiqueSimulation();
 		void assignerCheminVersMusiqueSimulation(std::string chemin);
-
 
 	private:
 		bool creationDossierDonnees();

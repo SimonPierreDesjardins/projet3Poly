@@ -93,7 +93,6 @@ private:
 	static const glm::dvec3 POSITION_RELATIVE_DROITE;
 
 	std::vector<CapteurOptique> capteursOptique_;
-	ArbreRendu* arbre_{ nullptr };
 
     void initialiser();
 };
