@@ -62,6 +62,11 @@ namespace ui
                     ModeLabel.Text = "Collection Pièces";
                     break;
 
+                    //Na pas encore le mode
+                /*case (int)ModeEnum.Mode.RACE:
+                    ModeLabel.Text = "Course";
+                    break;*/
+
                 default:
                     ModeLabel.Text = "Edition / Simulation";
                     break;

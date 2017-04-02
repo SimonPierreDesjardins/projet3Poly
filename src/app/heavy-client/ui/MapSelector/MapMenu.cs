@@ -395,6 +395,11 @@ namespace ui
                         createMapPieceMode();
                         //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
                         break;
+
+                    case 3:
+                        createMapRaceMode();
+                        //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
+                        break;
                 }
                 FonctionsNatives.createMap(mapName, mapName.Length, password, password.Length, mapType, privateCheckBox.Checked ? (char)1 : (char)0);
             }
@@ -654,6 +659,7 @@ namespace ui
             }
         }
 
+        //Cette fonction est temporaire - attend que le mode soit en ligne
         private void createMapPieceMode()
         {
             String mapName = textBox.Text;
@@ -671,6 +677,44 @@ namespace ui
             {
                 //Create the map and Copy the default map
                 File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
+                MapPresentator newMap = new MapPresentator(parent_, mapName, false, (int)ModeEnum.Mode.PIECES, 0, -1);
+                newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
+                parent_.mapMenu.addOnlineMapEntry(-1, newMap);
+                verifyMapsAttributes();
+            }
+            else
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte avec ce nom existe déjà.";
+                textBox.Clear();
+                return;
+            }
+
+            mapPanel.Visible = true;
+            addPanel.Visible = false;
+            offlineModePanel.Visible = false;
+        }
+
+        //Cette fonction est temporaire - attend que le mode soit en ligne
+        //Également changer dans SingleMapPresentation
+        public void createMapRaceMode()
+        {
+            String mapName = textBox.Text;
+            if (mapName.Equals(""))
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte ne peut avoir ce nom.";
+                textBox.Clear();
+                return;
+            }
+
+            bool a = System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone));
+
+            if (!System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone)) && !parent_.mapMenu.offlineMaps_.ContainsKey(mapName))
+            {
+                //Create the map and Copy the default map
+                File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
+                //Todo change mode
                 MapPresentator newMap = new MapPresentator(parent_, mapName, false, (int)ModeEnum.Mode.PIECES, 0, -1);
                 newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
                 parent_.mapMenu.addOnlineMapEntry(-1, newMap);

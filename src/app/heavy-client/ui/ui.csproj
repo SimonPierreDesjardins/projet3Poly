@@ -474,6 +474,7 @@
     <None Include="Resources\TutorialFirstPerso.png" />
     <None Include="Resources\TutorialLights.png" />
     <None Include="Resources\TutorialOrbite.png" />
+    <None Include="Resources\TutorialMenu.png" />
     <Content Include="Resources\User.png" />
     <Content Include="Resources\wall.png" />
     <Content Include="Resources\wheel.png" />
