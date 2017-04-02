@@ -129,7 +129,7 @@ void NoeudAudi::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(physics_.rotation.z(), 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
 	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
@@ -177,16 +177,16 @@ void NoeudAudi::suivreCamera()
 	if (vue->estPremierePersonne())
 	{
 		vue::Camera* camera = vue->obtenirCamera();
-		Eigen::Vector3f positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
+		glm::dvec3 positionRectangle = rectangleEnglobant_.obtenirPositionCentre();
 
-		camera->assignerPosition(glm::dvec3(positionRectangle) + glm::dvec3{ 0.0, 0.0, 4.0 });
+		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(physics_.rotation.z() * PI / 180), 
-			                     sin(physics_.rotation.z() * PI / 180), 3.0 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z * PI / 180), 
+			                     sin(physics_.rotation.z * PI / 180), 3.0 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z() * PI / 180) * 3, 
-			                     sin(physics_.rotation.z() * PI / 180) * 3, -3.0 });
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z * PI / 180) * 3, 
+			                     sin(physics_.rotation.z * PI / 180) * 3, -3.0 });
 	}
 }
 
@@ -204,17 +204,17 @@ void NoeudAudi::suivreCamera()
 ////////////////////////////////////////////////////////////////////////
 void NoeudAudi::positionnerRoues()
 {
-	roueGauche_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
-	roueGauche2_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
+	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 
-	roueGauche_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
-	roueGauche2_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
+	roueGauche_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
+	roueGauche2_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
 
-	roueDroite_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
-	roueDroite2_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 
-	roueDroite_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
-	roueDroite2_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
+	roueDroite_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
+	roueDroite2_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
 }
 
 ////////////////////////////////////////////////////////////////////////

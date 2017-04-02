@@ -414,7 +414,7 @@ bool ModeTutorialEdition::isTutorialObjectSelect()
 ////////////////////////////////////////////////////////////////////////
 double ModeTutorialEdition::getScaleOfTutorialObject()
 {
-	return table_->chercher(indexOfCurrentObject_)->obtenirFacteurMiseAEchelle();
+	return table_->chercher(indexOfCurrentObject_)->getPhysicsComponent().scale.x;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -428,7 +428,7 @@ double ModeTutorialEdition::getScaleOfTutorialObject()
 ////////////////////////////////////////////////////////////////////////
 double ModeTutorialEdition::getRotationOfTutorialObject()
 {
-	return table_->chercher(indexOfCurrentObject_)->obtenirAngleRotation();
+	return table_->chercher(indexOfCurrentObject_)->getPhysicsComponent().rotation.z;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -442,7 +442,7 @@ double ModeTutorialEdition::getRotationOfTutorialObject()
 ////////////////////////////////////////////////////////////////////////
 glm::dvec3 ModeTutorialEdition::getPositionOfTutorialObject()
 {
-	return table_->chercher(indexOfCurrentObject_)->obtenirPositionCourante();
+	return table_->chercher(indexOfCurrentObject_)->getPhysicsComponent().absolutePosition;
 }
 
 ////////////////////////////////////////////////////////////////////////

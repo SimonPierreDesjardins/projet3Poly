@@ -10,7 +10,7 @@
 #ifndef PHYSICS_COMPONENT_H
 #define PHYSICS_COMPONENT_H
 
-#include "Eigen/Dense"
+#include "glm/glm.hpp"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class PhysicsComponent
@@ -24,12 +24,12 @@ public:
 	PhysicsComponent() = default;
 	~PhysicsComponent() = default;
 
-	Eigen::Vector3f absolutePosition;
-	Eigen::Vector3f relativePosition;
-	Eigen::Vector3f scale;
-	Eigen::Vector3f rotation;
-	Eigen::Vector3f linearVelocity;
-	Eigen::Vector3f angularVelocity;
+	glm::dvec3 absolutePosition;
+	glm::dvec3 relativePosition;
+	glm::dvec3 scale;
+	glm::dvec3 rotation;
+	glm::dvec3 linearVelocity;
+	glm::dvec3 angularVelocity;
 
 	// Objects with negative mass will behave like they have infinite mass:
 	// They can't move and will apply an elastic collision.

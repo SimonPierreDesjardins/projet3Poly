@@ -99,8 +99,9 @@ ComportementEvitement::~ComportementEvitement()
 void ComportementEvitement::initialiser(){
 	startTime_ = time(nullptr);
 	NoeudRobot* noeud = controleRobot_->obtenirNoeud();
-	if (noeud != nullptr){
-		angleCible_ = noeud->obtenirAngleRotation() + maxAngle_;
+	if (noeud != nullptr)
+	{
+		angleCible_ = noeud->getPhysicsComponent().rotation.z + maxAngle_;
 	}
 	gauche = maxAngle_ >= 0;
 	ignorerLigne_ = true;
@@ -136,17 +137,21 @@ void ComportementEvitement::mettreAJour(){
 
 			bool angleAtteinte = false;
 			NoeudRobot* noeud = controleRobot_->obtenirNoeud();
-			if (noeud != nullptr){
+			if (noeud != nullptr)
+			{
+				PhysicsComponent& physics = noeud->getPhysicsComponent();
 				// Rotation du robot
-				if (gauche){
+				if (gauche)
+				{
 					// Dévier à gauche et vérifier angle
 					controleRobot_->traiterCommande(&CommandeRobot(ROTATION_GAUCHE), false);
-					angleAtteinte = noeud->obtenirAngleRotation() > angleCible_;
+					angleAtteinte = physics.rotation.z > angleCible_;
 				}
-				else{
+				else
+				{
 					// Dévier à droite et vérifier angle
 					controleRobot_->traiterCommande(&CommandeRobot(ROTATION_DROITE), false);
-					angleAtteinte = controleRobot_->obtenirNoeud()->obtenirAngleRotation() < angleCible_;
+					angleAtteinte = physics.rotation.x < angleCible_;
 				}
 			}
 

@@ -99,7 +99,7 @@ ComportementDeviation::~ComportementDeviation()
 void ComportementDeviation::initialiser(){
 	NoeudRobot* noeud = controleRobot_->obtenirNoeud();
 	if (noeud != nullptr){
-		angleCible_ = noeud->obtenirAngleRotation() + maxAngle_;
+		angleCible_ = noeud->getPhysicsComponent().rotation.z + maxAngle_;
 	}
 	gauche = maxAngle_ >= 0;
 	ignorerLigne_ = true;
@@ -114,15 +114,20 @@ void ComportementDeviation::initialiser(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ComportementDeviation::mettreAJour(){
-	if (controleRobot_ != nullptr){
+void ComportementDeviation::mettreAJour()
+{
+	if (controleRobot_ != nullptr)
+	{
 		//Implémentation de l'exception Rapport d'élicitation p.22
-		if (controleRobot_->ligneDetectee()){
-			if (!ignorerLigne_){
+		if (controleRobot_->ligneDetectee())
+		{
+			if (!ignorerLigne_)
+			{
 				controleRobot_->assignerComportement(SUIVIDELIGNE, L"Ligne détectée");
 			}
 		}
-		else{
+		else
+		{
 			ignorerLigne_ = false;
 		}
 
@@ -130,16 +135,20 @@ void ComportementDeviation::mettreAJour(){
 
 		NoeudRobot* noeud = controleRobot_->obtenirNoeud();
 		// Rotation du robot
-		if (noeud != nullptr){
-			if (gauche){
+		if (noeud != nullptr)
+		{
+			PhysicsComponent& physics = noeud->getPhysicsComponent();
+			if (gauche)
+			{
 				// Dévier à gauche et vérifier angle
 				controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_GAUCHE), false);
-				angleAtteinte = noeud->obtenirAngleRotation() > angleCible_;
+				angleAtteinte = physics.rotation.z > angleCible_;
 			}
-			else{
+			else
+			{
 				// Dévier à droite et vérifier angle
 				controleRobot_->traiterCommande(&CommandeRobot(DEVIATION_DROITE), false);
-				angleAtteinte = noeud->obtenirAngleRotation() < angleCible_;
+				angleAtteinte = physics.rotation.z < angleCible_;
 			}
 		}
 		if (angleAtteinte){

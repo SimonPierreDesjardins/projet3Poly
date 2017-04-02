@@ -65,10 +65,10 @@ NoeudTruck::NoeudTruck(uint32_t id, const std::string& typeNoeud)
 
 	roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche2).get();
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
-	roueDroite_->assignerPositionRelative({ 1.5, 0.5, 1.0 });
-	roueGauche_->assignerPositionRelative({ 1.5, -0.47, 1.0 });
-	roueGauche2_->assignerPositionRelative({ -2.2, -0.47, 1.0});
-	roueDroite2_->assignerPositionRelative({ -2.2, 0.5, 1.0 });
+	roueDroite_->getPhysicsComponent().relativePosition = { 1.5, 0.5, 1.0 };
+	roueGauche_->getPhysicsComponent().relativePosition = { 1.5, -0.47, 1.0 };
+	roueGauche2_->getPhysicsComponent().relativePosition = { -2.2, -0.47, 1.0};
+	roueDroite2_->getPhysicsComponent().relativePosition = { -2.2, 0.5, 1.0 };
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);
@@ -131,7 +131,7 @@ void NoeudTruck::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
 	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
@@ -182,10 +182,10 @@ void NoeudTruck::suivreCamera()
 
 		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 5.0 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z * PI / 180), sin(physics_.rotation.z * PI / 180), 5.0 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 4, sin(angleRotation_* PI / 180) * 4, -5.0 }); 
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z * PI / 180) * 4, sin(physics_.rotation.z * PI / 180) * 4, -5.0 }); 
 	}
 }
 
@@ -203,16 +203,16 @@ void NoeudTruck::suivreCamera()
 ////////////////////////////////////////////////////////////////////////
 void NoeudTruck::positionnerRoues()
 {
-	roueGauche_->assignerAngleRotation(angleRotation_);
-	roueGauche2_->assignerAngleRotation(angleRotation_);
-
+	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
+
+	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueGauche2_->setVitesseCourante(vitesseCouranteGauche_);
 
-	roueDroite_->assignerAngleRotation(angleRotation_);
-	roueDroite2_->assignerAngleRotation(angleRotation_);
-
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
+
+	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueDroite2_->setVitesseCourante(vitesseCouranteDroite_);
 }
 

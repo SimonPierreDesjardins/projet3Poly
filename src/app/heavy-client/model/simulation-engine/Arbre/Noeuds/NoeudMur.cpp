@@ -35,8 +35,8 @@ NoeudMur::NoeudMur(uint32_t id, const std::string& typeNoeud)
 	: NoeudAbstrait{ id, typeNoeud }
 {
 	type_ = WALL_ENTITY;
-	physics_.rotation.z() = 0.0;
-	physics_.scale.x() = 1.0;
+	physics_.rotation.z = 0.0;
+	physics_.scale.x = 1.0;
 }
 
 
@@ -113,11 +113,11 @@ void NoeudMur::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
-    largeur *= physics_.scale.x();
-	rectangleEnglobant_.mettreAJour({ physics_.absolutePosition.x(), 
-		                              physics_.absolutePosition.y(), 
-		                              physics_.absolutePosition.z() }, 
-		                              physics_.rotation.z(), hauteur, largeur);
+    largeur *= physics_.scale.x;
+	rectangleEnglobant_.mettreAJour({ physics_.absolutePosition.x, 
+		                              physics_.absolutePosition.y, 
+		                              physics_.absolutePosition.z }, 
+		                              physics_.rotation.z, hauteur, largeur);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -142,9 +142,9 @@ void NoeudMur::afficherConcret() const
 	}
 
 	//Ajustement du mur avant la création
-	glRotated(physics_.rotation.z(), 0, 0, 1);
+	glRotated(physics_.rotation.z, 0, 0, 1);
 	
-	glScaled(physics_.scale.x(), 1.0, 1.0);
+	glScaled(physics_.scale.x, 1.0, 1.0);
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -152,7 +152,7 @@ void NoeudMur::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //rectangleEnglobant_.afficher(positionCourante_);
+    //rectangleEnglobant_.afficher(physics_.absolutePosition);
 }
 
 ////////////////////////////////////////////////////////////////////////

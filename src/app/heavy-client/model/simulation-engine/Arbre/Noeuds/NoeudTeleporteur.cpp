@@ -71,9 +71,9 @@ void NoeudTeleporteur::animer(float dt)
 	if (!versLeHaut)
 		compteurHauteurTeleporteur = compteurHauteurTeleporteur-0.02;
 
-	positionCourante_ = positionRelative_;
-	positionCourante_.z = compteurHauteurTeleporteur;
-	positionRelative_.z = compteurHauteurTeleporteur;
+	physics_.absolutePosition = physics_.relativePosition;
+	physics_.absolutePosition.z = compteurHauteurTeleporteur;
+	physics_.relativePosition.z = compteurHauteurTeleporteur;
     mettreAJourFormeEnglobante();
 }
 ////////////////////////////////////////////////////////////////////////
@@ -89,13 +89,13 @@ void NoeudTeleporteur::mettreAJourFormeEnglobante()
 {
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
 	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
-	rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
+	rectangleEnglobant_.mettreAJour(physics_.absolutePosition, physics_.rotation.z, hauteur, largeur);
 
 	hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
 	largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
 	double rayon = hauteur > largeur ? hauteur : largeur;
 	rayon = 11;
-	cercleEnglobant_.mettreAJour(positionCourante_, rayon);
+	cercleEnglobant_.mettreAJour(physics_.absolutePosition, rayon);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -203,7 +203,7 @@ void NoeudTeleporteur::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotated(angleRotation_, 0, 0, 1);
+	glRotated(physics_.rotation.z, 0, 0, 1);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -213,10 +213,10 @@ void NoeudTeleporteur::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //rectangleEnglobant_.afficher(positionCourante_);
+    //rectangleEnglobant_.afficher(physics_.absolutePosition);
 	if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == 2) //montre les cercles des teleporteurs si dans le mode edition
 	{
-		cercleEnglobant_.afficher(positionCourante_);
+		cercleEnglobant_.afficher(physics_.absolutePosition);
 	}
 	
 }

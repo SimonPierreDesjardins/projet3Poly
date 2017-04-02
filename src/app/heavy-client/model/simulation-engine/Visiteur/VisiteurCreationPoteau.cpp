@@ -75,10 +75,12 @@ void VisiteurCreationPoteau::visiter(NoeudTable* noeud)
 {
 	table_ = noeud;
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
-	nouveauNoeud->assignerPositionRelative(positionRelative_);
-	nouveauNoeud->assignerPositionCourante(positionRelative_);
-	noeud->ajouter(nouveauNoeud);
 	referenceNoeud_ = nouveauNoeud.get();
+
+	PhysicsComponent& physics = nouveauNoeud->getPhysicsComponent();
+	physics.relativePosition = positionRelative_;
+	physics.absolutePosition = positionRelative_;
+	noeud->ajouter(nouveauNoeud);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

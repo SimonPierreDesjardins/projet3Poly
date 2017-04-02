@@ -105,8 +105,8 @@ void NoeudSegment::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
-    largeur *= facteurMiseAEchelle_;
-    rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
+    largeur *= physics_.scale.x;
+    rectangleEnglobant_.mettreAJour(physics_.absolutePosition, physics_.rotation.z, hauteur, largeur);
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -147,8 +147,8 @@ void NoeudSegment::afficherConcret() const
 	}
 
 	//Ajustement du mur avant la création
-	glRotated(angleRotation_, 0, 0, 1);
-	glScaled(facteurMiseAEchelle_, 1, 1);
+	glRotated(physics_.rotation.z, 0, 0, 1);
+	glScaled(physics_.scale.x, 1, 1);
 
 	// Affichage du modèle.
 	vbo_->dessiner();

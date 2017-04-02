@@ -73,12 +73,6 @@ NoeudVolks::NoeudVolks(uint32_t id, const std::string& typeNoeud)
 	suiveurLigne_ = profil_->obtenirSuiveurLigne();
 	capteursDistance_ = profil_->obtenirCapteursDistance();
 
-	// À modifier avec le merge du profile.
-	/*visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);*/
-
-	positionRelative_ = depart_->obtenirPositionRelative();
-	angleRotation_ = depart_->obtenirAngleRotation();
-
 	positionDepart();
 
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -130,9 +124,6 @@ NoeudVolks::~NoeudVolks()
 ////////////////////////////////////////////////////////////////////////
 void NoeudVolks::positionDepart()
 {
-	NoeudAbstrait* depart = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_DEPART);
-	positionRelative_ = depart->obtenirPositionRelative();
-	angleRotation_ = depart->obtenirAngleRotation();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -158,7 +149,7 @@ void NoeudVolks::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
 	controleurLumiere_->afficherLumiereSpotGyro();
@@ -257,10 +248,10 @@ void NoeudVolks::suivreCamera()
 
 		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 4 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z* PI / 180), sin(physics_.rotation.z* PI / 180), 4 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 4, sin(angleRotation_* PI / 180) * 4, -4.0 });
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z* PI / 180) * 4, sin(physics_.rotation.z* PI / 180) * 4, -4.0 });
 	}
 }
 
@@ -473,10 +464,10 @@ bool NoeudVolks::verifierCollision(NoeudTable* table)
 ////////////////////////////////////////////////////////////////////////
 void NoeudVolks::mettreAJourCapteurs()
 {
-	suiveurLigne_->mettreAJourCapteurs(positionRelative_, angleRotation_);
+	suiveurLigne_->mettreAJourCapteurs(physics_.relativePosition, physics_.rotation.z);
 	for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
 	{
-		capteursDistance_->at(i).mettreAJour(positionRelative_, angleRotation_);
+		capteursDistance_->at(i).mettreAJour(physics_.relativePosition, physics_.rotation.z);
 	}
 }
 
@@ -493,8 +484,8 @@ void NoeudVolks::mettreAJourCapteurs()
 ////////////////////////////////////////////////////////////////////////
 void NoeudVolks::mettreAJourPosition(const float& dt)
 {
-	dernierePositionRelative_ = positionRelative_;
-	dernierAngleRotation_ = angleRotation_;
+	dernierePositionRelative_ = physics_.relativePosition;
+	dernierAngleRotation_ = physics_.rotation.z;
 
 	float vitesseDroiteTemp = vitesseDroite_, vitesseGaucheTemp = vitesseGauche_;
 	//Calcul de la différence entre les vitesses de gauche et droite
@@ -588,10 +579,10 @@ void NoeudVolks::mettreAJourPosition(const float& dt)
 		}
 	}
 
-	angleRotation_ -= dt * vitesseRotationCourante_;
-	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
-	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
-	positionCourante_ = positionRelative_;
+	physics_.rotation.z -= dt * vitesseRotationCourante_;
+	physics_.relativePosition.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	physics_.relativePosition.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	physics_.absolutePosition = physics_.relativePosition;
 	vitesseDroite_ = vitesseDroiteTemp;
 	vitesseGauche_ = vitesseGaucheTemp;
 }
@@ -607,9 +598,9 @@ void NoeudVolks::mettreAJourPosition(const float& dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudVolks::reinitialiserPosition()
 {
-	positionRelative_ = dernierePositionRelative_;
-	positionCourante_ = positionRelative_;
-	angleRotation_ = dernierAngleRotation_;
+	physics_.relativePosition = dernierePositionRelative_;
+	physics_.absolutePosition = physics_.relativePosition;
+	physics_.rotation.z = dernierAngleRotation_;
 
 	mettreAJourFormeEnglobante();
 
@@ -629,7 +620,7 @@ void NoeudVolks::reinitialiserPosition()
 ////////////////////////////////////////////////////////////////////////
 void NoeudVolks::mettreAJourFormeEnglobante()
 {
-	positionCourante_ = positionRelative_;
+	physics_.absolutePosition = physics_.relativePosition;
 
 	// On obtient les dimensions de la boite.
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
@@ -641,13 +632,13 @@ void NoeudVolks::mettreAJourFormeEnglobante()
 	glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
 	// On effectue une rotation du centre. (Au cas où la boite n'est pas centrée avec le modèle).
-	utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, angleRotation_);
+	utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, physics_.rotation.z);
 
 	// Effectuer la translation de la position.
-	glm::dvec3 positionRectangle = { positionCourante_.x + positionBoite.x, positionCourante_.y + positionBoite.y, 0.0 };
+	glm::dvec3 positionRectangle = { physics_.absolutePosition.x + positionBoite.x, physics_.absolutePosition.y + positionBoite.y, 0.0 };
 
 	// Mettre à jour les attributs du rectangle.
-	rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
+	rectangleEnglobant_.mettreAJour(positionRectangle, physics_.rotation.z, hauteur, largeur);
 }
 
 
@@ -674,8 +665,8 @@ void NoeudVolks::effectuerCollision(const double& dt)
 	vitesseAngulaire += vitesseAngulaireCollision_;
 
 	// Appliquer la vitesse de collision en fonction du temps
-	positionRelative_ += vitesseTranslation * dt / 10.0;
-	angleRotation_ += vitesseAngulaire * dt;
+	physics_.relativePosition += vitesseTranslation * dt / 10.0;
+	physics_.rotation.z += vitesseAngulaire * dt;
 
 	// La force frottement est toujours dans le sens inverse du déplacement.
 	glm::dvec3 frottementTranslation = -glm::normalize(vitesseTranslationCollision_);
@@ -728,21 +719,21 @@ void NoeudVolks::effectuerCollision(const double& dt)
 void NoeudVolks::positionnerRoues()
 {
 	//Positionner la roue gauche en fonction du robot
-	roueGauche_->assignerAngleRotation(angleRotation_);
-	glm::dvec3 position = positionRelative_;
-	position[0] = position[0] - sin(angleRotation_*PI / 180)*0.0;
-	position[1] = position[1] + cos(angleRotation_*PI / 180)*0.0;
+	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	glm::dvec3 position = physics_.relativePosition;
+	position[0] = position[0] - sin(physics_.rotation.z*PI / 180)*0.0;
+	position[1] = position[1] + cos(physics_.rotation.z*PI / 180)*0.0;
 	position[2] = 0.8;
-	roueGauche_->assignerPositionRelative(position);
+	roueGauche_->getPhysicsComponent().relativePosition = position;
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
 
 	//Positionner la roue droite en fonction du robot
-	roueDroite_->assignerAngleRotation(angleRotation_);
-	position = positionRelative_;
-	position[0] = position[0] + sin(angleRotation_*PI / 180)*-0.2; //Correction afin de rendre la roue au bon endroit apres la rotation de 180 degre de celle ci.
-	position[1] = position[1] - cos(angleRotation_*PI / 180)*-0.2;
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	position = physics_.relativePosition;
+	position[0] = position[0] + sin(physics_.rotation.z*PI / 180)*-0.2; //Correction afin de rendre la roue au bon endroit apres la rotation de 180 degre de celle ci.
+	position[1] = position[1] - cos(physics_.rotation.z*PI / 180)*-0.2;
 	position[2] = 0.8;
-	roueDroite_->assignerPositionRelative(position);
+	roueDroite_->getPhysicsComponent().relativePosition = position;
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
 

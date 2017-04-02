@@ -84,10 +84,13 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			vue_->convertirClotureAVirtuelle(x, y, positionVirtuelle);
 			visiteurCreationTeleporteur_->assignerPositionRelative(positionVirtuelle);
 			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
+
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
-			teleporteur_->assignerPositionCourante(positionVirtuelle);
+			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
 			teleporteur_->assignerTeleporteur(nullptr);
+
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+
 			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 				arbre_->chercher("table")->effacer(teleporteur_);
 				teleporteur_ = nullptr;
@@ -103,10 +106,11 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			visiteurCreationTeleporteur_->assignerPositionRelative(positionVirtuelle);
 			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
-			teleporteur_->assignerPositionCourante(positionVirtuelle);
+			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 			ancienTeleporteur_->assignerTeleporteur(teleporteur_);
 			teleporteur_->assignerTeleporteur(ancienTeleporteur_);
+
 			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
 				arbre_->chercher("table")->effacer(teleporteur_);
 				teleporteur_ = ancienTeleporteur_;

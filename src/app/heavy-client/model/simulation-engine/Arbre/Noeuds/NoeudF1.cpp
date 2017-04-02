@@ -133,7 +133,7 @@ void NoeudF1::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(physics_.rotation.z(), 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
 	if (mode_ != PERSONALIZE)  //empêche lumiere spot
@@ -184,12 +184,12 @@ void NoeudF1::suivreCamera()
 
 		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(physics_.rotation.z() * PI / 180),
-			                     sin(physics_.rotation.z() * PI / 180), 2.0 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z * PI / 180),
+			                     sin(physics_.rotation.z * PI / 180), 2.0 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z() * PI / 180) * 4, 
-			                                                     sin(physics_.rotation.z() * PI / 180) * 4, -2.0 });
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z * PI / 180) * 4, 
+			                                                     sin(physics_.rotation.z * PI / 180) * 4, -2.0 });
 	}
 }
 
@@ -207,17 +207,17 @@ void NoeudF1::suivreCamera()
 ////////////////////////////////////////////////////////////////////////
 void NoeudF1::positionnerRoues()
 {
-	roueGauche_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
-	roueGauche_->getPhysicsComponent().angularVelocity.z() = vitesseCouranteGauche_;
+	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueGauche_->getPhysicsComponent().angularVelocity.z = vitesseCouranteGauche_;
 
-	roueGauche2_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
-	roueGauche2_->getPhysicsComponent().angularVelocity.y() = vitesseCouranteGauche_;
+	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueGauche2_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
 
-	roueDroite_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
-	roueDroite_->getPhysicsComponent().angularVelocity.z() = vitesseCouranteDroite_;
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueDroite_->getPhysicsComponent().angularVelocity.z = vitesseCouranteDroite_;
 
-	roueDroite2_->getPhysicsComponent().rotation.z() = physics_.rotation.z();
-	roueDroite2_->getPhysicsComponent().angularVelocity.z() = vitesseCouranteDroite_;
+	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueDroite2_->getPhysicsComponent().angularVelocity.z = vitesseCouranteDroite_;
 }
 
 ////////////////////////////////////////////////////////////////////////

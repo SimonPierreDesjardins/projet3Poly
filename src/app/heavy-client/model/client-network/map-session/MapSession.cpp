@@ -56,10 +56,11 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			NoeudAbstrait* parent = itParent->second;
 			std::shared_ptr<NoeudAbstrait> newEntity = entityTree_->creerNoeud((EntityType)(type));
 			parent->ajouter(newEntity);
-			newEntity->assignerPositionCourante({ absPos.x, absPos.y, absPos.z });
-			newEntity->assignerPositionRelative({ relPos.x, relPos.y, relPos.z });
-			newEntity->assignerAngleRotation(rotation.z);
-			newEntity->assignerFacteurMiseAEchelle(scale.x);
+			PhysicsComponent& physics = newEntity->getPhysicsComponent();
+			physics.absolutePosition = { absPos.x, absPos.y, absPos.z };
+			physics.relativePosition = { relPos.x, relPos.y, relPos.z };
+			physics.rotation = rotation;
+			physics.scale = scale;
 			newEntity->setId(entityId);
 
 			auto userIt = users_.find(userId);
@@ -74,16 +75,6 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
 			std::cout << "Server entity created : " << newEntity->obtenirNom() <<
 				" id : " << newEntity->getId() << " parentid : " << parent->getId() << std::endl;
-
-			std::cout << "absolute position : " <<
-				newEntity->obtenirPositionCourante().x << " " <<
-				newEntity->obtenirPositionCourante().y << " " <<
-				newEntity->obtenirPositionCourante().z << std::endl;
-
-			std::cout << "relative position : " <<
-				newEntity->obtenirPositionRelative().x << " " <<
-				newEntity->obtenirPositionRelative().y << " " <<
-				newEntity->obtenirPositionRelative().z << std::endl << std::endl;
 		}
 	}
 	// This is a confirmation for the object to be created.
@@ -97,17 +88,19 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 		entityToInsert->setId(entityId);
 
 		// Update entity data.
+
+		PhysicsComponent& physics = entityToInsert->getPhysicsComponent();
 		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::ABSOLUTE_POSITION, 
-			                                  glm::vec3(entityToInsert->obtenirPositionCourante()));
+			                                  glm::vec3(physics.absolutePosition));
 
 		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::RELATIVE_POSITION, 
-			                                  glm::vec3(entityToInsert->obtenirPositionRelative()));
+			                                  glm::vec3(physics.relativePosition));
 
 		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::ROTATION, 
-			                                  glm::vec3(0.0, 0.0, entityToInsert->obtenirAngleRotation()));
+			                                  glm::vec3(physics.rotation));
 
 		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::SCALE, 
-			                                  glm::vec3(entityToInsert->obtenirFacteurMiseAEchelle(), 0.0, 0.0));
+			                                  glm::vec3(physics.scale));
 
 		network_->requestEntitySelection(entityToInsert->getId(), entityToInsert->estSelectionne());
 
@@ -126,17 +119,6 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 		std::cout << "Local entity creation confirmed : " << entityToInsert->obtenirNom() <<
 			" id : " << entityToInsert->getId() << " parentid : " << entityToInsert->obtenirParent()->getId() << std::endl;
 
-		std::cout << "absolute position : " <<
-			entityToInsert->obtenirPositionCourante().x << " " <<
-			entityToInsert->obtenirPositionCourante().y << " " <<
-			entityToInsert->obtenirPositionCourante().z << std::endl;
-
-		std::cout << "relative position : " <<
-			entityToInsert->obtenirPositionRelative().x << " " <<
-			entityToInsert->obtenirPositionRelative().y << " " <<
-			entityToInsert->obtenirPositionRelative().z << std::endl << std::endl;
-
-
 		// Send next entity in pending.
 		NoeudAbstrait* entityToConfirm = nullptr;
 
@@ -151,23 +133,7 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 
 void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 {
-		// TODO: Refactor data from NoeudAbstrait. 
-		glm::vec3 absPos = { entity->obtenirPositionCourante().x,
-							 entity->obtenirPositionCourante().y,
-							 entity->obtenirPositionCourante().z };
-
-		glm::vec3 relPos = { entity->obtenirPositionRelative().x,
-							 entity->obtenirPositionRelative().y,
-							 entity->obtenirPositionRelative().z };
-
-		glm::vec3 rotation = { 0.0,
-							   0.0,
-							   entity->obtenirAngleRotation() };
-
-		glm::vec3 scale = { entity->obtenirFacteurMiseAEchelle(),
-							0.0,
-							0.0 };
-
+		PhysicsComponent& physics = entity->getPhysicsComponent();
 		NoeudAbstrait* parent = entity->obtenirParent();
 		uint32_t parentId = 1;
 		if (parent) {
@@ -176,7 +142,8 @@ void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 
 		network_->requestEntityCreation(entity->getType(),
 										parentId,
-										absPos, relPos, rotation, scale);
+										glm::vec3(physics.absolutePosition), glm::vec3(physics.relativePosition), 
+			                            glm::vec3(physics.rotation), glm::vec3(physics.scale));
 }
 
 void MapSession::deleteLocalEntity(NoeudAbstrait* entity)
@@ -275,30 +242,31 @@ void MapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking::Prop
 	auto it = confirmedEntities_.find(entityId);
 	if (it != confirmedEntities_.end())
 	{
+		PhysicsComponent& physics = it->second->getPhysicsComponent();
 		switch (type)
 		{
 		case Networking::ABSOLUTE_POSITION:
-			it->second->assignerPositionCourante({ updatedProperty.x, updatedProperty.y, updatedProperty.z });
+			physics.absolutePosition = updatedProperty;
 			break;
 
 		case Networking::RELATIVE_POSITION:
-			it->second->assignerPositionRelative({ updatedProperty.x, updatedProperty.y, updatedProperty.z });
+			physics.relativePosition = updatedProperty;
 			break;
 
 		case Networking::ROTATION:
-			it->second->assignerAngleRotation(updatedProperty.z);
+			physics.rotation = updatedProperty;
 			break;
 
 		case Networking::SCALE:
-			it->second->assignerFacteurMiseAEchelle(updatedProperty.x);
+			physics.scale = updatedProperty;
 			break;
 
 		case Networking::LINEAR_VELOCITY:
-			// TODO
+			physics.linearVelocity = updatedProperty;
 			break;
 
 		case Networking::ANGULAR_VELOCITY:
-			// TODO
+			physics.angularVelocity = updatedProperty;
 			break;
 		}
 	}

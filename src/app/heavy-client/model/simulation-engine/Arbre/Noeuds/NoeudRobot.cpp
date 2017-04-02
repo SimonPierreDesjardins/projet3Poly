@@ -34,9 +34,9 @@
 #include "EnginSon.h"
 #include "Camera.h"
 
-const Eigen::Vector3f NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
-const Eigen::Vector3f NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
-const Eigen::Vector3f NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_GAUCHE = { 3.47, 1.85, 5.0 };
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_CENTRE = { 4.2695, 0.1, 5.0 };
+const glm::dvec3 NoeudRobot::POSITION_CAPTEUR_DISTANCE_DROITE = { 3.60, -1.80, 5.0 };
 
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE{ -45.0 };
 const double NoeudRobot::ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE{ 0.0 };
@@ -166,7 +166,7 @@ void NoeudRobot::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(physics_.rotation.z(), 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
     controleurLumiere_->afficherLumiereSpotRobot();
     
@@ -279,10 +279,10 @@ void NoeudRobot::suivreCamera()
 
 		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(physics_.rotation.z() * PI / 180), sin(physics_.rotation.z() * PI / 180), 4.0 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z * PI / 180), sin(physics_.rotation.z * PI / 180), 4.0 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z() * PI / 180) * 4, sin(physics_.rotation.z() * PI / 180) * 4, -4.0 });
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z * PI / 180) * 4, sin(physics_.rotation.z * PI / 180) * 4, -4.0 });
 	}
 }
 
@@ -298,9 +298,9 @@ void NoeudRobot::suivreCamera()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::calculerComposantesVitesseCourante(Eigen::Vector3f& vitesseTranslation, double& vitesseAngulaire) const
+void NoeudRobot::calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslation, double& vitesseAngulaire) const
 {
-    Eigen::Vector3f vitesseTangentielle, vitesseCentripete;
+    glm::dvec3 vitesseTangentielle, vitesseCentripete;
     rectangleEnglobant_.calculerVecteursOrientation(vitesseCentripete, vitesseTangentielle);
 
     double normeTangetielle = vitesseCouranteGauche_ + vitesseCouranteDroite_;
@@ -314,7 +314,7 @@ void NoeudRobot::calculerComposantesVitesseCourante(Eigen::Vector3f& vitesseTran
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// void NoeudRobot::calculerComposantesVitesseCourante(Eigen::Vector3f& vitesseTranslation, double& vitesseAngulaire) const
+/// void NoeudRobot::calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslation, double& vitesseAngulaire) const
 ///
 /// Cette méthode retourne les composantes du vitesse de collision en fonction
 /// d'une normale de collision.
@@ -326,13 +326,13 @@ void NoeudRobot::calculerComposantesVitesseCourante(Eigen::Vector3f& vitesseTran
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::calculerComposantesCollision(const Eigen::Vector3f& normale, Eigen::Vector3f& vitesseTranslationCollision,
+void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& vitesseTranslationCollision,
     double& vitesseAngulaireCollision) const
 {
-    Eigen::Vector3f orientationTangentielle, orientationCentripete;
+	glm::dvec3 orientationTangentielle, orientationCentripete;
     rectangleEnglobant_.calculerVecteursOrientation(orientationCentripete, orientationTangentielle);
 
-    Eigen::Vector3f vitesseTranslationCourante;
+    glm::dvec3 vitesseTranslationCourante;
     double vitesseAngulaireCourante;
     calculerComposantesVitesseCourante(vitesseTranslationCourante, vitesseAngulaireCourante);
     
@@ -374,7 +374,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         enCollision = true;
         cercle->assignerEnCollision(enCollision);
 
-        Eigen::Vector3f normaleCollision = cercle->calculerNormaleCollision(rectangleEnglobant_);
+        glm::dvec3 normaleCollision = cercle->calculerNormaleCollision(rectangleEnglobant_);
         calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
         // On replace le poteau à la dernière position.
@@ -417,7 +417,7 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 			teleporteurCollision_ = true;
 			teleporteurCourant_ = teleporteur;
 			rectangle->assignerEnCollision(enCollision);
-			Eigen::Vector3f normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
+			glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
 			calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
 			// On replace le teleporteur à la dernière position.
@@ -473,7 +473,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
         rectangle->assignerEnCollision(enCollision);
 
         // On calcule les composantes de la collision.
-        Eigen::Vector3f normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
+        glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
 
         calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
@@ -505,10 +505,10 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
 	RectangleEnglobant* rectangle = table->obtenirFormeEnglobante();
 
     // Trouver si le robot est en intersection avec la table.
-	Eigen::Vector3f coins[4];
+	glm::dvec3 coins[4];
     rectangleEnglobant_.calculerPositionCoins(coins);
 	bool enIntersection = false;
-    Eigen::Vector3f normaleCollision = { 0.0, 0.0, 0.0 };
+    glm::dvec3 normaleCollision = { 0.0, 0.0, 0.0 };
 
 	for (unsigned i = 0; i < 4; i++)
 	{
@@ -553,17 +553,17 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourCapteurs()
 {
-	suiveurLigne_->mettreAJourCapteurs({ physics_.relativePosition.x(),
-										 physics_.relativePosition.y(),
-										 physics_.relativePosition.z() },
-		                                 physics_.rotation.z());
+	suiveurLigne_->mettreAJourCapteurs({ physics_.relativePosition.x,
+										 physics_.relativePosition.y,
+										 physics_.relativePosition.z },
+		                                 physics_.rotation.z);
 
 	for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
 	{
-		capteursDistance_->at(i).mettreAJour({ physics_.relativePosition.x(),
-											   physics_.relativePosition.y(),
-											   physics_.relativePosition.z() },
-			                                   physics_.rotation.z());
+		capteursDistance_->at(i).mettreAJour({ physics_.relativePosition.x,
+											   physics_.relativePosition.y,
+											   physics_.relativePosition.z },
+			                                   physics_.rotation.z);
 	}
 }
 
@@ -580,10 +580,8 @@ void NoeudRobot::mettreAJourCapteurs()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourPosition(const float& dt)
 {
-	dernierePositionRelative_ = { physics_.relativePosition.x(), 
-	                              physics_.relativePosition.y(),
-								  physics_.relativePosition.z()	};
-    dernierAngleRotation_ = physics_.rotation.z();
+	dernierePositionRelative_ = physics_.relativePosition;
+    dernierAngleRotation_ = physics_.rotation.z;
 
 	float vitesseDroiteTemp = vitesseDroite_, vitesseGaucheTemp = vitesseGauche_;
 		//Calcul de la différence entre les vitesses de gauche et droite
@@ -677,9 +675,9 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
         }
     }
 
-	physics_.rotation.z() -= dt * vitesseRotationCourante_;
-	physics_.relativePosition.x() += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(physics_.rotation.z()));
-	physics_.relativePosition.y() += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(physics_.rotation.z()));
+	physics_.rotation.z -= dt * vitesseRotationCourante_;
+	physics_.relativePosition.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	physics_.relativePosition.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(physics_.rotation.z));
 	physics_.absolutePosition = physics_.relativePosition;
 	vitesseDroite_ = vitesseDroiteTemp;
 	vitesseGauche_ = vitesseGaucheTemp;
@@ -698,7 +696,7 @@ void NoeudRobot::reinitialiserPosition()
 {
 	physics_.relativePosition = { dernierePositionRelative_.x, dernierePositionRelative_.y, dernierePositionRelative_.z };
 	physics_.absolutePosition = physics_.relativePosition;
-	physics_.rotation.z() = dernierAngleRotation_;
+	physics_.rotation.z = dernierAngleRotation_;
 
     mettreAJourFormeEnglobante();
 
@@ -727,16 +725,16 @@ void NoeudRobot::mettreAJourFormeEnglobante()
     // On obtient la position du centre de la boite.
     double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
-    Eigen::Vector3f positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
+    glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
     // On effectue une rotation du centre. (Au cas où la boite n'est pas centrée avec le modèle).
-    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, physics_.rotation.z());
+    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, physics_.rotation.z);
 
     // Effectuer la translation de la position.
-    Eigen::Vector3f positionRectangle = { physics_.absolutePosition.x() + positionBoite.x, physics_.absolutePosition.y() + positionBoite.y, 0.0 };
+    glm::dvec3 positionRectangle = { physics_.absolutePosition.x + positionBoite.x, physics_.absolutePosition.y + positionBoite.y, 0.0 };
 
     // Mettre à jour les attributs du rectangle.
-    rectangleEnglobant_.mettreAJour(positionRectangle, physics_.rotation.z(), hauteur, largeur);
+    rectangleEnglobant_.mettreAJour(positionRectangle, physics_.rotation.z, hauteur, largeur);
 }
 
 
@@ -758,24 +756,24 @@ void NoeudRobot::effectuerCollision(const double& dt)
 	{
 		// Ajouter les vitesses de collision aux vitesses du moteur.    
 		double vitesseAngulaire = 0.0;
-		Eigen::Vector3f vitesseTranslation = { 0.0, 0.0, 0.0 };
+		glm::dvec3 vitesseTranslation = { 0.0, 0.0, 0.0 };
 
 		//calculerComposantesVitesseCourante(vitesseTranslation, vitesseAngulaire);
 		vitesseTranslation += vitesseTranslationCollision_;
 		vitesseAngulaire += vitesseAngulaireCollision_;
 
 		// Appliquer la vitesse de collision en fonction du temps
-		physics_.relativePosition() += vitesseTranslation * dt / 10.0;
-		angleRotation_ += vitesseAngulaire * dt;
+		physics_.relativePosition += vitesseTranslation * dt / 10.0;
+		physics_.rotation.z += vitesseAngulaire * dt;
 
 		// La force frottement est toujours dans le sens inverse du déplacement.
-		Eigen::Vector3f frottementTranslation = -glm::normalize(vitesseTranslationCollision_);
+		glm::dvec3 frottementTranslation = -glm::normalize(vitesseTranslationCollision_);
 		frottementTranslation *= acceleration_;
 		double frottementRotation = acceleration_ * -glm::sign(vitesseAngulaireCollision_);
 
 		// Appliquer la force de frottement sur la vitesse en translation tant qu'on se trouve en translation.
-		Eigen::Vector3f origine = { 0.0, 0.0, 0.0 };
-		Eigen::Vector3f dV = frottementTranslation * dt;
+		glm::dvec3 origine = { 0.0, 0.0, 0.0 };
+		glm::dvec3 dV = frottementTranslation * dt;
 
 		// Si la vitesse est plus petite que différence de vitesse, celle-ci devient nulle et le robot n'est plus en translation.
 		bool enTranslation = glm::length(dV) < glm::length(vitesseTranslationCollision_);
@@ -805,11 +803,13 @@ void NoeudRobot::effectuerCollision(const double& dt)
 	}
 	else
 	{
+		// TODO: À bouger dans le téléporteur.
 		if (teleportationFaite_ == false)
 		{
-			positionCourante_.x = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante().x;
-			positionCourante_.y = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante().y;
-			positionRelative_ = positionCourante_;
+			glm::dvec3 teleporterAbsPos = teleporteurCourant_->getPhysicsComponent().absolutePosition;
+			physics_.absolutePosition.x = teleporterAbsPos.x;
+			physics_.absolutePosition.y = teleporterAbsPos.y;
+			physics_.relativePosition = physics_.absolutePosition;
 			mettreAJourPosition(dt);
 			mettreAJourFormeEnglobante();
 			teleportationFaite_ = true;
@@ -831,12 +831,10 @@ void NoeudRobot::effectuerCollision(const double& dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::positionnerRoues()
 {
-	roueGauche_->assignerAngleRotation(angleRotation_);
+	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
-
-	roueDroite_->assignerAngleRotation(angleRotation_);
-
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
 

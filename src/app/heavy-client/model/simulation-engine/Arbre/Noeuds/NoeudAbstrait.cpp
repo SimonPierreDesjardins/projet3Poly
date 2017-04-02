@@ -430,9 +430,9 @@ void NoeudAbstrait::afficher(const int& index) const
 		glPushAttrib(GL_CURRENT_BIT | GL_POLYGON_BIT);
         
 		// La translation de la position relative		
-		glTranslated(physics_.relativePosition.x(), 
-			         physics_.relativePosition.y(), 
-			         physics_.relativePosition.z());
+		glTranslated(physics_.relativePosition.x, 
+			         physics_.relativePosition.y, 
+			         physics_.relativePosition.z);
 
 		// Assignation du mode d'affichage des polygones
 		glPolygonMode(GL_FRONT_AND_BACK, modePolygones_);
@@ -515,15 +515,15 @@ void NoeudAbstrait::toJson(rapidjson::Writer<rapidjson::FileWriteStream>& writer
 	writer.Key("type");
 	writer.String(obtenirNom().c_str());
 	writer.Key("posX");
-	writer.Double(physics_.relativePosition.x());
+	writer.Double(physics_.relativePosition.x);
 	writer.Key("posY");
-	writer.Double(physics_.relativePosition.y());
+	writer.Double(physics_.relativePosition.y);
 	writer.Key("posZ");
-	writer.Double(physics_.relativePosition.z());
+	writer.Double(physics_.relativePosition.z);
 	writer.Key("angleRotation");
-	writer.Double(physics_.rotation.z());
+	writer.Double(physics_.rotation.z);
 	writer.Key("facteurEchelle");
-	writer.Double(physics_.scale.x());
+	writer.Double(physics_.scale.x);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -546,13 +546,13 @@ void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON)
 	itr++;
 	double z = itr->value.GetDouble();
 	itr++;
-	physics_.relativePosition.x() = x;
-	physics_.relativePosition.y() = y;
-	physics_.relativePosition.z() = z;
+	physics_.relativePosition.x = x;
+	physics_.relativePosition.y = y;
+	physics_.relativePosition.z = z;
 
-	physics_.rotation.z() = itr->value.GetDouble();
+	physics_.rotation.z = itr->value.GetDouble();
 	itr++;
-	physics_.scale.x() = itr->value.GetDouble();
+	physics_.scale.x = itr->value.GetDouble();
 }
 
 

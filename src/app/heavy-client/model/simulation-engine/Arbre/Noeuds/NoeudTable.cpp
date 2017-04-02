@@ -95,8 +95,8 @@ void NoeudTable::mettreAJourFormeEnglobante()
     double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
 
-    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };
-    rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
+    glm::dvec3 positionRectangle = { physics_.absolutePosition.x + positionBoiteX, physics_.absolutePosition.y + positionBoiteY, 0.0 };
+    rectangleEnglobant_.mettreAJour(positionRectangle, physics_.rotation.z, hauteur, largeur);
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -120,7 +120,7 @@ void NoeudTable::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //rectangleEnglobant_.afficher(positionCourante_);
+    //rectangleEnglobant_.afficher(physics_.absolutePosition);
 }
 
 ////////////////////////////////////////////////////////////////////////

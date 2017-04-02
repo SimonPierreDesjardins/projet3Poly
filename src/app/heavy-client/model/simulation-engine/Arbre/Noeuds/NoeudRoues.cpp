@@ -39,8 +39,6 @@ NoeudRoues::NoeudRoues(uint32_t id, const std::string& typeNoeud)
 	type_ = WHEEL_ENTITY;
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	NoeudAbstrait* depart = table->chercher(0);
-	positionRelative_ = depart->obtenirPositionRelative();
-	angleRotation_ = depart->obtenirAngleRotation();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	couleur_ = profil_->obtenirCouleurs(WHEELS);
 	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(WHEELS);
