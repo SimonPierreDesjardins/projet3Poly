@@ -35,6 +35,8 @@ public:
 	virtual void assignerSymboleCurseur();
 	virtual void gererToucheEchappe();
 
+	bool isInCreation() { return enCreation_; };
+
 private:
 	std::unique_ptr<VisiteurCreationTeleporteur> visiteurCreationTeleporteur_{ nullptr };
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };

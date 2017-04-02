@@ -111,8 +111,14 @@ class ProfilUtilisateur
 		void setModele(std::string modele);
 		std::string getModele();
 
+
+		void setPiece(int piece);
+		int obtenirPieces();
+		int obtenirMaxPieces();
+
 		std::string obtenirCheminVersMusiqueSimulation();
 		void assignerCheminVersMusiqueSimulation(std::string chemin);
+
 
 	private:
 		bool creationDossierDonnees();
@@ -203,6 +209,9 @@ class ProfilUtilisateur
 		bool estDefautRobot_ = true;
 
 		std::string modele_{"robot"};
+
+		int piecesCollectees = 0;
+		int plusGrandNombrePieces = 0;
 		
 };
 

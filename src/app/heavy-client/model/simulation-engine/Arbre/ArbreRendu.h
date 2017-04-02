@@ -96,6 +96,8 @@ public:
 	// Assigne la position relative en x du noeud sélectionné. 
 	void assignerPositionRelativeY(const double& positionRelativeY);
 
+	
+
 protected:
 	// Retourne un pointeur vers le fichier de structure de base
 	FILE* obtenirFichierZoneDefaut(std::string mode);

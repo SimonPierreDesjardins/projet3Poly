@@ -33,7 +33,7 @@ namespace MessageStandard {
 
 	int GetMessageLength(std::string& message);
 
-	namespace ItemTypes{
+	namespace ItemTypes {
 		enum EntityType
 		{
 			TABLE_ENTITY,

@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 /// @file ModeTest.cpp
-/// @author Frédéric Grégoire
+/// @author Frï¿½dï¿½ric Grï¿½goire
 /// @date 2016-02-02
 /// @version 1.0
 ///
@@ -24,7 +24,7 @@ std::array<char, 11> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1'
 ///
 /// @fn ModeTest::ModeTest()
 ///
-/// Constructeur par défaut pour le mode test
+/// Constructeur par dï¿½faut pour le mode test
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeTest::ModeTest(client_network::MapSession* mapSession)
@@ -32,8 +32,10 @@ ModeTest::ModeTest(client_network::MapSession* mapSession)
 {
 	typeMode_ = TEST;
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	//controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-	// On fait démarrer le robot en mode automatique
+	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	// On fait dï¿½marrer le robot en mode automatique
 	//controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 
@@ -81,13 +83,13 @@ ModeTest::~ModeTest()
 ///
 /// @fn void ModeTest::preChangementDeProfil()
 ///
-/// Fonction appelée avant qu'il y ait changement de profil pour arrêter les accès. Arrête aussi le thread du robot.
+/// Fonction appelï¿½e avant qu'il y ait changement de profil pour arrï¿½ter les accï¿½s. Arrï¿½te aussi le thread du robot.
 ///
 /// @return Aucune
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModeTest::preChangementDeProfil(){
-	//Terminer le thread du robot et préparer à un changement au mode automatique
+	//Terminer le thread du robot et prï¿½parer ï¿½ un changement au mode automatique
 	//controleRobot_->passerAModeManuel();
 }
 
@@ -95,7 +97,7 @@ void ModeTest::preChangementDeProfil(){
 ///
 /// @fn void ModeTest::postChangementDeProfil()
 ///
-/// Fonction appelée après qu'il y ait changement de profil pour repartir la simulation. Passe le robot en mode automatique.
+/// Fonction appelï¿½e aprï¿½s qu'il y ait changement de profil pour repartir la simulation. Passe le robot en mode automatique.
 ///
 /// @return Aucune
 ///
@@ -109,7 +111,7 @@ void ModeTest::postChangementDeProfil(){
 ///
 /// @fn void ModeSimulation::inverserLumiereAmbiante()
 ///
-/// Fonction qui permet d'alterner l'état de la lumière ambiante 
+/// Fonction qui permet d'alterner l'ï¿½tat de la lumiï¿½re ambiante 
 ///
 /// @return Aucune
 ///
@@ -135,7 +137,7 @@ void ModeTest::inverserLumiereAmbiante()
 ///
 /// @fn void ModeSimulation::inverserLumiereDirectionnelle()
 ///
-/// Fonction qui permet d'alterner l'état de la lumière directionnelle 
+/// Fonction qui permet d'alterner l'ï¿½tat de la lumiï¿½re directionnelle 
 ///
 /// @return Aucune
 ///
@@ -161,7 +163,7 @@ void ModeTest::inverserLumiereDirectionnelle()
 ///
 /// @fn void ModeSimulation::inverserLumiereSpot()
 ///
-/// Fonction qui permet d'alterner l'état de la lumière spot
+/// Fonction qui permet d'alterner l'ï¿½tat de la lumiï¿½re spot
 ///
 /// @return Aucune
 ///
@@ -185,7 +187,7 @@ void ModeTest::inverserLumiereSpot()
 ///
 /// @fn ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ///
-/// Fonction qui permet de traiter les entrées utilisateur en mode test. 
+/// Fonction qui permet de traiter les entrï¿½es utilisateur en mode test. 
 ///
 /// @return Aucune (destructeur).
 ///
@@ -299,11 +301,11 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
                 std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
                 controleRobot_->traiterCommande(commandeArreter.get(), true);
 
-                // Indiquer que la commande n'est plus appuyée dans les flags d'actions appuyées
+                // Indiquer que la commande n'est plus appuyï¿½e dans les flags d'actions appuyï¿½es
                 TypeCommande type = commandeCourante->obtenirTypeCommande();
                 actionsAppuyees_.at(type) = false;
 
-                // Relancer les commandes qui sont toujours appuyées.
+                // Relancer les commandes qui sont toujours appuyï¿½es.
                 for (int i = 1; i < actionsAppuyees_.size(); i++)
                 {
                     if (actionsAppuyees_.at((TypeCommande)i))
@@ -316,7 +318,7 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 		*/
 	}
-	// Répartition du traitement des messages provenant de la souris.
+	// Rï¿½partition du traitement des messages provenant de la souris.
 	if (FacadeModele::obtenirInstance()->obtenirAutorisationInputSouris())
 	{
 		switch (msg)
@@ -340,6 +342,37 @@ void ModeTest::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 		}
 	}
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeTest::postAnimer()
+///
+/// Fonction qui permet de visiter les noeuds et detecter collision
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+void ModeTest::postAnimer()
+{
+	arbre_->accepterVisiteur(&visiteur_);
+
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ModeTest::obtenirModeEnPause()
+///
+/// Fonction qui permet de dire si le mode est en pause ou non
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+bool ModeTest::obtenirModeEnPause()
+{
+	return modeEnPause;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

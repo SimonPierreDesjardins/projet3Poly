@@ -416,7 +416,6 @@ namespace ui
             if (parent_.viewPort.Controls.Contains(parent_.mainMenu))
             {
                 parent_.mainMenu.connexionPictureBox.Image = parent_.mainMenu.ChangeColor((Bitmap)parent_.mainMenu.connexionPictureBox.Image, Color.Red);
-                parent_.mainMenu.achievementButton.Visible = false;
             }
 
             parent_.mapMenu.onlineMaps_.Clear();

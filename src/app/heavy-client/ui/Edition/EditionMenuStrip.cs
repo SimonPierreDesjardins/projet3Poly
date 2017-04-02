@@ -417,54 +417,5 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputClavier(true);
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void tutorielToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Change le mode pour le mode Edition Tutoriel et enleve les controls pour le mode
-        /// edition.
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void tutorielToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Focus();
-            parent_.editionTutorielMenuStrip = new EditionTutorielMenuStrip(parent_);
-            parent_.editionTutorielSideMenu = new EditionTutorielSideMenu(parent_);
-            parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
-            parent_.editionTutorielModificationPanel = new TutorialEditionModificationPanel(parent_);
-
-            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
-            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
-            parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
-
-            parent_.viewPort.Controls.Add(parent_.editionTutorielSideMenu);
-            parent_.editionTutorielSideMenu.Dock = DockStyle.Left;
-
-            parent_.viewPort.Controls.Add(parent_.editionTutorielMenuStrip);
-            parent_.editionTutorielMenuStrip.Dock = DockStyle.Top;
-
-            parent_.editionTutorielModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionTutorielModificationPanel.Width,
-                                                                  parent_.editionMenuStrip.Height);
-            parent_.editionTutorielModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionTutorielModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionTutorielModificationPanel);
-
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-            FonctionsNatives.assignerMode(Mode.TUTORIAL_EDITION);
-
-            parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
-            parent_.editionTutorielInstructions.Location = new Point(parent_.viewPort.Width / 2 - parent_.editionTutorielInstructions.Width / 2,
-                                                                    parent_.viewPort.Height / 2 - parent_.editionTutorielInstructions.Height / 2);
-            parent_.editionTutorielInstructions.Anchor = AnchorStyles.None;
-            parent_.viewPort.Controls.Add(parent_.editionTutorielInstructions);
-            parent_.editionTutorielInstructions.BringToFront();
-        }
     }
 }

@@ -41,7 +41,6 @@
             this.orbiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.informationsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tutorielToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.BottomToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.TopToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
@@ -56,8 +55,7 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fichierToolStripMenuItem,
             this.vuesToolStripMenuItem,
-            this.informationsToolStripMenuItem,
-            this.tutorielToolStripMenuItem});
+            this.informationsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(793, 29);
@@ -166,15 +164,6 @@
             this.aideToolStripMenuItem.Text = "Aide";
             this.aideToolStripMenuItem.Click += new System.EventHandler(this.aideToolStripMenuItem_Click);
             // 
-            // tutorielToolStripMenuItem
-            // 
-            this.tutorielToolStripMenuItem.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tutorielToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(178)))), ((int)(((byte)(216)))), ((int)(((byte)(255)))));
-            this.tutorielToolStripMenuItem.Name = "tutorielToolStripMenuItem";
-            this.tutorielToolStripMenuItem.Size = new System.Drawing.Size(78, 25);
-            this.tutorielToolStripMenuItem.Text = "Tutoriel";
-            this.tutorielToolStripMenuItem.Click += new System.EventHandler(this.tutorielToolStripMenuItem_Click);
-            // 
             // BottomToolStripPanel
             // 
             this.BottomToolStripPanel.Location = new System.Drawing.Point(0, 0);
@@ -245,6 +234,5 @@
         private System.Windows.Forms.ToolStripPanel RightToolStripPanel;
         private System.Windows.Forms.ToolStripPanel LeftToolStripPanel;
         private System.Windows.Forms.ToolStripContentPanel ContentPanel;
-        private System.Windows.Forms.ToolStripMenuItem tutorielToolStripMenuItem;
     }
 }

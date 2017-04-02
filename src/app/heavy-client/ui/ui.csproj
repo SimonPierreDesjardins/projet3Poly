@@ -116,6 +116,36 @@
     <Compile Include="Connection\DisconnetedPanel.Designer.cs">
       <DependentUpon>DisconnetedPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Loading\loadingPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Loading\loadingPanel.Designer.cs">
+      <DependentUpon>loadingPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlinePieces\OnlinePiecesMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OnlinePieces\OnlinePiecesMenuStrip.Designer.cs">
+      <DependentUpon>OnlinePiecesMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineRace\OnlineRaceMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OnlineRace\OnlineRaceMenuStrip.Designer.cs">
+      <DependentUpon>OnlineRaceMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnlineSimulation\OnlineSimulationMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OnlineSimulation\OnlineSimulationMenuStrip.Designer.cs">
+      <DependentUpon>OnlineSimulationMenuStrip.cs</DependentUpon>
+    </Compile>
+    <Compile Include="OnllineEdition\OnlineEditionMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OnllineEdition\OnlineEditionMenuStrip.Designer.cs">
+      <DependentUpon>OnlineEditionMenuStrip.cs</DependentUpon>
+    </Compile>
     <Compile Include="Personalize\MusicSelector.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -196,11 +226,11 @@
     <Compile Include="MapSelector\MapMenu.Designer.cs">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MapSelector\MapPresentator.cs">
+    <Compile Include="MapSelector\SingleMapPresentation.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="MapSelector\MapPresentator.Designer.cs">
-      <DependentUpon>MapPresentator.cs</DependentUpon>
+    <Compile Include="MapSelector\SingleMapPresentation.Designer.cs">
+      <DependentUpon>SingleMapPresentation.cs</DependentUpon>
     </Compile>
     <Compile Include="Personalize\PersonnalisationSideMenu.cs">
       <SubType>UserControl</SubType>
@@ -278,6 +308,21 @@
     <EmbeddedResource Include="Connection\DisconnetedPanel.resx">
       <DependentUpon>DisconnetedPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Loading\loadingPanel.resx">
+      <DependentUpon>loadingPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlinePieces\OnlinePiecesMenuStrip.resx">
+      <DependentUpon>OnlinePiecesMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineRace\OnlineRaceMenuStrip.resx">
+      <DependentUpon>OnlineRaceMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnlineSimulation\OnlineSimulationMenuStrip.resx">
+      <DependentUpon>OnlineSimulationMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OnllineEdition\OnlineEditionMenuStrip.resx">
+      <DependentUpon>OnlineEditionMenuStrip.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Personalize\MusicSelector.resx">
       <DependentUpon>MusicSelector.cs</DependentUpon>
     </EmbeddedResource>
@@ -314,8 +359,8 @@
     <EmbeddedResource Include="MapSelector\MapMenu.resx">
       <DependentUpon>MapMenu.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MapSelector\MapPresentator.resx">
-      <DependentUpon>MapPresentator.cs</DependentUpon>
+    <EmbeddedResource Include="MapSelector\SingleMapPresentation.resx">
+      <DependentUpon>SingleMapPresentation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Personalize\ModeleSelector.resx">
       <DependentUpon>ModeleSelector.cs</DependentUpon>
@@ -431,6 +476,7 @@
     <Content Include="Resources\Zoom.png" />
     <Content Include="Resources\Zoom_Disabled.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -20,6 +20,8 @@ namespace EditionTutorial
         CREATING_POST,
         SELECT_LINE_TOOL,
         CREATING_LINE,
+        SELECT_TELEPORTOR,
+        CREATING_TELEPORTOR,
         SELECT_WALL_TOOL,
         CREATING_WALL,
         SELECT_TOOL,

@@ -15,6 +15,8 @@
 #include "glm\glm.hpp"
 #include "OnlineMapMode.h"
 #include "ControleRobot.h"
+#include "FacadeModele.h"
+#include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
 
@@ -49,6 +51,8 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
+	virtual void postAnimer();
+
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
 
 private:
@@ -66,6 +70,7 @@ private:
 	ControleurLumiere* controleurLumiere_{ nullptr };
 	
 	//Constructeur par d�faut
+	bool obtenirModeEnPause();
 	ModeSimulation() = delete;
 };
 

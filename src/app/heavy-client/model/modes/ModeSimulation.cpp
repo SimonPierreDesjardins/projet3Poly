@@ -15,7 +15,6 @@
 #include "Utilitaire.h"
 #include "Vue.h"
 #include "Projection.h"
-#include "FacadeModele.h"
 
 #include "NoeudRobot.h"
 #include "CommandeRobot.h"
@@ -46,9 +45,14 @@ ModeSimulation::ModeSimulation(ArbreRendu* tree, ProfilUtilisateur* profil,
 	  controleurLumiere_(lighting),
 	  controleRobot_(tree, profil, lighting, mapSession)
 {
+
 	typeMode_ = SIMULATION;
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
+	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	// On fait d�marrer le robot en mode manuel
+	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
 
@@ -266,6 +270,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             bool estEnPause = controleRobot_.getEnPause();
             controleRobot_.setEnPause(!estEnPause);
 			controleurLumiere_->setEnPause(!estEnPause);
+			modeEnPause = !modeEnPause;
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();      
@@ -347,6 +352,34 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ModeSimulation::postAnimer()
+///
+/// Fonction qui permet de visiter les noeuds et detecter collision
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+void ModeSimulation::postAnimer()
+{
+	arbre_->accepterVisiteur(&visiteur_);
+
+}
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ModeSimulation::obtenirModeEnPause()
+///
+/// Fonction qui permet de dire si le mode est en pause ou non
+///
+/// @return Aucune 
+///
+////////////////////////////////////////////////////////////////////////
+bool ModeSimulation::obtenirModeEnPause()
+{
+	return modeEnPause;
 }
 
 

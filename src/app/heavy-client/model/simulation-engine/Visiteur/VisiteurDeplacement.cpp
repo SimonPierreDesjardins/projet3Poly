@@ -115,7 +115,7 @@ void VisiteurDeplacement::visiter(NoeudDuplication* duplication)
 
 		// Push the children in the queue.
 		uint32_t nChildren = entityToUpdate->obtenirNombreEnfants();
-		for (int i = 0; i < nChildren; ++i)
+		for (unsigned int i = 0; i < nChildren; ++i)
 		{
 			entitiesToMove.push(entityToUpdate->chercher(i));
 		}
@@ -155,7 +155,7 @@ void VisiteurDeplacement::moveSelectedChildren(NoeudAbstrait* entity)
 
 		// Push the children in the queue.
 		uint32_t nChildren = entityToUpdate->obtenirNombreEnfants();
-		for (int i = 0; i < nChildren; ++i)
+		for (unsigned int i = 0; i < nChildren; ++i)
 		{
 			entitiesToMove.push(entityToUpdate->chercher(i));
 		}

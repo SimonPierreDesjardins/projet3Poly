@@ -20,30 +20,30 @@
 #include <codecvt>
 #include <string>
 
-/// La chaîne représentant le type du robot.
+/// La chaï¿½ne reprï¿½sentant le type du robot.
 const std::string ArbreRenduINF2990::NOM_ROBOT{ "robot" };
-/// La chaîne représentant le type de la table.
+/// La chaï¿½ne reprï¿½sentant le type de la table.
 const std::string ArbreRenduINF2990::NOM_TABLE{ "table" };
-/// La chaîne représentant le type des poteeaux.
+/// La chaï¿½ne reprï¿½sentant le type des poteeaux.
 const std::string ArbreRenduINF2990::NOM_POTEAU{ "poteau" };
-/// La chaîne représentant le type des murs.
+/// La chaï¿½ne reprï¿½sentant le type des murs.
 const std::string ArbreRenduINF2990::NOM_MUR{ "mur" };
-/// La chaîne représentant le type des lignes.
+/// La chaï¿½ne reprï¿½sentant le type des lignes.
 const std::string ArbreRenduINF2990::NOM_LIGNENOIRE{ "ligneNoire" };
-/// La chaîne représentant le type des segments.
+/// La chaï¿½ne reprï¿½sentant le type des segments.
 const std::string ArbreRenduINF2990::NOM_SEGMENT{ "segment" };
-/// La chaîne représentant le type des duplications.
+/// La chaï¿½ne reprï¿½sentant le type des duplications.
 const std::string ArbreRenduINF2990::NOM_DUPLICATION{ "duplication" };
-/// La chaîne représentant le type du point de départ.
+/// La chaï¿½ne reprï¿½sentant le type du point de dï¿½part.
 const std::string ArbreRenduINF2990::NOM_DEPART{ "depart" };
-/// La chaîne représentant le type du point de départ.
+/// La chaï¿½ne reprï¿½sentant le type du point de dï¿½part.
 const std::string ArbreRenduINF2990::NOM_JONCTION{ "jonction" };
-/// La chaîne représentant le type du point de départ.
+/// La chaï¿½ne reprï¿½sentant le type du point de dï¿½part.
 const std::string ArbreRenduINF2990::NOM_ROUES{ "roues" };
-/// La chaine représentant le type du skybox
+/// La chaine reprï¿½sentant le type du skybox
 const std::string ArbreRenduINF2990::NOM_SKYBOX{ "skybox" };
 
-//La chaine représentant les différents modèles que l'on peut changer
+//La chaine reprï¿½sentant les diffï¿½rents modï¿½les que l'on peut changer
 const std::string ArbreRenduINF2990::NOM_F1{ "f1" };
 
 const std::string ArbreRenduINF2990::NOM_TRUCK{ "truck" };
@@ -52,13 +52,15 @@ const std::string ArbreRenduINF2990::NOM_AUDI{ "audi" };
 
 const std::string ArbreRenduINF2990::NOM_TELEPORTEUR{ "teleporteur" };
 
+const std::string ArbreRenduINF2990::NOM_PIECE{ "piece" };
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn ArbreRenduINF2990::ArbreRenduINF2990()
 ///
-/// Ce constructeur crée toutes les usines qui seront utilisées par le
-/// projet de INF2990 et les enregistre auprès de la classe de base.
-/// Il crée également la structure de base de l'arbre de rendu, c'est-à-dire
+/// Ce constructeur crï¿½e toutes les usines qui seront utilisï¿½es par le
+/// projet de INF2990 et les enregistre auprï¿½s de la classe de base.
+/// Il crï¿½e ï¿½galement la structure de base de l'arbre de rendu, c'est-ï¿½-dire
 /// avec les noeuds structurants.
 ///
 /// @return Aucune (constructeur).
@@ -87,8 +89,8 @@ ArbreRenduINF2990::~ArbreRenduINF2990()
 ///
 /// @fn void ArbreRenduINF2990::initialiser()
 ///
-/// Cette fonction appel chargerZoneDefaut() pour créer la structure de base de l'arbre de rendu,
-/// c'est-à-dire avec les noeuds structurants (pour les objets, les murs, les billes,
+/// Cette fonction appel chargerZoneDefaut() pour crï¿½er la structure de base de l'arbre de rendu,
+/// c'est-ï¿½-dire avec les noeuds structurants (pour les objets, les murs, les billes,
 /// les parties statiques, etc.).
 ///
 /// @return Aucune.
@@ -111,6 +113,8 @@ void ArbreRenduINF2990::initialiser()
 	ajouterUsine(TRUCK_ENTITY, NOM_TRUCK, std::make_unique<UsineNoeud<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }));
 	ajouterUsine(AUDI_ENTITY, NOM_AUDI, std::make_unique<UsineNoeud<NoeudAudi>>(NOM_AUDI, std::string{ "media/modeles/audi_r8.obj" }));
 	ajouterUsine(TELEPORT_ENTITY, NOM_TELEPORTEUR, std::make_unique<UsineNoeud<NoeudTeleporteur>>(NOM_TELEPORTEUR, std::string{ "media/modeles/teleporter.obj" }));
+	ajouterUsine(COIN_ENTITY, NOM_PIECE, std::make_unique<UsineNoeud<NoeudPiece>>(NOM_PIECE, std::string{ "media/modeles/coin.obj" }));
+
 	//chargerZoneDefaut();
 }
 
@@ -118,8 +122,8 @@ void ArbreRenduINF2990::initialiser()
 ///
 /// @fn void ArbreRenduINF2990::chargerZoneDefaut()
 ///
-/// Cette fonction s'occupe de récupérer le fichier json contenant la configuration 
-/// de base de l'arbre de rendu. Si le fichier n'existe pas, la fonction le crée.
+/// Cette fonction s'occupe de rï¿½cupï¿½rer le fichier json contenant la configuration 
+/// de base de l'arbre de rendu. Si le fichier n'existe pas, la fonction le crï¿½e.
 ///
 /// @return Aucune.
 ///
@@ -150,8 +154,8 @@ void ArbreRenduINF2990::chargerZoneDefaut(){
 ///
 /// @fn void ArbreRenduINF2990::chargerZone()
 ///
-/// Cette fonction s'occupe de récupérer le fichier json contenant une configuration quelconque 
-/// de l'arbre de rendu sauvegardé par un utilisateur.
+/// Cette fonction s'occupe de rï¿½cupï¿½rer le fichier json contenant une configuration quelconque 
+/// de l'arbre de rendu sauvegardï¿½ par un utilisateur.
 ///
 /// @return Aucune.
 ///
@@ -165,8 +169,8 @@ void ArbreRenduINF2990::chargerZone()
 ///
 /// @fn void ArbreRenduINF2990::chargerZone(FILE* fp)
 ///
-/// Cette fonction s'occupe de générer l'arbre de rendu
-/// selon le fichier json qu'on lui a passé en paramètre.
+/// Cette fonction s'occupe de gï¿½nï¿½rer l'arbre de rendu
+/// selon le fichier json qu'on lui a passï¿½ en paramï¿½tre.
 ///
 /// @param[in] fp : le fichier de sauvegarde pas encore parse.
 ///
@@ -199,11 +203,11 @@ void ArbreRenduINF2990::chargerZone(FILE* fp)
 ///
 /// @fn void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJSON, shared_ptr<NoeudAbstrait> parent)
 ///
-/// Fonction récursive traversant l'arbre Json pour créer chaque noeud
+/// Fonction rï¿½cursive traversant l'arbre Json pour crï¿½er chaque noeud
 /// selon leur type et les ajoutant au parent correspondant
 ///
 /// @param[in] noeudJSON : noeud en Json contenant les attributs du noeudAbstrait.
-/// @param[in] parent : le pointeur vers le parent du noeud qui s'apprête à être créé.
+/// @param[in] parent : le pointeur vers le parent du noeud qui s'apprï¿½te ï¿½ ï¿½tre crï¿½ï¿½.
 ///
 /// @return Aucune.
 ///

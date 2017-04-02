@@ -24,6 +24,8 @@
 #include "NoeudMur.h"
 #include "NoeudTable.h"
 #include "NoeudTeleporteur.h"
+#include "NoeudPiece.h"
+
 
 #include "VisiteurAbstrait.h"
 #include "FacadeModele.h"
@@ -121,9 +123,9 @@ NoeudRobot::~NoeudRobot()
     glLightfv(GL_LIGHT2, GL_DIFFUSE, glm::value_ptr(glm::vec4(0.0, 0.0, 0.0, 0.0)));
 
 	if ((table_ != nullptr) && (roueGauche_ != nullptr))
-		table_->effacer(roueGauche_);
+		effacer(roueGauche_);
 	if ((table_ != nullptr) && (roueDroite_ != nullptr))
-		table_->effacer(roueDroite_);
+		effacer(roueDroite_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -171,7 +173,7 @@ void NoeudRobot::afficherConcret() const
     controleurLumiere_->afficherLumiereSpotRobot();
     
 
-	if (mode_ != PERSONALIZE)  //empêche lumiere spot et capteurs pour personnaliser
+	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
@@ -182,7 +184,7 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	if (mode_ != PERSONALIZE)
+	if (mode_ != PERSONALIZE && mode_ != PIECES)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
@@ -252,7 +254,7 @@ void NoeudRobot::animer(float dt)
 	
 	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(), dt);
 	
-    arbre_->accepterVisiteur(visiteur_.get());
+
 	
 	positionnerRoues();
 	suivreCamera();
@@ -540,6 +542,40 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
         rectangle->assignerEnCollision(false);
     }
     return enIntersection;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool NoeudRobot::verifierCollision(NoeudPiece* piece)
+///
+/// Cette fonction vérifie s'il y a une collision avec le robot et une piece
+///
+/// @param[in] noeud: Prend le NoeudPiece en paramètre ce qui correspond aux pieces.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+bool NoeudRobot::verifierCollision(NoeudPiece* piece)
+{
+	if (piece == nullptr) return false;
+	RectangleEnglobant* rectangle = piece->obtenirFormeEnglobante();
+	bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
+	bool enCollision = false;
+	// Le piece est en intersection et il ne se trouve pas déjà en collision.
+	if (enIntersection)
+	{
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
+		// On calcule les composantes de la collision.
+		table_->effacer(piece);
+		profil_->setPiece(profil_->obtenirPieces() + 1);
+	}
+	// Le poteau n'est pas en intersection et il se trouvait en collision.
+	else // if (!enIntersection)
+	{
+		enCollision = false;
+		rectangle->assignerEnCollision(enCollision);
+	}
+	return enIntersection;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -905,6 +941,23 @@ void NoeudRobot::setCouleurDefault(int piece,bool default)
 	}
 	
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
+///
+/// Cette fonction permet de retourner le tableau de coins
+///
+/// @param[in] aucun
+///
+/// @return tableau de coins
+///
+////////////////////////////////////////////////////////////////////////
+std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
+{
+	return tableauCoins;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

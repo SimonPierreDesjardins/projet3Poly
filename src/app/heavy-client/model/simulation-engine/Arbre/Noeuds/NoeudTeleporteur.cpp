@@ -32,7 +32,7 @@
 /// @fn NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
 ///
 /// Ce constructeur ne fait qu'appeler la version de la classe et base
-/// et donner des valeurs par défaut aux variables membres.
+/// et donner des valeurs par dï¿½faut aux variables membres.
 ///
 /// @param[in] typeNoeud : Le type du noeud et le id du noeud
 ///
@@ -59,28 +59,31 @@ NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
 
 void NoeudTeleporteur::animer(float dt)
 {
-	if (compteurHauteurTeleporteur <= 0.02)
-		versLeHaut = true;
+	if (!FacadeModele::obtenirInstance()->obtenirMode()->obtenirModeEnPause())
+	{
+		if (compteurHauteurTeleporteur <= 0.02)
+			versLeHaut = true;
 
-	if (compteurHauteurTeleporteur >= 1.5)
-		versLeHaut = false;
+		if (compteurHauteurTeleporteur >= 1.5)
+			versLeHaut = false;
 
-	if (versLeHaut)
-		compteurHauteurTeleporteur = compteurHauteurTeleporteur+0.02;
+		if (versLeHaut)
+			compteurHauteurTeleporteur = compteurHauteurTeleporteur + 0.02;
 
-	if (!versLeHaut)
-		compteurHauteurTeleporteur = compteurHauteurTeleporteur-0.02;
+		if (!versLeHaut)
+			compteurHauteurTeleporteur = compteurHauteurTeleporteur - 0.02;
 
+        physics_.absolutePosition.z = compteurHauteurTeleporteur;
+        physics_.relativePosition.z = compteurHauteurTeleporteur;
+	}
 	physics_.absolutePosition = physics_.relativePosition;
-	physics_.absolutePosition.z = compteurHauteurTeleporteur;
-	physics_.relativePosition.z = compteurHauteurTeleporteur;
-    mettreAJourFormeEnglobante();
+	mettreAJourFormeEnglobante();
 }
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudPoteau::mettreAJourFormeEnglobante()
 ///
-/// Cette fonction permet de faire la mise à jour de la forme englobante pour le teleporteur.
+/// Cette fonction permet de faire la mise ï¿½ jour de la forme englobante pour le teleporteur.
 ///
 /// @return Aucune.
 ///
@@ -102,7 +105,7 @@ void NoeudTeleporteur::mettreAJourFormeEnglobante()
 ///
 /// @fn NoeudTeleporteur::~NoeudTeleporteur()
 ///
-/// Ce destructeur désallouee la liste d'affichage du teleporteur.
+/// Ce destructeur dï¿½sallouee la liste d'affichage du teleporteur.
 ///
 /// @return Aucune (destructeur).
 ///
@@ -179,7 +182,7 @@ const CercleEnglobant* NoeudTeleporteur::obtenirCercleEnglobante() const
 ///
 /// @fn void NoeudTeleporteur::afficherConcret() const
 ///
-/// Cette fonction effectue le véritable rendu de l'objet.
+/// Cette fonction effectue le vï¿½ritable rendu de l'objet.
 ///
 /// @return Aucune.
 ///
@@ -205,16 +208,20 @@ void NoeudTeleporteur::afficherConcret() const
 
 	glRotated(physics_.rotation.z, 0, 0, 1);
 	
-	// Affichage du modèle.
+	// Affichage du modï¿½le.
 	vbo_->dessiner();
-
-    
 
 	// Restauration de la matrice.
 	glPopMatrix();
 
+<<<<<<< HEAD
     //rectangleEnglobant_.afficher(physics_.absolutePosition);
 	if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode() == 2) //montre les cercles des teleporteurs si dans le mode edition
+=======
+    //rectangleEnglobant_.afficher(positionCourante_);
+	int mode = FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
+	if (mode == EDITION || mode == TUTORIAL_EDITION) //montre les cercles des teleporteurs si dans le mode edition
+>>>>>>> master
 	{
 		cercleEnglobant_.afficher(physics_.absolutePosition);
 	}
@@ -225,10 +232,10 @@ void NoeudTeleporteur::afficherConcret() const
 ///
 /// @fn void NoeudTeleporteur::accepterVisiteur(VisiteurAbstrait* visiteur)
 ///
-/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
-/// sa tâche à la méthode qui se charge de ce type de noeud.
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse dï¿½lï¿½guer
+/// sa tï¿½che ï¿½ la mï¿½thode qui se charge de ce type de noeud.
 ///
-/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour dï¿½lï¿½guer au concret aprï¿½s)
 ///
 /// @return Aucune.
 ///
@@ -242,9 +249,9 @@ void NoeudTeleporteur::accepterVisiteur(VisiteurAbstrait* visiteur)
 ///
 /// @fn void NoeudTeleporteur::setId(int id)
 ///
-/// Cette fonction attribue un id au téléporteur
+/// Cette fonction attribue un id au tï¿½lï¿½porteur
 ///
-/// @param[in] id: numéro du téléporteur
+/// @param[in] id: numï¿½ro du tï¿½lï¿½porteur
 ///
 /// @return Aucune.
 ///
@@ -258,11 +265,11 @@ void NoeudTeleporteur::setId(int id)
 ///
 /// @fn int NoeudTeleporteur::getId()
 ///
-/// Cette fonction retourne le id du téléporteur
+/// Cette fonction retourne le id du tï¿½lï¿½porteur
 ///
 /// @param[in] aucun
 ///
-/// @return id du téléporteur
+/// @return id du tï¿½lï¿½porteur
 ///
 ////////////////////////////////////////////////////////////////////////
 int NoeudTeleporteur::getId()
@@ -309,7 +316,7 @@ bool NoeudTeleporteur::collisionTeleporteur()
 	{
 		return true;
 	}
-	for (unsigned int i = 0; i < FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->obtenirNombreEnfants() -1; i++) //on vérifie le cercle englobant des autres téléporteurs afin d'éviter d'avoir un téléporter dans ceux-ci
+	for (unsigned int i = 0; i < FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->obtenirNombreEnfants() -1; i++) //on vï¿½rifie le cercle englobant des autres tï¿½lï¿½porteurs afin d'ï¿½viter d'avoir un tï¿½lï¿½porter dans ceux-ci
 	{
 		if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i) != this)
 		{

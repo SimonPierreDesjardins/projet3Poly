@@ -9,6 +9,7 @@ namespace client_network
 MapSessionManager::MapSessionManager(ArbreRendu* tree, NetworkManager* network)
 	: tree_(tree), network_(network), localMapSession_(tree, network)
 {
+	localMapSession_.setIsOnlineSession(false);
 }
 
 MapSession* MapSessionManager::getServerSession(uint32_t mapId)

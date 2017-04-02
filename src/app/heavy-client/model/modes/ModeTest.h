@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 /// @file ModeTest.h
-/// @author Frédéric Grégoire
+/// @author Frï¿½dï¿½ric Grï¿½goire
 /// @date 2016-02-02
 /// @version 1.0
 ///
@@ -17,6 +17,8 @@
 
 #include "OnlineMapMode.h"
 #include "ControleRobot.h"
+#include "FacadeModele.h"
+#include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
 
@@ -27,9 +29,9 @@ class ControleurLumiere;
 
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeTest
-/// @brief Classe qui représente le mode test de notre machine à modes
+/// @brief Classe qui reprï¿½sente le mode test de notre machine ï¿½ modes
 ///
-///        Cette classe s'occupe d'implémenter les fonctions du mode test
+///        Cette classe s'occupe d'implï¿½menter les fonctions du mode test
 ///
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
@@ -37,6 +39,26 @@ class ControleurLumiere;
 
 class ModeTest : public OnlineMapMode
 {
+private:
+	std::unique_ptr<ControleRobot> controleRobot_;
+
+	ProfilUtilisateur* profil_{ nullptr };
+    AffichageTexte* affichageTexte_{ nullptr };
+
+	static std::array<char, 11> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
+
+	bool lumiereAmbiante{ true };
+	bool lumiereDirectionnelle{ true };
+	bool lumiereSpot{ true };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
+
+	ArbreRenduINF2990* arbre_{ nullptr };
+	VisiteurDetectionRobot visiteur_;
+
+	bool modeEnPause{ false };
+
 public:
 	ModeTest(client_network::MapSession* mapSession);
 
@@ -50,8 +72,12 @@ public:
 	void inverserLumiereDirectionnelle();
 	void inverserLumiereSpot();
 
-	//Gestion des entrées utilisateur
+	//Gestion des entrï¿½es utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
+
+	void postAnimer();
+
+	bool obtenirModeEnPause();
 	
 protected:
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
