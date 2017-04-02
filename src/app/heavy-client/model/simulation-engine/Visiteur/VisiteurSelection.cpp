@@ -105,7 +105,7 @@ void VisiteurSelection::visiter(NoeudTable* table)
 	selectedIndexes.insert(debut_, fin_);
 
 	uint32_t nChildren = table->obtenirNombreEnfants();
-	for (int i = 0; i < nChildren; ++i)
+	for (unsigned int i = 0; i < nChildren; ++i)
 	{
 		bool estSelectionne = table->chercher(i)->estSelectionne();
 		// If this node is not being selected

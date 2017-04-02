@@ -57,6 +57,7 @@ Minuterie::~Minuterie()
 void Minuterie::reinitialiserChrono()
 {
     debut_ = std::chrono::system_clock::now();
+	duree_ = 0.0;
 }
 
 

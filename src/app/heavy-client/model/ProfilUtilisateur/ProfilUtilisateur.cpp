@@ -819,7 +819,26 @@ std::string ProfilUtilisateur::getModele()
 void ProfilUtilisateur::setPiece(int piece)
 {
 	piecesCollectees = piece;
+	if (piece > plusGrandNombrePieces)
+	{
+		plusGrandNombrePieces = piece;
+	}
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn int ProfilUtilisateur::obtenirMaxPieces()
+///
+///	Fonction qui retourne l'attribut plusGrandNombrePieces
+///
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+int ProfilUtilisateur::obtenirMaxPieces()
+{
+	return plusGrandNombrePieces;
+}
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
