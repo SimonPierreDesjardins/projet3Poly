@@ -740,12 +740,12 @@ namespace ui
             parent_.viewPort.Controls.Remove(parent_.editionTutorielMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionTutorielModificationPanel);
 
+            parent_.viewPort.Controls.Add(parent_.mainMenu);
+            parent_.mainMenu.Dock = DockStyle.Left;
+
             Program.peutAfficher = false;
             parent_.viewPort.Refresh();
 
-            parent_.viewPort.Controls.Add(parent_.mainMenu);
-            parent_.mainMenu.Dock = DockStyle.Left;
-            
             FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
         

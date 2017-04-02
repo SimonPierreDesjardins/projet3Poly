@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 using ModeEnum;
 using System.Text;
 using System.Threading;
+using System.Drawing;
 
 namespace ui
 {
@@ -44,6 +45,7 @@ namespace ui
         public OnlinePiecesMenuStrip onlinePiecesMenuStrip;
         public OnlineRaceMenuStrip onlineRaceMenuStrip;
 
+        public string PathToDefaultZone_;
 
         public object timerLock_ = new object();
         public bool lockWasTaken = false;
@@ -112,6 +114,9 @@ namespace ui
             configuration = new Configure(this);
             //Load data from last launch
             FonctionsNatives.LoadApplicationSettings();
+            System.Text.StringBuilder str = new System.Text.StringBuilder(100);
+            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
+            PathToDefaultZone_ = str.ToString();
 
             mInstance = new CallbackForNewMap(addNewMap);
             SetCallbackForNewMap(mInstance);
@@ -483,7 +488,7 @@ namespace ui
                     if (editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TELEPORTOR)
                     {
                         editionTutorielInstructions.nextState();
-                        editionSideMenu.teleportorObjet();
+                        editionTutorielSideMenu.teleportorObjet();
                     }
                     break;    
 
@@ -664,6 +669,196 @@ namespace ui
                 int h = viewPort.Height;
             }
         }
+
+        public void goOfflineEdition()
+        {
+            estEnPause = false;
+            picturePause.Visible = false;
+
+            editionSideMenu = new EditionSideMenu(this);
+            editionMenuStrip = new EditionMenuStrip(this);
+            editionModificationPanel = new EditionModificationPanel(this);
+
+            editionSideMenu.Dock = DockStyle.Left;
+            viewPort.Controls.Add(editionSideMenu);
+            
+
+            viewPort.Controls.Add(editionMenuStrip);
+            editionMenuStrip.Dock = DockStyle.Top;
+
+            editionModificationPanel.Location = new Point(viewPort.Width - editionModificationPanel.Width, editionMenuStrip.Height);
+            editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            editionModificationPanel.Visible = false;
+            viewPort.Controls.Add(editionModificationPanel);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            Program.peutAfficher = true;
+            viewPort.Refresh();
+            verificationDuNombreElementChoisi();
+
+            FonctionsNatives.assignerMode(Mode.EDITION);
+            verificationDuNombreElementChoisi();
+        }
+
+        public void goOfflineEditionTutorial()
+        {
+            editionTutorielSideMenu = new EditionTutorielSideMenu(this);
+            editionTutorielMenuStrip = new EditionTutorielMenuStrip(this);
+            editionTutorielInstructions = new EditionTutorielInstructions(this);
+            editionTutorielModificationPanel = new TutorialEditionModificationPanel(this);
+
+            editionTutorielSideMenu.Dock = DockStyle.Left;
+            viewPort.Controls.Add(editionTutorielSideMenu);
+
+            editionTutorielMenuStrip.Dock = DockStyle.Top;
+            viewPort.Controls.Add(editionTutorielMenuStrip);
+
+            editionTutorielModificationPanel.Location = new Point(viewPort.Width - editionTutorielModificationPanel.Width, editionTutorielMenuStrip.Height);
+            editionTutorielModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            editionTutorielModificationPanel.Visible = false;
+            viewPort.Controls.Add(editionTutorielModificationPanel);
+
+            viewPort.Refresh();
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+            Program.peutAfficher = true;
+            FonctionsNatives.assignerMode(Mode.TUTORIAL_EDITION);
+
+
+            editionTutorielInstructions = new EditionTutorielInstructions(this);
+            editionTutorielInstructions.Location = new Point(viewPort.Width / 2 - editionTutorielInstructions.Width / 2,
+                                                             viewPort.Height / 2 - editionTutorielInstructions.Height / 2);
+            editionTutorielInstructions.Anchor = AnchorStyles.None;
+            viewPort.Controls.Add(editionTutorielInstructions);
+            editionTutorielInstructions.BringToFront();
+        }
+
+        public void goOnlineEdition()
+        {
+            estEnPause = false;
+            picturePause.Visible = false;
+
+            editionSideMenu = new EditionSideMenu(this);
+            onlineEditionMenuStrip = new OnlineEditionMenuStrip(this);
+            editionModificationPanel = new EditionModificationPanel(this);
+
+            editionSideMenu.Dock = DockStyle.Left;
+            viewPort.Controls.Add(editionSideMenu);
+
+            onlineEditionMenuStrip.Dock = DockStyle.Top;
+            viewPort.Controls.Add(onlineEditionMenuStrip);
+            
+            editionModificationPanel.Location = new Point(viewPort.Width - editionModificationPanel.Width, onlineEditionMenuStrip.Height);
+            editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
+            editionModificationPanel.Visible = false;
+            viewPort.Controls.Add(editionModificationPanel);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            Program.peutAfficher = true;
+            viewPort.Refresh();
+            verificationDuNombreElementChoisi();
+
+            FonctionsNatives.assignerMode(Mode.EDITION);
+            verificationDuNombreElementChoisi();
+        }
+
+        public void goOfflineSimulation()
+        {
+            simulationMenuStrip = new SimulationMenuStrip(this);
+            configuration.populerToolStripProfils(simulationMenuStrip.profilsToolStripMenuItem);
+
+            simulationMenuStrip.Dock = DockStyle.Top;
+            viewPort.Controls.Add(simulationMenuStrip);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            Program.peutAfficher = true;
+            viewPort.Refresh();
+
+            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
+        }
+
+        public void goOfflineSimulationTutorial()
+        {
+            simulationMenuStrip = new SimulationMenuStrip(this);
+            simulationMenuStrip.Dock = DockStyle.Top;
+            viewPort.Controls.Add(simulationMenuStrip);
+
+            simulationTutorial = new TutorialSimulation(this);
+            simulationTutorial.Location = new Point(viewPort.Width / 2 - simulationTutorial.Width / 2,
+                                                    viewPort.Height / 2 - simulationTutorial.Height / 2);
+
+            simulationTutorial.Anchor = AnchorStyles.None;
+
+            viewPort.Controls.Add(simulationTutorial);
+
+            simulationTutorial.BringToFront();
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+            FonctionsNatives.assignerMode(Mode.SIMULATION);
+            Program.peutAfficher = true;
+        }
+
+        public void goOnlineSimulation()
+        {
+            onlineSimulationMenuStrip = new OnlineSimulationMenuStrip(this);
+            configuration.populerToolStripProfils(onlineSimulationMenuStrip.profilsToolStripMenuItem);
+
+            onlineSimulationMenuStrip.Dock = DockStyle.Top;
+            viewPort.Controls.Add(onlineSimulationMenuStrip);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            Program.peutAfficher = true;
+            viewPort.Refresh();
+
+            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
+        }
+
+        public void goOnlineCoin()
+        {
+            onlinePiecesMenuStrip = new OnlinePiecesMenuStrip(this);
+            configuration.populerToolStripProfils(onlinePiecesMenuStrip.profilsToolStripMenuItem);
+
+            onlinePiecesMenuStrip.Dock = DockStyle.Top;
+            viewPort.Controls.Add(onlinePiecesMenuStrip);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            Program.peutAfficher = true;
+            viewPort.Refresh();
+
+            FonctionsNatives.assignerMode(ModeEnum.Mode.PIECES);
+        }
+
+        public void goOnlineRace()
+        {
+            onlineRaceMenuStrip = new OnlineRaceMenuStrip(this);
+            configuration.populerToolStripProfils(onlineRaceMenuStrip.profilsToolStripMenuItem);
+
+            onlineRaceMenuStrip.Dock = DockStyle.Top;
+            viewPort.Controls.Add(onlineRaceMenuStrip);
+
+            FonctionsNatives.assignerVueOrtho();
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            Program.peutAfficher = true;
+            viewPort.Refresh();
+
+            //Todo change for race
+            FonctionsNatives.assignerMode(ModeEnum.Mode.PIECES);
+        }
+
+
 
         public void Test(string mapName, bool connectionState, int mode, int nbPlayers, int id)
         {

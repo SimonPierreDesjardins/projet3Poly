@@ -84,7 +84,7 @@ void ApplicationSettings::save() {
 	rapidjson::Writer<rapidjson::FileWriteStream> writer(os);
 	writer.StartObject();
 		writer.Key("EditionTutorial");
-		writer.Bool(profil_->getSimulationTutorialState());
+		writer.Bool(profil_->getEditionTutorialState());
 
 		writer.Key("SimulationTutorial");
 		writer.Bool(profil_->getSimulationTutorialState());

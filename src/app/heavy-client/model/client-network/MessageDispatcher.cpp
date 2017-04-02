@@ -273,6 +273,7 @@ void MessageDispatcher::dispatch(const std::string& message)
 	case 'c':
 		TestCallback(message);
 		break;
+
 	case 'm':
 		handleMapSystemMessage(message);
 		break;

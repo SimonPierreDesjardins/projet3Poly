@@ -144,19 +144,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void loadOnlineSimulationMode()
         {
-            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-            parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             parent_.mapMenu.defaultView();
 
-            parent_.simulationMenuStrip.Dock = DockStyle.Top;
-            parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-
-            Program.peutAfficher = true;
+            parent_.goOnlineSimulation();
 
             if (connectionState_)
             {
@@ -174,30 +165,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void loadOnlineEditionMode()
         {
-            parent_.editionSideMenu = new EditionSideMenu(parent_);
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
-            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             parent_.mapMenu.defaultView();
 
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
-            parent_.editionSideMenu.Dock = DockStyle.Left;
-
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
-            parent_.editionMenuStrip.Dock = DockStyle.Top;
-
-            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
-                                                                  parent_.editionMenuStrip.Height);
-            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-
-            Program.peutAfficher = true;
-            parent_.verificationDuNombreElementChoisi();
+            parent_.goOnlineEdition();
 
             if (connectionState_)
             {
@@ -208,22 +179,13 @@ namespace ui
 
         private void loadOnlinePieceMode()
         {
-            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-            parent_.viewPort.Controls.Remove(parent_.mapMenu);
-            parent_.mapMenu.defaultView();
-
-            parent_.simulationMenuStrip.Dock = DockStyle.Top;
-            parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
-
             FonctionsNatives.assignerCheminFichierZone(pathToFile_);
             FonctionsNatives.charger();
 
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            parent_.viewPort.Controls.Remove(parent_.mapMenu);
+            parent_.mapMenu.defaultView();
 
-            Program.peutAfficher = true;
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.PIECES);
+            parent_.goOnlineCoin();
         }
 
         private void publicCheckBox_Click(object sender, EventArgs e)

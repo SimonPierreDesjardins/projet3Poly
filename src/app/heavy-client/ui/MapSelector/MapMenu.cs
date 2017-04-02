@@ -531,37 +531,24 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void offlineEditionModeButton_Click(object sender, EventArgs e)
         {
-            
-            FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
-            FonctionsNatives.charger();
-
-            parent_.editionSideMenu = new EditionSideMenu(parent_);
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
-            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             defaultView();
 
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
-            parent_.editionSideMenu.Dock = DockStyle.Left;
+            if (FonctionsNatives.getEditionTutorialState())
+            {
+                FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
+                FonctionsNatives.charger();
 
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
-            parent_.editionMenuStrip.Dock = DockStyle.Top;
+                parent_.goOfflineEdition();
+            }
+            else
+            {
+                FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
+                FonctionsNatives.charger();
 
-            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
-                                                                  parent_.editionMenuStrip.Height);
-            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-
-            Program.peutAfficher = true;
-            parent_.viewPort.Refresh();
-            parent_.verificationDuNombreElementChoisi();
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.EDITION);
+                parent_.goOfflineEditionTutorial();
+            }
+            
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -577,25 +564,23 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void offlineSimulationModeButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
-            FonctionsNatives.charger();
-
-            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-            parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             defaultView();
 
-            parent_.simulationMenuStrip.Dock = DockStyle.Top;
-            parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
+            if (FonctionsNatives.getSimulationTutorialState())
+            {
+                FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
+                FonctionsNatives.charger();
 
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+                parent_.goOfflineSimulation();
+            }
+            else
+            {
+                FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
+                FonctionsNatives.charger();
 
-            Program.peutAfficher = true;
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
+                parent_.goOfflineSimulationTutorial();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////

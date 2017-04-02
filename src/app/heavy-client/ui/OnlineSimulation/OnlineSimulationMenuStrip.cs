@@ -33,6 +33,22 @@ namespace ui
             crochetPourVue();
         }
 
+        private void modeÉditionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            parent_.configuration.deallocateCurrentProfilToolStrip();
+            parent_.viewPort.Controls.Remove(this);
+
+            parent_.goOnlineEdition();
+        }
+
+        private void modePièceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            parent_.configuration.deallocateCurrentProfilToolStrip();
+            parent_.viewPort.Controls.Remove(this);
+
+            parent_.goOnlineCoin();
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -64,7 +80,7 @@ namespace ui
             parent_.mainMenu = new MainMenu(parent_);
 
             parent_.configuration.deallocateCurrentProfilToolStrip();
-            parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
+            parent_.viewPort.Controls.Remove(this);
 
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;

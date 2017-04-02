@@ -71,12 +71,14 @@
             this.modeÉditionToolStripMenuItem.Name = "modeÉditionToolStripMenuItem";
             this.modeÉditionToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.modeÉditionToolStripMenuItem.Text = "Mode Édition";
+            this.modeÉditionToolStripMenuItem.Click += new System.EventHandler(this.modeÉditionToolStripMenuItem_Click);
             // 
             // modePièceToolStripMenuItem
             // 
             this.modePièceToolStripMenuItem.Name = "modePièceToolStripMenuItem";
             this.modePièceToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.modePièceToolStripMenuItem.Text = "Mode Simulation";
+            this.modePièceToolStripMenuItem.Click += new System.EventHandler(this.modePièceToolStripMenuItem_Click);
             // 
             // menuPrincipalToolStripMenuItem
             // 

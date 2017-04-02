@@ -41,6 +41,8 @@ ModeEdition::ModeEdition(client_network::MapSession* mapSession)
 	facade->assignerEnvironnement(2);
 	eventHandler_ = facade->getEventHandler();
 	tree_ = facade->obtenirArbreRenduINF2990();
+
+	FacadeModele::obtenirInstance()->continuerAffichage();
 }
 
 ////////////////////////////////////////////////////////////////////////

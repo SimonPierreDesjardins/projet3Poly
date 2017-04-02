@@ -140,6 +140,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void introductionState()
         {
+            pictureBox.Image = null;
             instructionBox.Items.Clear();
             string instruction = "Bienvenu au tutoriel pour le mode simulation! \n\n" +
                                  "Comme vous avez pu le constater, lorsque vous choississez ce mode, " +
@@ -157,6 +158,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void mouvementState()
         {
+            pictureBox.Image = Properties.Resources.TutorialContorls;
             instructionBox.Items.Clear();
             string instruction = "Pour déplacer votre robot dans la zone de simulation, vous devez appuyer sur les touches suivantes : \n" +
                                  "Pour avancer: '" + FonctionsNatives.obtenirToucheCommande(TypeCommandeEnum.TypeCommande.AVANCER) + "'\n" +
@@ -178,6 +180,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void cameraOrthoState()
         {
+            pictureBox.Image = Properties.Resources.TutorialOrtho;
             instructionBox.Items.Clear();
             string instruction = "Il y a trois types de caméra disponible dans le mode simulation. \n" +
                                  "La première est la caméra orthographique. \n" +
@@ -197,6 +200,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void cameraOrbiteState()
         {
+            pictureBox.Image = Properties.Resources.TutorialOrbite;
             instructionBox.Items.Clear();
             string instruction = "Le deuxième type de caméra est la caméra orbite. \n" +
                                  "Avec cette caméra, il est possible de voir la zone de simulation de tous les angles possible. \n" +
@@ -217,6 +221,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void cameraFirstPersoState()
         {
+            pictureBox.Image = Properties.Resources.TutorialFirstPerso;
             instructionBox.Items.Clear();
             string instruction = "Le troisème type de caméra est la caméra permière personne. \n" +
                                  "Avec cette caméra, il est possible de voir la zone de simulation sous l'angle d'un conducteur fictif. \n" +
@@ -234,6 +239,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void lightsState()
         {
+            pictureBox.Image = Properties.Resources.TutorialLights;
             instructionBox.Items.Clear();
             string instruction = "Il y a trois types de lumière possible que vous pouvez changer lors de la simulation. \n\n" +
                                  "La première est la lumière ambiante. \n" +
@@ -254,10 +260,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void conclusionState()
         {
+            pictureBox.Image = Properties.Resources.TutorialMenu;
             instructionBox.Items.Clear();
             string instruction = "Vous avez maintenant complété le tutoriel de simulation! \n\n" +
-                                 "Vous pouvez toujours refaire le tutoriel de simulation en sélectionnant l'option 'Tutoriel' dans le menu au haut de l'écran, " +
-                                 "lorsque la simulation est en pause.";
+                                 "Vous pouvez toujours refaire le tutoriel de simulation en sélectionnant l'option" + 
+                                 " 'Tutoriel Simulation' dans le menu principale";
             instructionBox.Items.Add(instruction);
         }
 
@@ -283,7 +290,6 @@ namespace ui
                 nextLabel.Text = "Suivant";
                 nextPictureBox.Image = ui.Properties.Resources.RightArrow;
             }
-                
 
             switchInstruction();
         }

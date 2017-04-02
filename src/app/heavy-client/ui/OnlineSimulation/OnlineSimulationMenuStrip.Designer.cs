@@ -30,14 +30,14 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeÉditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modePièceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuPrincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orbiteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.premierePersonneToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.profilsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modeÉditionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modePièceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -65,6 +65,20 @@
             this.fichierToolStripMenuItem.Name = "fichierToolStripMenuItem";
             this.fichierToolStripMenuItem.Size = new System.Drawing.Size(71, 25);
             this.fichierToolStripMenuItem.Text = "Fichier";
+            // 
+            // modeÉditionToolStripMenuItem
+            // 
+            this.modeÉditionToolStripMenuItem.Name = "modeÉditionToolStripMenuItem";
+            this.modeÉditionToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
+            this.modeÉditionToolStripMenuItem.Text = "Mode Édition";
+            this.modeÉditionToolStripMenuItem.Click += new System.EventHandler(this.modeÉditionToolStripMenuItem_Click);
+            // 
+            // modePièceToolStripMenuItem
+            // 
+            this.modePièceToolStripMenuItem.Name = "modePièceToolStripMenuItem";
+            this.modePièceToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
+            this.modePièceToolStripMenuItem.Text = "Mode Pièce";
+            this.modePièceToolStripMenuItem.Click += new System.EventHandler(this.modePièceToolStripMenuItem_Click);
             // 
             // menuPrincipalToolStripMenuItem
             // 
@@ -113,18 +127,6 @@
             this.profilsToolStripMenuItem.Name = "profilsToolStripMenuItem";
             this.profilsToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
             this.profilsToolStripMenuItem.Text = "Profils";
-            // 
-            // modeÉditionToolStripMenuItem
-            // 
-            this.modeÉditionToolStripMenuItem.Name = "modeÉditionToolStripMenuItem";
-            this.modeÉditionToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
-            this.modeÉditionToolStripMenuItem.Text = "Mode Édition";
-            // 
-            // modePièceToolStripMenuItem
-            // 
-            this.modePièceToolStripMenuItem.Name = "modePièceToolStripMenuItem";
-            this.modePièceToolStripMenuItem.Size = new System.Drawing.Size(194, 26);
-            this.modePièceToolStripMenuItem.Text = "Mode Pièce";
             // 
             // OnlineSimulationMenuStrip
             // 
