@@ -865,17 +865,19 @@ namespace ui
             AddMap(mapName, connectionState, mode, nbPlayers, isAdmin, id);
         }
 
-        private delegate void CallbackForNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id);
+        private delegate void CallbackForNewMap(IntPtr mapName, int mapNameSize, int connectionState, int mode, int nbPlayers, int isAdmin, int id, int isPrivate);
         // Ensure it doesn't get garbage collected
         private CallbackForNewMap mInstance;
-        private void addNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id)
+        private void addNewMap(IntPtr mapName, int mapNameSize, int connectionState, int mode, int nbPlayers, int isAdmin, int id, int isPrivate)
         {
             Byte[] tmp = new Byte[mapNameSize];
             Marshal.Copy(mapName, tmp, 0, mapNameSize);
             var str = System.Text.Encoding.Default.GetString(tmp);
 
-            MapPresentator newMap = new MapPresentator(this, str, connectionState, mode, nbPlayers, id);
+            MapPresentator newMap = new MapPresentator(this, str, Convert.ToBoolean(connectionState), mode, nbPlayers, 
+                                                        id, Convert.ToBoolean(isAdmin), Convert.ToBoolean(isPrivate));
             mapMenu.addOnlineMapEntry(id, newMap);
+            mapMenu.onlineMapsName_.Add(str, newMap);
         }
 
         [DllImport("model.dll")]

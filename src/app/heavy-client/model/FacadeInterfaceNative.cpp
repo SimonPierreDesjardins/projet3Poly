@@ -1265,10 +1265,10 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, int isPrivate, int connectionState, int mode, int nbPlayers, int isAdmin, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
-		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, isAdmin, id);
+		AddNewMap(bytes, name.size(), (int)connectionState, mode, nbPlayers, (int)isAdmin, id, (int)isPrivate);
 	}
 
 	__declspec(dllexport) void __cdecl LoadApplicationSettings()

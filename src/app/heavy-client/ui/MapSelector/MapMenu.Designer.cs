@@ -200,6 +200,7 @@
             this.passwordBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.passwordBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordBox.Location = new System.Drawing.Point(329, 315);
+            this.passwordBox.MaxLength = 10;
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '*';
             this.passwordBox.Size = new System.Drawing.Size(188, 27);

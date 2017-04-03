@@ -44,6 +44,7 @@ void EventHandler::onEntitySelected(uint32_t entityId, bool isSelected, uint32_t
 void EventHandler::onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, uint32_t adminId, std::string& name)
 {
 	mapSessionManager_->createServerSession(mapId, mapType, name);
+	bool test = adminId == userId_;
 	AddMap(name, (bool)(permissions), true, mapType, nUsers, adminId == userId_, mapId);
 }
 

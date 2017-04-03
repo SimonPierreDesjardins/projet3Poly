@@ -20,6 +20,7 @@ namespace ui
         private int modeType_;
         private int numberOfPlayers_;
         private int mapId_;
+        private bool isAdmin_;
 
         public string pathToFile_;
 
@@ -37,18 +38,21 @@ namespace ui
         /// @param int id: numero unique pour les maps enligne
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public MapPresentator(Window parent, String mapName, bool connectionState, int modeType, int numberOfPlayers, int id)
+        public MapPresentator(Window parent, String mapName, bool connectionState, int modeType, 
+                                int numberOfPlayers, int id, bool isAdmin, bool isPrivate)
         {
             InitializeComponent();
             parent_ = parent;
 
             mapName_ = mapName;
-            modeType_ = modeType;
             connectionState_ = connectionState;
+            modeType_ = modeType;
             numberOfPlayers_ = numberOfPlayers;
             mapId_ = id;
+            isAdmin_ = isAdmin;
+            confidentiality_ = isPrivate;
 
-            switch(modeType_)
+            switch (modeType_)
             {
                 case (int)ModeEnum.Mode.SIMULATION:
                     ModeLabel.Text = "Simulation";
@@ -62,11 +66,6 @@ namespace ui
                     ModeLabel.Text = "Collection Pièces";
                     break;
 
-                    //Na pas encore le mode
-                /*case (int)ModeEnum.Mode.RACE:
-                    ModeLabel.Text = "Course";
-                    break;*/
-
                 default:
                     ModeLabel.Text = "Edition / Simulation";
                     break;
@@ -77,19 +76,26 @@ namespace ui
             else
                 connectionLabel.Text = "Hors Ligne";
 
-            confidentiality_ = false;
             if (confidentiality_)
-            {
-                privacyLabel.Text = "Publique";
-                publicSettings();
-            }
-            else
             {
                 privacyLabel.Text = "Privée";
                 privateSettings();
             }
-                
+            else
+            {
+                privacyLabel.Text = "Publique";
+                publicSettings();
+            }
 
+            if (isAdmin_)
+            {
+                settingsButton.Visible = true;
+            }
+            else
+            {
+                settingsButton.Visible = false;
+            }
+                
             NameMapLabel.Text = mapName_;
             numberOfPlayersLabel.Text = numberOfPlayers_.ToString();
 
@@ -209,6 +215,14 @@ namespace ui
 
         private void returnButton_Click(object sender, EventArgs e)
         {
+            //if ()
+
+
+
+
+
+
+
             settingsPanel.Visible = false;
             privatePanel.Visible = true;
         }

@@ -150,9 +150,9 @@ extern "C"
 	__declspec(dllexport) void __cdecl TestCallback(std::string message);
 
 	//Map System
-	typedef void(__stdcall * CallbackForNewMap)(const unsigned char* text, int size, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id);
+	typedef void(__stdcall * CallbackForNewMap)(const unsigned char* text, int size, int connectionState, int mode, int nbPlayers, int isAdmin, int id, int isPrivate);
 	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap);
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id);
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, int isPrivate, int connectionState, int mode, int nbPlayers, int isAdmin, int id);
 
 	//Application saved settings
 	__declspec(dllexport) void __cdecl LoadApplicationSettings();

@@ -245,7 +245,6 @@ namespace ui
         private void cancelNewUserButton_Click(object sender, EventArgs e)
         {
             deconnectFromServer();
-            goBackToMainMenu();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -380,8 +379,6 @@ namespace ui
             parent_.viewPort.Controls.Remove(this);
             parent_.mainMenu = new MainMenu(parent_);
 
-            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
-            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
         }

@@ -53,7 +53,7 @@ namespace ui
         /// @return Aucune
         ///
         ////////////////////////////////////////////////////////////////////////
-        public ExplorateurOuverture(Window parent/*bool afficher*/)
+        public ExplorateurOuverture(Window parent)
         {
             parent_ = parent;
 
@@ -268,7 +268,7 @@ namespace ui
 
                 if (!parent_.mapMenu.offlineMaps_.ContainsKey(text))
                 {
-                    MapPresentator newMap = new MapPresentator(parent_, text, false, -1, 0, -1);
+                    MapPresentator newMap = new MapPresentator(parent_, text, false, -1, 0, -1, false, false);
                     newMap.setPath(((FileInfo)listView1.Items[i].Tag).FullName);
                     parent_.mapMenu.addOfflineMapEntry(text, newMap);
                 }
