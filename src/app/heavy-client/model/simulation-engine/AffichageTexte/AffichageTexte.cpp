@@ -126,6 +126,8 @@ void AffichageTexte::afficher()
 	FTPoint positionPieces(dimensions.x - OFFSET_X - 100, dimensions.y - OFFSET_Y, 0.0);
 	//Rajouter la position des pieces des autres joueurs
 	FTPoint positionFinModePieces(dimensions.x - OFFSET_X - 700, dimensions.y - OFFSET_Y - 50, 0.0);
+	FTPoint positionAvantDebutCourse(dimensions.x - OFFSET_X - 700, dimensions.y - OFFSET_Y - 50, 0.0);
+	FTPoint positionTempsFinal(dimensions.x - OFFSET_X - 700, dimensions.y - OFFSET_Y - 50, 0.0);
 
     glPushAttrib(GL_ALL_ATTRIB_BITS);
 
@@ -134,6 +136,30 @@ void AffichageTexte::afficher()
 
     // TODO: figurer comment changer la couleur du texte.
     glColor3f(1.0, 1.0, 1.0);
+	if (tempsFinal_)
+	{
+		std::string secondesCourse{ std::to_string((int)(profil_->obtenirRaceTime()) % 60) };
+		if (secondesCourse.size() < 2)
+		{
+			secondesCourse.insert(0, "0");
+		}
+		std::string minutesCourse{ std::to_string(((int)(profil_->obtenirRaceTime()) / 60) % 60) };
+		if (minutesCourse.size() < 2)
+		{
+			minutesCourse.insert(0, "0");
+		}
+
+		// Formatage du temps sous la forme "MM : SS".
+		std::string tempsFinalCourse = "Le premier joueur a fini avec un temps de " + minutesCourse + " : " + secondesCourse;
+		font_.Render(tempsFinalCourse.c_str(), -1, positionTempsFinal);
+
+	}
+	if (avantDebutCourse_)
+	{
+		std::string avantDebut = "Le depart de la course va debuter a 1 minute";
+
+		font_.Render(avantDebut.c_str(), -1, positionAvantDebutCourse);
+	}
 	if (piecesEstAffiche_)
 	{
 		std::string pieceString = std::to_string(profil_->obtenirPieces());
@@ -235,6 +261,55 @@ void AffichageTexte::assignerFinModePiecesEstAfficher(bool estAffiche)
 	finModePieces_ = estAffiche;
 
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void AffichageTexte::assignerAvantDebutCourse(bool estAffiche)
+///
+/// Fonction qui affiche un texte indiquant quand la course va commencer
+///
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void AffichageTexte::assignerAvantDebutCourse(bool estAffiche)
+{
+	avantDebutCourse_ = estAffiche;
+
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void AffichageTexte::assignerTempsFinal(bool estAffiche)
+///
+/// Fonction qui affiche un texte indiquant le temps a la fin de la course
+///
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void AffichageTexte::assignerTempsFinal(bool estAffiche)
+{
+	tempsFinal_ = estAffiche;
+
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool AffichageTexte::obtenirTempsFinal()
+///
+/// Fonction qui retourne si le temps final est affichee
+///
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+bool AffichageTexte::obtenirTempsFinal()
+{
+	return tempsFinal_;
+
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -173,7 +173,7 @@ void NoeudRobot::afficherConcret() const
     controleurLumiere_->afficherLumiereSpotRobot();
     
 
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
@@ -184,7 +184,7 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	if (mode_ != PERSONALIZE && mode_ != PIECES)
+	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{

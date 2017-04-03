@@ -134,7 +134,7 @@ void NoeudTruck::afficherConcret() const
 	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
 
 	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
@@ -145,7 +145,7 @@ void NoeudTruck::afficherConcret() const
 	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	if (mode_ != PERSONALIZE && mode_ != PIECES)
+	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{

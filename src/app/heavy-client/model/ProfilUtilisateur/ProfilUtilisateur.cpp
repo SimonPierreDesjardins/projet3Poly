@@ -971,6 +971,86 @@ void ProfilUtilisateur::setSimulationTutorialState(bool completed)
 	completedSimulationTutorial_ = completed;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double ProfilUtilisateur::obtenirRaceTime()
+///
+///	Fonction retourne le temps de course de lutilisateur
+///
+/// @args 
+/// @return temps de course
+///
+////////////////////////////////////////////////////////////////////////
+double ProfilUtilisateur::obtenirRaceTime()
+{
+	return raceTime;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double ProfilUtilisateur::obtenirFastestRaceTime()
+///
+///	Fonction retourne le temps le plus rapide de course de lutilisateur
+///
+/// @args 
+/// @return temps de course
+///
+////////////////////////////////////////////////////////////////////////
+double ProfilUtilisateur::obtenirFastestRaceTime()
+{
+	return fastestRaceTime;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn double ProfilUtilisateur::setRaceTime(double time)
+///
+///	Fonction set le temps de l<utilisateur ainsi que le plus rapide
+///
+/// @args temps de course de lutilisateur
+/// @return 
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::setRaceTime(double time)
+{
+	raceTime = time;
+	if (time < fastestRaceTime)
+	{
+		fastestRaceTime = time;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::debutDecompte(bool debut)
+///
+///	Fonction qui set le debut du compte a true ou false
+///
+/// @args bool qui dit si c<est le debut du decompte
+/// @return 
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::debutDecompte(bool debut)
+{
+	debutDecompteCourse = debut;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::obtenirDebutDecompte()
+///
+///	Fonction qui retourne si cest le debut du decompte
+///
+/// @args 
+/// @return true ou false que cest le debut du decompte
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::obtenirDebutDecompte()
+{
+	return debutDecompteCourse;
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

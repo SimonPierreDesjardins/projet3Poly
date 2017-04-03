@@ -48,11 +48,17 @@ ModeCourse::ModeCourse()
 	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	// On fait démarrer le robot en mode manuel
+	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
+	controleRobot_->setEnPause(true);
+	timerAvantDecompte.reinitialiserChrono();
+
 	controleRobot_->passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
 
+
     affichageTexte_ = FacadeModele::obtenirInstance()->obtenirAffichageTexte();
+	affichageTexte_->assignerAvantDebutCourse(true);
     affichageTexte_->assignerProfilEstAffiche(true);
     affichageTexte_->assignerTempsEstAffiche(true);
     affichageTexte_->reinitialiserChrono();
@@ -62,7 +68,7 @@ ModeCourse::ModeCourse()
 
 	FacadeModele::obtenirInstance()->assignerEnvironnement(0);
 
-	controleurLumiere_->assignerLumiereSpotGyro(true);
+	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
 }
@@ -80,9 +86,12 @@ ModeCourse::~ModeCourse()
 	EnginSon::obtenirInstance()->stopMusique();
 	controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
+	affichageTexte_->assignerAvantDebutCourse(false);
     affichageTexte_->assignerTempsEstAffiche(false);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->pauseChrono();
+	affichageTexte_->assignerTempsFinal(false);
+	profil_->debutDecompte(false);
 	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
@@ -365,8 +374,33 @@ void ModeCourse::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 ////////////////////////////////////////////////////////////////////////
 void ModeCourse::postAnimer()
 {
+	
+	if (timerAvantDecompte.obtenirDuree() >= 15 && !profil_->obtenirDebutDecompte())
+	{
+		profil_->debutDecompte(true);
+	}
+	if (profil_->obtenirDebutDecompte() && !faitReinitialiserChrono)
+	{
+		affichageTexte_->assignerAvantDebutCourse(false);
+		decompteAvantDepart.reinitialiserChrono();
+		faitReinitialiserChrono = true;
+	}
+	if (faitReinitialiserChrono && !finDecompte)
+	{
+		if (decompteAvantDepart.obtenirDuree() >= 4)
+		{
+			finDecompte = true;
+			controleRobot_->setEnPause(false);
+		}
+	}
+		
 	arbre_->accepterVisiteur(&visiteur_);
-
+	if (profil_->obtenirCourseTerminee() && !affichageTexte_->obtenirTempsFinal())
+	{
+		profil_->setRaceTime(decompteAvantDepart.obtenirDuree() - 4);
+		affichageTexte_->assignerTempsFinal(true);
+		timerAvantFin.reinitialiserChrono(); //pas utiliser en ce moment mais on pourrait p-t lutiliser pour finir le mode
+	}
 }
 ////////////////////////////////////////////////////////////////////////
 ///

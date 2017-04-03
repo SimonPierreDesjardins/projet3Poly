@@ -19,6 +19,7 @@
 #include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
+#include "Minuterie.h"
 
 class ProfilUtilisateur;
 class AffichageTexte;
@@ -54,6 +55,13 @@ private:
 	ArbreRenduINF2990* arbre_{ nullptr };
 
 	bool modeEnPause{ false };
+
+	Minuterie timerAvantDecompte;
+	Minuterie decompteAvantDepart;
+	Minuterie timerAvantFin;
+
+	bool finDecompte = false;
+	bool faitReinitialiserChrono = false;
 
 public:
 	//Constructeur par défaut

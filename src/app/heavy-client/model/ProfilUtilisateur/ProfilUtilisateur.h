@@ -116,6 +116,15 @@ class ProfilUtilisateur
 		int obtenirPieces();
 		int obtenirMaxPieces();
 
+		double obtenirRaceTime();
+		double obtenirFastestRaceTime();
+
+		void setRaceTime(double time);
+
+		void debutDecompte(bool debut);
+
+		bool obtenirDebutDecompte();
+
 		std::string obtenirCheminVersMusiqueSimulation();
 		void assignerCheminVersMusiqueSimulation(std::string chemin);
 
@@ -227,7 +236,12 @@ class ProfilUtilisateur
 		int piecesCollectees = 0;
 		int plusGrandNombrePieces = 0;
 
-		bool courseTerminee = false;
+
+		bool debutDecompteCourse = false;
+		bool courseTerminee = false; // pu besoin?
+
+		double raceTime = 0.0;
+		double fastestRaceTime = 0.0;
 		
 };
 

@@ -251,29 +251,28 @@ void VisiteurDetectionRobot::visiter(NoeudLigneCourseAbstrait* checkpoint)
 	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
 	ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	bool estTerminee = true;
-
-	if (intersection && !checkpoint->estSelectionne() && checkpoint->obtenirNom() == "checkpoint")
-	{
-		//EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON); //mettre un son pour les checkpoints
-		checkpoint->assignerSelection(true);
-	}
-	else if (intersection && checkpoint->obtenirNom() == "lignearrivee")
-	{
-		for (int i = 0; i < table->obtenirNombreEnfants() && estTerminee; i++)
+		if (intersection && !checkpoint->estSelectionne() && checkpoint->obtenirNom() == "checkpoint")
 		{
-			if (table->chercher(i)->obtenirNom() == "checkpoint")
+			//EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON); //mettre un son pour les checkpoints
+			checkpoint->assignerSelection(true);
+		}
+		else if (intersection && checkpoint->obtenirNom() == "lignearrivee")
+		{
+			for (int i = 0; i < table->obtenirNombreEnfants() && estTerminee; i++)
 			{
-				if (!table->chercher(i)->estSelectionne())
+				if (table->chercher(i)->obtenirNom() == "checkpoint")
 				{
-					estTerminee = false;
+					if (!table->chercher(i)->estSelectionne())
+					{
+						estTerminee = false;
+					}
 				}
 			}
+			if (estTerminee)
+			{
+				profil->assignerCourseTerminee(true);
+			}
 		}
-		if (estTerminee)
-		{
-			profil->assignerCourseTerminee(true);
-		}
-	}
 	if (!estEnCollision_)
 	{
 		estEnCollision_ = false;
