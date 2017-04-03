@@ -183,12 +183,12 @@ void SimulationEngine::render()
 
 void SimulationEngine::stopRendering()
 {
-
+	isRendering_ = false;
 }
 
 void SimulationEngine::resumeRendering()
 {
-
+	isRendering_ = true;
 }
 
 void SimulationEngine::animate(double dt)

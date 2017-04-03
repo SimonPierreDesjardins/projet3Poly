@@ -44,6 +44,7 @@ private:
 
 inline void User::ForwardMessage(const std::string& message)
 {
+	assert(message.size() > 0);
 	_connection->SendData(message);
 }
 

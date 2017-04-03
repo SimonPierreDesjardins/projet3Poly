@@ -24,12 +24,12 @@ public:
 	PhysicsComponent() = default;
 	~PhysicsComponent() = default;
 
-	glm::dvec3 absolutePosition;
-	glm::dvec3 relativePosition;
-	glm::dvec3 scale;
-	glm::dvec3 rotation;
-	glm::dvec3 linearVelocity;
-	glm::dvec3 angularVelocity;
+	glm::dvec3 absolutePosition{ 0.0, 0.0, 0.0 };
+	glm::dvec3 relativePosition{ 0.0, 0.0, 0.0 };
+	glm::dvec3 scale{ 1.0, 1.0, 1.0 };
+	glm::dvec3 rotation{ 0.0, 0.0, 0.0 };
+	glm::dvec3 linearVelocity{ 0.0, 0.0, 0.0 };
+	glm::dvec3 angularVelocity{ 0.0, 0.0, 0.0 };
 
 	// Objects with negative mass will behave like they have infinite mass:
 	// They can't move and will apply an elastic collision.

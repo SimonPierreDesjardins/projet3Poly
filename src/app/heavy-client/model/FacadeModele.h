@@ -122,7 +122,6 @@ public:
 	void getDesktopResolution(int& horizontal, int& vertical);
 
 private:
-	bool peutAfficher_{ true };
 	bool autorisationInputSouris_{ true };
 	bool autorisationInputClavier_{ true };
 	/// Constructeur copie désactivé.

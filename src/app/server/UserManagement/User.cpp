@@ -52,8 +52,8 @@ void User::StartMessageReadThread()
 		return;
 	}
 
-	_messageReaderThread = std::thread(&User::lookupMessage);
 	_runThread = true;
+	_messageReaderThread = std::thread(&User::lookupMessage);
 }
 
 void User::lookupMessage()
