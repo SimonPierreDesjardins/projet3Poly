@@ -65,6 +65,7 @@ void NoeudPoteau::animer(float dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudPoteau::mettreAJourFormeEnglobante()
 {
+	positionCourante_ = positionRelative_;
     double hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
     double largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
     double rayon = hauteur > largeur ? hauteur : largeur;

@@ -588,6 +588,11 @@ void FacadeModele::assignerMode(Mode mode)
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePieces>();
 			break;
+		
+		case COURSE:
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeCourse>();
+			break;
 
 		default:
 			break;

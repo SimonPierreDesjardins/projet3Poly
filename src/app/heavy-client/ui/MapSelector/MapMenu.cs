@@ -712,10 +712,11 @@ namespace ui
 
             if (!System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone)) && !parent_.mapMenu.offlineMaps_.ContainsKey(mapName))
             {
-                //Create the map and Copy the default map
-                File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
+                //Create the map and Copy the MapCourse 
+                //TODO pour tester en offline en ce moment
+                File.Copy(cheminDossierZone + "MapCourse" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
                 //Todo change mode
-                MapPresentator newMap = new MapPresentator(parent_, mapName, false, (int)ModeEnum.Mode.PIECES, 0, -1);
+                MapPresentator newMap = new MapPresentator(parent_, mapName, false, (int)ModeEnum.Mode.COURSE, 0, -1);
                 newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
                 parent_.mapMenu.addOnlineMapEntry(-1, newMap);
                 verifyMapsAttributes();

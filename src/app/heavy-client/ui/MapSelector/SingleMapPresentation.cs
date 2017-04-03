@@ -62,10 +62,9 @@ namespace ui
                     ModeLabel.Text = "Collection Pièces";
                     break;
 
-                    //Na pas encore le mode
-                /*case (int)ModeEnum.Mode.RACE:
+                case (int)ModeEnum.Mode.COURSE:
                     ModeLabel.Text = "Course";
-                    break;*/
+                    break;
 
                 default:
                     ModeLabel.Text = "Edition / Simulation";
@@ -117,6 +116,12 @@ namespace ui
                 case (int)ModeEnum.Mode.PIECES:
                     loadOnlinePieceMode();
                     break;
+
+                case (int)ModeEnum.Mode.COURSE:
+                    loadOnlineRaceMode();
+                    break;
+
+
 
                 default:
                     parent_.mapMenu.choseOfflineMode(this);
@@ -191,6 +196,17 @@ namespace ui
             parent_.mapMenu.defaultView();
 
             parent_.goOnlineCoin();
+        }
+
+        private void loadOnlineRaceMode()
+        {
+            FonctionsNatives.assignerCheminFichierZone(pathToFile_);
+            FonctionsNatives.charger();
+
+            parent_.viewPort.Controls.Remove(parent_.mapMenu);
+            parent_.mapMenu.defaultView();
+
+            parent_.goOnlineRace();
         }
 
         private void publicCheckBox_Click(object sender, EventArgs e)

@@ -254,7 +254,7 @@ void VisiteurDetectionRobot::visiter(NoeudLigneCourseAbstrait* checkpoint)
 
 	if (intersection && !checkpoint->estSelectionne() && checkpoint->obtenirNom() == "checkpoint")
 	{
-		EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON); //mettre un son pour les checkpoints
+		//EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON); //mettre un son pour les checkpoints
 		checkpoint->assignerSelection(true);
 	}
 	else if (intersection && checkpoint->obtenirNom() == "lignearrivee")
@@ -274,7 +274,10 @@ void VisiteurDetectionRobot::visiter(NoeudLigneCourseAbstrait* checkpoint)
 			profil->assignerCourseTerminee(true);
 		}
 	}
-	estEnCollision_ = false;
+	if (!estEnCollision_)
+	{
+		estEnCollision_ = false;
+	}
 }
 
 

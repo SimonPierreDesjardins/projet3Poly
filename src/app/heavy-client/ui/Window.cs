@@ -252,6 +252,10 @@ namespace ui
                     gererTouchePieces(keyDown);
                     break;
 
+                case (int)Mode.COURSE:
+                    gererToucheCourse(keyDown);
+                    break;
+
                 default:
                     break;
             }
@@ -551,24 +555,63 @@ namespace ui
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    simulationMenuStrip.orthoView();
+                    onlinePiecesMenuStrip.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    simulationMenuStrip.orbiteView();
+                    onlinePiecesMenuStrip.orbiteView();
                     break;
 
                 case Constants.Key_3:
-                    simulationMenuStrip.firstPersonView();
+                    onlinePiecesMenuStrip.firstPersonView();
                     break;
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        simulationMenuStrip.goMenuPrincipal();
+                        onlinePiecesMenuStrip.goMenuPrincipal();
                     break;
 
                 case Constants.Key_Esc:
-                    simulationMenuStrip.goIntoPause();
+                    onlinePiecesMenuStrip.goIntoPause();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// @fn private void gererToucheCourse(IntPtr keyDown)
+        ///
+        /// Gère les touches pour le mode course
+        /// 
+        /// @param IntPtr keyDown: evenement du clavier
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        private void gererToucheCourse(IntPtr keyDown)
+        {
+            switch ((int)keyDown)
+            {
+                case Constants.Key_1:
+                    onlineRaceMenuStrip.orthoView();
+                    break;
+
+                case Constants.Key_2:
+                    onlineRaceMenuStrip.orbiteView();
+                    break;
+
+                case Constants.Key_3:
+                    onlineRaceMenuStrip.firstPersonView();
+                    break;
+
+                case Constants.Key_Q:
+                    if (ModifierKeys.HasFlag(Keys.Control))
+                        onlineRaceMenuStrip.goMenuPrincipal();
+                    break;
+
+                case Constants.Key_Esc:
+                    onlineRaceMenuStrip.goIntoPause();
                     break;
 
                 default:
@@ -855,7 +898,7 @@ namespace ui
             viewPort.Refresh();
 
             //Todo change for race
-            FonctionsNatives.assignerMode(ModeEnum.Mode.PIECES);
+            FonctionsNatives.assignerMode(ModeEnum.Mode.COURSE);
         }
 
 
