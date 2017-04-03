@@ -24,6 +24,7 @@ public:
 	inline Entity* getParent();
 	inline void addChild(Entity* child);
 	inline void removeChild(Entity* child);
+	inline int getChildCount();
 
 	inline ChildrenContainer::iterator begin();
 	inline ChildrenContainer::iterator end();
@@ -55,6 +56,11 @@ inline void Entity::addChild(Entity* child)
 inline void Entity::removeChild(Entity* child)
 {
 	children_.erase(child->entityId_);
+}
+
+inline int Entity::getChildCount()
+{
+	return children_.size();
 }
 
 inline Entity::ChildrenContainer::iterator Entity::begin()

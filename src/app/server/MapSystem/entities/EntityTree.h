@@ -15,13 +15,17 @@ public:
 	EntityTree();
 	~EntityTree();
 
+
 	// Create a new entity with initial position, parentId and entity Type.
 	Entity* createEntity(char entityType, uint32_t parentId);
+
 	bool deleteEntity(uint32_t entityToDelete);
 	Entity* findEntity(uint32_t entityId);
 
 	inline EntityContainer::iterator begin();
 	inline EntityContainer::iterator end();
+
+	int GetChildCount();
 
 private:
 	EntityContainer entities_;

@@ -15,6 +15,7 @@ class MapEntry
 {
 public:
 	MapInfo* Info;
+	MapFileEntry* File;
 
 	MapEntry(MapInfo* info, MapFileEntry* mapFile);
 	void GetSerializedInfo(std::string& message) const;
