@@ -404,7 +404,7 @@
             this.importButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.importButton.Controls.Add(this.customLabel3);
             this.importButton.Controls.Add(this.pictureBox3);
-            this.importButton.Location = new System.Drawing.Point(91, 281);
+            this.importButton.Location = new System.Drawing.Point(76, 281);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(210, 36);
             this.importButton.TabIndex = 8;

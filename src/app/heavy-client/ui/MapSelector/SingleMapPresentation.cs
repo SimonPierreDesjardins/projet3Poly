@@ -79,15 +79,23 @@ namespace ui
 
             confidentiality_ = false;
             if (confidentiality_)
+            {
                 privacyLabel.Text = "Publique";
+                publicSettings();
+            }
             else
+            {
                 privacyLabel.Text = "Privée";
+                privateSettings();
+            }
+                
 
             NameMapLabel.Text = mapName_;
             numberOfPlayersLabel.Text = numberOfPlayers_.ToString();
 
             //Lovely circles as char in password
             passwordBox.PasswordChar = '\u25CF';
+            newPasswordBox.PasswordChar = '\u25CF';
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -193,16 +201,56 @@ namespace ui
             parent_.goOnlineCoin();
         }
 
+        private void settingsButton_Click(object sender, EventArgs e)
+        {
+            settingsPanel.Visible = true;
+            privatePanel.Visible = false;
+        }
+
+        private void returnButton_Click(object sender, EventArgs e)
+        {
+            settingsPanel.Visible = false;
+            privatePanel.Visible = true;
+        }
+
         private void publicCheckBox_Click(object sender, EventArgs e)
+        {
+            publicSettings();
+        }
+
+        private void publicSettings()
         {
             publicCheckBox.Checked = true;
             privateCheckBox.Checked = false;
+
+            newPasswordLabel.Visible = false;
+            newPasswordBox.Clear();
+            newPasswordBox.Visible = false;
+            updateButton.Visible = false;
+
+            passewordLabel.Visible = false;
+            passwordBox.Clear();
+            passwordBox.Visible = false;
+            connectButton.Visible = false;
         }
 
         private void privateCheckBox_Click(object sender, EventArgs e)
         {
-            publicCheckBox.Checked = false;
+            privateSettings();
+        }
+
+        private void privateSettings()
+        {
             privateCheckBox.Checked = true;
+            publicCheckBox.Checked = false;
+
+            newPasswordLabel.Visible = true;
+            newPasswordBox.Visible = true;
+            updateButton.Visible = true;
+
+            passewordLabel.Visible = true;
+            passwordBox.Visible = true;
+            connectButton.Visible = true;
         }
     }
 }
