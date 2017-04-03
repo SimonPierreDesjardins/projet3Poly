@@ -43,16 +43,12 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
-	  : controleRobot_(engine, profil), OnlineMapMode(session)
+	  : controleRobot_(engine, profil, session), OnlineMapMode(session)
 {
-
 	typeMode_ = SIMULATION;
 	profil_ = profil;
 	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	controleRobot_.passerAModeManuel();
-	//visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
-	//arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	// On fait d�marrer le robot en mode manuel
     actionsAppuyees_ = { { false, false, false, false, false } };
 	EnginSon::obtenirInstance()->jouerMusique();
 
@@ -62,13 +58,11 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
 
-	engine->setEnvironnement(0);
+	engine->setEnvironnement(1);
+	controleurLumiere_ = engine->getLightController();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
-
-	controleRobot_.passerAModeManuel();
-	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
 }
 
 ////////////////////////////////////////////////////////////////////////

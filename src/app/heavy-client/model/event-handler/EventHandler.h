@@ -42,6 +42,7 @@ public:
 	void onUserJoinedMap(char result, uint32_t mapId, uint32_t userId);
 	void onUserLeftCurrentMapSession(uint32_t userId);
 	void onUserAuthentified(uint32_t userId);
+	void onMapReady(uint32_t mapId);
 
 	// Entity properties
 	void onEntityPropertyUpdated(uint32_t entityId, char propertyType, const glm::vec3& propertyValue);

@@ -43,95 +43,124 @@ void MapSession::localEntityCreated(NoeudAbstrait* entity)
 	pendingQueueLock_.unlock();
 }
 
+void MapSession::createServerEntity(const PhysicsComponent& properties, uint8_t type, uint32_t entityId, uint32_t parentId, uint32_t userId)
+{
+	pendingQueueLock_.lock();
+
+	auto itParent = confirmedEntities_.find(parentId);
+	// If the parent is not found, we return.
+	if (itParent == confirmedEntities_.end()) return;
+
+	NoeudAbstrait* parent = itParent->second;
+	std::shared_ptr<NoeudAbstrait> newEntity = entityTree_->creerNoeud((EntityType)(type));
+	parent->ajouter(newEntity);
+	PhysicsComponent& physics = newEntity->getPhysicsComponent();
+	physics.absolutePosition = properties.absolutePosition;
+	physics.relativePosition = properties.relativePosition;
+	physics.rotation = properties.rotation;
+	physics.scale = properties.scale;
+	newEntity->setId(entityId);
+
+	auto userIt = users_.find(userId);
+	if (userIt != users_.end())
+	{
+		newEntity->setSelectionColor(userIt->second.selectionColor);
+		newEntity->setOwnerId(userId);
+		newEntity->assignerSelection(true);
+	}
+	newEntity->setOwnerId(userId);
+	confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
+
+	pendingQueueLock_.unlock();
+
+	std::cout << "Server entity created : " << newEntity->obtenirNom() <<
+		" id : " << newEntity->getId() << " parentid : " << parent->getId() << std::endl;
+}
+
+void MapSession::confirmLocalEntity(NoeudAbstrait* entityToConfirm, uint32_t entityId)
+{
+	if (!entityToConfirm) return;
+
+	pendingQueueLock_.lock();
+	confirmedEntities_.insert(std::make_pair(entityId, entityToConfirm));
+	entityToConfirm->setId(entityId);
+
+	sendEntityCreationRequest(entityToConfirm);
+	// Update entity data.
+	PhysicsComponent& physics = entityToConfirm->getPhysicsComponent();
+	network_->requestEntityPropertyUpdate(entityToConfirm->getId(), Networking::ABSOLUTE_POSITION, 
+										  glm::vec3(physics.absolutePosition));
+
+	network_->requestEntityPropertyUpdate(entityToConfirm->getId(), Networking::RELATIVE_POSITION, 
+										  glm::vec3(physics.relativePosition));
+
+	network_->requestEntityPropertyUpdate(entityToConfirm->getId(), Networking::ROTATION, 
+										  glm::vec3(physics.rotation));
+
+	network_->requestEntityPropertyUpdate(entityToConfirm->getId(), Networking::SCALE, 
+										  glm::vec3(physics.scale));
+
+	network_->requestEntitySelection(entityToConfirm->getId(), entityToConfirm->estSelectionne());
+
+	// Update selection color.
+	auto userIt = users_.find(network_->getUserId());
+	if (userIt != users_.end())
+	{
+		entityToConfirm->setSelectionColor(userIt->second.selectionColor);
+	}
+
+	// Send next entity to confirm.
+	if (!pendingEntityCreationRequests_.empty())
+	{
+		NoeudAbstrait* entityToConfirm = pendingEntityCreationRequests_.front();
+		sendEntityCreationRequest(entityToConfirm);
+	}
+
+	pendingQueueLock_.unlock();
+	std::cout << "Local entity creation confirmed : " << entityToConfirm->obtenirNom() <<
+		" id : " << entityToConfirm->getId() << " parentid : " << entityToConfirm->obtenirParent()->getId() << std::endl;
+}
+
 void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 	const glm::vec3& absPos, const glm::vec3& relPos,
 	const glm::vec3& rotation, const glm::vec3& scale,
 	uint32_t entityId, uint32_t userId)
 {
-	pendingQueueLock_.lock();
+	PhysicsComponent properties;
+	properties.absolutePosition = absPos;
+	properties.relativePosition = relPos;
+	properties.rotation = rotation;
+	properties.scale = scale;
+
 	// If this is a new object from another user.
 	if (userId != network_->getUserId())
 	{
-		auto itParent = confirmedEntities_.find(parentId);
-		// If the parent and the user are found
-		if (itParent != confirmedEntities_.end())
-		{
-			NoeudAbstrait* parent = itParent->second;
-			std::shared_ptr<NoeudAbstrait> newEntity = entityTree_->creerNoeud((EntityType)(type));
-			parent->ajouter(newEntity);
-			PhysicsComponent& physics = newEntity->getPhysicsComponent();
-			physics.absolutePosition = { absPos.x, absPos.y, absPos.z };
-			physics.relativePosition = { relPos.x, relPos.y, relPos.z };
-			physics.rotation = rotation;
-			physics.scale = scale;
-			newEntity->setId(entityId);
-
-			auto userIt = users_.find(userId);
-			if (userIt != users_.end())
-			{
-				newEntity->setSelectionColor(userIt->second.selectionColor);
-				newEntity->setOwnerId(userId);
-				newEntity->assignerSelection(true);
-			}
-
-			newEntity->setOwnerId(userId);
-			confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
-			std::cout << "Server entity created : " << newEntity->obtenirNom() <<
-				" id : " << newEntity->getId() << " parentid : " << parent->getId() << std::endl;
-		}
+		createServerEntity(properties, type, entityId, parentId, userId);
 	}
-	// This is a confirmation for the object to be created.
+	// User id is mine so it might be a confirmation.
 	else
 	{
-		// Insert server confirmed entity.
-		NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.front();
-		pendingEntityCreationRequests_.pop();
-
-		confirmedEntities_.insert(std::make_pair(entityId, entityToInsert));
-		entityToInsert->setId(entityId);
-
-		// Update entity data.
-
-		PhysicsComponent& physics = entityToInsert->getPhysicsComponent();
-		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::ABSOLUTE_POSITION, 
-			                                  glm::vec3(physics.absolutePosition));
-
-		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::RELATIVE_POSITION, 
-			                                  glm::vec3(physics.relativePosition));
-
-		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::ROTATION, 
-			                                  glm::vec3(physics.rotation));
-
-		network_->requestEntityPropertyUpdate(entityToInsert->getId(), Networking::SCALE, 
-			                                  glm::vec3(physics.scale));
-
-		network_->requestEntitySelection(entityToInsert->getId(), entityToInsert->estSelectionne());
-
-		auto itParent = confirmedEntities_.find(parentId);
-		if (itParent != confirmedEntities_.end())
-		{
-		}
-
-		// Update selection color.
-		auto userIt = users_.find(userId);
-		if (userIt != users_.end())
-		{
-			entityToInsert->setSelectionColor(userIt->second.selectionColor);
-		}
-
-		std::cout << "Local entity creation confirmed : " << entityToInsert->obtenirNom() <<
-			" id : " << entityToInsert->getId() << " parentid : " << entityToInsert->obtenirParent()->getId() << std::endl;
-
-		// Send next entity in pending.
-		NoeudAbstrait* entityToConfirm = nullptr;
-
+		// This is a confirmation for the object to be created.
+		NoeudAbstrait* entityToInsert = nullptr;
+		pendingQueueLock_.lock();
 		if (!pendingEntityCreationRequests_.empty())
 		{
-			entityToConfirm = pendingEntityCreationRequests_.front();
-			sendEntityCreationRequest(entityToConfirm);
+			NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.front();
+			pendingEntityCreationRequests_.pop();
+		}
+		pendingQueueLock_.unlock();
+
+		// We found en entity to confirm.
+		if (entityToInsert)
+		{
+			confirmLocalEntity(entityToInsert, entityId);
+		}
+		// Server has created an object for me.
+		else
+		{
+			//createServerEntity(properties, type, entityId, parentId, userId);
 		}
 	}
-	pendingQueueLock_.unlock();
 }
 
 void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
@@ -334,6 +363,7 @@ void MapSession::clearMapSession()
 	users_.clear();
 	entityTree_->vider();
 }
+
 
 void MapSession::addUser(uint32_t userId, const std::string& userName)
 {

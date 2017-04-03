@@ -11,6 +11,7 @@
 
 class ArbreRendu;
 class NoeudAbstrait;
+class PhysicsComponent;
 
 namespace client_network
 {
@@ -29,7 +30,7 @@ public:
 	struct SessionInfo
 	{
 		char mapType;
-		std::string mapId;
+		uint32_t mapId;
 		std::string mapName;
 		// TODO: handle permissions here.
 	};
@@ -83,6 +84,10 @@ private:
 
 	void sendEntityCreationRequest(NoeudAbstrait* entity);
 	void clearMapSession();
+
+	void createServerEntity(const PhysicsComponent& physics, uint8_t type, uint32_t entityId, uint32_t parendId, uint32_t userId);
+	void confirmLocalEntity(NoeudAbstrait* entity, uint32_t entityId);
+
 
 	MapSession() = delete;
 };

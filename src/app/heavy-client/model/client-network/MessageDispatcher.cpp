@@ -202,6 +202,12 @@ void MessageDispatcher::handleMapListMessage(const std::string& message)
 	}
 }
 
+void MessageDispatcher::handleMapReadyMessage(const std::string& message)
+{
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	eventHandler_->onMapReady(mapId);
+}
+
 void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 {
 	switch (message[5])
@@ -220,6 +226,11 @@ void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 
 	case 'l':
 		handleMapListMessage(message);
+		break;
+
+	case 'r':
+		handleMapReadyMessage(message);
+		break;
 
 	default:
 		std::cout << "Unexpected message received" << message << std::endl;

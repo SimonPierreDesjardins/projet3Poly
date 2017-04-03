@@ -11,7 +11,6 @@ namespace server
 AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo)
 {
 	Entity* table = tree_.createEntity(0, 0);
-	Entity* start = tree_.createEntity(1, table->entityId_);
 	mapInfo_ = mapInfo;
 }
 
@@ -28,6 +27,7 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 {
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
+
 
 	// Send user list to the new User.
 	for (auto it = _connectedUserList.begin(); it != _connectedUserList.end(); ++it)
@@ -47,6 +47,11 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 
 	std::queue<Entity*> sendingQueue;
 	Entity* table = tree_.findEntity(1);
+
+	// Create an arrow for the new user.
+	Entity* start = tree_.createEntity(1, table->entityId_);
+	start->userId_ = user->Info.GetId();
+
 	if (table)
 	{
 		sendingQueue.push(table);
@@ -67,6 +72,13 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 			sendingQueue.push(it->second);
 		}
 	}
+	
+	std::string mapReadyMessage;
+	Networking::serialize(uint32_t(0), mapReadyMessage);
+	mapReadyMessage.append("mr");
+	Networking::serialize(mapInfo_->GetId(), mapReadyMessage);
+	Networking::MessageStandard::UpdateLengthHeader(mapReadyMessage);
+	user->ForwardMessage(mapReadyMessage);
 }
 
 void AbstractMapRoom::TreatUserDisconnect(User* user)

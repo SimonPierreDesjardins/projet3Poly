@@ -53,7 +53,7 @@ class ControleRobot
 	
 public:
 	ControleRobot() = default;
-	ControleRobot(engine::SimulationEngine* engine, ProfilUtilisateur* profile);
+	ControleRobot(engine::SimulationEngine* engine, ProfilUtilisateur* profile, client_network::MapSession* mapSession);
 
 	~ControleRobot();
 	// Demande au robot de traiter une commande donn�e
@@ -86,8 +86,10 @@ public:
 
 private:
 
+	bool isRunning_ = false;
+
 	// d�finit si oui ou non le robot est en mode manuel
-	bool manuel{ false };
+	bool manuel{ true };
 
 	// d�finit si en mode debug
 	bool enPause{ false };
