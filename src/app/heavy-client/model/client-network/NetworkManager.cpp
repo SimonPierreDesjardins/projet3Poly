@@ -98,6 +98,16 @@ void NetworkManager::requestMapCreation(const std::string& mapName, const std::s
 	connection_.sendMessage(message);
 }
 
+void NetworkManager::requestMapPermissionChange(const uint32_t mapId, uint8_t permission, const std::string & password)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(11 + password.size()), message);
+	message.append("mp");
+	serializer_.serialize(permission, message);
+	message.append(password);
+
+}
+
 void NetworkManager::requestToJoinMapSession(uint32_t mapId)
 {
 	std::string message;

@@ -971,6 +971,11 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, mapNameSize), std::string(password, passwordSize), mapType, isPrivate);
 	}
 
+	void changeMapPermission(int mapId, char permission, char * password, int size)
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapPermissionChange(mapId, permission, std::string(password, size));
+	}
+
 	__declspec(dllexport) void __cdecl joinMap(int mapId)
 	{
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(mapId);
@@ -1260,10 +1265,10 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
-		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);
+		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, isAdmin, id);
 	}
 
 	__declspec(dllexport) void __cdecl LoadApplicationSettings()
