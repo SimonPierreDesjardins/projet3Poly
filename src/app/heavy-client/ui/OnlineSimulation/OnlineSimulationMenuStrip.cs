@@ -1,7 +1,7 @@
 ﻿////////////////////////////////////////////////
 /// @file   OnlineSimulationMenuStrip.cs
 /// @author Frédéric Grégoire
-/// @date   2017-02-16
+/// @date   2017-03-29
 ///
 ////////////////////////////////////////////////
 using System;
@@ -31,6 +31,22 @@ namespace ui
             menuStrip1.Renderer = new myRenderer();
             menuStrip1.Visible = false;
             crochetPourVue();
+        }
+
+        private void modeÉditionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            parent_.configuration.deallocateCurrentProfilToolStrip();
+            parent_.viewPort.Controls.Remove(this);
+
+            parent_.goOnlineEdition();
+        }
+
+        private void modePièceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            parent_.configuration.deallocateCurrentProfilToolStrip();
+            parent_.viewPort.Controls.Remove(this);
+
+            parent_.goOnlineCoin();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -64,7 +80,7 @@ namespace ui
             parent_.mainMenu = new MainMenu(parent_);
 
             parent_.configuration.deallocateCurrentProfilToolStrip();
-            parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
+            parent_.viewPort.Controls.Remove(this);
 
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;

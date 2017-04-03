@@ -469,6 +469,12 @@
     <Content Include="Resources\SendIcon.png" />
     <Content Include="Resources\table.png" />
     <Content Include="Resources\Teleporteur.png" />
+    <None Include="Resources\TutorialOrtho.png" />
+    <None Include="Resources\TutorialContorls.png" />
+    <None Include="Resources\TutorialFirstPerso.png" />
+    <None Include="Resources\TutorialLights.png" />
+    <None Include="Resources\TutorialOrbite.png" />
+    <None Include="Resources\TutorialMenu.png" />
     <Content Include="Resources\User.png" />
     <Content Include="Resources\wall.png" />
     <Content Include="Resources\wheel.png" />

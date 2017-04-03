@@ -15,7 +15,6 @@ namespace ui
     {
         Window parent_;
         ConnectToServer connectOptions_;
-        string PathToDefaultZone;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -31,6 +30,9 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
+            Program.peutAfficher = false;
+            parent_.viewPort.Refresh();
+
             if (FonctionsNatives.isConnected())
             {
                 connexionPictureBox.Image = ChangeColor((Bitmap)connexionPictureBox.Image, Color.Green);
@@ -42,10 +44,6 @@ namespace ui
 
             this.Width = 0;
             ShowMenuTimer.Start();
-
-            System.Text.StringBuilder str = new System.Text.StringBuilder(100);
-            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
-            PathToDefaultZone = str.ToString();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -83,7 +81,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void mainMenu_PersoButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerCheminFichierZone(PathToDefaultZone);
+            FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
             FonctionsNatives.charger();
 
             animationChangingMenu();
@@ -248,66 +246,22 @@ namespace ui
 
         private void mainMenu_TutoEditionButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerCheminFichierZone(PathToDefaultZone);
+            FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
             FonctionsNatives.charger();
-
-            parent_.editionTutorielSideMenu = new EditionTutorielSideMenu(parent_);
-            parent_.editionTutorielMenuStrip = new EditionTutorielMenuStrip(parent_);
-            parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
-            parent_.editionTutorielModificationPanel = new TutorialEditionModificationPanel(parent_);
 
             animationChangingMenu();
 
-            parent_.editionTutorielSideMenu.Dock = DockStyle.Left;
-            parent_.viewPort.Controls.Add(parent_.editionTutorielSideMenu);
-
-            parent_.editionTutorielMenuStrip.Dock = DockStyle.Top;
-            parent_.viewPort.Controls.Add(parent_.editionTutorielMenuStrip);
-            
-            parent_.editionTutorielModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionTutorielModificationPanel.Width,
-                                                                  parent_.editionTutorielMenuStrip.Height);
-            parent_.editionTutorielModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionTutorielModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionTutorielModificationPanel);
-
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-            Program.peutAfficher = true;
-            FonctionsNatives.assignerMode(Mode.TUTORIAL_EDITION);
-            
-
-            parent_.editionTutorielInstructions = new EditionTutorielInstructions(parent_);
-            parent_.editionTutorielInstructions.Location = new Point(parent_.viewPort.Width / 2 - parent_.editionTutorielInstructions.Width / 2,
-                                                                    parent_.viewPort.Height / 2 - parent_.editionTutorielInstructions.Height / 2);
-            parent_.editionTutorielInstructions.Anchor = AnchorStyles.None;
-            parent_.viewPort.Controls.Add(parent_.editionTutorielInstructions);
-            parent_.editionTutorielInstructions.BringToFront();
+            parent_.goOfflineEditionTutorial();
         }
 
         private void mainMenu_TutoSimulationButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerCheminFichierZone(PathToDefaultZone);
+            FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
             FonctionsNatives.charger();
-
-            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-
-            parent_.simulationTutorial = new TutorialSimulation(parent_);
-            parent_.simulationTutorial.Location = new Point(parent_.viewPort.Width / 2 - parent_.simulationTutorial.Width / 2,
-                                                    parent_.viewPort.Height / 2 - parent_.simulationTutorial.Height / 2);
-            parent_.simulationTutorial.Anchor = AnchorStyles.None;
 
             animationChangingMenu();
 
-            parent_.viewPort.Controls.Add(parent_.simulationTutorial);
-
-            parent_.simulationTutorial.BringToFront();
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-            FonctionsNatives.assignerMode(Mode.SIMULATION);
-            Program.peutAfficher = true;
+            parent_.goOfflineSimulationTutorial();
         }
     }
 }

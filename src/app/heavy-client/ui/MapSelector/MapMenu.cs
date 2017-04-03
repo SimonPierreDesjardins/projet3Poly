@@ -1,5 +1,4 @@
-
-﻿////////////////////////////////////////////////
+////////////////////////////////////////////////
 /// @file   MapMenu.cs
 /// @author Frédéric Grégoire
 /// @date   2017-02-27
@@ -9,8 +8,10 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace ui
@@ -19,8 +20,8 @@ namespace ui
     {
         Window parent_;
         MapPresentator selectedMap_;
-        int numberOfMaps_ = 0;
 
+        int numberOfMaps_ = 0;
         public Dictionary<string, MapPresentator> offlineMaps_ = new Dictionary<string, MapPresentator>();
         public Dictionary<int, MapPresentator> onlineMaps_ = new Dictionary<int, MapPresentator>();
 
@@ -360,38 +361,33 @@ namespace ui
             //Offline map
             if (offlineCheckBox.Checked)
             {
-                bool a = System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone));
-
-                if (!System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone)) && !parent_.mapMenu.offlineMaps_.ContainsKey(mapName))
-                {
-                    //Create the map and Copy the default map
-                    File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
-                    MapPresentator newMap = new MapPresentator(parent_, mapName, false, -1, 0, -1);
-                    newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
-                    parent_.mapMenu.addOfflineMapEntry(mapName, newMap);
-                    verifyMapsAttributes();
-                }
-                else
-                {
-                    warningLabel.Visible = true;
-                    warningLabel.Text = "Une carte avec ce nom existe déjà.";
-                    textBox.Clear();
-                    return;
-                }
+                creatingOffLineMap(mapName);
             }
             //Online map
             else
             {
+                if (!string.IsNullOrEmpty(fileDirLabel.Text))
+                {
+                    string path = fileDirLabel.Text;
+                    // call file upload
+                    uploadMap(path);
+                }
+                String password = "";
+                char mapType = '\0';
+                if (privateCheckBox.Checked)
+                {
+                    password = "defaultPassword";
+                }
                 switch (modeComboBox.SelectedIndex)
                 {
                     //Edition
                     case 0:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.EDITION));
+                        mapType = (char)(ModeEnum.Mode.EDITION);
                         break;
 
                     //Simulation
                     case 1:
-                        FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
+                        mapType = (char)(ModeEnum.Mode.SIMULATION);
                         break;
 
                     //Piece
@@ -399,12 +395,65 @@ namespace ui
                         createMapPieceMode();
                         //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
                         break;
+
+                    case 3:
+                        createMapRaceMode();
+                        //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
+                        break;
                 }
+                FonctionsNatives.createMap(mapName, mapName.Length, password, password.Length, mapType, privateCheckBox.Checked ? (char)1 : (char)0);
             }
 
             mapPanel.Visible = true;
             addPanel.Visible = false;
             offlineModePanel.Visible = false;
+        }
+
+        private void creatingOffLineMap(string mapName)
+        {
+            if (!System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone)) && !parent_.mapMenu.offlineMaps_.ContainsKey(mapName))
+            {
+                //Create the map and Copy the default map
+                File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
+                MapPresentator newMap = new MapPresentator(parent_, mapName, false, -1, 0, -1);
+                newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
+                parent_.mapMenu.addOfflineMapEntry(mapName, newMap);
+                verifyMapsAttributes();
+            }
+            else
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte avec ce nom existe déjà.";
+                textBox.Clear();
+                return;
+            }
+        }
+
+        private void uploadMap(string path)
+        {
+            loadingPanel load = new loadingPanel(parent_);
+            load.Dock = DockStyle.Fill;
+            parent_.Controls.Add(load);
+            load.BringToFront();
+
+            //Create thread
+            Worker workerObject = new Worker(path);
+            Thread workerThread = new Thread(workerObject.DoWork);
+
+            // Start the worker thread.
+            workerThread.Start();
+
+            // Loop until worker thread activates.
+            while (!workerThread.IsAlive) ;
+
+            // Loop until worker thread activates.
+            while (workerThread.IsAlive)
+            {
+                Application.DoEvents();
+            };
+
+            load.stop();
+            parent_.Controls.Remove(load);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -487,35 +536,24 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void offlineEditionModeButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
-            FonctionsNatives.charger();
-
-            parent_.editionSideMenu = new EditionSideMenu(parent_);
-            parent_.editionMenuStrip = new EditionMenuStrip(parent_);
-            parent_.editionModificationPanel = new EditionModificationPanel(parent_);
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             defaultView();
 
-            parent_.viewPort.Controls.Add(parent_.editionSideMenu);
-            parent_.editionSideMenu.Dock = DockStyle.Left;
+            if (FonctionsNatives.getEditionTutorialState())
+            {
+                FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
+                FonctionsNatives.charger();
 
-            parent_.viewPort.Controls.Add(parent_.editionMenuStrip);
-            parent_.editionMenuStrip.Dock = DockStyle.Top;
+                parent_.goOfflineEdition();
+            }
+            else
+            {
+                FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
+                FonctionsNatives.charger();
 
-            parent_.editionModificationPanel.Location = new Point(parent_.viewPort.Width - parent_.editionModificationPanel.Width,
-                                                                  parent_.editionMenuStrip.Height);
-            parent_.editionModificationPanel.Anchor = (AnchorStyles.Top | AnchorStyles.Right);
-            parent_.editionModificationPanel.Visible = false;
-            parent_.viewPort.Controls.Add(parent_.editionModificationPanel);
-
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
-
-            Program.peutAfficher = true;
-            parent_.verificationDuNombreElementChoisi();
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.EDITION);
+                parent_.goOfflineEditionTutorial();
+            }
+            
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -531,24 +569,23 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void offlineSimulationModeButton_Click(object sender, EventArgs e)
         {
-            FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
-            FonctionsNatives.charger();
-
-            parent_.simulationMenuStrip = new SimulationMenuStrip(parent_);
-            parent_.configuration.populerToolStripProfils(parent_.simulationMenuStrip.profilsToolStripMenuItem);
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             defaultView();
 
-            parent_.simulationMenuStrip.Dock = DockStyle.Top;
-            parent_.viewPort.Controls.Add(parent_.simulationMenuStrip);
+            if (FonctionsNatives.getSimulationTutorialState())
+            {
+                FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
+                FonctionsNatives.charger();
 
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+                parent_.goOfflineSimulation();
+            }
+            else
+            {
+                FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
+                FonctionsNatives.charger();
 
-            Program.peutAfficher = true;
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
+                parent_.goOfflineSimulationTutorial();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -622,6 +659,7 @@ namespace ui
             }
         }
 
+        //Cette fonction est temporaire - attend que le mode soit en ligne
         private void createMapPieceMode()
         {
             String mapName = textBox.Text;
@@ -656,5 +694,70 @@ namespace ui
             addPanel.Visible = false;
             offlineModePanel.Visible = false;
         }
+
+        //Cette fonction est temporaire - attend que le mode soit en ligne
+        //Également changer dans SingleMapPresentation
+        public void createMapRaceMode()
+        {
+            String mapName = textBox.Text;
+            if (mapName.Equals(""))
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte ne peut avoir ce nom.";
+                textBox.Clear();
+                return;
+            }
+
+            bool a = System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone));
+
+            if (!System.IO.File.Exists(System.IO.Path.GetFullPath(cheminDossierZone + mapName + extensionFichierZone)) && !parent_.mapMenu.offlineMaps_.ContainsKey(mapName))
+            {
+                //Create the map and Copy the default map
+                File.Copy(cheminDossierZone + "defaut" + extensionFichierZone, cheminDossierZone + mapName + extensionFichierZone);
+                //Todo change mode
+                MapPresentator newMap = new MapPresentator(parent_, mapName, false, (int)ModeEnum.Mode.PIECES, 0, -1);
+                newMap.setPath(cheminDossierZone + mapName + extensionFichierZone);
+                parent_.mapMenu.addOnlineMapEntry(-1, newMap);
+                verifyMapsAttributes();
+            }
+            else
+            {
+                warningLabel.Visible = true;
+                warningLabel.Text = "Une carte avec ce nom existe déjà.";
+                textBox.Clear();
+                return;
+            }
+
+            mapPanel.Visible = true;
+            addPanel.Visible = false;
+            offlineModePanel.Visible = false;
+        }
+
+        public class Worker
+        {
+            string path_;
+
+            public Worker(string path)
+            {
+                path_ = path;
+            }
+            // This method will be called when the thread is started.
+            public void DoWork()
+            {
+                FonctionsNatives.uploadMap(path_);
+            }
+        }
+    }
+
+    static partial class FonctionsNatives
+    {
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void uploadMap(string chemin);
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool getEditionTutorialState();
+
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern bool getSimulationTutorialState();
     }
 }

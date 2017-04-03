@@ -44,10 +44,9 @@ namespace utilitaire {
       /// Affiche la boîte d'environnement.
       void afficher(const glm::dvec3& centre, double demiLargeur) const;
 
-
    private:
       /// Identificateurs des textures de la boîte d'environnement.
-      unsigned int texturesEnvironnement_[6];
+	   unsigned int texturesEnvironnement_[6];
 
    };
 

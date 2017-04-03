@@ -311,8 +311,8 @@ void MapSystem::HandleMapGraphRequestMessage(User * user, const std::string & me
 
 void MapSystem::HandleMapTransferMessage(User * user, const std::string & message)
 {
-	// +4 is to skip the nominator;denominator; in the message
-	std::string mapData = message.substr(Networking::MessageStandard::DATA_START + 4);
+	// +2 is to skip the nominator;denominator; in the message
+	std::string mapData = message.substr(Networking::MessageStandard::DATA_START + 2);
 
 	// Check if transfer already in progress
 	if (_mapsInTransfer.count(user->Info.GetId()) > 0) {

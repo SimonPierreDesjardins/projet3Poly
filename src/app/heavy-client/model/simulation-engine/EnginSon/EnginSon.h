@@ -28,7 +28,8 @@ enum typeSon {
 	COLLISION_POTEAU_SON,
 	COLLISION_MUR_SON,
 	COLLISION_TABLE_SON,
-	COLLISION_TELEPORTEUR_SON
+	COLLISION_TELEPORTEUR_SON,
+	COLLISION_COIN_SON
 };
 
 class EnginSon{
@@ -51,11 +52,11 @@ private:
 	/// Référence vers le système FMOD
 	FMOD::System *systeme_;
 
-	/// Tableau contenant les 9 sons possibles
-	std::array<SoundClass, 10> sons_;
+	/// Tableau contenant les 10 sons possibles
+	std::array<SoundClass, 11> sons_;
 
-	/// Tableau contenant les noms des 9 sons possibles
-	std::array<std::string, 10> nomsSons_;
+	/// Tableau contenant les noms des 10 sons possibles
+	std::array<std::string, 11> nomsSons_;
 
 	/// Channel jouant la musique en boucle
 	FMOD::Channel* musiqueChannel;

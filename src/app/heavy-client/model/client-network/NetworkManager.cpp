@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ios>
+#include <fstream>
 
 #include "NetworkManager.h"
 
@@ -33,15 +35,66 @@ void NetworkManager::createProfile(const std::string& username)
 	connection_.sendMessage(message);
 }
 
-void NetworkManager::requestMapCreation(const std::string& mapName, uint8_t mapType)
+void NetworkManager::uploadMap(const std::string& filePath) {
+	//Forgive me, this function is gonna be a clusterfuck
+
+	// open file
+	std::ifstream mapFile(filePath, std::ios::in | std::ios::binary | std::ios::ate);
+	if (!mapFile.is_open())
+	{
+		return;
+	}
+
+	// load file into mem block
+	auto size = mapFile.tellg();
+	char* memblock = new char[size];
+	mapFile.seekg(0, std::ios::beg);
+	mapFile.read(memblock, size);
+	mapFile.close();
+
+	// start reading through the memblock, segmenting into packets and sending them
+
+	std::vector<std::string> packets;
+
+	int maxPacketSize = 256;
+	int bytesLeft = size;
+	int currentByte = 0;
+
+	while (bytesLeft > 0) {
+		// add to an array of messages to send;
+		auto packetSize = (maxPacketSize < bytesLeft) ? maxPacketSize : bytesLeft;
+		packets.push_back(std::string(memblock + currentByte, packetSize));
+		currentByte += packetSize;
+		bytesLeft -= packetSize;
+	}
+
+	char numberOfPackets = packets.size();
+	for (char i = 0; i < numberOfPackets; ++i) {
+		std::string message("");
+		serializer_.serialize(uint32_t(packets[i].size() + 8), message);
+		message.append("mt");
+		message += i + 1;
+		message += numberOfPackets;
+		message += packets[i];
+		connection_.sendMessage(message);
+	}
+
+	delete[] memblock;
+}
+
+void NetworkManager::requestMapCreation(const std::string& mapName, const std::string& password, uint8_t mapType, uint8_t isPrivate)
 {
 	std::string message;
-	serializer_.serialize((uint32_t)(mapName.size() + 7), message);
+	// on rajoute isPrivate à la taille pour symboliser l'ajout du ; entre le nom et le mot de passe
+	serializer_.serialize((uint32_t)(mapName.size() + password.size() + 8 + isPrivate), message);
 	message.append("mc");
 	serializer_.serialize(mapType, message);
-	// TODO: pass privacy and password, currently public by default
-	message.append(0x00);
+	serializer_.serialize(isPrivate, message);
 	message.append(mapName);
+	if (isPrivate) {
+		message += ';';
+		message.append(password);
+	}
 	connection_.sendMessage(message);
 }
 

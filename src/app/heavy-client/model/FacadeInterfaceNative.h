@@ -112,6 +112,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
 	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
+	__declspec(dllexport) void __cdecl uploadMap(char* filePath);
 	typedef int(__stdcall * CallbackDisconnect)();
 	__declspec(dllexport) void __cdecl SetCallbackForDisconnect(CallbackDisconnect disconnectHandler);
 	__declspec(dllexport) void __cdecl GotDisconnected();
@@ -123,7 +124,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl connectionWasFail();
 
 	// Map management
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType);
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNamesize, char* password, int passwordSize, char mapType, char isPrivate);
 	__declspec(dllexport) void __cdecl joinMap(int mapId);
 	__declspec(dllexport) void __cdecl leaveMap();
 
@@ -135,6 +136,12 @@ extern "C"
 	__declspec(dllexport) void __cdecl UnselectCurrentTool();
 	__declspec(dllexport) void __cdecl UnselectAllObjects();
 	__declspec(dllexport) void __cdecl SelectAllTutorialObjects();
+	__declspec(dllexport) bool __cdecl getEditionTutorialState();
+	__declspec(dllexport) void __cdecl setEditionTutorialState(bool completed);
+
+	//Simulation Tutorial
+	__declspec(dllexport) bool __cdecl getSimulationTutorialState();
+	__declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed);
 
 	//Chat System
 	typedef void(__stdcall * CallbackForChat)(const unsigned char* text, int size);
@@ -145,6 +152,10 @@ extern "C"
 	typedef void(__stdcall * CallbackForNewMap)(const unsigned char* text, int size, bool connectionState, int mode, int nbPlayers, int id);
 	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap);
 	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id);
+
+	//Application saved settings
+	__declspec(dllexport) void __cdecl LoadApplicationSettings();
+	__declspec(dllexport) void __cdecl SaveApplicationSettings();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

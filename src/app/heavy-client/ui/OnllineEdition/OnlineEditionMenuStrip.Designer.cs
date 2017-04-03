@@ -32,6 +32,8 @@
             this.fichierToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enregistrerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.enregistrerSousToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modeSimulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.modePiècesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuprincipalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.vuesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.orthoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,8 +45,6 @@
             this.RightToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.LeftToolStripPanel = new System.Windows.Forms.ToolStripPanel();
             this.ContentPanel = new System.Windows.Forms.ToolStripContentPanel();
-            this.modeSimulationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.modePiècesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -79,16 +79,30 @@
             // enregistrerToolStripMenuItem
             // 
             this.enregistrerToolStripMenuItem.Name = "enregistrerToolStripMenuItem";
-            this.enregistrerToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.enregistrerToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.enregistrerToolStripMenuItem.Text = "Enregistrer";
             this.enregistrerToolStripMenuItem.Click += new System.EventHandler(this.enregistrerToolStripMenuItem_Click);
             // 
             // enregistrerSousToolStripMenuItem
             // 
             this.enregistrerSousToolStripMenuItem.Name = "enregistrerSousToolStripMenuItem";
-            this.enregistrerSousToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.enregistrerSousToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
             this.enregistrerSousToolStripMenuItem.Text = "Enregistrer sous";
             this.enregistrerSousToolStripMenuItem.Click += new System.EventHandler(this.enregistrerSousToolStripMenuItem_Click);
+            // 
+            // modeSimulationToolStripMenuItem
+            // 
+            this.modeSimulationToolStripMenuItem.Name = "modeSimulationToolStripMenuItem";
+            this.modeSimulationToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.modeSimulationToolStripMenuItem.Text = "Mode Simulation";
+            this.modeSimulationToolStripMenuItem.Click += new System.EventHandler(this.modeSimulationToolStripMenuItem_Click);
+            // 
+            // modePiècesToolStripMenuItem
+            // 
+            this.modePiècesToolStripMenuItem.Name = "modePiècesToolStripMenuItem";
+            this.modePiècesToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
+            this.modePiècesToolStripMenuItem.Text = "Mode Pièces";
+            this.modePiècesToolStripMenuItem.Click += new System.EventHandler(this.modePiècesToolStripMenuItem_Click);
             // 
             // menuprincipalToolStripMenuItem
             // 
@@ -176,18 +190,6 @@
             // ContentPanel
             // 
             this.ContentPanel.Size = new System.Drawing.Size(150, 150);
-            // 
-            // modeSimulationToolStripMenuItem
-            // 
-            this.modeSimulationToolStripMenuItem.Name = "modeSimulationToolStripMenuItem";
-            this.modeSimulationToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
-            this.modeSimulationToolStripMenuItem.Text = "Mode Simulation";
-            // 
-            // modePiècesToolStripMenuItem
-            // 
-            this.modePiècesToolStripMenuItem.Name = "modePiècesToolStripMenuItem";
-            this.modePiècesToolStripMenuItem.Size = new System.Drawing.Size(210, 26);
-            this.modePiècesToolStripMenuItem.Text = "Mode Pièces";
             // 
             // OnlineEditionMenuStrip
             // 

@@ -966,9 +966,9 @@ extern "C"
 		strcpy_s(path, size, EnginSon::obtenirInstance()->getDefaultMusic().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType)
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNameSize, char* password, int passwordSize, char mapType, char isPrivate)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, mapNameSize), std::string(password, passwordSize), mapType, isPrivate);
 	}
 
 	__declspec(dllexport) void __cdecl joinMap(int mapId)
@@ -1067,6 +1067,13 @@ extern "C"
 		// Need the size of the array so the string builder doesn't stop at 
 		// the first \0 (likely in the serialized message size)
 		FacadeModele::obtenirInstance()->getNetworkManager()->sendSizePrefixedMessage(std::string(message, size));
+	}
+
+	__declspec(dllexport) void __cdecl uploadMap(char* filePath)
+	{
+		// Need the size of the array so the string builder doesn't stop at 
+		// the first \0 (likely in the serialized message size)
+		FacadeModele::obtenirInstance()->getNetworkManager()->uploadMap(std::string(filePath));
 	}
 
 	CallbackDisconnect DisconnectHandler = 0;
@@ -1182,6 +1189,58 @@ extern "C"
 			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::selectAllTutorialObjects();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl getEditionTutorialState()
+	///
+	/// Cette fonction de savoir si le tutoriel edition est completer
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl getEditionTutorialState()
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getEditionTutorialState();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setEditionTutorialState(bool completed)
+	///
+	/// Cette fonction d'assigner l'état du tutoriel edition
+	///
+	///	@args bool compled: indique si le tutoriel est completé
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setEditionTutorialState(bool completed)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setEditionTutorialState(completed);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl getSimulationTutorialState()
+	///
+	/// Cette fonction de savoir si le tutoriel simulation est completer
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl getSimulationTutorialState()
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getSimulationTutorialState();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed)
+	///
+	/// Cette fonction d'assigner l'état du tutoriel simulation
+	///
+	///	@args bool compled: indique si le tutoriel est completé
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setSimulationTutorialState(completed);
+	}
+
 	CallbackForChat Handler = 0;
 	__declspec(dllexport) void __cdecl SetCallbackForChat(CallbackForChat handler)
 	{
@@ -1205,6 +1264,16 @@ extern "C"
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
 		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);
+	}
+
+	__declspec(dllexport) void __cdecl LoadApplicationSettings()
+	{
+		FacadeModele::obtenirInstance()->getApplicationSettings()->load();
+	}
+
+	__declspec(dllexport) void __cdecl SaveApplicationSettings()
+	{
+		FacadeModele::obtenirInstance()->getApplicationSettings()->save();
 	}
 }
 

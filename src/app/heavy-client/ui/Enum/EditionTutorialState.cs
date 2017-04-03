@@ -39,7 +39,7 @@ namespace EditionTutorial
         CONCLUSION
     };
 
-    #if !__LINE__
+#if !__LINE__
 }
 #endif
 ////////////////////////////////////////////////

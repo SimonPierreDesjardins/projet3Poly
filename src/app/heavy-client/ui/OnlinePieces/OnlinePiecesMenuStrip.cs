@@ -1,7 +1,7 @@
 ﻿////////////////////////////////////////////////
 /// @file   OnlinePiecesMenuStrip.cs
 /// @author Frédéric Grégoire
-/// @date   2017-02-16
+/// @date   2017-03-29
 ///
 ////////////////////////////////////////////////
 using System;
@@ -33,6 +33,24 @@ namespace ui
             crochetPourVue();
         }
 
+        private void modeÉditionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Focus();
+            parent_.configuration.deallocateCurrentProfilToolStrip();
+            parent_.viewPort.Controls.Remove(this);
+
+            parent_.goOnlineEdition();
+        }
+
+        private void modePièceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Focus();
+            parent_.configuration.deallocateCurrentProfilToolStrip();
+            parent_.viewPort.Controls.Remove(this);
+
+            parent_.goOnlineCoin();
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -45,6 +63,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void menuPrincipalToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             goMenuPrincipal();
         }
 
@@ -64,7 +83,7 @@ namespace ui
             parent_.mainMenu = new MainMenu(parent_);
 
             parent_.configuration.deallocateCurrentProfilToolStrip();
-            parent_.viewPort.Controls.Remove(parent_.simulationMenuStrip);
+            parent_.viewPort.Controls.Remove(this);
 
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
@@ -87,6 +106,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void orthoToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             orthoView();
         }
 
@@ -117,6 +137,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void orbiteToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             orbiteView();
         }
 
@@ -147,6 +168,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void premierePersonneToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Focus();
             firstPersonView();
         }
 

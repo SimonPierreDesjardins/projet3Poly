@@ -1,7 +1,7 @@
 ﻿////////////////////////////////////////////////
 /// @file   OnlineEditionMenuStrip.cs
 /// @author Frédéric Grégoire
-/// @date   2017-02-16
+/// @date   2017-03-29
 ///
 ////////////////////////////////////////////////
 using System;
@@ -107,6 +107,27 @@ namespace ui
             FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
+        private void modePiècesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Focus();
+            parent_.viewPort.Controls.Remove(this);
+            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
+
+            parent_.goOnlineCoin();
+
+        }
+
+        private void modeSimulationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Focus();
+            parent_.viewPort.Controls.Remove(this);
+            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+            parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
+
+            parent_.goOnlineSimulation();
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void menuprincipalToolStripMenuItem_Click(object sender, EventArgs e)
@@ -135,7 +156,7 @@ namespace ui
         {
             parent_.mainMenu = new MainMenu(parent_);
 
-            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
+            parent_.viewPort.Controls.Remove(this);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
             parent_.viewPort.Controls.Add(parent_.mainMenu);
