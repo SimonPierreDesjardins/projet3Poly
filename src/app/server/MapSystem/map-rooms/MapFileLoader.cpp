@@ -112,10 +112,6 @@ void server::MapFileLoader::LoadTeleporters(const rapidjson::Value& jsonNode, En
 	Entity* tp2 = _entityTree->createEntity(GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
 	parent->addChild(tp2);
 	setEntityValues(tp2, jsonItr);
-
-	// this is disgusting, either cast or deal with the code being bad
-	//tp1->assignerTeleporteur(tp2);
-	//tp2->assignerTeleporteur(tp1);
 	
 }
 
@@ -178,7 +174,7 @@ void server::MapFileLoader::StartSaveThread()
 		while (_runSaveThread) {
 			// I feel horrible, there must be a better way
 			std::this_thread::sleep_for(std::chrono::seconds(2));
-			// heck again after sleep
+			// check again after sleep
 			if (_mapDirty && _runSaveThread) {
 				SaveTree();
 			}
@@ -197,13 +193,21 @@ void server::MapFileLoader::StopSaveThread()
 void server::MapFileLoader::SaveTree() {
 	rapidjson::StringBuffer buffer;
 	auto writer = new rapidjson::Writer<rapidjson::StringBuffer>(buffer);
-	std::function<void(Entity*)> saveLambda;
-	saveLambda = [saveLambda, writer](Entity* entity) -> void{
+	
+	
+	// visit tree with this method.
+	std::function<void(Entity*)> visiterLambda;
+	// save objects and continue visiting with this one
+	std::function<void(Entity*)> saveObjectLambda;
+
+	saveObjectLambda = [saveObjectLambda, visiterLambda, writer](Entity* entity) -> void{
+
 		writer->StartObject();
-		//TODO: expect teleporters 
+		
 		// get type
 		writer -> Key("type");
 		writer -> String(GetEntityType(entity->entityType_).c_str());
+
 		//get positons
 		auto pos = entity->getProperty(Networking::RELATIVE_POSITION);
 		writer->Key("posX");
@@ -226,15 +230,44 @@ void server::MapFileLoader::SaveTree() {
 			writer->StartArray();
 			for each (auto child in *entity)
 			{
-				saveLambda(child.second);
+				visiterLambda(child.second);
 			}
 			writer->EndArray();
 		}
 
 		writer->EndObject();
 	};
+
+	
+	visiterLambda = [visiterLambda, saveObjectLambda, writer](Entity* entity) -> void {
+		static Entity* previousTeleporter = nullptr;
+
+		// check for teleporter, otherwise save normally
+		if (entity->entityType_ != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
+			saveObjectLambda(entity);
+		}
+		// Teleporter saving methodology
+		else {
+			if (previousTeleporter == nullptr) {
+				// save to previous teleporter
+				previousTeleporter = entity;
+			}
+			else {
+				//save both items in pairTeleporteurs
+				writer->StartObject();
+				writer->Key("PaireTeleporteurs");
+				writer->StartArray();
+				saveObjectLambda(previousTeleporter);
+				saveObjectLambda(entity);
+				writer->EndArray();
+				writer->EndObject();
+				previousTeleporter = nullptr;
+			}
+		}
+	};
+
 	writer->StartObject();
-	saveLambda(&(_entityTree->begin()->second));
+	visiterLambda(&(_entityTree->begin()->second));
 	writer->EndObject();
 
 	_mapFile->MapData = buffer.GetString();
