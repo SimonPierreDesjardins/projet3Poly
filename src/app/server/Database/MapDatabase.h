@@ -27,6 +27,7 @@ namespace server {
 		unsigned int nbPoteaux = 0;
 		unsigned int nbLignes = 0;
 		unsigned int nbMurs = 0;
+		unsigned int nbTeleporteurs = 0;
 		std::string password; // password to join map if private
 		unsigned int Admin = 0; // UserId of the map's creator
 		unsigned int MapId = 0; // Id of the map json

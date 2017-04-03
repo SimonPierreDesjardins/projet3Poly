@@ -228,6 +228,9 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
 		mapInfo_->nbLignes++;
 		break;
+	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
+		mapInfo_->nbTeleporteurs++;
+		break;
 	}
 
 	// TODO: discriminate object type
@@ -252,6 +255,9 @@ void AbstractMapRoom::handleEntityRemovalMessage(User* sender, const std::string
 		break;
 	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
 		mapInfo_->nbLignes--;
+		break;
+	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
+		mapInfo_->nbTeleporteurs--;
 		break;
 	}
 
