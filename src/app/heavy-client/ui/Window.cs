@@ -860,15 +860,15 @@ namespace ui
 
 
 
-        public void Test(string mapName, bool connectionState, int mode, int nbPlayers, int id)
+        public void Test(string mapName, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id)
         {
-            AddMap(mapName, connectionState, mode, nbPlayers, id);
+            AddMap(mapName, connectionState, mode, nbPlayers, isAdmin, id);
         }
 
-        private delegate void CallbackForNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, int id);
+        private delegate void CallbackForNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id);
         // Ensure it doesn't get garbage collected
         private CallbackForNewMap mInstance;
-        private void addNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, int id)
+        private void addNewMap(IntPtr mapName, int mapNameSize, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id)
         {
             Byte[] tmp = new Byte[mapNameSize];
             Marshal.Copy(mapName, tmp, 0, mapNameSize);
@@ -882,7 +882,7 @@ namespace ui
         private static extern void SetCallbackForNewMap(CallbackForNewMap fn);
 
         [DllImport("model.dll")]
-        private static extern void AddMap(string mapName, bool connectionState, int mode, int nbPlayers, int id);
+        private static extern void AddMap(string mapName, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id);
     }
 
     ////////////////////////////////////////////////////////////////////////

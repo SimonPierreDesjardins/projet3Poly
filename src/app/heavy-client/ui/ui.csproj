@@ -467,6 +467,7 @@
     <Content Include="Resources\Scale.png" />
     <Content Include="Resources\Selection.png" />
     <Content Include="Resources\SendIcon.png" />
+    <None Include="Resources\settings-24.png" />
     <Content Include="Resources\table.png" />
     <Content Include="Resources\Teleporteur.png" />
     <None Include="Resources\TutorialOrtho.png" />

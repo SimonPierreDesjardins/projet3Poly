@@ -38,7 +38,7 @@ public:
 	void onEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId);
 
 	// Map system
-	void onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, std::string& name);
+	void onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, uint32_t admin, std::string& name);
 	void onUserJoinedMap(char result, uint32_t mapId, uint32_t userId);
 	void onUserLeftCurrentMapSession(uint32_t userId);
 	void onUserAuthentified(uint32_t userId);
@@ -52,6 +52,8 @@ private:
 	client_network::MapSession* currentSession_ = nullptr;
 
 	ArbreRendu* entityTree_ = nullptr;
+
+	uint32_t userId_;
 };
 
 inline void EventHandler::setNetworkManager(client_network::NetworkManager* networkManager)
