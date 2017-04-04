@@ -43,7 +43,6 @@ public:
 	void setCouleurDefault(int piece, bool default);
 
 private:
-	ProfilUtilisateur* profil_{ nullptr };
 	float vitesseCourante_{ 0.f };
 	bool isRightWheel{ false };
 	float* couleur_;
