@@ -36,6 +36,7 @@ namespace ui
                 connectPanel.Visible = false;
             }
 
+            //Set callbacks for connection state
             mInstance = new CallbackDisconnect(DisconnectHandler);
             SetCallbackForDisconnect(mInstance);
 
@@ -44,6 +45,10 @@ namespace ui
 
             connectFail = new CallbackConnectionFail(ConnectionFailHandler);
             SetCallbackForConnectionFail(connectFail);
+
+            //Set callbacks for user authentification
+            authenticationInstance = new CallbackAuthentification(AuthentificationHandler);
+            SetCallbackForAuthentification(authenticationInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -245,7 +250,6 @@ namespace ui
         private void cancelNewUserButton_Click(object sender, EventArgs e)
         {
             deconnectFromServer();
-            goBackToMainMenu();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -380,8 +384,6 @@ namespace ui
             parent_.viewPort.Controls.Remove(this);
             parent_.mainMenu = new MainMenu(parent_);
 
-            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
-            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
         }
@@ -434,11 +436,6 @@ namespace ui
         [DllImport("model.dll")]
         private static extern void SetCallbackForDisconnect(CallbackDisconnect fn);
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void GotDisconnected();
 
@@ -479,11 +476,6 @@ namespace ui
         [DllImport("model.dll")]
         private static extern void SetCallbackForConnectionSuccess(CallbackConnectionSuccess fn);
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void connectionWasSuccess();
 
@@ -524,12 +516,33 @@ namespace ui
         [DllImport("model.dll")]
         private static extern void SetCallbackForConnectionFail(CallbackConnectionFail fn);
 
+        [DllImport("model.dll")]
+        private static extern void connectionWasFail();
+
+        //New user authentication
+        public void Test3(int action)
+        {
+            authentification(action);
+        }
+
+        private delegate void CallbackAuthentification(int action);
+        // Ensure it doesn't get garbage collected
+        private CallbackAuthentification authenticationInstance;
+        private void AuthentificationHandler(int action)
+        {
+            // Do something...
+
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction permettant le callback entre le c++ et le c#
         ///
         ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
-        private static extern void connectionWasFail();
+        private static extern void SetCallbackForAuthentification(CallbackAuthentification fn);
+
+        [DllImport("model.dll")]
+        private static extern void authentification(int action);
     }
 }

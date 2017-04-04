@@ -986,6 +986,27 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestToQuitMapSession();
 	}
 
+	CallbackMapConnection callbackMapConnection = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn)
+	{
+		callbackMapConnection = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapConnect(int action)
+	{
+		callbackMapConnection(action);
+	}
+
+	CallbackMapPermission callbackMapPermission = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapPermission(CallbackMapPermission fn)
+	{
+		callbackMapPermission = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapPermission(int action)
+	{
+		callbackMapPermission(action);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -1112,6 +1133,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl connectionWasFail()
 	{
 		ConnectionFailHandler();
+	}
+
+	CallbackAuthentification callbackAuthentification = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForAuthentification(CallbackAuthentification fn)
+	{
+		callbackAuthentification = fn;
+	}
+
+	__declspec(dllexport) void __cdecl authentification(int action)
+	{
+		callbackAuthentification(action);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -1265,10 +1297,10 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, int isPrivate, int connectionState, int mode, int nbPlayers, int isAdmin, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
-		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, isAdmin, id);
+		AddNewMap(bytes, name.size(), (int)connectionState, mode, nbPlayers, (int)isAdmin, id, (int)isPrivate);
 	}
 
 	__declspec(dllexport) void __cdecl LoadApplicationSettings()

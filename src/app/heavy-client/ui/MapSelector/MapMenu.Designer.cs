@@ -200,6 +200,7 @@
             this.passwordBox.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.passwordBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.passwordBox.Location = new System.Drawing.Point(329, 315);
+            this.passwordBox.MaxLength = 10;
             this.passwordBox.Name = "passwordBox";
             this.passwordBox.PasswordChar = '*';
             this.passwordBox.Size = new System.Drawing.Size(188, 27);
@@ -404,7 +405,7 @@
             this.importButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.importButton.Controls.Add(this.customLabel3);
             this.importButton.Controls.Add(this.pictureBox3);
-            this.importButton.Location = new System.Drawing.Point(91, 281);
+            this.importButton.Location = new System.Drawing.Point(76, 281);
             this.importButton.Name = "importButton";
             this.importButton.Size = new System.Drawing.Size(210, 36);
             this.importButton.TabIndex = 8;
