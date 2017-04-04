@@ -36,6 +36,16 @@ void SimulationEngine::initializeRendering(HWND hWnd, ProfilUtilisateur* userPro
 	// La couleur de fond
 	glClearColor(0.32f, 0.32f, 0.32f, 1.0f);
 
+	environnements_.push_back(utilitaire::BoiteEnvironnement(
+		".\\media\\textures\\Skybox1\\posz.jpg", ".\\media\\textures\\Skybox1\\negz.jpg",
+		".\\media\\textures\\Skybox1\\posx.jpg", ".\\media\\textures\\Skybox1\\negx.jpg",
+		".\\media\\textures\\Skybox1\\negy.jpg", ".\\media\\textures\\Skybox1\\posy.jpg"));
+
+	environnements_.push_back(utilitaire::BoiteEnvironnement(
+		".\\media\\textures\\Skybox2\\posz.jpg", ".\\media\\textures\\Skybox2\\negz.jpg",
+		".\\media\\textures\\Skybox2\\posx.jpg", ".\\media\\textures\\Skybox2\\negx.jpg",
+		".\\media\\textures\\Skybox2\\negy.jpg", ".\\media\\textures\\Skybox2\\posy.jpg"));
+
 	// Les lumières
 	glEnable(GL_LIGHTING);
 	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
@@ -78,6 +88,8 @@ void SimulationEngine::initializeRendering(HWND hWnd, ProfilUtilisateur* userPro
 				-50, 50, -50, 50, false });
 
 	textDisplay_ = std::make_unique<AffichageTexte>(view_.get(), userProfile);
+
+
 	isInitialized_ = true;
 }
 
@@ -132,7 +144,7 @@ void SimulationEngine::render()
 
 	
 	// AfficherEnvironnement
-	if (environnement_ != nullptr)
+	if (environnementCourant_ != nullptr)
 	{
 		int horizontal = 0;
 		int vertical = 0;
@@ -146,7 +158,7 @@ void SimulationEngine::render()
 		}
 			
 		getDesktopResolution(horizontal, vertical);
-		environnement_->afficher(centre, horizontal / 4);
+		environnementCourant_->afficher(centre, horizontal / 4);
 	}
 		
 
@@ -259,25 +271,10 @@ void SimulationEngine::setCloseOrbitalView()
 
 void SimulationEngine::setEnvironnement(int environnementId)
 {
-	switch (environnementId)
+	environnementCourant_ = nullptr;
+	if (0 <= environnementId && environnementId < environnements_.size())
 	{
-	case 0:
-		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\Skybox1\\posz.jpg", ".\\media\\textures\\Skybox1\\negz.jpg",
-			".\\media\\textures\\Skybox1\\posx.jpg", ".\\media\\textures\\Skybox1\\negx.jpg",
-			".\\media\\textures\\Skybox1\\negy.jpg", ".\\media\\textures\\Skybox1\\posy.jpg");
-		break;
-
-	case 1:
-		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\Skybox2\\posz.jpg", ".\\media\\textures\\Skybox2\\negz.jpg",
-			".\\media\\textures\\Skybox2\\posx.jpg", ".\\media\\textures\\Skybox2\\negx.jpg",
-			".\\media\\textures\\Skybox2\\negy.jpg", ".\\media\\textures\\Skybox2\\posy.jpg");
-		break;
-
-	default:
-		environnement_ = nullptr;
-		break;
+		environnementCourant_ = &environnements_[environnementId];
 	}
 }
 

@@ -57,7 +57,10 @@ private:
 	ArbreRenduINF2990 tree_;
 	std::unique_ptr<vue::Vue> view_{ nullptr };
 	// La boite qui donne un environnement
-	std::unique_ptr<utilitaire::BoiteEnvironnement> environnement_{ nullptr };
+
+	std::vector<utilitaire::BoiteEnvironnement> environnements_;
+	utilitaire::BoiteEnvironnement* environnementCourant_ = nullptr;
+
 	// Le controle de l'affichage du texte.
 	std::unique_ptr<AffichageTexte> textDisplay_{ nullptr };
 	// Le controle de l'affichage des lumières.

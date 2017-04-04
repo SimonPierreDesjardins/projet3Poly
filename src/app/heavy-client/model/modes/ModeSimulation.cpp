@@ -63,7 +63,7 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->demarrerChrono();
 
-	engine->setEnvironnement(1);
+	engine->setEnvironnement(0);
 	controleurLumiere_ = engine->getLightController();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
