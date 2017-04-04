@@ -4,6 +4,8 @@
 #include "EntityTree.h"
 #include "Database\MapFileDatabase.h"
 #include "rapidjson\document.h"
+#include "rapidjson\stringbuffer.h"
+#include "rapidjson\writer.h"
 
 
 namespace server
@@ -33,6 +35,10 @@ private:
 
 	void SaveTree();
 
+	void VisiterMethod(Entity* entity, rapidjson::Writer<rapidjson::StringBuffer> * writer);
+	void SaveEntityToJSON(Entity* entity, rapidjson::Writer<rapidjson::StringBuffer> * writer);
+	bool EntitySavesNormally(char entityType);
+
 	// have thread that does saving
 	std::thread _mapSavingThread;
 	MapFileEntry* _mapFile;
@@ -42,6 +48,10 @@ private:
 	
 	// The tree that is tracked for saving purposes
 	EntityTree* _entityTree;
+
+	//horrible teleporter implementation
+	Entity* previousTeleporter_ = nullptr;
+
 };
 
 }

@@ -51,6 +51,7 @@ void User::StartMessageReadThread()
 	if (_runThread) {
 		return;
 	}
+	_runThread = true;
 
 	_runThread = true;
 	_messageReaderThread = new std::thread([](){
