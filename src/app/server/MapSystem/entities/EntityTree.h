@@ -25,8 +25,6 @@ public:
 	inline EntityContainer::iterator begin();
 	inline EntityContainer::iterator end();
 
-	int GetChildCount();
-
 private:
 	EntityContainer entities_;
 	uint32_t nextEntityId_{ 1 };

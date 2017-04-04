@@ -1,6 +1,4 @@
 #include "MapFileLoader.h"
-#include "rapidjson\stringbuffer.h"
-#include "rapidjson\writer.h"
 
 server::MapFileLoader::MapFileLoader(EntityTree* tree, MapFileEntry * mapFile)
 {
@@ -144,6 +142,9 @@ char server::MapFileLoader::GetEntityType(const std::string & itemType)
 std::string server::MapFileLoader::GetEntityType(char itemType)
 {
 	//TODO: Implement this
+	if (itemType == Networking::MessageStandard::ItemTypes::TABLE_ENTITY) {
+		return "table";
+	}
 	if (itemType == Networking::MessageStandard::ItemTypes::POST_ENTITY) {
 		return "poteau";
 	}
@@ -170,6 +171,7 @@ std::string server::MapFileLoader::GetEntityType(char itemType)
 
 void server::MapFileLoader::StartSaveThread()
 {
+	_runSaveThread = true;
 	_mapSavingThread = std::thread([this]() {
 		while (_runSaveThread) {
 			// I feel horrible, there must be a better way
@@ -180,7 +182,6 @@ void server::MapFileLoader::StartSaveThread()
 			}
 		}
 	});
-	_runSaveThread = true;
 }
 
 void server::MapFileLoader::StopSaveThread()
@@ -193,82 +194,85 @@ void server::MapFileLoader::StopSaveThread()
 void server::MapFileLoader::SaveTree() {
 	rapidjson::StringBuffer buffer;
 	auto writer = new rapidjson::Writer<rapidjson::StringBuffer>(buffer);
-	
-	
-	// visit tree with this method.
-	std::function<void(Entity*)> visiterLambda;
-	// save objects and continue visiting with this one
-	std::function<void(Entity*)> saveObjectLambda;
-
-	saveObjectLambda = [saveObjectLambda, visiterLambda, writer](Entity* entity) -> void{
-
-		writer->StartObject();
-		
-		// get type
-		writer -> Key("type");
-		writer -> String(GetEntityType(entity->entityType_).c_str());
-
-		//get positons
-		auto pos = entity->getProperty(Networking::RELATIVE_POSITION);
-		writer->Key("posX");
-		writer->Double(pos->x());
-		writer->Key("posY");
-		writer->Double(pos->y());
-		writer->Key("posZ");
-		writer->Double(pos->z());
-		// get rotation
-		auto rot = entity->getProperty(Networking::ROTATION);
-		writer->Key("angleRotation");
-		writer->Double(rot -> z());
-		// get scale
-		auto scale = entity->getProperty(Networking::ROTATION);
-		writer->Key("facteurEchelle");
-		writer->Double(scale -> x());
-		//get children
-		if (entity->getChildCount() > 0) {
-			writer->Key("noeudsEnfants");
-			writer->StartArray();
-			for each (auto child in *entity)
-			{
-				visiterLambda(child.second);
-			}
-			writer->EndArray();
-		}
-
-		writer->EndObject();
-	};
-
-	
-	visiterLambda = [visiterLambda, saveObjectLambda, writer](Entity* entity) -> void {
-		static Entity* previousTeleporter = nullptr;
-
-		// check for teleporter, otherwise save normally
-		if (entity->entityType_ != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
-			saveObjectLambda(entity);
-		}
-		// Teleporter saving methodology
-		else {
-			if (previousTeleporter == nullptr) {
-				// save to previous teleporter
-				previousTeleporter = entity;
-			}
-			else {
-				//save both items in pairTeleporteurs
-				writer->StartObject();
-				writer->Key("PaireTeleporteurs");
-				writer->StartArray();
-				saveObjectLambda(previousTeleporter);
-				saveObjectLambda(entity);
-				writer->EndArray();
-				writer->EndObject();
-				previousTeleporter = nullptr;
-			}
-		}
-	};
 
 	writer->StartObject();
-	visiterLambda(&(_entityTree->begin()->second));
+	writer->Key("table");
+	SaveEntityToJSON(_entityTree->findEntity(1), writer);
 	writer->EndObject();
 
 	_mapFile->MapData = buffer.GetString();
+}
+
+void server::MapFileLoader::VisiterMethod(Entity * entity, rapidjson::Writer<rapidjson::StringBuffer> * writer)
+{
+	auto entityType = entity->entityType_;
+	// check for teleporter, otherwise save normally
+	if (EntitySavesNormally(entityType) && entityType != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
+		SaveEntityToJSON(entity, writer);
+	}
+	// Teleporter saving methodology
+	else {
+		if (previousTeleporter_ == nullptr) {
+			// save to previous teleporter
+			previousTeleporter_ = entity;
+		}
+		else {
+			//save both items in pairTeleporteurs
+			writer->StartObject();
+			writer->Key("PaireTeleporteurs");
+			writer->StartArray();
+			SaveEntityToJSON(previousTeleporter_, writer);
+			SaveEntityToJSON(entity, writer);
+			writer->EndArray();
+			writer->EndObject();
+			previousTeleporter_ = nullptr;
+		}
+	}
+}
+
+void server::MapFileLoader::SaveEntityToJSON(Entity * entity, rapidjson::Writer<rapidjson::StringBuffer>* writer)
+{
+	writer->StartObject();
+
+	// get type
+	writer->Key("type");
+	writer->String(GetEntityType(entity->entityType_).c_str());
+
+	//get positons
+	auto pos = entity->getProperty(Networking::RELATIVE_POSITION);
+	writer->Key("posX");
+	writer->Double(pos->x());
+	writer->Key("posY");
+	writer->Double(pos->y());
+	writer->Key("posZ");
+	writer->Double(pos->z());
+	// get rotation
+	auto rot = entity->getProperty(Networking::ROTATION);
+	writer->Key("angleRotation");
+	writer->Double(rot->z());
+	// get scale
+	auto scale = entity->getProperty(Networking::SCALE);
+	writer->Key("facteurEchelle");
+	writer->Double(scale->x());
+	//get children
+	if (entity->getChildCount() > 0) {
+		writer->Key("noeudsEnfants");
+		writer->StartArray();
+		for each (auto child in *entity)
+		{
+			VisiterMethod(child.second, writer);
+		}
+		writer->EndArray();
+	}
+
+	writer->EndObject();
+}
+
+bool server::MapFileLoader::EntitySavesNormally(char entityType)
+{
+	if (entityType < Networking::MessageStandard::ItemTypes::WHEEL_ENTITY
+		&& entityType != Networking::MessageStandard::ItemTypes::DUPLICATION_ENTITY) {
+		return true;
+	}
+	return false;
 }
