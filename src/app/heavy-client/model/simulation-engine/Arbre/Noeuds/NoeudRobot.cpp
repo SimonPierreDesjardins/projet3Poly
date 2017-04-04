@@ -157,13 +157,15 @@ void NoeudRobot::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-    controleurLumiere_->afficherLumiereSpotRobot();
+    //controleurLumiere_->afficherLumiereSpotRobot();
     
 
+	/*	
 	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
+	*/
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -221,8 +223,6 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 void NoeudRobot::animer(float dt)
 {
 	//mettreAJourCapteurs();
-	controleurLumiere_->assignerLumiereSpotGyro(true);
-	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(), dt);
 	positionnerRoues();
 	//suivreCamera();
 }

@@ -12,6 +12,10 @@
 
 #include "VisiteurDetectionRobot.h"
 
+namespace client_network {
+	class MapSession;
+}
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class RobotPhysics
 /// @brief Classe qui s'occupe de simuler la physique d'un robot
@@ -24,7 +28,7 @@ public:
 	RobotPhysics() = default;
 	~RobotPhysics() = default;
 
-	void init(NoeudRobot* robot, ArbreRendu* arbre);
+	void init(NoeudRobot* robot, ArbreRendu* arbre, client_network::MapSession* mapSession);
 
     // Mise à jour des attributs du robot.
 	void applyPhysicsEffects(float dt);
@@ -35,6 +39,7 @@ private:
 
 	NoeudRobot* robot_ = nullptr;
 	ArbreRendu* tree_ = nullptr;
+	client_network::MapSession* mapSession_ = nullptr;
 
 	VisiteurDetectionRobot collisionDetection_;
 

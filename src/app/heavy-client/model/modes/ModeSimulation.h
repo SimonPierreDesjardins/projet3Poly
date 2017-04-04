@@ -53,12 +53,13 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
-	virtual void postAnimer();
+	virtual void postAnimer(float dt);
 
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
 
 private:
 	ControleRobot controleRobot_;
+	RobotPhysics robotPhysics_;
 	ProfilUtilisateur* profil_{ nullptr };
 	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;

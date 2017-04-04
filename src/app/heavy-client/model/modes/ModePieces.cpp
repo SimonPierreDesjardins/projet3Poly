@@ -40,11 +40,11 @@ std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '
 /// Constructeur par défaut pour le mode pieces
 ///
 ////////////////////////////////////////////////////////////////////////
-ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profile)
+ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil)
 {
 	typeMode_ = PIECES;
-	controleRobot_ = std::make_unique<ControleRobot>();
-	profil_ = profile;
+	controleRobot_ = std::make_unique<ControleRobot>(engine->getEntityTree(), profil);
+	profil_ = profil;
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode manuel
 	controleRobot_->passerAModeManuel();

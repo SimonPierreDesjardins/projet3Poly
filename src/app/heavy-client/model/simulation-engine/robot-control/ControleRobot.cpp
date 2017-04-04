@@ -9,8 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
-#include <chrono>
-#include <thread>
+
 
 #include "Vue.h"
 #include "CommandeRobot.h"
@@ -23,7 +22,6 @@
 #include "SimulationEngine.h"
 
 #include "ControleRobot.h"
-#include "MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -36,35 +34,25 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ControleRobot::ControleRobot(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* mapSession)
+ControleRobot::ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profil)
+	: arbre_(arbre), profil_(profil)
 {
-	arbre_ = engine->getEntityTree();
-	table_ = arbre_->chercher(0);
-	profil_ = profil;
-	mapSession_ = mapSession;
-
+	std::cout << "Control created." << std::endl;
 	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele());
+	table_ = arbre_->chercher(0);
 	table_->ajouter(robot);
 
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
 	robot_->assignerMutex(&mutexComportement);
-	robotPhysic_.init(robot_, arbre_);
-	robot_->giveSensors(profil_->obtenirCapteursDistance(), profil_->obtenirSuiveurLigne());
-
-	// Placer le robot sur la fleche ici.
-	mapSession_->localEntityCreated(robot.get());
+	robot_->giveSensors(profil->obtenirCapteursDistance(), profil->obtenirSuiveurLigne());
 
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
-
-	controleurLumiere_ = engine->getLightController();
 
 	// init des flags du capteur
 	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 2; j++)
 			flagCapteur[i][j] = false;
-
-	initialiserBoucleRobot();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -83,7 +71,6 @@ ControleRobot::~ControleRobot()
 	if (table_ != nullptr && robot_ != nullptr){
 		table_->effacer(robot_);
 	}
-	terminerBoucleRobot();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -130,10 +117,8 @@ void ControleRobot::traiterCommande(CommandeRobot* commande, bool provientUtilis
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur)
-{
+void ControleRobot::assignerVecteurComportements(std::vector<std::unique_ptr<ComportementAbstrait>>* vecteur){
 	vecteurComportements_ = vecteur;
-	assignerComportement(DEFAUT, L"Passage au mode automatique");
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -179,13 +164,11 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 ///
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::inverserModeControle(){
-	if (manuel)
-	{
+	if (manuel){
 	    controleurLumiere_->assignerLumiereSpotGyro(false);
 		passerAModeAutomatique();
 	}
-	else
-	{
+	else{
 	    controleurLumiere_->assignerLumiereSpotGyro(true);
 		passerAModeManuel();
 	}
@@ -203,7 +186,7 @@ void ControleRobot::inverserModeControle(){
 void ControleRobot::passerAModeAutomatique() {
 	manuel = false;
 	assignerComportement(DEFAUT, L"Passage au mode automatique");
-	//initialiserBoucleRobot();
+	initialiserBoucleRobot();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -217,7 +200,7 @@ void ControleRobot::passerAModeAutomatique() {
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::passerAModeManuel(){
 	manuel = true;
-	//terminerBoucleRobot();
+	terminerBoucleRobot();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -229,13 +212,7 @@ void ControleRobot::passerAModeManuel(){
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::initialiserBoucleRobot()
-{
-	if (isRunning_)
-	{
-		terminerBoucleRobot();
-	}
-	isRunning_ = true;
+void ControleRobot::initialiserBoucleRobot(){
 	logiqueRobot = std::make_unique<std::thread>(&ControleRobot::boucleInfinieLogiqueRobot, this);
 }
 
@@ -248,8 +225,7 @@ void ControleRobot::initialiserBoucleRobot()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::terminerBoucleRobot()
-{
+void ControleRobot::terminerBoucleRobot(){
 	
 	// On garde temporairemtn la valeur de manuel
 	bool man = manuel;
@@ -259,7 +235,6 @@ void ControleRobot::terminerBoucleRobot()
 
 	// Fermeture du thread s'il est joignable
 	if ((logiqueRobot != nullptr) && (logiqueRobot->joinable())){
-		isRunning_ = false;
 		logiqueRobot->join();
 		logiqueRobot = nullptr;
 	}
@@ -281,37 +256,17 @@ void ControleRobot::terminerBoucleRobot()
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::boucleInfinieLogiqueRobot()
 {
-	std::chrono::microseconds sleepDuration(16667);
-	auto lastTime = std::chrono::high_resolution_clock::now();
-	while (isRunning_) 
+	while (!manuel) 
 	{
-		auto now = std::chrono::high_resolution_clock::now();
-		std::chrono::duration<float> dt = now - lastTime;
-		lastTime = now;
-		if (!enPause)
-		{
-			if (robot_)
-			{
-				if (!manuel)
-				{
-					verifierCapteurs();
-					comportement_->mettreAJour();
-				}
-				robotPhysic_.applyPhysicsEffects(dt.count());
+		if (!enPause){
+			if (robot_ != nullptr){
+				verifierCapteurs();
 			}
+			comportement_->mettreAJour();
 		}
-		else
-		{
+		else{
 			assignerVitessesMoteurs(0, 0);
 		}
-		PhysicsComponent& physics = robot_->getPhysicsComponent();
-		mapSession_->localEntityPropertyUpdated(robot_, Networking::ABSOLUTE_POSITION, glm::vec3(physics.absolutePosition));
-		mapSession_->localEntityPropertyUpdated(robot_, Networking::RELATIVE_POSITION, glm::vec3(physics.relativePosition));
-		mapSession_->localEntityPropertyUpdated(robot_, Networking::ROTATION, glm::vec3(physics.rotation));
-		mapSession_->localEntityPropertyUpdated(robot_, Networking::LINEAR_VELOCITY, glm::vec3(physics.linearVelocity));
-		mapSession_->localEntityPropertyUpdated(robot_, Networking::ANGULAR_VELOCITY, glm::vec3(physics.angularVelocity));
-
-		std::this_thread::sleep_for(sleepDuration);
 	}
 }
 
@@ -324,8 +279,7 @@ void ControleRobot::boucleInfinieLogiqueRobot()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleRobot::verifierCapteurs()
-{
+void ControleRobot::verifierCapteurs(){
 	NoeudRobot::ConteneurCapteursDistance* capteurs = robot_->obtenirCapteursDistance();
 	std::wstring declencheur;
 	for (int i = 0; i < capteurs->size(); i++)

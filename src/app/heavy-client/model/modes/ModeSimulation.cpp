@@ -43,8 +43,13 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
-	  : controleRobot_(engine, profil, session), OnlineMapMode(session)
+	  : controleRobot_(engine->getEntityTree(), profil), OnlineMapMode(session)
 {
+	NoeudRobot* robot = controleRobot_.obtenirNoeud();
+	robot->assignerSelection(true);
+	session->localEntityCreated(robot);
+	robotPhysics_.init(robot, engine->getEntityTree(), session);
+
 	typeMode_ = SIMULATION;
 	profil_ = profil;
 	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
@@ -350,9 +355,9 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 /// @return Aucune 
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModeSimulation::postAnimer()
+void ModeSimulation::postAnimer(float dt)
 {
-	//arbre_->accepterVisiteur(&visiteur_);
+	robotPhysics_.applyPhysicsEffects(dt);
 }
 ////////////////////////////////////////////////////////////////////////
 ///

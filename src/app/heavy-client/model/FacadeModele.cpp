@@ -224,6 +224,7 @@ void FacadeModele::reinitialiser()
 void FacadeModele::animer(float temps)
 {
 	engine_.animate(temps);
+	mode_->postAnimer(temps);
 }
 
 void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSession)

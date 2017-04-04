@@ -53,7 +53,7 @@ class ControleRobot
 	
 public:
 	ControleRobot() = default;
-	ControleRobot(engine::SimulationEngine* engine, ProfilUtilisateur* profile, client_network::MapSession* mapSession);
+	ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profile);
 
 	~ControleRobot();
 	// Demande au robot de traiter une commande donn�e

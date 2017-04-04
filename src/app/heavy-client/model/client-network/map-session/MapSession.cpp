@@ -45,8 +45,6 @@ void MapSession::localEntityCreated(NoeudAbstrait* entity)
 
 void MapSession::createServerEntity(const PhysicsComponent& properties, uint8_t type, uint32_t entityId, uint32_t parentId, uint32_t userId)
 {
-	pendingQueueLock_.lock();
-
 	auto itParent = confirmedEntities_.find(parentId);
 	// If the parent is not found, we return.
 	if (itParent == confirmedEntities_.end()) return;
@@ -71,8 +69,6 @@ void MapSession::createServerEntity(const PhysicsComponent& properties, uint8_t 
 	newEntity->setOwnerId(userId);
 	confirmedEntities_.insert(std::make_pair(entityId, newEntity.get()));
 
-	pendingQueueLock_.unlock();
-
 	std::cout << "Server entity created : " << newEntity->obtenirNom() <<
 		" id : " << newEntity->getId() << " parentid : " << parent->getId() << std::endl;
 }
@@ -81,11 +77,9 @@ void MapSession::confirmLocalEntity(NoeudAbstrait* entityToConfirm, uint32_t ent
 {
 	if (!entityToConfirm) return;
 
-	pendingQueueLock_.lock();
 	confirmedEntities_.insert(std::make_pair(entityId, entityToConfirm));
 	entityToConfirm->setId(entityId);
 
-	sendEntityCreationRequest(entityToConfirm);
 	// Update entity data.
 	PhysicsComponent& physics = entityToConfirm->getPhysicsComponent();
 	network_->requestEntityPropertyUpdate(entityToConfirm->getId(), Networking::ABSOLUTE_POSITION, 
@@ -116,7 +110,6 @@ void MapSession::confirmLocalEntity(NoeudAbstrait* entityToConfirm, uint32_t ent
 		sendEntityCreationRequest(entityToConfirm);
 	}
 
-	pendingQueueLock_.unlock();
 	std::cout << "Local entity creation confirmed : " << entityToConfirm->obtenirNom() <<
 		" id : " << entityToConfirm->getId() << " parentid : " << entityToConfirm->obtenirParent()->getId() << std::endl;
 }
@@ -132,6 +125,10 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 	properties.rotation = rotation;
 	properties.scale = scale;
 
+	std::cout << "Server entity creation message from server : " <<
+		" id : " << entityId << "owner id : " << userId << " my id: " << network_->getUserId() << std::endl;
+
+	pendingQueueLock_.lock();
 	// If this is a new object from another user.
 	if (userId != network_->getUserId())
 	{
@@ -142,25 +139,19 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 	{
 		// This is a confirmation for the object to be created.
 		NoeudAbstrait* entityToInsert = nullptr;
-		pendingQueueLock_.lock();
+
 		if (!pendingEntityCreationRequests_.empty())
 		{
-			NoeudAbstrait* entityToInsert = pendingEntityCreationRequests_.front();
+			entityToInsert = pendingEntityCreationRequests_.front();
 			pendingEntityCreationRequests_.pop();
-		}
-		pendingQueueLock_.unlock();
-
-		// We found en entity to confirm.
-		if (entityToInsert)
-		{
 			confirmLocalEntity(entityToInsert, entityId);
 		}
-		// Server has created an object for me.
 		else
 		{
-			//createServerEntity(properties, type, entityId, parentId, userId);
+			createServerEntity(properties, type, entityId, parentId, userId);
 		}
 	}
+	pendingQueueLock_.unlock();
 }
 
 void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)

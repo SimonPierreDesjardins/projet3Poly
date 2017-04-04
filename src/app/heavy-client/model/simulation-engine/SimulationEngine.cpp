@@ -84,12 +84,13 @@ void SimulationEngine::initializeRendering(HWND hWnd, ProfilUtilisateur* userPro
 void SimulationEngine::free()
 {
 	tree_.vider();
-	utilitaire::CompteurAffichage::libererInstance();
-
-	bool succes{ aidegl::detruireContexteGL(hWnd_, hDC_, hGLRC_) };
-	assert(succes && "Le contexte OpenGL n'a pu être détruit.");
-
-	FreeImage_DeInitialise();
+	if (isInitialized_)
+	{
+		utilitaire::CompteurAffichage::libererInstance();
+		bool succes{ aidegl::detruireContexteGL(hWnd_, hDC_, hGLRC_) };
+		assert(succes && "Le contexte OpenGL n'a pu être détruit.");
+		FreeImage_DeInitialise();
+	}
 	isInitialized_ = false;
 }
 

@@ -82,7 +82,7 @@ public:
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
-	virtual void postAnimer() {};
+	virtual void postAnimer(float dt) {};
 
 	virtual bool obtenirModeEnPause() { return true; };
 
