@@ -763,7 +763,6 @@ namespace ui
             viewPort.Refresh();
             verificationDuNombreElementChoisi();
 
-            FonctionsNatives.assignerMode(Mode.EDITION);
             verificationDuNombreElementChoisi();
         }
 
@@ -819,8 +818,6 @@ namespace ui
 
             Program.peutAfficher = true;
             viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
         }
 
         public void goOnlineCoin()

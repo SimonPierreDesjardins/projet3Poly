@@ -59,17 +59,34 @@ NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud)
 	std::shared_ptr<NoeudAbstrait> roueGauche2 = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite2 = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 
-
 	ajouter(roueGauche2);
 	ajouter(roueDroite2);
 
 	roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche2).get();
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
 
-	roueDroite_->getPhysicsComponent().relativePosition  = { 2.2, 0.2, 0.58 };
 	roueGauche_->getPhysicsComponent().relativePosition  = { 2.2, -0.2, 0.58 };
 	roueGauche2_->getPhysicsComponent().relativePosition = { -2.2, -0.2, 0.58 };
+	roueDroite_->getPhysicsComponent().relativePosition  = { 2.2, 0.2, 0.58 };
 	roueDroite2_->getPhysicsComponent().relativePosition = { -2.2, 0.2, 0.58 };
+
+		glScalef(0.6f, 0.8f, 0.75f);
+
+	PhysicsComponent leftPhysics = roueGauche_->getPhysicsComponent();
+	leftPhysics.relativePosition = { 2.2, -0.2, 0.58 };
+	leftPhysics.scale = { 0.6f, 0.8f, 0.75f };
+
+	PhysicsComponent leftPhysics2 = roueGauche_->getPhysicsComponent();
+	leftPhysics2.relativePosition = { -2.2, -0.2, 0.58 };
+	leftPhysics2.scale = { 0.6f, 0.8f, 0.75f };
+
+	PhysicsComponent rightPhysics = roueGauche_->getPhysicsComponent();
+	rightPhysics.relativePosition = { 2.2, 0.2, 0.58 };
+	rightPhysics.scale = { 0.6f, 0.8f, 0.75f };
+
+	PhysicsComponent rightPhysics2 = roueGauche_->getPhysicsComponent();
+	rightPhysics2.relativePosition = { -2.2, 0.2, 0.58 };
+	rightPhysics2.scale = { 0.6f, 0.8f, 0.75f };
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);

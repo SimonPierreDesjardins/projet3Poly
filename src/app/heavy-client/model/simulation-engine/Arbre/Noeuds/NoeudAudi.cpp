@@ -64,10 +64,22 @@ NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud)
 
 	roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche2).get();
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
-	roueDroite_->getPhysicsComponent().relativePosition = { 2.5, 0.2, 0.7 };
-	roueGauche_->getPhysicsComponent().relativePosition = { 2.5,  -0.2, 0.7 };
-	roueGauche2_->getPhysicsComponent().relativePosition = { -3.1,  -0.2, 0.7 };
-	roueDroite2_->getPhysicsComponent().relativePosition = { -3.1,  0.2, 0.7 };
+
+	PhysicsComponent leftPhysics = roueGauche_->getPhysicsComponent();
+	leftPhysics.relativePosition = { 2.5,  -0.2, 0.7 };
+	leftPhysics.scale = { 0.95f, 0.95f, 0.85f };
+
+	PhysicsComponent leftPhysics2 = roueGauche_->getPhysicsComponent();
+	leftPhysics2.relativePosition = { -3.1,  -0.2, 0.7 };
+	leftPhysics2.scale = { 0.95f, 0.95f, 0.85f };
+
+	PhysicsComponent rightPhysics = roueGauche_->getPhysicsComponent();
+	rightPhysics.relativePosition = { 2.5, 0.2, 0.7 };
+	rightPhysics.scale = { 0.95f, 0.95f, 0.85f };
+
+	PhysicsComponent rightPhysics2 = roueGauche_->getPhysicsComponent();
+	rightPhysics2.relativePosition = { -3.1,  0.2, 0.7 };
+	rightPhysics2.scale = { 0.95f, 0.95f, 0.85f };
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);

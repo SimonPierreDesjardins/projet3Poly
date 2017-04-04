@@ -836,9 +836,9 @@ void NoeudRobot::effectuerCollision(double dt)
 void NoeudRobot::positionnerRoues()
 {
 	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
+
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
 
