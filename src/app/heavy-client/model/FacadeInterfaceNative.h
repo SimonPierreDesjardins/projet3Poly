@@ -133,7 +133,7 @@ extern "C"
 	// Map management
 	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNamesize, char* password, int passwordSize, char mapType, char isPrivate);
 	__declspec(dllexport) void __cdecl changeMapPermission(int mapId, char permission, char* password, int size);
-	__declspec(dllexport) void __cdecl joinMap(int mapId);
+	__declspec(dllexport) void __cdecl joinMap(int mapId, char*password, int size);
 	__declspec(dllexport) void __cdecl leaveMap();
 	typedef int(__stdcall * CallbackMapConnection)(int action);
 	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn);

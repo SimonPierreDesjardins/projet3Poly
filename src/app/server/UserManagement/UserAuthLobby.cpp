@@ -76,24 +76,35 @@ void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string m
 	
 	std::cout << "Received login request with username: " << username << "." << std::endl;
 
-	//TODO: check if user is already connected
+	std::string reply = "ua";
+
+	//Check if user exist
 	if (_users.count(username) > 0) {
-		
-		// Assign connection to its user
-		User* authedUser = _users.at(username);
-		authedUser->AssignConnection(wrapper->GetConnection());
-		
-		// wrapper no longer needed since user is wrapping connection
-		delete wrapper;
+		User* connectingUser = _users.at(username);
+		if (_connectedUserList.count(connectingUser->Info.GetId()) > 0) {
+			// user already connected
+			reply += 'd';
+			wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader(reply));
+		}
+		else {
+			// Assign connection to its user
+			User* authedUser = _users.at(username);
+			connectingUser->AssignConnection(wrapper->GetConnection());
 
-		AddUser(authedUser);
+			reply += 's';
+			Networking::serialize(connectingUser->Info.GetId(), reply);
 
-		
+			wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader(reply));
+
+			AddUser(connectingUser);
+
+			delete wrapper;
+		}
 	}
 	else {
 		// user doesn't exist...REBUKE!
-		std::string failMessage = "uaf";
-		wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader(failMessage));
+		reply += 'f';
+		wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader(reply));
 	}
 }
 
@@ -128,12 +139,6 @@ char UserAuthLobby::GetSystemType()
 
 void UserAuthLobby::TreatUserJoin(User * user)
 {
-	// This method is called when the authlobby has a user login
-	// Confirm authentification.
-	std::string authConfirmation = "uas";
-	Networking::serialize(user->Info.GetId(), authConfirmation);
-	user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader(authConfirmation));
-
 	for each(auto userReceiver in _userReceivers) {
 		userReceiver->AddUser(user);
 	}
