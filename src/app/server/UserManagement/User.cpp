@@ -51,6 +51,7 @@ void User::StartMessageReadThread()
 	if (_runThread) {
 		return;
 	}
+	_runThread = true;
 
 	_messageReaderThread = new std::thread([](){
 		std::pair<User*, std::string> userMessagePair;
@@ -70,7 +71,6 @@ void User::StartMessageReadThread()
 			}
 		}
 	});
-	_runThread = true;
 }
 
 void User::StopMessageReadThread()
