@@ -966,9 +966,14 @@ extern "C"
 		strcpy_s(path, size, EnginSon::obtenirInstance()->getDefaultMusic().c_str());
 	}
 
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType)
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNameSize, char* password, int passwordSize, char mapType, char isPrivate)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, size), mapType);
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, mapNameSize), std::string(password, passwordSize), mapType, isPrivate);
+	}
+
+	void changeMapPermission(int mapId, char permission, char * password, int size)
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapPermissionChange(mapId, permission, std::string(password, size));
 	}
 
 	__declspec(dllexport) void __cdecl joinMap(int mapId)
@@ -981,6 +986,27 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestToQuitMapSession();
 	}
 
+	CallbackMapConnection callbackMapConnection = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn)
+	{
+		callbackMapConnection = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapConnect(int action)
+	{
+		callbackMapConnection(action);
+	}
+
+	CallbackMapPermission callbackMapPermission = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapPermission(CallbackMapPermission fn)
+	{
+		callbackMapPermission = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapPermission(int action)
+	{
+		callbackMapPermission(action);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -1069,6 +1095,13 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->sendSizePrefixedMessage(std::string(message, size));
 	}
 
+	__declspec(dllexport) void __cdecl uploadMap(char* filePath)
+	{
+		// Need the size of the array so the string builder doesn't stop at 
+		// the first \0 (likely in the serialized message size)
+		FacadeModele::obtenirInstance()->getNetworkManager()->uploadMap(std::string(filePath));
+	}
+
 	CallbackDisconnect DisconnectHandler = 0;
 	__declspec(dllexport) void __cdecl SetCallbackForDisconnect(CallbackDisconnect disconnectHandler)
 	{
@@ -1100,6 +1133,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl connectionWasFail()
 	{
 		ConnectionFailHandler();
+	}
+
+	CallbackAuthentification callbackAuthentification = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForAuthentification(CallbackAuthentification fn)
+	{
+		callbackAuthentification = fn;
+	}
+
+	__declspec(dllexport) void __cdecl authentification(int action)
+	{
+		callbackAuthentification(action);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -1182,6 +1226,58 @@ extern "C"
 			static_cast<ModeTutorialEdition*>(FacadeModele::obtenirInstance()->obtenirMode())->ModeTutorialEdition::selectAllTutorialObjects();
 	}
 
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl getEditionTutorialState()
+	///
+	/// Cette fonction de savoir si le tutoriel edition est completer
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl getEditionTutorialState()
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getEditionTutorialState();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setEditionTutorialState(bool completed)
+	///
+	/// Cette fonction d'assigner l'état du tutoriel edition
+	///
+	///	@args bool compled: indique si le tutoriel est completé
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setEditionTutorialState(bool completed)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setEditionTutorialState(completed);
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) bool __cdecl getSimulationTutorialState()
+	///
+	/// Cette fonction de savoir si le tutoriel simulation est completer
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) bool __cdecl getSimulationTutorialState()
+	{
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getSimulationTutorialState();
+	}
+
+	////////////////////////////////////////////////////////////////////////
+	///
+	/// @fn __declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed)
+	///
+	/// Cette fonction d'assigner l'état du tutoriel simulation
+	///
+	///	@args bool compled: indique si le tutoriel est completé
+	///
+	////////////////////////////////////////////////////////////////////////
+	__declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed)
+	{
+		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setSimulationTutorialState(completed);
+	}
+
 	CallbackForChat Handler = 0;
 	__declspec(dllexport) void __cdecl SetCallbackForChat(CallbackForChat handler)
 	{
@@ -1201,10 +1297,20 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, int isPrivate, int connectionState, int mode, int nbPlayers, int isAdmin, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
-		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);
+		AddNewMap(bytes, name.size(), (int)connectionState, mode, nbPlayers, (int)isAdmin, id, (int)isPrivate);
+	}
+
+	__declspec(dllexport) void __cdecl LoadApplicationSettings()
+	{
+		FacadeModele::obtenirInstance()->getApplicationSettings()->load();
+	}
+
+	__declspec(dllexport) void __cdecl SaveApplicationSettings()
+	{
+		FacadeModele::obtenirInstance()->getApplicationSettings()->save();
 	}
 }
 

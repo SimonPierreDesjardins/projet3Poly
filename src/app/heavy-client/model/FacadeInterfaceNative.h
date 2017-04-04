@@ -112,6 +112,9 @@ extern "C"
 	__declspec(dllexport) void __cdecl disconnectFromServer();
 	__declspec(dllexport) bool __cdecl isConnected();
 	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
+	__declspec(dllexport) void __cdecl uploadMap(char* filePath);
+
+	// Connection callbacks
 	typedef int(__stdcall * CallbackDisconnect)();
 	__declspec(dllexport) void __cdecl SetCallbackForDisconnect(CallbackDisconnect disconnectHandler);
 	__declspec(dllexport) void __cdecl GotDisconnected();
@@ -122,10 +125,22 @@ extern "C"
 	__declspec(dllexport) void __cdecl SetCallbackForConnectionFail(CallbackConnectionFail connectionFailHandler);
 	__declspec(dllexport) void __cdecl connectionWasFail();
 
+	// User Authentification callback
+	typedef int(__stdcall * CallbackAuthentification)(int action);
+	__declspec(dllexport) void __cdecl SetCallbackForAuthentification(CallbackAuthentification fn);
+	__declspec(dllexport) void __cdecl authentification(int action);
+
 	// Map management
-	__declspec(dllexport) void __cdecl createMap(char* mapName, int size, char mapType);
+	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNamesize, char* password, int passwordSize, char mapType, char isPrivate);
+	__declspec(dllexport) void __cdecl changeMapPermission(int mapId, char permission, char* password, int size);
 	__declspec(dllexport) void __cdecl joinMap(int mapId);
 	__declspec(dllexport) void __cdecl leaveMap();
+	typedef int(__stdcall * CallbackMapConnection)(int action);
+	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn);
+	__declspec(dllexport) void __cdecl mapConnect(int action);
+	typedef int(__stdcall * CallbackMapPermission)(int action);
+	__declspec(dllexport) void __cdecl SetCallbackForMapPermission(CallbackMapPermission fn);
+	__declspec(dllexport) void __cdecl mapPermission(int action);
 
 	//Edition Tutorial
 	typedef int(__stdcall * Callback)();
@@ -135,6 +150,12 @@ extern "C"
 	__declspec(dllexport) void __cdecl UnselectCurrentTool();
 	__declspec(dllexport) void __cdecl UnselectAllObjects();
 	__declspec(dllexport) void __cdecl SelectAllTutorialObjects();
+	__declspec(dllexport) bool __cdecl getEditionTutorialState();
+	__declspec(dllexport) void __cdecl setEditionTutorialState(bool completed);
+
+	//Simulation Tutorial
+	__declspec(dllexport) bool __cdecl getSimulationTutorialState();
+	__declspec(dllexport) void __cdecl setSimulationTutorialState(bool completed);
 
 	//Chat System
 	typedef void(__stdcall * CallbackForChat)(const unsigned char* text, int size);
@@ -142,9 +163,13 @@ extern "C"
 	__declspec(dllexport) void __cdecl TestCallback(std::string message);
 
 	//Map System
-	typedef void(__stdcall * CallbackForNewMap)(const unsigned char* text, int size, bool connectionState, int mode, int nbPlayers, int id);
+	typedef void(__stdcall * CallbackForNewMap)(const unsigned char* text, int size, int connectionState, int mode, int nbPlayers, int isAdmin, int id, int isPrivate);
 	__declspec(dllexport) void __cdecl SetCallbackForNewMap(CallbackForNewMap addNewMap);
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id);
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, int isPrivate, int connectionState, int mode, int nbPlayers, int isAdmin, int id);
+
+	//Application saved settings
+	__declspec(dllexport) void __cdecl LoadApplicationSettings();
+	__declspec(dllexport) void __cdecl SaveApplicationSettings();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

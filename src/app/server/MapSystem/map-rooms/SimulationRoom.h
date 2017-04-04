@@ -9,7 +9,7 @@ namespace server
 class SimulationRoom : public AbstractMapRoom
 {
 public:
-	SimulationRoom(MapInfo* mapInfo);
+	SimulationRoom(MapInfo* mapInfo, MapFileEntry* mapFile);
 	virtual ~SimulationRoom() = default;
 };
 

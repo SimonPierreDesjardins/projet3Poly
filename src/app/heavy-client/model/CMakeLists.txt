@@ -122,8 +122,8 @@ set(MACHINE_A_ETATS_SRC
     edition-tools/EtatRotation.cpp
     edition-tools/EtatSelection.h
     edition-tools/EtatSelection.cpp
-	edition-tools/OnlineTool.h
-	edition-tools/OnlineTool.cpp
+    edition-tools/OnlineTool.h
+    edition-tools/OnlineTool.cpp
     edition-tools/EtatTypes.h
     edition-tools/EtatCreationTeleporteur.h
     edition-tools/EtatCreationTeleporteur.cpp
@@ -161,6 +161,8 @@ source_group("modes" FILES ${MODES_SRC})
 set(PROFIL_UTILISATEUR_SRC
     simulation-engine/ProfilUtilisateur/ProfilUtilisateur.h      
     simulation-engine/ProfilUtilisateur/ProfilUtilisateur.cpp      
+    simulation-engine/ProfilUtilisateur/ApplicationSettings.h
+    simulation-engine/ProfilUtilisateur/ApplicationSettings.cpp     
 )
 
 set(VISITEUR_SRC

@@ -3,9 +3,10 @@
 namespace server
 {
 
-SimulationRoom::SimulationRoom(MapInfo* mapInfo)
-	: AbstractMapRoom(mapInfo)
+SimulationRoom::SimulationRoom(MapInfo* mapInfo, MapFileEntry* mapFile)
+	: AbstractMapRoom(mapInfo, mapFile)
 {
 }
+
 
 }

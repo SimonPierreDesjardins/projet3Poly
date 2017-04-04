@@ -53,6 +53,8 @@ ModeTutorialEdition::ModeTutorialEdition(client_network::MapSession * mapSession
 
 	table_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"));
 	startIndexOfTutorialObjects_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->obtenirNombreEnfants();
+
+	//FacadeModele::obtenirInstance()->assignerEnvironnement(-1);
 }
 
 ////////////////////////////////////////////////////////////////////////

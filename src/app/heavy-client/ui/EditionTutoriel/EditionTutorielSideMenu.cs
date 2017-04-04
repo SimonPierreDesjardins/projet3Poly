@@ -464,10 +464,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void teleportObjectButton_Click(object sender, EventArgs e)
         {
-            teleportorObject();
+            teleportorObjet();
         }
 
-        public void teleportorObject()
+        public void teleportorObjet()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();

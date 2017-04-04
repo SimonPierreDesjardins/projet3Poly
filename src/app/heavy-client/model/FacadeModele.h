@@ -28,6 +28,8 @@
 
 #include "SimulationEngine.h"
 
+#include "ApplicationSettings.h"
+
 class NoeudAbstrait;
 class OnlineMapMode;
 class ArbreRenduINF2990;
@@ -98,6 +100,8 @@ public:
 	inline ArbreRenduINF2990* obtenirArbreRenduINF2990();
 	/// Retourne le profil de l'utilisateur.
 	inline ProfilUtilisateur* obtenirProfilUtilisateur();
+	/// Return the application settings.
+	inline ApplicationSettings* getApplicationSettings();
 	// Retourne l'affichage du texte.
 	inline AffichageTexte* obtenirAffichageTexte();
 	// Retourne le controleur de lumière.
@@ -153,7 +157,10 @@ private:
 
 	/// Le profil utilisateur.
 	ProfilUtilisateur profil_;
+	/// The application settings.
+	ApplicationSettings saves_;
 
+	/// La boite qui donne un environnement
 	FacadeModele();
 };
 
@@ -214,6 +221,20 @@ inline ArbreRenduINF2990* FacadeModele::obtenirArbreRenduINF2990()
 ProfilUtilisateur* FacadeModele::obtenirProfilUtilisateur()
 {
 	return &profil_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline ApplicationSettings* FacadeModele::getApplicationSettings() const
+///
+/// Cette fonction retourne les parametres sauvegarder de l'application
+///
+/// @return les parametres sauvegarder
+///
+////////////////////////////////////////////////////////////////////////
+ApplicationSettings* FacadeModele::getApplicationSettings()
+{
+	return &saves_;
 }
 
 

@@ -33,32 +33,22 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.addPanel = new System.Windows.Forms.Panel();
-            this.onlineCheckBox = new System.Windows.Forms.CheckBox();
-            this.modeComboBox = new System.Windows.Forms.ComboBox();
-            this.offlineCheckBox = new System.Windows.Forms.CheckBox();
-            this.privateCheckBox = new System.Windows.Forms.CheckBox();
-            this.publicCheckBox = new System.Windows.Forms.CheckBox();
-            this.warningLabel = new System.Windows.Forms.Label();
-            this.textBox = new System.Windows.Forms.TextBox();
-            this.offlineModePanel = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.panel5 = new System.Windows.Forms.Panel();
+            this.passwordWarningLabel = new System.Windows.Forms.Label();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.passwordBox = new System.Windows.Forms.TextBox();
-            this.passwordWarningLabel = new System.Windows.Forms.Label();
-            this.createButton = new ui.PanelButton();
-            this.customLabel1 = new ui.CustomLabel();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.returnButton = new ui.PanelButton();
-            this.returnPictureBox = new System.Windows.Forms.PictureBox();
+            this.onlineCheckBox = new System.Windows.Forms.CheckBox();
             this.modeSelectionLabel = new ui.CustomLabel();
+            this.modeComboBox = new System.Windows.Forms.ComboBox();
+            this.offlineCheckBox = new System.Windows.Forms.CheckBox();
             this.customLabel6 = new ui.CustomLabel();
             this.confirmeButton = new ui.PanelButton();
             this.customLabel5 = new ui.CustomLabel();
             this.pictureBox4 = new System.Windows.Forms.PictureBox();
+            this.privateCheckBox = new System.Windows.Forms.CheckBox();
+            this.publicCheckBox = new System.Windows.Forms.CheckBox();
             this.rightsModificationLabel = new ui.CustomLabel();
+            this.warningLabel = new System.Windows.Forms.Label();
+            this.textBox = new System.Windows.Forms.TextBox();
             this.nameLabel = new ui.CustomLabel();
             this.fileDirLabel = new ui.CustomLabel();
             this.importButton = new ui.PanelButton();
@@ -67,34 +57,44 @@
             this.cancelButton = new ui.PanelButton();
             this.customLabel2 = new ui.CustomLabel();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.offlineModePanel = new System.Windows.Forms.Panel();
             this.cancelJoiningButton = new ui.PanelButton();
             this.customLabel8 = new ui.CustomLabel();
             this.pictureBox5 = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
             this.offlineEditionModeButton = new ui.PanelButton();
             this.customLabel4 = new ui.CustomLabel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel5 = new System.Windows.Forms.Panel();
             this.offlineSimulationModeButton = new ui.PanelButton();
             this.customLabel7 = new ui.CustomLabel();
+            this.createButton = new ui.PanelButton();
+            this.customLabel1 = new ui.CustomLabel();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.returnButton = new ui.PanelButton();
+            this.returnPictureBox = new System.Windows.Forms.PictureBox();
             this.panel1.SuspendLayout();
             this.addPanel.SuspendLayout();
-            this.offlineModePanel.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.createButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
-            this.returnButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.returnPictureBox)).BeginInit();
             this.confirmeButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.importButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.cancelButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.offlineModePanel.SuspendLayout();
             this.cancelJoiningButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
+            this.panel2.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.offlineEditionModeButton.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.panel5.SuspendLayout();
             this.offlineSimulationModeButton.SuspendLayout();
+            this.createButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.returnButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.returnPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // mapPanel
@@ -170,6 +170,42 @@
             this.addPanel.Visible = false;
             this.addPanel.VisibleChanged += new System.EventHandler(this.addPanel_VisibleChanged);
             // 
+            // passwordWarningLabel
+            // 
+            this.passwordWarningLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.passwordWarningLabel.AutoSize = true;
+            this.passwordWarningLabel.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordWarningLabel.ForeColor = System.Drawing.Color.Brown;
+            this.passwordWarningLabel.Location = new System.Drawing.Point(326, 345);
+            this.passwordWarningLabel.Name = "passwordWarningLabel";
+            this.passwordWarningLabel.Size = new System.Drawing.Size(91, 17);
+            this.passwordWarningLabel.TabIndex = 23;
+            this.passwordWarningLabel.Text = "Warning label";
+            this.passwordWarningLabel.Visible = false;
+            // 
+            // passwordLabel
+            // 
+            this.passwordLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.passwordLabel.AutoSize = true;
+            this.passwordLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordLabel.ForeColor = System.Drawing.Color.Silver;
+            this.passwordLabel.Location = new System.Drawing.Point(325, 288);
+            this.passwordLabel.Name = "passwordLabel";
+            this.passwordLabel.Size = new System.Drawing.Size(115, 21);
+            this.passwordLabel.TabIndex = 22;
+            this.passwordLabel.Text = "Mot de passe";
+            // 
+            // passwordBox
+            // 
+            this.passwordBox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.passwordBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passwordBox.Location = new System.Drawing.Point(329, 315);
+            this.passwordBox.MaxLength = 10;
+            this.passwordBox.Name = "passwordBox";
+            this.passwordBox.PasswordChar = '*';
+            this.passwordBox.Size = new System.Drawing.Size(188, 27);
+            this.passwordBox.TabIndex = 21;
+            // 
             // onlineCheckBox
             // 
             this.onlineCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -183,6 +219,18 @@
             this.onlineCheckBox.Text = "Enligne";
             this.onlineCheckBox.UseVisualStyleBackColor = true;
             this.onlineCheckBox.Click += new System.EventHandler(this.onlineCheckBox_Click);
+            // 
+            // modeSelectionLabel
+            // 
+            this.modeSelectionLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.modeSelectionLabel.AutoSize = true;
+            this.modeSelectionLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.modeSelectionLabel.ForeColor = System.Drawing.Color.Silver;
+            this.modeSelectionLabel.Location = new System.Drawing.Point(325, 78);
+            this.modeSelectionLabel.Name = "modeSelectionLabel";
+            this.modeSelectionLabel.Size = new System.Drawing.Size(150, 21);
+            this.modeSelectionLabel.TabIndex = 20;
+            this.modeSelectionLabel.Text = "Mode de la carte:";
             // 
             // modeComboBox
             // 
@@ -216,6 +264,51 @@
             this.offlineCheckBox.UseVisualStyleBackColor = true;
             this.offlineCheckBox.Click += new System.EventHandler(this.offlineCheckBox_Click);
             // 
+            // customLabel6
+            // 
+            this.customLabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customLabel6.AutoSize = true;
+            this.customLabel6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel6.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel6.Location = new System.Drawing.Point(87, 171);
+            this.customLabel6.Name = "customLabel6";
+            this.customLabel6.Size = new System.Drawing.Size(157, 21);
+            this.customLabel6.TabIndex = 16;
+            this.customLabel6.Text = "Paramètre réseau :";
+            // 
+            // confirmeButton
+            // 
+            this.confirmeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.confirmeButton.Controls.Add(this.customLabel5);
+            this.confirmeButton.Controls.Add(this.pictureBox4);
+            this.confirmeButton.Location = new System.Drawing.Point(369, 4);
+            this.confirmeButton.Name = "confirmeButton";
+            this.confirmeButton.Size = new System.Drawing.Size(228, 36);
+            this.confirmeButton.TabIndex = 8;
+            this.confirmeButton.Click += new System.EventHandler(this.confirmeButton_Click);
+            // 
+            // customLabel5
+            // 
+            this.customLabel5.AutoSize = true;
+            this.customLabel5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel5.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel5.Location = new System.Drawing.Point(10, 7);
+            this.customLabel5.Name = "customLabel5";
+            this.customLabel5.Size = new System.Drawing.Size(174, 21);
+            this.customLabel5.TabIndex = 3;
+            this.customLabel5.Text = "Confirmer la création";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox4.Enabled = false;
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(197, 6);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox4.TabIndex = 2;
+            this.pictureBox4.TabStop = false;
+            // 
             // privateCheckBox
             // 
             this.privateCheckBox.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -246,6 +339,18 @@
             this.publicCheckBox.UseVisualStyleBackColor = true;
             this.publicCheckBox.Click += new System.EventHandler(this.publicCheckBox_Click);
             // 
+            // rightsModificationLabel
+            // 
+            this.rightsModificationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.rightsModificationLabel.AutoSize = true;
+            this.rightsModificationLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rightsModificationLabel.ForeColor = System.Drawing.Color.Silver;
+            this.rightsModificationLabel.Location = new System.Drawing.Point(325, 171);
+            this.rightsModificationLabel.Name = "rightsModificationLabel";
+            this.rightsModificationLabel.Size = new System.Drawing.Size(182, 21);
+            this.rightsModificationLabel.TabIndex = 13;
+            this.rightsModificationLabel.Text = "Droit de modification :";
+            // 
             // warningLabel
             // 
             this.warningLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -270,6 +375,96 @@
             this.textBox.TabIndex = 11;
             this.textBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox_KeyPress);
             // 
+            // nameLabel
+            // 
+            this.nameLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.nameLabel.AutoSize = true;
+            this.nameLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nameLabel.ForeColor = System.Drawing.Color.Silver;
+            this.nameLabel.Location = new System.Drawing.Point(87, 78);
+            this.nameLabel.Name = "nameLabel";
+            this.nameLabel.Size = new System.Drawing.Size(145, 21);
+            this.nameLabel.TabIndex = 10;
+            this.nameLabel.Text = "Nom de la carte :";
+            // 
+            // fileDirLabel
+            // 
+            this.fileDirLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.fileDirLabel.AutoSize = true;
+            this.fileDirLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileDirLabel.ForeColor = System.Drawing.Color.Silver;
+            this.fileDirLabel.Location = new System.Drawing.Point(101, 320);
+            this.fileDirLabel.Name = "fileDirLabel";
+            this.fileDirLabel.Size = new System.Drawing.Size(99, 21);
+            this.fileDirLabel.TabIndex = 9;
+            this.fileDirLabel.Text = "fileNameDir";
+            this.fileDirLabel.Click += new System.EventHandler(this.importButton_Click);
+            // 
+            // importButton
+            // 
+            this.importButton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.importButton.Controls.Add(this.customLabel3);
+            this.importButton.Controls.Add(this.pictureBox3);
+            this.importButton.Location = new System.Drawing.Point(76, 281);
+            this.importButton.Name = "importButton";
+            this.importButton.Size = new System.Drawing.Size(210, 36);
+            this.importButton.TabIndex = 8;
+            this.importButton.Click += new System.EventHandler(this.importButton_Click);
+            // 
+            // customLabel3
+            // 
+            this.customLabel3.AutoSize = true;
+            this.customLabel3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel3.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel3.Location = new System.Drawing.Point(43, 7);
+            this.customLabel3.Name = "customLabel3";
+            this.customLabel3.Size = new System.Drawing.Size(159, 21);
+            this.customLabel3.TabIndex = 3;
+            this.customLabel3.Text = "Importer une carte";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox3.Enabled = false;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(10, 4);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox3.TabIndex = 2;
+            this.pictureBox3.TabStop = false;
+            // 
+            // cancelButton
+            // 
+            this.cancelButton.Controls.Add(this.customLabel2);
+            this.cancelButton.Controls.Add(this.pictureBox2);
+            this.cancelButton.Location = new System.Drawing.Point(5, 4);
+            this.cancelButton.Name = "cancelButton";
+            this.cancelButton.Size = new System.Drawing.Size(210, 36);
+            this.cancelButton.TabIndex = 7;
+            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
+            // 
+            // customLabel2
+            // 
+            this.customLabel2.AutoSize = true;
+            this.customLabel2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel2.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel2.Location = new System.Drawing.Point(10, 7);
+            this.customLabel2.Name = "customLabel2";
+            this.customLabel2.Size = new System.Drawing.Size(159, 21);
+            this.customLabel2.TabIndex = 3;
+            this.customLabel2.Text = "Annuler la création";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox2.Enabled = false;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(179, 6);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox2.TabIndex = 2;
+            this.pictureBox2.TabStop = false;
+            // 
             // offlineModePanel
             // 
             this.offlineModePanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -284,6 +479,38 @@
             this.offlineModePanel.Size = new System.Drawing.Size(600, 394);
             this.offlineModePanel.TabIndex = 19;
             this.offlineModePanel.Visible = false;
+            // 
+            // cancelJoiningButton
+            // 
+            this.cancelJoiningButton.Controls.Add(this.customLabel8);
+            this.cancelJoiningButton.Controls.Add(this.pictureBox5);
+            this.cancelJoiningButton.Location = new System.Drawing.Point(20, 12);
+            this.cancelJoiningButton.Name = "cancelJoiningButton";
+            this.cancelJoiningButton.Size = new System.Drawing.Size(164, 36);
+            this.cancelJoiningButton.TabIndex = 8;
+            this.cancelJoiningButton.Click += new System.EventHandler(this.cancelJoiningButton_Click);
+            // 
+            // customLabel8
+            // 
+            this.customLabel8.AutoSize = true;
+            this.customLabel8.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel8.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel8.Location = new System.Drawing.Point(10, 7);
+            this.customLabel8.Name = "customLabel8";
+            this.customLabel8.Size = new System.Drawing.Size(120, 21);
+            this.customLabel8.TabIndex = 3;
+            this.customLabel8.Text = "Ne pas joindre";
+            // 
+            // pictureBox5
+            // 
+            this.pictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox5.Enabled = false;
+            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
+            this.pictureBox5.Location = new System.Drawing.Point(133, 6);
+            this.pictureBox5.Name = "pictureBox5";
+            this.pictureBox5.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox5.TabIndex = 2;
+            this.pictureBox5.TabStop = false;
             // 
             // panel2
             // 
@@ -304,6 +531,27 @@
             this.panel4.Size = new System.Drawing.Size(332, 47);
             this.panel4.TabIndex = 9;
             // 
+            // offlineEditionModeButton
+            // 
+            this.offlineEditionModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.offlineEditionModeButton.Controls.Add(this.customLabel4);
+            this.offlineEditionModeButton.Location = new System.Drawing.Point(0, 0);
+            this.offlineEditionModeButton.Name = "offlineEditionModeButton";
+            this.offlineEditionModeButton.Size = new System.Drawing.Size(332, 47);
+            this.offlineEditionModeButton.TabIndex = 0;
+            this.offlineEditionModeButton.Click += new System.EventHandler(this.offlineEditionModeButton_Click);
+            // 
+            // customLabel4
+            // 
+            this.customLabel4.AutoSize = true;
+            this.customLabel4.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel4.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel4.Location = new System.Drawing.Point(40, 10);
+            this.customLabel4.Name = "customLabel4";
+            this.customLabel4.Size = new System.Drawing.Size(250, 24);
+            this.customLabel4.TabIndex = 0;
+            this.customLabel4.Text = "Mode Édition Hors Ligne";
+            // 
             // panel3
             // 
             this.panel3.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -323,40 +571,26 @@
             this.panel5.Size = new System.Drawing.Size(332, 47);
             this.panel5.TabIndex = 9;
             // 
-            // passwordLabel
+            // offlineSimulationModeButton
             // 
-            this.passwordLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordLabel.ForeColor = System.Drawing.Color.Silver;
-            this.passwordLabel.Location = new System.Drawing.Point(325, 288);
-            this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(115, 21);
-            this.passwordLabel.TabIndex = 22;
-            this.passwordLabel.Text = "Mot de passe";
+            this.offlineSimulationModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
+            this.offlineSimulationModeButton.Controls.Add(this.customLabel7);
+            this.offlineSimulationModeButton.Location = new System.Drawing.Point(0, 0);
+            this.offlineSimulationModeButton.Name = "offlineSimulationModeButton";
+            this.offlineSimulationModeButton.Size = new System.Drawing.Size(332, 47);
+            this.offlineSimulationModeButton.TabIndex = 0;
+            this.offlineSimulationModeButton.Click += new System.EventHandler(this.offlineSimulationModeButton_Click);
             // 
-            // passwordBox
+            // customLabel7
             // 
-            this.passwordBox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.passwordBox.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordBox.Location = new System.Drawing.Point(329, 315);
-            this.passwordBox.Name = "passwordBox";
-            this.passwordBox.PasswordChar = '*';
-            this.passwordBox.Size = new System.Drawing.Size(188, 27);
-            this.passwordBox.TabIndex = 21;
-            // 
-            // passwordWarningLabel
-            // 
-            this.passwordWarningLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.passwordWarningLabel.AutoSize = true;
-            this.passwordWarningLabel.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passwordWarningLabel.ForeColor = System.Drawing.Color.Brown;
-            this.passwordWarningLabel.Location = new System.Drawing.Point(326, 345);
-            this.passwordWarningLabel.Name = "passwordWarningLabel";
-            this.passwordWarningLabel.Size = new System.Drawing.Size(91, 17);
-            this.passwordWarningLabel.TabIndex = 23;
-            this.passwordWarningLabel.Text = "Warning label";
-            this.passwordWarningLabel.Visible = false;
+            this.customLabel7.AutoSize = true;
+            this.customLabel7.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel7.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel7.Location = new System.Drawing.Point(25, 10);
+            this.customLabel7.Name = "customLabel7";
+            this.customLabel7.Size = new System.Drawing.Size(288, 24);
+            this.customLabel7.TabIndex = 0;
+            this.customLabel7.Text = "Mode Simulation Hors Ligne";
             // 
             // createButton
             // 
@@ -410,238 +644,6 @@
             this.returnPictureBox.TabIndex = 2;
             this.returnPictureBox.TabStop = false;
             // 
-            // modeSelectionLabel
-            // 
-            this.modeSelectionLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.modeSelectionLabel.AutoSize = true;
-            this.modeSelectionLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.modeSelectionLabel.ForeColor = System.Drawing.Color.Silver;
-            this.modeSelectionLabel.Location = new System.Drawing.Point(325, 78);
-            this.modeSelectionLabel.Name = "modeSelectionLabel";
-            this.modeSelectionLabel.Size = new System.Drawing.Size(150, 21);
-            this.modeSelectionLabel.TabIndex = 20;
-            this.modeSelectionLabel.Text = "Mode de la carte:";
-            // 
-            // customLabel6
-            // 
-            this.customLabel6.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.customLabel6.AutoSize = true;
-            this.customLabel6.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel6.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel6.Location = new System.Drawing.Point(87, 171);
-            this.customLabel6.Name = "customLabel6";
-            this.customLabel6.Size = new System.Drawing.Size(157, 21);
-            this.customLabel6.TabIndex = 16;
-            this.customLabel6.Text = "Paramètre réseau :";
-            // 
-            // confirmeButton
-            // 
-            this.confirmeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.confirmeButton.Controls.Add(this.customLabel5);
-            this.confirmeButton.Controls.Add(this.pictureBox4);
-            this.confirmeButton.Location = new System.Drawing.Point(369, 4);
-            this.confirmeButton.Name = "confirmeButton";
-            this.confirmeButton.Size = new System.Drawing.Size(228, 36);
-            this.confirmeButton.TabIndex = 8;
-            this.confirmeButton.Click += new System.EventHandler(this.confirmeButton_Click);
-            // 
-            // customLabel5
-            // 
-            this.customLabel5.AutoSize = true;
-            this.customLabel5.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel5.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel5.Location = new System.Drawing.Point(10, 7);
-            this.customLabel5.Name = "customLabel5";
-            this.customLabel5.Size = new System.Drawing.Size(174, 21);
-            this.customLabel5.TabIndex = 3;
-            this.customLabel5.Text = "Confirmer la création";
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox4.Enabled = false;
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(197, 6);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox4.TabIndex = 2;
-            this.pictureBox4.TabStop = false;
-            // 
-            // rightsModificationLabel
-            // 
-            this.rightsModificationLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.rightsModificationLabel.AutoSize = true;
-            this.rightsModificationLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.rightsModificationLabel.ForeColor = System.Drawing.Color.Silver;
-            this.rightsModificationLabel.Location = new System.Drawing.Point(325, 171);
-            this.rightsModificationLabel.Name = "rightsModificationLabel";
-            this.rightsModificationLabel.Size = new System.Drawing.Size(182, 21);
-            this.rightsModificationLabel.TabIndex = 13;
-            this.rightsModificationLabel.Text = "Droit de modification :";
-            // 
-            // nameLabel
-            // 
-            this.nameLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.nameLabel.AutoSize = true;
-            this.nameLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nameLabel.ForeColor = System.Drawing.Color.Silver;
-            this.nameLabel.Location = new System.Drawing.Point(87, 78);
-            this.nameLabel.Name = "nameLabel";
-            this.nameLabel.Size = new System.Drawing.Size(145, 21);
-            this.nameLabel.TabIndex = 10;
-            this.nameLabel.Text = "Nom de la carte :";
-            // 
-            // fileDirLabel
-            // 
-            this.fileDirLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.fileDirLabel.AutoSize = true;
-            this.fileDirLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.fileDirLabel.ForeColor = System.Drawing.Color.Silver;
-            this.fileDirLabel.Location = new System.Drawing.Point(101, 320);
-            this.fileDirLabel.Name = "fileDirLabel";
-            this.fileDirLabel.Size = new System.Drawing.Size(99, 21);
-            this.fileDirLabel.TabIndex = 9;
-            this.fileDirLabel.Text = "fileNameDir";
-            this.fileDirLabel.Click += new System.EventHandler(this.importButton_Click);
-            // 
-            // importButton
-            // 
-            this.importButton.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.importButton.Controls.Add(this.customLabel3);
-            this.importButton.Controls.Add(this.pictureBox3);
-            this.importButton.Location = new System.Drawing.Point(91, 281);
-            this.importButton.Name = "importButton";
-            this.importButton.Size = new System.Drawing.Size(210, 36);
-            this.importButton.TabIndex = 8;
-            this.importButton.Click += new System.EventHandler(this.importButton_Click);
-            // 
-            // customLabel3
-            // 
-            this.customLabel3.AutoSize = true;
-            this.customLabel3.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel3.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel3.Location = new System.Drawing.Point(10, 7);
-            this.customLabel3.Name = "customLabel3";
-            this.customLabel3.Size = new System.Drawing.Size(159, 21);
-            this.customLabel3.TabIndex = 3;
-            this.customLabel3.Text = "Importer une carte";
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox3.Enabled = false;
-            this.pictureBox3.Location = new System.Drawing.Point(179, 6);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox3.TabIndex = 2;
-            this.pictureBox3.TabStop = false;
-            // 
-            // cancelButton
-            // 
-            this.cancelButton.Controls.Add(this.customLabel2);
-            this.cancelButton.Controls.Add(this.pictureBox2);
-            this.cancelButton.Location = new System.Drawing.Point(5, 4);
-            this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(210, 36);
-            this.cancelButton.TabIndex = 7;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
-            // 
-            // customLabel2
-            // 
-            this.customLabel2.AutoSize = true;
-            this.customLabel2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel2.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel2.Location = new System.Drawing.Point(10, 7);
-            this.customLabel2.Name = "customLabel2";
-            this.customLabel2.Size = new System.Drawing.Size(159, 21);
-            this.customLabel2.TabIndex = 3;
-            this.customLabel2.Text = "Annuler la création";
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox2.Enabled = false;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(179, 6);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox2.TabIndex = 2;
-            this.pictureBox2.TabStop = false;
-            // 
-            // cancelJoiningButton
-            // 
-            this.cancelJoiningButton.Controls.Add(this.customLabel8);
-            this.cancelJoiningButton.Controls.Add(this.pictureBox5);
-            this.cancelJoiningButton.Location = new System.Drawing.Point(20, 12);
-            this.cancelJoiningButton.Name = "cancelJoiningButton";
-            this.cancelJoiningButton.Size = new System.Drawing.Size(164, 36);
-            this.cancelJoiningButton.TabIndex = 8;
-            this.cancelJoiningButton.Click += new System.EventHandler(this.cancelJoiningButton_Click);
-            // 
-            // customLabel8
-            // 
-            this.customLabel8.AutoSize = true;
-            this.customLabel8.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel8.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel8.Location = new System.Drawing.Point(10, 7);
-            this.customLabel8.Name = "customLabel8";
-            this.customLabel8.Size = new System.Drawing.Size(120, 21);
-            this.customLabel8.TabIndex = 3;
-            this.customLabel8.Text = "Ne pas joindre";
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox5.Enabled = false;
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(133, 6);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox5.TabIndex = 2;
-            this.pictureBox5.TabStop = false;
-            // 
-            // offlineEditionModeButton
-            // 
-            this.offlineEditionModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.offlineEditionModeButton.Controls.Add(this.customLabel4);
-            this.offlineEditionModeButton.Location = new System.Drawing.Point(0, 0);
-            this.offlineEditionModeButton.Name = "offlineEditionModeButton";
-            this.offlineEditionModeButton.Size = new System.Drawing.Size(332, 47);
-            this.offlineEditionModeButton.TabIndex = 0;
-            this.offlineEditionModeButton.Click += new System.EventHandler(this.offlineEditionModeButton_Click);
-            // 
-            // customLabel4
-            // 
-            this.customLabel4.AutoSize = true;
-            this.customLabel4.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel4.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel4.Location = new System.Drawing.Point(40, 10);
-            this.customLabel4.Name = "customLabel4";
-            this.customLabel4.Size = new System.Drawing.Size(250, 24);
-            this.customLabel4.TabIndex = 0;
-            this.customLabel4.Text = "Mode Édition Hors Ligne";
-            // 
-            // offlineSimulationModeButton
-            // 
-            this.offlineSimulationModeButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.offlineSimulationModeButton.Controls.Add(this.customLabel7);
-            this.offlineSimulationModeButton.Location = new System.Drawing.Point(0, 0);
-            this.offlineSimulationModeButton.Name = "offlineSimulationModeButton";
-            this.offlineSimulationModeButton.Size = new System.Drawing.Size(332, 47);
-            this.offlineSimulationModeButton.TabIndex = 0;
-            this.offlineSimulationModeButton.Click += new System.EventHandler(this.offlineSimulationModeButton_Click);
-            // 
-            // customLabel7
-            // 
-            this.customLabel7.AutoSize = true;
-            this.customLabel7.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel7.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel7.Location = new System.Drawing.Point(25, 10);
-            this.customLabel7.Name = "customLabel7";
-            this.customLabel7.Size = new System.Drawing.Size(288, 24);
-            this.customLabel7.TabIndex = 0;
-            this.customLabel7.Text = "Mode Simulation Hors Ligne";
-            // 
             // MapMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -656,16 +658,6 @@
             this.panel1.ResumeLayout(false);
             this.addPanel.ResumeLayout(false);
             this.addPanel.PerformLayout();
-            this.offlineModePanel.ResumeLayout(false);
-            this.panel2.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.createButton.ResumeLayout(false);
-            this.createButton.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
-            this.returnButton.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.returnPictureBox)).EndInit();
             this.confirmeButton.ResumeLayout(false);
             this.confirmeButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -675,13 +667,23 @@
             this.cancelButton.ResumeLayout(false);
             this.cancelButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.offlineModePanel.ResumeLayout(false);
             this.cancelJoiningButton.ResumeLayout(false);
             this.cancelJoiningButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
+            this.panel2.ResumeLayout(false);
+            this.panel4.ResumeLayout(false);
             this.offlineEditionModeButton.ResumeLayout(false);
             this.offlineEditionModeButton.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.panel5.ResumeLayout(false);
             this.offlineSimulationModeButton.ResumeLayout(false);
             this.offlineSimulationModeButton.PerformLayout();
+            this.createButton.ResumeLayout(false);
+            this.createButton.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.returnButton.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.returnPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

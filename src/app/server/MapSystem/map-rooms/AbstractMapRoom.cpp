@@ -8,10 +8,11 @@
 namespace server
 {
 
-AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo)
+AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo, MapFileEntry* mapFile)
 {
-	Entity* table = tree_.createEntity(0, 0);
 	mapInfo_ = mapInfo;
+	// load up the tree from the file
+	mapFileLoader_ = new MapFileLoader(&tree_, mapFile);
 }
 
 AbstractMapRoom::~AbstractMapRoom()
@@ -143,6 +144,9 @@ void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& messa
 		// Update other users.
 		broadcastMessage(sender, message);
 	}
+
+	// TODO: check if entity is worth noting dirty map for
+	mapFileLoader_->SetMapDirty();
 }
 
 void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& message)
@@ -237,20 +241,48 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
 		mapInfo_->nbLignes++;
 		break;
+	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
+		mapInfo_->nbTeleporteurs++;
+		break;
 	}
+
+	// TODO: discriminate object type
+	mapFileLoader_->SetMapDirty();
+
 }
 
 void AbstractMapRoom::handleEntityRemovalMessage(User* sender, const std::string& message)
 {
 	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
 
+
+
 	Entity* deletedEntity = tree_.findEntity(entityId);
+
+	switch (deletedEntity->entityType_) {
+	case Networking::MessageStandard::ItemTypes::POST_ENTITY:
+		mapInfo_->nbPoteaux--;
+		break;
+	case Networking::MessageStandard::ItemTypes::WALL_ENTITY:
+		mapInfo_->nbMurs--;
+		break;
+	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
+		mapInfo_->nbLignes--;
+		break;
+	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
+		mapInfo_->nbTeleporteurs--;
+		break;
+	}
+
 	// If the entity exists and the user is selecting it.
 	if (deletedEntity && deletedEntity->userId_ == sender->Info.GetId())
 	{
 		tree_.deleteEntity(entityId);
 	}
 	broadcastMessage(sender, message);
+
+	// mark map as dirty
+	mapFileLoader_->SetMapDirty();
 }
 
 void AbstractMapRoom::handleEntitySelectionMessage(User* sender, const std::string& message)

@@ -159,8 +159,9 @@ void MessageDispatcher::handleMapCreationMessage(const std::string& message)
 	char type = message[Networking::MessageStandard::DATA_START + 4];
 	char nUsers = message[Networking::MessageStandard::DATA_START + 5];
 	char permission = message[Networking::MessageStandard::DATA_START + 6];
-	std::string name = message.substr(Networking::MessageStandard::DATA_START + 7);
-	eventHandler_->onNewMapCreated(mapId, type, mapId, permission, name);
+	uint32_t adminId = message[Networking::MessageStandard::DATA_START + 7];
+	std::string name = message.substr(Networking::MessageStandard::DATA_START + 11);
+	eventHandler_->onNewMapCreated(mapId, type, mapId, permission, adminId, name);
 }
 
 void MessageDispatcher::handleMapJoinMessage(const std::string& message)
@@ -188,8 +189,9 @@ void MessageDispatcher::handleMapListMessage(const std::string& message)
 		char mapType = message[iCurrentEntry + 4];
 		char nUsers = message[iCurrentEntry + 5];
 		char permission = message[iCurrentEntry + 6];
+		uint32_t adminId = serializer_.deserializeInteger(message.data() + iCurrentEntry + 7);
 
-		size_t nameBegin = iCurrentEntry + 7;
+		size_t nameBegin = iCurrentEntry + 11;
 		size_t nameEnd = message.find(';', nameBegin);
 		if (nameEnd == std::string::npos)
 		{
@@ -197,7 +199,7 @@ void MessageDispatcher::handleMapListMessage(const std::string& message)
 			continueParsing = false;
 		}
 		std::string mapName = message.substr(nameBegin, nameEnd - nameBegin);
-		eventHandler_->onNewMapCreated(mapId, mapType, nUsers, permission, mapName);
+		eventHandler_->onNewMapCreated(mapId, mapType, nUsers, permission, adminId, mapName);
 		iCurrentEntry = nameEnd + 1;
 	}
 }
@@ -284,6 +286,7 @@ void MessageDispatcher::dispatch(const std::string& message)
 	case 'c':
 		TestCallback(message);
 		break;
+
 	case 'm':
 		handleMapSystemMessage(message);
 		break;

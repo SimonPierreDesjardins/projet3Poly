@@ -28,6 +28,7 @@
 ModeMenuPrincipal::ModeMenuPrincipal()
 {
 	typeMode_ = MENU_PRINCIPAL;
+	FacadeModele::obtenirInstance()->stopAffichage();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -41,6 +42,7 @@ ModeMenuPrincipal::ModeMenuPrincipal()
 
 ModeMenuPrincipal::~ModeMenuPrincipal()
 {
+	FacadeModele::obtenirInstance()->continuerAffichage();
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

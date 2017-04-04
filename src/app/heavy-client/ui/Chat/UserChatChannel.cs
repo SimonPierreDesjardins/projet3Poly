@@ -41,41 +41,6 @@ namespace ui
             chatListBox.MeasureItem += chatBox_MeasureItem;
             chatListBox.DrawItem += chatBox_DrawItem;
 
-            chatTextBox.GotFocus += OnFocus;
-            chatTextBox.LostFocus += OnDefocus;
-
-            addChannelTextBox.GotFocus += OnFocus;
-            addChannelTextBox.LostFocus += OnDefocus;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void OnFocus(object sender, MeasureItemEventArgs e)
-        ///
-        /// Evenement quand le control est utiliser
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void OnFocus(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void OnDefocus(object sender, MeasureItemEventArgs e)
-        ///
-        /// Evenement quand le control n'est plus utiliser
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void OnDefocus(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -253,8 +218,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void chatTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter)
-                sendText();
+
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -449,6 +413,26 @@ namespace ui
         private void addChannelTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
 
+        }
+
+        private void chatTextBox_Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+        }
+
+        private void chatTextBox_Leave(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+        }
+
+        private void addChannelTextBox_Enter(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+        }
+
+        private void addChannelTextBox_Leave(object sender, EventArgs e)
+        {
+            FonctionsNatives.assignerAutorisationInputClavier(true);
         }
     }
 }

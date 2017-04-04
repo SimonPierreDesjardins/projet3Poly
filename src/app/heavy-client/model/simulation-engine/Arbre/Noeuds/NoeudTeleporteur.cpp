@@ -307,19 +307,20 @@ NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
 
 bool NoeudTeleporteur::collisionTeleporteur()
 {
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table");
 	if (!this->obtenirCercleEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY))
 	{
 		return true;
 	}
-	for (unsigned int i = 0; i < FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->obtenirNombreEnfants() -1; i++) //on vï¿½rifie le cercle englobant des autres tï¿½lï¿½porteurs afin d'ï¿½viter d'avoir un tï¿½lï¿½porter dans ceux-ci
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants() -1; i++) //on vérifie le cercle englobant des autres téléporteurs afin d'éviter d'avoir un téléporter dans ceux-ci
 	{
-		if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i) != this)
+		if (table->chercher(i) != this)
 		{
-			if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i)->obtenirNom() == "teleporteur" && ((NoeudTeleporteur*)FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i))->obtenirCercleEnglobante()->calculerIntersection(cercleEnglobant_))
+			if (table->chercher(i)->obtenirNom() == "teleporteur" && ((NoeudTeleporteur*)table->chercher(i))->obtenirCercleEnglobante()->calculerIntersection(cercleEnglobant_))
 			{
 				return true;
 			}
-			else if (FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table")->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(cercleEnglobant_))
+			else if (table->chercher(i)->obtenirNom() != "ligneNoire" && table->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(cercleEnglobant_))
 			{
 				return true;
 			}

@@ -852,16 +852,94 @@ int ProfilUtilisateur::obtenirPieces()
 {
 	return piecesCollectees;
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn std::string ProfilUtilisateur::obtenirCheminVersMusiqueSimulation()
+///
+///	Fonction qui retourne le chemin a la musique jouer pour simulation
+///
+/// @return le chemin a la musique jouer pour simulation
+///
+////////////////////////////////////////////////////////////////////////
 std::string ProfilUtilisateur::obtenirCheminVersMusiqueSimulation()
 {
 	return pathToMusic_;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::assignerCheminVersMusiqueSimulation(std::string chemin)
+///
+///	Fonction qui assigne le chemin a la musique jouer pour simulation
+///
+/// @args std::string chemin: Path a la musique
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
 void ProfilUtilisateur::assignerCheminVersMusiqueSimulation(std::string chemin)
 {
 	pathToMusic_ = chemin;
 	EnginSon::obtenirInstance()->setSimulationMusic(chemin);
 
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::getEditionTutorialState() 
+///
+///	Fonction qui retourne l'état du tutoriel edition
+///
+/// @return bool: état du tutoriel edition
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::getEditionTutorialState() 
+{
+	return completedEditionTutorial_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::setEditionTutorialState(bool completed)
+///
+///	Fonction qui assigne l'état du tutoriel edition
+///
+/// @args bool compled: etat du tutoriel edition
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::setEditionTutorialState(bool completed)
+{
+	completedEditionTutorial_ = completed;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool ProfilUtilisateur::getSimulationTutorialState() 
+///
+///	Fonction qui retourne l'état du tutoriel simulation
+///
+/// @return bool: état du tutoriel simulation
+///
+////////////////////////////////////////////////////////////////////////
+bool ProfilUtilisateur::getSimulationTutorialState()
+{
+	return completedSimulationTutorial_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void ProfilUtilisateur::setSimulationTutorialState(bool completed)
+///
+///	Fonction qui assigne l'état du tutoriel simulation
+///
+/// @args bool compled: etat du tutoriel simulation
+/// @return
+///
+////////////////////////////////////////////////////////////////////////
+void ProfilUtilisateur::setSimulationTutorialState(bool completed)
+{
+	completedSimulationTutorial_ = completed;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

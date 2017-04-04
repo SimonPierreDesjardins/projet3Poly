@@ -57,7 +57,7 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 
 /// Constructeur par défaut.
 FacadeModele::FacadeModele()
-	: network_(&eventHandler_), mapSessionManager_(engine_.getEntityTree(), &network_)
+	: network_(&eventHandler_), mapSessionManager_(engine_.getEntityTree(), &network_), saves_(&profil_)
 {
 }
 
@@ -319,6 +319,11 @@ void FacadeModele::assignerMode(Mode mode)
 void FacadeModele::continuerAffichage()
 {
 	engine_.resumeRendering();
+}
+
+void FacadeModele::assignerEnvironnement(int noEnviro)
+{
+	engine_.setEnvironnement(noEnviro);
 }
 
 ////////////////////////////////////////////////////////////////////////
