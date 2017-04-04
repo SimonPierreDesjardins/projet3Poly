@@ -36,15 +36,15 @@ void SimulationEngine::initializeRendering(HWND hWnd, ProfilUtilisateur* userPro
 	// La couleur de fond
 	glClearColor(0.32f, 0.32f, 0.32f, 1.0f);
 
-	environnements_.push_back(utilitaire::BoiteEnvironnement(
+	environnements_.emplace_back(
 		".\\media\\textures\\Skybox1\\posz.jpg", ".\\media\\textures\\Skybox1\\negz.jpg",
 		".\\media\\textures\\Skybox1\\posx.jpg", ".\\media\\textures\\Skybox1\\negx.jpg",
-		".\\media\\textures\\Skybox1\\negy.jpg", ".\\media\\textures\\Skybox1\\posy.jpg"));
+		".\\media\\textures\\Skybox1\\negy.jpg", ".\\media\\textures\\Skybox1\\posy.jpg");
 
-	environnements_.push_back(utilitaire::BoiteEnvironnement(
+	environnements_.emplace_back(
 		".\\media\\textures\\Skybox2\\posz.jpg", ".\\media\\textures\\Skybox2\\negz.jpg",
 		".\\media\\textures\\Skybox2\\posx.jpg", ".\\media\\textures\\Skybox2\\negx.jpg",
-		".\\media\\textures\\Skybox2\\negy.jpg", ".\\media\\textures\\Skybox2\\posy.jpg"));
+		".\\media\\textures\\Skybox2\\negy.jpg", ".\\media\\textures\\Skybox2\\posy.jpg");
 
 	// Les lumières
 	glEnable(GL_LIGHTING);
