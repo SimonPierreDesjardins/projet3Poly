@@ -113,6 +113,8 @@ extern "C"
 	__declspec(dllexport) bool __cdecl isConnected();
 	__declspec(dllexport) void __cdecl sendMessage(char* message, int size);
 	__declspec(dllexport) void __cdecl uploadMap(char* filePath);
+
+	// Connection callbacks
 	typedef int(__stdcall * CallbackDisconnect)();
 	__declspec(dllexport) void __cdecl SetCallbackForDisconnect(CallbackDisconnect disconnectHandler);
 	__declspec(dllexport) void __cdecl GotDisconnected();
@@ -123,11 +125,22 @@ extern "C"
 	__declspec(dllexport) void __cdecl SetCallbackForConnectionFail(CallbackConnectionFail connectionFailHandler);
 	__declspec(dllexport) void __cdecl connectionWasFail();
 
+	// User Authentification callback
+	typedef int(__stdcall * CallbackAuthentification)(int action);
+	__declspec(dllexport) void __cdecl SetCallbackForAuthentification(CallbackAuthentification fn);
+	__declspec(dllexport) void __cdecl authentification(int action);
+
 	// Map management
 	__declspec(dllexport) void __cdecl createMap(char* mapName, int mapNamesize, char* password, int passwordSize, char mapType, char isPrivate);
 	__declspec(dllexport) void __cdecl changeMapPermission(int mapId, char permission, char* password, int size);
 	__declspec(dllexport) void __cdecl joinMap(int mapId);
 	__declspec(dllexport) void __cdecl leaveMap();
+	typedef int(__stdcall * CallbackMapConnection)(int action);
+	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn);
+	__declspec(dllexport) void __cdecl mapConnect(int action);
+	typedef int(__stdcall * CallbackMapPermission)(int action);
+	__declspec(dllexport) void __cdecl SetCallbackForMapPermission(CallbackMapPermission fn);
+	__declspec(dllexport) void __cdecl mapPermission(int action);
 
 	//Edition Tutorial
 	typedef int(__stdcall * Callback)();

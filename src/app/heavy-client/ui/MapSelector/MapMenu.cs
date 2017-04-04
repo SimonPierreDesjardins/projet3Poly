@@ -55,6 +55,9 @@ namespace ui
             extensionFichierZone = cheminFichierZoneDefaut.Substring(cheminFichierZoneDefaut.LastIndexOf("."));
 
             fileDirLabel.Text = null;
+
+            //Lovely circles as char in password
+            passwordBox.PasswordChar = '\u25CF';
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -99,13 +102,13 @@ namespace ui
         { 
             if (!onlineMaps_.ContainsKey(mapId))
             {
-                mapPanel.VerticalScroll.Value = 0;
                 newMap.Size = new Size(this.mapPanel.Width, newMap.Height);
                 newMap.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
                 newMap.Location = new Point(0, numberOfMaps_++ * 150);
                 onlineMaps_.Add(mapId, newMap);
 
                 parent_.Invoke((MethodInvoker)delegate {
+                    mapPanel.VerticalScroll.Value = 0;
                     this.mapPanel.Controls.Add(newMap);
                 });
             }

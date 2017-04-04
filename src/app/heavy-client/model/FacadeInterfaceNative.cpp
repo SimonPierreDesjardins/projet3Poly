@@ -986,6 +986,27 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestToQuitMapSession();
 	}
 
+	CallbackMapConnection callbackMapConnection = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn)
+	{
+		callbackMapConnection = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapConnect(int action)
+	{
+		callbackMapConnection(action);
+	}
+
+	CallbackMapPermission callbackMapPermission = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapPermission(CallbackMapPermission fn)
+	{
+		callbackMapPermission = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapPermission(int action)
+	{
+		callbackMapPermission(action);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -1112,6 +1133,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl connectionWasFail()
 	{
 		ConnectionFailHandler();
+	}
+
+	CallbackAuthentification callbackAuthentification = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForAuthentification(CallbackAuthentification fn)
+	{
+		callbackAuthentification = fn;
+	}
+
+	__declspec(dllexport) void __cdecl authentification(int action)
+	{
+		callbackAuthentification(action);
 	}
 
 	////////////////////////////////////////////////////////////////////////

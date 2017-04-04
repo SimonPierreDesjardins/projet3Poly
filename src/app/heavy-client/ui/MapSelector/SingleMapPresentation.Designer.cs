@@ -30,6 +30,14 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MapPresentator));
             this.mapButton = new ui.PanelButton();
+            this.privatePanel = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.settingsButton = new ui.PanelButton();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.customLabel4 = new ui.CustomLabel();
+            this.passewordLabel = new System.Windows.Forms.Label();
+            this.connectButton = new System.Windows.Forms.Button();
+            this.passwordBox = new System.Windows.Forms.TextBox();
             this.privacyLabel = new ui.CustomLabel();
             this.customLabel99 = new ui.CustomLabel();
             this.connectionLabel = new ui.CustomLabel();
@@ -41,7 +49,6 @@
             this.customLabel2 = new ui.CustomLabel();
             this.customLabel1 = new ui.CustomLabel();
             this.settingsPanel = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.updateButton = new System.Windows.Forms.Button();
             this.returnButton = new ui.PanelButton();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -49,20 +56,14 @@
             this.publicCheckBox = new System.Windows.Forms.CheckBox();
             this.newPasswordLabel = new System.Windows.Forms.Label();
             this.newPasswordBox = new System.Windows.Forms.TextBox();
-            this.privatePanel = new System.Windows.Forms.Panel();
-            this.settingsButton = new ui.PanelButton();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.customLabel4 = new ui.CustomLabel();
-            this.passewordLabel = new System.Windows.Forms.Label();
-            this.connectButton = new System.Windows.Forms.Button();
-            this.passwordBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.mapButton.SuspendLayout();
-            this.settingsPanel.SuspendLayout();
-            this.returnButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.privatePanel.SuspendLayout();
             this.settingsButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.settingsPanel.SuspendLayout();
+            this.returnButton.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // mapButton
@@ -86,6 +87,95 @@
             this.mapButton.Size = new System.Drawing.Size(600, 150);
             this.mapButton.TabIndex = 0;
             this.mapButton.Click += new System.EventHandler(this.mapButton_Click);
+            // 
+            // privatePanel
+            // 
+            this.privatePanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.privatePanel.Controls.Add(this.label2);
+            this.privatePanel.Controls.Add(this.settingsButton);
+            this.privatePanel.Controls.Add(this.passewordLabel);
+            this.privatePanel.Controls.Add(this.connectButton);
+            this.privatePanel.Controls.Add(this.passwordBox);
+            this.privatePanel.Location = new System.Drawing.Point(299, 0);
+            this.privatePanel.Name = "privatePanel";
+            this.privatePanel.Size = new System.Drawing.Size(301, 150);
+            this.privatePanel.TabIndex = 16;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.Location = new System.Drawing.Point(21, 127);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(52, 16);
+            this.label2.TabIndex = 24;
+            this.label2.Text = "warning";
+            this.label2.Visible = false;
+            // 
+            // settingsButton
+            // 
+            this.settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.settingsButton.Controls.Add(this.pictureBox2);
+            this.settingsButton.Controls.Add(this.customLabel4);
+            this.settingsButton.Location = new System.Drawing.Point(131, 17);
+            this.settingsButton.Name = "settingsButton";
+            this.settingsButton.Size = new System.Drawing.Size(153, 39);
+            this.settingsButton.TabIndex = 19;
+            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.Enabled = false;
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.Location = new System.Drawing.Point(118, 7);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.pictureBox2.TabIndex = 1;
+            this.pictureBox2.TabStop = false;
+            // 
+            // customLabel4
+            // 
+            this.customLabel4.AutoSize = true;
+            this.customLabel4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel4.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel4.Location = new System.Drawing.Point(13, 10);
+            this.customLabel4.Name = "customLabel4";
+            this.customLabel4.Size = new System.Drawing.Size(99, 21);
+            this.customLabel4.TabIndex = 0;
+            this.customLabel4.Text = "Paramètres";
+            // 
+            // passewordLabel
+            // 
+            this.passewordLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.passewordLabel.AutoSize = true;
+            this.passewordLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.passewordLabel.ForeColor = System.Drawing.Color.Silver;
+            this.passewordLabel.Location = new System.Drawing.Point(20, 70);
+            this.passewordLabel.Name = "passewordLabel";
+            this.passewordLabel.Size = new System.Drawing.Size(115, 21);
+            this.passewordLabel.TabIndex = 17;
+            this.passewordLabel.Text = "Mot de passe";
+            // 
+            // connectButton
+            // 
+            this.connectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.connectButton.Location = new System.Drawing.Point(209, 102);
+            this.connectButton.Name = "connectButton";
+            this.connectButton.Size = new System.Drawing.Size(75, 23);
+            this.connectButton.TabIndex = 18;
+            this.connectButton.Text = "Connecter";
+            this.connectButton.UseVisualStyleBackColor = true;
+            // 
+            // passwordBox
+            // 
+            this.passwordBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.passwordBox.Location = new System.Drawing.Point(24, 104);
+            this.passwordBox.Name = "passwordBox";
+            this.passwordBox.PasswordChar = '*';
+            this.passwordBox.Size = new System.Drawing.Size(175, 20);
+            this.passwordBox.TabIndex = 16;
             // 
             // privacyLabel
             // 
@@ -200,30 +290,18 @@
             // settingsPanel
             // 
             this.settingsPanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.settingsPanel.Controls.Add(this.label1);
             this.settingsPanel.Controls.Add(this.updateButton);
             this.settingsPanel.Controls.Add(this.returnButton);
             this.settingsPanel.Controls.Add(this.privateCheckBox);
             this.settingsPanel.Controls.Add(this.publicCheckBox);
             this.settingsPanel.Controls.Add(this.newPasswordLabel);
             this.settingsPanel.Controls.Add(this.newPasswordBox);
+            this.settingsPanel.Controls.Add(this.label1);
             this.settingsPanel.Location = new System.Drawing.Point(299, 0);
             this.settingsPanel.Name = "settingsPanel";
             this.settingsPanel.Size = new System.Drawing.Size(301, 150);
             this.settingsPanel.TabIndex = 19;
             this.settingsPanel.Visible = false;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(21, 127);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 16);
-            this.label1.TabIndex = 23;
-            this.label1.Text = "warning";
-            this.label1.Visible = false;
             // 
             // updateButton
             // 
@@ -306,81 +384,17 @@
             this.newPasswordBox.Size = new System.Drawing.Size(175, 20);
             this.newPasswordBox.TabIndex = 16;
             // 
-            // privatePanel
+            // label1
             // 
-            this.privatePanel.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.privatePanel.Controls.Add(this.settingsButton);
-            this.privatePanel.Controls.Add(this.passewordLabel);
-            this.privatePanel.Controls.Add(this.connectButton);
-            this.privatePanel.Controls.Add(this.passwordBox);
-            this.privatePanel.Location = new System.Drawing.Point(299, 0);
-            this.privatePanel.Name = "privatePanel";
-            this.privatePanel.Size = new System.Drawing.Size(301, 150);
-            this.privatePanel.TabIndex = 16;
-            // 
-            // settingsButton
-            // 
-            this.settingsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.settingsButton.Controls.Add(this.pictureBox2);
-            this.settingsButton.Controls.Add(this.customLabel4);
-            this.settingsButton.Location = new System.Drawing.Point(131, 17);
-            this.settingsButton.Name = "settingsButton";
-            this.settingsButton.Size = new System.Drawing.Size(153, 39);
-            this.settingsButton.TabIndex = 19;
-            this.settingsButton.Click += new System.EventHandler(this.settingsButton_Click);
-            // 
-            // pictureBox2
-            // 
-            this.pictureBox2.Enabled = false;
-            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
-            this.pictureBox2.Location = new System.Drawing.Point(118, 7);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-            this.pictureBox2.TabIndex = 1;
-            this.pictureBox2.TabStop = false;
-            // 
-            // customLabel4
-            // 
-            this.customLabel4.AutoSize = true;
-            this.customLabel4.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel4.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel4.Location = new System.Drawing.Point(13, 10);
-            this.customLabel4.Name = "customLabel4";
-            this.customLabel4.Size = new System.Drawing.Size(99, 21);
-            this.customLabel4.TabIndex = 0;
-            this.customLabel4.Text = "Paramètres";
-            // 
-            // passewordLabel
-            // 
-            this.passewordLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.passewordLabel.AutoSize = true;
-            this.passewordLabel.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.passewordLabel.ForeColor = System.Drawing.Color.Silver;
-            this.passewordLabel.Location = new System.Drawing.Point(20, 70);
-            this.passewordLabel.Name = "passewordLabel";
-            this.passewordLabel.Size = new System.Drawing.Size(115, 21);
-            this.passewordLabel.TabIndex = 17;
-            this.passewordLabel.Text = "Mot de passe";
-            // 
-            // connectButton
-            // 
-            this.connectButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.connectButton.Location = new System.Drawing.Point(209, 102);
-            this.connectButton.Name = "connectButton";
-            this.connectButton.Size = new System.Drawing.Size(75, 23);
-            this.connectButton.TabIndex = 18;
-            this.connectButton.Text = "Connecter";
-            this.connectButton.UseVisualStyleBackColor = true;
-            // 
-            // passwordBox
-            // 
-            this.passwordBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.passwordBox.Location = new System.Drawing.Point(24, 104);
-            this.passwordBox.Name = "passwordBox";
-            this.passwordBox.PasswordChar = '*';
-            this.passwordBox.Size = new System.Drawing.Size(175, 20);
-            this.passwordBox.TabIndex = 16;
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.Location = new System.Drawing.Point(21, 127);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(52, 16);
+            this.label1.TabIndex = 23;
+            this.label1.Text = "warning";
+            this.label1.Visible = false;
             // 
             // MapPresentator
             // 
@@ -392,16 +406,16 @@
             this.Size = new System.Drawing.Size(600, 150);
             this.mapButton.ResumeLayout(false);
             this.mapButton.PerformLayout();
-            this.settingsPanel.ResumeLayout(false);
-            this.settingsPanel.PerformLayout();
-            this.returnButton.ResumeLayout(false);
-            this.returnButton.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.privatePanel.ResumeLayout(false);
             this.privatePanel.PerformLayout();
             this.settingsButton.ResumeLayout(false);
             this.settingsButton.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.settingsPanel.ResumeLayout(false);
+            this.settingsPanel.PerformLayout();
+            this.returnButton.ResumeLayout(false);
+            this.returnButton.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -435,5 +449,6 @@
         private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.TextBox newPasswordBox;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
     }
 }
