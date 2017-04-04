@@ -108,6 +108,7 @@
     <Compile Include="EditionTutoriel\EditionTutorielInstructions.Designer.cs">
       <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
     </Compile>
+    <Compile Include="enum\Authentification.cs" />
     <Compile Include="enum\EditionTutorialState.cs" />
     <Compile Include="enum\TypeOfTool.cs" />
     <Compile Include="Connection\DisconnetedPanel.cs">

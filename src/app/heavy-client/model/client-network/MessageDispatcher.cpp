@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "MessageDispatcher.h"
+#include "Authentification.cs"
 
 namespace client_network
 {
@@ -238,10 +239,37 @@ void MessageDispatcher::handleUserAuthentificationConfirmation(const std::string
 	{
 	case 's':
 		eventHandler_->onUserAuthentified(userId);
+		authentification(AUTEHNTIFICATION_SUCCESS);
+		break;
+
+	case 'f':
+		authentification(EXISTING_FAIL);
+		break;
+
+	case 'c':
+		authentification(EXISTING_ALREADY_CONNECTED);
 		break;
 
 	default:
 		std::cout << "user authentification failed." << std::endl;
+	}
+}
+
+void MessageDispatcher::handleUserCreationConfirmation(const std::string& message)
+{
+	char authResult = message[6];
+	switch (authResult)
+	{
+	case 's':
+		authentification(CREATION_SUCCESS);
+		break;
+
+	case 'e':
+		authentification(NEW_ALREADY_EXIST);
+		break;
+
+	default:
+		std::cout << "user creation failed." << std::endl;
 	}
 }
 
@@ -251,6 +279,10 @@ void MessageDispatcher::handleUserSystemMessage(const std::string& message)
 	{
 	case 'a':
 		handleUserAuthentificationConfirmation(message);
+		break;
+
+	case 'c':
+		handleUserCreationConfirmation(message);
 		break;
 	}
 }
