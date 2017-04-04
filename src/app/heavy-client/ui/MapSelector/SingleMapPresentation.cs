@@ -7,6 +7,7 @@
 
 using System;
 using System.Drawing;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace ui
@@ -215,13 +216,34 @@ namespace ui
 
         private void returnButton_Click(object sender, EventArgs e)
         {
-            //if ()
-
-
-
-
-
-
+            //Stayed private
+            if (confidentiality_ && privateCheckBox.Checked)
+            {
+                //Maybe some code here??
+            }
+            //Changed to public
+            else if (confidentiality_ && publicCheckBox.Checked)
+            {
+                publicSettings();
+                //Mettre a jour info
+                confidentiality_ = false;
+                privacyLabel.Text = "Publique";
+            }
+            //Change to private
+            else if (!confidentiality_ && privateCheckBox.Checked)
+            {
+                if (newPasswordBox.TextLength == 0)
+                {
+                    label1.Visible = true;
+                    label1.Text = "Doit entrer un mot de passe";
+                    return;
+                }
+            }
+            //Stayed public
+            else
+            {
+                //Maybe some code here??
+            }
 
             settingsPanel.Visible = false;
             privatePanel.Visible = true;
@@ -266,5 +288,32 @@ namespace ui
             passwordBox.Visible = true;
             connectButton.Visible = true;
         }
+
+        private void updateButton_Click(object sender, EventArgs e)
+        {
+            if (newPasswordBox.TextLength == 0)
+            {
+                label1.Visible = true;
+                label1.Text = "Doit entrer un mot de passe";
+                return;
+            }
+
+            FonctionsNatives.changeMapPermission(mapId_, (char)1, newPasswordBox.Text, newPasswordBox.TextLength);
+            newPasswordBox.Clear();
+
+            privateSettings();
+            settingsPanel.Visible = false;
+            privatePanel.Visible = true;
+
+            //Mettre a jour info
+            confidentiality_ = true;
+            privacyLabel.Text = "Privée";
+        }
+    }
+
+    static partial class FonctionsNatives
+    {
+        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern void changeMapPermission(int mapId, char permission, string password, int passwordSize);
     }
 }

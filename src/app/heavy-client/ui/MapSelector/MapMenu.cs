@@ -781,9 +781,6 @@ namespace ui
     static partial class FonctionsNatives
     {
 		[DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-		public static extern void changeMapPermission(int mapId, char permission, string password, int passwordSize);
-
-		[DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void uploadMap(string chemin);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]

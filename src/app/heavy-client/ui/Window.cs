@@ -551,24 +551,24 @@ namespace ui
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    simulationMenuStrip.orthoView();
+                    onlinePiecesMenuStrip.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    simulationMenuStrip.orbiteView();
+                    onlinePiecesMenuStrip.orbiteView();
                     break;
 
                 case Constants.Key_3:
-                    simulationMenuStrip.firstPersonView();
+                    onlinePiecesMenuStrip.firstPersonView();
                     break;
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        simulationMenuStrip.goMenuPrincipal();
+                        onlinePiecesMenuStrip.goMenuPrincipal();
                     break;
 
                 case Constants.Key_Esc:
-                    simulationMenuStrip.goIntoPause();
+                    onlinePiecesMenuStrip.goIntoPause();
                     break;
 
                 default:

@@ -36,6 +36,7 @@ namespace ui
                 connectPanel.Visible = false;
             }
 
+            //Set callbacks for connection state
             mInstance = new CallbackDisconnect(DisconnectHandler);
             SetCallbackForDisconnect(mInstance);
 
@@ -44,6 +45,8 @@ namespace ui
 
             connectFail = new CallbackConnectionFail(ConnectionFailHandler);
             SetCallbackForConnectionFail(connectFail);
+
+            //Set callbacks for user authentification
         }
 
         ////////////////////////////////////////////////////////////////////////
