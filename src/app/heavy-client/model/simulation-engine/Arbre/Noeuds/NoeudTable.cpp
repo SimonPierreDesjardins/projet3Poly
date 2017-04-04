@@ -34,7 +34,7 @@ NoeudTable::NoeudTable(uint32_t id, const std::string& typeNoeud)
 	: NoeudComposite{ id, typeNoeud }
 {
 	type_ = TABLE_ENTITY;
-	facteurMiseAEchelle_ = 2;
+	facteurMiseAEchelle_ = 2; //A changer si on veut modifier la taille de la table, il faudra alors faire fromJson sur la table dans le chargement de la carte.
 }
 
 
