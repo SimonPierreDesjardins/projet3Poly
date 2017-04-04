@@ -105,6 +105,7 @@ void NetworkManager::requestMapPermissionChange(const uint32_t mapId, uint8_t pe
 	std::string message;
 	serializer_.serialize(uint32_t(11 + password.size()), message);
 	message.append("mp");
+	serializer_.serialize(mapId, message);
 	serializer_.serialize(permission, message);
 	message.append(password);
 
