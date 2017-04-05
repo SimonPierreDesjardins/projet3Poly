@@ -111,15 +111,18 @@ void NetworkManager::requestMapPermissionChange(const uint32_t mapId, uint8_t pe
 	serializer_.serialize(mapId, message);
 	serializer_.serialize(permission, message);
 	message.append(password);
-
+	connection_.sendMessage(message);
 }
 
-void NetworkManager::requestToJoinMapSession(uint32_t mapId)
+void NetworkManager::requestToJoinMapSession(uint32_t mapId, const std::string & password)
 {
 	std::string message;
-	serializer_.serialize(uint32_t(10), message);
+	serializer_.serialize(uint32_t(10 + password.size()), message);
 	message.append("mj");
 	serializer_.serialize(mapId, message);
+	if (password.size() > 0) {
+		message.append(password);
+	}
 	connection_.sendMessage(message);
 }
 

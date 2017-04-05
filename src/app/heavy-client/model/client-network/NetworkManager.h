@@ -37,7 +37,7 @@ public:
 	void uploadMap(const std::string& filePath);
 	void requestMapCreation(const std::string& mapName, const std::string& password, uint8_t mapType, uint8_t isPrivate);
 	void requestMapPermissionChange(const uint32_t mapId, uint8_t permission, const std::string& password);
-	void requestToJoinMapSession(uint32_t mapId);
+	void requestToJoinMapSession(uint32_t mapId, const std::string & password);
 	void requestToQuitMapSession();
 
 	void requestEntityCreation(uint8_t type, uint32_t parentId, 
