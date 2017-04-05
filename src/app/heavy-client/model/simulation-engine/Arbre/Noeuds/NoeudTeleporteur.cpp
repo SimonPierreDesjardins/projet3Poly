@@ -90,6 +90,7 @@ void NoeudTeleporteur::animer(float dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudTeleporteur::mettreAJourFormeEnglobante()
 {
+	physics_.absolutePosition = physics_.relativePosition;
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
 	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
 	rectangleEnglobant_.mettreAJour(physics_.absolutePosition, physics_.rotation.z, hauteur, largeur);

@@ -386,8 +386,6 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 			teleporteurCollision_ = true;
 			teleporteurCourant_ = teleporteur;
 			rectangle->assignerEnCollision(enCollision);
-			glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
-			calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
 			// On replace le teleporteur à la dernière position.
 			reinitialiserPosition();
@@ -413,7 +411,7 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 	}
 
 	// TODO: À bouger dans le téléporteur.
-	if (teleportationFaite_ == false)
+	if (teleportationFaite_ == false && enCollision)
 	{
 		glm::dvec3 teleporterAbsPos = teleporteurCourant_->getPhysicsComponent().absolutePosition;
 		physics_.absolutePosition.x = teleporterAbsPos.x;
