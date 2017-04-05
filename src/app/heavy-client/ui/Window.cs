@@ -366,12 +366,13 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(IntPtr keyDown)
         {
-            if (viewPort.Controls.Contains(simulationMenuStrip.simulationTutorial))
-                return;
-
             SimMenuStrip simulation;
             if (viewPort.Controls.Contains(simulationMenuStrip))
+            {
                 simulation = simulationMenuStrip;
+                if (viewPort.Controls.Contains(simulationMenuStrip.simulationTutorial))
+                    return;
+            }
             else
                 simulation = onlineSimulationMenuStrip;
 
