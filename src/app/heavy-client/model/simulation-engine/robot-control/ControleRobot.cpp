@@ -22,6 +22,7 @@
 #include "SimulationEngine.h"
 
 #include "ControleRobot.h"
+#include "EnginSon.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -355,9 +356,10 @@ void ControleRobot::verifierCapteurs(){
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 {
-	if (robot_ != nullptr){
-		robot_->assignerVitesseGauche(vit_G);
-		robot_->assignerVitesseDroite(vit_D);
+	if (robot_ != nullptr)
+	{
+		robot_->rightEngine.targetVelocity =  vit_D;
+		robot_->leftEngine.targetVelocity = vit_G;
 		jouerSonRobot(vit_G, vit_D);
 	}
 }
@@ -376,12 +378,11 @@ void ControleRobot::assignerVitessesMoteurs(double vit_G, double vit_D)
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::ajouterVitessesMoteurs(double vit_G, double vit_D)
 {
-	if (robot_ != nullptr){
-		vit_G += robot_->obtenirVitesseGauche();
-		vit_D += robot_->obtenirVitesseDroite();
-		robot_->assignerVitesseGauche(vit_G);
-		robot_->assignerVitesseDroite(vit_D);
-		jouerSonRobot(vit_G, vit_D);
+	if (robot_ != nullptr)
+	{
+		robot_->rightEngine.targetVelocity += vit_G;
+		robot_->leftEngine.targetVelocity += vit_D;
+		jouerSonRobot(robot_->rightEngine.targetVelocity, robot_->leftEngine.targetVelocity);
 	}
 }
 

@@ -21,6 +21,7 @@
 #include "ControleurLumiere.h"
 #include <stack>
 
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
 /// @brief Classe qui représente le robot du premier projet intégrateur.
@@ -40,6 +41,24 @@ public:
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_DROITE;
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_CENTRE;
     static const double ANGLE_RELATIF_CAPTEUR_DISTANCE_GAUCHE;    
+
+	class Engine
+	{
+	public:
+		const double MAX_VELOCITY = 20.0;
+
+		float targetVelocity = 0.0;
+		void updateVelocity(float dt);
+		inline double getVelocity() const;
+
+	private:
+		double power = 70.0;
+		double velocity_ = 0.0;
+	};
+
+	Engine leftEngine;
+	Engine rightEngine;
+	const double friction = 70.0;
 
     using ConteneurCapteursDistance = std::array<CapteurDistance, N_CAPTEURS_DISTANCE>;
 
@@ -63,11 +82,14 @@ public:
     bool verifierCollision(NoeudTable* noeud);
 	bool verifierCollision(NoeudTeleporteur* noeud);
 	bool verifierCollision(NoeudPiece* piece);
+	bool verifierCollision(NoeudRobot* robot);
+
+	//inline void setEnginePower(Engine::Side side, float power);
     
-	//Permet de modifier les paramètres du robot
+	// Permet de modifier les paramètres du robot
 	inline void assignerVitesseRotation(float vitesse);
-	inline void assignerVitesseDroite(float vitesse);
-	inline void assignerVitesseGauche(float vitesse);
+	//inline void assignerVitesseDroite(float vitesse);
+	//inline void assignerVitesseGauche(float vitesse);
     inline void assignerMutex(std::mutex* mutex);
 
     // Calculer les composantes courantes de vitesse du robot.
@@ -84,9 +106,11 @@ public:
 
 	void assignerMode(int mode);
 
+	/*
 	//Permet de récupérer les paramètres du robot.
 	inline float obtenirVitesseDroite() const;
 	inline float obtenirVitesseGauche() const;
+	*/
 
 	inline void assignerEstEnCollision(bool collision);
     
@@ -103,12 +127,11 @@ public:
 
 
 protected:
+
 	//Vitesse des moteurs du robot
-	float vitesseRotation_{ 0.f };
 	float vitesseDroite_{ 0.f };
 	float vitesseGauche_{ 0.f };
 
-	float vitesseRotationCourante_{ 0.f };
 	float vitesseCouranteDroite_{ 0.f };
 	float vitesseCouranteGauche_{ 0.f };
 
@@ -152,8 +175,6 @@ protected:
 	int mode_;
 	bool teleporteurCollision_ = false;
 	bool teleportationFaite_ = false;
-
-	
 	
 	ControleurLumiere* controleurLumiere_{ nullptr };
 };
@@ -190,6 +211,7 @@ inline NoeudRobot::ConteneurCapteursDistance* NoeudRobot::obtenirCapteursDistanc
     return capteursDistance_;
 }
 
+/*
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::obtenirVitesseDroite() const
@@ -222,7 +244,9 @@ inline float NoeudRobot::obtenirVitesseGauche() const
 {
 	return vitesseGauche_;
 }
+*/
 
+/*
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -255,6 +279,7 @@ inline void NoeudRobot::assignerVitesseGauche(float vitesse)
 {
 	vitesseGauche_ = vitesse;
 }
+*/
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -269,7 +294,7 @@ inline void NoeudRobot::assignerVitesseGauche(float vitesse)
 ////////////////////////////////////////////////////////////////////////
 inline void NoeudRobot::assignerVitesseRotation(float vitesse)
 {
-	vitesseRotation_ = vitesse;
+	physics_.angularVelocity.z = vitesse;
 }
 
 inline void NoeudRobot::assignerEstEnCollision(bool collision)
@@ -295,6 +320,10 @@ inline void NoeudRobot::giveSensors(ConteneurCapteursDistance* distanceSensors, 
 	suiveurLigne_ = lineSensor;
 }
 
+inline double NoeudRobot::Engine::getVelocity() const
+{
+	return velocity_;
+}
 
 #endif // __ARBRE_NOEUD_ROBOT_H__
 
