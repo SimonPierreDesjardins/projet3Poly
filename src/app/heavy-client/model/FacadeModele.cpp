@@ -286,7 +286,7 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case PERSONALIZE:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModePersonalize>();
+			mode_ = std::make_unique<ModePersonalize>(&engine_, &profil_);
 			continuerAffichage();
 			break;
 

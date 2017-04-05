@@ -65,21 +65,14 @@ NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud)
 	roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche2).get();
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
 
-	PhysicsComponent leftPhysics = roueGauche_->getPhysicsComponent();
-	leftPhysics.relativePosition = { 2.5,  -0.2, 0.7 };
-	leftPhysics.scale = { 0.95f, 0.95f, 0.85f };
-
-	PhysicsComponent leftPhysics2 = roueGauche_->getPhysicsComponent();
-	leftPhysics2.relativePosition = { -3.1,  -0.2, 0.7 };
-	leftPhysics2.scale = { 0.95f, 0.95f, 0.85f };
-
-	PhysicsComponent rightPhysics = roueGauche_->getPhysicsComponent();
-	rightPhysics.relativePosition = { 2.5, 0.2, 0.7 };
-	rightPhysics.scale = { 0.95f, 0.95f, 0.85f };
-
-	PhysicsComponent rightPhysics2 = roueGauche_->getPhysicsComponent();
-	rightPhysics2.relativePosition = { -3.1,  0.2, 0.7 };
-	rightPhysics2.scale = { 0.95f, 0.95f, 0.85f };
+	roueGauche_->getPhysicsComponent().relativePosition = { 2.5,  -0.2, 0.7 };
+	roueGauche_->getPhysicsComponent().scale = { 0.95f, 0.95f, 0.85f };
+	roueGauche2_->getPhysicsComponent().relativePosition = { -3.1,  -0.2, 0.7 };
+	roueGauche2_->getPhysicsComponent().scale = { 0.95f, 0.95f, 0.85f };
+	roueDroite_->getPhysicsComponent().relativePosition = { 2.5, 0.2, 0.7 };
+	roueDroite_->getPhysicsComponent().scale = { 0.95f, 0.95f, 0.85f };
+	roueDroite2_->getPhysicsComponent().relativePosition = { -3.1,  0.2, 0.7 };
+	roueDroite2_->getPhysicsComponent().scale = { 0.95f, 0.95f, 0.85f };
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);
@@ -286,6 +279,29 @@ void NoeudAudi::setCouleurDefault(int piece, bool default)
 		estCouleurDefaut_ = default;
 	}
 
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudAudi::initialisationCouleurs(float* roues, float* modele)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues et du modele
+///
+/// @param[in] float* de couleurs des roues et du modele
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudAudi::initialisationCouleurs(float* roues, float* modele)
+{
+	couleur_[0] = modele[0];
+	couleur_[1] = modele[1];
+	couleur_[2] = modele[2];
+	couleur_[3] = modele[3];
+	roueDroite_->initialisationCouleurs(roues);
+	roueDroite2_->initialisationCouleurs(roues);
+	roueGauche_->initialisationCouleurs(roues);
+	roueGauche2_->initialisationCouleurs(roues);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

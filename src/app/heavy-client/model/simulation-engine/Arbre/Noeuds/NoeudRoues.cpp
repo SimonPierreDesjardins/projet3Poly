@@ -76,6 +76,8 @@ void NoeudRoues::afficherConcret() const
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
+	
+	glScalef(physics_.scale.x, physics_.scale.y, physics_.scale.z);
 	if (!estCouleurDefaut_)
 	{
 		glDisable(GL_COLOR_MATERIAL);
@@ -179,6 +181,25 @@ void NoeudRoues::setCouleurDefault(int piece, bool default)
 	{
 		estCouleurDefaut_ = default;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRoues::initialisationCouleurs(float* roues)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues
+///
+/// @param[in] float* de couleurs des roues
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRoues::initialisationCouleurs(float* roues)
+{
+	couleur_[0] = roues[0];
+	couleur_[1] = roues[1];
+	couleur_[2] = roues[2];
+	couleur_[3] = roues[3];
 }
 
 

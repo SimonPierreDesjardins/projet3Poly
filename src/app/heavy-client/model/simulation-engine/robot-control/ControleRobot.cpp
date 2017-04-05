@@ -43,6 +43,9 @@ ControleRobot::ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profil)
 	table_->ajouter(robot);
 
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
+	robot_->initialisationCouleurs(profil->obtenirCouleurs(WHEELS), profil->obtenirCouleurs(BODY));
+	robot_->setCouleurDefault(WHEELS, profil->obtenirCouleurParDefaut(WHEELS));
+	robot_->setCouleurDefault(BODY, profil->obtenirCouleurParDefaut(BODY));
 	robot_->assignerMutex(&mutexComportement);
 	robot_->giveSensors(profil->obtenirCapteursDistance(), profil->obtenirSuiveurLigne());
 
@@ -68,9 +71,6 @@ ControleRobot::~ControleRobot()
 {
 	//Nous utilisons ceci pour terminer le thread d'IA du robot
 	passerAModeManuel();
-	if (table_ != nullptr && robot_ != nullptr){
-		table_->effacer(robot_);
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////

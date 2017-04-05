@@ -101,6 +101,8 @@ public:
 
 	std::stack <NoeudAbstrait*> tableauCoins;
 
+	virtual void initialisationCouleurs(float* roues, float* modele);
+
 
 protected:
 	//Vitesse des moteurs du robot
@@ -147,7 +149,7 @@ protected:
 	NoeudRoues* roueGauche2_;
 	NoeudRoues* roueDroite2_;
 	NoeudTeleporteur* teleporteurCourant_{nullptr};
-	float* couleur_;
+	float couleur_[4] = {0.0,0.0,0.0,0.0};
 	bool estCouleurDefaut_ = true;
 	int mode_;
 	bool teleporteurCollision_ = false;

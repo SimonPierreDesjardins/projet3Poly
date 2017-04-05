@@ -49,6 +49,8 @@ public:
 
 	void setCouleurDefault(int piece, bool default);
 
+	void initialisationCouleurs(float* roues, float* modele);
+
 private:
 
 	// Les attributs du robot.

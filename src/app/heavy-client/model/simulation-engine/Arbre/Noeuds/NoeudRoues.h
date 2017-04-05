@@ -41,11 +41,12 @@ public:
 	void setRightWheel(bool isRight);
 	void assignerCouleurs(int modele, int a, int r, int g, int b);
 	void setCouleurDefault(int piece, bool default);
+	void initialisationCouleurs(float *roues);
 
 private:
 	float vitesseCourante_{ 0.f };
 	bool isRightWheel{ false };
-	float* couleur_;
+	float couleur_[4] = {0.0,0.0,0.0,0.0};
 	bool estCouleurDefaut_ = true;
 };
 

@@ -71,7 +71,7 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 
     // À modifier avec le merge du profile.
     visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
-
+	
 	
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -926,6 +926,26 @@ std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
 	return tableauCoins;
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::initialisationCouleurs(float* roues, float* modele)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues et du modele
+///
+/// @param[in] float* de couleurs des roues et du modele
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::initialisationCouleurs(float* roues, float* modele)
+{
+	couleur_[0] = modele[0];
+	couleur_[1] = modele[1];
+	couleur_[2] = modele[2];
+	couleur_[3] = modele[3];
+	roueDroite_->initialisationCouleurs(roues);
+	roueGauche_->initialisationCouleurs(roues);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

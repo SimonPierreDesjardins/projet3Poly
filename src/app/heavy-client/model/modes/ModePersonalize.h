@@ -38,7 +38,7 @@ class ModePersonalize : public ModeAbstrait
 {
 public:
 	//Constructeur par défaut
-	ModePersonalize();
+	ModePersonalize(engine::SimulationEngine* engine, ProfilUtilisateur* profil);
 
 	//Destructeur
 	virtual ~ModePersonalize();
@@ -52,12 +52,11 @@ public:
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
-	void creerControleRobot();
-
 private:
 	ProfilUtilisateur* profil_{ nullptr };
 
 	ArbreRendu* tree_{ nullptr };
+	ControleRobot controleRobot_;
 
 	bool lumiereAmbiante{ true };
 	bool lumiereDirectionnelle{ true };
