@@ -205,7 +205,7 @@ namespace ui
 
             if (connectionState_)
             {
-                FonctionsNatives.joinMap(mapId_);
+                FonctionsNatives.joinMap(mapId_, passwordBox.Text, passwordBox.Text.Length);
             }
         }
 
@@ -226,7 +226,7 @@ namespace ui
 
             if (connectionState_)
             {
-                FonctionsNatives.joinMap(mapId_);
+                FonctionsNatives.joinMap(mapId_, passwordBox.Text, passwordBox.Text.Length);
             }
         }
 
@@ -264,7 +264,7 @@ namespace ui
                 //Mettre a jour info
                 confidentiality_ = false;
                 privacyLabel.Text = "Publique";
-                FonctionsNatives.changeMapPermission(mapId_, (char)0, null, 0);
+                FonctionsNatives.changeMapPermission(mapId_, 'o', null, 0);
             }
             //Change to private
             else if (!confidentiality_ && privateCheckBox.Checked)
@@ -342,7 +342,7 @@ namespace ui
                 return;
             }
 
-            FonctionsNatives.changeMapPermission(mapId_, (char)1, newPasswordBox.Text, newPasswordBox.TextLength);
+            FonctionsNatives.changeMapPermission(mapId_, 'c', newPasswordBox.Text, newPasswordBox.TextLength);
             newPasswordBox.Clear();
 
             privateSettings();

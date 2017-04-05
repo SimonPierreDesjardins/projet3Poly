@@ -397,7 +397,7 @@ void MapSystem::HandleMapPermissionChange(User * user, const std::string & messa
 		}
 
 		// tell user everything went as planned
-		user->ForwardMessage(reply);
+		broadcastMessage(reply);
 	}
 }
 
