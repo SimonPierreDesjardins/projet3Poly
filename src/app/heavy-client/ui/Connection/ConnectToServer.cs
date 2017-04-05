@@ -225,16 +225,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void createAndConnectNewUser()
         {
+            existingAccountWarningLabel.Visible = false;
+            newAccountWarningLabel.Visible = false;
+
             FonctionsNatives.createProfile(newAccountTextBox.Text);
-            FonctionsNatives.authenticate(newAccountTextBox.Text);
-
             parent_.userName = newAccountTextBox.Text;
-            goBackToMainMenu();
-
-            parent_.viewPort.Controls.Add(parent_.userChat);
-            parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width, parent_.viewPort.Height - parent_.userChat.Height);
-            parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-            parent_.userChat.BringToFront();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -315,15 +310,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void connectExistingUser()
         {
+            existingAccountWarningLabel.Visible = false;
+            newAccountWarningLabel.Visible = false;
+
             FonctionsNatives.authenticate(ExistingAccountTextBox.Text);
-
-            parent_.userName = newAccountTextBox.Text;
-            goBackToMainMenu();
-
-            parent_.viewPort.Controls.Add(parent_.userChat);
-            parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width, parent_.viewPort.Height - parent_.userChat.Height);
-            parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-            parent_.userChat.BringToFront();
+            parent_.userName = ExistingAccountTextBox.Text;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -386,6 +377,45 @@ namespace ui
 
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
+        }
+
+        private void userConnectionSuccess()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                goBackToMainMenu();
+
+                parent_.viewPort.Controls.Add(parent_.userChat);
+                parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width, parent_.viewPort.Height - parent_.userChat.Height);
+                parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                parent_.userChat.BringToFront();
+            });
+        }
+
+        private void userAlreadyExists()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                newAccountWarningLabel.Text = "Un utilisateur avec ce nom exist déjà";
+                newAccountWarningLabel.Visible = true;
+                parent_.userName = null;
+            });
+        }
+
+        private void userAuthFail()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                existingAccountWarningLabel.Text = "Cet utilisateur n'existe pas";
+                existingAccountWarningLabel.Visible = true;
+                parent_.userName = null;
+            });
+        }
+
+        private void userAlreadyConnected()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                existingAccountWarningLabel.Text = "Un utilisateur avec ce nom est déjà connecté";
+                existingAccountWarningLabel.Visible = true;
+                parent_.userName = null;
+            });
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -530,7 +560,31 @@ namespace ui
         private CallbackAuthentification authenticationInstance;
         private void AuthentificationHandler(int action)
         {
-            // Do something...
+            switch(action)
+            {
+                case (int)AuthenticationAction.Authentication.CREATION_SUCCESS:
+                    FonctionsNatives.authenticate(newAccountTextBox.Text);
+                    break;
+
+                case (int)AuthenticationAction.Authentication.NEW_ALREADY_EXIST:
+                    userAlreadyExists();
+                    break;
+
+                case (int)AuthenticationAction.Authentication.AUTEHNTIFICATION_SUCCESS:
+                    userConnectionSuccess();
+                    break;
+
+                case (int)AuthenticationAction.Authentication.EXISTING_ALREADY_CONNECTED:
+                    userAlreadyConnected();
+                    break;
+
+                case (int)AuthenticationAction.Authentication.EXISTING_FAIL:
+                    userAuthFail();
+                    break;
+
+                default:
+                    break;
+            }
 
         }
 
