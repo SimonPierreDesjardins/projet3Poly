@@ -5,8 +5,6 @@
 ///
 ////////////////////////////////////////////////
 using System;
-using System.Windows.Forms;
-using ModeEnum;
 using System.Drawing;
 
 namespace ui

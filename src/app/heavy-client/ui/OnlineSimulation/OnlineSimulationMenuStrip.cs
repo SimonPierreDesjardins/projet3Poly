@@ -5,8 +5,6 @@
 ///
 ////////////////////////////////////////////////
 using System;
-using System.Windows.Forms;
-using ModeEnum;
 
 namespace ui
 {

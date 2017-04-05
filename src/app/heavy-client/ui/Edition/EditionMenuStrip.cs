@@ -6,7 +6,6 @@
 ////////////////////////////////////////////////
 using System;
 using System.Windows.Forms;
-using ModeEnum;
 using System.Drawing;
 
 namespace ui
@@ -208,7 +207,7 @@ namespace ui
             parent_.viewPort.Controls.Add(parent_.testMenuStrip);
             parent_.testMenuStrip.Dock = DockStyle.Top;
             
-            FonctionsNatives.assignerMode(Mode.TEST);
+            FonctionsNatives.assignerMode(ModeEnum.Mode.TEST);
         }
 
         ////////////////////////////////////////////////////////////////////////
