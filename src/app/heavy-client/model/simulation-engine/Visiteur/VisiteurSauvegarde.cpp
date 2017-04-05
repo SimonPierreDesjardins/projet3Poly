@@ -219,9 +219,7 @@ void VisiteurSauvegarde::visiter(NoeudJonction* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
 {
-	writer->StartObject();
-	noeud->toJson(*writer);
-	writer->EndObject();
+
 }
 
 ////////////////////////////////////////////////////////////////////////

@@ -371,7 +371,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 ////////////////////////////////////////////////////////////////////////
 bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 {
-	if (teleporteur == nullptr) return false;
+	/*if (teleporteur == nullptr) return false;
 	RectangleEnglobant* rectangle = teleporteur->obtenirFormeEnglobante();
 	bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
 	bool enCollision = rectangle->obtenirEnCollision();
@@ -421,7 +421,7 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 		mettreAJourFormeEnglobante();
 		teleportationFaite_ = true;
 	}
-
+*/
 	return false;
 }
 
@@ -945,6 +945,75 @@ void NoeudRobot::initialisationCouleurs(int* roues, int* modele)
 	roueDroite_->initialisationCouleurs(roues);
 	roueGauche_->initialisationCouleurs(roues);
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudTeleporteur* NoeudRobot::getTeleporteurCourant()
+///
+/// Cette fonction retourne teleporteur courant
+///
+/// @param[in]
+///
+/// @return teleporteur courant
+///
+////////////////////////////////////////////////////////////////////////
+NoeudTeleporteur* NoeudRobot::getTeleporteurCourant()
+{
+
+	return teleporteurCourant_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::setTeleporteurCourant(NoeudTeleporteur* teleporteur)
+///
+/// Cette fonction set le teleporteur courant
+///
+/// @param[in] teleporteur courant
+///
+/// @return 
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::setTeleporteurCourant(NoeudTeleporteur* teleporteur)
+{
+
+	teleporteurCourant_ = teleporteur;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool NoeudRobot::getTeleportationFaite()
+///
+/// Cette fonction retourne si la teleportation a ete faite
+///
+/// @param[in]
+///
+/// @return teleportationFaite
+///
+////////////////////////////////////////////////////////////////////////
+bool NoeudRobot::getTeleportationFaite()
+{
+
+	return teleportationFaite_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::setTeleportationFaite(bool teleportationFaite);
+///
+/// Cette fonction set si la teleportation a ete faite
+///
+/// @param[in] teleportationFaite
+///
+/// @return 
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::setTeleportationFaite(bool teleportationFaite)
+{
+
+	teleportationFaite_ = teleportationFaite;
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -51,6 +51,7 @@ void MapSession::createServerEntity(const PhysicsComponent& properties, uint8_t 
 
 	NoeudAbstrait* parent = itParent->second;
 	std::shared_ptr<NoeudAbstrait> newEntity = entityTree_->creerNoeud((EntityType)(type));
+	if (!newEntity) return;
 	parent->ajouter(newEntity);
 	PhysicsComponent& physics = newEntity->getPhysicsComponent();
 	physics.absolutePosition = properties.absolutePosition;
