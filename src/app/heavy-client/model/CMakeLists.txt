@@ -313,8 +313,8 @@ source_group("simulation-engine\\user-profile"
              REGULAR_EXPRESSION 
              simulation-engine/ProfilUtilisateur/*)
 
-# Compiler les fichiers sources dans une dll
-add_library(model SHARED
+# Compiler l'engin dans une librairie statique
+add_library(simulation_engine
     ${AFFICHAGE_TEXTE_SRC}
     ${ARBRE_SRC}
     ${NOEUDS_SRC}
@@ -322,23 +322,26 @@ add_library(model SHARED
     ${CONFIGURATION_SRC}
     ${ROBOT_CONTROL_SRC}
     ${ENGIN_SON_SRC}
-    ${INTERFACE_SRC}
     ${LUMIERE_SRC}
-    ${MACHINE_A_ETATS_SRC}
-    ${MODES_SRC}
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
+    ${SIMULATION_ENGINE_SRC}
+)
+
+# Compiler les fichiers sources dans une dll
+add_library(model SHARED
+    ${MACHINE_A_ETATS_SRC}
+    ${MODES_SRC}
     ${EVENT_HANDLER_SRC}
 	${UI_INTERFACE_SRC}
     ${MAP_SESSION_SRC}
 	${CLIENT_NETWORK_SRC}
 	${MODEL_SRC}
-    ${SIMULATION_ENGINE_SRC}
     CMakelists.txt
 )
 
 # Linker les librairies externes avec la dll
-target_link_libraries(model util networkUtils ${EXTERNAL_LIBRARIES})
+target_link_libraries(model util networkUtils simulation_engine ${EXTERNAL_LIBRARIES})
 
 # Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew et ftgl)
 target_compile_definitions(model 
@@ -347,4 +350,5 @@ target_compile_definitions(model
     _USRDLL 
     FTGL_LIBRARY_STATIC)
 
+set_property(TARGET simulation_engine PROPERTY FOLDER "app/heavy-client")
 set_property(TARGET model PROPERTY FOLDER "app/heavy-client")
