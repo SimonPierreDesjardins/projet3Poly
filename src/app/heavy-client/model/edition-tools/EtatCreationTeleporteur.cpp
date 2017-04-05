@@ -13,6 +13,7 @@
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "glm\glm.hpp"
+#include "NoeudPaireTeleporteurs.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -87,6 +88,9 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
+			std::shared_ptr<NoeudAbstrait> paireTeleporteur = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PAIRTELEPORT);
+			arbre_->chercher(0)->ajouter(paireTeleporteur);
+			paireTeleporteur->ajouter(teleporteur_);
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
 			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
 			teleporteur_->assignerTeleporteur(nullptr);
@@ -94,7 +98,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 
 			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
-				arbre_->chercher("table")->effacer(teleporteur_);
+				arbre_->chercher("table")->effacer(teleporteur_.get());
 				teleporteur_ = nullptr;
 				enCreation_ = false;
 				ancienTeleporteur_ = nullptr;

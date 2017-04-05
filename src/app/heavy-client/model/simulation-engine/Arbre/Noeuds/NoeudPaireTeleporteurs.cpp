@@ -1,0 +1,52 @@
+////////////////////////////////////////////////
+/// @file   NoeudPaireTeleporteurs.cpp
+/// @author DGI-2990
+/// @date   2007-01-25
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+////////////////////////////////////////////////
+
+#include "NoeudPaireTeleporteurs.h"
+#include <cassert>
+
+////////////////////////////////////////////////////////////////////////
+//
+// @fn NoeudPaireTeleporteurs::NoeudPaireTeleporteurs(const std::string& type)
+//
+// Ne fait qu'appeler la version de la classe de base.
+//
+// @param[in] id				 : L'identifiant du noeud.
+// @param[in] type               : Le type du noeud.
+//
+// @return Aucune (constructeur).
+//
+////////////////////////////////////////////////////////////////////////
+NoeudPaireTeleporteurs::NoeudPaireTeleporteurs(uint32_t id, const std::string& type)
+	: NoeudComposite{ id, type }
+{
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudComposite::~NoeudComposite()
+///
+/// Destructeur qui détruit tous les enfants du noeud.
+///
+/// @return Aucune (destructeur).
+///
+////////////////////////////////////////////////////////////////////////
+NoeudPaireTeleporteurs::~NoeudPaireTeleporteurs()
+{
+	//detruire ses enfants;
+}
+
+
+
+
+
+
+
+////////////////////////////////////////////////
+/// @}
+////////////////////////////////////////////////

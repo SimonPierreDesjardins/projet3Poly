@@ -42,7 +42,7 @@ private:
 	std::unique_ptr<VisiteurVerificationQuad> visiteurVerificationQuad_{ nullptr };
 	int compteurTeleporteur_;
 	bool enCreation_{false};
-	NoeudAbstrait* teleporteur_;
+	std::shared_ptr<NoeudAbstrait> teleporteur_;
 	NoeudAbstrait* ancienTeleporteur_;
 	NoeudAbstrait* teleporteurTemp;
 };

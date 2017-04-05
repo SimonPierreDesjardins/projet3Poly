@@ -77,8 +77,12 @@ void VisiteurCreationTeleporteur::visiter(NoeudTable* noeud)
 	PhysicsComponent& physics = nouveauNoeud->getPhysicsComponent();
 	physics.relativePosition = positionRelative_;
 	physics.absolutePosition = positionRelative_;
-	noeud->ajouter(nouveauNoeud);
-	referenceNoeud_ = nouveauNoeud.get();
+	referenceNoeud_ = nouveauNoeud;
+}
+
+std::shared_ptr<NoeudAbstrait> VisiteurCreationTeleporteur::obtenirReferenceNoeud()
+{
+	return referenceNoeud_;
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
