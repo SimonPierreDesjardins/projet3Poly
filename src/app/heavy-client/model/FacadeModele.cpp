@@ -231,12 +231,14 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 {
 	switch (mode)
 	{
-	case EDITION:
+	case ONLINE_EDITION:
 		mode_ = std::make_unique<ModeEdition>(&engine_, mapSession);
+		typeModeCourant_ = ONLINE_EDITION;
 		break;
 
-	case SIMULATION:
+	case ONLINE_SIMULATION:
 		mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSession);
+		typeModeCourant_ = ONLINE_SIMULATION;
 		break;
 	}
 	continuerAffichage();
@@ -258,53 +260,59 @@ void FacadeModele::assignerMode(Mode mode)
 		case MENU_PRINCIPAL:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
-			stopAffichage();
+			typeModeCourant_ = MENU_PRINCIPAL;
 			break;
 
-		case SIMULATION:
+		case OFFLINE_SIMULATION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
+			typeModeCourant_ = OFFLINE_SIMULATION;
 			break;
 
-		case EDITION:
+		case OFFLINE_EDITION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeEdition>(&engine_, mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
+			typeModeCourant_ = OFFLINE_EDITION;
 			break;
 
 		case CONFIGURE:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeConfigure>();
+			typeModeCourant_ = CONFIGURE;
 			break;
 
 		case TEST:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
+			typeModeCourant_ = TEST;
 			break;
 
 		case PERSONALIZE:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePersonalize>(&engine_, &profil_);
-			continuerAffichage();
+			typeModeCourant_ = PERSONALIZE;
 			break;
 
 		case TUTORIAL_EDITION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeTutorialEdition>(mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
+			typeModeCourant_ = TUTORIAL_EDITION;
 			break;
 		
 		case PIECES:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePieces>(&engine_, &profil_);
-			continuerAffichage();
+			typeModeCourant_ = PIECES;
 			break;
 
 		default:
 			break;
 	}
+}
+
+int FacadeModele::getModeType()
+{
+	return typeModeCourant_;
 }
 
 

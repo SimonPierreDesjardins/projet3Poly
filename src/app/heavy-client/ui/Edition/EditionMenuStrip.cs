@@ -67,9 +67,11 @@ namespace ui
             DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                FonctionsNatives.nouvelleTable();
-                enregistrerToolStripMenuItem.Enabled = false;
-                parent_.verificationDuNombreElementChoisi();
+                parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
+                parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+                parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
+                parent_.goOfflineEdition(parent_.PathToDefaultZone_);
+                //FonctionsNatives.nouvelleTable();
             }
         }
 
@@ -106,9 +108,10 @@ namespace ui
             DialogResult dialogresult = explorateur.ShowDialog();
             if (dialogresult == DialogResult.OK)
             {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
-                FonctionsNatives.charger();
-                enregistrerToolStripMenuItem.Enabled = true;
+                parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
+                parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+                parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
+                parent_.goOfflineEdition(explorateur.cheminFichier);
             }
 
             explorateur.Dispose();

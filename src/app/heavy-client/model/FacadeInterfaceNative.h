@@ -23,11 +23,13 @@ extern "C"
 	__declspec(dllexport) void charger();
 	__declspec(dllexport) void assignerCheminFichierZone(char* chemin);
 	__declspec(dllexport) void obtenirCheminFichierZoneDefaut(char* chemin, int longueur);
+	__declspec(dllexport) void obtenirCheminFichierZone(char* chemin, int longueur);
 	__declspec(dllexport) int  obtenirAffichagesParSeconde();
 	__declspec(dllexport) bool executerTests();
 
 	__declspec(dllexport) void assignerMode(int mode);
 	__declspec(dllexport) int obtenirMode();
+	__declspec(dllexport) int getModeType();
 
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	__declspec(dllexport) bool peutRafraichir();
@@ -135,12 +137,12 @@ extern "C"
 	__declspec(dllexport) void __cdecl changeMapPermission(int mapId, char permission, char* password, int size);
 	__declspec(dllexport) void __cdecl joinMap(int mapId, char*password, int size);
 	__declspec(dllexport) void __cdecl leaveMap();
-	typedef int(__stdcall * CallbackMapConnection)(int action);
+	typedef int(__stdcall * CallbackMapConnection)(int mapId, int action);
 	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn);
-	__declspec(dllexport) void __cdecl mapConnect(int action);
-	typedef int(__stdcall * CallbackMapPermission)(int action);
+	__declspec(dllexport) void __cdecl mapConnect(int mapId, int action);
+	typedef int(__stdcall * CallbackMapPermission)(int mapId, int action);
 	__declspec(dllexport) void __cdecl SetCallbackForMapPermission(CallbackMapPermission fn);
-	__declspec(dllexport) void __cdecl mapPermission(int action);
+	__declspec(dllexport) void __cdecl mapPermission(int mapId, int action);
 
 	//Edition Tutorial
 	typedef int(__stdcall * Callback)();

@@ -282,7 +282,7 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 			std::string password = message.substr(Networking::MessageStandard::DATA_START + 4);
 			if (password != mapIt->second.Info->password) {
 				// send error message
-				response[10] = 'd';
+				response[6] = 'd';
 				user->ForwardMessage(response);
 				return;
 			}

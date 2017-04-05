@@ -34,7 +34,7 @@ ModeEdition::ModeEdition(engine::SimulationEngine* engine, client_network::MapSe
 	: OnlineMapMode(mapSession),
 	  visiteurSuppression_(mapSession)
 {
-	typeMode_ = EDITION;
+	typeMode_ = OFFLINE_EDITION;
 	assignerEtat(SELECTION);
 
 	engine->setEnvironnement(2);
