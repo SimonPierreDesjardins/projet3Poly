@@ -316,8 +316,11 @@ add_library(simulation_engine
     ${SIMULATION_ENGINE_SRC}
 )
 
+target_link_libraries(simulation_engine util)
+
 #inclusion permettant aux utilisateurs de la librairie d'inclure dependances
 target_include_directories(simulation_engine PUBLIC
+    util
     simulation-engine
     simulation-engine/AffichageTexte
     simulation-engine/ProfilUtilisateur
@@ -348,7 +351,7 @@ add_library(model SHARED
 )
 
 # Linker les librairies externes avec la dll
-target_link_libraries(model util networkUtils simulation_engine ${EXTERNAL_LIBRARIES})
+target_link_libraries(model util networkUtils simulation_engine)
 
 # Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew et ftgl)
 target_compile_definitions(model 
