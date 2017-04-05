@@ -316,11 +316,11 @@ bool VisiteurDetectionRobot::collisionTeleporteur(NoeudTeleporteur* teleporteur)
 			{
 				return true;
 			}
-			else if (table->chercher(i)->obtenirNom() != "ligneNoire" && table->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
+			else if (table->chercher(i)->obtenirNom() == "robot" && ((NoeudRobot*)table->chercher(i))->getBoundingBox().calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
 			{
 				return true;
 			}
-			else if (table->chercher(i)->obtenirNom() != "robot" && ((NoeudRobot*)table->chercher(i))->getBoundingBox().calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
+			else if (table->chercher(i)->obtenirNom() != "ligneNoire" && table->chercher(i)->obtenirNom() != "robot"  && table->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
 			{
 				return true;
 			}

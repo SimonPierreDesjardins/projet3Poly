@@ -113,12 +113,12 @@ void NoeudTeleporteur::mettreAJourFormeEnglobante()
 ////////////////////////////////////////////////////////////////////////
 NoeudTeleporteur::~NoeudTeleporteur()
 {
-	if (teleporteur_ != nullptr && !teleporteur_->estSelectionne())
+	/*if (teleporteur_ != nullptr && !teleporteur_->estSelectionne())
 	{
 		teleporteur_->assignerTeleporteur(nullptr);
 		teleporteur_->assignerSelection(true); //permet de supprimer le noeud de la meme paire
 		
-	}
+	}*/
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -302,6 +302,8 @@ void NoeudTeleporteur::assignerTeleporteur(NoeudAbstrait* teleporteur)
 ////////////////////////////////////////////////////////////////////////
 NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
 {
+	//if (!teleporteur_)
+		// ALler chercher le teleporteur a partir du parent
 	return teleporteur_;
 }
 
