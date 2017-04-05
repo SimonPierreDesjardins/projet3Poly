@@ -88,6 +88,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
+			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
 			teleporteur_->assignerTeleporteur(nullptr);
 
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
@@ -108,6 +109,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
+			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 			ancienTeleporteur_->assignerTeleporteur(teleporteur_);
 			teleporteur_->assignerTeleporteur(ancienTeleporteur_);

@@ -103,6 +103,17 @@ public:
 
 	virtual void initialisationCouleurs(int* roues, int* modele);
 
+	void reinitialiserPosition();
+
+	virtual void mettreAJourFormeEnglobante();
+
+	NoeudTeleporteur* getTeleporteurCourant();
+	void setTeleporteurCourant(NoeudTeleporteur* teleporteur);
+	bool getTeleportationFaite();
+	void setTeleportationFaite(bool teleportationFaite);
+
+
+
 
 protected:
 	//Vitesse des moteurs du robot
@@ -137,8 +148,7 @@ protected:
 
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
-    void reinitialiserPosition();
-    virtual void mettreAJourFormeEnglobante();
+  
     std::mutex* mutexControleRobot_{ nullptr };
 
 	bool estEnCollision_{ false };
