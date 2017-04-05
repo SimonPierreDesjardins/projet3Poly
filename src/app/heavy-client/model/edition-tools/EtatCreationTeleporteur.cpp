@@ -90,7 +90,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
 			std::shared_ptr<NoeudAbstrait> paireTeleporteur = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PAIRTELEPORT);
 			arbre_->chercher(0)->ajouter(paireTeleporteur);
-			paireTeleporteur->ajouter(teleporteur_);
+			paireTeleporteur->ajouter(teleporteur_); /////RENDU ICI POUR LES TP
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
 			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
 			teleporteur_->assignerTeleporteur(nullptr);
