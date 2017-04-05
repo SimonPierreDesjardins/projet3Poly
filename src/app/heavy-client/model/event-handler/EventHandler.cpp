@@ -61,7 +61,6 @@ void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 			if (userId == networkManager_->getUserId())
 			{
 				currentSession_ = mapSession;
-				FacadeModele::obtenirInstance()->setOnlineMapMode((Mode)(mapSession->info.mapType), mapSession);
 			}
 		}
 	}

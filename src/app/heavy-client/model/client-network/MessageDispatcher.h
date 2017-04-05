@@ -57,6 +57,7 @@ private:
 
 	// User sustem message
 	void handleUserAuthentificationConfirmation(const std::string& message);
+	void handleUserCreationConfirmation(const std::string& message);
 	void handleUserSystemMessage(const std::string& message);
 
 	// Map systemMessage

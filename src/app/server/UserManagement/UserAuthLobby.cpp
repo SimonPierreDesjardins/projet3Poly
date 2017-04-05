@@ -83,7 +83,7 @@ void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string m
 		User* connectingUser = _users.at(username);
 		if (_connectedUserList.count(connectingUser->Info.GetId()) > 0) {
 			// user already connected
-			reply += 'd';
+			reply += 'c';
 			wrapper->GetConnection()->SendData(Networking::MessageStandard::AddMessageLengthHeader(reply));
 		}
 		else {

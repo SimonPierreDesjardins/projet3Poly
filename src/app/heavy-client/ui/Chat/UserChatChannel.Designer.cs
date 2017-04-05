@@ -30,43 +30,43 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UserChatChannel));
             this.panelForButtons = new System.Windows.Forms.Panel();
-            this.panelChat = new System.Windows.Forms.Panel();
-            this.chatTextBox = new System.Windows.Forms.TextBox();
-            this.chatListBox = new System.Windows.Forms.ListBox();
-            this.userListBox = new System.Windows.Forms.ListBox();
-            this.ChannelListBox = new System.Windows.Forms.ListBox();
-            this.panelChannel = new System.Windows.Forms.Panel();
-            this.warningLabel = new System.Windows.Forms.Label();
-            this.addChannelTextBox = new System.Windows.Forms.TextBox();
-            this.panelUser = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.panel = new System.Windows.Forms.Panel();
             this.channelButton = new ui.PanelButton();
             this.channelPictureBox = new System.Windows.Forms.PictureBox();
             this.userButton = new ui.PanelButton();
             this.userPictureBox = new System.Windows.Forms.PictureBox();
+            this.panelChat = new System.Windows.Forms.Panel();
+            this.chatTextBox = new System.Windows.Forms.TextBox();
             this.sendButton = new ui.PanelButton();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.chatListBox = new System.Windows.Forms.ListBox();
+            this.userListBox = new System.Windows.Forms.ListBox();
+            this.ChannelListBox = new System.Windows.Forms.ListBox();
+            this.panelChannel = new System.Windows.Forms.Panel();
             this.createButton = new ui.PanelButton();
             this.customLabel3 = new ui.CustomLabel();
+            this.warningLabel = new System.Windows.Forms.Label();
+            this.addChannelTextBox = new System.Windows.Forms.TextBox();
             this.joinButton = new ui.PanelButton();
             this.customLabel2 = new ui.CustomLabel();
             this.leaveButton = new ui.PanelButton();
             this.customLabel1 = new ui.CustomLabel();
+            this.panelUser = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel = new System.Windows.Forms.Panel();
             this.panelForButtons.SuspendLayout();
-            this.panelChat.SuspendLayout();
-            this.panelChannel.SuspendLayout();
-            this.panelUser.SuspendLayout();
-            this.panel.SuspendLayout();
             this.channelButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.channelPictureBox)).BeginInit();
             this.userButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userPictureBox)).BeginInit();
+            this.panelChat.SuspendLayout();
             this.sendButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            this.panelChannel.SuspendLayout();
             this.createButton.SuspendLayout();
             this.joinButton.SuspendLayout();
             this.leaveButton.SuspendLayout();
+            this.panelUser.SuspendLayout();
+            this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelForButtons
@@ -78,6 +78,48 @@
             this.panelForButtons.Name = "panelForButtons";
             this.panelForButtons.Size = new System.Drawing.Size(20, 239);
             this.panelForButtons.TabIndex = 13;
+            // 
+            // channelButton
+            // 
+            this.channelButton.BackColor = System.Drawing.Color.Transparent;
+            this.channelButton.Controls.Add(this.channelPictureBox);
+            this.channelButton.Location = new System.Drawing.Point(0, 120);
+            this.channelButton.Name = "channelButton";
+            this.channelButton.Size = new System.Drawing.Size(20, 119);
+            this.channelButton.TabIndex = 1;
+            this.channelButton.Click += new System.EventHandler(this.channelButton_Click);
+            // 
+            // channelPictureBox
+            // 
+            this.channelPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.channelPictureBox.Enabled = false;
+            this.channelPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("channelPictureBox.Image")));
+            this.channelPictureBox.Location = new System.Drawing.Point(2, 55);
+            this.channelPictureBox.Name = "channelPictureBox";
+            this.channelPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.channelPictureBox.TabIndex = 0;
+            this.channelPictureBox.TabStop = false;
+            // 
+            // userButton
+            // 
+            this.userButton.BackColor = System.Drawing.Color.Transparent;
+            this.userButton.Controls.Add(this.userPictureBox);
+            this.userButton.Location = new System.Drawing.Point(0, 0);
+            this.userButton.Name = "userButton";
+            this.userButton.Size = new System.Drawing.Size(20, 119);
+            this.userButton.TabIndex = 0;
+            this.userButton.Click += new System.EventHandler(this.userButton_Click);
+            // 
+            // userPictureBox
+            // 
+            this.userPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.userPictureBox.Enabled = false;
+            this.userPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("userPictureBox.Image")));
+            this.userPictureBox.Location = new System.Drawing.Point(2, 55);
+            this.userPictureBox.Name = "userPictureBox";
+            this.userPictureBox.Size = new System.Drawing.Size(16, 16);
+            this.userPictureBox.TabIndex = 0;
+            this.userPictureBox.TabStop = false;
             // 
             // panelChat
             // 
@@ -99,7 +141,30 @@
             this.chatTextBox.Size = new System.Drawing.Size(175, 20);
             this.chatTextBox.TabIndex = 15;
             this.chatTextBox.Enter += new System.EventHandler(this.chatTextBox_Enter);
+            this.chatTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.chatTextBox_KeyPress);
             this.chatTextBox.Leave += new System.EventHandler(this.chatTextBox_Leave);
+            // 
+            // sendButton
+            // 
+            this.sendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.sendButton.BackColor = System.Drawing.Color.Transparent;
+            this.sendButton.Controls.Add(this.pictureBox3);
+            this.sendButton.Location = new System.Drawing.Point(196, 201);
+            this.sendButton.Name = "sendButton";
+            this.sendButton.Size = new System.Drawing.Size(26, 26);
+            this.sendButton.TabIndex = 14;
+            this.sendButton.Click += new System.EventHandler(this.sendButton_Click_1);
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox3.Enabled = false;
+            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
+            this.pictureBox3.Location = new System.Drawing.Point(1, 1);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
             // 
             // chatListBox
             // 
@@ -156,6 +221,27 @@
             this.panelChannel.TabIndex = 19;
             this.panelChannel.VisibleChanged += new System.EventHandler(this.panelChannel_VisibleChanged);
             // 
+            // createButton
+            // 
+            this.createButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.createButton.Controls.Add(this.customLabel3);
+            this.createButton.Location = new System.Drawing.Point(164, 197);
+            this.createButton.Name = "createButton";
+            this.createButton.Size = new System.Drawing.Size(58, 20);
+            this.createButton.TabIndex = 23;
+            this.createButton.Click += new System.EventHandler(this.createButton_Click);
+            // 
+            // customLabel3
+            // 
+            this.customLabel3.AutoSize = true;
+            this.customLabel3.Font = new System.Drawing.Font("Century", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.customLabel3.ForeColor = System.Drawing.Color.Silver;
+            this.customLabel3.Location = new System.Drawing.Point(15, 2);
+            this.customLabel3.Name = "customLabel3";
+            this.customLabel3.Size = new System.Drawing.Size(37, 15);
+            this.customLabel3.TabIndex = 0;
+            this.customLabel3.Text = "Créer";
+            // 
             // warningLabel
             // 
             this.warningLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -177,125 +263,8 @@
             this.addChannelTextBox.Size = new System.Drawing.Size(150, 20);
             this.addChannelTextBox.TabIndex = 21;
             this.addChannelTextBox.Enter += new System.EventHandler(this.addChannelTextBox_Enter);
+            this.addChannelTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.addChannelTextBox_KeyPress);
             this.addChannelTextBox.Leave += new System.EventHandler(this.addChannelTextBox_Leave);
-            this.addChannelTextBox.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.addChannelTextBox_PreviewKeyDown);
-            // 
-            // panelUser
-            // 
-            this.panelUser.Controls.Add(this.label1);
-            this.panelUser.Controls.Add(this.userListBox);
-            this.panelUser.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelUser.Location = new System.Drawing.Point(0, 0);
-            this.panelUser.Name = "panelUser";
-            this.panelUser.Size = new System.Drawing.Size(257, 239);
-            this.panelUser.TabIndex = 20;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Silver;
-            this.label1.Location = new System.Drawing.Point(4, 7);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(154, 21);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "Liste d\'utilisateur(s)";
-            // 
-            // panel
-            // 
-            this.panel.Controls.Add(this.panelChannel);
-            this.panel.Controls.Add(this.panelChat);
-            this.panel.Controls.Add(this.panelUser);
-            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel.Location = new System.Drawing.Point(0, 0);
-            this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(257, 239);
-            this.panel.TabIndex = 21;
-            // 
-            // channelButton
-            // 
-            this.channelButton.BackColor = System.Drawing.Color.Transparent;
-            this.channelButton.Controls.Add(this.channelPictureBox);
-            this.channelButton.Location = new System.Drawing.Point(0, 120);
-            this.channelButton.Name = "channelButton";
-            this.channelButton.Size = new System.Drawing.Size(20, 119);
-            this.channelButton.TabIndex = 1;
-            this.channelButton.Click += new System.EventHandler(this.channelButton_Click);
-            // 
-            // channelPictureBox
-            // 
-            this.channelPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.channelPictureBox.Enabled = false;
-            this.channelPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("channelPictureBox.Image")));
-            this.channelPictureBox.Location = new System.Drawing.Point(2, 55);
-            this.channelPictureBox.Name = "channelPictureBox";
-            this.channelPictureBox.Size = new System.Drawing.Size(16, 16);
-            this.channelPictureBox.TabIndex = 0;
-            this.channelPictureBox.TabStop = false;
-            // 
-            // userButton
-            // 
-            this.userButton.BackColor = System.Drawing.Color.Transparent;
-            this.userButton.Controls.Add(this.userPictureBox);
-            this.userButton.Location = new System.Drawing.Point(0, 0);
-            this.userButton.Name = "userButton";
-            this.userButton.Size = new System.Drawing.Size(20, 119);
-            this.userButton.TabIndex = 0;
-            this.userButton.Click += new System.EventHandler(this.userButton_Click);
-            // 
-            // userPictureBox
-            // 
-            this.userPictureBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.userPictureBox.Enabled = false;
-            this.userPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("userPictureBox.Image")));
-            this.userPictureBox.Location = new System.Drawing.Point(2, 55);
-            this.userPictureBox.Name = "userPictureBox";
-            this.userPictureBox.Size = new System.Drawing.Size(16, 16);
-            this.userPictureBox.TabIndex = 0;
-            this.userPictureBox.TabStop = false;
-            // 
-            // sendButton
-            // 
-            this.sendButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.sendButton.BackColor = System.Drawing.Color.Transparent;
-            this.sendButton.Controls.Add(this.pictureBox3);
-            this.sendButton.Location = new System.Drawing.Point(196, 201);
-            this.sendButton.Name = "sendButton";
-            this.sendButton.Size = new System.Drawing.Size(26, 26);
-            this.sendButton.TabIndex = 14;
-            this.sendButton.Click += new System.EventHandler(this.sendButton_Click_1);
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox3.Enabled = false;
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(1, 1);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(24, 24);
-            this.pictureBox3.TabIndex = 0;
-            this.pictureBox3.TabStop = false;
-            // 
-            // createButton
-            // 
-            this.createButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.createButton.Controls.Add(this.customLabel3);
-            this.createButton.Location = new System.Drawing.Point(164, 197);
-            this.createButton.Name = "createButton";
-            this.createButton.Size = new System.Drawing.Size(58, 20);
-            this.createButton.TabIndex = 23;
-            this.createButton.Click += new System.EventHandler(this.createButton_Click);
-            // 
-            // customLabel3
-            // 
-            this.customLabel3.AutoSize = true;
-            this.customLabel3.Font = new System.Drawing.Font("Century", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.customLabel3.ForeColor = System.Drawing.Color.Silver;
-            this.customLabel3.Location = new System.Drawing.Point(15, 2);
-            this.customLabel3.Name = "customLabel3";
-            this.customLabel3.Size = new System.Drawing.Size(37, 15);
-            this.customLabel3.TabIndex = 0;
-            this.customLabel3.Text = "Créer";
             // 
             // joinButton
             // 
@@ -341,6 +310,38 @@
             this.customLabel1.TabIndex = 0;
             this.customLabel1.Text = "Quitter ce canal";
             // 
+            // panelUser
+            // 
+            this.panelUser.Controls.Add(this.label1);
+            this.panelUser.Controls.Add(this.userListBox);
+            this.panelUser.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelUser.Location = new System.Drawing.Point(0, 0);
+            this.panelUser.Name = "panelUser";
+            this.panelUser.Size = new System.Drawing.Size(257, 239);
+            this.panelUser.TabIndex = 20;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.Color.Silver;
+            this.label1.Location = new System.Drawing.Point(4, 7);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(154, 21);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "Liste d\'utilisateur(s)";
+            // 
+            // panel
+            // 
+            this.panel.Controls.Add(this.panelChannel);
+            this.panel.Controls.Add(this.panelChat);
+            this.panel.Controls.Add(this.panelUser);
+            this.panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel.Location = new System.Drawing.Point(0, 0);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(257, 239);
+            this.panel.TabIndex = 21;
+            // 
             // UserChatChannel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -352,25 +353,25 @@
             this.Size = new System.Drawing.Size(257, 239);
             this.Resize += new System.EventHandler(this.UserChatChannel_Resize);
             this.panelForButtons.ResumeLayout(false);
-            this.panelChat.ResumeLayout(false);
-            this.panelChat.PerformLayout();
-            this.panelChannel.ResumeLayout(false);
-            this.panelChannel.PerformLayout();
-            this.panelUser.ResumeLayout(false);
-            this.panelUser.PerformLayout();
-            this.panel.ResumeLayout(false);
             this.channelButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.channelPictureBox)).EndInit();
             this.userButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.userPictureBox)).EndInit();
+            this.panelChat.ResumeLayout(false);
+            this.panelChat.PerformLayout();
             this.sendButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            this.panelChannel.ResumeLayout(false);
+            this.panelChannel.PerformLayout();
             this.createButton.ResumeLayout(false);
             this.createButton.PerformLayout();
             this.joinButton.ResumeLayout(false);
             this.joinButton.PerformLayout();
             this.leaveButton.ResumeLayout(false);
             this.leaveButton.PerformLayout();
+            this.panelUser.ResumeLayout(false);
+            this.panelUser.PerformLayout();
+            this.panel.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

@@ -7,9 +7,7 @@
 using System;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
-using ModeEnum;
 using System.Text;
-using System.Threading;
 using System.Drawing;
 
 namespace ui
@@ -150,7 +148,6 @@ namespace ui
         {
         }
 
-
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn public void MettreAJour(double tempsInterAffichage)
@@ -216,39 +213,39 @@ namespace ui
             switch (mode)
             {
                 //Mode Menu_Principal
-                case (int)Mode.MENU_PRINCIPAL:
+                case (int)ModeEnum.Mode.MENU_PRINCIPAL:
                     break;
 
                 //Mode Simulation
-                case (int)Mode.SIMULATION:
+                case (int)ModeEnum.Mode.SIMULATION:
                     gererToucheSimulation(keyDown);
                     break;
 
                 //Mode Edition
-                case (int)Mode.EDITION:
+                case (int)ModeEnum.Mode.EDITION:
                     gererToucheEdition(keyDown);
                     break;
 
                 //Mode Configure
-                case (int)Mode.CONFIGURE:
+                case (int)ModeEnum.Mode.CONFIGURE:
                     break;
 
                 //Mode Test
-                case (int)Mode.TEST:
+                case (int)ModeEnum.Mode.TEST:
                     gererToucheTest(keyDown);
                     break;
 
                 //Mode Personalize
-                case (int)Mode.PERSONALIZE:
+                case (int)ModeEnum.Mode.PERSONALIZE:
                     break;
 
                 //Mode Édition Tutoriel
-                case (int)Mode.TUTORIAL_EDITION:
+                case (int)ModeEnum.Mode.TUTORIAL_EDITION:
                     gererToucheEditionTutoriel(keyDown);
                     break;
 
                 //Mode Édition Tutoriel
-                case (int)Mode.PIECES:
+                case (int)ModeEnum.Mode.PIECES:
                     gererTouchePieces(keyDown);
                     break;
 
@@ -268,14 +265,20 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheEdition(IntPtr keyDown)
         {
+            EditMenuStrip edition;
+            if (viewPort.Controls.Contains(editionMenuStrip))
+                edition = editionMenuStrip;
+            else
+                edition = onlineEditionMenuStrip;
+
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    editionMenuStrip.orthoView();
+                    edition.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    editionMenuStrip.orbiteView();
+                    edition.orbiteView();
                     break;
 
                 case Constants.Key_Del:
@@ -285,10 +288,10 @@ namespace ui
                 case Constants.Key_S:
                     if (ModifierKeys.HasFlag(Keys.Control))
                     {
-                        if (editionMenuStrip.enregistrerToolStripMenuItem.Enabled)
-                            editionMenuStrip.enregistrer();
+                        if (edition.canSave())
+                            edition.enregistrer();
                         else
-                            editionMenuStrip.enregistrerSousZone();
+                            edition.enregistrerSousZone();
                     }
                     else
                         editionSideMenu.selectTool();
@@ -296,19 +299,19 @@ namespace ui
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        editionMenuStrip.goMenuPrincipal();
+                        edition.goMenuPrincipal();
                     break;
 
                 case Constants.Key_O:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        editionMenuStrip.ouvrirZone(false);
+                        edition.ouvrirZone(false);
                     else
                         editionSideMenu.teleportorObjet();
                     break;
 
                 case Constants.Key_N:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        editionMenuStrip.nouvelleZone();
+                        edition.nouvelleZone();
                     break;
 
                 case Constants.Key_D:
@@ -344,7 +347,7 @@ namespace ui
                     break;
 
                 case Constants.Key_T:
-                    editionMenuStrip.goTestMode();
+                    edition.goTestMode();
                     break;
 
                 default:
@@ -363,31 +366,38 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(IntPtr keyDown)
         {
-            if (viewPort.Controls.Contains(simulationMenuStrip.simulationTutorial))
-                return;
+            SimMenuStrip simulation;
+            if (viewPort.Controls.Contains(simulationMenuStrip))
+            {
+                simulation = simulationMenuStrip;
+                if (viewPort.Controls.Contains(simulationMenuStrip.simulationTutorial))
+                    return;
+            }
+            else
+                simulation = onlineSimulationMenuStrip;
 
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    simulationMenuStrip.orthoView();
+                    simulation.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    simulationMenuStrip.orbiteView();
+                    simulation.orbiteView();
                     break;
 
                 case Constants.Key_3:
-                    simulationMenuStrip.firstPersonView();
+                    simulation.firstPersonView();
                     break;
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        simulationMenuStrip.goMenuPrincipal();
+                        simulation.goMenuPrincipal();
                     break;
 
                  case Constants.Key_Esc:
-                    simulationMenuStrip.goIntoPause();
-                     break;
+                    simulation.goIntoPause();
+                    break;
 
                 default:
                     break;
@@ -587,11 +597,11 @@ namespace ui
         public void verificationDuNombreElementChoisi()
         {
             int mode = FonctionsNatives.obtenirMode();
-            if (!(mode == (int)Mode.EDITION || mode == (int)Mode.TUTORIAL_EDITION))
+            if (!(mode == (int)ModeEnum.Mode.EDITION || mode == (int)ModeEnum.Mode.TUTORIAL_EDITION))
                 return;
 
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            if (mode == (int)Mode.EDITION)
+            if (mode == (int)ModeEnum.Mode.EDITION)
             {
                 int nbEnfant = FonctionsNatives.obtenirNombreSelection();
                 if (nbEnfant == 1)
@@ -670,6 +680,24 @@ namespace ui
             }
         }
 
+        public void goMainMenu()
+        {
+            estEnPause = false;
+            picturePause.Visible = false;
+
+            mainMenu = new MainMenu(this);
+
+            configuration.deallocateCurrentProfilToolStrip();
+
+            mainMenu.Dock = DockStyle.Left;
+            viewPort.Controls.Add(mainMenu);
+
+            Program.peutAfficher = false;
+            viewPort.Refresh();
+
+            FonctionsNatives.assignerMode(ModeEnum.Mode.MENU_PRINCIPAL);
+        }
+
         public void goOfflineEdition()
         {
             estEnPause = false;
@@ -698,7 +726,7 @@ namespace ui
             viewPort.Refresh();
             verificationDuNombreElementChoisi();
 
-            FonctionsNatives.assignerMode(Mode.EDITION);
+            FonctionsNatives.assignerMode(ModeEnum.Mode.EDITION);
             verificationDuNombreElementChoisi();
         }
 
@@ -725,7 +753,7 @@ namespace ui
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
             Program.peutAfficher = true;
-            FonctionsNatives.assignerMode(Mode.TUTORIAL_EDITION);
+            FonctionsNatives.assignerMode(ModeEnum.Mode.TUTORIAL_EDITION);
 
 
             editionTutorielInstructions = new EditionTutorielInstructions(this);
@@ -761,8 +789,6 @@ namespace ui
 
             Program.peutAfficher = true;
             viewPort.Refresh();
-            verificationDuNombreElementChoisi();
-
             verificationDuNombreElementChoisi();
         }
 
@@ -801,7 +827,7 @@ namespace ui
 
             FonctionsNatives.assignerVueOrtho();
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-            FonctionsNatives.assignerMode(Mode.SIMULATION);
+            FonctionsNatives.assignerMode(ModeEnum.Mode.SIMULATION);
             Program.peutAfficher = true;
         }
 
@@ -906,7 +932,7 @@ namespace ui
         public static extern void animer(double temps);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void assignerMode(Mode mode);
+        public static extern void assignerMode(ModeEnum.Mode mode);
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirMode();
