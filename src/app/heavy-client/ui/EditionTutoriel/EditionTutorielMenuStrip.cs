@@ -5,8 +5,6 @@
 ///
 ////////////////////////////////////////////////
 using System;
-using System.Windows.Forms;
-using ModeEnum;
 using System.Drawing;
 
 namespace ui
@@ -34,67 +32,6 @@ namespace ui
             enregistrerToolStripMenuItem.Enabled = false;
 
             disableAllControls();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enregistrerToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'action de enregistrer
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void enregistrerToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            enregistrer();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enregistrerSousToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'action de enregistrerSous
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void enregistrerSousToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            enregistrerSousZone();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enregistrerSousZone()
-        ///
-        /// Ouvre un explorateur de fichier qui permet de sauvegarde la zone, permet uniquement à 
-        /// l'utilisateur de sauvegarder dans zones
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        override public bool enregistrerSousZone()
-        {
-            if (base.enregistrerSousZone())
-                enregistrerToolStripMenuItem.Enabled = true;
-
-            return true;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'action de retour vers le mode test
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void modeTestToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            goTestMode();
         }
 
         ////////////////////////////////////////////////////////////////////////
