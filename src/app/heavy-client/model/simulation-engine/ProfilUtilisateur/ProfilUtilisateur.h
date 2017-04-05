@@ -103,7 +103,7 @@ class ProfilUtilisateur
 		int* obtenirLimiteParametres();
 
 		void assignerCouleur(int modele, int a, int r, int g, int b);
-		float* obtenirCouleurs(int modele);
+		int* obtenirCouleurs(int modele);
 
 		bool obtenirCouleurParDefaut(int modele);
 		void setCouleurParDefaut(int modele, bool value);
@@ -207,8 +207,8 @@ class ProfilUtilisateur
 
 		std::string pathToMusic_ = "";
 
-		float couleurRobot_[4];
-		float couleurRoues_[4];
+		int couleurRobot_[4];
+		int couleurRoues_[4];
 
 		bool estDefautRoues_ = true;
 		bool estDefautRobot_ = true;

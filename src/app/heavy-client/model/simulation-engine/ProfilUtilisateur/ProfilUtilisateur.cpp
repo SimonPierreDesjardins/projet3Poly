@@ -701,18 +701,22 @@ int* ProfilUtilisateur::obtenirLimiteParametres(){
 void ProfilUtilisateur::assignerCouleur(int modele, int a, int r, int g, int b) {
 	if (modele == WHEELS)
 	{
-		couleurRoues_[0] = (float)a / (float)255;
+		/*couleurRoues_[0] = (float)a / (float)255;
 		couleurRoues_[1] = (float)r / (float)255;
 		couleurRoues_[2] = (float)g / (float)255;
 		couleurRoues_[3] = (float)b / (float)255;
-		estDefautRoues_ = false;
+		estDefautRoues_ = false;*/
+		couleurRoues_[0] = a;
+		couleurRoues_[1] = r;
+		couleurRoues_[2] = g;
+		couleurRoues_[3] = b;
 	}
 	else
 	{
-		couleurRobot_[0] = (float)a / (float)255;
-		couleurRobot_[1] = (float)r / (float)255;
-		couleurRobot_[2] = (float)g / (float)255;
-		couleurRobot_[3] = (float)b / (float)255;
+		couleurRobot_[0] = a;
+		couleurRobot_[1] = r;
+		couleurRobot_[2] = g;
+		couleurRobot_[3] = b;
 		estDefautRobot_ = false;
 	}
 }
@@ -726,7 +730,7 @@ void ProfilUtilisateur::assignerCouleur(int modele, int a, int r, int g, int b) 
 /// @return int* Pointeur sur le tableau des 
 ///
 ////////////////////////////////////////////////////////////////////////
-float* ProfilUtilisateur::obtenirCouleurs(int modele) {
+int* ProfilUtilisateur::obtenirCouleurs(int modele) {
 	if (modele == WHEELS)
 	{
 		return couleurRoues_;

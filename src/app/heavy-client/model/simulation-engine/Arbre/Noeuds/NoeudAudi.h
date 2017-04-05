@@ -49,7 +49,7 @@ public:
 
 	void setCouleurDefault(int piece, bool default);
 
-	void initialisationCouleurs(float* roues, float* modele);
+	void initialisationCouleurs(int* roues, int* modele);
 
 private:
 

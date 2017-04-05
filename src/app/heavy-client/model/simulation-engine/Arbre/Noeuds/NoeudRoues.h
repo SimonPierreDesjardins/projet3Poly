@@ -41,7 +41,7 @@ public:
 	void setRightWheel(bool isRight);
 	void assignerCouleurs(int modele, int a, int r, int g, int b);
 	void setCouleurDefault(int piece, bool default);
-	void initialisationCouleurs(float *roues);
+	void initialisationCouleurs(int *roues);
 
 private:
 	float vitesseCourante_{ 0.f };
