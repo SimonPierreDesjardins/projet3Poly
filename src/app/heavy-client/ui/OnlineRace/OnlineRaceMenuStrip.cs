@@ -5,12 +5,10 @@
 ///
 ////////////////////////////////////////////////
 using System;
-using System.Windows.Forms;
-using ModeEnum;
 
 namespace ui
 {
-    public partial class OnlineRaceMenuStrip : UserControl
+    public partial class OnlineRaceMenuStrip : SimMenuStrip
     {
         Window parent_;
 
@@ -23,7 +21,7 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public OnlineRaceMenuStrip(Window parent)
+        public OnlineRaceMenuStrip(Window parent) : base(parent)
         {
             InitializeComponent();
             parent_ = parent;
@@ -56,23 +54,10 @@ namespace ui
         /// du mode principal et change de mode
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void goMenuPrincipal()
+        override public void goMenuPrincipal()
         {
-            parent_.estEnPause = false;
-            parent_.picturePause.Visible = false;
-
-            parent_.mainMenu = new MainMenu(parent_);
-
-            parent_.configuration.deallocateCurrentProfilToolStrip();
+            base.goMenuPrincipal();
             parent_.viewPort.Controls.Remove(this);
-
-            parent_.viewPort.Controls.Add(parent_.mainMenu);
-            parent_.mainMenu.Dock = DockStyle.Left;
-
-            Program.peutAfficher = false;
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -98,10 +83,9 @@ namespace ui
         /// pour la vue dans le menuStrip
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void orthoView()
+        override public void orthoView()
         {
-            FonctionsNatives.assignerVueOrtho();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            base.orthoView();
             crochetPourVue();
         }
 
@@ -128,10 +112,9 @@ namespace ui
         /// pour la vue dans le menuStrip
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void orbiteView()
+        override public void orbiteView()
         {
-            FonctionsNatives.assignerVueOrbite();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            base.orbiteView();
             crochetPourVue();
         }
 
@@ -158,10 +141,9 @@ namespace ui
         /// pour la vue dans le menuStrip
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void firstPersonView()
+        override public void firstPersonView()
         {
-            FonctionsNatives.assignerVuePremierePersonne();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            base.firstPersonView();
             crochetPourVue();
         }
 
@@ -204,9 +186,9 @@ namespace ui
         /// visibilité de l'image pause et du menuStrip en conséquence
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void goIntoPause()
+        override public void goIntoPause()
         {
-            parent_.estEnPause = !parent_.estEnPause;
+            base.goIntoPause();
             parent_.picturePause.Visible = parent_.estEnPause;
             menuStrip1.Visible = parent_.estEnPause;
         }
