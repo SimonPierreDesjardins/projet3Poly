@@ -194,12 +194,12 @@ void NoeudRoues::setCouleurDefault(int piece, bool default)
 /// @return Aucun
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRoues::initialisationCouleurs(float* roues)
+void NoeudRoues::initialisationCouleurs(int* roues)
 {
-	couleur_[0] = roues[0];
-	couleur_[1] = roues[1];
-	couleur_[2] = roues[2];
-	couleur_[3] = roues[3];
+	couleur_[0] = (float)roues[0] / (float)255;
+	couleur_[1] = (float)roues[1] / (float)255;
+	couleur_[2] = (float)roues[2] / (float)255;
+	couleur_[3] = (float)roues[3] / (float)255;
 }
 
 

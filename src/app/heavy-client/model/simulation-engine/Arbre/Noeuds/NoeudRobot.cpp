@@ -937,12 +937,13 @@ std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
 /// @return Aucun
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::initialisationCouleurs(float* roues, float* modele)
+void NoeudRobot::initialisationCouleurs(int* roues, int* modele)
 {
-	couleur_[0] = modele[0];
-	couleur_[1] = modele[1];
-	couleur_[2] = modele[2];
-	couleur_[3] = modele[3];
+
+	couleur_[0] = (float)modele[0] / (float)255;
+	couleur_[1] = (float)modele[1] / (float)255;
+	couleur_[2] = (float)modele[2] / (float)255;
+	couleur_[3] = (float)modele[3] / (float)255;
 	roueDroite_->initialisationCouleurs(roues);
 	roueGauche_->initialisationCouleurs(roues);
 }

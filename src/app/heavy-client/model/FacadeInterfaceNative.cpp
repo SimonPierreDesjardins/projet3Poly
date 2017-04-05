@@ -875,15 +875,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece)
 	{
-		float* couleurPieceFloat = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurs(piece);
-		int couleurPieceInt[4];
-		
-		couleurPieceInt[0] = (int)(couleurPieceFloat[0] * 255);
-		couleurPieceInt[1] = (int)(couleurPieceFloat[1] * 255);
-		couleurPieceInt[2] = (int)(couleurPieceFloat[2] * 255);
-		couleurPieceInt[3] = (int)(couleurPieceFloat[3] * 255);
-
-		return couleurPieceInt;
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurs(piece);
 	}
 
 	////////////////////////////////////////////////////////////////////////

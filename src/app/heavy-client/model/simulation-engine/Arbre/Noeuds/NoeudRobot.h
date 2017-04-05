@@ -101,7 +101,7 @@ public:
 
 	std::stack <NoeudAbstrait*> tableauCoins;
 
-	virtual void initialisationCouleurs(float* roues, float* modele);
+	virtual void initialisationCouleurs(int* roues, int* modele);
 
 
 protected:
