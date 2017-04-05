@@ -41,7 +41,6 @@ namespace ui
             chatListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             chatListBox.MeasureItem += chatBox_MeasureItem;
             chatListBox.DrawItem += chatBox_DrawItem;
-
         }
 
         public string[] getChannelList()

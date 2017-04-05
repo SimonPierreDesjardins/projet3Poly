@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace ui
 {
-    public partial class EditionMenuStrip : UserControl
+    public partial class EditionMenuStrip : EditMenuStrip
     {
         Window parent_;
 
@@ -24,7 +24,7 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public EditionMenuStrip(Window parent)
+        public EditionMenuStrip(Window parent) : base(parent)
         {
             InitializeComponent();
             parent_ = parent;
@@ -63,7 +63,7 @@ namespace ui
         /// sinon ne fait rien
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void nouvelleZone()
+        override public void nouvelleZone()
         {
             DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
@@ -98,7 +98,7 @@ namespace ui
         /// le bouton ouvrir est appuyer sur le menu
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void ouvrirZone(bool afficherZoneDefaut)
+        override public void ouvrirZone(bool afficherZoneDefaut)
         {
             ExplorateurOuverture explorateur = new ExplorateurOuverture(parent_);
             FonctionsNatives.assignerAutorisationInputClavier(false);
@@ -134,16 +134,9 @@ namespace ui
             enregistrer();
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void enregistrer()
-        ///
-        /// Permet de sauvegarde la zone dans la derniere zone ouverte ou enregistrer sous
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void enregistrer()
+        override public bool canSave()
         {
-            FonctionsNatives.sauvegarder();
+            return enregistrerToolStripMenuItem.Enabled;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -170,20 +163,12 @@ namespace ui
         /// l'utilisateur de sauvegarder dans zones
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void enregistrerSousZone()
+        override public bool enregistrerSousZone()
         {
-            ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            if (explorateur.ShowDialog() == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.CheminFichier);
-                FonctionsNatives.sauvegarder();
+            if (base.enregistrerSousZone())
                 enregistrerToolStripMenuItem.Enabled = true;
-            }
-            explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
+
+            return true;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -210,7 +195,7 @@ namespace ui
         /// du mode test et change de mode
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void goTestMode()
+        override public void goTestMode()
         {
             parent_.testMenuStrip = new TestMenuStrip(parent_);
 
@@ -250,20 +235,12 @@ namespace ui
         /// du mode principal et change de mode
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void goMenuPrincipal()
+        override public void goMenuPrincipal()
         {
-            parent_.mainMenu = new MainMenu(parent_);
-
+            base.goMenuPrincipal();
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
-            parent_.viewPort.Controls.Add(parent_.mainMenu);
-            parent_.mainMenu.Dock = DockStyle.Left;
-
-            Program.peutAfficher = false;
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -305,11 +282,10 @@ namespace ui
         /// pour la vue dans le menuStrip
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void orthoView()
+        override public void orthoView()
         {
-            FonctionsNatives.assignerVueOrtho();
+            base.orthoView();
             crochetPourVue();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -336,11 +312,10 @@ namespace ui
         /// pour la vue dans le menuStrip
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void orbiteView()
+        override public void orbiteView()
         {
-            FonctionsNatives.assignerVueOrbite();
+            base.orbiteView();
             crochetPourVue();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -405,17 +380,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void aideToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PopOutInterface popup = new PopOutInterface();
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            DialogResult dialogresult = popup.ShowDialog();
-            if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
-            {
-                popup.Dispose();
-                parent_.viewPort.Focus();
-            }
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
+            helpPopUp();
         }
     }
 }

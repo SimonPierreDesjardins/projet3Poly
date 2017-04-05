@@ -108,6 +108,12 @@
     <Compile Include="EditionTutoriel\EditionTutorielInstructions.Designer.cs">
       <DependentUpon>EditionTutorielInstructions.cs</DependentUpon>
     </Compile>
+    <Compile Include="Edition\EditMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Edition\EditMenuStrip.Designer.cs">
+      <DependentUpon>EditMenuStrip.cs</DependentUpon>
+    </Compile>
     <Compile Include="enum\Authentification.cs" />
     <Compile Include="enum\EditionTutorialState.cs" />
     <Compile Include="enum\TypeOfTool.cs" />
@@ -249,6 +255,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Simulation\SimMenuStrip.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Simulation\SimMenuStrip.Designer.cs">
+      <DependentUpon>SimMenuStrip.cs</DependentUpon>
     </Compile>
     <Compile Include="Simulation\SimulationMenuStrip.cs">
       <SubType>UserControl</SubType>

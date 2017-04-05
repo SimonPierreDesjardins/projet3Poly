@@ -11,7 +11,7 @@ using System.Drawing;
 
 namespace ui
 {
-    public partial class OnlineEditionMenuStrip : UserControl
+    public partial class OnlineEditionMenuStrip : EditMenuStrip
     {
         Window parent_;
 
@@ -24,7 +24,7 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public OnlineEditionMenuStrip(Window parent)
+        public OnlineEditionMenuStrip(Window parent) : base(parent)
         {
             InitializeComponent();
             parent_ = parent;
@@ -57,18 +57,6 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void enregistrer()
-        ///
-        /// Permet de sauvegarde la zone dans la derniere zone ouverte ou enregistrer sous
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void enregistrer()
-        {
-            FonctionsNatives.sauvegarder();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private void enregistrerSousToolStripMenuItem_Click(object sender, EventArgs e)
         ///
         /// Appel l'action de enregistrerSous
@@ -91,20 +79,12 @@ namespace ui
         /// l'utilisateur de sauvegarder dans zones
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void enregistrerSousZone()
+        override public bool enregistrerSousZone()
         {
-            ExplorateurSauvegarde explorateur = new ExplorateurSauvegarde();
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            if (explorateur.ShowDialog() == DialogResult.OK)
-            {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.CheminFichier);
-                FonctionsNatives.sauvegarder();
+            if (base.enregistrerSousZone())
                 enregistrerToolStripMenuItem.Enabled = true;
-            }
-            explorateur.Dispose();
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
+
+            return true;
         }
 
         private void modePiècesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -152,20 +132,13 @@ namespace ui
         /// du mode principal et change de mode
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void goMenuPrincipal()
+        override public void goMenuPrincipal()
         {
-            parent_.mainMenu = new MainMenu(parent_);
-
+            base.goMenuPrincipal();
             parent_.viewPort.Controls.Remove(this);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
-            parent_.viewPort.Controls.Add(parent_.mainMenu);
-            parent_.mainMenu.Dock = DockStyle.Left;
-
-            Program.peutAfficher = false;
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(Mode.MENU_PRINCIPAL);
+            
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -207,11 +180,10 @@ namespace ui
         /// pour la vue dans le menuStrip
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void orthoView()
+        override public void orthoView()
         {
-            FonctionsNatives.assignerVueOrtho();
+            base.orthoView();
             crochetPourVue();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -238,11 +210,10 @@ namespace ui
         /// pour la vue dans le menuStrip
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void orbiteView()
+        override public void orbiteView()
         {
-            FonctionsNatives.assignerVueOrbite();
+            base.orbiteView();
             crochetPourVue();
-            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -307,17 +278,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void aideToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PopOutInterface popup = new PopOutInterface();
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-            FonctionsNatives.assignerAutorisationInputSouris(false);
-            DialogResult dialogresult = popup.ShowDialog();
-            if (dialogresult == DialogResult.OK || dialogresult == DialogResult.Cancel)
-            {
-                popup.Dispose();
-                parent_.viewPort.Focus();
-            }
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.assignerAutorisationInputSouris(true);
+            helpPopUp();
         }
     }
 }
