@@ -246,26 +246,14 @@ set(SIMULATION_ENGINE_SRC
 )
 source_group("simulation-engine" FILES ${SIMULATION_ENGINE_SRC})
 
+
+
 # Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/Eigen/include
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 	.
-    simulation-engine
-    simulation-engine/AffichageTexte
-    simulation-engine/ProfilUtilisateur
-    simulation-engine/Arbre
-    simulation-engine/Arbre/Noeuds
-    simulation-engine/Arbre/Usines
-    simulation-engine/robot-control
-    simulation-engine/robot-control/commands
-    simulation-engine/robot-control/behaviors
-    simulation-engine/robot-control/physics
-    simulation-engine/robot-control/physics/bounding-shapes
-    simulation-engine/robot-control/sensors
-    simulation-engine/EnginSon
-    simulation-engine/Lumiere
-    simulation-engine/Visiteur
+    
     Configuration
     event-handler
     client-network
@@ -326,6 +314,25 @@ add_library(simulation_engine
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
     ${SIMULATION_ENGINE_SRC}
+)
+
+#inclusion permettant aux utilisateurs de la librairie d'inclure dependances
+target_include_directories(simulation_engine PUBLIC
+    simulation-engine
+    simulation-engine/AffichageTexte
+    simulation-engine/ProfilUtilisateur
+    simulation-engine/Arbre
+    simulation-engine/Arbre/Noeuds
+    simulation-engine/Arbre/Usines
+    simulation-engine/robot-control
+    simulation-engine/robot-control/commands
+    simulation-engine/robot-control/behaviors
+    simulation-engine/robot-control/physics
+    simulation-engine/robot-control/physics/bounding-shapes
+    simulation-engine/robot-control/sensors
+    simulation-engine/EnginSon
+    simulation-engine/Lumiere
+    simulation-engine/Visiteur
 )
 
 # Compiler les fichiers sources dans une dll
