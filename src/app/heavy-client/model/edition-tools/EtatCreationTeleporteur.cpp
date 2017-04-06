@@ -92,10 +92,10 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
 			arbre_->chercher(0)->ajouter(paireTeleporteurs_);
-			paireTeleporteurs_->ajouter(teleporteur_); /////RENDU ICI POUR LES TP faire l'assignation ici p-t dans ajouter
+			paireTeleporteurs_->ajouter(teleporteur_);
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
 			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
-			teleporteur_->assignerTeleporteur(nullptr);//pas a faire ici
+			//teleporteur_->assignerTeleporteur(nullptr);//pas a faire ici
 
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 
