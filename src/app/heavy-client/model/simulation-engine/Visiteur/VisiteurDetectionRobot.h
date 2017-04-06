@@ -53,6 +53,8 @@ public:
 
 	virtual void visiter(NoeudPiece* noeud);
 
+	virtual void visiter(NoeudPaireTeleporteurs* noeud);
+
 	bool collisionTeleporteur(NoeudTeleporteur* teleporteur);
 
 private:

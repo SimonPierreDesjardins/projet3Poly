@@ -235,23 +235,11 @@ void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
 {
-	if (teleporteursDejaSauves.find(noeud) == teleporteursDejaSauves.end())
-	{
-		writer->StartObject();
-		writer->Key("PaireTeleporteurs");
-		writer->StartArray();
+
 		writer->StartObject();
 		noeud->toJson(*writer);
 		writer->EndObject();
-		writer->StartObject();
-		noeud->obtenirProchainTeleporteur()->toJson(*writer);
-		writer->EndObject();
-		writer->EndArray();
-		writer->EndObject();
-		teleporteursDejaSauves.insert(noeud);
-		teleporteursDejaSauves.insert(noeud->obtenirProchainTeleporteur());
 
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -285,9 +273,15 @@ void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudPaireTeleporteurs* noeud)
 {
-	for each(std::shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants()) {
-		noeudAbs->accepterVisiteur(this);
+	writer->StartObject();
+	noeud->toJson(*writer);
+	if (noeud->obtenirNombreEnfants() > 0) {
+		writer->Key("noeudsEnfants");
+		writer->StartArray();
+		visiterEnfants(noeud);
+		writer->EndArray();
 	}
+	writer->EndObject();
 }
 
 
