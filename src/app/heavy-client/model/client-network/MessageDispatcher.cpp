@@ -6,6 +6,7 @@
 
 #include "MessageDispatcher.h"
 #include "Authentification.cs"
+#include "MapPermission.cs"
 
 namespace client_network
 {
@@ -211,6 +212,30 @@ void MessageDispatcher::handleMapReadyMessage(const std::string& message)
 	eventHandler_->onMapReady(mapId);
 }
 
+void MessageDispatcher::handleMapPermissionMessage(const std::string& message)
+{
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	char result = message[Networking::MessageStandard::DATA_START + 4];
+	switch (result)
+	{
+	case 'o':
+		mapPermission(mapId, CHANGED_PUBLIC);
+		break;
+
+	case 'c':
+		mapPermission(mapId, CHANGED_PRIVATE);
+		break;
+
+	case 'd':
+		mapPermission(mapId, CHANGED_DENIED);
+		break;
+
+	default:
+		std::cout << "Unexpected message received" << message << std::endl;
+		break;
+	}
+}
+
 void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 {
 	switch (message[5])
@@ -233,6 +258,10 @@ void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 
 	case 'r':
 		handleMapReadyMessage(message);
+		break;
+
+	case 'p':
+		handleMapPermissionMessage(message);
 		break;
 
 	default:

@@ -58,6 +58,14 @@ namespace ui
 
             //Lovely circles as char in password
             passwordBox.PasswordChar = '\u25CF';
+
+            //Set callbacks for map permission change
+            mapPermissionInstance = new CallbackMapPermission(MapPermissionHandler);
+            SetCallbackForMapPermission(mapPermissionInstance);
+
+            //Set callbacks for map connection
+            mapConnectionInstance = new CallbackMapConnection(MapConnectionHandler);
+            SetCallbackForMapConnection(mapConnectionInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -69,6 +77,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public void initMapList()
         {
+            if (FonctionsNatives.isConnected())
+                onlineCheckBox.Visible = true;
+            else
+                onlineCheckBox.Visible = false;
+
             mapPanel.Controls.Clear();
             numberOfMaps_ = 0;
             foreach (KeyValuePair<int, MapPresentator> pair in onlineMaps_)
@@ -572,16 +585,10 @@ namespace ui
 
             if (FonctionsNatives.getEditionTutorialState())
             {
-                FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
-                FonctionsNatives.charger();
-
-                parent_.goOfflineEdition();
+                parent_.goOfflineEdition(selectedMap_.pathToFile_);
             }
             else
             {
-                FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
-                FonctionsNatives.charger();
-
                 parent_.goOfflineEditionTutorial();
             }
             
@@ -605,16 +612,10 @@ namespace ui
 
             if (FonctionsNatives.getSimulationTutorialState())
             {
-                FonctionsNatives.assignerCheminFichierZone(selectedMap_.pathToFile_);
-                FonctionsNatives.charger();
-
-                parent_.goOfflineSimulation();
+                parent_.goOfflineSimulation(selectedMap_.pathToFile_);
             }
             else
             {
-                FonctionsNatives.assignerCheminFichierZone(parent_.PathToDefaultZone_);
-                FonctionsNatives.charger();
-
                 parent_.goOfflineSimulationTutorial();
             }
         }
@@ -779,6 +780,99 @@ namespace ui
                 FonctionsNatives.uploadMap(path_);
             }
         }
+
+        public void Test1(int mapId, int action)
+        {
+            mapPermission(mapId, action);
+        }
+
+        private delegate void CallbackMapPermission(int mapId, int action);
+        // Ensure it doesn't get garbage collected
+        private CallbackMapPermission mapPermissionInstance;
+        private void MapPermissionHandler(int mapId, int action)
+        {
+            MapPresentator tmp;
+            bool success = onlineMaps_.TryGetValue(mapId, out tmp);
+            if (!success)
+                System.Console.WriteLine("Couldn't find map with id: " + mapId + " in online dictionary.");
+
+            switch (action)
+            {
+                case (int)MapPermission.Permission.CHANGED_PUBLIC:
+                    tmp.changeToPublic();
+                    break;
+
+                case (int)MapPermission.Permission.CHANGED_PRIVATE:
+                    tmp.changeToPrivate();
+                    break;
+
+                case (int)MapPermission.Permission.CHANGED_DENIED:
+                    System.Console.WriteLine("Permission denied to change permission on mapId: " + mapId + ".");
+                    break;
+
+                default:
+                    System.Console.WriteLine("Unexpected command on map permission change. MapId: " + mapId + ".");
+                    break;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForMapPermission(CallbackMapPermission fn);
+
+        [DllImport("model.dll")]
+        private static extern void mapPermission(int mapId, int action);
+
+
+        public void Test(int mapId, int action)
+        {
+            mapConnect(mapId, action);
+        }
+
+        private delegate void CallbackMapConnection(int mapId, int action);
+        // Ensure it doesn't get garbage collected
+        private CallbackMapConnection mapConnectionInstance;
+        private void MapConnectionHandler(int mapId, int action)
+        {
+            MapPresentator tmp;
+            bool success = onlineMaps_.TryGetValue(mapId, out tmp);
+            if (!success)
+                System.Console.WriteLine("Couldn't find map with id: " + mapId + " in online dictionary.");
+
+            switch (action)
+            {
+                case (int)MapJoin.Response.MAP_JOINED:
+                    tmp.joinMap();
+                    break;
+
+                case (int)MapJoin.Response.MAP_FULL:
+                    tmp.sessionFull();
+                    break;
+
+                case (int)MapJoin.Response.MAP_WRONG_PASSWORD:
+                    tmp.wrongPassword();
+                    break;
+
+                default:
+                    System.Console.WriteLine("Unexpected command on map connection. MapId: " + mapId + ".");
+                    break;
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForMapConnection(CallbackMapConnection fn);
+
+        [DllImport("model.dll")]
+        private static extern void mapConnect(int mapId, int action);
     }
 
     static partial class FonctionsNatives

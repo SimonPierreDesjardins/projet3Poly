@@ -258,19 +258,16 @@ void FacadeModele::assignerMode(Mode mode)
 		case MENU_PRINCIPAL:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
-			stopAffichage();
 			break;
 
 		case SIMULATION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
 			break;
 
 		case EDITION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeEdition>(&engine_, mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
 			break;
 
 		case CONFIGURE:
@@ -281,32 +278,27 @@ void FacadeModele::assignerMode(Mode mode)
 		case TEST:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
 			break;
 
 		case PERSONALIZE:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePersonalize>(&engine_, &profil_);
-			continuerAffichage();
 			break;
 
 		case TUTORIAL_EDITION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeTutorialEdition>(mapSessionManager_.getLocalMapSession());
-			continuerAffichage();
 			break;
 		
 		case PIECES:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePieces>(&engine_, &profil_);
-			continuerAffichage();
 			break;
 
 		default:
 			break;
 	}
 }
-
 
 ////////////////////////////////////////////////////////////////////////
 ///

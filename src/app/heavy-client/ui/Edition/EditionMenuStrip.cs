@@ -67,9 +67,11 @@ namespace ui
             DialogResult dialogResult = MessageBox.Show("Êtes-vous sure de vouloir créer une nouvelle épreuve", "Creation d'une nouvelle zone", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                FonctionsNatives.nouvelleTable();
-                enregistrerToolStripMenuItem.Enabled = false;
-                parent_.verificationDuNombreElementChoisi();
+                parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
+                parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+                parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
+                parent_.goOfflineEdition(parent_.PathToDefaultZone_);
+                //FonctionsNatives.nouvelleTable();
             }
         }
 
@@ -106,9 +108,10 @@ namespace ui
             DialogResult dialogresult = explorateur.ShowDialog();
             if (dialogresult == DialogResult.OK)
             {
-                FonctionsNatives.assignerCheminFichierZone(explorateur.cheminFichier);
-                FonctionsNatives.charger();
-                enregistrerToolStripMenuItem.Enabled = true;
+                parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
+                parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
+                parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
+                parent_.goOfflineEdition(explorateur.cheminFichier);
             }
 
             explorateur.Dispose();
@@ -196,17 +199,19 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         override public void goTestMode()
         {
-            parent_.testMenuStrip = new TestMenuStrip(parent_);
-
-            parent_.configuration.populerToolStripProfils(parent_.testMenuStrip.profilsToolStripMenuItem);
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
-            parent_.viewPort.Refresh();
+
+            parent_.testMenuStrip = new TestMenuStrip(parent_);
+            parent_.configuration.populerToolStripProfils(parent_.testMenuStrip.profilsToolStripMenuItem);
 
             parent_.viewPort.Controls.Add(parent_.testMenuStrip);
             parent_.testMenuStrip.Dock = DockStyle.Top;
-            
+
+            parent_.viewPort.Refresh();
+
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
             FonctionsNatives.assignerMode(ModeEnum.Mode.TEST);
         }
 

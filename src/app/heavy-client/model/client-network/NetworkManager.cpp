@@ -3,8 +3,8 @@
 #include <fstream>
 
 #include "NetworkStandard.h"
-
 #include "NetworkManager.h"
+#include "EventHandler.h"
 
 namespace client_network
 {
@@ -13,6 +13,7 @@ NetworkManager::NetworkManager(event_handler::EventHandler* eventHandler)
 	: dispatcher_(eventHandler)
 {
 	connection_.setOnMessageReceivedHandler(&MessageDispatcher::handleReceivedMessage, &dispatcher_);
+	connection_.setOnConnectionLostHandler(&event_handler::EventHandler::onUserDisconnected, eventHandler);
 	dispatcher_.startDispatching();
 }
 

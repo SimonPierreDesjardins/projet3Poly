@@ -192,6 +192,10 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZoneDefaut().c_str());
 	}
 
+	__declspec(dllexport) void __cdecl obtenirCheminFichierZone(char* chemin, int longueur) {
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZone().c_str());
+	}
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
@@ -1000,9 +1004,9 @@ extern "C"
 		callbackMapConnection = fn;
 	}
 
-	__declspec(dllexport) void __cdecl mapConnect(int action)
+	__declspec(dllexport) void __cdecl mapConnect(int mapId, int action)
 	{
-		callbackMapConnection(action);
+		callbackMapConnection(mapId, action);
 	}
 
 	CallbackMapPermission callbackMapPermission = 0;
@@ -1011,9 +1015,9 @@ extern "C"
 		callbackMapPermission = fn;
 	}
 
-	__declspec(dllexport) void __cdecl mapPermission(int action)
+	__declspec(dllexport) void __cdecl mapPermission(int mapId, int action)
 	{
-		callbackMapPermission(action);
+		callbackMapPermission(mapId, action);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -1319,6 +1323,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl SaveApplicationSettings()
 	{
 		FacadeModele::obtenirInstance()->getApplicationSettings()->save();
+	}
+
+	CallbackLoading callBackLoading = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForLoading(CallbackLoading handler)
+	{
+		callBackLoading = handler;
+	}
+
+	__declspec(dllexport) void __cdecl Loading(int action)
+	{
+		callBackLoading(action);
 	}
 }
 

@@ -52,18 +52,12 @@
             this.ShowObjectMenu = new System.Windows.Forms.Timer(this.components);
             this.HideObjectMenu = new System.Windows.Forms.Timer(this.components);
             this.editionObjectMenu = new System.Windows.Forms.Panel();
-            this.bridgeObjectButton = new ui.PanelButton();
-            this.bridgePictureBox = new System.Windows.Forms.PictureBox();
             this.teleportorObjectButton = new ui.PanelButton();
             this.teleportorPictureBox = new System.Windows.Forms.PictureBox();
             this.wallObjectButton = new ui.PanelButton();
             this.wallObjectPicture = new System.Windows.Forms.PictureBox();
             this.postObjectButton = new ui.PanelButton();
             this.postObjectPicture = new System.Windows.Forms.PictureBox();
-            this.redLineObjectButton = new ui.PanelButton();
-            this.redLinePictureBox = new System.Windows.Forms.PictureBox();
-            this.greenLineObjectButton = new ui.PanelButton();
-            this.greenLinePictureBox = new System.Windows.Forms.PictureBox();
             this.lineObjectButton = new ui.PanelButton();
             this.lineObjectPicture = new System.Windows.Forms.PictureBox();
             this.panelButton3 = new ui.PanelButton();
@@ -88,18 +82,12 @@
             this.selectToolButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.selectPictureBox)).BeginInit();
             this.editionObjectMenu.SuspendLayout();
-            this.bridgeObjectButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.bridgePictureBox)).BeginInit();
             this.teleportorObjectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.teleportorPictureBox)).BeginInit();
             this.wallObjectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wallObjectPicture)).BeginInit();
             this.postObjectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.postObjectPicture)).BeginInit();
-            this.redLineObjectButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.redLinePictureBox)).BeginInit();
-            this.greenLineObjectButton.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.greenLinePictureBox)).BeginInit();
             this.lineObjectButton.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.lineObjectPicture)).BeginInit();
             this.panelButton3.SuspendLayout();
@@ -325,12 +313,9 @@
             // editionObjectMenu
             // 
             this.editionObjectMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(102)))), ((int)(((byte)(204)))));
-            this.editionObjectMenu.Controls.Add(this.bridgeObjectButton);
             this.editionObjectMenu.Controls.Add(this.teleportorObjectButton);
             this.editionObjectMenu.Controls.Add(this.wallObjectButton);
             this.editionObjectMenu.Controls.Add(this.postObjectButton);
-            this.editionObjectMenu.Controls.Add(this.redLineObjectButton);
-            this.editionObjectMenu.Controls.Add(this.greenLineObjectButton);
             this.editionObjectMenu.Controls.Add(this.lineObjectButton);
             this.editionObjectMenu.Controls.Add(this.panelButton3);
             this.editionObjectMenu.Dock = System.Windows.Forms.DockStyle.Left;
@@ -338,26 +323,6 @@
             this.editionObjectMenu.Name = "editionObjectMenu";
             this.editionObjectMenu.Size = new System.Drawing.Size(35, 521);
             this.editionObjectMenu.TabIndex = 2;
-            // 
-            // bridgeObjectButton
-            // 
-            this.bridgeObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.bridgeObjectButton.BackColor = System.Drawing.Color.Transparent;
-            this.bridgeObjectButton.Controls.Add(this.bridgePictureBox);
-            this.bridgeObjectButton.Location = new System.Drawing.Point(0, 377);
-            this.bridgeObjectButton.Name = "bridgeObjectButton";
-            this.bridgeObjectButton.Size = new System.Drawing.Size(35, 40);
-            this.bridgeObjectButton.TabIndex = 7;
-            // 
-            // bridgePictureBox
-            // 
-            this.bridgePictureBox.Enabled = false;
-            this.bridgePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("bridgePictureBox.Image")));
-            this.bridgePictureBox.Location = new System.Drawing.Point(5, 8);
-            this.bridgePictureBox.Name = "bridgePictureBox";
-            this.bridgePictureBox.Size = new System.Drawing.Size(25, 25);
-            this.bridgePictureBox.TabIndex = 1;
-            this.bridgePictureBox.TabStop = false;
             // 
             // teleportorObjectButton
             // 
@@ -422,52 +387,12 @@
             this.postObjectPicture.TabIndex = 1;
             this.postObjectPicture.TabStop = false;
             // 
-            // redLineObjectButton
-            // 
-            this.redLineObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.redLineObjectButton.BackColor = System.Drawing.Color.Transparent;
-            this.redLineObjectButton.Controls.Add(this.redLinePictureBox);
-            this.redLineObjectButton.Location = new System.Drawing.Point(0, 193);
-            this.redLineObjectButton.Name = "redLineObjectButton";
-            this.redLineObjectButton.Size = new System.Drawing.Size(35, 40);
-            this.redLineObjectButton.TabIndex = 7;
-            // 
-            // redLinePictureBox
-            // 
-            this.redLinePictureBox.Enabled = false;
-            this.redLinePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("redLinePictureBox.Image")));
-            this.redLinePictureBox.Location = new System.Drawing.Point(5, 8);
-            this.redLinePictureBox.Name = "redLinePictureBox";
-            this.redLinePictureBox.Size = new System.Drawing.Size(25, 25);
-            this.redLinePictureBox.TabIndex = 1;
-            this.redLinePictureBox.TabStop = false;
-            // 
-            // greenLineObjectButton
-            // 
-            this.greenLineObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.greenLineObjectButton.BackColor = System.Drawing.Color.Transparent;
-            this.greenLineObjectButton.Controls.Add(this.greenLinePictureBox);
-            this.greenLineObjectButton.Location = new System.Drawing.Point(0, 147);
-            this.greenLineObjectButton.Name = "greenLineObjectButton";
-            this.greenLineObjectButton.Size = new System.Drawing.Size(35, 40);
-            this.greenLineObjectButton.TabIndex = 7;
-            // 
-            // greenLinePictureBox
-            // 
-            this.greenLinePictureBox.Enabled = false;
-            this.greenLinePictureBox.Image = ((System.Drawing.Image)(resources.GetObject("greenLinePictureBox.Image")));
-            this.greenLinePictureBox.Location = new System.Drawing.Point(5, 8);
-            this.greenLinePictureBox.Name = "greenLinePictureBox";
-            this.greenLinePictureBox.Size = new System.Drawing.Size(25, 25);
-            this.greenLinePictureBox.TabIndex = 1;
-            this.greenLinePictureBox.TabStop = false;
-            // 
             // lineObjectButton
             // 
             this.lineObjectButton.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.lineObjectButton.BackColor = System.Drawing.Color.Transparent;
             this.lineObjectButton.Controls.Add(this.lineObjectPicture);
-            this.lineObjectButton.Location = new System.Drawing.Point(0, 101);
+            this.lineObjectButton.Location = new System.Drawing.Point(1, 193);
             this.lineObjectButton.Name = "lineObjectButton";
             this.lineObjectButton.Size = new System.Drawing.Size(35, 40);
             this.lineObjectButton.TabIndex = 7;
@@ -530,18 +455,12 @@
             this.selectToolButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.selectPictureBox)).EndInit();
             this.editionObjectMenu.ResumeLayout(false);
-            this.bridgeObjectButton.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.bridgePictureBox)).EndInit();
             this.teleportorObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.teleportorPictureBox)).EndInit();
             this.wallObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.wallObjectPicture)).EndInit();
             this.postObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.postObjectPicture)).EndInit();
-            this.redLineObjectButton.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.redLinePictureBox)).EndInit();
-            this.greenLineObjectButton.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.greenLinePictureBox)).EndInit();
             this.lineObjectButton.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.lineObjectPicture)).EndInit();
             this.panelButton3.ResumeLayout(false);
@@ -573,18 +492,12 @@
         public System.Windows.Forms.Timer ShowObjectMenu;
         public System.Windows.Forms.Timer HideObjectMenu;
         public System.Windows.Forms.Panel editionObjectMenu;
-        public PanelButton bridgeObjectButton;
-        public System.Windows.Forms.PictureBox bridgePictureBox;
         public PanelButton teleportorObjectButton;
         public System.Windows.Forms.PictureBox teleportorPictureBox;
         public PanelButton wallObjectButton;
         public System.Windows.Forms.PictureBox wallObjectPicture;
         public PanelButton postObjectButton;
         public System.Windows.Forms.PictureBox postObjectPicture;
-        public PanelButton redLineObjectButton;
-        public System.Windows.Forms.PictureBox redLinePictureBox;
-        public PanelButton greenLineObjectButton;
-        public System.Windows.Forms.PictureBox greenLinePictureBox;
         public PanelButton lineObjectButton;
         public System.Windows.Forms.PictureBox lineObjectPicture;
         public PanelButton panelButton3;
