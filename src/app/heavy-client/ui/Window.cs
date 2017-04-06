@@ -676,6 +676,22 @@ namespace ui
             FonctionsNatives.assignerMode(ModeEnum.Mode.MENU_PRINCIPAL);
         }
 
+        public void goOfflineTest()
+        {
+            System.Text.StringBuilder str = new System.Text.StringBuilder(100);
+            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
+            string tmp = str.ToString();
+
+            loadMap(tmp, ModeEnum.Mode.TEST);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            testMenuStrip = new TestMenuStrip(this);
+            configuration.populerToolStripProfils(testMenuStrip.profilsToolStripMenuItem);
+
+            viewPort.Controls.Add(testMenuStrip);
+            testMenuStrip.Dock = DockStyle.Top;
+        }
+
         public void goOfflineEdition(String pathToFile)
         {
             loadMap(pathToFile, ModeEnum.Mode.EDITION);

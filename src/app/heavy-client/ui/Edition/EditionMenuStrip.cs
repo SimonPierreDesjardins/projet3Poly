@@ -199,18 +199,13 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         override public void goTestMode()
         {
-            parent_.testMenuStrip = new TestMenuStrip(parent_);
-
-            parent_.configuration.populerToolStripProfils(parent_.testMenuStrip.profilsToolStripMenuItem);
             parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
+
+            parent_.goOfflineTest();
             parent_.viewPort.Refresh();
 
-            parent_.viewPort.Controls.Add(parent_.testMenuStrip);
-            parent_.testMenuStrip.Dock = DockStyle.Top;
-            
-            FonctionsNatives.assignerMode(ModeEnum.Mode.TEST);
         }
 
         ////////////////////////////////////////////////////////////////////////
