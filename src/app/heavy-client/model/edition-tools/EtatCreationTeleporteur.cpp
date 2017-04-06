@@ -22,7 +22,8 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationTeleporteur::EtatCreationTeleporteur()
+EtatCreationTeleporteur::EtatCreationTeleporteur(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(CREATION_TELEPORTOR);
 	visiteurCreationTeleporteur_ = std::make_unique<VisiteurCreationTeleporteur>();
@@ -43,6 +44,8 @@ EtatCreationTeleporteur::~EtatCreationTeleporteur()
 	if (enCreation_)
 	{
 		arbre_->chercher("table")->effacer(paireTeleporteurs_.get());
+		mapSession_->deleteLocalEntity(paireTeleporteurs_.get()); //pas sure si je dois mettre les deux
+		mapSession_->deleteLocalEntity(teleporteur_.get());
 		enCreation_ = false;
 		teleporteur_ = nullptr;
 	}
@@ -95,6 +98,9 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			paireTeleporteurs_->ajouter(teleporteur_);
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
 			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
+
+			mapSession_->localEntityCreated(paireTeleporteurs_.get());
+			mapSession_->localEntityCreated(teleporteur_.get());
 			//teleporteur_->assignerTeleporteur(nullptr);//pas a faire ici
 
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
@@ -118,6 +124,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
 			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
+			mapSession_->localEntityCreated(teleporteur_.get());
 			//ancienTeleporteur_->assignerTeleporteur(teleporteur_);
 			//teleporteur_->assignerTeleporteur(ancienTeleporteur_); a faire dans le ajouter
 

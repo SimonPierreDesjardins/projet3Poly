@@ -14,6 +14,7 @@
 #include "EtatAbstrait.h"
 #include "VisiteurTypes.h"
 #include <iostream>
+#include "OnlineTool.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class EtatCreationTeleporteur
@@ -22,10 +23,10 @@
 /// @author Simon-Pierre Desjardins
 /// @date 2017-03-08
 ///////////////////////////////////////////////////////////////////////////
-class EtatCreationTeleporteur : public EtatAbstrait
+class EtatCreationTeleporteur : public OnlineTool
 {
 public:
-	EtatCreationTeleporteur();
+	EtatCreationTeleporteur(client_network::MapSession* mapSession);
 	virtual ~EtatCreationTeleporteur();
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
