@@ -901,6 +901,7 @@ extern "C"
 
 		ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 		ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+		ModeAbstrait* mode = FacadeModele::obtenirInstance()->obtenirMode();
 
 		if (profil->getModele() != modele)
 		{
@@ -908,10 +909,11 @@ extern "C"
 			profil->setModele(std::string(modele));
 			profil->setCouleurParDefaut(BODY, true);
 			profil->setCouleurParDefaut(WHEELS, true);
-			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(profil->getModele());//changer après modif oli, a voir avec lui
-			arbre->chercher(0)->ajouter(robot);//mm chose
-			arbre->chercher(0)->chercher(profil->getModele())->setCouleurDefault(BODY, true);
-			arbre->chercher(profil->getModele())->setCouleurDefault(WHEELS, true);
+			
+			NoeudRobot* robot = mode->creerRobot(arbre,profil);
+
+			robot->setCouleurDefault(BODY, true);
+			robot->setCouleurDefault(WHEELS, true);
 		}
 		
 	}

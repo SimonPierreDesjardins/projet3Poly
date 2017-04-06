@@ -27,7 +27,7 @@
 ///
 ////////////////////////////////////////////////////////////////////////
 ModePersonalize::ModePersonalize(engine::SimulationEngine* engine, ProfilUtilisateur* profil)
-	: controleRobot_(engine->getEntityTree(), profil)
+	: controleRobot_(creerRobot(engine->getEntityTree(), profil))
 {
 	typeMode_ = PERSONALIZE;
 	profil_ = profil;
@@ -233,6 +233,8 @@ NoeudRobot* ModePersonalize::obtenirRobot()
 {
 	return robot_;
 }
+
+
 
 
 ///////////////////////////////////////////////////////////////////////////////

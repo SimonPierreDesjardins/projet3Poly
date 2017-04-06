@@ -19,6 +19,8 @@
 #include "NoeudTypes.h"
 
 
+class ArbreRenduINF2990;
+class ProfilUtilisateur;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeAbstraitC:\Users\Olivier St-Amour\Documents\Polytechnique\hiver_2016\inf2990-06\Cadriciel\Sources\InterfaceGraphique\Program.cs
@@ -91,10 +93,13 @@ public:
 
 	virtual NoeudRobot* obtenirRobot() { return nullptr; };
 
+	virtual NoeudRobot* creerRobot(ArbreRenduINF2990* arbre, ProfilUtilisateur* profil);
+
 protected:
 	int typeMode_;
 	bool clicDroitEnfonce_{ false };
 	static glm::ivec2 currentPosition_;
+	NoeudRobot* robot_{ nullptr };
 
 };
 
