@@ -24,7 +24,7 @@
 class EtatDeplacement : public OnlineTool
 {
 public:
-	EtatDeplacement(client_network::MapSession* mapSession);
+	EtatDeplacement(client_network::ClientMapSession* mapSession);
 	virtual ~EtatDeplacement();
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

@@ -53,7 +53,7 @@ void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 	// On a failed join, do something
 	if (result == 's') 
 	{
-		client_network::MapSession* mapSession = mapSessionManager_->getServerSession(mapId);
+		client_network::ClientMapSession* mapSession = mapSessionManager_->getServerSession(mapId);
 		// The map exists on the client.
 		if (mapSession != nullptr)
 		{

@@ -30,7 +30,7 @@ class ModeTutorialEdition : public OnlineMapMode
 public:
 
 	//Constructeur par défaut
-	ModeTutorialEdition(client_network::MapSession* mapSession);
+	ModeTutorialEdition(client_network::ClientMapSession* mapSession);
 	//Destructeur
 	virtual ~ModeTutorialEdition();
 	virtual void gererToucheSupprimer();

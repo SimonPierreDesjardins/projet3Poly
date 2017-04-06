@@ -39,7 +39,7 @@ namespace engine {
 class ModeSimulation : public OnlineMapMode
 {
 public:
-	ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session);
+	ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session);
 
 	//Destructeur
 	virtual ~ModeSimulation();

@@ -9,7 +9,7 @@ namespace client_network
 {
 	class NetworkManager;
 	class MapSessionManager;
-	class MapSession;
+	class ClientMapSession;
 }
 
 class ArbreRendu;
@@ -50,7 +50,7 @@ public:
 private:
 	client_network::NetworkManager* networkManager_ = nullptr;
 	client_network::MapSessionManager* mapSessionManager_ = nullptr;
-	client_network::MapSession* currentSession_ = nullptr;
+	client_network::ClientMapSession* currentSession_ = nullptr;
 
 	ArbreRendu* entityTree_ = nullptr;
 

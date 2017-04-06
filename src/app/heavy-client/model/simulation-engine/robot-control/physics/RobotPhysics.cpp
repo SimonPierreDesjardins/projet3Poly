@@ -1,12 +1,12 @@
 #include "RobotPhysics.h"
 
-#include "MapSession.h"
+#include "map-session/MapSession.h"
 #include "ArbreRendu.h"
 #include "NoeudRobot.h"
 #include "NoeudPoteau.h"
 #include "EnginSon.h"
 
-void RobotPhysics::init(NoeudRobot* robot, ArbreRendu* tree, client_network::MapSession* mapSession)
+void RobotPhysics::init(NoeudRobot* robot, ArbreRendu* tree, engine::MapSession* mapSession)
 {
 	collisionDetection_ = VisiteurDetectionRobot(robot);
 	robot_ = robot;

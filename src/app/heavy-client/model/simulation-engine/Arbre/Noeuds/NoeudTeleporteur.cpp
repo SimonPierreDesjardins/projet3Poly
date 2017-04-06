@@ -216,11 +216,11 @@ void NoeudTeleporteur::afficherConcret() const
 	glPopMatrix();
 
     //rectangleEnglobant_.afficher(positionCourante_);
-	int mode = FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
+	/*int mode = FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
 	if (mode == EDITION || mode == TUTORIAL_EDITION) //montre les cercles des teleporteurs si dans le mode edition
 	{
 		cercleEnglobant_.afficher(physics_.absolutePosition);
-	}
+	}*/
 	
 }
 

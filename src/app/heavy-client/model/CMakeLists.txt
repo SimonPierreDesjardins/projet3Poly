@@ -101,6 +101,11 @@ set(LUMIERE_SRC
     simulation-engine/Lumiere/ControleurLumiere.cpp
 )
 
+set(MAP_SESSION_SRC
+    simulation-engine/map-session/MapSession.h
+    simulation-engine/map-session/MapSession.cpp
+)
+
 set(MACHINE_A_ETATS_SRC
     edition-tools/EtatAbstrait.h
     edition-tools/EtatAbstrait.cpp
@@ -198,9 +203,9 @@ set(VISITEUR_SRC
 
 )
 
-set(MAP_SESSION_SRC
-	client-network/map-session/MapSession.h
-	client-network/map-session/MapSession.cpp
+set(CLIENT_MAP_SESSION_SRC
+	client-network/map-session/ClientMapSession.h
+	client-network/map-session/ClientMapSession.cpp
 	client-network/map-session/MapSessionManager.h
 	client-network/map-session/MapSessionManager.cpp
 )
@@ -314,6 +319,7 @@ add_library(simulation_engine
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
     ${SIMULATION_ENGINE_SRC}
+    ${MAP_SESSION_SRC}
 )
 
 target_link_libraries(simulation_engine util)
@@ -344,7 +350,7 @@ add_library(model SHARED
     ${MODES_SRC}
     ${EVENT_HANDLER_SRC}
 	${UI_INTERFACE_SRC}
-    ${MAP_SESSION_SRC}
+    ${CLIENT_MAP_SESSION_SRC}
 	${CLIENT_NETWORK_SRC}
 	${MODEL_SRC}
     CMakelists.txt

@@ -19,7 +19,7 @@
 #include "CommandeRobot.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
-#include "MapSession.h"
+#include "map-session/ClientMapSession.h"
 
 #include <iostream>
 
@@ -42,7 +42,7 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 /// Constructeur par d�faut pour le mode simulation
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
+ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session)
 	  : controleRobot_(engine->getEntityTree(), profil), OnlineMapMode(session)
 {
 	NoeudRobot* robot = controleRobot_.obtenirNoeud();

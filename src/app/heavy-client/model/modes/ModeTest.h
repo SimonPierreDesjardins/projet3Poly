@@ -40,7 +40,7 @@ class ControleurLumiere;
 class ModeTest : public OnlineMapMode
 {
 public:
-	ModeTest(client_network::MapSession* mapSession);
+	ModeTest(client_network::ClientMapSession* mapSession);
 
 	//Destructeur
 	virtual ~ModeTest();

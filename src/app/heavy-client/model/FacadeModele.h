@@ -71,7 +71,7 @@ public:
 	/// Modifie le Mode courant.
 	void assignerMode(Mode mode);
 	/// Modifie le mode courant pour un mode en ligne avec une session utilisateur.
-	void setOnlineMapMode(Mode mode, client_network::MapSession* mapSession);
+	void setOnlineMapMode(Mode mode, client_network::ClientMapSession* mapSession);
 
 	// Obtenir le Mode courant.
 	inline ModeAbstrait* obtenirMode();

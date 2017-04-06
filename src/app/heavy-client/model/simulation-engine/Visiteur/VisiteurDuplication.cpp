@@ -11,7 +11,7 @@
 #include <queue>
 #include <memory>
 
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 #include "FacadeModele.h"
 #include "NoeudTypes.h"
 #include "ArbreRendu.h"
@@ -29,7 +29,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDuplication::VisiteurDuplication(client_network::MapSession* mapSession)
+VisiteurDuplication::VisiteurDuplication(engine::MapSession* mapSession)
 	: mapSession_(mapSession)
 {
 	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);

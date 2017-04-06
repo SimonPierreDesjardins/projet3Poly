@@ -24,7 +24,7 @@
 class EtatRotation : public OnlineTool
 {
 public:
-	EtatRotation(client_network::MapSession* mapSession);
+	EtatRotation(client_network::ClientMapSession* mapSession);
 	virtual ~EtatRotation();
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);
