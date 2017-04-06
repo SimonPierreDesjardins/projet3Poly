@@ -203,9 +203,16 @@ namespace ui
             parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Remove(parent_.editionModificationPanel);
 
-            parent_.goOfflineTest();
+            parent_.testMenuStrip = new TestMenuStrip(parent_);
+            parent_.configuration.populerToolStripProfils(parent_.testMenuStrip.profilsToolStripMenuItem);
+
+            parent_.viewPort.Controls.Add(parent_.testMenuStrip);
+            parent_.testMenuStrip.Dock = DockStyle.Top;
+
             parent_.viewPort.Refresh();
 
+            FonctionsNatives.redimensionnerFenetre(parent_.viewPort.Width, parent_.viewPort.Height);
+            FonctionsNatives.assignerMode(ModeEnum.Mode.TEST);
         }
 
         ////////////////////////////////////////////////////////////////////////

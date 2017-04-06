@@ -676,22 +676,6 @@ namespace ui
             FonctionsNatives.assignerMode(ModeEnum.Mode.MENU_PRINCIPAL);
         }
 
-        public void goOfflineTest()
-        {
-            System.Text.StringBuilder str = new System.Text.StringBuilder(100);
-            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
-            string tmp = str.ToString();
-
-            loadMap(tmp, ModeEnum.Mode.TEST);
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
-            testMenuStrip = new TestMenuStrip(this);
-            configuration.populerToolStripProfils(testMenuStrip.profilsToolStripMenuItem);
-
-            viewPort.Controls.Add(testMenuStrip);
-            testMenuStrip.Dock = DockStyle.Top;
-        }
-
         public void goOfflineEdition(String pathToFile)
         {
             loadMap(pathToFile, ModeEnum.Mode.EDITION);
@@ -865,6 +849,8 @@ namespace ui
 
         private void loadMap(String path, ModeEnum.Mode mode)
         {
+            FonctionsNatives.assignerAutorisationInputClavier(false);
+            FonctionsNatives.assignerAutorisationInputSouris(false);
             loadingPanel load = new loadingPanel(this);
             load.Dock = DockStyle.Fill;
             this.Controls.Add(load);
@@ -888,6 +874,8 @@ namespace ui
 
             load.stop();
             this.Controls.Remove(load);
+            FonctionsNatives.assignerAutorisationInputClavier(true);
+            FonctionsNatives.assignerAutorisationInputSouris(true);
         }
 
         public class Loader
@@ -916,15 +904,13 @@ namespace ui
         {
             this.Invoke((MethodInvoker)delegate
             {
+                FonctionsNatives.assignerAutorisationInputClavier(false);
+                FonctionsNatives.assignerAutorisationInputSouris(false);
+
                 onlineLoadingPanel = new loadingPanel(this);
                 onlineLoadingPanel.Dock = DockStyle.Fill;
                 this.Controls.Add(onlineLoadingPanel);
                 onlineLoadingPanel.BringToFront();
-
-                /*while (loading)
-                {
-                    Application.DoEvents();
-                };*/
             });
         }
 
@@ -934,6 +920,9 @@ namespace ui
             {
                 onlineLoadingPanel.stop();
                 this.Controls.Remove(onlineLoadingPanel);
+
+                FonctionsNatives.assignerAutorisationInputClavier(true);
+                FonctionsNatives.assignerAutorisationInputSouris(true);
             });
         }
 
