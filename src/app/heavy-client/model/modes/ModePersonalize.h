@@ -52,11 +52,14 @@ public:
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
+	virtual NoeudRobot* obtenirRobot();
+
 private:
 	ProfilUtilisateur* profil_{ nullptr };
 
 	ArbreRendu* tree_{ nullptr };
 	ControleRobot controleRobot_;
+	NoeudRobot* robot_;
 
 	bool lumiereAmbiante{ true };
 	bool lumiereDirectionnelle{ true };

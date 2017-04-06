@@ -16,6 +16,7 @@
 #include <Windows.h>
 #include <Windowsx.h>
 #include "ModeEnum.cs"
+#include "NoeudTypes.h"
 
 
 
@@ -43,6 +44,8 @@ public:
 	virtual void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	inline int obtenirTypeMode();
+
+
 
 
 	////////////////////////////////////////////////////////////////////////
@@ -85,6 +88,8 @@ public:
 	virtual void postAnimer(float dt) {};
 
 	virtual bool obtenirModeEnPause() { return true; };
+
+	virtual NoeudRobot* obtenirRobot() { return nullptr; };
 
 protected:
 	int typeMode_;

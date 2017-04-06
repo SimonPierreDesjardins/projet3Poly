@@ -845,7 +845,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value)
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(piece, value);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(piece,value);
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot() != nullptr)
+		{
+			FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot()->setCouleurDefault(piece, value);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -859,8 +862,14 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
 	{	
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCouleur(piece, a, r, g, b);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->assignerCouleurs(piece,a,r,g,b);
+		ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+		ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+		
+		profil->assignerCouleur(piece, a, r, g, b);
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot() != nullptr)
+		{
+			FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot()->assignerCouleurs(piece, a, r, g, b);
+		}
 	}
 
 

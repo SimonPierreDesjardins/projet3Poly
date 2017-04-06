@@ -40,7 +40,7 @@ ModePersonalize::ModePersonalize(engine::SimulationEngine* engine, ProfilUtilisa
 	std::shared_ptr<NoeudAbstrait> depart = tree_->creerNoeud(ArbreRenduINF2990::NOM_DEPART);
 	table->ajouter(depart);
 
-	NoeudRobot* robot = controleRobot_.obtenirNoeud();
+	robot_ = controleRobot_.obtenirNoeud();
 
 	controleurLumiere_ = engine->getLightController();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
@@ -64,6 +64,7 @@ ModePersonalize::~ModePersonalize()
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+	robot_ = nullptr;
 	tree_->vider();
 }
 
@@ -217,6 +218,20 @@ void ModePersonalize::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudRobot* obtenirRobot()
+///
+/// Fonction qui permet d'obtenir le robot du mode
+///
+/// @return robot
+///
+////////////////////////////////////////////////////////////////////////
+NoeudRobot* ModePersonalize::obtenirRobot()
+{
+	return robot_;
 }
 
 
