@@ -240,20 +240,6 @@ extern "C"
 
 	////////////////////////////////////////////////////////////////////////
 	///
-	/// @fn __declspec(dllexport) void __cdecl obtenirMode()
-	///
-	/// Cette fonction permet d'obtenir un Mode
-	///
-	/// @return int mode : Le numero du mode sélectionné
-	///
-	////////////////////////////////////////////////////////////////////////
-	__declspec(dllexport) int __cdecl getModeType()
-	{
-		return FacadeModele::obtenirInstance()->getModeType();
-	}
-
-	////////////////////////////////////////////////////////////////////////
-	///
 	/// @fn __declspec(dllexport) double __cdecl obtenirAngleRotation()
 	///
 	/// Cette fonction permet d'obtenir l'angle de rotation d'un objet
@@ -1326,6 +1312,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl SaveApplicationSettings()
 	{
 		FacadeModele::obtenirInstance()->getApplicationSettings()->save();
+	}
+
+	CallbackLoading callBackLoading = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForLoading(CallbackLoading handler)
+	{
+		callBackLoading = handler;
+	}
+
+	__declspec(dllexport) void __cdecl Loading(int action)
+	{
+		callBackLoading(action);
 	}
 }
 

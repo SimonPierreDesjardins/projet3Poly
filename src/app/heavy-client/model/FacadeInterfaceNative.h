@@ -29,7 +29,6 @@ extern "C"
 
 	__declspec(dllexport) void assignerMode(int mode);
 	__declspec(dllexport) int obtenirMode();
-	__declspec(dllexport) int getModeType();
 
 	__declspec(dllexport) void repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 	__declspec(dllexport) bool peutRafraichir();
@@ -172,6 +171,11 @@ extern "C"
 	//Application saved settings
 	__declspec(dllexport) void __cdecl LoadApplicationSettings();
 	__declspec(dllexport) void __cdecl SaveApplicationSettings();
+
+	//Loading
+	typedef void(__stdcall * CallbackLoading)(int action);
+	__declspec(dllexport) void __cdecl SetCallbackForLoading(CallbackLoading handler);
+	__declspec(dllexport) void __cdecl Loading(int action);
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

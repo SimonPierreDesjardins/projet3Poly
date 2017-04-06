@@ -231,14 +231,12 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 {
 	switch (mode)
 	{
-	case ONLINE_EDITION:
+	case EDITION:
 		mode_ = std::make_unique<ModeEdition>(&engine_, mapSession);
-		typeModeCourant_ = ONLINE_EDITION;
 		break;
 
-	case ONLINE_SIMULATION:
+	case SIMULATION:
 		mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSession);
-		typeModeCourant_ = ONLINE_SIMULATION;
 		break;
 	}
 	continuerAffichage();
@@ -260,61 +258,47 @@ void FacadeModele::assignerMode(Mode mode)
 		case MENU_PRINCIPAL:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
-			typeModeCourant_ = MENU_PRINCIPAL;
 			break;
 
-		case OFFLINE_SIMULATION:
+		case SIMULATION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
-			typeModeCourant_ = OFFLINE_SIMULATION;
 			break;
 
-		case OFFLINE_EDITION:
+		case EDITION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeEdition>(&engine_, mapSessionManager_.getLocalMapSession());
-			typeModeCourant_ = OFFLINE_EDITION;
 			break;
 
 		case CONFIGURE:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeConfigure>();
-			typeModeCourant_ = CONFIGURE;
 			break;
 
 		case TEST:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
-			typeModeCourant_ = TEST;
 			break;
 
 		case PERSONALIZE:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePersonalize>(&engine_, &profil_);
-			typeModeCourant_ = PERSONALIZE;
 			break;
 
 		case TUTORIAL_EDITION:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeTutorialEdition>(mapSessionManager_.getLocalMapSession());
-			typeModeCourant_ = TUTORIAL_EDITION;
 			break;
 		
 		case PIECES:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePieces>(&engine_, &profil_);
-			typeModeCourant_ = PIECES;
 			break;
 
 		default:
 			break;
 	}
 }
-
-int FacadeModele::getModeType()
-{
-	return typeModeCourant_;
-}
-
 
 ////////////////////////////////////////////////////////////////////////
 ///

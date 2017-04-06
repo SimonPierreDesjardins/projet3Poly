@@ -69,7 +69,7 @@ void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 				// If the user that joined the map is me.
 				if (userId == networkManager_->getUserId())
 				{
-					//Todo: call start of callback load
+					Loading(1);
 					currentSession_ = mapSession;
 					mapConnect(mapId, MAP_JOINED);
 				}
@@ -96,8 +96,8 @@ void EventHandler::onMapReady(uint32_t mapId)
 {
 	if (currentSession_ && currentSession_->info.mapId == mapId)
 	{
-		//Todo: call end of callback load
 		FacadeModele::obtenirInstance()->setOnlineMapMode((Mode)(currentSession_->info.mapType), currentSession_);
+		Loading(0);
 	}
 }
 

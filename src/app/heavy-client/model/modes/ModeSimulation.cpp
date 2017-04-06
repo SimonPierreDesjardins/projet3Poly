@@ -50,7 +50,7 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
 	session->localEntityCreated(robot);
 	robotPhysics_.init(robot, engine->getEntityTree(), session);
 
-	typeMode_ = OFFLINE_SIMULATION;
+	typeMode_ = SIMULATION;
 	profil_ = profil;
 	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	controleRobot_.passerAModeManuel();

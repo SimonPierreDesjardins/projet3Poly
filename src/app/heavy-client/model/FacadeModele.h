@@ -75,7 +75,6 @@ public:
 
 	// Obtenir le Mode courant.
 	inline ModeAbstrait* obtenirMode();
-	int getModeType();
 
 	// Obtient si le modèle est autorisé à recevoir des entrées utilisateurs. 
 	inline bool obtenirAutorisationInputSouris() const; 
@@ -152,8 +151,6 @@ private:
     client_network::NetworkManager network_;
 
 	engine::SimulationEngine engine_;
-
-	Mode typeModeCourant_ = MENU_PRINCIPAL;
 
 	/// Le mode d'utilisation courant.
 	std::unique_ptr<ModeAbstrait> mode_{ nullptr };

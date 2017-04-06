@@ -29,11 +29,7 @@ namespace ui
 
         public virtual void goModeEdition()
         {
-            parent_.configuration.deallocateCurrentProfilToolStrip();
-            System.Text.StringBuilder str = new System.Text.StringBuilder(100);
-            FonctionsNatives.obtenirCheminFichierZoneDefaut(str, str.Capacity);
-            string tmp = str.ToString();
-            parent_.goOfflineEdition(tmp);
+            
         }
 
         public virtual void orthoView()

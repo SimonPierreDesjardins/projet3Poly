@@ -44,6 +44,8 @@ namespace ui
         public OnlinePiecesMenuStrip onlinePiecesMenuStrip;
         public OnlineRaceMenuStrip onlineRaceMenuStrip;
 
+        public loadingPanel onlineLoadingPanel;
+
         public string PathToDefaultZone_;
 
         public object timerLock_ = new object();
@@ -124,6 +126,10 @@ namespace ui
             //Set callback for random disconnect
             disconnectInstance = new CallbackDisconnect(DisconnectHandler);
             SetCallbackForDisconnect(disconnectInstance);
+
+            //Set callback for loading
+            loadingHandler = new CallbackLoading(LoadingHandler);
+            SetCallbackForLoading(loadingHandler);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -214,32 +220,27 @@ namespace ui
             if (!FonctionsNatives.obtenirAutorisationInputClavier())
                 return;
 
-            int mode = FonctionsNatives.getModeType();
+            int mode = FonctionsNatives.obtenirMode();
             switch (mode)
             {
                 //Mode Menu_Principal
                 case (int)ModeEnum.Mode.MENU_PRINCIPAL:
                     break;
 
+                //Mode Test
+                case (int)ModeEnum.Mode.TEST:
                 //Mode Simulation
-                case (int)ModeEnum.Mode.ONLINE_SIMULATION:
-                case (int)ModeEnum.Mode.OFFLINE_SIMULATION:
+                case (int)ModeEnum.Mode.SIMULATION:
                     gererToucheSimulation(keyDown);
                     break;
 
                 //Mode Edition
-                case (int)ModeEnum.Mode.ONLINE_EDITION:
-                case (int)ModeEnum.Mode.OFFLINE_EDITION:
+                case (int)ModeEnum.Mode.EDITION:
                     gererToucheEdition(keyDown);
                     break;
 
                 //Mode Configure
                 case (int)ModeEnum.Mode.CONFIGURE:
-                    break;
-
-                //Mode Test
-                case (int)ModeEnum.Mode.TEST:
-                    gererToucheTest(keyDown);
                     break;
 
                 //Mode Personalize
@@ -373,77 +374,47 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void gererToucheSimulation(IntPtr keyDown)
         {
-            SimMenuStrip simulation;
+            SimMenuStrip menuStrip;
             if (viewPort.Controls.Contains(simulationMenuStrip))
             {
-                simulation = simulationMenuStrip;
+                menuStrip = simulationMenuStrip;
                 if (viewPort.Controls.Contains(simulationMenuStrip.simulationTutorial))
                     return;
             }
+            else if (viewPort.Controls.Contains(onlineSimulationMenuStrip))
+                menuStrip = onlineSimulationMenuStrip;
             else
-                simulation = onlineSimulationMenuStrip;
+                menuStrip = testMenuStrip;
 
             switch ((int)keyDown)
             {
                 case Constants.Key_1:
-                    simulation.orthoView();
+                    menuStrip.orthoView();
                     break;
 
                 case Constants.Key_2:
-                    simulation.orbiteView();
+                    menuStrip.orbiteView();
                     break;
 
                 case Constants.Key_3:
-                    simulation.firstPersonView();
+                    menuStrip.firstPersonView();
                     break;
 
                 case Constants.Key_Q:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        simulation.goMenuPrincipal();
+                        menuStrip.goMenuPrincipal();
                     break;
 
                  case Constants.Key_Esc:
-                    simulation.goIntoPause();
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void gererToucheTest(IntPtr keyDown)
-        ///
-        /// Gère les touches pour le mode Test
-        /// 
-        /// @param IntPtr keyDown: evenement du clavier
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void gererToucheTest(IntPtr keyDown)
-        {
-            switch ((int)keyDown)
-            {
-                case Constants.Key_1:
-                    testMenuStrip.orthoView();
-                    break;
-
-                case Constants.Key_2:
-                    testMenuStrip.orbiteView();
-                    break;
-
-                case Constants.Key_Q:
-                    if (ModifierKeys.HasFlag(Keys.Control))
-                        testMenuStrip.goMenuPrincipal();
-                    break;
-
-                case Constants.Key_Esc:
-                    testMenuStrip.goIntoPause();
+                    menuStrip.goIntoPause();
                     break;
 
                 case Constants.Key_E:
                     if (ModifierKeys.HasFlag(Keys.Control))
-                        testMenuStrip.goModeEdition();
+                        menuStrip.goModeEdition();
+                    break;
+
+                default:
                     break;
             }
         }
@@ -603,12 +574,12 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public void verificationDuNombreElementChoisi()
         {
-            int mode = FonctionsNatives.getModeType();
-            if (!(mode == (int)ModeEnum.Mode.OFFLINE_SIMULATION || mode == (int)ModeEnum.Mode.ONLINE_EDITION || mode == (int)ModeEnum.Mode.TUTORIAL_EDITION))
+            int mode = FonctionsNatives.obtenirMode();
+            if (!(mode == (int)ModeEnum.Mode.EDITION || mode == (int)ModeEnum.Mode.TUTORIAL_EDITION))
                 return;
 
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            if (mode == (int)ModeEnum.Mode.OFFLINE_SIMULATION || mode == (int)ModeEnum.Mode.ONLINE_EDITION)
+            if (mode == (int)ModeEnum.Mode.EDITION)
             {
                 int nbEnfant = FonctionsNatives.obtenirNombreSelection();
                 if (nbEnfant == 1)
@@ -707,7 +678,7 @@ namespace ui
 
         public void goOfflineEdition(String pathToFile)
         {
-            loadMap(pathToFile, ModeEnum.Mode.OFFLINE_EDITION);
+            loadMap(pathToFile, ModeEnum.Mode.EDITION);
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             estEnPause = false;
@@ -794,7 +765,7 @@ namespace ui
 
         public void goOfflineSimulation(String pathToFile)
         {
-            loadMap(pathToFile, ModeEnum.Mode.OFFLINE_SIMULATION);
+            loadMap(pathToFile, ModeEnum.Mode.SIMULATION);
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             simulationMenuStrip = new SimulationMenuStrip(this);
@@ -808,7 +779,7 @@ namespace ui
 
         public void goOfflineSimulationTutorial()
         {
-            loadMap(PathToDefaultZone_, ModeEnum.Mode.OFFLINE_SIMULATION);
+            loadMap(PathToDefaultZone_, ModeEnum.Mode.SIMULATION);
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             simulationMenuStrip = new SimulationMenuStrip(this);
@@ -925,6 +896,31 @@ namespace ui
             }
         }
 
+        private void startLoading()
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                onlineLoadingPanel = new loadingPanel(this);
+                onlineLoadingPanel.Dock = DockStyle.Fill;
+                this.Controls.Add(onlineLoadingPanel);
+                onlineLoadingPanel.BringToFront();
+
+                /*while (loading)
+                {
+                    Application.DoEvents();
+                };*/
+            });
+        }
+
+        private void stopLoading()
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                onlineLoadingPanel.stop();
+                this.Controls.Remove(onlineLoadingPanel);
+            });
+        }
+
         public void Test(string mapName, bool connectionState, int mode, int nbPlayers, bool isAdmin, int id)
         {
             AddMap(mapName, connectionState, mode, nbPlayers, isAdmin, id);
@@ -991,6 +987,37 @@ namespace ui
 
         [DllImport("model.dll")]
         private static extern void GotDisconnected();
+
+        public void Test2(int action)
+        {
+            Loading(action);
+        }
+
+        private delegate void CallbackLoading(int action);
+        private bool loading = false;
+        private CallbackLoading loadingHandler;
+        private void LoadingHandler(int action)
+        {
+            if (Convert.ToBoolean(action))
+            {
+                startLoading();
+            }
+            else
+            {
+                stopLoading();
+            }
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForLoading(CallbackLoading fn);
+
+        [DllImport("model.dll")]
+        private static extern void Loading(int action);
     }
 
     ////////////////////////////////////////////////////////////////////////
@@ -1019,9 +1046,6 @@ namespace ui
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern int obtenirMode();
-
-        [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern int getModeType();
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void redimensionnerFenetre(int largeur, int hauteur);
@@ -1090,7 +1114,12 @@ namespace ui
         public static extern int obtenirTypeVue();
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
-        public static extern void sendMessage(String message, int size);
+        public static extern void sendMessage(byte[] message, int size);
+        public static void sendMessage(string data)
+        {
+            byte[] dataUtf8 = Encoding.UTF8.GetBytes(data);
+            sendMessage(dataUtf8, dataUtf8.Length);
+        }
 
         [DllImport(@"model.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern bool connectToServer(String hostName, String port);

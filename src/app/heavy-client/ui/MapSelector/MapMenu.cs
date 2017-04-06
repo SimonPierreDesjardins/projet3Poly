@@ -448,13 +448,13 @@ namespace ui
             {
                 //Edition
                 case 0:
-                    mapType = (char)(ModeEnum.Mode.ONLINE_EDITION);
+                    mapType = (char)(ModeEnum.Mode.EDITION);
                     FonctionsNatives.createMap(mapName, mapName.Length, password, password.Length, mapType, privateCheckBox.Checked ? (char)1 : (char)0);
                     break;
 
                 //Simulation
                 case 1:
-                    mapType = (char)(ModeEnum.Mode.ONLINE_SIMULATION);
+                    mapType = (char)(ModeEnum.Mode.SIMULATION);
                     FonctionsNatives.createMap(mapName, mapName.Length, password, password.Length, mapType, privateCheckBox.Checked ? (char)1 : (char)0);
                     break;
 

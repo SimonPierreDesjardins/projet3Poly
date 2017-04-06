@@ -18,10 +18,8 @@ namespace ModeEnum
 enum Mode
     {
         MENU_PRINCIPAL,
-        ONLINE_SIMULATION,
-        ONLINE_EDITION,
-        OFFLINE_SIMULATION,
-        OFFLINE_EDITION,
+        SIMULATION,
+        EDITION,
         CONFIGURE,
         TEST,
         PERSONALIZE,

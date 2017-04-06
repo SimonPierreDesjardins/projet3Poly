@@ -53,11 +53,11 @@ namespace ui
 
             switch (modeType_)
             {
-                case (int)ModeEnum.Mode.ONLINE_SIMULATION:
+                case (int)ModeEnum.Mode.SIMULATION:
                     ModeLabel.Text = "Simulation";
                     break;
 
-                case (int)ModeEnum.Mode.ONLINE_EDITION:
+                case (int)ModeEnum.Mode.EDITION:
                     ModeLabel.Text = "Edition";
                     break;
 
@@ -150,11 +150,11 @@ namespace ui
                 {
                     switch (modeType_)
                     {
-                        case (int)ModeEnum.Mode.ONLINE_SIMULATION:
+                        case (int)ModeEnum.Mode.SIMULATION:
                             loadOnlineSimulationMode();
                             break;
 
-                        case (int)ModeEnum.Mode.ONLINE_EDITION:
+                        case (int)ModeEnum.Mode.EDITION:
                             loadOnlineEditionMode();
                             break;
 
