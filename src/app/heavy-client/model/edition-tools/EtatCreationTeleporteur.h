@@ -43,7 +43,8 @@ private:
 	int compteurTeleporteur_;
 	bool enCreation_{false};
 	std::shared_ptr<NoeudAbstrait> teleporteur_;
-	NoeudAbstrait* ancienTeleporteur_;
+	std::shared_ptr<NoeudAbstrait> ancienTeleporteur_;
+	std::shared_ptr<NoeudAbstrait> paireTeleporteurs_;
 	NoeudAbstrait* teleporteurTemp;
 };
 

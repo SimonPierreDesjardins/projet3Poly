@@ -272,6 +272,25 @@ void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
 	}
 }
 
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudPaireTeleporteurs* noeud)
+///
+/// Appel la méthode accepterVisiteur pour tous les enfants d'un noeud composite(ligne ou table)
+///
+/// @param[in] noeud : Pointeur vers le noeud ayant des enfants.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	for each(std::shared_ptr<NoeudAbstrait> noeudAbs in noeud->getEnfants()) {
+		noeudAbs->accepterVisiteur(this);
+	}
+}
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

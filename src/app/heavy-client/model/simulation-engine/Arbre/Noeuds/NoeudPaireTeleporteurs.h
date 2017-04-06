@@ -15,6 +15,7 @@
 
 #include <vector>
 
+class VisiteurAbstrait;
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudComposite
 /// @brief Implantation d'un noeud du patron composite qui peut posséder
@@ -32,8 +33,12 @@ public:
 	// Constructeur.
 	NoeudPaireTeleporteurs(uint32_t id, const std::string& type = std::string{ "" });
     // Destructeur.
-    virtual ~NoeudPaireTeleporteurs();
+    ~NoeudPaireTeleporteurs();
 
+	virtual void afficherConcret() const;
+	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
+
+	virtual bool NoeudPaireTeleporteurs::ajouter(std::shared_ptr<NoeudAbstrait> enfant);
 };
 
 
