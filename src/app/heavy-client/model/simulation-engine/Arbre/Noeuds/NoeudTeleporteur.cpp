@@ -312,7 +312,7 @@ bool NoeudTeleporteur::collisionTeleporteur()
 	{
 		return true;
 	}
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants() -1; i++) //on vérifie le cercle englobant des autres téléporteurs afin d'éviter d'avoir un téléporter dans ceux-ci
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants() -1; i++) //on vï¿½rifie le cercle englobant des autres tï¿½lï¿½porteurs afin d'ï¿½viter d'avoir un tï¿½lï¿½porter dans ceux-ci
 	{
 		if (table->chercher(i) != this)
 		{

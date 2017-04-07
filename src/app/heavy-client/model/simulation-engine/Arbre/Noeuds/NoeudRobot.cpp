@@ -273,25 +273,76 @@ void NoeudRobot::suivreCamera()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& vitesseTranslationCollision,
-    double& vitesseAngulaireCollision) const
+void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale)
 {
 	glm::dvec3 orientationTangentielle, orientationCentripete;
     rectangleEnglobant_.calculerVecteursOrientation(orientationCentripete, orientationTangentielle);
 
     // La nouvelle vitesse de translation en collision est la réflexion de la vitesse en translation courante.
-    vitesseTranslationCollision = glm::reflect(physics_.linearVelocity, normale) * FACTEUR_ATTENUATION;
+    vitesseTranslationCollision_ = glm::reflect(physics_.linearVelocity, normale) * FACTEUR_ATTENUATION;
 
     // La vitesse angulaire de collision est l'inverse de la vitesse angulaire courante.
     // La vitesse en translation ajoute sa projection sur l'orientation de la vitesse engulaire également.
-    vitesseAngulaireCollision = (- physics_.angularVelocity.z - glm::dot(vitesseTranslationCollision, orientationCentripete)) * FACTEUR_ATTENUATION;    
+    vitesseAngulaireCollision_ = (- physics_.angularVelocity.z - glm::dot(vitesseTranslationCollision_, orientationCentripete)) * FACTEUR_ATTENUATION;    
 
     // S'assurer que la vitesse de collision reste à l'intérieur d'une certaine limite.
-    vitesseTranslationCollision.x = glm::clamp(vitesseTranslationCollision.x, -50.0, 50.0);
-    vitesseTranslationCollision.y = glm::clamp(vitesseTranslationCollision.y, -50.0, 50.0);
-    vitesseAngulaireCollision = glm::clamp(vitesseAngulaireCollision, -50.0, 50.0);
+    vitesseTranslationCollision_.x = glm::clamp(vitesseTranslationCollision_.x, -50.0, 50.0);
+    vitesseTranslationCollision_.y = glm::clamp(vitesseTranslationCollision_.y, -50.0, 50.0);
+    vitesseAngulaireCollision_ = glm::clamp(vitesseAngulaireCollision_, -50.0, 50.0);
 
-	std::cout << "\r t: " << vitesseTranslationCollision.x << ", " << vitesseTranslationCollision.y << " r: " << vitesseAngulaireCollision;
+	std::cout << "\r t: " << vitesseTranslationCollision_.x << ", " << vitesseTranslationCollision_.y << " r: " << vitesseAngulaireCollision_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// void NoeudRobot::calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslation, double& vitesseAngulaire) const
+///
+/// Cette méthode retourne les composantes du vitesse de collision en fonction
+/// d'une normale de collision.
+///
+/// @param[in] normale : La normale de collision avec laquelle calculer la collision.
+/// @param[out] vitesseTranslation : La vitesse de translation du robot.
+/// @param[out] vitesseAngulaire : La vitesse angulaire du robot.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, NoeudRobot* entity)
+{
+	glm::dvec3 orientationTangentielle, orientationCentripete;
+    rectangleEnglobant_.calculerVecteursOrientation(orientationCentripete, orientationTangentielle);
+
+	PhysicsComponent& otherPhysics = entity->getPhysicsComponent();
+	// Compute conservation of momentum coefficient for this robot.
+	double thisVelocity = glm::length(physics_.linearVelocity);
+	double otherVelocity = glm::length(otherPhysics.linearVelocity);
+
+	double thisRadius = rectangleEnglobant_.calculerRayon();
+	double otherRadius = entity->getBoundingBox().calculerRayon();
+
+	double thisMomentum = thisVelocity + physics_.angularVelocity.z * thisRadius;
+	double otherMomentum = otherVelocity + otherPhysics.angularVelocity.z * otherRadius;
+
+	double weightedMomentum = (FACTEUR_ATTENUATION * otherPhysics.mass * (thisMomentum - otherMomentum) +
+			                   physics_.mass * thisMomentum +
+			                   otherPhysics.mass * otherMomentum);
+	double totalMass = physics_.mass + otherPhysics.mass;
+
+	double momentumCoefficient = weightedMomentum / totalMass;
+
+    // La nouvelle vitesse de translation en collision est la réflexion de la vitesse en translation courante.
+    vitesseTranslationCollision_ = glm::reflect(physics_.linearVelocity, normale) * momentumCoefficient;
+
+    // La vitesse angulaire de collision est l'inverse de la vitesse angulaire courante.
+    // La vitesse en translation ajoute sa projection sur l'orientation de la vitesse engulaire également.
+    vitesseAngulaireCollision_ = (- physics_.angularVelocity.z - glm::dot(vitesseTranslationCollision_, orientationCentripete)) * momentumCoefficient;    
+
+    // S'assurer que la vitesse de collision reste à l'intérieur d'une certaine limite.
+    vitesseTranslationCollision_.x = glm::clamp(vitesseTranslationCollision_.x, -50.0, 50.0);
+    vitesseTranslationCollision_.y = glm::clamp(vitesseTranslationCollision_.y, -50.0, 50.0);
+    vitesseAngulaireCollision_ = glm::clamp(vitesseAngulaireCollision_, -50.0, 50.0);
+
+	std::cout << "\r t: " << vitesseTranslationCollision_.x << ", " << vitesseTranslationCollision_.y << " r: " << vitesseAngulaireCollision_;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -320,7 +371,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
         cercle->assignerEnCollision(enCollision);
 
         glm::dvec3 normaleCollision = cercle->calculerNormaleCollision(rectangleEnglobant_);
-        calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+        calculerComposantesCollision(normaleCollision);
 
         // On replace le poteau à la dernière position.
         reinitialiserPosition();
@@ -363,7 +414,7 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 			teleporteurCourant_ = teleporteur;
 			rectangle->assignerEnCollision(enCollision);
 			glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
-			calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+			calculerComposantesCollision(normaleCollision);
 
 			// On replace le teleporteur à la dernière position.
 			reinitialiserPosition();
@@ -395,7 +446,6 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 		physics_.absolutePosition.x = teleporterAbsPos.x;
 		physics_.absolutePosition.y = teleporterAbsPos.y;
 		physics_.relativePosition = physics_.absolutePosition;
-		//mettreAJourPosition(dt);
 		mettreAJourFormeEnglobante();
 		teleportationFaite_ = true;
 	}
@@ -433,7 +483,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
         // On calcule les composantes de la collision.
         glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
 
-        calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+		calculerComposantesCollision(normaleCollision);
 
         reinitialiserPosition();
     }
@@ -484,7 +534,7 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
     {
 		EnginSon::obtenirInstance()->jouerCollision(COLLISION_TABLE_SON);
         // On calcule les composantes de la collision.
-        calculerComposantesCollision(-normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+		calculerComposantesCollision(-normaleCollision);
 
         reinitialiserPosition();
 
@@ -552,17 +602,17 @@ bool NoeudRobot::verifierCollision(NoeudRobot* robot)
     bool enIntersection = rectangleEnglobant_.calculerIntersection(rectangle);
     bool enCollision = rectangle.obtenirEnCollision();
 
-    // Le poteau est en intersection et il ne se trouve pas déjà en collision.
+    // Le robot est en intersection et il ne se trouve pas déjà en collision.
     if (enIntersection)
     {
-		EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON);
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_TABLE_SON);
         enCollision = true;
         rectangle.assignerEnCollision(enCollision);
 
         // On calcule les composantes de la collision.
         glm::dvec3 normaleCollision = rectangle.calculerNormaleCollision(rectangleEnglobant_);
 
-        calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+		calculerComposantesCollision(normaleCollision, robot);
 
         reinitialiserPosition();
     }

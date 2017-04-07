@@ -163,8 +163,8 @@ protected:
 	void updateEnginesRadius();
 
     // Calculer les composantes de d'une collision en fonction d'une normale de collision.
-    void calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& viteseTranslationCollision,
-                                      double& vitesseAngulaireCollision) const;
+	void calculerComposantesCollision(const glm::dvec3& normale);
+	void calculerComposantesCollision(const glm::dvec3& normale, NoeudRobot* entity);
 	
 	ControleurLumiere* controleurLumiere_{ nullptr };
 };
