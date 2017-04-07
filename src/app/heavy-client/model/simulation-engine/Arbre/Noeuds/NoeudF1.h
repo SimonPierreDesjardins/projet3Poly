@@ -45,7 +45,7 @@ public:
 
 	void afficherConcret() const;
 
-	void suivreCamera();
+	void suivreCamera(vue::Vue* vue);
 
 	void setCouleurDefault(int piece, bool default);
 

@@ -48,7 +48,7 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
 	NoeudRobot* robot = controleRobot_.obtenirNoeud();
 	robot->assignerSelection(true);
 	session->localEntityCreated(robot);
-	robotPhysics_.init(robot, engine->getEntityTree(), session);
+	robotPhysics_.init(robot, engine, session);
 
 	typeMode_ = SIMULATION;
 	profil_ = profil;

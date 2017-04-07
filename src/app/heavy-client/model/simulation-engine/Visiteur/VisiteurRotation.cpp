@@ -142,6 +142,7 @@ void VisiteurRotation::visiter(NoeudTeleporteur* noeud)
 	// Assigner le nouvel angle de rotation.
 	PhysicsComponent& physics = noeud->getPhysicsComponent();
 	physics.rotation.z += angleRotation_;
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(physics.rotation));
 	assignerNouvellePositionRelative(noeud);
 }
 
@@ -295,6 +296,20 @@ void VisiteurRotation::assignerNouvellePositionRelative(NoeudAbstrait* noeud)
 
 	mapSession_->localEntityPropertyUpdated(noeud, Networking::ABSOLUTE_POSITION, glm::vec3(updatedPosition));
 	mapSession_->localEntityPropertyUpdated(noeud, Networking::RELATIVE_POSITION, glm::vec3(updatedPosition));
+}
+
+void VisiteurRotation::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	calculerCentreSelection(noeud);
+	NoeudAbstrait* enfant = nullptr;
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
+		enfant = noeud->chercher(i);
+		// Child has to be selected by me.
+		if (enfant != nullptr && enfant->estSelectionne() &&
+			enfant->getOwnerId() == mapSession_->getThisUserId()) {
+			enfant->accepterVisiteur(this);
+		}
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

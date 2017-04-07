@@ -139,11 +139,11 @@ void NoeudF1::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot
+	//controleurLumiere_->afficherLumiereSpotRobot();
+	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
-	}
+	}*/
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -179,9 +179,8 @@ void NoeudF1::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudF1::suivreCamera()
+void NoeudF1::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{
@@ -214,16 +213,16 @@ void NoeudF1::suivreCamera()
 void NoeudF1::positionnerRoues()
 {
 	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche_->getPhysicsComponent().angularVelocity.z = vitesseCouranteGauche_;
+	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
 
 	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche2_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
+	roueGauche2_->setVitesseCourante(vitesseCouranteGauche_);
 
 	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite_->getPhysicsComponent().angularVelocity.z = vitesseCouranteDroite_;
+	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 
 	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite2_->getPhysicsComponent().angularVelocity.z = vitesseCouranteDroite_;
+	roueDroite2_->setVitesseCourante(vitesseCouranteDroite_);
 }
 
 ////////////////////////////////////////////////////////////////////////
