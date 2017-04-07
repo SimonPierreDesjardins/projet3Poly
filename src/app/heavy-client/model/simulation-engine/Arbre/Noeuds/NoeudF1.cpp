@@ -226,17 +226,20 @@ void NoeudF1::suivreCamera()
 ////////////////////////////////////////////////////////////////////////
 void NoeudF1::positionnerRoues()
 {
+	double vLeft = leftEngine.getTangentialVelocity();
+	double vRight = rightEngine.getTangentialVelocity();
+
 	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche_->getPhysicsComponent().angularVelocity.z = vitesseCouranteGauche_;
+	roueGauche_->getPhysicsComponent().angularVelocity.z = vLeft;
 
 	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche2_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
+	roueGauche2_->getPhysicsComponent().angularVelocity.y = vLeft;
 
 	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite_->getPhysicsComponent().angularVelocity.z = vitesseCouranteDroite_;
+	roueDroite_->getPhysicsComponent().angularVelocity.z = vRight;
 
 	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite2_->getPhysicsComponent().angularVelocity.z = vitesseCouranteDroite_;
+	roueDroite2_->getPhysicsComponent().angularVelocity.z = vRight;
 }
 
 ////////////////////////////////////////////////////////////////////////

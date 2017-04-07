@@ -216,17 +216,20 @@ void NoeudTruck::suivreCamera()
 ////////////////////////////////////////////////////////////////////////
 void NoeudTruck::positionnerRoues()
 {
+	double vLeft = leftEngine.getTangentialVelocity();
+	double vRight = rightEngine.getTangentialVelocity();
+
 	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
+	roueGauche_->setVitesseCourante(vLeft);
 
 	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche2_->setVitesseCourante(vitesseCouranteGauche_);
+	roueGauche2_->setVitesseCourante(vLeft);
 
 	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
+	roueDroite_->setVitesseCourante(vRight);
 
 	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite2_->setVitesseCourante(vitesseCouranteDroite_);
+	roueDroite2_->setVitesseCourante(vRight);
 }
 
 ////////////////////////////////////////////////////////////////////////

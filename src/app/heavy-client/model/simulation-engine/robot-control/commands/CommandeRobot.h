@@ -47,8 +47,8 @@ class CommandeRobot{
 		inline TypeCommande obtenirTypeCommande();
 
 	private:
-		const double MAX_POWER = 20.0;
-		const double LOW_POWER = 5.0;
+		const double MAX_POWER = 4.0;
+		const double LOW_POWER = 1.0;
 
 		/// Représente la nouvelle vitesse du moteur de gauche
 		double puissanceMoteurG_{ 0 };

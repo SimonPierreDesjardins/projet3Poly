@@ -44,7 +44,6 @@ ControleRobot::ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profil)
 	table_->ajouter(robot);
 
 	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
-	robot_->assignerMutex(&mutexComportement);
 	robot_->giveSensors(profil->obtenirCapteursDistance(), profil->obtenirSuiveurLigne());
 
 	comportement_ = nullptr;

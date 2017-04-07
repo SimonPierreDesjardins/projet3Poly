@@ -19,9 +19,9 @@ void RobotPhysics::applyPhysicsEffects(float dt)
 {
 	if (!isInitialized_) return;
 
-    robot_->mettreAJourPosition(dt);
 	tree_->accepterVisiteur(&collisionDetection_);
-	robot_->effectuerCollision(dt);
+    robot_->mettreAJourPosition(dt);
+	//robot_->effectuerCollision(dt);
 
 	PhysicsComponent& physics = robot_->getPhysicsComponent();
 

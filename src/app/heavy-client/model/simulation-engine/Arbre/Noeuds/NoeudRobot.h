@@ -45,20 +45,28 @@ public:
 	class Engine
 	{
 	public:
-		const double MAX_VELOCITY = 20.0;
-
 		float targetVelocity = 0.0;
 		void updateVelocity(float dt);
-		inline double getVelocity() const;
+
+		inline void setWheelToCenterRadius(double radius);
+
+		inline double getTangentialVelocity() const;
+		inline double getAngularVelocity() const;
+		inline void resetVelocity();
+
+		inline double getLinearFriction() const;
+		inline double getAngularFriction() const;
 
 	private:
-		double power = 70.0;
-		double velocity_ = 0.0;
+		const double POWER = 5.0;
+		double angularFriction_ = POWER;
+		double tangentialVelocity_ = 0.0;
+		double angularVelocity_ = 0.0;
+		double radius_ = 1.0;
 	};
 
 	Engine leftEngine;
 	Engine rightEngine;
-	const double friction = 70.0;
 
     using ConteneurCapteursDistance = std::array<CapteurDistance, N_CAPTEURS_DISTANCE>;
 
@@ -84,33 +92,18 @@ public:
 	bool verifierCollision(NoeudPiece* piece);
 	bool verifierCollision(NoeudRobot* robot);
 
-	//inline void setEnginePower(Engine::Side side, float power);
-    
 	// Permet de modifier les paramètres du robot
 	inline void assignerVitesseRotation(float vitesse);
-	//inline void assignerVitesseDroite(float vitesse);
-	//inline void assignerVitesseGauche(float vitesse);
-    inline void assignerMutex(std::mutex* mutex);
 
-    // Calculer les composantes courantes de vitesse du robot.
-    void calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslationCourante, double& vitesseAngulaireCourante) const;
-    // Calculer les composantes de d'une collision en fonction d'une normale de collision.
-    void calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& viteseTranslationCollision,
-                                      double& vitesseAngulaireCollision) const;
 	//Permet de positionner les roues
 	virtual void positionnerRoues();
+
     void mettreAJourPosition(float dt);
     void effectuerCollision(double dt);
 
 	virtual void assignerCouleurs(int modele, int a, int r, int g, int b);
 
 	void assignerMode(int mode);
-
-	/*
-	//Permet de récupérer les paramètres du robot.
-	inline float obtenirVitesseDroite() const;
-	inline float obtenirVitesseGauche() const;
-	*/
 
 	inline void assignerEstEnCollision(bool collision);
     
@@ -128,13 +121,6 @@ public:
 
 protected:
 
-	//Vitesse des moteurs du robot
-	float vitesseDroite_{ 0.f };
-	float vitesseGauche_{ 0.f };
-
-	float vitesseCouranteDroite_{ 0.f };
-	float vitesseCouranteGauche_{ 0.f };
-
     glm::dvec3 vitesseTranslationCollision_{0.0, 0.0, 0.0};
     double vitesseAngulaireCollision_{ 0.0 };
 
@@ -142,7 +128,6 @@ protected:
     double dernierAngleRotation_;
 
 	float angle_{ 0.f };
-	float acceleration_{ 70.0 };
 
 	//attribut pour la couleur
 
@@ -153,14 +138,12 @@ protected:
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };
 
-    std::unique_ptr<VisiteurDetectionRobot> visiteur_{ nullptr };
     ArbreRendu* arbre_{ nullptr };
 
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
     void reinitialiserPosition();
     virtual void mettreAJourFormeEnglobante();
-    std::mutex* mutexControleRobot_{ nullptr };
 
 	bool estEnCollision_{ false };
 
@@ -170,11 +153,18 @@ protected:
 	NoeudRoues* roueGauche2_;
 	NoeudRoues* roueDroite2_;
 	NoeudTeleporteur* teleporteurCourant_{nullptr};
+
 	float* couleur_;
 	bool estCouleurDefaut_ = true;
 	int mode_;
 	bool teleporteurCollision_ = false;
 	bool teleportationFaite_ = false;
+
+	void updateEnginesRadius();
+
+    // Calculer les composantes de d'une collision en fonction d'une normale de collision.
+    void calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& viteseTranslationCollision,
+                                      double& vitesseAngulaireCollision) const;
 	
 	ControleurLumiere* controleurLumiere_{ nullptr };
 };
@@ -211,76 +201,6 @@ inline NoeudRobot::ConteneurCapteursDistance* NoeudRobot::obtenirCapteursDistanc
     return capteursDistance_;
 }
 
-/*
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::obtenirVitesseDroite() const
-///
-/// Cette fonction retourne la vitesse du moteur de droite
-///
-/// @param[in] Aucune.
-///
-/// @return float : vitesse de rotation du moteur de droite.
-///
-////////////////////////////////////////////////////////////////////////
-inline float NoeudRobot::obtenirVitesseDroite() const
-{
-	return vitesseDroite_;
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::obtenirVitesseGauche() const
-///
-/// Cette fonction retourne la vitesse du moteur de gauche
-///
-/// @param[in] Aucune.
-///
-/// @return float : vitesse de rotation du moteur de gauche.
-///
-////////////////////////////////////////////////////////////////////////
-inline float NoeudRobot::obtenirVitesseGauche() const
-{
-	return vitesseGauche_;
-}
-*/
-
-/*
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::assignerVitesseDroite() const
-///
-/// Cette modifie la vitesse de rotation du moteur de droite.
-///
-/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de droite.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudRobot::assignerVitesseDroite(float vitesse)
-{
-	vitesseDroite_ = vitesse;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudRobot::assignerVitesseGauche() const
-///
-/// Cette modifie la vitesse de rotation du moteur de gauche.
-///
-/// @param[in] vitesse : vitesse que l'on souhaite assigner au moteur de gauche.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudRobot::assignerVitesseGauche(float vitesse)
-{
-	vitesseGauche_ = vitesse;
-}
-*/
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudRobot::assignerVitesseRotation() const
@@ -303,12 +223,6 @@ inline void NoeudRobot::assignerEstEnCollision(bool collision)
     rectangleEnglobant_.assignerEnCollision(collision);
 }
 
-inline void NoeudRobot::assignerMutex(std::mutex* mutex)
-{
-    mutexControleRobot_ = mutex;
-}
-
-
 inline RectangleEnglobant& NoeudRobot::getBoundingBox()
 {
 	return rectangleEnglobant_;
@@ -320,10 +234,41 @@ inline void NoeudRobot::giveSensors(ConteneurCapteursDistance* distanceSensors, 
 	suiveurLigne_ = lineSensor;
 }
 
-inline double NoeudRobot::Engine::getVelocity() const
+inline double NoeudRobot::Engine::getTangentialVelocity() const
 {
-	return velocity_;
+	return tangentialVelocity_;
 }
+
+inline double NoeudRobot::Engine::getAngularVelocity() const
+{
+	return angularVelocity_;
+}
+
+inline void NoeudRobot::Engine::resetVelocity()
+{
+	tangentialVelocity_ = 0.0;
+	angularVelocity_ = 0.0;
+}
+
+inline void NoeudRobot::Engine::setWheelToCenterRadius(double radius)
+{
+	if (!utilitaire::EGAL_ZERO(radius))
+	{
+		radius_ = radius;
+		angularFriction_ = std::abs(POWER / radius_);
+	}
+}
+
+inline double NoeudRobot::Engine::getLinearFriction() const
+{
+	return POWER;
+}
+
+inline double NoeudRobot::Engine::getAngularFriction() const
+{
+	return angularFriction_;
+}
+
 
 #endif // __ARBRE_NOEUD_ROBOT_H__
 
