@@ -229,7 +229,18 @@ void VisiteurDetectionRobot::visiter(NoeudPiece* piece)
 	{
 		estEnCollision_ = estEnCollision;
 	}
+}
 
+void VisiteurDetectionRobot::visiter(NoeudRobot* robot)
+{
+	if (robot_ != robot)
+	{
+		bool estEnCollision = robot_->verifierCollision(robot);
+		if (!estEnCollision_)
+		{
+			estEnCollision_ = estEnCollision;
+		}
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

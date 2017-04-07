@@ -40,38 +40,38 @@ CommandeRobot::CommandeRobot(TypeCommande commande){
 	switch (commande)
 	{
 	case AVANCER:
-		vitesseMoteurD_ = 20.0;
-		vitesseMoteurG_ = 20.0;
+		puissanceMoteurD_ = MAX_POWER;
+		puissanceMoteurG_ = MAX_POWER;
 		break;
 	
 	case RECULER:
-		vitesseMoteurD_ = -20.0;
-		vitesseMoteurG_ = -20.0;
+		puissanceMoteurD_ = -MAX_POWER;
+		puissanceMoteurG_ = -MAX_POWER;
 		break;
 	
 	case ROTATION_GAUCHE:
-		vitesseMoteurD_ = 20.0;
-		vitesseMoteurG_ = -20.0;
+		puissanceMoteurD_ = MAX_POWER;
+		puissanceMoteurG_ = -MAX_POWER;
 		break;
 	
 	case ROTATION_DROITE:
-		vitesseMoteurD_ = -20.0;
-		vitesseMoteurG_ = 20.0;
+		puissanceMoteurD_ = -MAX_POWER;
+		puissanceMoteurG_ = MAX_POWER;
 		break;
 
 	case DEVIATION_GAUCHE:
-		vitesseMoteurD_ = 20.0;
-		vitesseMoteurG_ = 5.0;
+		puissanceMoteurD_ = MAX_POWER;
+		puissanceMoteurG_ = LOW_POWER;
 		break;
 
 	case DEVIATION_DROITE:
-		vitesseMoteurD_ = 5.0;
-		vitesseMoteurG_ = 20.0;
+		puissanceMoteurD_ = LOW_POWER;
+		puissanceMoteurG_ = MAX_POWER;
 		break;
 	
 	case ARRETER:
-		vitesseMoteurD_ = 0.0;
-		vitesseMoteurG_ = 0.0;
+		puissanceMoteurD_ = 0.0;
+		puissanceMoteurG_ = 0.0;
 	default:
 		break;
 	}
@@ -110,8 +110,8 @@ CommandeRobot::CommandeRobot(TypeCommande type, const bool& ajout)
 ///////////////////////////////////////////////////////////////////////////
 void CommandeRobot::inverserVitesseMoteurs()
 {
-    vitesseMoteurD_ = -vitesseMoteurD_;
-    vitesseMoteurG_ = -vitesseMoteurG_;
+    puissanceMoteurD_ = -puissanceMoteurD_;
+    puissanceMoteurG_ = -puissanceMoteurG_;
 }
 
 
@@ -125,10 +125,10 @@ void CommandeRobot::inverserVitesseMoteurs()
 ///////////////////////////////////////////////////////////////////////////
 void CommandeRobot::executer(ControleRobot* ia){
 	if (ajout_){
-		ia->ajouterVitessesMoteurs(vitesseMoteurG_, vitesseMoteurD_);
+		ia->ajouterVitessesMoteurs(puissanceMoteurG_, puissanceMoteurD_);
 	}
     else 
-	    ia->assignerVitessesMoteurs(vitesseMoteurG_, vitesseMoteurD_);
+	    ia->assignerVitessesMoteurs(puissanceMoteurG_, puissanceMoteurD_);
 
 	if (typeCommande_ == INVERSER_MODE_CONTROLE)
 		ia->inverserModeControle();

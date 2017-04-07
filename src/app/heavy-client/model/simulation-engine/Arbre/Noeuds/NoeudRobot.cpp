@@ -26,7 +26,6 @@
 #include "NoeudTeleporteur.h"
 #include "NoeudPiece.h"
 
-
 #include "VisiteurAbstrait.h"
 #include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
@@ -48,6 +47,7 @@ const double FACTEUR_ATTENUATION = 0.7;
 const double MINIMUM_REBOND = 5;\
 
 #define PI 3.14159265
+
 
 ////////////////////////////////////////////////////////////////////////
 //
@@ -88,6 +88,7 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 	roueGauche_->setRightWheel(false);
 	roueDroite_->setRightWheel(true);
 
+	physics_.mass = 1.0;
 
 	positionnerRoues();
 
@@ -560,6 +561,47 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn bool NoeudRobot::verifierCollision(NoeudRobot* robot)
+///
+/// Cette fonction vérifie s'il y a une collision entre ce robot et un autre.
+///
+/// @param[in] noeud: Prend le NoeudPiece en paramètre ce qui correspond aux pieces.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+bool NoeudRobot::verifierCollision(NoeudRobot* robot)
+{
+    if (robot == nullptr) return false;
+    RectangleEnglobant& rectangle = robot->getBoundingBox();
+    bool enIntersection = rectangleEnglobant_.calculerIntersection(rectangle);
+    bool enCollision = rectangle.obtenirEnCollision();
+
+    // Le poteau est en intersection et il ne se trouve pas déjà en collision.
+    if (enIntersection)
+    {
+		EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON);
+        enCollision = true;
+        rectangle.assignerEnCollision(enCollision);
+
+        // On calcule les composantes de la collision.
+        glm::dvec3 normaleCollision = rectangle.calculerNormaleCollision(rectangleEnglobant_);
+
+        calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
+
+        reinitialiserPosition();
+    }
+    // Le poteau n'est pas en intersection et il se trouvait en collision.
+    else // if (!enIntersection)
+    {
+        enCollision = false;
+        rectangle.assignerEnCollision(enCollision);
+    }
+    return enIntersection;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn void NoeudRobot::mettreAJourCapteurs()
 ///
 /// Cette fonction met à jour les capteurs de distance selon leur position et leur angle.
@@ -598,21 +640,18 @@ void NoeudRobot::mettreAJourPosition(float dt)
 	dernierePositionRelative_ = physics_.relativePosition;
     dernierAngleRotation_ = physics_.rotation.z;
 
-	float vitesseDroiteTemp = vitesseDroite_, vitesseGaucheTemp = vitesseGauche_;
-		//Calcul de la différence entre les vitesses de gauche et droite
+	/*
+	float vitesseDroiteTemp = vitesseDroite_; 
+	float vitesseGaucheTemp = vitesseGauche_;
+
+	//Calcul de la différence entre les vitesses de gauche et droite
     vitesseRotation_ = vitesseGauche_ - vitesseDroite_;
-    vitesseRotationCourante_ = vitesseCouranteGauche_ - vitesseCouranteDroite_;
+    physics_.angularVelocity.z = vitesseCouranteGauche_ - vitesseCouranteDroite_;
 
 	//Calcul de la résultante de la vitesse relative
-	float diffD = vitesseDroite_ - vitesseCouranteDroite_, diffG = vitesseGauche_ - vitesseCouranteGauche_;
-	if (diffD < 0)
-	{
-		diffD = -diffD;
-	}
-	if (diffG < 0)
-	{
-		diffG = -diffG;
-	}
+	float diffD = std::abs(vitesseDroite_ - vitesseCouranteDroite_);
+	float diffG = std::abs(vitesseGauche_ - vitesseCouranteGauche_);
+
 	if (diffD < (acceleration_ * dt) && vitesseDroite_ == 0)
 	{
 		vitesseCouranteDroite_ = 0;
@@ -642,6 +681,7 @@ void NoeudRobot::mettreAJourPosition(float dt)
 			}
 		}
 	}
+
 	if (diffG < (acceleration_*dt) && vitesseGauche_ == 0)
 	{
 		vitesseCouranteGauche_ = 0;
@@ -671,31 +711,48 @@ void NoeudRobot::mettreAJourPosition(float dt)
 			}
 		}
 	}
+
 	float relativeGaucheDroite = vitesseCouranteGauche_ + vitesseCouranteDroite_;
 	//Calculs des nouvelles positions et du nouvel angle
-	float diffAngle = vitesseRotationCourante_ - vitesseRotation_;
-	if (diffAngle < 0)
-	{
-		diffAngle = -diffAngle;
-	}
-    if (diffAngle > dt * vitesseRotationCourante_)
+	float diffAngle = glm::abs(physics_.angularVelocity.z - vitesseRotation_);
+    if (diffAngle > dt * physics_.angularVelocity.z)
     {
-        if (vitesseRotationCourante_ < vitesseRotation_)
+        if (physics_.angularVelocity.z < vitesseRotation_)
         {
-            vitesseRotationCourante_ += dt * acceleration_;
+            physics_.angularVelocity.z += dt * acceleration_;
         }
         else
         {
-            vitesseRotationCourante_ -= dt * acceleration_;
+            physics_.angularVelocity.z -= dt * acceleration_;
         }
     }
 
-	physics_.rotation.z -= dt * vitesseRotationCourante_;
-	physics_.relativePosition.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(physics_.rotation.z));
-	physics_.relativePosition.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	*/
+	leftEngine.updateVelocity(dt);
+	rightEngine.updateVelocity(dt);
+
+	double vLeft =  leftEngine.getVelocity();
+	double vRight = rightEngine.getVelocity();
+
+	physics_.angularVelocity.z = vRight - vLeft;
+	physics_.rotation -= physics_.angularVelocity * (double)dt;
+
+	double vCombined = vLeft + vRight;
+
+	physics_.linearVelocity.x = vCombined / 10 * cos(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	physics_.linearVelocity.y = vCombined / 10 * sin(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+
+	//physics_.linearVelocity -= glm::normalize(physics_.linearVelocity) * friction * (double)dt;
+	
+	physics_.relativePosition += physics_.linearVelocity * (double)dt;
 	physics_.absolutePosition = physics_.relativePosition;
-	vitesseDroite_ = vitesseDroiteTemp;
-	vitesseGauche_ = vitesseGaucheTemp;
+	 
+	//physics_.relativePosition.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	//physics_.relativePosition.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+
+	//vitesseDroite_ = vitesseDroiteTemp;
+	//vitesseGauche_ = vitesseGaucheTemp;
+
 	mettreAJourFormeEnglobante();
 	mettreAJourCapteurs();
 }
@@ -715,11 +772,13 @@ void NoeudRobot::reinitialiserPosition()
 	physics_.absolutePosition = physics_.relativePosition;
 	physics_.rotation.z = dernierAngleRotation_;
 
-    mettreAJourFormeEnglobante();
+	physics_.angularVelocity = { 0.0, 0.0, 0.0 };
+	physics_.linearVelocity  = { 0.0, 0.0, 0.0 };
 
     vitesseCouranteDroite_ = 0.0;
     vitesseCouranteGauche_ = 0.0;
-    vitesseRotationCourante_ = 0.0;
+
+    mettreAJourFormeEnglobante();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -926,7 +985,16 @@ std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
 	return tableauCoins;
 }
 
+void NoeudRobot::Engine::updateVelocity(float dt)
+{
+	float updatedVelocity = velocity_ + (targetVelocity - velocity_) * power * dt;
+	if (updatedVelocity < targetVelocity)
+	{
+		velocity_ = updatedVelocity;
+	}
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+

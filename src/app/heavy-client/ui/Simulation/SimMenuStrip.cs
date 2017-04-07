@@ -12,28 +12,25 @@ namespace ui
     {
         Window parent_;
 
-        public SimMenuStrip(Window parent)
+        public SimMenuStrip()
         {
             InitializeComponent();
+        }
+
+        public SimMenuStrip(Window parent) : this()
+        {
             parent_ = parent;
         }
 
         public virtual void goMenuPrincipal()
         {
-            parent_.estEnPause = false;
-            parent_.picturePause.Visible = false;
+            parent_.goMainMenu();
+        }
 
-            parent_.mainMenu = new MainMenu(parent_);
-
+        public virtual void goModeEdition()
+        {
             parent_.configuration.deallocateCurrentProfilToolStrip();
-
-            parent_.viewPort.Controls.Add(parent_.mainMenu);
-            parent_.mainMenu.Dock = DockStyle.Left;
-
-            Program.peutAfficher = false;
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.MENU_PRINCIPAL);
+            parent_.goOfflineEdition();
         }
 
         public virtual void orthoView()

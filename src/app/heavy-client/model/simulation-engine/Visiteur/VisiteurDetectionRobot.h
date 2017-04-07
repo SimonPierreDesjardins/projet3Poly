@@ -53,6 +53,8 @@ public:
 
 	virtual void visiter(NoeudPiece* noeud);
 
+	virtual void visiter(NoeudRobot* robot);
+
 private:
     NoeudRobot* robot_{ nullptr };
     SuiveurLigne* suiveurLigne_;

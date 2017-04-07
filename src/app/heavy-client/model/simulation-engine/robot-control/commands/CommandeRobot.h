@@ -34,9 +34,6 @@ class CommandeRobot{
 		/// Constructeur par paramètre permettant de changer la puissance des moteurs du robot ou de changer le mode d'utilisation de celui-ci
 		CommandeRobot(TypeCommande commande);
 
-        /// Constructeur par paramètre sans type de commande.
-        CommandeRobot(const bool& ajout);
-
         /// Constructeur par paramètre avec le type de commande et un bool indiquant si la commande effectue un ajout ou une assignation.
         CommandeRobot(TypeCommande commande, const bool& ajout);
 
@@ -48,14 +45,16 @@ class CommandeRobot{
 
         /// Méthodes d'accès.
 		inline TypeCommande obtenirTypeCommande();
-		inline bool provientUtilisateur();
 
 	private:
+		const double MAX_POWER = 20.0;
+		const double LOW_POWER = 5.0;
+
 		/// Représente la nouvelle vitesse du moteur de gauche
-		double vitesseMoteurG_{ 0 };
+		double puissanceMoteurG_{ 0 };
 
 		/// Représente la nouvelle vitesse du moteur de droite
-		double vitesseMoteurD_{ 0 };
+		double puissanceMoteurD_{ 0 };
 
         /// Indique si la commande est une assignation ou un ajout de vitesse.
         bool ajout_{ false };

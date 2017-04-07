@@ -50,17 +50,25 @@ void EventHandler::onNewMapCreated(uint32_t mapId, char mapType, char nUsers, ch
 
 void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 {
-	client_network::MapSession* mapSession = mapSessionManager_->getServerSession(mapId);
-	// The map exists on the client.
-	if (mapSession != nullptr)
+	// On a failed join, do something
+	if (result == 's') 
 	{
-		mapSession->addUser(userId);
-		// If the user that joined the map is me.
-		if (userId == networkManager_->getUserId())
+		client_network::MapSession* mapSession = mapSessionManager_->getServerSession(mapId);
+		// The map exists on the client.
+		if (mapSession != nullptr)
 		{
-			currentSession_ = mapSession;
+			mapSession->addUser(userId);
+			// If the user that joined the map is me.
+			if (userId == networkManager_->getUserId())
+			{
+				currentSession_ = mapSession;
+			}
 		}
 	}
+	else if (result == 'd') {
+		// TODO: call wrong password callback. We know this is directed to us from server functionality
+	}
+	mapConnect(result);
 }
 
 void EventHandler::onMapReady(uint32_t mapId)

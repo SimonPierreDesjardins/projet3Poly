@@ -12,9 +12,13 @@ namespace ui
     {
         Window parent_;
 
-        public EditMenuStrip(Window parent)
+        public EditMenuStrip()
         {
             InitializeComponent();
+        }
+
+        public EditMenuStrip(Window parent) : this()
+        {
             parent_ = parent;
         }
 
@@ -60,15 +64,7 @@ namespace ui
 
         public virtual void goMenuPrincipal()
         {
-            parent_.mainMenu = new MainMenu(parent_);
-
-            parent_.viewPort.Controls.Add(parent_.mainMenu);
-            parent_.mainMenu.Dock = DockStyle.Left;
-
-            Program.peutAfficher = false;
-            parent_.viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.MENU_PRINCIPAL);
+            parent_.goMainMenu();
         }
 
         public virtual void ouvrirZone(bool showDefault)
