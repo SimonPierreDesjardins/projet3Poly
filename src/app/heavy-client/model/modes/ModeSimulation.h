@@ -75,6 +75,7 @@ private:
 	//Constructeur par d�faut
 	bool obtenirModeEnPause();
 	ModeSimulation() = delete;
+	engine::SimulationEngine* engine_ = nullptr;
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

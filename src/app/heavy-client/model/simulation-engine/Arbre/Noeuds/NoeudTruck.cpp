@@ -49,8 +49,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudTruck::NoeudTruck(uint32_t id, const std::string& typeNoeud)
-	: NoeudRobot{ id, typeNoeud }
+NoeudTruck::NoeudTruck(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
+	: NoeudRobot{ id, typeNoeud, arbre}
 {
 	type_ = TRUCK_ENTITY;
 	positionDepart();

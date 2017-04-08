@@ -20,6 +20,7 @@
 //#include "FacadeModele.h"
 
 class NoeudAbstrait;
+class ArbreRendu;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class UsineAbstraite
@@ -116,9 +117,40 @@ std::shared_ptr<NoeudAbstrait> UsineNoeud<T>::creerNoeud() const
 	noeud->assignerObjetRendu(&modele_, &vbo_);
 	return noeud;
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudAbstrait* UsineNoeudRobot::creerNoeud() const
+///
+/// Cette fonction retourne un noeud nouvellement créé du type produit
+/// par cette usine.
+///
+/// @return Le noeud nouvellement créé.
+///
+////////////////////////////////////////////////////////////////////////
+template <typename Noeud>
+class UsineNoeudRobot: public UsineAbstraite{
+public:
+	UsineNoeudRobot(const std::string& nomUsine, const std::string& nomModele, ArbreRendu* arbre):UsineAbstraite(nomUsine) {
+		modele_.charger(nomModele);
+		vbo_ = opengl::VBO{ &modele_ };
+		vbo_.charger();
+		_arbre = arbre;
+	}
+
+	virtual std::shared_ptr<NoeudAbstrait> creerNoeud() const override {
+		static_assert(std::is_base_of<NoeudAbstrait, Noeud>::value, R"(Une usine de noeuds ne peut creer que des types de noeuds dérivant de NoeudAbstrait.)");
+		std::shared_ptr<NoeudAbstrait> noeud = std::make_shared<Noeud>(nextId_, obtenirNom(), _arbre);
+		noeud->assignerObjetRendu(&modele_, &vbo_);
+		return noeud;
+	}
+
+protected:
+	ArbreRendu* _arbre;
+	/// Modèle 3D correspondant à ce noeud.
+	modele::Modele3D modele_;
+	/// Storage pour le dessin du modèle
+	opengl::VBO vbo_;
+};
+
 #endif // __ARBRE_USINES_USINENOEUD_H__
-
-
-///////////////////////////////////////////////////////////////////////////////
-/// @}
-///////////////////////////////////////////////////////////////////////////////

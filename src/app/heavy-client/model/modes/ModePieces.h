@@ -93,7 +93,6 @@ private:
 	glm::dvec3 positionNoeudCourant;
 
 	bool modeEnPause{ false };
-	VisiteurDetectionRobot visiteur_;
 
 	Minuterie minuterie_;
 

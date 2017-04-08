@@ -49,8 +49,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud)
-	: NoeudRobot{ id, typeNoeud }
+NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
+	: NoeudRobot{ id, typeNoeud, arbre }
 {
 	//profil_->setModele("audi");
 	positionDepart();

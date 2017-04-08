@@ -49,8 +49,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud)
-    : NoeudRobot { id, typeNoeud }
+NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
+    : NoeudRobot { id, typeNoeud, arbre }
 {
 	type_ = F1_ENTITY;
 	//profil_->setModele("f1");

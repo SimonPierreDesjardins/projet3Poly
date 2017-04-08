@@ -51,9 +51,8 @@ VisiteurDetectionRobot::VisiteurDetectionRobot()
 VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
     : robot_(robot)
 {
-    ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-    suiveurLigne_ = profil->obtenirSuiveurLigne();
-    capteursDistance_ = profil->obtenirCapteursDistance();
+    suiveurLigne_ = robot->obtenirSuiveurLigne();
+    capteursDistance_ = robot->obtenirCapteursDistance();
 }
 
 

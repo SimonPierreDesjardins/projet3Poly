@@ -62,15 +62,12 @@ const double MINIMUM_REBOND = 5;\
 // @return Aucune (constructeur).
 //
 ////////////////////////////////////////////////////////////////////////
-NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
+NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
     : NoeudComposite{ id, typeNoeud }
 {
 	type_ = ROBOT_ENTITY;
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	arbre_ = arbre;
 	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
-
-    // À modifier avec le merge du profile.
-    visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
 	
 	
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);

@@ -69,6 +69,8 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
+
+	engine_ = engine;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -267,6 +269,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             controleRobot_.setEnPause(!estEnPause);
 			controleurLumiere_->setEnPause(!estEnPause);
 			modeEnPause = !modeEnPause;
+			engine_->setAnimating(estEnPause);
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();      

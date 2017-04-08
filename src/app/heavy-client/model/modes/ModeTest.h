@@ -67,7 +67,6 @@ private:
 
 	ProfilUtilisateur* profil_{ nullptr };
     AffichageTexte* affichageTexte_{ nullptr };
-	VisiteurDetectionRobot visiteur_;
 
 	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
