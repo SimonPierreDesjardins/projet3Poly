@@ -529,7 +529,7 @@ namespace ui
         ///
         /// @fn private void gererTouchePieces(IntPtr keyDown)
         ///
-        /// Gère les touches pour le mode Simulation
+        /// Gère les touches pour le mode Pieces
         /// 
         /// @param IntPtr keyDown: evenement du clavier
         ///

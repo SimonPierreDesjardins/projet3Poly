@@ -115,6 +115,8 @@ public:
 
 	void assignerControleurLumiere(ControleurLumiere* controleur);
 
+	ControleurLumiere* obtenirControleurLumiere();
+
 
 protected:
 	//Vitesse des moteurs du robot

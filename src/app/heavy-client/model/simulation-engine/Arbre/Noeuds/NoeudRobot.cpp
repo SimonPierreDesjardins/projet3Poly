@@ -1018,6 +1018,11 @@ void NoeudRobot::assignerControleurLumiere(ControleurLumiere* controleur)
 	controleurLumiere_ = controleur;
 }
 
+ControleurLumiere* NoeudRobot::obtenirControleurLumiere()
+{
+	return controleurLumiere_;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

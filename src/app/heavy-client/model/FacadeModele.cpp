@@ -292,7 +292,7 @@ void FacadeModele::assignerMode(Mode mode)
 		
 		case PIECES:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModePieces>(&engine_, &profil_);
+			mode_ = std::make_unique<ModePieces>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		default:

@@ -28,6 +28,7 @@
 #include "ArbreRenduINF2990.h"
 #include "ProfilUtilisateur.h"
 #include "SimulationEngine.h"
+#include "MapSession.h"
 
 #include "EnginSon.h"
 
@@ -40,19 +41,24 @@ std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '
 /// Constructeur par défaut pour le mode pieces
 ///
 ////////////////////////////////////////////////////////////////////////
-ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil)
+ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
+	: controleRobot_(creerRobot(engine->getEntityTree(), profil)), OnlineMapMode(session)
 {
+	NoeudRobot* robot = controleRobot_.obtenirNoeud();
+	robot->assignerSelection(true);
+	session->localEntityCreated(robot);
+	robotPhysics_.init(robot, engine, session);
+
 	typeMode_ = PIECES;
-	controleRobot_ = std::make_unique<ControleRobot>(creerRobot(engine->getEntityTree(), profil));
 	profil_ = profil;
-	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode manuel
-	controleRobot_->passerAModeManuel();
+	controleRobot_.passerAModeManuel();
     actionsAppuyees_ = { { false, false, false, false, false } };
 	arbre_ = engine->getEntityTree();
 	table_ = arbre_->chercher(0);
-	controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
-	visiteur_ = VisiteurDetectionRobot(controleRobot_->obtenirNoeud());
+	controleRobot_.obtenirNoeud()->assignerMode(typeMode_);
+
 	startThread();
 
 	affichageTexte_ = engine->getTextDisplay();
@@ -70,6 +76,7 @@ ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* prof
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -83,7 +90,6 @@ ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* prof
 ModePieces::~ModePieces()
 {
 	profil_->setPiece(0);
-	controleRobot_ = nullptr;
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
 	affichageTexte_->assignerPiecesEstAfficher(false);
@@ -183,7 +189,7 @@ void ModePieces::inverserLumiereSpot()
 ////////////////////////////////////////////////////////////////////////
 void ModePieces::preChangementDeProfil(){
 	//Terminer le thread du robot et préparer à un changement au mode automatique
-	controleRobot_->passerAModeManuel();
+	controleRobot_.passerAModeManuel();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -197,9 +203,9 @@ void ModePieces::preChangementDeProfil(){
 ////////////////////////////////////////////////////////////////////////
 void ModePieces::postChangementDeProfil(){
 	// Le robot charge la référence aux nouveaux comportements
-	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
+	controleRobot_.assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	//Repartir le thread en mode automatique, comportement defaut
-	controleRobot_->passerAModeAutomatique();
+	controleRobot_.passerAModeAutomatique();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -257,19 +263,13 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 
 		case '\b':
-			controleRobot_ = nullptr;
-			controleRobot_ = std::make_unique<ControleRobot>();
-			controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
-			controleRobot_->passerAModeManuel();
-			controleurLumiere_->assignerLumiereSpotGyro(true);
-			affichageTexte_->reinitialiserChrono();
-			controleRobot_->obtenirNoeud()->positionDepart();
+			//pas replacer au centre?
 			break;
 
         case VK_ESCAPE:
         {
-            bool estEnPause = controleRobot_->getEnPause();
-            controleRobot_->setEnPause(!estEnPause);
+            bool estEnPause = controleRobot_.getEnPause(); //probablement a changer si on enleve la pause
+            controleRobot_.setEnPause(!estEnPause);
 			controleurLumiere_->setEnPause(!estEnPause);
 			modeEnPause = !modeEnPause;
             if (estEnPause)
@@ -280,7 +280,7 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             {
                 affichageTexte_->pauseChrono();
                 std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
-                controleRobot_->traiterCommande(commandeArreter.get(), true);
+                controleRobot_.traiterCommande(commandeArreter.get(), true);
             }
         }
         break;
@@ -289,7 +289,7 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 
-		if (!controleRobot_->getEnPause())
+		if (!controleRobot_.getEnPause())
 		{
 			const bool estRepetition = ((HIWORD(lParam) & KF_REPEAT) == KF_REPEAT);
 			if (!estRepetition)
@@ -300,20 +300,20 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
                     TypeCommande type = commande->obtenirTypeCommande();
                     actionsAppuyees_.at(type) = true;
                 }
-				controleRobot_->traiterCommande(commande, true);
+				controleRobot_.traiterCommande(commande, true);
 			}
 		}
 	}
 	else if (msg == WM_KEYUP)
 	{
-		if (!controleRobot_->getEnPause())
+		if (!controleRobot_.getEnPause())
 		{
 			CommandeRobot* commandeCourante = profil_->obtenirCommandeRobot(wParam);
 			if (commandeCourante != nullptr && commandeCourante->obtenirTypeCommande() != INVERSER_MODE_CONTROLE)
 			{
                 // Arreter les moteurs.
                 std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
-                controleRobot_->traiterCommande(commandeArreter.get(), true);
+                controleRobot_.traiterCommande(commandeArreter.get(), true);
 
                 // Indiquer que la commande n'est plus appuyée dans les flags d'actions appuyées
                 TypeCommande type = commandeCourante->obtenirTypeCommande();
@@ -325,7 +325,7 @@ void ModePieces::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
                     if (actionsAppuyees_.at((TypeCommande)i))
                     {
                         std::unique_ptr<CommandeRobot> commandeMiseAJour  = std::make_unique<CommandeRobot>((TypeCommande)i, true);
-                        controleRobot_->traiterCommande(commandeMiseAJour.get(), true);
+                        controleRobot_.traiterCommande(commandeMiseAJour.get(), true);
                     }
                 }
 			}
@@ -385,18 +385,19 @@ glm::dvec3 ModePieces::genererPositionCoin()
 /// @return Aucune 
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModePieces::postAnimer()
+void ModePieces::postAnimer(float dt)
 {	
 	if(affichageTexte_->obtenirDuree() <= 60)
 	{
 		if ((int)(minuterie_.obtenirDuree()) % 15 == 0 && (int)(minuterie_.obtenirDuree()) != 0)
 		{
+			//delete les toutes les pieces avec mapSession_->deleteLocalEntity() ????
 			arbre_->chercher(0)->effacerTypeNoeud("piece");
 			minuterie_.reinitialiserChrono();
 			startThread();
 
 		}
-		arbre_->accepterVisiteur(&visiteur_);
+		robotPhysics_.applyPhysicsEffects(dt);
 		if (objectsReadyToSpawn)
 		{
 			spawnObjects();
@@ -405,9 +406,9 @@ void ModePieces::postAnimer()
 	else 
 	{
 		affichageTexte_->assignerFinModePiecesEstAfficher(true);
-		controleRobot_->setEnPause(true);
+		controleRobot_.setEnPause(true);
 		std::unique_ptr<CommandeRobot> commandeArreter = std::make_unique<CommandeRobot>(ARRETER);
-		controleRobot_->traiterCommande(commandeArreter.get(), true);
+		controleRobot_.traiterCommande(commandeArreter.get(), true);
 		modeEnPause = true;
 		affichageTexte_->pauseChrono();
 	}
@@ -486,6 +487,7 @@ void ModePieces::spawnObjects()
 	for (int i = 0; i < objectsToSpawn.size(); i++)
 	{
 		table_->ajouter(objectsToSpawn[i]);
+		mapSession_->localEntityCreated(objectsToSpawn[i].get());
 	}
 	objectsToSpawn.clear();
 	objectsReadyToSpawn = false;

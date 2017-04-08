@@ -155,11 +155,11 @@ void ControleRobot::assignerComportement(TypeComportement nouveauComportement, s
 ////////////////////////////////////////////////////////////////////////
 void ControleRobot::inverserModeControle(){
 	if (manuel){
-	    controleurLumiere_->assignerLumiereSpotGyro(false);
+	    robot_->obtenirControleurLumiere()->assignerLumiereSpotGyro(false);
 		passerAModeAutomatique();
 	}
 	else{
-	    controleurLumiere_->assignerLumiereSpotGyro(true);
+		robot_->obtenirControleurLumiere()->assignerLumiereSpotGyro(true);
 		passerAModeManuel();
 	}
 }

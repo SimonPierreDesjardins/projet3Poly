@@ -460,7 +460,9 @@ namespace ui
 
                 //Piece
                 case 2:
-                    createMapPieceMode();
+                    mapType = (char)(ModeEnum.Mode.PIECES);
+                    FonctionsNatives.createMap(mapName, mapName.Length, password, password.Length, mapType, privateCheckBox.Checked ? (char)1 : (char)0);
+                    //createMapPieceMode();
                     //FonctionsNatives.createMap(mapName, mapName.Length, (char)(ModeEnum.Mode.SIMULATION));
                     break;
 

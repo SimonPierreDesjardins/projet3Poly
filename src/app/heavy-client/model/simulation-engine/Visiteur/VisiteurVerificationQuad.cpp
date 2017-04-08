@@ -226,6 +226,13 @@ bool VisiteurVerificationQuad::verifierPointEstSurTable(glm::dvec3 point)
 
 	return (MIN_X <= point.x && point.x <= MAX_X && MIN_Y <= point.y && point.y <= MAX_Y);
 }
+
+void VisiteurVerificationQuad::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++) {
+		noeud->chercher(i)->accepterVisiteur(this);
+	}
+}
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
