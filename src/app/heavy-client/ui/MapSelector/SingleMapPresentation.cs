@@ -65,10 +65,9 @@ namespace ui
                     ModeLabel.Text = "Collection Pièces";
                     break;
 
-
-                /*case (int)ModeEnum.Mode.COURSE:
+                case (int)ModeEnum.Mode.COURSE:
                     ModeLabel.Text = "Course";
-                    break;*/
+                    break;
 
                 default:
                     ModeLabel.Text = "Edition / Simulation";
@@ -167,9 +166,9 @@ namespace ui
                             loadOnlinePieceMode();
                             break;
 
-                        /*case (int)ModeEnum.Mode.COURSE:
+                        case (int)ModeEnum.Mode.COURSE:
                             loadOnlineRaceMode();
-                            break;*/
+                            break;
 
                         default:
                             break;
@@ -251,10 +250,8 @@ namespace ui
             parent_.goOnlineCoin();
         }
 
-
         private void loadOnlineRaceMode()
         {
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             parent_.mapMenu.defaultView();
 

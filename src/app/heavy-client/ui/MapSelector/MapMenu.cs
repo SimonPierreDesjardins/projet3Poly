@@ -454,12 +454,11 @@ namespace ui
                 //Piece
                 case 2:
                     mapType = (char)(ModeEnum.Mode.PIECES);
-                    
                     break;
 
                 //Race
                 case 3:
-                    //mapType = (char)(ModeEnum.Mode.COURSE);
+                    mapType = (char)(ModeEnum.Mode.COURSE);
                     break;
 
                 //Edition && unknown
@@ -590,7 +589,6 @@ namespace ui
             {
                 parent_.goOfflineEditionTutorial();
             }
-            
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -690,8 +688,6 @@ namespace ui
                 map.Width = mapPanel.Width;
             }
         }
-
-
 
         public class Worker
         {
