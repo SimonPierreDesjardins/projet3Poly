@@ -257,15 +257,6 @@ void VisiteurDetectionRobot::visiter(NoeudTeleporteur* teleporteur)
 		robot_->setTeleportationFaite(true);
 	}
 
-	/*estEnCollision = false;
-	if (!estEnCollision_)
-	{
-		estEnCollision_ = estEnCollision;
-	}*/
-	/*for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
-	{
-		capteursDistance_->at(i).verifierDetection(teleporteur);
-	}*/
 }
 
 ////////////////////////////////////////////////////////////////////////
