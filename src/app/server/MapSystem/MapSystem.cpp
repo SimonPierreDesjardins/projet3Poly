@@ -26,6 +26,10 @@ void MapEntry::updateSessionType()
 	case EDITION_MAP:
 		currentSession_ = std::make_unique<EditionRoom>(Info, File);
 		break;
+
+	default:
+		currentSession_ = std::make_unique<SimulationRoom>(Info, File);
+		break;
 	}
 }
 
@@ -282,7 +286,7 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 			std::string password = message.substr(Networking::MessageStandard::DATA_START + 4);
 			if (password != mapIt->second.Info->password) {
 				// send error message
-				response[10] = 'd';
+				response[6] = 'd';
 				user->ForwardMessage(response);
 				return;
 			}

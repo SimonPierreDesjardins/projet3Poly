@@ -65,28 +65,15 @@ NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud)
 	roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche2).get();
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
 
-	roueGauche_->getPhysicsComponent().relativePosition  = { 2.2, -0.2, 0.58 };
+
+	roueGauche_->getPhysicsComponent().relativePosition = { 2.2, -0.2, 0.58 };;
+	roueGauche_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
 	roueGauche2_->getPhysicsComponent().relativePosition = { -2.2, -0.2, 0.58 };
-	roueDroite_->getPhysicsComponent().relativePosition  = { 2.2, 0.2, 0.58 };
+	roueGauche2_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
+	roueDroite_->getPhysicsComponent().relativePosition = { 2.2, 0.2, 0.58 };
+	roueDroite_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
 	roueDroite2_->getPhysicsComponent().relativePosition = { -2.2, 0.2, 0.58 };
-
-		glScalef(0.6f, 0.8f, 0.75f);
-
-	PhysicsComponent leftPhysics = roueGauche_->getPhysicsComponent();
-	leftPhysics.relativePosition = { 2.2, -0.2, 0.58 };
-	leftPhysics.scale = { 0.6f, 0.8f, 0.75f };
-
-	PhysicsComponent leftPhysics2 = roueGauche_->getPhysicsComponent();
-	leftPhysics2.relativePosition = { -2.2, -0.2, 0.58 };
-	leftPhysics2.scale = { 0.6f, 0.8f, 0.75f };
-
-	PhysicsComponent rightPhysics = roueGauche_->getPhysicsComponent();
-	rightPhysics.relativePosition = { 2.2, 0.2, 0.58 };
-	rightPhysics.scale = { 0.6f, 0.8f, 0.75f };
-
-	PhysicsComponent rightPhysics2 = roueGauche_->getPhysicsComponent();
-	rightPhysics2.relativePosition = { -2.2, 0.2, 0.58 };
-	rightPhysics2.scale = { 0.6f, 0.8f, 0.75f };
+	roueDroite2_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);
@@ -152,11 +139,11 @@ void NoeudF1::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot
+	//controleurLumiere_->afficherLumiereSpotRobot();
+	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
-	}
+	}*/
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -192,9 +179,8 @@ void NoeudF1::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudF1::suivreCamera()
+void NoeudF1::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{
@@ -230,16 +216,16 @@ void NoeudF1::positionnerRoues()
 	double vRight = rightEngine.getTangentialVelocity();
 
 	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche_->getPhysicsComponent().angularVelocity.z = vLeft;
+	roueGauche_->setVitesseCourante(vLeft);
 
 	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche2_->getPhysicsComponent().angularVelocity.y = vLeft;
+	roueGauche2_->setVitesseCourante(vLeft);
 
 	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite_->getPhysicsComponent().angularVelocity.z = vRight;
+	roueDroite_->setVitesseCourante(vRight);
 
 	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite2_->getPhysicsComponent().angularVelocity.z = vRight;
+	roueDroite2_->setVitesseCourante(vRight);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -297,6 +283,29 @@ void NoeudF1::setCouleurDefault(int piece, bool default)
 		estCouleurDefaut_ = default;
 	}
 
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudF1::initialisationCouleurs(float* roues, float* modele)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues et du modele
+///
+/// @param[in] float* de couleurs des roues et du modele
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudF1::initialisationCouleurs(int* roues, int* modele)
+{
+	couleur_[0] = (float)modele[0] / (float)255;
+	couleur_[1] = (float)modele[1] / (float)255;
+	couleur_[2] = (float)modele[2] / (float)255;
+	couleur_[3] = (float)modele[3] / (float)255;
+	roueDroite_->initialisationCouleurs(roues);
+	roueDroite2_->initialisationCouleurs(roues);
+	roueGauche_->initialisationCouleurs(roues);
+	roueGauche2_->initialisationCouleurs(roues);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -49,8 +49,6 @@ public:
 	int getId();
 	void setId(int id);
 
-	bool collisionTeleporteur();
-
 private:
     CercleEnglobant cercleEnglobant_;
 	int idTeleporteur_;

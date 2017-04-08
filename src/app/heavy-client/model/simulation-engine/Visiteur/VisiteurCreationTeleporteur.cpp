@@ -74,11 +74,15 @@ void VisiteurCreationTeleporteur::visiter(ArbreRendu* noeud)
 void VisiteurCreationTeleporteur::visiter(NoeudTable* noeud)
 {
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_TELEPORTEUR);
-	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	PhysicsComponent& physics = nouveauNoeud->getPhysicsComponent();
 	physics.relativePosition = positionRelative_;
 	physics.absolutePosition = positionRelative_;
-	noeud->ajouter(nouveauNoeud);
-	referenceNoeud_ = nouveauNoeud.get();
+	referenceNoeud_ = nouveauNoeud;
+}
+
+std::shared_ptr<NoeudAbstrait> VisiteurCreationTeleporteur::obtenirReferenceNoeud()
+{
+	return referenceNoeud_;
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

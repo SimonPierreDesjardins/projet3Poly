@@ -43,7 +43,7 @@ std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '
 ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil)
 {
 	typeMode_ = PIECES;
-	controleRobot_ = std::make_unique<ControleRobot>(engine->getEntityTree(), profil);
+	controleRobot_ = std::make_unique<ControleRobot>(creerRobot(engine->getEntityTree(), profil));
 	profil_ = profil;
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
 	// On fait démarrer le robot en mode manuel

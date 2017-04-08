@@ -29,8 +29,7 @@ namespace ui
 
         public virtual void goModeEdition()
         {
-            parent_.configuration.deallocateCurrentProfilToolStrip();
-            parent_.goOfflineEdition();
+            
         }
 
         public virtual void orthoView()

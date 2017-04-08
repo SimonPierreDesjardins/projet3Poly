@@ -55,6 +55,10 @@ public:
 
 	virtual void visiter(NoeudRobot* robot);
 
+	virtual void visiter(NoeudPaireTeleporteurs* noeud);
+
+	bool collisionTeleporteur(NoeudTeleporteur* teleporteur);
+
 private:
     NoeudRobot* robot_{ nullptr };
     SuiveurLigne* suiveurLigne_;

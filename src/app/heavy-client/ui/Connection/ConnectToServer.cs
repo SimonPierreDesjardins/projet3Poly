@@ -37,9 +37,6 @@ namespace ui
             }
 
             //Set callbacks for connection state
-            mInstance = new CallbackDisconnect(DisconnectHandler);
-            SetCallbackForDisconnect(mInstance);
-
             connectSuccess = new CallbackConnectionSuccess(ConnectionSuccessHandler);
             SetCallbackForConnectionSuccess(connectSuccess);
 
@@ -343,6 +340,7 @@ namespace ui
         {
             FonctionsNatives.disconnectFromServer();
             parent_.mapMenu.onlineMaps_.Clear();
+            parent_.mapMenu.onlineMapsName_.Clear();
             removeChat();
             goBackToMainMenu();
         }
@@ -433,41 +431,6 @@ namespace ui
             else
                 parent_.userChat.chatWindow_.Dispose();
         }
-
-        public void Test()
-        {
-            GotDisconnected();
-        }
-
-        private delegate void CallbackDisconnect();
-        // Ensure it doesn't get garbage collected
-        private CallbackDisconnect mInstance;
-        private void DisconnectHandler()
-        {
-            // Do something...
-            if (parent_.viewPort.Controls.Contains(parent_.mainMenu))
-            {
-                parent_.mainMenu.connexionPictureBox.Image = parent_.mainMenu.ChangeColor((Bitmap)parent_.mainMenu.connexionPictureBox.Image, Color.Red);
-            }
-
-            parent_.mapMenu.onlineMaps_.Clear();
-
-            parent_.disconnectedWarning = new DisconnetedPanel(parent_);
-            parent_.disconnectedWarning.Location = new Point(parent_.viewPort.Width / 2 - parent_.disconnectedWarning.Width / 2,
-                                                             parent_.viewPort.Height / 2 - parent_.disconnectedWarning.Height / 2);
-            parent_.viewPort.Controls.Add(parent_.disconnectedWarning);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        [DllImport("model.dll")]
-        private static extern void SetCallbackForDisconnect(CallbackDisconnect fn);
-
-        [DllImport("model.dll")]
-        private static extern void GotDisconnected();
 
         ////////////////////////////////////////////////////////////////////////
         ///

@@ -34,7 +34,7 @@ public:
 	// Objects with negative mass will behave like they have infinite mass:
 	// They can't move and will apply an elastic collision.
 	// Note: The curvature of space-time is not simulated.
-	float mass{ -1.0 };
+	double mass{ -1.0 };
 };
 
 #endif // PHYSICS_COMPONENT_H

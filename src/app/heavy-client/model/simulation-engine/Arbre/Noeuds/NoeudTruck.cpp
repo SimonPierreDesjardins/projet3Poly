@@ -31,7 +31,7 @@
 #include "RectangleEnglobant.h"
 
 #include "EnginSon.h"
-#include "Camera.h"
+
 
 
 
@@ -65,21 +65,15 @@ NoeudTruck::NoeudTruck(uint32_t id, const std::string& typeNoeud)
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
 
 		
-	PhysicsComponent leftPhysics = roueGauche_->getPhysicsComponent();
-	leftPhysics.relativePosition = { 1.5, -0.47, 1.0 };
-	leftPhysics.scale = { 1.25f, 1.25f, 1.25f };
-
-	PhysicsComponent leftPhysics2 = roueGauche_->getPhysicsComponent();
-	leftPhysics2.relativePosition = { -2.2, -0.47, 1.0};
-	leftPhysics2.scale = { 1.25f, 1.25f, 1.25f };
-
-	PhysicsComponent rightPhysics = roueGauche_->getPhysicsComponent();
-	rightPhysics.relativePosition = { 1.5, 0.5, 1.0 };
-	rightPhysics.scale = { 1.25f, 1.25f, 1.25f };
-
-	PhysicsComponent rightPhysics2 = roueGauche_->getPhysicsComponent();
-	rightPhysics2.relativePosition = { -2.2, 0.5, 1.0 };
-	rightPhysics2.scale = { 1.25f, 1.25f, 1.25f };
+	roueGauche_->getPhysicsComponent().relativePosition = { 1.5, -0.47, 1.0 };
+	roueGauche_->getPhysicsComponent().scale = { 1.25f, 1.25f, 1.25f };
+	roueGauche2_->getPhysicsComponent().relativePosition = { -2.2, -0.47, 1.0 };
+	roueGauche2_->getPhysicsComponent().scale = { 1.25f, 1.25f, 1.25f };
+	roueDroite_->getPhysicsComponent().relativePosition = { 1.5, 0.5, 1.0 };
+	roueDroite_->getPhysicsComponent().scale = { 1.25f, 1.25f, 1.25f };
+	roueDroite2_->getPhysicsComponent().relativePosition = { -2.2, 0.5, 1.0 };
+	roueDroite2_->getPhysicsComponent().scale = { 1.25f, 1.25f, 1.25f };
+	
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);
@@ -144,11 +138,11 @@ void NoeudTruck::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+	//controleurLumiere_->afficherLumiereSpotRobot();
+	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
-	}
+	}*/
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -184,9 +178,8 @@ void NoeudTruck::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudTruck::suivreCamera()
+void NoeudTruck::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{
@@ -288,6 +281,30 @@ void NoeudTruck::setCouleurDefault(int piece, bool default)
 	}
 
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudTruck::initialisationCouleurs(float* roues, float* modele)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues et du modele
+///
+/// @param[in] float* de couleurs des roues et du modele
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudTruck::initialisationCouleurs(int* roues, int* modele)
+{
+	couleur_[0] = (float)modele[0] / (float)255;
+	couleur_[1] = (float)modele[1] / (float)255;
+	couleur_[2] = (float)modele[2] / (float)255;
+	couleur_[3] = (float)modele[3] / (float)255;
+	roueDroite_->initialisationCouleurs(roues);
+	roueDroite2_->initialisationCouleurs(roues);
+	roueGauche_->initialisationCouleurs(roues);
+	roueGauche2_->initialisationCouleurs(roues);
+}
+
 
 
 ///////////////////////////////////////////////////////////////////////////////

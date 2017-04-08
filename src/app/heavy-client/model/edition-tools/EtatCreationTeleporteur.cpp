@@ -13,6 +13,7 @@
 #include "Vue.h"
 #include "ArbreRenduINF2990.h"
 #include "glm\glm.hpp"
+#include "NoeudPaireTeleporteurs.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -21,11 +22,14 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationTeleporteur::EtatCreationTeleporteur()
+EtatCreationTeleporteur::EtatCreationTeleporteur(client_network::MapSession* mapSession)
+	: OnlineTool(mapSession)
 {
 	setType(CREATION_TELEPORTOR);
 	visiteurCreationTeleporteur_ = std::make_unique<VisiteurCreationTeleporteur>();
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
+	paireTeleporteurs_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_PAIRTELEPORT);
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -39,7 +43,9 @@ EtatCreationTeleporteur::~EtatCreationTeleporteur()
 {
 	if (enCreation_)
 	{
-		arbre_->chercher("table")->effacer(teleporteur_);
+		arbre_->chercher("table")->effacer(paireTeleporteurs_.get());
+		mapSession_->deleteLocalEntity(paireTeleporteurs_.get()); //pas sure si je dois mettre les deux
+		mapSession_->deleteLocalEntity(teleporteur_.get());
 		enCreation_ = false;
 		teleporteur_ = nullptr;
 	}
@@ -78,6 +84,7 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 	glm::dvec3 positionVirtuelle;
 	if (!estClickDrag() && curseurEstSurTable_)
 	{
+		
 		//Premier clic
 		if (!enCreation_)
 		{
@@ -87,13 +94,19 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
+			arbre_->chercher(0)->ajouter(paireTeleporteurs_);
+			paireTeleporteurs_->ajouter(teleporteur_);
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
-			teleporteur_->assignerTeleporteur(nullptr);
+			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
+
+			mapSession_->localEntityCreated(paireTeleporteurs_.get());
+			mapSession_->localEntityCreated(teleporteur_.get());
+			//teleporteur_->assignerTeleporteur(nullptr);//pas a faire ici
 
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
 
 			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
-				arbre_->chercher("table")->effacer(teleporteur_);
+				arbre_->chercher("table")->effacer(paireTeleporteurs_.get()); //a voir sinon remove tp
 				teleporteur_ = nullptr;
 				enCreation_ = false;
 				ancienTeleporteur_ = nullptr;
@@ -107,13 +120,16 @@ void EtatCreationTeleporteur::gererClicGaucheRelache(const int& x, const int& y)
 			visiteurCreationTeleporteur_->assignerPositionRelative(positionVirtuelle);
 			arbre_->accepterVisiteur(visiteurCreationTeleporteur_.get());
 			teleporteur_ = visiteurCreationTeleporteur_->obtenirReferenceNoeud();
+			paireTeleporteurs_->ajouter(teleporteur_);
 			teleporteur_->getPhysicsComponent().absolutePosition = positionVirtuelle;
+			teleporteur_->getPhysicsComponent().relativePosition = positionVirtuelle;
 			arbre_->accepterVisiteur(visiteurVerificationQuad_.get());
-			ancienTeleporteur_->assignerTeleporteur(teleporteur_);
-			teleporteur_->assignerTeleporteur(ancienTeleporteur_);
+			mapSession_->localEntityCreated(teleporteur_.get());
+			//ancienTeleporteur_->assignerTeleporteur(teleporteur_);
+			//teleporteur_->assignerTeleporteur(ancienTeleporteur_); a faire dans le ajouter
 
 			if (!visiteurVerificationQuad_->objetsDansZoneSimulation()) {
-				arbre_->chercher("table")->effacer(teleporteur_);
+				arbre_->chercher("table")->effacer(teleporteur_.get());
 				teleporteur_ = ancienTeleporteur_;
 				enCreation_ = true;
 				ancienTeleporteur_ = nullptr;
@@ -192,7 +208,7 @@ void EtatCreationTeleporteur::gererToucheEchappe()
 {
 	if (enCreation_)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(teleporteur_);
+		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->effacer(paireTeleporteurs_.get());
 		enCreation_ = false;
 		teleporteur_ = nullptr;
 	}

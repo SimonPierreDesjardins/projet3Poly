@@ -46,6 +46,8 @@ namespace ui
         private void selectToolButton_Click(object sender, EventArgs e)
         {
             selectTool();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -63,7 +65,6 @@ namespace ui
             setDefaultCurrentTool();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -79,6 +80,8 @@ namespace ui
         private void MoveToolButton_Click(object sender, EventArgs e)
         {
             moveTool();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -96,7 +99,6 @@ namespace ui
             setDefaultCurrentTool();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -112,6 +114,8 @@ namespace ui
         private void RotateToolButton_Click(object sender, EventArgs e)
         {
             rotateTool();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -129,7 +133,6 @@ namespace ui
             setDefaultCurrentTool();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -145,6 +148,8 @@ namespace ui
         private void ScaleToolButton_Click(object sender, EventArgs e)
         {
             scaleTool();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -162,7 +167,6 @@ namespace ui
             setDefaultCurrentTool();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -178,6 +182,8 @@ namespace ui
         private void DuplicateToolButton_Click(object sender, EventArgs e)
         {
             duplicateTool();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -195,7 +201,6 @@ namespace ui
             setDefaultCurrentTool();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            //FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -231,6 +236,8 @@ namespace ui
         private void zoomToolButton_Click(object sender, EventArgs e)
         {
             zoomTool();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -248,7 +255,6 @@ namespace ui
             setDefaultCurrentTool();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -264,6 +270,8 @@ namespace ui
         private void deleteToolButton_Click(object sender, EventArgs e)
         {
             deleteTool();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -276,7 +284,6 @@ namespace ui
         public void deleteTool()
         {
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
             parent_.verificationDuNombreElementChoisi();
         }
 
@@ -293,6 +300,8 @@ namespace ui
         private void lineObjectButton_Click(object sender, EventArgs e)
         {
             lineObject();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -309,7 +318,6 @@ namespace ui
             setDefaultUnselectedColors();
             lineObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(lineObjectPicture);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -379,6 +387,8 @@ namespace ui
         private void postObjectButton_Click(object sender, EventArgs e)
         {
             postObject();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_P, (IntPtr)1638401);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -395,7 +405,6 @@ namespace ui
             setDefaultUnselectedColors();
             postObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(postObjectPicture);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_P, (IntPtr)1638401);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -411,6 +420,8 @@ namespace ui
         private void wallObjectButton_Click(object sender, EventArgs e)
         {
             wallObject();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -427,7 +438,6 @@ namespace ui
             setDefaultUnselectedColors();
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(wallObjectPicture);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -443,6 +453,8 @@ namespace ui
         private void teleportorObjectButton_Click(object sender, EventArgs e)
         {
             teleportorObjet();
+            //Pass it to the model
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_O, (IntPtr)3276801);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -459,7 +471,6 @@ namespace ui
             setDefaultUnselectedColors();
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(teleportorPictureBox);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_O, (IntPtr)3276801);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -513,12 +524,9 @@ namespace ui
 
             //Objects
             lineObjectButton.BackColor = Color.Transparent;
-            greenLineObjectButton.BackColor = Color.Transparent;
-            redLineObjectButton.BackColor = Color.Transparent;
             postObjectButton.BackColor = Color.Transparent;
             wallObjectButton.BackColor = Color.Transparent;
             teleportorObjectButton.BackColor = Color.Transparent;
-            bridgeObjectButton.BackColor = Color.Transparent;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -609,12 +617,9 @@ namespace ui
 
             //Objects
             lineObjectButton.toolTip.SetToolTip(lineObjectPicture, "Objet ligne [L]");
-            greenLineObjectButton.toolTip.SetToolTip(greenLinePictureBox, "Objet ligne verte []");
-            redLineObjectButton.toolTip.SetToolTip(redLinePictureBox, "Objet ligne rouge []");
             postObjectButton.toolTip.SetToolTip(postObjectPicture, "Objet poteau [P]");
             wallObjectButton.toolTip.SetToolTip(wallObjectPicture, "Objet mur [M]");
             teleportorObjectButton.toolTip.SetToolTip(teleportorPictureBox, "Objet téléporteur [O]");
-            bridgeObjectButton.toolTip.SetToolTip(bridgePictureBox, "Objet viaduc []");
         }
 
         ////////////////////////////////////////////////////////////////////////

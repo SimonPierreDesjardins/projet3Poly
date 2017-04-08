@@ -16,6 +16,10 @@
 #include "CapteurDistance.h"
 #include "SuiveurLigne.h"
 
+#define coinMinX -48
+#define coinMaxX  48
+#define coinMinY -24
+#define coinMaxY  24
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -100,7 +104,6 @@ void VisiteurDetectionRobot::visiter(ArbreRendu* arbre)
 void VisiteurDetectionRobot::visiter(NoeudTable* table)
 {	
 	bool estEnCollision = robot_->verifierCollision(table);
-     
 	if (!estEnCollision_)
 	{
 		estEnCollision_ = estEnCollision;
@@ -116,11 +119,7 @@ void VisiteurDetectionRobot::visiter(NoeudTable* table)
         table->chercher(i)->accepterVisiteur(this);
     }
 
-
-    if (estEnCollision_)
-    {
-        robot_->assignerEstEnCollision(estEnCollision_);
-    }
+	robot_->assignerEstEnCollision(estEnCollision_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -200,11 +199,65 @@ void VisiteurDetectionRobot::visiter(NoeudMur* mur)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDetectionRobot::visiter(NoeudTeleporteur* teleporteur)
 {
-	bool estEnCollision = robot_->verifierCollision(teleporteur);
+	bool estEnCollision = false;
+	if (teleporteur == nullptr)
+		estEnCollision = false;
+	RectangleEnglobant* rectangle = teleporteur->obtenirFormeEnglobante();
+	bool enIntersection = robot_->getBoundingBox().calculerIntersection(*rectangle);
+	bool enCollision = rectangle->obtenirEnCollision();
+	// Le teleporteur est en intersection et il ne se trouve pas déjà en collision.
+	if (enIntersection)
+	{
+		
+		if (!robot_->getTeleportationFaite() && !collisionTeleporteur(teleporteur->obtenirProchainTeleporteur()))
+		{
+			EnginSon::obtenirInstance()->jouerCollision(COLLISION_TELEPORTEUR_SON);
+			// On calcule les composantes de la collision.
+			enCollision = true;
+			robot_->setTeleporteurCourant(teleporteur);
+			rectangle->assignerEnCollision(enCollision);
+
+			// On replace le teleporteur à la dernière position.
+			robot_->reinitialiserPosition();
+		}
+		else
+		{
+			enIntersection = false;
+		}
+	}
+	// Le teleporteur n'est pas en intersection et il se trouvait en collision.
+	else
+	{
+		//Ce if permet de laisser le robot sortir du teleporteur avant de reprendre en considération les collisions
+		if (robot_->getTeleporteurCourant() != nullptr && teleporteur == robot_->getTeleporteurCourant() && !robot_->getBoundingBox().calculerIntersection(*(robot_->getTeleporteurCourant()->obtenirProchainTeleporteur()->obtenirFormeEnglobante())))
+		{
+			robot_->setTeleporteurCourant(nullptr);
+			robot_->setTeleportationFaite(false);
+		}
+
+
+		enCollision = false;
+		rectangle->assignerEnCollision(enCollision);
+	}
+
+	// TODO: À bouger dans le téléporteur.
+	if (robot_->getTeleportationFaite() == false && enCollision)
+	{
+		
+		glm::dvec3 teleporterAbsPos = robot_->getTeleporteurCourant()->obtenirProchainTeleporteur()->getPhysicsComponent().absolutePosition;
+		robot_->getPhysicsComponent().absolutePosition.x = teleporterAbsPos.x;
+		robot_->getPhysicsComponent().absolutePosition.y = teleporterAbsPos.y;
+		robot_->getPhysicsComponent().relativePosition = robot_->getPhysicsComponent().absolutePosition;
+		//mettreAJourPosition(dt);
+		robot_->mettreAJourFormeEnglobante();
+		robot_->setTeleportationFaite(true);
+	}
+
+	/*estEnCollision = false;
 	if (!estEnCollision_)
 	{
 		estEnCollision_ = estEnCollision;
-	}
+	}*/
 	/*for (int i = 0; i < NoeudRobot::N_CAPTEURS_DISTANCE; i++)
 	{
 		capteursDistance_->at(i).verifierDetection(teleporteur);
@@ -240,6 +293,79 @@ void VisiteurDetectionRobot::visiter(NoeudRobot* robot)
 		{
 			estEnCollision_ = estEnCollision;
 		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn bool VisiteurDetectionRobot::collisionTeleporteur(NoeudTeleporteur* teleporteur)
+///
+/// Fonction qui vérifie si le teleporteur ou on se teleporte est en collision avec quelque chose
+///
+/// @param[in] teleporteur:  Pointeur sur un noeud teleporteur.
+///
+/// @return bool.
+///
+////////////////////////////////////////////////////////////////////////
+bool VisiteurDetectionRobot::collisionTeleporteur(NoeudTeleporteur* teleporteur)
+{
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table");
+	glm::dvec3 scale = table->getPhysicsComponent().scale;
+	if (!teleporteur->obtenirCercleEnglobante()->calculerEstDansLimites(coinMinX*scale.x, coinMaxX*scale.x, coinMinY*scale.y, coinMaxY*scale.y))
+	{
+		return true;
+	}
+	for (unsigned int i = 0; i < table->obtenirNombreEnfants() - 1; i++) //on vérifie le cercle englobant des autres téléporteurs afin d'éviter d'avoir un téléporter dans ceux-ci
+	{
+		if (table->chercher(i) != teleporteur->obtenirParent())
+		{
+			if (table->chercher(i)->obtenirNom() == "paireteleporteurs" && (((NoeudTeleporteur*)table->chercher(i)->chercher(0))->obtenirCercleEnglobante()->calculerIntersection(*teleporteur->obtenirCercleEnglobante()) || ((NoeudTeleporteur*)table->chercher(i)->chercher(1))->obtenirCercleEnglobante()->calculerIntersection(*teleporteur->obtenirCercleEnglobante())))
+			{
+				return true;
+			}
+			else if ((table->chercher(i)->obtenirNom() == "robot" || table->chercher(i)->obtenirNom() == "truck" || table->chercher(i)->obtenirNom() == "audi"
+				|| table->chercher(i)->obtenirNom() == "f1") && ((NoeudRobot*)table->chercher(i))->getBoundingBox().calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
+			{
+				return true;
+			}
+			else if (table->chercher(i)->obtenirNom() != "ligneNoire" && table->chercher(i)->obtenirNom() != "robot" && table->chercher(i)->obtenirNom() != "truck" && table->chercher(i)->obtenirNom() != "audi" 
+				&& table->chercher(i)->obtenirNom() != "f1"  && table->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
+			{
+				return true;
+			}
+		}
+		else //verifier si le teleporteur est en collision avec son prochain teleporteur
+		{
+			if (table->chercher(i)->chercher(0) == teleporteur && ((NoeudTeleporteur*)table->chercher(i)->chercher(1))->obtenirCercleEnglobante()->calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
+			{
+				return true;
+			}
+			else if (table->chercher(i)->chercher(1) == teleporteur && ((NoeudTeleporteur*)table->chercher(i)->chercher(0))->obtenirCercleEnglobante()->calculerIntersection(*teleporteur->obtenirCercleEnglobante()))
+			{
+				return true;
+			}
+		}
+			
+	}
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudPaireTeleporteurs* noeud)
+///
+/// Fonction qui vérifie si le robot est en collision avec un teleporteur et si le capteur du robot détecte un teleporteur.
+///
+/// @param[in] teleporteur:  Pointeur sur un noeud paireteleporteur.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurDetectionRobot::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	{
+		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
 

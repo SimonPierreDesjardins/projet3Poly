@@ -53,7 +53,8 @@ class ControleRobot
 	
 public:
 	ControleRobot() = default;
-	ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profile);
+
+	ControleRobot(NoeudRobot* robot);
 
 	~ControleRobot();
 	// Demande au robot de traiter une commande donn�e

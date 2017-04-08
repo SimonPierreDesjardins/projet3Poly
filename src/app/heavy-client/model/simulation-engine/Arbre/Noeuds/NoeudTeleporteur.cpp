@@ -90,6 +90,7 @@ void NoeudTeleporteur::animer(float dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudTeleporteur::mettreAJourFormeEnglobante()
 {
+	physics_.absolutePosition = physics_.relativePosition;
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
 	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
 	rectangleEnglobant_.mettreAJour(physics_.absolutePosition, physics_.rotation.z, hauteur, largeur);
@@ -112,12 +113,12 @@ void NoeudTeleporteur::mettreAJourFormeEnglobante()
 ////////////////////////////////////////////////////////////////////////
 NoeudTeleporteur::~NoeudTeleporteur()
 {
-	if (teleporteur_ != nullptr && !teleporteur_->estSelectionne())
+	/*if (teleporteur_ != nullptr && !teleporteur_->estSelectionne())
 	{
 		teleporteur_->assignerTeleporteur(nullptr);
 		teleporteur_->assignerSelection(true); //permet de supprimer le noeud de la meme paire
 		
-	}
+	}*/
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -301,32 +302,9 @@ void NoeudTeleporteur::assignerTeleporteur(NoeudAbstrait* teleporteur)
 ////////////////////////////////////////////////////////////////////////
 NoeudTeleporteur* NoeudTeleporteur::obtenirProchainTeleporteur()
 {
+	//if (!teleporteur_)
+		// ALler chercher le teleporteur a partir du parent
 	return teleporteur_;
-}
-
-
-bool NoeudTeleporteur::collisionTeleporteur()
-{
-	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table");
-	if (!this->obtenirCercleEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY))
-	{
-		return true;
-	}
-	for (unsigned int i = 0; i < table->obtenirNombreEnfants() -1; i++) //on v�rifie le cercle englobant des autres t�l�porteurs afin d'�viter d'avoir un t�l�porter dans ceux-ci
-	{
-		if (table->chercher(i) != this)
-		{
-			if (table->chercher(i)->obtenirNom() == "teleporteur" && ((NoeudTeleporteur*)table->chercher(i))->obtenirCercleEnglobante()->calculerIntersection(cercleEnglobant_))
-			{
-				return true;
-			}
-			else if (table->chercher(i)->obtenirNom() != "ligneNoire" && table->chercher(i)->obtenirFormeEnglobante()->calculerIntersection(cercleEnglobant_))
-			{
-				return true;
-			}
-		}
-	}
-	return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

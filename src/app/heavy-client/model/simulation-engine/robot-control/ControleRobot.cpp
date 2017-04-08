@@ -35,17 +35,9 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ControleRobot::ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profil)
-	: arbre_(arbre), profil_(profil)
+ControleRobot::ControleRobot(NoeudRobot* robot)
 {
-	std::cout << "Control created." << std::endl;
-	std::shared_ptr<NoeudAbstrait> robot = arbre_->creerNoeud(profil_->getModele());
-	table_ = arbre_->chercher(0);
-	table_->ajouter(robot);
-
-	robot_ = std::static_pointer_cast<NoeudRobot>(robot).get();
-	robot_->giveSensors(profil->obtenirCapteursDistance(), profil->obtenirSuiveurLigne());
-
+	robot_ = robot;
 	comportement_ = nullptr;
 	vecteurComportements_ = nullptr;
 
@@ -68,9 +60,6 @@ ControleRobot::~ControleRobot()
 {
 	//Nous utilisons ceci pour terminer le thread d'IA du robot
 	passerAModeManuel();
-	if (table_ != nullptr && robot_ != nullptr){
-		table_->effacer(robot_);
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////

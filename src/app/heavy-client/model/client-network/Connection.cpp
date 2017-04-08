@@ -31,15 +31,16 @@ Connection::~Connection()
 
 void Connection::closeConnection()
 {
-	mConnection.lock();
-	shutdown(socket_, SD_SEND);
-	mConnection.unlock();
+	//mConnection.lock();
+	//shutdown(socket_, SD_SEND);
+	//mConnection.unlock();
 	isConnected_ = false;
 
-	if (listener_.joinable())
+	/*if (listener_.joinable())
 	{
 		listener_.join();
-	}
+	}*/
+
 
 	closesocket(socket_);
 }
@@ -50,7 +51,7 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 
 	// Initialize socket
 	socket_ = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
-	assert(socket_ != INVALID_SOCKET);
+	assert(socket_ != INVALID_SOCKET && "Could not open socket.");
 
 	addrinfo hints;
 	ZeroMemory(&hints, sizeof(hints));
@@ -60,7 +61,7 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 
 	// Translate strings to addrinfo structure
 	addrinfo* info;
-	assert(getaddrinfo(hostName.c_str(), port.c_str(), &hints, &info) == NO_ERROR);
+	assert(getaddrinfo(hostName.c_str(), port.c_str(), &hints, &info) == NO_ERROR && "Open connection assert");
 
 	// Find the good info
 	while (info == NULL || info->ai_family != AF_INET)
@@ -81,6 +82,8 @@ bool Connection::openConnection(const std::string& hostName, const std::string& 
 
 	isConnected_ = true;
 	listener_ = std::thread(&Connection::listen, this);
+	listener_.detach();
+
 	return true;
 }
 
@@ -90,6 +93,7 @@ void Connection::fetchSocketMessage()
 	mConnection.lock();
 	rcvBuffer_.fill(char());
 	int readBytes = recv(socket_, rcvBuffer_.data(), DEFAULT_BUFF_LEN, 0);
+	mConnection.unlock();
 
 	if (readBytes > 0)
 	{
@@ -97,11 +101,13 @@ void Connection::fetchSocketMessage()
 	}
 	else // Connection lost 
 	{
-		isConnected_ = false;
-		// TODO: Notifier le ui de la deconnexion.
+		if (isConnected_)
+		{
+			isConnected_ = false;
+			onConnectionLost_();
+			closesocket(socket_);
+		}
 	} 
-	// TODO: else pour le recv qui fail.
-	mConnection.unlock();
 }
 
 void Connection::listen()
@@ -111,17 +117,22 @@ void Connection::listen()
 	{
 		FD_ZERO(&readfds);
 		FD_SET(socket_, &readfds);
-
+		mConnection.lock();
 		// Check if there is a message on the socket q.
 		int selectResult = !select(NULL, &readfds, NULL, NULL, &timeout_);
+		mConnection.unlock();
 		if (selectResult != SOCKET_ERROR && FD_ISSET(socket_, &readfds))
 		{
 			fetchSocketMessage();
 		}
 		else if (selectResult == SOCKET_ERROR)
 		{
-			isConnected_ = false;
-			// TODO: Notifier le ui de la deconnexion.
+			if (isConnected_)
+			{
+				isConnected_ = false;
+				onConnectionLost_();
+				closesocket(socket_);
+			}
 		}
 	}
 }

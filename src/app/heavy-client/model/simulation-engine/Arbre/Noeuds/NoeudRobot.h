@@ -20,6 +20,7 @@
 #include <array>
 #include "ControleurLumiere.h"
 #include <stack>
+#include "Vue.h"
 
 
 ///////////////////////////////////////////////////////////////////////////
@@ -82,7 +83,7 @@ public:
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	virtual void animer(float dt);
-	virtual void suivreCamera();
+	virtual void suivreCamera(vue::Vue* vue);
 
     /// Méthode permettant au robot de vérifier la collision avec un noeud.
     bool verifierCollision(NoeudPoteau* poteau);
@@ -118,6 +119,18 @@ public:
 
 	std::stack <NoeudAbstrait*> tableauCoins;
 
+	virtual void initialisationCouleurs(int* roues, int* modele);
+
+	void reinitialiserPosition();
+	virtual void mettreAJourFormeEnglobante();
+
+	NoeudTeleporteur* getTeleporteurCourant();
+	void setTeleporteurCourant(NoeudTeleporteur* teleporteur);
+	bool getTeleportationFaite();
+	void setTeleportationFaite(bool teleportationFaite);
+
+	void assignerControleurLumiere(ControleurLumiere* controleur);
+
 
 protected:
 
@@ -142,8 +155,6 @@ protected:
 
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
-    void reinitialiserPosition();
-    virtual void mettreAJourFormeEnglobante();
 
 	bool estEnCollision_{ false };
 
@@ -154,7 +165,7 @@ protected:
 	NoeudRoues* roueDroite2_;
 	NoeudTeleporteur* teleporteurCourant_{nullptr};
 
-	float* couleur_;
+	float couleur_[4] = {0.0,0.0,0.0,0.0};
 	bool estCouleurDefaut_ = true;
 	int mode_;
 	bool teleporteurCollision_ = false;

@@ -330,60 +330,6 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void greenLineObjectButton_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'outil création ligne verte
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void greenLineObjectButton_Click(object sender, EventArgs e)
-        {
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn public void greenLineObject()
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation ligne verte
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void greenLineObject()
-        {
-
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void redLineObjectButton_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'outil création ligne rouge
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void redLineObjectButton_Click(object sender, EventArgs e)
-        {
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn public void redLineObject()
-        ///
-        /// Cette fonction change l'état et la couleur du bouton sur la barre d'outils
-        /// qui correspond à l'état, creation ligne rouge
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void redLineObject()
-        {
-
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private void postObjectButton_Click(object sender, EventArgs e)
         ///
         /// Appel l'outil création de poteau
@@ -481,20 +427,6 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void bridgeObjectButton_Click(object sender, EventArgs e)
-        ///
-        /// Appel l'outils création pont
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventsArgs e: evenement du click
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void bridgeObjectButton_Click(object sender, EventArgs e)
-        {
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private void hideObjectMenu()
         ///
         /// Cache le menu pour la création d'objet.
@@ -530,12 +462,9 @@ namespace ui
 
             //Objects
             lineObjectButton.BackColor = Color.Transparent;
-            greenLineObjectButton.BackColor = Color.Transparent;
-            redLineObjectButton.BackColor = Color.Transparent;
             postObjectButton.BackColor = Color.Transparent;
             wallObjectButton.BackColor = Color.Transparent;
             teleportObjectButton.BackColor = Color.Transparent;
-            bridgeObjectButton.BackColor = Color.Transparent;
 
             currentToolButton.BackColor = Color.Transparent;
             currentToolButton.Visible = false;
@@ -616,12 +545,9 @@ namespace ui
 
             //Objects
             lineObjectButton.toolTip.SetToolTip(lineObjectPicture, "Objet ligne [L]");
-            greenLineObjectButton.toolTip.SetToolTip(greenLinePictureBox, "Objet ligne verte []");
-            redLineObjectButton.toolTip.SetToolTip(redLinePictureBox, "Objet ligne rouge []");
             postObjectButton.toolTip.SetToolTip(postObjectPicture, "Objet poteau [P]");
             wallObjectButton.toolTip.SetToolTip(wallObjectPicture, "Objet mur [M]");
             teleportObjectButton.toolTip.SetToolTip(teleportorPictureBox, "Objet téléporteur []");
-            bridgeObjectButton.toolTip.SetToolTip(bridgePictureBox, "Objet viaduc []");
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -685,18 +611,12 @@ namespace ui
             //Objects
             lineObjectButton.Enabled = false;
             lineObjectPicture.Image = ChangeColor((Bitmap)lineObjectPicture.Image, Color.Gray);
-            greenLineObjectButton.Enabled = false;
-            greenLinePictureBox.Image = ChangeColor((Bitmap)greenLinePictureBox.Image, Color.Gray);
-            redLineObjectButton.Enabled = false;
-            redLinePictureBox.Image = ChangeColor((Bitmap)redLinePictureBox.Image, Color.Gray);
             postObjectButton.Enabled = false;
             postObjectPicture.Image = ChangeColor((Bitmap)postObjectPicture.Image, Color.Gray);
             wallObjectButton.Enabled = false;
             wallObjectPicture.Image = ChangeColor((Bitmap)wallObjectPicture.Image, Color.Gray);
             teleportObjectButton.Enabled = false;
             teleportorPictureBox.Image = ChangeColor((Bitmap)teleportorPictureBox.Image, Color.Gray);
-            bridgeObjectButton.Enabled = false;
-            bridgePictureBox.Image = ChangeColor((Bitmap)bridgePictureBox.Image, Color.Gray);
         }
     }
 }

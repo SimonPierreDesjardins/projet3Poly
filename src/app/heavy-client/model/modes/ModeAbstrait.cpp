@@ -15,6 +15,8 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
+#include "ProfilUtilisateur.h"
+#include "ArbreRenduINF2990.h"
 
 
 glm::ivec2 ModeAbstrait::currentPosition_ = { 0.0, 0.0 };
@@ -243,6 +245,30 @@ void ModeAbstrait::gererMoletteSouris(const int & delta){
 		else
 			FacadeModele::obtenirInstance()->obtenirVue()->zoomerOut();
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn NoeudRobot* ModeAbstrait::creerRobot(ArbreRenduINF2990* arbre, ProfilUtilisateur* profil)
+///
+/// Cette fonction cree un noeud robot et lui assigne ses couleurs
+///
+/// @param const int & delta: la valeur de la molette de la souris
+///
+////////////////////////////////////////////////////////////////////////
+NoeudRobot* ModeAbstrait::creerRobot(ArbreRenduINF2990* arbre, ProfilUtilisateur* profil)
+{
+	std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(profil->getModele());
+	NoeudAbstrait* table = arbre->chercher(0);
+	table->ajouter(robot);
+	NoeudRobot* robotPtr = static_cast<NoeudRobot*>(robot.get());
+	robot_ = robotPtr;
+	robotPtr->initialisationCouleurs(profil->obtenirCouleurs(WHEELS), profil->obtenirCouleurs(BODY));
+	robotPtr->setCouleurDefault(WHEELS, profil->obtenirCouleurParDefaut(WHEELS));
+	robotPtr->setCouleurDefault(BODY, profil->obtenirCouleurParDefaut(BODY));
+	robotPtr->giveSensors(profil->obtenirCapteursDistance(), profil->obtenirSuiveurLigne());
+
+	return robotPtr;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

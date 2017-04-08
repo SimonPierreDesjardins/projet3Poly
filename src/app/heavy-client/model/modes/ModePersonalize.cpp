@@ -15,6 +15,7 @@
 #include "FacadeModele.h"
 #include "Vue.h"
 #include "Projection.h"
+#include "SimulationEngine.h"
 
 #include <iostream>
 
@@ -25,20 +26,23 @@
 /// Constructeur par défaut pour le mode test
 ///
 ////////////////////////////////////////////////////////////////////////
-ModePersonalize::ModePersonalize()
+ModePersonalize::ModePersonalize(engine::SimulationEngine* engine, ProfilUtilisateur* profil)
+	: controleRobot_(creerRobot(engine->getEntityTree(), profil))
 {
 	typeMode_ = PERSONALIZE;
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	FacadeModele::obtenirInstance()->assignerVueOrbitePerso();
+	profil_ = profil;
+	engine->setCloseOrbitalView();
 
-	tree_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	tree_ = engine->getEntityTree();
 	std::shared_ptr<NoeudAbstrait> table = tree_->creerNoeud(ArbreRenduINF2990::NOM_TABLE);
 	tree_->ajouter(table);
 
-	std::shared_ptr<NoeudAbstrait> robot = tree_->creerNoeud(profil_->getModele());
-	table->ajouter(robot);
+	std::shared_ptr<NoeudAbstrait> depart = tree_->creerNoeud(ArbreRenduINF2990::NOM_DEPART);
+	table->ajouter(depart);
 
-	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
+	robot_ = controleRobot_.obtenirNoeud();
+
+	controleurLumiere_ = engine->getLightController();
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
@@ -60,6 +64,7 @@ ModePersonalize::~ModePersonalize()
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+	robot_ = nullptr;
 	tree_->vider();
 }
 
@@ -217,19 +222,21 @@ void ModePersonalize::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn void ModePersonalize::creerControleRobot()
+/// @fn NoeudRobot* obtenirRobot()
 ///
-/// Fonction qui permet de créer un controle robot
+/// Fonction qui permet d'obtenir le robot du mode
 ///
-/// @return Aucune
+/// @return robot
 ///
 ////////////////////////////////////////////////////////////////////////
-void ModePersonalize::creerControleRobot()
+NoeudRobot* ModePersonalize::obtenirRobot()
 {
-	//controleRobot_ = nullptr;
-	//controleRobot_ = std::make_unique<ControleRobot>();
-	//controleRobot_->obtenirNoeud()->assignerMode(typeMode_);
+	return robot_;
 }
+
+
+
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////

@@ -43,12 +43,12 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
-	  : controleRobot_(engine->getEntityTree(), profil), OnlineMapMode(session)
+	  : controleRobot_(creerRobot(engine->getEntityTree(), profil)), OnlineMapMode(session)
 {
 	NoeudRobot* robot = controleRobot_.obtenirNoeud();
 	robot->assignerSelection(true);
 	session->localEntityCreated(robot);
-	robotPhysics_.init(robot, engine->getEntityTree(), session);
+	robotPhysics_.init(robot, engine, session);
 
 	typeMode_ = SIMULATION;
 	profil_ = profil;

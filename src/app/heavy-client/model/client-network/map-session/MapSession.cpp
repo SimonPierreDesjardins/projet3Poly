@@ -52,7 +52,6 @@ void MapSession::createServerEntity(const PhysicsComponent& properties, uint8_t 
 	NoeudAbstrait* parent = itParent->second;
 	std::shared_ptr<NoeudAbstrait> newEntity = entityTree_->creerNoeud((EntityType)(type));
 	if (!newEntity) return;
-
 	parent->ajouter(newEntity);
 	PhysicsComponent& physics = newEntity->getPhysicsComponent();
 	physics.absolutePosition = properties.absolutePosition;
@@ -60,6 +59,7 @@ void MapSession::createServerEntity(const PhysicsComponent& properties, uint8_t 
 	physics.rotation = properties.rotation;
 	physics.scale = properties.scale;
 	newEntity->setId(entityId);
+	newEntity->mettreAJourFormeEnglobante();
 
 	auto userIt = users_.find(userId);
 	if (userIt != users_.end())
@@ -305,6 +305,7 @@ void MapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking::Prop
 			physics.angularVelocity = updatedProperty;
 			break;
 		}
+		it->second->mettreAJourFormeEnglobante();
 	}
 	pendingQueueLock_.unlock();
 }
