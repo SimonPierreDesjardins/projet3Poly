@@ -30,7 +30,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeEdition::ModeEdition(engine::SimulationEngine* engine, client_network::MapSession* mapSession)
+ModeEdition::ModeEdition(engine::SimulationEngine* engine, client_network::ClientMapSession* mapSession)
 	: OnlineMapMode(mapSession),
 	  visiteurSuppression_(mapSession)
 {

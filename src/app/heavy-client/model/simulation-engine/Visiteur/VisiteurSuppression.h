@@ -13,7 +13,7 @@
 
 #include "VisiteurAbstrait.h"
 
-namespace client_network
+namespace engine
 {
 	class MapSession;
 }
@@ -29,7 +29,7 @@ class VisiteurSuppression : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurSuppression(client_network::MapSession* mapSession);
+	VisiteurSuppression(engine::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurSuppression();
@@ -44,7 +44,7 @@ public:
 private:
 	VisiteurSuppression() = delete;
 
-	client_network::MapSession* mapSession_;
+	engine::MapSession* mapSession_;
 };
 
 #endif // VISITEUR_SUPPRESSION_H

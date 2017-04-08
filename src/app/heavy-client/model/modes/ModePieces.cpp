@@ -28,7 +28,7 @@
 #include "ArbreRenduINF2990.h"
 #include "ProfilUtilisateur.h"
 #include "SimulationEngine.h"
-#include "MapSession.h"
+#include "map-session/ClientMapSession.h"
 
 #include "EnginSon.h"
 
@@ -41,7 +41,7 @@ std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '
 /// Constructeur par défaut pour le mode pieces
 ///
 ////////////////////////////////////////////////////////////////////////
-ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
+ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session)
 	: controleRobot_(creerRobot(engine->getEntityTree(), profil)), OnlineMapMode(session)
 {
 	NoeudRobot* robot = controleRobot_.obtenirNoeud();

@@ -5,17 +5,17 @@
 
 namespace client_network
 {
-	class MapSession;
+	class ClientMapSession;
 }
 
 class OnlineMapMode : public ModeAbstrait
 {
 public:
-	OnlineMapMode(client_network::MapSession* mapSession);
+	OnlineMapMode(client_network::ClientMapSession* mapSession);
 	virtual ~OnlineMapMode() = 0;
 
 protected:
-	client_network::MapSession* mapSession_;
+	client_network::ClientMapSession* mapSession_;
 
 private:
 	OnlineMapMode() = delete;

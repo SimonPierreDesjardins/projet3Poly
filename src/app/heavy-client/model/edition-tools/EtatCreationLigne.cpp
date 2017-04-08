@@ -23,7 +23,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationLigne::EtatCreationLigne(client_network::MapSession* mapSession)
+EtatCreationLigne::EtatCreationLigne(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(CREATION_LIGNE_NOIRE);

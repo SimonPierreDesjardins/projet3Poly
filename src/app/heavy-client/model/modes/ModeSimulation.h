@@ -39,7 +39,7 @@ namespace engine {
 class ModeSimulation : public OnlineMapMode
 {
 public:
-	ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session);
+	ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session);
 
 	//Destructeur
 	virtual ~ModeSimulation();
@@ -75,6 +75,7 @@ private:
 	//Constructeur par d�faut
 	bool obtenirModeEnPause();
 	ModeSimulation() = delete;
+	engine::SimulationEngine* engine_ = nullptr;
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

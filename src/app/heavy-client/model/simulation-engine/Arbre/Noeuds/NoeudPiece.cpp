@@ -45,7 +45,6 @@ NoeudPiece::NoeudPiece(uint32_t id, const std::string& typeNoeud)
 }
 
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudPiece::mettreAJourFormeEnglobante()

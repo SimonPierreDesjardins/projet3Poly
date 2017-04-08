@@ -1,6 +1,6 @@
 #include "RobotPhysics.h"
 
-#include "MapSession.h"
+#include "map-session/MapSession.h"
 #include "ArbreRendu.h"
 #include "NoeudRobot.h"
 #include "NoeudPoteau.h"
@@ -9,8 +9,7 @@
 
 #define PI 3.14159265
 
-void RobotPhysics::init(NoeudRobot* robot, engine::SimulationEngine* engine, client_network::MapSession* mapSession)
-
+void RobotPhysics::init(NoeudRobot* robot, engine::SimulationEngine* engine, engine::MapSession* mapSession)
 {
 	collisionDetection_ = VisiteurDetectionRobot(robot);
 	robot_ = robot;

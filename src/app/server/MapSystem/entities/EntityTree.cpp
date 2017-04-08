@@ -1,4 +1,5 @@
 #include "EntityTree.h"
+#include "ArbreRenduINF2990.h"
 
 namespace server
 {
@@ -8,6 +9,7 @@ EntityTree::EntityTree()
 	Entity root;
 	root.entityId_ = 0;
 	entities_.insert(std::make_pair(0, std::move(root)));
+	ArbreRenduINF2990 arbre;
 }
 
 EntityTree::~EntityTree()

@@ -27,7 +27,7 @@
 /// Constructeur par défault. Assigne arbre_ à arbre courant
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatSelection::EtatSelection(client_network::MapSession* mapSession)
+EtatSelection::EtatSelection(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(SELECTION);

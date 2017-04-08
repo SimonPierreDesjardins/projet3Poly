@@ -107,7 +107,7 @@ void ArbreRenduINF2990::initialiser()
 	// Construction des usines
 	ajouterUsine(TABLE_ENTITY, NOM_TABLE, std::make_unique<UsineNoeud<NoeudTable>>(NOM_TABLE, std::string{ "media/modeles/table.obj" }));
 	ajouterUsine(BLACK_LINE_ENTITY, NOM_LIGNENOIRE, std::make_unique<UsineNoeud<NoeudLigne>>(NOM_LIGNENOIRE, std::string{ "media/modeles/segment.obj" }));
-	ajouterUsine(ROBOT_ENTITY, NOM_ROBOT, std::make_unique<UsineNoeud<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robot.obj" }));
+	ajouterUsine(ROBOT_ENTITY, NOM_ROBOT, std::make_unique<UsineNoeudRobot<NoeudRobot>>(NOM_ROBOT, std::string{ "media/modeles/robot.obj" }, this));
 	ajouterUsine(POST_ENTITY, NOM_POTEAU, std::make_unique<UsineNoeud<NoeudPoteau>>(NOM_POTEAU, std::string{ "media/modeles/poteau.obj" }));
 	ajouterUsine(WALL_ENTITY, NOM_MUR, std::make_unique<UsineNoeud<NoeudMur>>(NOM_MUR, std::string{ "media/modeles/mur.obj" }));
 	ajouterUsine(SEGMENT_ENTITY, NOM_SEGMENT, std::make_unique<UsineNoeud<NoeudSegment>>(NOM_SEGMENT, std::string{ "media/modeles/segment.obj" }));
@@ -115,9 +115,9 @@ void ArbreRenduINF2990::initialiser()
 	ajouterUsine(START_ENTITY, NOM_DEPART, std::make_unique<UsineNoeud<NoeudDepart>>(NOM_DEPART, std::string{ "media/modeles/Fleche.obj" }));
 	ajouterUsine(JUNCTION_ENTITY, NOM_JONCTION, std::make_unique<UsineNoeud<NoeudJonction>>(NOM_JONCTION, std::string{ "media/modeles/jonction.obj" }));
 	ajouterUsine(WHEEL_ENTITY, NOM_ROUES, std::make_unique<UsineNoeud<NoeudRoues>>(NOM_ROUES, std::string{ "media/modeles/roue.obj" }));
-	ajouterUsine(F1_ENTITY, NOM_F1, std::make_unique<UsineNoeud<NoeudF1>>(NOM_F1, std::string{ "media/modeles/ferrari-f1-race-car.obj" }));
-	ajouterUsine(TRUCK_ENTITY, NOM_TRUCK, std::make_unique<UsineNoeud<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }));
-	ajouterUsine(AUDI_ENTITY, NOM_AUDI, std::make_unique<UsineNoeud<NoeudAudi>>(NOM_AUDI, std::string{ "media/modeles/audi_r8.obj" }));
+	ajouterUsine(F1_ENTITY, NOM_F1, std::make_unique<UsineNoeudRobot<NoeudF1>>(NOM_F1, std::string{ "media/modeles/ferrari-f1-race-car.obj" }, this));
+	ajouterUsine(TRUCK_ENTITY, NOM_TRUCK, std::make_unique<UsineNoeudRobot<NoeudTruck>>(NOM_TRUCK, std::string{ "media/modeles/mining-dump-truck.obj" }, this));
+	ajouterUsine(AUDI_ENTITY, NOM_AUDI, std::make_unique<UsineNoeudRobot<NoeudAudi>>(NOM_AUDI, std::string{ "media/modeles/audi_r8.obj" }, this));
 	ajouterUsine(TELEPORT_ENTITY, NOM_TELEPORTEUR, std::make_unique<UsineNoeud<NoeudTeleporteur>>(NOM_TELEPORTEUR, std::string{ "media/modeles/teleporter.obj" }));
 	ajouterUsine(COIN_ENTITY, NOM_PIECE, std::make_unique<UsineNoeud<NoeudPiece>>(NOM_PIECE, std::string{ "media/modeles/coin.obj" }));
 

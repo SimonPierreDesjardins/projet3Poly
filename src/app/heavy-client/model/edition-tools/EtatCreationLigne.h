@@ -26,7 +26,7 @@
 class EtatCreationLigne : public OnlineTool
 {
 public:
-	EtatCreationLigne(client_network::MapSession* mapSession);
+	EtatCreationLigne(client_network::ClientMapSession* mapSession);
 	virtual ~EtatCreationLigne();
 
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

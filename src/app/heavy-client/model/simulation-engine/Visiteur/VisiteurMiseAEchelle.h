@@ -14,7 +14,7 @@
 #include "VisiteurAbstrait.h"
 #include <vector>
 
-namespace client_network
+namespace engine
 {
 	class MapSession;
 }
@@ -35,17 +35,17 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurMiseAEchelle();
 
-	void resizeSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession);
+	void resizeSelectedEntities(ArbreRendu* tree, engine::MapSession* mapSession);
 
 	void initialiser(ArbreRendu* arbre);
-	void reinitialiser(ArbreRendu* arbre, client_network::MapSession* mapSession);
+	void reinitialiser(ArbreRendu* arbre, engine::MapSession* mapSession);
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
 	virtual void visiter(NoeudPoteau* noeud);
 	virtual void visiter(NoeudMur* noeud);
 private:
 	std::vector<double> facteursDimensionsInitiaux_;
-	client_network::MapSession* mapSession_;
+	engine::MapSession* mapSession_;
 };
 
 

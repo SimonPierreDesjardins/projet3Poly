@@ -34,7 +34,7 @@ class NoeudTruck : public NoeudRobot
 public:
 
 	/// Constructeur à partir du type du noeud.
-	NoeudTruck(uint32_t id, const std::string& typeNoeud);
+	NoeudTruck(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre);
 	/// Destructeur.
 	~NoeudTruck();
 

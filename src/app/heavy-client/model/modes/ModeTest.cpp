@@ -27,7 +27,7 @@ std::array<char, 11> ModeTest::touchesNonConfigurable_ = { { '+', '-', '\b', '1'
 /// Constructeur par d�faut pour le mode test
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeTest::ModeTest(client_network::MapSession* mapSession)
+ModeTest::ModeTest(client_network::ClientMapSession* mapSession)
 	: OnlineMapMode(mapSession)
 {
 	typeMode_ = TEST;
