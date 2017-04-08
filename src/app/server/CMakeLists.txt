@@ -15,6 +15,7 @@ include_directories(
 	chat-management
 	MapSystem
 	MapSystem/map-rooms
+	MapSystem/map-rooms/game-rooms
 	MapSystem/entities
 	UserManagement
 	message-dispatcher
@@ -94,6 +95,16 @@ set(MAP_ROOMS_SRC
 )
 source_group("MapSystem\\MapRooms" FILES ${MAP_ROOMS_SRC})
 
+set(GAME_ROOMS_SRC
+	MapSystem/map-rooms/game-rooms/GameRoom.h
+	MapSystem/map-rooms/game-rooms/GameRoom.cpp
+	MapSystem/map-rooms/game-rooms/CoinCollectionRoom.h
+	MapSystem/map-rooms/game-rooms/CoinCollectionRoom.cpp
+	MapSystem/map-rooms/game-rooms/RacingRoom.h
+	MapSystem/map-rooms/game-rooms/RacingRoom.cpp)
+source_group("MapSystem\\MapRooms\\GameRooms" FILES ${GAME_ROOMS_SRC})
+
+
 set(MAP_SYST 
 	MapSystem/MapSystem.cpp 
 	MapSystem/MapSystem.h
@@ -147,6 +158,7 @@ add_executable(Server
 	${MESSAGE_DISPATCHER_SRC}
 	${USER_MANAGEMENT_SRC}
 	${MAP_ROOMS_SRC}
+    ${GAME_ROOMS_SRC}
 	${MAP_SYST}
 	${ENTITIES_SRC}
 	${SERVER_SRC}

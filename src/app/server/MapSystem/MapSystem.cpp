@@ -1,8 +1,11 @@
 #include "NetworkStandard.h"
 #include "TypeSerializerDeserializer.h"
 #include "../Database/IdGenerator.h"
+
 #include "EditionRoom.h"
 #include "SimulationRoom.h"
+#include "CoinCollectionRoom.h"
+#include "RacingRoom.h"
 
 #include "MapSystem.h"
 
@@ -25,6 +28,14 @@ void MapEntry::updateSessionType()
 
 	case EDITION_MAP:
 		currentSession_ = std::make_unique<EditionRoom>(Info, File);
+		break;
+
+	case COIN_COLLECTOR_MAP:
+		currentSession_ = std::make_unique<CoinCollectionRoom>(Info, File);
+		break;
+
+	case RACING_MAP:
+		currentSession_ = std::make_unique<RacingRoom>(Info, File);
 		break;
 
 	default:

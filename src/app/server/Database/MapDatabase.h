@@ -11,6 +11,8 @@ enum MAP_TYPE
 	// Utiliser les mêmes enums que sur le client lourd.
 	SIMULATION_MAP = 1,
 	EDITION_MAP = 2,
+	COIN_COLLECTOR_MAP = 7,
+	RACING_MAP = 8
 };
 
 namespace server {

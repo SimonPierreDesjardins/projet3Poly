@@ -1,9 +1,10 @@
 #ifndef __MAP_SYSTEM_H
 #define __MAP_SYSTEM_H
 
-#include "../UserManagement/MultiUserSystem.h"
 #include <unordered_map>
 #include <memory>
+
+#include "../UserManagement/MultiUserSystem.h"
 #include "AbstractMapRoom.h"
 #include "Database\MapDatabase.h"
 #include "Database\MapFileDatabase.h"
