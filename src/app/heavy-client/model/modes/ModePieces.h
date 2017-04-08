@@ -24,6 +24,7 @@
 #include "ModeAbstrait.h"
 #include "ControleRobot.h"
 #include "Minuterie.h"
+#include "OnlineMapMode.h"
 
 class ProfilUtilisateur;
 class AffichageTexte;
@@ -43,11 +44,11 @@ namespace engine {
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModePieces : public ModeAbstrait
+class ModePieces : public OnlineMapMode
 {
 public:
 	//Constructeur par défaut
-	ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profile);
+	ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session);
 	//Destructeur
 	virtual ~ModePieces();
 	//Gestion des entrées utilisateur
@@ -62,7 +63,7 @@ public:
 
 	glm::dvec3 genererPositionCoin();
 
-	virtual void postAnimer();
+	virtual void postAnimer(float dt);
 
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
 
@@ -74,7 +75,6 @@ public:
 	void spawnObjects();
 
 private:
-	std::unique_ptr<ControleRobot> controleRobot_;
 	ProfilUtilisateur* profil_{ nullptr };
 	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
@@ -104,6 +104,9 @@ private:
 	std::vector<std::shared_ptr<NoeudAbstrait>> objectsToSpawn;
 
 	std::mutex spawnLock;
+
+	ControleRobot controleRobot_;
+	RobotPhysics robotPhysics_;
 };
 
 inline std::array<char, 11>* ModePieces::getTouchesNonConfigurable()

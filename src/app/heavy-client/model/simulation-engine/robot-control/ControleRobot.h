@@ -53,7 +53,8 @@ class ControleRobot
 	
 public:
 	ControleRobot() = default;
-	ControleRobot(ArbreRendu* arbre, ProfilUtilisateur* profile);
+
+	ControleRobot(NoeudRobot* robot);
 
 	~ControleRobot();
 	// Demande au robot de traiter une commande donn�e
@@ -100,7 +101,7 @@ private:
 
 	ProfilUtilisateur* profil_{ nullptr };
     ControleurLumiere* controleurLumiere_{ nullptr };
-	client_network::MapSession* mapSession_{ nullptr };
+	engine::MapSession* mapSession_{ nullptr };
 
 	// pointeur vers le noeud du robot
 	// Pointeur sur un profil

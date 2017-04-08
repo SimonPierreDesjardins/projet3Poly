@@ -192,6 +192,10 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZoneDefaut().c_str());
 	}
 
+	__declspec(dllexport) void __cdecl obtenirCheminFichierZone(char* chemin, int longueur) {
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZone().c_str());
+	}
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
@@ -845,7 +849,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value)
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(piece, value);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(piece,value);
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot() != nullptr)
+		{
+			FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot()->setCouleurDefault(piece, value);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -859,8 +866,14 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
 	{	
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCouleur(piece, a, r, g, b);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->assignerCouleurs(piece,a,r,g,b);
+		ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+		ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+		
+		profil->assignerCouleur(piece, a, r, g, b);
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot() != nullptr)
+		{
+			FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot()->assignerCouleurs(piece, a, r, g, b);
+		}
 	}
 
 
@@ -892,6 +905,7 @@ extern "C"
 
 		ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 		ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+		ModeAbstrait* mode = FacadeModele::obtenirInstance()->obtenirMode();
 
 		if (profil->getModele() != modele)
 		{
@@ -899,10 +913,11 @@ extern "C"
 			profil->setModele(std::string(modele));
 			profil->setCouleurParDefaut(BODY, true);
 			profil->setCouleurParDefaut(WHEELS, true);
-			std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(profil->getModele());//changer après modif oli, a voir avec lui
-			arbre->chercher(0)->ajouter(robot);//mm chose
-			arbre->chercher(0)->chercher(profil->getModele())->setCouleurDefault(BODY, true);
-			arbre->chercher(profil->getModele())->setCouleurDefault(WHEELS, true);
+			
+			NoeudRobot* robot = mode->creerRobot(arbre,profil);
+
+			robot->setCouleurDefault(BODY, true);
+			robot->setCouleurDefault(WHEELS, true);
 		}
 		
 	}
@@ -989,9 +1004,9 @@ extern "C"
 		callbackMapConnection = fn;
 	}
 
-	__declspec(dllexport) void __cdecl mapConnect(int action)
+	__declspec(dllexport) void __cdecl mapConnect(int mapId, int action)
 	{
-		callbackMapConnection(action);
+		callbackMapConnection(mapId, action);
 	}
 
 	CallbackMapPermission callbackMapPermission = 0;
@@ -1000,9 +1015,9 @@ extern "C"
 		callbackMapPermission = fn;
 	}
 
-	__declspec(dllexport) void __cdecl mapPermission(int action)
+	__declspec(dllexport) void __cdecl mapPermission(int mapId, int action)
 	{
-		callbackMapPermission(action);
+		callbackMapPermission(mapId, action);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -1308,6 +1323,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl SaveApplicationSettings()
 	{
 		FacadeModele::obtenirInstance()->getApplicationSettings()->save();
+	}
+
+	CallbackLoading callBackLoading = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForLoading(CallbackLoading handler)
+	{
+		callBackLoading = handler;
+	}
+
+	__declspec(dllexport) void __cdecl Loading(int action)
+	{
+		callBackLoading(action);
 	}
 }
 

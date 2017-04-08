@@ -31,7 +31,7 @@
 #include "RectangleEnglobant.h"
 
 #include "EnginSon.h"
-#include "Camera.h"
+
 
 
 
@@ -138,11 +138,11 @@ void NoeudTruck::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+	//controleurLumiere_->afficherLumiereSpotRobot();
+	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
-	}
+	}*/
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -178,9 +178,8 @@ void NoeudTruck::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudTruck::suivreCamera()
+void NoeudTruck::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{

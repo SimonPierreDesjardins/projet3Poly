@@ -27,6 +27,8 @@ public:
 	inline void setMapSessionManager(client_network::MapSessionManager* entityTree);
 	inline void setEntityTree(ArbreRendu* entityTree);
 
+	void onUserDisconnected();
+
 	virtual void onEntityCreated();
 
 	// Map edition
@@ -71,6 +73,8 @@ inline void EventHandler::setEntityTree(ArbreRendu* entityTree)
 {
 	entityTree_ = entityTree;
 }
+
+
 
 }
 

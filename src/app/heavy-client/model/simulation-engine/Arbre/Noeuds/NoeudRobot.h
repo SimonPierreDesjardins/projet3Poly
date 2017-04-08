@@ -20,6 +20,7 @@
 #include <array>
 #include "ControleurLumiere.h"
 #include <stack>
+#include "Vue.h"
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
@@ -55,7 +56,7 @@ public:
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	virtual void animer(float dt);
-	virtual void suivreCamera();
+	virtual void suivreCamera(vue::Vue* vue);
 
     /// Méthode permettant au robot de vérifier la collision avec un noeud.
     bool verifierCollision(NoeudPoteau* poteau);
@@ -112,7 +113,9 @@ public:
 	bool getTeleportationFaite();
 	void setTeleportationFaite(bool teleportationFaite);
 
+	void assignerControleurLumiere(ControleurLumiere* controleur);
 
+	ControleurLumiere* obtenirControleurLumiere();
 
 
 protected:

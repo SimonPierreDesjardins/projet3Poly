@@ -207,6 +207,11 @@ void ArbreRendu::assignerCheminFichierZone(std::string chemin)
 	cheminFichierZone = std::string(chemin);
 }
 
+std::string ArbreRendu::obtenirCheminFichierZone()
+{
+	return cheminFichierZone;
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn FILE* ArbreRendu::obtenirFichierZone(std::string mode)

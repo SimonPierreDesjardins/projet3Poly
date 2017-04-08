@@ -136,11 +136,11 @@ void NoeudAudi::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+	//controleurLumiere_->afficherLumiereSpotRobot();
+	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
-	}
+	}*/
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -177,9 +177,8 @@ void NoeudAudi::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudAudi::suivreCamera()
+void NoeudAudi::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{
@@ -212,16 +211,16 @@ void NoeudAudi::suivreCamera()
 void NoeudAudi::positionnerRoues()
 {
 	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
 
-	roueGauche_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
-	roueGauche2_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
+	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueGauche2_->setVitesseCourante(vitesseCouranteGauche_);
 
 	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
-	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 
-	roueDroite_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
-	roueDroite2_->getPhysicsComponent().angularVelocity.y = vitesseCouranteGauche_;
+	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
+	roueDroite2_->setVitesseCourante(vitesseCouranteDroite_);
 }
 
 ////////////////////////////////////////////////////////////////////////

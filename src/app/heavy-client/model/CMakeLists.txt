@@ -48,6 +48,8 @@ set(NOEUDS_SRC
     simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
     simulation-engine/Arbre/Noeuds/NoeudPiece.h
     simulation-engine/Arbre/Noeuds/NoeudPiece.cpp
+    simulation-engine/Arbre/Noeuds/NoeudPaireTeleporteurs.h
+    simulation-engine/Arbre/Noeuds/NoeudPaireTeleporteurs.cpp
 )
 
 set(USINES_SRC

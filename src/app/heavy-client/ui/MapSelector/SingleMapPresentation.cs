@@ -4,9 +4,7 @@
 /// @date   2017-02-27
 ///
 ////////////////////////////////////////////////
-
 using System;
-using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -103,14 +101,6 @@ namespace ui
             //Lovely circles as char in password
             passwordBox.PasswordChar = '\u25CF';
             newPasswordBox.PasswordChar = '\u25CF';
-
-            //Set callbacks for map connection
-            mapConnectionInstance = new CallbackMapConnection(MapConnectionHandler);
-            SetCallbackForMapConnection(mapConnectionInstance);
-
-            //Set callbacks for map permission change
-            mapPermissionInstance = new CallbackMapPermission(MapPermissionHandler);
-            SetCallbackForMapPermission(mapPermissionInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -127,11 +117,12 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void mapButton_Click(object sender, EventArgs e)
         {
+            privatePanel.Visible = true;
+            settingsPanel.Visible = false;
+            label2.Visible = false;
+
             if (confidentiality_)
             {
-                privatePanel.Visible = true;
-                settingsPanel.Visible = false;
-
                 if (passwordBox.TextLength == 0)
                 {
                     label2.Visible = true;
@@ -140,37 +131,64 @@ namespace ui
                 }
             }
 
-            label2.Visible = false;
-
-            //This will be in callback
+            //Try to join online map
             if (connectionState_)
             {
-                switch (modeType_)
-                {
-                    case (int)ModeEnum.Mode.SIMULATION:
-                        loadOnlineSimulationMode();
-                        break;
-
-                    case (int)ModeEnum.Mode.EDITION:
-                        loadOnlineEditionMode();
-                        break;
-
-                    case (int)ModeEnum.Mode.PIECES:
-                        loadOnlinePieceMode();
-                        break;
-
-                    /*case (int)ModeEnum.Mode.COURSE:
-                        loadOnlineRaceMode();
-                        break;*/
-
-                    default:
-                        break;
-                }
+                FonctionsNatives.joinMap(mapId_, passwordBox.Text, passwordBox.Text.Length);
             }
             else
             {
                 parent_.mapMenu.choseOfflineMode(this);
             }
+        }
+
+        public void joinMap()
+        {
+            parent_.Invoke((MethodInvoker)delegate
+            {
+                if (connectionState_)
+                {
+                    switch (modeType_)
+                    {
+                        case (int)ModeEnum.Mode.SIMULATION:
+                            loadOnlineSimulationMode();
+                            break;
+
+                        case (int)ModeEnum.Mode.EDITION:
+                            loadOnlineEditionMode();
+                            break;
+
+                        case (int)ModeEnum.Mode.PIECES:
+                            loadOnlinePieceMode();
+                            break;
+
+                        /*case (int)ModeEnum.Mode.COURSE:
+                            loadOnlineRaceMode();
+                            break;*/
+
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
+
+        public void wrongPassword()
+        {
+            parent_.Invoke((MethodInvoker)delegate
+            {
+                label2.Visible = true;
+                label2.Text = "Mauvais mot de passe";
+            });
+        }
+
+        public void sessionFull()
+        {
+            parent_.Invoke((MethodInvoker)delegate
+            {
+                label2.Visible = true;
+                label2.Text = "La session est pleine";
+            });
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -202,11 +220,6 @@ namespace ui
             parent_.mapMenu.defaultView();
 
             parent_.goOnlineSimulation();
-
-            if (connectionState_)
-            {
-                FonctionsNatives.joinMap(mapId_, passwordBox.Text, passwordBox.Text.Length);
-            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -223,13 +236,7 @@ namespace ui
             parent_.mapMenu.defaultView();
 
             parent_.goOnlineEdition();
-
-            if (connectionState_)
-            {
-                FonctionsNatives.joinMap(mapId_, passwordBox.Text, passwordBox.Text.Length);
-            }
         }
-
 
         private void loadOnlinePieceMode()
         {
@@ -252,35 +259,10 @@ namespace ui
 
         private void returnButton_Click(object sender, EventArgs e)
         {
-            //Stayed private
-            if (confidentiality_ && privateCheckBox.Checked)
-            {
-                //Maybe some code here??
-            }
-            //Changed to public
-            else if (confidentiality_ && publicCheckBox.Checked)
-            {
-                publicSettings();
-                //Mettre a jour info
-                confidentiality_ = false;
-                privacyLabel.Text = "Publique";
-                FonctionsNatives.changeMapPermission(mapId_, 'o', null, 0);
-            }
-            //Change to private
-            else if (!confidentiality_ && privateCheckBox.Checked)
-            {
-                if (newPasswordBox.TextLength == 0)
-                {
-                    label1.Visible = true;
-                    label1.Text = "Doit entrer un mot de passe";
-                    return;
-                }
-            }
-            //Stayed public
+            if (confidentiality_)
+                privateSettings();
             else
-            {
-                //Maybe some code here??
-            }
+                publicSettings();
 
             label1.Visible = false;
             settingsPanel.Visible = false;
@@ -300,7 +282,7 @@ namespace ui
             newPasswordLabel.Visible = false;
             newPasswordBox.Clear();
             newPasswordBox.Visible = false;
-            updateButton.Visible = false;
+            updateButton.Visible = true;
 
             passewordLabel.Visible = false;
             passwordBox.Clear();
@@ -335,74 +317,62 @@ namespace ui
 
         private void updateButton_Click(object sender, EventArgs e)
         {
-            if (newPasswordBox.TextLength == 0)
+            //Changed to public
+            if (confidentiality_ && publicCheckBox.Checked)
             {
-                label1.Visible = true;
-                label1.Text = "Doit entrer un mot de passe";
-                return;
+                FonctionsNatives.changeMapPermission(mapId_, 'o', null, 0);
+            }
+            //Change to private
+            else if (!confidentiality_ && privateCheckBox.Checked)
+            {
+                if (newPasswordBox.TextLength == 0)
+                {
+                    label1.Visible = true;
+                    label1.Text = "Doit entrer un mot de passe";
+                    return;
+                }
+
+                FonctionsNatives.changeMapPermission(mapId_, 'c', newPasswordBox.Text, newPasswordBox.TextLength);
+                newPasswordBox.Clear();
+            }
+            //Stayed private
+            else if (confidentiality_ && privateCheckBox.Checked)
+            {
+                //Maybe some code here??
+            }
+            //Stayed public
+            else
+            {
+                //Maybe some code here??
             }
 
-            FonctionsNatives.changeMapPermission(mapId_, 'c', newPasswordBox.Text, newPasswordBox.TextLength);
-            newPasswordBox.Clear();
-
-            privateSettings();
             settingsPanel.Visible = false;
             privatePanel.Visible = true;
 
             label1.Visible = false;
-
-            //Mettre a jour info
-            confidentiality_ = true;
-            privacyLabel.Text = "Privée";
         }
 
-        public void Test(int action)
+        public void changeToPublic()
         {
-            mapConnect(action);
+            parent_.Invoke((MethodInvoker)delegate
+            {
+                //Mettre a jour info
+                publicSettings();
+                confidentiality_ = false;
+                privacyLabel.Text = "Publique";
+            });
         }
 
-        private delegate void CallbackMapConnection(int action);
-        // Ensure it doesn't get garbage collected
-        private CallbackMapConnection mapConnectionInstance;
-        private void MapConnectionHandler(int action)
+        public void changeToPrivate()
         {
-            // Do something...
+            parent_.Invoke((MethodInvoker)delegate
+            {
+                //Mettre a jour info
+                privateSettings();
+                confidentiality_ = true;
+                privacyLabel.Text = "Privée";
+            });
         }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        [DllImport("model.dll")]
-        private static extern void SetCallbackForMapConnection(CallbackMapConnection fn);
-
-        [DllImport("model.dll")]
-        private static extern void mapConnect(int action);
-
-        public void Test1(int action)
-        {
-            mapPermission(action);
-        }
-
-        private delegate void CallbackMapPermission(int action);
-        // Ensure it doesn't get garbage collected
-        private CallbackMapPermission mapPermissionInstance;
-        private void MapPermissionHandler(int action)
-        {
-            // Do something...
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        [DllImport("model.dll")]
-        private static extern void SetCallbackForMapPermission(CallbackMapPermission fn);
-
-        [DllImport("model.dll")]
-        private static extern void mapPermission(int action);
     }
 
     static partial class FonctionsNatives

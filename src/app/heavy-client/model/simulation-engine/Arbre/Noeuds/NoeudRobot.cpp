@@ -91,7 +91,7 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 
 	positionnerRoues();
 
-	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
+	//controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 
@@ -237,9 +237,8 @@ void NoeudRobot::animer(float dt)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::suivreCamera()
+void NoeudRobot::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{
@@ -1014,6 +1013,15 @@ void NoeudRobot::setTeleportationFaite(bool teleportationFaite)
 	teleportationFaite_ = teleportationFaite;
 }
 
+void NoeudRobot::assignerControleurLumiere(ControleurLumiere* controleur)
+{
+	controleurLumiere_ = controleur;
+}
+
+ControleurLumiere* NoeudRobot::obtenirControleurLumiere()
+{
+	return controleurLumiere_;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

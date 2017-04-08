@@ -6,9 +6,15 @@
 
 #include "EventHandler.h"
 #include "FacadeInterfaceNative.h"
+#include "MapJoin.cs"
 
 namespace event_handler
 {
+
+void EventHandler::onUserDisconnected()
+{
+	GotDisconnected();
+}
 
 void EventHandler::onEntityCreated()
 {
@@ -51,24 +57,39 @@ void EventHandler::onNewMapCreated(uint32_t mapId, char mapType, char nUsers, ch
 void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 {
 	// On a failed join, do something
-	if (result == 's') 
+	switch (result)
 	{
-		client_network::ClientMapSession* mapSession = mapSessionManager_->getServerSession(mapId);
-		// The map exists on the client.
-		if (mapSession != nullptr)
+	case 's':
 		{
-			mapSession->addUser(userId);
-			// If the user that joined the map is me.
-			if (userId == networkManager_->getUserId())
+			client_network::ClientMapSession* mapSession = mapSessionManager_->getServerSession(mapId);
+			// The map exists on the client.
+			if (mapSession != nullptr)
 			{
-				currentSession_ = mapSession;
+				mapSession->addUser(userId);
+				// If the user that joined the map is me.
+				if (userId == networkManager_->getUserId())
+				{
+					Loading(1);
+					currentSession_ = mapSession;
+					mapConnect(mapId, MAP_JOINED);
+				}
 			}
 		}
+		break;
+
+	case 'f':
+		mapConnect(mapId, MAP_FULL);
+		break;
+
+	case 'd':
+		mapConnect(mapId, MAP_WRONG_PASSWORD);
+		break;
+
+	default:
+		//TODO: deal with error here
+		break;
 	}
-	else if (result == 'd') {
-		// TODO: call wrong password callback. We know this is directed to us from server functionality
-	}
-	mapConnect(result);
+
 }
 
 void EventHandler::onMapReady(uint32_t mapId)
@@ -76,6 +97,7 @@ void EventHandler::onMapReady(uint32_t mapId)
 	if (currentSession_ && currentSession_->info.mapId == mapId)
 	{
 		FacadeModele::obtenirInstance()->setOnlineMapMode((Mode)(currentSession_->info.mapType), currentSession_);
+		Loading(0);
 	}
 }
 

@@ -133,6 +133,10 @@ void ModeEdition::assignerEtat(Tool etat)
 	case LOUPE:
 		etat_ = std::move(std::make_unique<EtatLoupe>());
 		break;
+
+	case CREATION_TELEPORTOR:
+		etat_ = std::move(std::make_unique<EtatCreationTeleporteur>(mapSession_));
+		break;
 	}
 }
 
@@ -214,7 +218,7 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_O:
-				etat_ = std::make_unique<EtatCreationTeleporteur>();
+				assignerEtat(CREATION_TELEPORTOR);
 				break;
 
 			case VK_KEY_M:

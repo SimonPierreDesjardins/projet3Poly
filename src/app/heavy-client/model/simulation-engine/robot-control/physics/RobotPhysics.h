@@ -11,11 +11,18 @@
 #define ROBOT_PHYSICS_H
 
 #include "VisiteurDetectionRobot.h"
+#include "ControleurLumiere.h"
+#include "PhysicsComponent.h"
+#include "Camera.h"
+#include "Vue.h"
 
 namespace engine {
 	class MapSession;
 }
 
+namespace engine {
+	class SimulationEngine;
+}
 ///////////////////////////////////////////////////////////////////////////
 /// @class RobotPhysics
 /// @brief Classe qui s'occupe de simuler la physique d'un robot
@@ -28,7 +35,8 @@ public:
 	RobotPhysics() = default;
 	~RobotPhysics() = default;
 
-	void init(NoeudRobot* robot, ArbreRendu* arbre, engine::MapSession* mapSession);
+
+	void init(NoeudRobot* robot, engine::SimulationEngine* engine, engine::MapSession* mapSession);
 
     // Mise à jour des attributs du robot.
 	void applyPhysicsEffects(float dt);
@@ -45,6 +53,13 @@ private:
 
 	void updateRobotState(float dt);
 
+	vue::Vue* vue_ = nullptr;
+
+	PhysicsComponent physics_;
+
+	ControleurLumiere* controleurLumiere_ = nullptr;
+
+	engine::SimulationEngine* engine_ = nullptr;
 
 };
 

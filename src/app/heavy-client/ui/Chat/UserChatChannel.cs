@@ -246,7 +246,7 @@ namespace ui
             if (!System.Text.RegularExpressions.Regex.Replace(chatTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
                 string tmp = "cm" + parent_.userName + ";" + name_ + ";" + DateTime.Now.ToString("HH:mm:ss;yyyy-MM-dd;") + chatTextBox.Text;
-                FonctionsNatives.sendMessage(tmp, tmp.Length);
+                FonctionsNatives.sendMessage(tmp);
                 chatTextBox.Clear();
             }
             chatTextBox.Focus();
@@ -363,7 +363,7 @@ namespace ui
                 else
                 {
                     string tmp = "cq" + channel;
-                    FonctionsNatives.sendMessage(tmp, tmp.Length);
+                    FonctionsNatives.sendMessage(tmp);
                 }
             }
             else

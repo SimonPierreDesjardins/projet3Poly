@@ -144,7 +144,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_O:
 				if (getCurrentTutorialState() == (int)SELECT_TELEPORTOR)
 				{
-					etat_ = std::make_unique<EtatCreationTeleporteur>();
+					etat_ = std::make_unique<EtatCreationTeleporteur>(mapSession_);
 					numberOfObjects_ = getNomberOfObjects("teleporteur");
 				}
 				break;
