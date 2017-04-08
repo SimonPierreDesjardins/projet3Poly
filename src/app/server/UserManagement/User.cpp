@@ -52,37 +52,40 @@ void User::StartMessageReadThread()
 		return;
 	}
 
-	_messageReaderThread = new std::thread([](){
-		std::pair<User*, std::string> userMessagePair;
-		while (_runThread) {
-			_queueMutex.lock();
-			if (_messageQueue.size() > 0) {
-				userMessagePair = std::move(_messageQueue.front());
-				_messageQueue.pop();
-				// We release the queue ASAP so it can receive new messages
-				_queueMutex.unlock();
-
-				// treat the message
-				userMessagePair.first->dispatchReceivedMessage(userMessagePair.first, userMessagePair.second);
-			}
-			else {
-				_queueMutex.unlock();
-			}
-		}
-	});
 	_runThread = true;
+	_messageReaderThread = std::thread(&User::lookupMessage);
+}
+
+void User::lookupMessage()
+{
+	std::pair<User*, std::string> userMessagePair;
+	while (_runThread) {
+		_queueMutex.lock();
+		if (_messageQueue.size() > 0) {
+			userMessagePair = std::move(_messageQueue.front());
+			_messageQueue.pop();
+			// We release the queue ASAP so it can receive new messages
+			_queueMutex.unlock();
+
+			// treat the message
+			userMessagePair.first->dispatchReceivedMessage(userMessagePair.first, userMessagePair.second);
+		}
+		else {
+			_queueMutex.unlock();
+		}
+	}
 }
 
 void User::StopMessageReadThread()
 {
 	_runThread = false;
-	while (!_messageReaderThread->joinable()) {}
-	_messageReaderThread->join();
+	while (!_messageReaderThread.joinable()) {}
+	_messageReaderThread.join();
 }
 
 std::queue<std::pair<User*, std::string>> User::_messageQueue;
 std::mutex User::_queueMutex;
-std::thread* User::_messageReaderThread = nullptr;
+std::thread User::_messageReaderThread;
 bool User::_runThread = false;
 int User::UserCount = 0;
 

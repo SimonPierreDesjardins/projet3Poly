@@ -54,7 +54,7 @@ ModeTutorialEdition::ModeTutorialEdition(client_network::MapSession * mapSession
 	table_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"));
 	startIndexOfTutorialObjects_ = static_cast<NoeudComposite*>(FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher("table"))->obtenirNombreEnfants();
 
-	FacadeModele::obtenirInstance()->assignerEnvironnement(-1);
+	//FacadeModele::obtenirInstance()->assignerEnvironnement(-1);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -144,7 +144,7 @@ void ModeTutorialEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 			case VK_KEY_O:
 				if (getCurrentTutorialState() == (int)SELECT_TELEPORTOR)
 				{
-					etat_ = std::make_unique<EtatCreationTeleporteur>();
+					etat_ = std::make_unique<EtatCreationTeleporteur>(mapSession_);
 					numberOfObjects_ = getNomberOfObjects("teleporteur");
 				}
 				break;
@@ -391,6 +391,7 @@ int ModeTutorialEdition::getNomberOfObjects(std::string TypeOfObject)
 	int numberOfObject = 0;
 	for (int i = 0; i < objects; i++)
 	{
+		//table_->chercher(i)-> 2 teleporteurs 
 		if (table_->chercher(i)->obtenirNom() == TypeOfObject)
 		{
 			numberOfObject++;
@@ -425,7 +426,7 @@ bool ModeTutorialEdition::isTutorialObjectSelect()
 ////////////////////////////////////////////////////////////////////////
 double ModeTutorialEdition::getScaleOfTutorialObject()
 {
-	return table_->chercher(indexOfCurrentObject_)->obtenirFacteurMiseAEchelle();
+	return table_->chercher(indexOfCurrentObject_)->getPhysicsComponent().scale.x;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -439,7 +440,7 @@ double ModeTutorialEdition::getScaleOfTutorialObject()
 ////////////////////////////////////////////////////////////////////////
 double ModeTutorialEdition::getRotationOfTutorialObject()
 {
-	return table_->chercher(indexOfCurrentObject_)->obtenirAngleRotation();
+	return table_->chercher(indexOfCurrentObject_)->getPhysicsComponent().rotation.z;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -453,7 +454,7 @@ double ModeTutorialEdition::getRotationOfTutorialObject()
 ////////////////////////////////////////////////////////////////////////
 glm::dvec3 ModeTutorialEdition::getPositionOfTutorialObject()
 {
-	return table_->chercher(indexOfCurrentObject_)->obtenirPositionCourante();
+	return table_->chercher(indexOfCurrentObject_)->getPhysicsComponent().absolutePosition;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -489,7 +490,7 @@ void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
 			EtatCreationTeleporteur* creationTeleportorTool(static_cast<EtatCreationTeleporteur*>(etat_.get()));
 			if (!creationTeleportorTool->isInCreation())
 			{
-				if (numberOfObjects_ != getNomberOfObjects("teleporteur"))
+				if (numberOfObjects_ != getNomberOfObjects("paireteleporteurs"))
 					ChangeEditionTutorialState();
 			}
 		}

@@ -237,9 +237,7 @@ void VisiteurSauvegarde::visiter(NoeudJonction* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
 {
-	writer->StartObject();
-	noeud->toJson(*writer);
-	writer->EndObject();
+
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -255,23 +253,11 @@ void VisiteurSauvegarde::visiter(NoeudRobot* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurSauvegarde::visiter(NoeudTeleporteur* noeud)
 {
-	if (teleporteursDejaSauves.find(noeud) == teleporteursDejaSauves.end())
-	{
-		writer->StartObject();
-		writer->Key("PaireTeleporteurs");
-		writer->StartArray();
+
 		writer->StartObject();
 		noeud->toJson(*writer);
 		writer->EndObject();
-		writer->StartObject();
-		noeud->obtenirProchainTeleporteur()->toJson(*writer);
-		writer->EndObject();
-		writer->EndArray();
-		writer->EndObject();
-		teleporteursDejaSauves.insert(noeud);
-		teleporteursDejaSauves.insert(noeud->obtenirProchainTeleporteur());
 
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -291,6 +277,31 @@ void VisiteurSauvegarde::visiterEnfants(NoeudComposite* noeud)
 		noeudAbs->accepterVisiteur(this);
 	}
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn  void VisiteurSauvegarde::visiter(NoeudPaireTeleporteurs* noeud)
+///
+/// Appel la méthode accepterVisiteur pour tous les enfants d'un noeud composite(ligne ou table)
+///
+/// @param[in] noeud : Pointeur vers le noeud ayant des enfants.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurSauvegarde::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	writer->StartObject();
+	noeud->toJson(*writer);
+	if (noeud->obtenirNombreEnfants() > 0) {
+		writer->Key("noeudsEnfants");
+		writer->StartArray();
+		visiterEnfants(noeud);
+		writer->EndArray();
+	}
+	writer->EndObject();
+}
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

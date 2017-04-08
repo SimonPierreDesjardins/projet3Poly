@@ -45,6 +45,7 @@ public:
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 
 private:
+
     RectangleEnglobant rectangleEnglobant_;
 };
 

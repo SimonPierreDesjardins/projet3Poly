@@ -81,8 +81,9 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 
 			std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 			segment_ = nouveauNoeud.get();
-			segment_->assignerPositionRelative(positionVirtuelle);
-			segment_->assignerPositionCourante(positionVirtuelle);
+			PhysicsComponent& physics = segment_->getPhysicsComponent();
+			physics.relativePosition = positionVirtuelle;
+			physics.absolutePosition = positionVirtuelle;
 			ligne_->ajouter(nouveauNoeud);
 			segment_->assignerSelection(true);
 			mapSession_->localEntityCreated(segment_);
@@ -93,10 +94,13 @@ void EtatCreationLigne::gererClicGaucheRelache(const int& x, const int& y)
 			std::shared_ptr<NoeudAbstrait> segment = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);
 			std::shared_ptr<NoeudAbstrait> jonction = arbre_->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
 
-			jonction->assignerPositionRelative(positionVirtuelle);
-			jonction->assignerPositionCourante(positionVirtuelle);
-			segment->assignerPositionRelative(positionVirtuelle);
-			segment->assignerPositionCourante(positionVirtuelle);
+			PhysicsComponent& junctionPhysics = segment->getPhysicsComponent();
+			junctionPhysics.relativePosition = positionVirtuelle;
+			junctionPhysics.absolutePosition = positionVirtuelle;
+
+			PhysicsComponent& segmentPhysics = jonction->getPhysicsComponent();
+			segmentPhysics.relativePosition = positionVirtuelle;
+			segmentPhysics.absolutePosition = positionVirtuelle;
 
 			ligne_->ajouter(jonction);
 			ligne_->ajouter(segment);
@@ -169,22 +173,23 @@ void EtatCreationLigne::gererMouvementSouris(const int& x, const int& y)
 	if (enCreation_) {
 		assert(segment_ != nullptr);
 
+		PhysicsComponent& physics = segment_->getPhysicsComponent();
 		// Calculer et assigner l'angle de rotation.
 		double angle = utilitaire::calculerAngleRotation(positionsClic_.back(), positionVirtuelle);
-		segment_->assignerAngleRotation(angle);
+		physics.rotation.z = angle;
 		mapSession_->localEntityPropertyUpdated(segment_, Networking::ROTATION, { 0.0, 0.0, angle });
 		
 		// Calculer et assigner le facteur de mise à échelle.
 		double distance = utilitaire::calculerDistanceHypothenuse(positionsClic_.back(), positionVirtuelle);
-		segment_->assignerFacteurMiseAEchelle(distance);
+		physics.scale.x = distance;
 		mapSession_->localEntityPropertyUpdated(segment_, Networking::SCALE, { distance, 0.0, 0.0 });
 
 		// Calculer et assigner la position relative.
 		glm::dvec3 positionRelative = utilitaire::calculerPositionEntreDeuxPoints(positionsClic_.back(), positionVirtuelle);
-		segment_->assignerPositionRelative(positionRelative);
-		segment_->assignerPositionCourante(positionRelative);
-		mapSession_->localEntityPropertyUpdated(segment_, Networking::RELATIVE_POSITION, { positionRelative.x, positionRelative.y, positionRelative.z });
-		mapSession_->localEntityPropertyUpdated(segment_, Networking::ABSOLUTE_POSITION, { positionRelative.x, positionRelative.y, positionRelative.z });
+		physics.absolutePosition = positionRelative;
+		physics.relativePosition = positionRelative;
+		mapSession_->localEntityPropertyUpdated(segment_, Networking::RELATIVE_POSITION, glm::vec3(positionRelative));
+		mapSession_->localEntityPropertyUpdated(segment_, Networking::ABSOLUTE_POSITION, glm::vec3(positionRelative));
 	}
 }
 
@@ -252,18 +257,20 @@ void EtatCreationLigne::calculerPositionCentreLigne()
 
 	// Ajuster la position relative des segments.
 	glm::dvec3 positionEnfant;
-	for (unsigned int i = 0; i < ligne_->obtenirNombreEnfants(); i++) {
+	for (unsigned int i = 0; i < ligne_->obtenirNombreEnfants(); i++) 
+	{
 		NoeudAbstrait* child = ligne_->chercher(i);
-		positionEnfant = child->obtenirPositionRelative();
+		PhysicsComponent& physics = child->getPhysicsComponent();
+		physics.relativePosition -= centre;
 		positionEnfant -= centre;
-		child->assignerPositionRelative(positionEnfant);
-		mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, { positionEnfant.x, positionEnfant.y, positionEnfant.z });
+		mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, glm::vec3(physics.relativePosition));
 	}
 
-	ligne_->assignerPositionRelative(centre);
-	ligne_->assignerPositionCourante(centre);
-	mapSession_->localEntityPropertyUpdated(ligne_, Networking::RELATIVE_POSITION, { centre.x, centre.y, centre.z });
-	mapSession_->localEntityPropertyUpdated(ligne_, Networking::ABSOLUTE_POSITION, { centre.x, centre.y, centre.z });
+	PhysicsComponent& physics = ligne_->getPhysicsComponent();
+	physics.relativePosition = centre;
+	physics.absolutePosition = centre;
+	mapSession_->localEntityPropertyUpdated(ligne_, Networking::RELATIVE_POSITION, glm::vec3(centre));
+	mapSession_->localEntityPropertyUpdated(ligne_, Networking::ABSOLUTE_POSITION, glm::vec3(centre));
 }
 
 ////////////////////////////////////////////////////////////////////////

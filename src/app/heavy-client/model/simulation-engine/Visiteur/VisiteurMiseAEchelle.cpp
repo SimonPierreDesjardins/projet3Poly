@@ -66,7 +66,7 @@ void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
 	facteursDimensionsInitiaux_.clear();
 	NoeudAbstrait* table = noeud->chercher("table");
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
-		facteursDimensionsInitiaux_.push_back(table->chercher(i)->obtenirFacteurMiseAEchelle());
+		facteursDimensionsInitiaux_.push_back(table->chercher(i)->getPhysicsComponent().scale.x);
 	}
 }
 
@@ -87,7 +87,7 @@ void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud, client_network::MapS
 	NoeudAbstrait* table = noeud->chercher("table");
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
 		NoeudAbstrait* child = table->chercher(i);
-		child->assignerFacteurMiseAEchelle(facteursDimensionsInitiaux_[i]);
+		child->getPhysicsComponent().scale.x = (facteursDimensionsInitiaux_[i]);
 		mapSession->localEntityPropertyUpdated(child, Networking::SCALE, glm::vec3(facteursDimensionsInitiaux_[i], 0.0, 0.0));
 	}
 }
@@ -146,9 +146,10 @@ void VisiteurMiseAEchelle::visiter(NoeudTable* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 {
-	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_;
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	double facteurMiseAEchelle = physics.scale.x + facteurMiseAEchelle_;
 	if (facteurMiseAEchelle >= 0) {
-		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+		physics.scale.x = facteurMiseAEchelle;
 		mapSession_->localEntityPropertyUpdated(noeud, Networking::SCALE, glm::vec3(facteurMiseAEchelle, facteurMiseAEchelle, 0.0));
 	}
 }
@@ -167,10 +168,11 @@ void VisiteurMiseAEchelle::visiter(NoeudPoteau* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurMiseAEchelle::visiter(NoeudMur* noeud)
 {
-	double facteurMiseAEchelle = noeud->obtenirFacteurMiseAEchelle() + facteurMiseAEchelle_ * 2;
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	double facteurMiseAEchelle = physics.scale.x + facteurMiseAEchelle_ * 2;
 	if (facteurMiseAEchelle >= 0) 
 	{
-		noeud->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+		physics.scale.x = facteurMiseAEchelle;
 		mapSession_->localEntityPropertyUpdated(noeud, Networking::SCALE, glm::vec3(facteurMiseAEchelle, 0.0, 0.0));
 	}
 }

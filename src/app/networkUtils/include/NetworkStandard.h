@@ -28,7 +28,6 @@ namespace MessageStandard {
 	const int DATA_START = 6;
 
 	std::string AddMessageLengthHeader(const std::string& message);
-	void AddMessageLengthHeader(size_t size, std::string& message);
 	void UpdateLengthHeader(std::string& message);
 
 	int GetMessageLength(std::string& message);

@@ -207,6 +207,11 @@ void ArbreRendu::assignerCheminFichierZone(std::string chemin)
 	cheminFichierZone = std::string(chemin);
 }
 
+std::string ArbreRendu::obtenirCheminFichierZone()
+{
+	return cheminFichierZone;
+}
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn FILE* ArbreRendu::obtenirFichierZone(std::string mode)
@@ -316,7 +321,7 @@ double ArbreRendu::obtenirAngleRotation()
 		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
 			NoeudAbstrait* enfant = table->chercher(i);
 			if (enfant->estSelectionne()) {
-				angle = enfant->obtenirAngleRotation();
+				angle = enfant->getPhysicsComponent().rotation.z;
 				trouve = true;
 			}
 		}
@@ -347,7 +352,7 @@ double ArbreRendu::obtenirFacteurMiseAEchelle()
 					facteurMiseAEchelle = 1;
 				}
 				else{
-					facteurMiseAEchelle = enfant->obtenirFacteurMiseAEchelle();
+					facteurMiseAEchelle = enfant->getPhysicsComponent().scale.x;
 				}
 					
 				trouve = true;
@@ -376,7 +381,7 @@ double ArbreRendu::obtenirPositionRelativeX()
 		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
 			NoeudAbstrait* enfant = table->chercher(i);
 			if (enfant->estSelectionne()) {
-				positionX = enfant->obtenirPositionRelative()[0];
+				positionX = enfant->getPhysicsComponent().relativePosition.x;
 				trouve = true;
 			}
 		}
@@ -403,7 +408,7 @@ double ArbreRendu::obtenirPositionRelativeY()
 		for (unsigned int i = 0; i < table->obtenirNombreEnfants() && !trouve; i++) {
 			NoeudAbstrait* enfant = table->chercher(i);
 			if (enfant->estSelectionne()) {
-				positionY = enfant->obtenirPositionRelative()[1];
+				positionY = enfant->getPhysicsComponent().relativePosition.y;
 				trouve = true;
 			}
 		}
@@ -434,7 +439,7 @@ void ArbreRendu::assignerAngleRotation(const double& angle)
 			NoeudAbstrait* enfant = table->chercher(i);
 			if (enfant->estSelectionne()) 
 			{
-				double angleAvantChangement = enfant->obtenirAngleRotation();
+				double angleAvantChangement = enfant->getPhysicsComponent().rotation.z;
 				visiteurRotation->assignerAngleRotation(angle - angleAvantChangement);
 				enfant->accepterVisiteur(visiteurRotation.get());
 
@@ -472,15 +477,16 @@ void ArbreRendu::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
 			if (enfant->estSelectionne()) 
 			{
 				// Assigner le nouveau facteur de mise à échelle.
-				double facteurAvantChangement = enfant->obtenirFacteurMiseAEchelle();
-				enfant->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+				PhysicsComponent& physics = enfant->getPhysicsComponent();
+				double facteurAvantChangement = physics.scale.x;
+				physics.scale.x = facteurMiseAEchelle;
 
 				// Vérifier la nouvelle position du noeud.
 				accepterVisiteur(visiteurVerification.get());
 				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
 				if (!positionValide) 
 				{
-					enfant->assignerFacteurMiseAEchelle(facteurAvantChangement);
+					physics.scale.x = facteurAvantChangement;
 				}
 			}
 		}
@@ -508,11 +514,11 @@ void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
 			NoeudAbstrait* enfant = table->chercher(i);
 			if (enfant->estSelectionne()) 
 			{
+				PhysicsComponent& physics = enfant->getPhysicsComponent();
+
 				// Ajuster la position du noeud et garder la dernière position.
-				double positionXAvantChangement = enfant->obtenirPositionRelative().x;
-				glm::dvec3 position = enfant->obtenirPositionRelative();
-				position.x = positionRelativeX;
-				enfant->assignerPositionRelative(position);
+				double positionXAvantChangement = physics.relativePosition.x;
+				physics.relativePosition.x = positionRelativeX;
 
 				// Verifier la position du noeud.
 				accepterVisiteur(visiteurVerification.get());
@@ -521,8 +527,7 @@ void ArbreRendu::assignerPositionRelativeX(const double& positionRelativeX)
 				// Replacer le noeud.
 				if (!positionValide) 
 				{
-					position[0] = positionXAvantChangement;
-					enfant->assignerPositionRelative(position);
+					physics.relativePosition.x = positionXAvantChangement;
 				}
 			}
 		}
@@ -549,11 +554,11 @@ void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
 			NoeudAbstrait* enfant = table->chercher(i);
 			if (enfant->estSelectionne()) 
 			{
+				PhysicsComponent& physics = enfant->getPhysicsComponent();
+
 				// Ajuster la position du noeud et garder la dernière position.
-				double positionYAvantChangement = enfant->obtenirPositionRelative()[1];
-				glm::dvec3 position = enfant->obtenirPositionRelative();
-				position.y = positionRelativeY;
-				enfant->assignerPositionRelative(position);
+				double positionYAvantChangement = physics.relativePosition.y;
+				physics.relativePosition.y = positionRelativeY;
 
 				// Vérifier que la position est valide.
 				accepterVisiteur(visiteurVerification.get());
@@ -562,8 +567,7 @@ void ArbreRendu::assignerPositionRelativeY(const double& positionRelativeY)
 				// Replacer le noeud.
 				if (!positionValide) 
 				{
-					position[1] = positionYAvantChangement;
-					enfant->assignerPositionRelative(position);
+					physics.relativePosition.y = positionYAvantChangement;
 				}
 			}
 		}

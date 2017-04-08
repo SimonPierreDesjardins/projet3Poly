@@ -29,21 +29,6 @@ namespace ui
 
         ////////////////////////////////////////////////////////////////////////
         ///
-        /// @fn private void reconnectButton_Click(object sender, MeasureItemEventArgs e)
-        ///
-        /// Tente de reconnecter le client au serveur
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void reconnectButton_Click(object sender, System.EventArgs e)
-        {
-            //Add reconnect call
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
         /// @fn private void continuButton_Click(object sender, MeasureItemEventArgs e)
         ///
         /// Enleve le control du viewport

@@ -1,3 +1,4 @@
+
 ///////////////////////////////////////////////////////////////////////////////
 /// @file FacadeModele.cpp
 /// @author Martin Bisson
@@ -57,8 +58,7 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 
 /// Constructeur par défaut.
 FacadeModele::FacadeModele()
-	// Inject dependencies
-	: network_(&eventHandler_), mapSessionManager_(&arbre_, &network_)
+	: network_(&eventHandler_), mapSessionManager_(engine_.getEntityTree(), &network_), saves_(&profil_)
 {
 }
 
@@ -110,157 +110,37 @@ void FacadeModele::libererInstance()
 FacadeModele::~FacadeModele()
 {
 	mode_.reset(nullptr);
-	vue_.reset(nullptr);
-    affichageTexte_.reset(nullptr);
-    controleurLumiere_.reset(nullptr);
+	libererOpenGL();
 }
 
 void FacadeModele::initialize(HWND hWnd)
 {
-	initialiserOpenGL(hWnd);
+	engine_.initializeRendering(hWnd, &profil_);
 
 	assignerMode(MENU_PRINCIPAL);
 
-	profil_ = std::make_unique<ProfilUtilisateur>();
-	saves_ = std::make_unique<ApplicationSettings>();
-
-	controleurLumiere_ = std::make_unique<ControleurLumiere>();
-	// Lumière ambiante "globale"
-	// Attention :
-	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	controleurLumiere_->afficherLumiereAmbianteGlobale();
-
-	// Création de l'arbre de rendu.  À moins d'être complètement certain
-	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
-	// l'arbre après avoir créé le contexte OpenGL.
-	arbre_.initialiser();
-
-	// On crée une vue par défaut. 
-	vue_ = std::make_unique<vue::VueOrtho>(vue::Camera(
-		glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-		glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
-		vue::ProjectionOrtho{
-		0, 500, 0, 500,
-		1, 1000, 1, 10000, 1.25,
-		-50, 50, -50, 50, false });
-
 	// Création du module qui gère l'affichage du texte avec OpenGL.
-	affichageTexte_ = std::make_unique<AffichageTexte>(vue_.get(), profil_.get());
-
 	eventHandler_.setNetworkManager(&network_);
-	eventHandler_.setEntityTree(&arbre_);
+	eventHandler_.setEntityTree(engine_.getEntityTree());
 	eventHandler_.setMapSessionManager(&mapSessionManager_);
 }
 
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::initialiserOpenGL(HWND hWnd)
-///
-/// Cette fonction permet d'initialiser le contexte OpenGL.  Elle crée
-/// un contexte OpenGL sur la fenêtre passée en paramètre, initialise
-/// FreeImage (utilisée par le chargeur de modèles) et assigne des 
-/// paramètres du contexte OpenGL.
-///
-/// @param[in] hWnd : La poignée ("handle") vers la fenêtre à utiliser.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::initialiserOpenGL(HWND hWnd)
+void FacadeModele::repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 {
-	hWnd_ = hWnd;
-	bool succes{ aidegl::creerContexteGL(hWnd_, hDC_, hGLRC_) };
-	assert(succes && "Le contexte OpenGL n'a pu être créé.");
-
-	// Initialisation des extensions de OpenGL
-	glewInit();
-
-	// Initialisation de la configuration
-	//chargerConfiguration();
-
-	// FreeImage, utilisée par le chargeur, doit être initialisée
-	FreeImage_Initialise();
-
-   // chargerNuanceurs();
-
-	// La couleur de fond
-	glClearColor(0.32f, 0.32f, 0.32f, 1.0f);
-
-	// Les lumières
-	glEnable(GL_LIGHTING);
-	glLightModelf(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-	glLightModeli(GL_LIGHT_MODEL_TWO_SIDE, GL_TRUE);
-	glEnable(GL_COLOR_MATERIAL);
-	/// Pour normaliser les normales dans le cas d'utilisation de glScale[fd]
-	glEnable(GL_NORMALIZE);
-	glEnable(GL_LIGHT0);
-	glEnable(GL_LIGHT1);
-	glEnable(GL_LIGHT2);
-
-	// Qualité
-	glShadeModel(GL_SMOOTH);
-	glHint(GL_LINE_SMOOTH_HINT, GL_NICEST);
-
-	// Profondeur
-	glEnable(GL_DEPTH_TEST);
-
-	// Le cull face
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::chargerConfiguration() const
-///
-/// Cette fonction charge la configuration à partir d'un fichier XML si
-/// ce dernier existe.  Sinon, le fichier de configuration est généré à
-/// partir de valeurs par défaut directement dans le code.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::chargerConfiguration() const
-{
-	// Vérification de l'existance du ficher
-
-	// Si le fichier n'existe pas, on le crée.
-	if (!utilitaire::fichierExiste(FICHIER_CONFIGURATION)) {
-		enregistrerConfiguration();
+	if (msg == WM_KEYDOWN || msg == WM_KEYUP)
+	{
+		if (autorisationInputClavier_)
+		{
+			mode_->gererMessage(msg, wParam, lParam);
+		}
 	}
-	// si le fichier existe on le lit
-	else {
-		tinyxml2::XMLDocument document;
-
-		// Lire à partir du fichier de configuration
-		document.LoadFile(FacadeModele::FICHIER_CONFIGURATION.c_str());
-
-		// On lit les différentes configurations.
-		ConfigScene::obtenirInstance()->lireDOM(document);
+	else
+	{
+		if (autorisationInputSouris_)
+		{
+			mode_->gererMessage(msg, wParam, lParam);
+		}
 	}
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::enregistrerConfiguration() const
-///
-/// Cette fonction génère un fichier XML de configuration à partir de
-/// valeurs par défaut directement dans le code.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::enregistrerConfiguration() const
-{
-	tinyxml2::XMLDocument document;
-	// Écrire la déclaration XML standard...
-	document.NewDeclaration(R"(?xml version="1.0" standalone="yes"?)");
-	
-	// On enregistre les différentes configurations.
-	ConfigScene::obtenirInstance()->creerDOM(document);
-
-	// Écrire dans le fichier
-	document.SaveFile(FacadeModele::FICHIER_CONFIGURATION.c_str());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -274,19 +154,31 @@ void FacadeModele::enregistrerConfiguration() const
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::libererOpenGL()
 {
-	utilitaire::CompteurAffichage::libererInstance();
-
-	// On libère les instances des différentes configurations.
-	ConfigScene::libererInstance();
-
-	bool succes{ aidegl::detruireContexteGL(hWnd_, hDC_, hGLRC_) };
-	assert(succes && "Le contexte OpenGL n'a pu être détruit.");
-
-	FreeImage_DeInitialise();
+	engine_.free();
 }
 
+//Assigne les parametres pour la vue ortho
+void FacadeModele::assignerVueOrtho()
+{
+	engine_.setOrthoView();
+}
 
+//Assigne les parametres pour la vue orbite
+void FacadeModele::assignerVueOrbite()
+{
+	engine_.setOrbitalView();
+}
 
+void FacadeModele::assignerVueOrbitePerso()
+{
+	engine_.setCloseOrbitalView();
+}
+
+//Assigne les parametres pour la vue à la première personne
+void FacadeModele::assignerVuePremierePersonne()
+{
+	engine_.setFirstPersonView(engine_.getEntityTree()->chercher(profil_.getModele()));
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -297,193 +189,9 @@ void FacadeModele::libererOpenGL()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void FacadeModele::afficher() const
+void FacadeModele::afficher()
 {
-	if (!peutAfficher_)
-		return;
-    
-	// Efface l'ancien rendu
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-
-    glInitNames();
-
-	// Ne devrait pas être nécessaire
-	vue_->appliquerProjection();
-
-
-	// Positionne la caméra
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	vue_->appliquerCamera();
-
-	// obtenir la cloture pour ajuster la taille de l'environnement en fonction
-	int xmin;
-	int xmax;
-	int ymin;
-	int ymax;
-	vue_->obtenirProjection().obtenirCoordonneesCloture(xmin, xmax, ymin, ymax);
-
-	
-	// AfficherEnvironnement
-	if (environnement_ != nullptr){
-		int horizontal = 0;
-		int vertical = 0;
-		glm::dvec3 centre(0.0);
-
-		//Si nous sommes en vue orthogonale, ajustons le centre
-		if (!FacadeModele::obtenirInstance()->obtenirVue()->obtenirProjection().estPerspective()){
-			glm::ivec2 centreProj = FacadeModele::obtenirInstance()->obtenirVue()->obtenirCentreVue();
-			centre.x += centreProj.x;
-			centre.y += centreProj.y;
-		}
-			
-
-		FacadeModele::obtenirInstance()->getDesktopResolution(horizontal, vertical);
-		environnement_->afficher(centre, horizontal / 4);
-	}
-		
-
-	// Afficher la scène
-	afficherBase();
-
-	// Compte de l'affichage
-	utilitaire::CompteurAffichage::obtenirInstance()->signalerAffichage();
-
-    affichageTexte_->afficher();
-
-	// Échange les tampons pour que le résultat du rendu soit visible.
-	::SwapBuffers(hDC_);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::afficherBase() const
-///
-/// Cette fonction affiche la base du contenu de la scène, c'est-à-dire
-/// qu'elle met en place l'éclairage et affiche les objets.
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::afficherBase() const
-{
-	// Positionner la lumière.
-	glm::vec4 position{ 0, 0, 1, 0 };
-	
-	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
-	glm::vec4 contributionMaximale{ 1.0, 1.0, 1.0, 1.0 };
-
-	glLightfv(GL_LIGHT0, GL_POSITION, glm::value_ptr(position));
-	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
-	glLightfv(GL_LIGHT0, GL_AMBIENT, glm::value_ptr(zeroContribution));
-	// On sature les objets de lumière
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, glm::value_ptr(contributionMaximale));
-	// Pas de composante spéculaire.
-	glLightfv(GL_LIGHT0, GL_SPECULAR, glm::value_ptr(zeroContribution));
-	EnginSon::obtenirInstance()->obtenirSystemeSon()->update();
-	//Affiche la lumière directionnelle
-	controleurLumiere_->afficherLumiereDirectionnelle();
-	//controleurLumiere_->afficherLumiereSpotGyro();
-	//controleurLumiere_->afficherLumiereSpotRobot();
-
-	// Afficher la scène.
-	arbre_.afficher(-1);
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::assignerVueOrtho()
-///
-/// Cette fonction assigne une vue ortho à la scène
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::assignerVueOrtho()
-{
-	vue_ = std::make_unique<vue::VueOrtho>(
-		vue::Camera(
-			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
-			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
-		vue::ProjectionOrtho{
-			0, 500, 0, 500,
-			1, 1000, 80, 105, 1.25,
-			-50, 50, -50, 50, false });
-	affichageTexte_->assignerVue(vue_.get());
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::assignerVueOrbite()
-///
-/// Cette fonction assigne une vue orbite à la scène
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::assignerVueOrbite()
-{
-	vue_ = std::make_unique<vue::VueOrbite>(
-		vue::Camera(
-			glm::dvec3(0, 0, 170), glm::dvec3(0, 0, 0),
-			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
-		vue::ProjectionPerspective{
-			0, 500, 0, 500,
-			1, 10000, 1, 100000, 1.25,
-			-50, 50, -50, 50, true }, false,false);
-	affichageTexte_->assignerVue(vue_.get());
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::assignerVueOrbitePerso()
-///
-/// Cette fonction assigne une vue orbite à la scène pour le mode personnalisation
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::assignerVueOrbitePerso()
-{
-	vue_ = std::make_unique<vue::VueOrbite>(
-		vue::Camera(
-			glm::dvec3(0, 0, 25), glm::dvec3(0, 0, 0),
-			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)),
-		vue::ProjectionPerspective{
-		0, 500, 0, 500,
-		1, 10000, 1, 100000, 1.25,
-		-50, 50, -50, 50, true }, false,true);
-	//place la camera pour qu'elle est un bon angle sur le robot
-	vue_->deplacerXY(-375, 550);
-	affichageTexte_->assignerVue(vue_.get());
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::assignerVuePremierePersonne()
-///
-/// Cette fonction assigne une vue première personne à la scène
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::assignerVuePremierePersonne()
-{
-	glm::dvec3 positionRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(profil_->getModele())->obtenirPositionCourante();
-	double angleRobot = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(profil_->getModele())->obtenirAngleRotation();
-
-
-	vue_ = std::make_unique<vue::VueOrbite>(
-		vue::Camera(
-			glm::dvec3(positionRobot.x, positionRobot.y, 4), glm::dvec3(100, 0, 1),
-			glm::dvec3(0, 0, 1), glm::dvec3(0, 0, 1)), 
-		vue::ProjectionPerspective{
-			0, 500, 0, 500,
-			1, 10000, 10, 10000, 1.25,
-			-50, 50, -50, 50, true }, true,false);
-	affichageTexte_->assignerVue(vue_.get());
+	engine_.render();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -498,7 +206,7 @@ void FacadeModele::assignerVuePremierePersonne()
 void FacadeModele::reinitialiser()
 {
 	// Réinitialisation de la scène.
-	arbre_.initialiser();
+	engine_.getEntityTree()->initialiser();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -516,24 +224,23 @@ void FacadeModele::reinitialiser()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::animer(float temps)
 {
-	// Mise à jour des objets.
-	arbre_.animer(temps);
-
-	mode_->postAnimer();
-	
-	// Mise à jour de la vue.
-	vue_->animer(temps);
+	engine_.animate(temps);
+	mode_->postAnimer(temps);
 }
 
 void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSession)
 {
 	switch (mode)
 	{
-		// TODO: do simulation mode here too.
 	case EDITION:
-		mode_ = std::make_unique<ModeEdition>(mapSession);
+		mode_ = std::make_unique<ModeEdition>(&engine_, mapSession);
+		break;
+
+	case SIMULATION:
+		mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSession);
 		break;
 	}
+	continuerAffichage();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -547,7 +254,8 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerMode(Mode mode)
 {
-	switch (mode) {
+	switch (mode) 
+	{
 		case MENU_PRINCIPAL:
 			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
@@ -555,13 +263,12 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case SIMULATION:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeSimulation>();
+			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		case EDITION:
 			mode_.reset(nullptr);
-			// Use the local offline map session for default edition mode. 
-			mode_ = std::make_unique<ModeEdition>(mapSessionManager_.getLocalMapSession());
+			mode_ = std::make_unique<ModeEdition>(&engine_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		case CONFIGURE:
@@ -571,12 +278,12 @@ void FacadeModele::assignerMode(Mode mode)
 
 		case TEST:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeTest>();
+			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		case PERSONALIZE:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModePersonalize>();
+			mode_ = std::make_unique<ModePersonalize>(&engine_, &profil_);
 			break;
 
 		case TUTORIAL_EDITION:
@@ -586,60 +293,11 @@ void FacadeModele::assignerMode(Mode mode)
 		
 		case PIECES:
 			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModePieces>();
-			break;
-		
-		case COURSE:
-			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeCourse>();
+			mode_ = std::make_unique<ModePieces>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		default:
 			break;
-	}
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn void FacadeModele::assignerEnvironnement(int noEnviro)
-///
-/// Cette fonction change la boite d'environnement de travaille à celui spécifié par le paramètre
-/// 0: Lac
-/// 1: Salle d'essai
-///
-/// @param[in] noEnviro : Numéro correspondant à l'environnement à afficher
-///
-/// @return aucun
-///
-////////////////////////////////////////////////////////////////////////
-void FacadeModele::assignerEnvironnement(int noEnviro){
-	// Création de l'environnement
-	/*
-	fichierXpos, fichierXneg,
-	fichierYpos, fichierYneg,
-	fichierZpos, fichierZneg
-	);
-	*/
-	switch (noEnviro){
-
-	case 0:
-		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\Skybox1\\posz.jpg", ".\\media\\textures\\Skybox1\\negz.jpg",
-			".\\media\\textures\\Skybox1\\posx.jpg", ".\\media\\textures\\Skybox1\\negx.jpg",
-			".\\media\\textures\\Skybox1\\negy.jpg", ".\\media\\textures\\Skybox1\\posy.jpg");
-		break;
-
-	case 1:
-		environnement_ = std::make_unique<utilitaire::BoiteEnvironnement>(
-			".\\media\\textures\\Skybox2\\posz.jpg", ".\\media\\textures\\Skybox2\\negz.jpg",
-			".\\media\\textures\\Skybox2\\posx.jpg", ".\\media\\textures\\Skybox2\\negx.jpg",
-			".\\media\\textures\\Skybox2\\negy.jpg", ".\\media\\textures\\Skybox2\\posy.jpg");
-		break;
-
-	default:
-		environnement_ = nullptr;
-		break;
-
 	}
 }
 
@@ -653,7 +311,12 @@ void FacadeModele::assignerEnvironnement(int noEnviro){
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::continuerAffichage()
 {
-	peutAfficher_ = true;
+	engine_.resumeRendering();
+}
+
+void FacadeModele::assignerEnvironnement(int noEnviro)
+{
+	engine_.setEnvironnement(noEnviro);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -666,7 +329,7 @@ void FacadeModele::continuerAffichage()
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::stopAffichage()
 {
-	peutAfficher_ = false;
+	engine_.stopRendering();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -693,3 +356,4 @@ void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
 ///////////////////////////////////////////////////////////////////////////////
+

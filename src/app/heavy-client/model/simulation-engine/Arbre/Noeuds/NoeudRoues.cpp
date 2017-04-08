@@ -37,14 +37,9 @@ NoeudRoues::NoeudRoues(uint32_t id, const std::string& typeNoeud)
 	: NoeudComposite{ id, typeNoeud }
 {
 	type_ = WHEEL_ENTITY;
-	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-	NoeudAbstrait* depart = table->chercher(0);
-	positionRelative_ = depart->obtenirPositionRelative();
-	angleRotation_ = depart->obtenirAngleRotation();
-	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	couleur_ = profil_->obtenirCouleurs(WHEELS);
-	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(WHEELS);
-	parent_ = table->chercher(ArbreRenduINF2990::NOM_ROBOT);
+	//couleur_ = profil_->obtenirCouleurs(WHEELS);
+	
+	//estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(WHEELS);
 }
 
 
@@ -81,12 +76,8 @@ void NoeudRoues::afficherConcret() const
 
 	// Sauvegarde de la matrice.
 	glPushMatrix();
-	if(profil_->getModele() == "audi" )
-		glScalef(0.95f, 0.95f, 0.85f);
-	if(profil_->getModele() == "f1")
-		glScalef(0.6f, 0.8f, 0.75f);
-	if (profil_->getModele() == "truck")
-		glScalef(1.25f, 1.25f, 1.25f);
+	
+	glScalef(physics_.scale.x, physics_.scale.y, physics_.scale.z);
 	if (!estCouleurDefaut_)
 	{
 		glDisable(GL_COLOR_MATERIAL);
@@ -190,6 +181,25 @@ void NoeudRoues::setCouleurDefault(int piece, bool default)
 	{
 		estCouleurDefaut_ = default;
 	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRoues::initialisationCouleurs(float* roues)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues
+///
+/// @param[in] float* de couleurs des roues
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRoues::initialisationCouleurs(int* roues)
+{
+	couleur_[0] = (float)roues[0] / (float)255;
+	couleur_[1] = (float)roues[1] / (float)255;
+	couleur_[2] = (float)roues[2] / (float)255;
+	couleur_[3] = (float)roues[3] / (float)255;
 }
 
 

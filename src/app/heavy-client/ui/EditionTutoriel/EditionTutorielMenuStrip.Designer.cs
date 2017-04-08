@@ -82,42 +82,36 @@
             this.nouveauToolStripMenuItem.Name = "nouveauToolStripMenuItem";
             this.nouveauToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.nouveauToolStripMenuItem.Text = "Nouveau";
-            this.nouveauToolStripMenuItem.Click += new System.EventHandler(this.nouveauToolStripMenuItem_Click);
             // 
             // ouvrirToolStripMenuItem
             // 
             this.ouvrirToolStripMenuItem.Name = "ouvrirToolStripMenuItem";
             this.ouvrirToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.ouvrirToolStripMenuItem.Text = "Ouvrir";
-            this.ouvrirToolStripMenuItem.Click += new System.EventHandler(this.ouvrirToolStripMenuItem_Click);
             // 
             // enregistrerToolStripMenuItem
             // 
             this.enregistrerToolStripMenuItem.Name = "enregistrerToolStripMenuItem";
             this.enregistrerToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.enregistrerToolStripMenuItem.Text = "Enregistrer";
-            this.enregistrerToolStripMenuItem.Click += new System.EventHandler(this.enregistrerToolStripMenuItem_Click);
             // 
             // enregistrerSousToolStripMenuItem
             // 
             this.enregistrerSousToolStripMenuItem.Name = "enregistrerSousToolStripMenuItem";
             this.enregistrerSousToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.enregistrerSousToolStripMenuItem.Text = "Enregistrer sous";
-            this.enregistrerSousToolStripMenuItem.Click += new System.EventHandler(this.enregistrerSousToolStripMenuItem_Click);
             // 
             // modeTestToolStripMenuItem
             // 
             this.modeTestToolStripMenuItem.Name = "modeTestToolStripMenuItem";
             this.modeTestToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.modeTestToolStripMenuItem.Text = "Mode test";
-            this.modeTestToolStripMenuItem.Click += new System.EventHandler(this.modeTestToolStripMenuItem_Click);
             // 
             // menuprincipalToolStripMenuItem
             // 
             this.menuprincipalToolStripMenuItem.Name = "menuprincipalToolStripMenuItem";
             this.menuprincipalToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.menuprincipalToolStripMenuItem.Text = "Menuprincipal";
-            this.menuprincipalToolStripMenuItem.Click += new System.EventHandler(this.menuprincipalToolStripMenuItem_Click);
+            this.menuprincipalToolStripMenuItem.Text = "Menu Principal";
             // 
             // vuesToolStripMenuItem
             // 

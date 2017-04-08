@@ -138,20 +138,21 @@ void EtatCreationMur::gererMouvementSouris(const int& x, const int&y)
 
 	if (enCreation_)
 	{		
+		PhysicsComponent& physics = mur_->getPhysicsComponent();
 		// Calculer et assigner de l'angle de rotation.
 		double angle = utilitaire::calculerAngleRotation(positionPremierClic_, positionVirtuelle);
-		mur_->assignerAngleRotation(angle);
+		physics.rotation.z = angle;
 		mapSession_->localEntityPropertyUpdated(mur_, Networking::ROTATION, { 0.0, 0.0, angle });
 		
 		// Calculer et assigner le facteur de mise à échelle.
 		double distance = utilitaire::calculerDistanceHypothenuse(positionPremierClic_, positionVirtuelle);
-		mur_->assignerFacteurMiseAEchelle(distance);
+		physics.scale.x = distance;
 		mapSession_->localEntityPropertyUpdated(mur_, Networking::SCALE, { distance, 0.0, 0.0 });
 
 		// Calculer et assigner la position relative.
 		glm::dvec3 nouvellePosition = utilitaire::calculerPositionEntreDeuxPoints(positionPremierClic_, positionVirtuelle);
-		mur_->assignerPositionRelative(nouvellePosition);
-		mur_->assignerPositionCourante(nouvellePosition);
+		physics.relativePosition = nouvellePosition;
+		physics.absolutePosition = nouvellePosition;
 		mapSession_->localEntityPropertyUpdated(mur_, Networking::RELATIVE_POSITION, { nouvellePosition.x, nouvellePosition.y, nouvellePosition.z });
 		mapSession_->localEntityPropertyUpdated(mur_, Networking::ABSOLUTE_POSITION, { nouvellePosition.x, nouvellePosition.y, nouvellePosition.z });
 	}

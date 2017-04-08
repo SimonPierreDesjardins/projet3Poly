@@ -36,14 +36,16 @@ namespace ui
                 connectPanel.Visible = false;
             }
 
-            mInstance = new CallbackDisconnect(DisconnectHandler);
-            SetCallbackForDisconnect(mInstance);
-
+            //Set callbacks for connection state
             connectSuccess = new CallbackConnectionSuccess(ConnectionSuccessHandler);
             SetCallbackForConnectionSuccess(connectSuccess);
 
             connectFail = new CallbackConnectionFail(ConnectionFailHandler);
             SetCallbackForConnectionFail(connectFail);
+
+            //Set callbacks for user authentification
+            authenticationInstance = new CallbackAuthentification(AuthentificationHandler);
+            SetCallbackForAuthentification(authenticationInstance);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -220,16 +222,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void createAndConnectNewUser()
         {
+            existingAccountWarningLabel.Visible = false;
+            newAccountWarningLabel.Visible = false;
+
             FonctionsNatives.createProfile(newAccountTextBox.Text);
-            FonctionsNatives.authenticate(newAccountTextBox.Text);
-
             parent_.userName = newAccountTextBox.Text;
-            goBackToMainMenu();
-
-            parent_.viewPort.Controls.Add(parent_.userChat);
-            parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width, parent_.viewPort.Height - parent_.userChat.Height);
-            parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-            parent_.userChat.BringToFront();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -245,7 +242,6 @@ namespace ui
         private void cancelNewUserButton_Click(object sender, EventArgs e)
         {
             deconnectFromServer();
-            goBackToMainMenu();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -311,15 +307,11 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void connectExistingUser()
         {
+            existingAccountWarningLabel.Visible = false;
+            newAccountWarningLabel.Visible = false;
+
             FonctionsNatives.authenticate(ExistingAccountTextBox.Text);
-
-            parent_.userName = newAccountTextBox.Text;
-            goBackToMainMenu();
-
-            parent_.viewPort.Controls.Add(parent_.userChat);
-            parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width, parent_.viewPort.Height - parent_.userChat.Height);
-            parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
-            parent_.userChat.BringToFront();
+            parent_.userName = ExistingAccountTextBox.Text;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -348,6 +340,7 @@ namespace ui
         {
             FonctionsNatives.disconnectFromServer();
             parent_.mapMenu.onlineMaps_.Clear();
+            parent_.mapMenu.onlineMapsName_.Clear();
             removeChat();
             goBackToMainMenu();
         }
@@ -380,10 +373,47 @@ namespace ui
             parent_.viewPort.Controls.Remove(this);
             parent_.mainMenu = new MainMenu(parent_);
 
-            parent_.viewPort.Controls.Remove(parent_.editionMenuStrip);
-            parent_.viewPort.Controls.Remove(parent_.editionSideMenu);
             parent_.viewPort.Controls.Add(parent_.mainMenu);
             parent_.mainMenu.Dock = DockStyle.Left;
+        }
+
+        private void userConnectionSuccess()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                goBackToMainMenu();
+
+                parent_.viewPort.Controls.Add(parent_.userChat);
+                parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width, parent_.viewPort.Height - parent_.userChat.Height);
+                parent_.userChat.Anchor = (AnchorStyles.Bottom | AnchorStyles.Right);
+                parent_.userChat.BringToFront();
+            });
+        }
+
+        private void userAlreadyExists()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                newAccountWarningLabel.Text = "Un utilisateur avec ce nom exist déjà";
+                newAccountWarningLabel.Visible = true;
+                parent_.userName = null;
+            });
+        }
+
+        private void userAuthFail()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                existingAccountWarningLabel.Text = "Cet utilisateur n'existe pas";
+                existingAccountWarningLabel.Visible = true;
+                parent_.userName = null;
+            });
+        }
+
+        private void userAlreadyConnected()
+        {
+            parent_.Invoke((MethodInvoker)delegate {
+                existingAccountWarningLabel.Text = "Un utilisateur avec ce nom est déjà connecté";
+                existingAccountWarningLabel.Visible = true;
+                parent_.userName = null;
+            });
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -401,46 +431,6 @@ namespace ui
             else
                 parent_.userChat.chatWindow_.Dispose();
         }
-
-        public void Test()
-        {
-            GotDisconnected();
-        }
-
-        private delegate void CallbackDisconnect();
-        // Ensure it doesn't get garbage collected
-        private CallbackDisconnect mInstance;
-        private void DisconnectHandler()
-        {
-            // Do something...
-            if (parent_.viewPort.Controls.Contains(parent_.mainMenu))
-            {
-                parent_.mainMenu.connexionPictureBox.Image = parent_.mainMenu.ChangeColor((Bitmap)parent_.mainMenu.connexionPictureBox.Image, Color.Red);
-            }
-
-            parent_.mapMenu.onlineMaps_.Clear();
-
-            parent_.disconnectedWarning = new DisconnetedPanel(parent_);
-            parent_.disconnectedWarning.Location = new Point(parent_.viewPort.Width / 2 - parent_.disconnectedWarning.Width / 2,
-                                                             parent_.viewPort.Height / 2 - parent_.disconnectedWarning.Height / 2);
-            parent_.viewPort.Controls.Add(parent_.disconnectedWarning);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        [DllImport("model.dll")]
-        private static extern void SetCallbackForDisconnect(CallbackDisconnect fn);
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        [DllImport("model.dll")]
-        private static extern void GotDisconnected();
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -479,11 +469,6 @@ namespace ui
         [DllImport("model.dll")]
         private static extern void SetCallbackForConnectionSuccess(CallbackConnectionSuccess fn);
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// Fonction permettant le callback entre le c++ et le c#
-        ///
-        ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
         private static extern void connectionWasSuccess();
 
@@ -524,12 +509,57 @@ namespace ui
         [DllImport("model.dll")]
         private static extern void SetCallbackForConnectionFail(CallbackConnectionFail fn);
 
+        [DllImport("model.dll")]
+        private static extern void connectionWasFail();
+
+        //New user authentication
+        public void Test3(int action)
+        {
+            authentification(action);
+        }
+
+        private delegate void CallbackAuthentification(int action);
+        // Ensure it doesn't get garbage collected
+        private CallbackAuthentification authenticationInstance;
+        private void AuthentificationHandler(int action)
+        {
+            switch(action)
+            {
+                case (int)AuthenticationAction.Authentication.CREATION_SUCCESS:
+                    FonctionsNatives.authenticate(newAccountTextBox.Text);
+                    break;
+
+                case (int)AuthenticationAction.Authentication.NEW_ALREADY_EXIST:
+                    userAlreadyExists();
+                    break;
+
+                case (int)AuthenticationAction.Authentication.AUTEHNTIFICATION_SUCCESS:
+                    userConnectionSuccess();
+                    break;
+
+                case (int)AuthenticationAction.Authentication.EXISTING_ALREADY_CONNECTED:
+                    userAlreadyConnected();
+                    break;
+
+                case (int)AuthenticationAction.Authentication.EXISTING_FAIL:
+                    userAuthFail();
+                    break;
+
+                default:
+                    break;
+            }
+
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// Fonction permettant le callback entre le c++ et le c#
         ///
         ////////////////////////////////////////////////////////////////////////
         [DllImport("model.dll")]
-        private static extern void connectionWasFail();
+        private static extern void SetCallbackForAuthentification(CallbackAuthentification fn);
+
+        [DllImport("model.dll")]
+        private static extern void authentification(int action);
     }
 }

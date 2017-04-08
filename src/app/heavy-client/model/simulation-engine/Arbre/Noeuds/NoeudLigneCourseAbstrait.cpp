@@ -66,10 +66,10 @@ NoeudLigneCourseAbstrait::~NoeudLigneCourseAbstrait()
 ////////////////////////////////////////////////////////////////////////
 void NoeudLigneCourseAbstrait::mettreAJourFormeEnglobante()
 {
-	positionCourante_ = positionRelative_;
+	physics_.absolutePosition = physics_.relativePosition;
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
 	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
-	rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
+	rectangleEnglobant_.mettreAJour(physics_.absolutePosition, physics_.rotation.z, hauteur, largeur);
 }
 
 
@@ -133,7 +133,7 @@ void NoeudLigneCourseAbstrait::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotated(angleRotation_, 0, 0, 1);
+	glRotated(physics_.rotation.z, 0, 0, 1);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -143,7 +143,7 @@ void NoeudLigneCourseAbstrait::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    rectangleEnglobant_.afficher(positionCourante_);
+    //rectangleEnglobant_.afficher(positionCourante_);
 	
 }
 ////////////////////////////////////////////////////////////////////////

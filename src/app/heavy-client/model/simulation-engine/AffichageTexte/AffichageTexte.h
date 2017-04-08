@@ -39,7 +39,7 @@ public:
 
 	inline void assignerVue(vue::Vue* vue); 
 
-    void afficher();
+	void afficher();
 
     void demarrerChrono();
     void pauseChrono();

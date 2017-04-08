@@ -15,10 +15,13 @@
 #include <string>
 #include <memory>
 #include <iterator>
+
 #include "Utilitaire.h"
 #include "glm\glm.hpp"
 #include "rapidjson\writer.h"
 #include "rapidjson\document.h"
+
+#include "PhysicsComponent.h"
 #include "RectangleEnglobant.h"
 
 /// Déclarations avancées pour contenir un pointeur vers un modèle3D et son storage
@@ -57,7 +60,9 @@ enum EntityType
 	TELEPORT_ENTITY,
 	COIN_ENTITY,
 	FINISHLINE_ENTITY,
-	CHECKPOINT_ENTITY
+	CHECKPOINT_ENTITY,
+	PAIRTELEPORT_ENTITY
+
 };
 
 ///////////////////////////////////////////////////////////////////////////
@@ -87,6 +92,9 @@ public:
 	/// Assigne le parent de ce noeud.
 	inline void assignerParent(NoeudAbstrait* parent);
 
+	inline PhysicsComponent& getPhysicsComponent();
+
+	/*	
 	/// Obtient la position relative du noeud.
 	inline const glm::dvec3& obtenirPositionRelative() const;
 	/// Assigne la position relative du noeud.
@@ -103,6 +111,7 @@ public:
 	inline double obtenirFacteurMiseAEchelle() const;
 	/// Assigne le facteur de dimension
 	inline void assignerFacteurMiseAEchelle(const double& facteurDimension);
+	*/
 
 	// Obtenir l'identifiant local.
 	inline uint32_t getId() const;
@@ -242,17 +251,7 @@ protected:
 	/// Mode d'affichage des polygones.
 	GLenum					modePolygones_{ GL_FILL };
 
-	/// Position relative du noeud à son parent.
-	glm::dvec3				positionRelative_{ 0.0, 0.0, 0.0 };
-
-    /// Position courante du noeud dans l'espace virtuel.
-    glm::dvec3              positionCourante_{ 0.0, 0.0, 0.0 };
-
-	/// Angle de rotation sur le plan xy
-	double					angleRotation_{ 0 };
-		
-	/// Facteur de dimension sur le plan xy
-	double					facteurMiseAEchelle_{ 1 };
+	PhysicsComponent		physics_;
 
     /// La boite englobante du modèle.
     utilitaire::BoiteEnglobante boiteEnglobanteModele_;
@@ -333,132 +332,18 @@ inline void NoeudAbstrait::assignerParent(NoeudAbstrait* parent)
 	parent_ = parent;
 }
 
-
 ////////////////////////////////////////////////////////////////////////
 ///
-/// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
+/// @fn inline PhysicsComponent& NoeudAbstrait::getPhysicsComponent()
 ///
-/// Cette fonction retourne la position relative du noeud par rapport
-/// à son parent.
+/// Cette fonction retourne une référence sur la composante physique.
 ///
-/// @return La position relative.
+/// @return Une référence sur la composante physique du noeud.
 ///
 ////////////////////////////////////////////////////////////////////////
-inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
+inline PhysicsComponent& NoeudAbstrait::getPhysicsComponent()
 {
-	return positionRelative_;
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
-///
-/// Cette fonction permet d'assigner la position relative du noeud par
-/// rapport à son parent.
-///
-/// @param positionRelative : La position relative.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerPositionRelative(const glm::dvec3& positionRelative)
-{
-	positionRelative_ = positionRelative;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline const glm::dvec3& NoeudAbstrait::obtenirPositionRelative() const
-///
-/// Cette fonction retourne la position courante du noeud dans l'espace virtuel.
-///
-/// @return La position relative.
-///
-////////////////////////////////////////////////////////////////////////
-inline const glm::dvec3& NoeudAbstrait::obtenirPositionCourante() const
-{
-    return positionCourante_;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionRelative)
-///
-/// Cette fonction permet d'assigner la position courante du noeud dans l'espace virtuel. 
-///
-/// @param positionRelative : La position courante.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerPositionCourante(const glm::dvec3& positionCourante)
-{
-    positionCourante_ = positionCourante;
-	mettreAJourFormeEnglobante();
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerPositionRelative( const glm::dvec3& positionRelative )
-///
-/// Cette fonction permet d'obtenir l'angle de rotation affectant présentement ce noeud.
-///
-/// @return l'angle de rotation en degrees du noeud
-///
-////////////////////////////////////////////////////////////////////////
-inline double NoeudAbstrait::obtenirAngleRotation() const
-{
-	return angleRotation_;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
-///
-/// Cette fonction permet d'assigner un angle de rotation en sens horaire au noeud par rapport à son centre.
-///
-/// @param angleRotation : Le nouvel angle de rotation de l'objet.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerAngleRotation(const double& angleRotation)
-{
-	angleRotation_ = angleRotation;
-	mettreAJourFormeEnglobante();
-}
-
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
-///
-/// Cette fonction permet d'obtenir l'échelle d'agrandissement ou de rapetissement du noeud.
-///
-/// @return L'échelle de l'objet. 1 étant l'échelle originale.
-///
-////////////////////////////////////////////////////////////////////////
-inline double NoeudAbstrait::obtenirFacteurMiseAEchelle() const
-{
-	return facteurMiseAEchelle_;
-}
-
-////////////////////////////////////////////////////////////////////////
-///
-/// @fn inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
-///
-/// Cette fonction permet d'assigner une nouvelle échelle d'agrandissement au Noeud.
-///
-/// @param[in] facteurDimension : Le facteur de redimentionnement de l'objet.
-///
-/// @return Aucune
-///
-////////////////////////////////////////////////////////////////////////
-inline void NoeudAbstrait::assignerFacteurMiseAEchelle(const double& facteurDimension)
-{
-	facteurMiseAEchelle_ = facteurDimension;
-	mettreAJourFormeEnglobante();
+	return physics_;
 }
 
 ////////////////////////////////////////////////////////////////////////

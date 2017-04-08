@@ -16,8 +16,11 @@
 #include <Windows.h>
 #include <Windowsx.h>
 #include "ModeEnum.cs"
+#include "NoeudTypes.h"
 
 
+class ArbreRenduINF2990;
+class ProfilUtilisateur;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class ModeAbstraitC:\Users\Olivier St-Amour\Documents\Polytechnique\hiver_2016\inf2990-06\Cadriciel\Sources\InterfaceGraphique\Program.cs
@@ -43,6 +46,8 @@ public:
 	virtual void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	inline int obtenirTypeMode();
+
+
 
 
 	////////////////////////////////////////////////////////////////////////
@@ -82,14 +87,19 @@ public:
 	virtual void gererMouvementSouris(const int & x, const int& y);
 	virtual void gererMoletteSouris(const int & delta);
 
-	virtual void postAnimer() {};
+	virtual void postAnimer(float dt) {};
 
 	virtual bool obtenirModeEnPause() { return true; };
+
+	virtual NoeudRobot* obtenirRobot() { return nullptr; };
+
+	virtual NoeudRobot* creerRobot(ArbreRenduINF2990* arbre, ProfilUtilisateur* profil);
 
 protected:
 	int typeMode_;
 	bool clicDroitEnfonce_{ false };
 	static glm::ivec2 currentPosition_;
+	NoeudRobot* robot_{ nullptr };
 
 };
 

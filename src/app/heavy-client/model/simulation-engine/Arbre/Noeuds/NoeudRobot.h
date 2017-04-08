@@ -20,8 +20,8 @@
 #include <array>
 #include "ControleurLumiere.h"
 #include <stack>
+#include "Vue.h"
 
-class ProfilUtilisateur;
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
 /// @brief Classe qui représente le robot du premier projet intégrateur.
@@ -50,12 +50,13 @@ public:
 	~NoeudRobot();
 
 	void positionDepart();
+	inline void giveSensors(ConteneurCapteursDistance* distanceSensors, SuiveurLigne* lineSensor);
 
 	/// Affiche le robot.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
 	virtual void animer(float dt);
-	virtual void suivreCamera();
+	virtual void suivreCamera(vue::Vue* vue);
 
     /// Méthode permettant au robot de vérifier la collision avec un noeud.
     bool verifierCollision(NoeudPoteau* poteau);
@@ -77,6 +78,8 @@ public:
                                       double& vitesseAngulaireCollision) const;
 	//Permet de positionner les roues
 	virtual void positionnerRoues();
+    void mettreAJourPosition(float dt);
+    void effectuerCollision(double dt);
 
 	virtual void assignerCouleurs(int modele, int a, int r, int g, int b);
 
@@ -91,6 +94,7 @@ public:
 	// Retourne l'états des capeurs du robot.
     inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
+	inline RectangleEnglobant& getBoundingBox();
 
 	virtual void setCouleurDefault(int piece,bool default);
 
@@ -98,8 +102,25 @@ public:
 
 	std::stack <NoeudAbstrait*> tableauCoins;
 
+
 	virtual RectangleEnglobant* obtenirFormeEnglobante();
 	virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
+
+
+	virtual void initialisationCouleurs(int* roues, int* modele);
+
+	void reinitialiserPosition();
+
+	virtual void mettreAJourFormeEnglobante();
+
+	NoeudTeleporteur* getTeleporteurCourant();
+	void setTeleporteurCourant(NoeudTeleporteur* teleporteur);
+	bool getTeleportationFaite();
+	void setTeleportationFaite(bool teleportationFaite);
+
+	void assignerControleurLumiere(ControleurLumiere* controleur);
+
+	ControleurLumiere* obtenirControleurLumiere();
 
 
 
@@ -127,7 +148,6 @@ protected:
 	bool optionDebug{ true };
 
 	// Les attributs du robot.
-	ProfilUtilisateur* profil_{ nullptr };
     RectangleEnglobant rectangleEnglobant_;
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };
@@ -137,14 +157,10 @@ protected:
 
     // Mise à jour des attributs du robot.
 	void mettreAJourCapteurs();
-    void mettreAJourPosition(const float& dt);
-    void effectuerCollision(const double& dt);
-    void reinitialiserPosition();
-    virtual void mettreAJourFormeEnglobante();
+  
     std::mutex* mutexControleRobot_{ nullptr };
 
 	bool estEnCollision_{ false };
-    bool enCollision_{ false };
 
 	NoeudAbstrait* table_;
 	NoeudRoues* roueGauche_;
@@ -152,7 +168,7 @@ protected:
 	NoeudRoues* roueGauche2_;
 	NoeudRoues* roueDroite2_;
 	NoeudTeleporteur* teleporteurCourant_{nullptr};
-	float* couleur_;
+	float couleur_[4] = {0.0,0.0,0.0,0.0};
 	bool estCouleurDefaut_ = true;
 	int mode_;
 	bool teleporteurCollision_ = false;
@@ -286,6 +302,18 @@ inline void NoeudRobot::assignerEstEnCollision(bool collision)
 inline void NoeudRobot::assignerMutex(std::mutex* mutex)
 {
     mutexControleRobot_ = mutex;
+}
+
+
+inline RectangleEnglobant& NoeudRobot::getBoundingBox()
+{
+	return rectangleEnglobant_;
+}
+
+inline void NoeudRobot::giveSensors(ConteneurCapteursDistance* distanceSensors, SuiveurLigne* lineSensor)
+{
+	capteursDistance_ = distanceSensors;
+	suiveurLigne_ = lineSensor;
 }
 
 

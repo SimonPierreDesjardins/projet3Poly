@@ -34,7 +34,7 @@ NoeudTable::NoeudTable(uint32_t id, const std::string& typeNoeud)
 	: NoeudComposite{ id, typeNoeud }
 {
 	type_ = TABLE_ENTITY;
-	facteurMiseAEchelle_ = 2; //A changer si on veut modifier la taille de la table, il faudra alors faire fromJson sur la table dans le chargement de la carte.
+	physics_.scale = { 2, 2, 1 }; //A changer si on veut modifier la taille de la table, il faudra alors faire fromJson sur la table dans le chargement de la carte.
 }
 
 
@@ -92,14 +92,20 @@ void NoeudTable::mettreAJourFormeEnglobante()
 {
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
-	largeur *= facteurMiseAEchelle_;
-	hauteur *= facteurMiseAEchelle_;
+	largeur *= physics_.scale.x;
+	hauteur *= physics_.scale.y;
 
     /*double positionBoiteX = boiteEnglobanteModele_.coinMin.x + largeur / 2.0;
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
 
-    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoiteX, positionCourante_.y + positionBoiteY, 0.0 };*/// Demander a oli pourquoi faire ca au lieu de prendre la position courante
-    rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
+
+	/// Demander a oli pourquoi faire ca au lieu de prendre la position courante
+
+
+    glm::dvec3 positionRectangle = { physics_.absolutePosition.x + positionBoiteX, physics_.absolutePosition.y + positionBoiteY, 0.0 };
+    */
+	rectangleEnglobant_.mettreAJour(physics_.absolutePosition, physics_.rotation.z, hauteur, largeur);
+
 }
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -119,14 +125,16 @@ void NoeudTable::afficherConcret() const
 	glPushMatrix();
 	// Affichage du modèle.
 	//glColor4f(1, 1, 1, 1);
-	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1.0);
+	glScaled(physics_.scale.x, physics_.scale.y, 1.0);
 	vbo_->dessiner();
 
 
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    rectangleEnglobant_.afficher(positionCourante_);
+
+    //rectangleEnglobant_.afficher(physics_.absolutePosition);
+
 }
 
 ////////////////////////////////////////////////////////////////////////

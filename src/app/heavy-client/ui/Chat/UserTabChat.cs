@@ -7,7 +7,9 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ui
@@ -213,11 +215,15 @@ namespace ui
             UserChatChannel newChannel = new UserChatChannel(parent_, name);
             channels_.Add(name, newChannel);
 
+            UserChatChannel gen;
+            if (channels_.TryGetValue("General", out gen))
+                newChannel.setChannelList(gen.getChannelList());
+
             newChannel.Dock = DockStyle.Fill;
             newTabPage.Controls.Add(newChannel);
 
             string tmp = "cj" + name;
-            FonctionsNatives.sendMessage(tmp, tmp.Length);
+            FonctionsNatives.sendMessage(tmp);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -278,7 +284,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void handleChatMessage(string message)
         {
-            switch(message[0])
+            byte[] bytes = Encoding.Default.GetBytes(message);
+            message = Encoding.UTF8.GetString(bytes);
+
+            switch (message[0])
             {
                 case 'm':
                     userSentAMessage(message);

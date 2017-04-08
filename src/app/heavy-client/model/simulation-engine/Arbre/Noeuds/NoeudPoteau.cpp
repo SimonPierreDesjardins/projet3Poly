@@ -65,12 +65,18 @@ void NoeudPoteau::animer(float dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudPoteau::mettreAJourFormeEnglobante()
 {
-	positionCourante_ = positionRelative_;
+
+
+	physics_.absolutePosition = physics_.relativePosition;
+
     double hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
     double largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
     double rayon = hauteur > largeur ? hauteur : largeur;
     rayon /= 2.0;
-    cercleEnglobant_.mettreAJour(positionCourante_, rayon * facteurMiseAEchelle_);
+	cercleEnglobant_.mettreAJour({ physics_.absolutePosition.x,
+								   physics_.absolutePosition.y,
+								   physics_.absolutePosition.z },
+		                           rayon * physics_.scale.x);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -138,7 +144,7 @@ void NoeudPoteau::afficherConcret() const
 	}
 
 	// Effectuer la mise à échelle.
-	glScaled(facteurMiseAEchelle_, facteurMiseAEchelle_, 1);
+	glScaled(physics_.scale.x, physics_.scale.y, physics_.scale.z);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -148,7 +154,7 @@ void NoeudPoteau::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //cercleEnglobant_.afficher(positionCourante_);
+    //cercleEnglobant_.afficher(physics_.absolutePosition);
 }
 
 ////////////////////////////////////////////////////////////////////////

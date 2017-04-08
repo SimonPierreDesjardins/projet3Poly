@@ -34,7 +34,6 @@ void Connection::ReadData()
 
 		if (!ec)
 		{
-
 			unsigned int messageStartIndex = 0;
 			while (messageStartIndex < length) {
 				uint32_t msgLength = Networking::deserializeInteger(_buffer + messageStartIndex);
@@ -53,13 +52,20 @@ void Connection::ReadData()
 	});
 }
 
-void Connection::SendData(std::string data) {
-	_sendQueue.push(std::move(data));
+void Connection::SendData(const std::string& data) {
+	assert(!data.empty() && "Tried to send empty string.");
 
-	// if this new message is alone in the queue, start writing
-	if (_sendQueue.size() == 1) {
-		WriteData();
-	}
+	_socket->async_write_some(asio::buffer(data.c_str(), data.size()),
+	[this](asio::error_code ec, std::size_t /*length*/)
+	{
+		if (_inDeletionProcess)
+			return;
+
+		if (ec)
+		{
+			Logger::LogError(ec);
+		}
+	});
 }
 
 void Networking::Connection::CloseConnection()
@@ -85,30 +91,6 @@ void Networking::Connection::CheckIfDisconnect(std::error_code error)
 		onConnectionLost_();
 		break;
 	}
-}
-
-void Connection::WriteData()
-{
-	std::string data = std::move(_sendQueue.front());
-	_sendQueue.pop();
-
-	_socket->async_write_some(asio::buffer(data.c_str(), data.size()),
-	//_socket -> async_write_some(asio::buffer(_buffer, length),
-	[this](asio::error_code ec, std::size_t /*length*/)
-	{
-		if (_inDeletionProcess)
-			return;
-
-		if (!ec)
-		{
-			if (_sendQueue.size() >= 1) {
-				WriteData();
-			}
-		}
-		else {
-			Logger::LogError(ec);
-		}
-	});
 }
 
 std::mutex Connection::_connectionLock;

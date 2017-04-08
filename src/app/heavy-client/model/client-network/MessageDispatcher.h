@@ -57,6 +57,7 @@ private:
 
 	// User sustem message
 	void handleUserAuthentificationConfirmation(const std::string& message);
+	void handleUserCreationConfirmation(const std::string& message);
 	void handleUserSystemMessage(const std::string& message);
 
 	// Map systemMessage
@@ -65,6 +66,8 @@ private:
 	void handleMapJoinMessage(const std::string& message);
 	void handleMapQuitMessage(const std::string& message);
 	void handleMapListMessage(const std::string& message);
+	void handleMapReadyMessage(const std::string& message);
+	void handleMapPermissionMessage(const std::string& message);
 
 	MessageDispatcher() = delete;
 };

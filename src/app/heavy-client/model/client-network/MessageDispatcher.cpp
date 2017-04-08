@@ -5,6 +5,8 @@
 #include <iostream>
 
 #include "MessageDispatcher.h"
+#include "Authentification.cs"
+#include "MapPermission.cs"
 
 namespace client_network
 {
@@ -159,8 +161,9 @@ void MessageDispatcher::handleMapCreationMessage(const std::string& message)
 	char type = message[Networking::MessageStandard::DATA_START + 4];
 	char nUsers = message[Networking::MessageStandard::DATA_START + 5];
 	char permission = message[Networking::MessageStandard::DATA_START + 6];
-	std::string name = message.substr(Networking::MessageStandard::DATA_START + 7);
-	eventHandler_->onNewMapCreated(mapId, type, mapId, permission, name);
+	uint32_t adminId = message[Networking::MessageStandard::DATA_START + 7];
+	std::string name = message.substr(Networking::MessageStandard::DATA_START + 11);
+	eventHandler_->onNewMapCreated(mapId, type, mapId, permission, adminId, name);
 }
 
 void MessageDispatcher::handleMapJoinMessage(const std::string& message)
@@ -188,8 +191,9 @@ void MessageDispatcher::handleMapListMessage(const std::string& message)
 		char mapType = message[iCurrentEntry + 4];
 		char nUsers = message[iCurrentEntry + 5];
 		char permission = message[iCurrentEntry + 6];
+		uint32_t adminId = serializer_.deserializeInteger(message.data() + iCurrentEntry + 7);
 
-		size_t nameBegin = iCurrentEntry + 7;
+		size_t nameBegin = iCurrentEntry + 11;
 		size_t nameEnd = message.find(';', nameBegin);
 		if (nameEnd == std::string::npos)
 		{
@@ -197,8 +201,38 @@ void MessageDispatcher::handleMapListMessage(const std::string& message)
 			continueParsing = false;
 		}
 		std::string mapName = message.substr(nameBegin, nameEnd - nameBegin);
-		eventHandler_->onNewMapCreated(mapId, mapType, nUsers, permission, mapName);
+		eventHandler_->onNewMapCreated(mapId, mapType, nUsers, permission, adminId, mapName);
 		iCurrentEntry = nameEnd + 1;
+	}
+}
+
+void MessageDispatcher::handleMapReadyMessage(const std::string& message)
+{
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	eventHandler_->onMapReady(mapId);
+}
+
+void MessageDispatcher::handleMapPermissionMessage(const std::string& message)
+{
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	char result = message[Networking::MessageStandard::DATA_START + 4];
+	switch (result)
+	{
+	case 'o':
+		mapPermission(mapId, CHANGED_PUBLIC);
+		break;
+
+	case 'c':
+		mapPermission(mapId, CHANGED_PRIVATE);
+		break;
+
+	case 'd':
+		mapPermission(mapId, CHANGED_DENIED);
+		break;
+
+	default:
+		std::cout << "Unexpected message received" << message << std::endl;
+		break;
 	}
 }
 
@@ -220,6 +254,15 @@ void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 
 	case 'l':
 		handleMapListMessage(message);
+		break;
+
+	case 'r':
+		handleMapReadyMessage(message);
+		break;
+
+	case 'p':
+		handleMapPermissionMessage(message);
+		break;
 
 	default:
 		std::cout << "Unexpected message received" << message << std::endl;
@@ -236,10 +279,37 @@ void MessageDispatcher::handleUserAuthentificationConfirmation(const std::string
 	{
 	case 's':
 		eventHandler_->onUserAuthentified(userId);
+		authentification(AUTEHNTIFICATION_SUCCESS);
+		break;
+
+	case 'f':
+		authentification(EXISTING_FAIL);
+		break;
+
+	case 'c':
+		authentification(EXISTING_ALREADY_CONNECTED);
 		break;
 
 	default:
-		std::cout << "user authentification failed." << std::endl;
+		std::cout << "User authentification failed." << std::endl;
+	}
+}
+
+void MessageDispatcher::handleUserCreationConfirmation(const std::string& message)
+{
+	char authResult = message[6];
+	switch (authResult)
+	{
+	case 's':
+		authentification(CREATION_SUCCESS);
+		break;
+
+	case 'e':
+		authentification(NEW_ALREADY_EXIST);
+		break;
+
+	default:
+		std::cout << "user creation failed." << std::endl;
 	}
 }
 
@@ -249,6 +319,10 @@ void MessageDispatcher::handleUserSystemMessage(const std::string& message)
 	{
 	case 'a':
 		handleUserAuthentificationConfirmation(message);
+		break;
+
+	case 'c':
+		handleUserCreationConfirmation(message);
 		break;
 	}
 }

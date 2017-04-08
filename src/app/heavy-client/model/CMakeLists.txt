@@ -13,7 +13,6 @@ set(ARBRE_SRC
 )
 
 set(NOEUDS_SRC
-
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.h
     simulation-engine/Arbre/Noeuds/NoeudAbstrait.cpp
     simulation-engine/Arbre/Noeuds/NoeudComposite.h
@@ -49,12 +48,17 @@ set(NOEUDS_SRC
     simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
     simulation-engine/Arbre/Noeuds/NoeudPiece.h
     simulation-engine/Arbre/Noeuds/NoeudPiece.cpp
+
     simulation-engine/Arbre/Noeuds/NoeudLigneCourseAbstrait.cpp
     simulation-engine/Arbre/Noeuds/NoeudLigneCourseAbstrait.h
     simulation-engine/Arbre/Noeuds/NoeudLigneArrivee.h
     simulation-engine/Arbre/Noeuds/NoeudLigneArrivee.cpp
     simulation-engine/Arbre/Noeuds/NoeudCheckpoint.h
     simulation-engine/Arbre/Noeuds/NoeudCheckpoint.cpp
+
+    simulation-engine/Arbre/Noeuds/NoeudPaireTeleporteurs.h
+    simulation-engine/Arbre/Noeuds/NoeudPaireTeleporteurs.cpp
+
 )
 
 set(USINES_SRC
@@ -62,44 +66,40 @@ set(USINES_SRC
     simulation-engine/Arbre/Usines/UsineNoeud.cpp
 )
 
-set(CAPTEUR_SRC
-    simulation-engine/Capteur/CapteurDistance.h
-    simulation-engine/Capteur/CapteurDistance.cpp
-    simulation-engine/Capteur/CapteurOptique.h
-    simulation-engine/Capteur/CapteurOptique.cpp
-    simulation-engine/Capteur/SuiveurLigne.h
-    simulation-engine/Capteur/SuiveurLigne.cpp
-)
-
-set(CONFIGURATION_SRC
-    Configuration/ConfigScene.h
-    Configuration/ConfigScene.cpp
-)
-
-set(CONTROLE_ROBOT_SRC
-    simulation-engine/ControleRobot/ControleRobot.h
-    simulation-engine/ControleRobot/ControleRobot.cpp
-)
-
-set(COMMANDE_SRC
-    simulation-engine/ControleRobot/Commande/CommandeRobot.h
-    simulation-engine/ControleRobot/Commande/CommandeRobot.cpp
-)
-
-set(COMPORTEMENT_SRC
-    simulation-engine/ControleRobot/Comportement/ComportementAbstrait.h
-    simulation-engine/ControleRobot/Comportement/ComportementAbstrait.cpp
-    simulation-engine/ControleRobot/Comportement/ComportementBalayage.h
-    simulation-engine/ControleRobot/Comportement/ComportementBalayage.cpp
-    simulation-engine/ControleRobot/Comportement/ComportementDefaut.h
-    simulation-engine/ControleRobot/Comportement/ComportementDefaut.cpp
-    simulation-engine/ControleRobot/Comportement/ComportementDeviation.h
-    simulation-engine/ControleRobot/Comportement/ComportementDeviation.cpp
-    simulation-engine/ControleRobot/Comportement/ComportementEvitement.h
-    simulation-engine/ControleRobot/Comportement/ComportementEvitement.cpp
-    simulation-engine/ControleRobot/Comportement/ComportementSuiviLigne.h
-    simulation-engine/ControleRobot/Comportement/ComportementSuiviLigne.cpp
-    simulation-engine/ControleRobot/Comportement/ComportementTypes.h
+set(ROBOT_CONTROL_SRC
+    simulation-engine/robot-control/ControleRobot.h
+    simulation-engine/robot-control/ControleRobot.cpp
+    simulation-engine/robot-control/sensors/CapteurDistance.h
+    simulation-engine/robot-control/sensors/CapteurDistance.cpp
+    simulation-engine/robot-control/sensors/CapteurOptique.h
+    simulation-engine/robot-control/sensors/CapteurOptique.cpp
+    simulation-engine/robot-control/sensors/SuiveurLigne.h
+    simulation-engine/robot-control/sensors/SuiveurLigne.cpp
+    simulation-engine/robot-control/commands/CommandeRobot.h
+    simulation-engine/robot-control/commands/CommandeRobot.cpp
+    simulation-engine/robot-control/behaviors/ComportementAbstrait.h
+    simulation-engine/robot-control/behaviors/ComportementAbstrait.cpp
+    simulation-engine/robot-control/behaviors/ComportementBalayage.h
+    simulation-engine/robot-control/behaviors/ComportementBalayage.cpp
+    simulation-engine/robot-control/behaviors/ComportementDefaut.h
+    simulation-engine/robot-control/behaviors/ComportementDefaut.cpp
+    simulation-engine/robot-control/behaviors/ComportementDeviation.h
+    simulation-engine/robot-control/behaviors/ComportementDeviation.cpp
+    simulation-engine/robot-control/behaviors/ComportementEvitement.h
+    simulation-engine/robot-control/behaviors/ComportementEvitement.cpp
+    simulation-engine/robot-control/behaviors/ComportementSuiviLigne.h
+    simulation-engine/robot-control/behaviors/ComportementSuiviLigne.cpp
+    simulation-engine/robot-control/behaviors/ComportementTypes.h
+    simulation-engine/robot-control/physics/RobotPhysics.h
+    simulation-engine/robot-control/physics/RobotPhysics.cpp
+    simulation-engine/robot-control/physics/PhysicsComponent.h
+    simulation-engine/robot-control/physics/PhysicsComponent.cpp
+    simulation-engine/robot-control/physics/bounding-shapes/CercleEnglobant.h
+    simulation-engine/robot-control/physics/bounding-shapes/CercleEnglobant.cpp
+    simulation-engine/robot-control/physics/bounding-shapes/FormeEnglobanteAbstraite.h
+    simulation-engine/robot-control/physics/bounding-shapes/FormeEnglobanteAbstraite.cpp
+    simulation-engine/robot-control/physics/bounding-shapes/RectangleEnglobant.h
+    simulation-engine/robot-control/physics/bounding-shapes/RectangleEnglobant.cpp
 )
 
 set(ENGIN_SON_SRC
@@ -138,7 +138,6 @@ set(MACHINE_A_ETATS_SRC
     edition-tools/EtatTypes.h
     edition-tools/EtatCreationTeleporteur.h
     edition-tools/EtatCreationTeleporteur.cpp
-
 )
 
 set(MODES_SRC
@@ -156,6 +155,7 @@ set(MODES_SRC
     modes/ModeCourse.cpp
     modes/ModeCourse.h
     modes/ModePieces.cpp
+    modes/ModeTest.h
     modes/ModeTest.cpp
     modes/ModeTypes.h
     modes/ModePersonalize.cpp
@@ -166,27 +166,19 @@ set(MODES_SRC
     modes/ModeMapSelection.cpp
     modes/OnlineMapMode.h
     modes/OnlineMapMode.cpp
+    modes/RobotControlMode.h
+    modes/RobotControlMode.cpp
 )
 source_group("modes" FILES ${MODES_SRC})
 
-set(PHYSIQUE_SRC
-    simulation-engine/Physique/CercleEnglobant.h
-    simulation-engine/Physique/CercleEnglobant.cpp
-    simulation-engine/Physique/FormeEnglobanteAbstraite.h
-    simulation-engine/Physique/FormeEnglobanteAbstraite.cpp
-    simulation-engine/Physique/RectangleEnglobant.h
-    simulation-engine/Physique/RectangleEnglobant.cpp
-)
-
 set(PROFIL_UTILISATEUR_SRC
-    ProfilUtilisateur/ProfilUtilisateur.h      
-    ProfilUtilisateur/ProfilUtilisateur.cpp 
-    ProfilUtilisateur/ApplicationSettings.h
-    ProfilUtilisateur/ApplicationSettings.cpp     
+    simulation-engine/ProfilUtilisateur/ProfilUtilisateur.h      
+    simulation-engine/ProfilUtilisateur/ProfilUtilisateur.cpp      
+    simulation-engine/ProfilUtilisateur/ApplicationSettings.h
+    simulation-engine/ProfilUtilisateur/ApplicationSettings.cpp     
 )
 
 set(VISITEUR_SRC
-
     simulation-engine/Visiteur/VisiteurAbstrait.h
     simulation-engine/Visiteur/VisiteurAbstrait.cpp
     simulation-engine/Visiteur/VisiteurCreationLigne.h
@@ -269,20 +261,23 @@ source_group("simulation-engine" FILES ${SIMULATION_ENGINE_SRC})
 
 # Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
+    ${CMAKE_SOURCE_DIR}/ext/Eigen/include
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 	.
     simulation-engine
     simulation-engine/AffichageTexte
+    simulation-engine/ProfilUtilisateur
     simulation-engine/Arbre
     simulation-engine/Arbre/Noeuds
     simulation-engine/Arbre/Usines
-    simulation-engine/Capteur
-    simulation-engine/ControleRobot
-    simulation-engine/ControleRobot/Commande
-    simulation-engine/ControleRobot/Comportement
+    simulation-engine/robot-control
+    simulation-engine/robot-control/commands
+    simulation-engine/robot-control/behaviors
+    simulation-engine/robot-control/physics
+    simulation-engine/robot-control/physics/bounding-shapes
+    simulation-engine/robot-control/sensors
     simulation-engine/EnginSon
     simulation-engine/Lumiere
-    simulation-engine/Physique
     simulation-engine/Visiteur
     Configuration
     event-handler
@@ -290,27 +285,46 @@ include_directories(
     client-network/map-session
     edition-tools
     modes
-    ProfilUtilisateur
 )
 
 # Ajouter les filtres dans le projet visual studio
 source_group("affichage-texte" FILES ${AFFICHAGE_TEXTE_SRC})
 source_group("application" FILES ${APPLICATION_SRC})
+source_group("config" FILES ${CONFIGURATION_SRC})
 source_group("simulation-engine\\arbre" FILES ${ARBRE_SRC})
 source_group("simulation-engine\\arbre\\noeuds" FILES ${NOEUDS_SRC})
 source_group("simulation-engine\\arbre\\usines" FILES ${USINES_SRC})
-source_group("simulation-engine\\capteur" FILES ${CAPTEUR_SRC})
-source_group("config" FILES ${CONFIGURATION_SRC})
-source_group("simulation-engine\\controle-robot" FILES ${CONTROLE_ROBOT_SRC})
-source_group("simulation-engine\\controle-robot\\commande" FILES ${COMMANDE_SRC})
-source_group("simulation-engine\\controle-robot\\comportement" FILES ${COMPORTEMENT_SRC})
 source_group("simulation-engine\\engin-son" FILES ${ENGIN_SON_SRC})
-source_group("interface" FILES ${INTERFACE_SRC})
 source_group("simulation-engine\\lumiere" FILES ${LUMIERE_SRC})
-source_group("etats" FILES ${MACHINE_A_ETATS_SRC})
-source_group("simulation-engine\\physique" FILES ${PHYSIQUE_SRC})
-source_group("profil-utilisateur" FILES ${PROFIL_UTILISATEUR_SRC})
 source_group("simulation-engine\\visiteur" FILES ${VISITEUR_SRC})
+source_group("interface" FILES ${INTERFACE_SRC})
+source_group("tools" FILES ${MACHINE_A_ETATS_SRC})
+source_group("simulation-engine\\robot-control" 
+             REGULAR_EXPRESSION 
+             simulation-engine/robot-control/*)
+
+source_group("simulation-engine\\robot-control\\sensors" 
+             REGULAR_EXPRESSION 
+             simulation-engine/robot-control/sensors/*)
+
+source_group("simulation-engine\\robot-control\\commands" 
+             REGULAR_EXPRESSION 
+             simulation-engine/robot-control/commands/*)
+
+source_group("simulation-engine\\robot-control\\behaviors" 
+             REGULAR_EXPRESSION 
+             simulation-engine/robot-control/behaviors/*)
+
+source_group("simulation-engine\\robot-control\\physics" 
+             REGULAR_EXPRESSION 
+             simulation-engine/robot-control/physics/*)
+
+source_group("simulation-engine\\robot-control\\physics\\bounding-shapes" 
+             REGULAR_EXPRESSION 
+             simulation-engine/robot-control/physics/bounding-shapes/*)
+source_group("simulation-engine\\user-profile"
+             REGULAR_EXPRESSION 
+             simulation-engine/ProfilUtilisateur/*)
 
 # Compiler les fichiers sources dans une dll
 add_library(model SHARED
@@ -318,17 +332,13 @@ add_library(model SHARED
     ${ARBRE_SRC}
     ${NOEUDS_SRC}
     ${USINES_SRC}
-    ${CAPTEUR_SRC}
     ${CONFIGURATION_SRC}
-    ${CONTROLE_ROBOT_SRC}
-    ${COMMANDE_SRC}
-    ${COMPORTEMENT_SRC}
+    ${ROBOT_CONTROL_SRC}
     ${ENGIN_SON_SRC}
     ${INTERFACE_SRC}
     ${LUMIERE_SRC}
     ${MACHINE_A_ETATS_SRC}
     ${MODES_SRC}
-    ${PHYSIQUE_SRC}
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
     ${EVENT_HANDLER_SRC}
@@ -341,7 +351,7 @@ add_library(model SHARED
 )
 
 # Linker les librairies externes avec la dll
-target_link_libraries(model util ${EXTERNAL_LIBRARIES})
+target_link_libraries(model util networkUtils ${EXTERNAL_LIBRARIES})
 
 # Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew et ftgl)
 target_compile_definitions(model 

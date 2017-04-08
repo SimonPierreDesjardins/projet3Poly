@@ -69,22 +69,9 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 
-	NoeudAbstrait* depart_ = table_->chercher(ArbreRenduINF2990::NOM_DEPART);
-
-    profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-	couleur_ = profil_->obtenirCouleurs(BODY);
-	estCouleurDefaut_ = profil_->obtenirCouleurParDefaut(BODY);
-    suiveurLigne_ = profil_->obtenirSuiveurLigne();
-    capteursDistance_ = profil_->obtenirCapteursDistance();
-	profil_->setModele("robot");
-
     // À modifier avec le merge du profile.
     visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
-
-	positionRelative_ = depart_->obtenirPositionRelative();
-	angleRotation_ = depart_->obtenirAngleRotation();
-
-	positionDepart();	
+	
 	
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -94,8 +81,8 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 
 	roueGauche_ = std::static_pointer_cast<NoeudRoues>(roueGauche).get();
 	roueDroite_ = std::static_pointer_cast<NoeudRoues>(roueDroite).get();
-	roueDroite_->assignerPositionRelative({ 0.0, 0.25, 0.8 }); 
-	roueGauche_->assignerPositionRelative({ 0.0,  0.0, 0.8 });
+	roueDroite_->getPhysicsComponent().relativePosition = { 0.0, 0.25, 0.8 }; 
+	roueGauche_->getPhysicsComponent().relativePosition = { 0.0, 0.0,  0.8 };
 
 
 	roueGauche_->setRightWheel(false);
@@ -104,7 +91,7 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 
 	positionnerRoues();
 
-	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
+	//controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 
@@ -143,8 +130,8 @@ NoeudRobot::~NoeudRobot()
 void NoeudRobot::positionDepart()
 {
 	NoeudAbstrait* depart = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE)->chercher(ArbreRenduINF2990::NOM_DEPART);
-	positionRelative_ = depart->obtenirPositionRelative();
-	angleRotation_ = depart->obtenirAngleRotation();
+	physics_.relativePosition = depart->getPhysicsComponent().relativePosition;
+	physics_.rotation = depart->getPhysicsComponent().rotation;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -168,15 +155,19 @@ void NoeudRobot::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-    controleurLumiere_->afficherLumiereSpotRobot();
+    //controleurLumiere_->afficherLumiereSpotRobot();
     
 
-	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)  //empêche lumiere spot et capteurs pour personnaliser
+
+	/*	
+	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
+	*/
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -184,7 +175,9 @@ void NoeudRobot::afficherConcret() const
 	// Appel à la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)
+	/*
+	if (mode_ != PERSONALIZE && mode_ != PIECES)
+
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
@@ -195,6 +188,7 @@ void NoeudRobot::afficherConcret() const
 			}
 		}
 	}
+	*/
 	      
 	// Restauration de la matrice.
 	glPopMatrix();
@@ -231,34 +225,9 @@ void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::animer(float dt)
 {
-    mutexControleRobot_->lock();
-    mettreAJourPosition(dt);
-
-    if (estEnCollision_)
-    {
-		if (!teleportationFaite_)
-		{
-			effectuerCollision(dt);
-		}
-		else
-		{
-			estEnCollision_ = false;
-		}
-    }
-    mettreAJourFormeEnglobante();
-
-	mettreAJourCapteurs();
-	controleurLumiere_->assignerLumiereSpotGyro(true);
-	
-
-	
-	controleurLumiere_->animer(rectangleEnglobant_.obtenirPositionCentre(), dt);
-	
-
-	
+	//mettreAJourCapteurs();
 	positionnerRoues();
-	suivreCamera();
-    mutexControleRobot_->unlock();
+	//suivreCamera();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -271,9 +240,8 @@ void NoeudRobot::animer(float dt)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::suivreCamera()
+void NoeudRobot::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{
@@ -282,10 +250,10 @@ void NoeudRobot::suivreCamera()
 
 		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 4.0 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z * PI / 180), sin(physics_.rotation.z * PI / 180), 4.0 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 4, sin(angleRotation_* PI / 180) * 4, -4.0 });
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z * PI / 180) * 4, sin(physics_.rotation.z * PI / 180) * 4, -4.0 });
 	}
 }
 
@@ -332,7 +300,7 @@ void NoeudRobot::calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslati
 void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, glm::dvec3& vitesseTranslationCollision,
     double& vitesseAngulaireCollision) const
 {
-    glm::dvec3 orientationTangentielle, orientationCentripete;
+	glm::dvec3 orientationTangentielle, orientationCentripete;
     rectangleEnglobant_.calculerVecteursOrientation(orientationCentripete, orientationTangentielle);
 
     glm::dvec3 vitesseTranslationCourante;
@@ -405,7 +373,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 ////////////////////////////////////////////////////////////////////////
 bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 {
-	if (teleporteur == nullptr) return false;
+	/*if (teleporteur == nullptr) return false;
 	RectangleEnglobant* rectangle = teleporteur->obtenirFormeEnglobante();
 	bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
 	bool enCollision = rectangle->obtenirEnCollision();
@@ -420,8 +388,6 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 			teleporteurCollision_ = true;
 			teleporteurCourant_ = teleporteur;
 			rectangle->assignerEnCollision(enCollision);
-			glm::dvec3 normaleCollision = rectangle->calculerNormaleCollision(rectangleEnglobant_);
-			calculerComposantesCollision(normaleCollision, vitesseTranslationCollision_, vitesseAngulaireCollision_);
 
 			// On replace le teleporteur à la dernière position.
 			reinitialiserPosition();
@@ -445,7 +411,20 @@ bool NoeudRobot::verifierCollision(NoeudTeleporteur* teleporteur)
 		enCollision = false;
 		rectangle->assignerEnCollision(enCollision);
 	}
-	return enIntersection;
+
+	// TODO: À bouger dans le téléporteur.
+	if (teleportationFaite_ == false && enCollision)
+	{
+		glm::dvec3 teleporterAbsPos = teleporteurCourant_->getPhysicsComponent().absolutePosition;
+		physics_.absolutePosition.x = teleporterAbsPos.x;
+		physics_.absolutePosition.y = teleporterAbsPos.y;
+		physics_.relativePosition = physics_.absolutePosition;
+		//mettreAJourPosition(dt);
+		mettreAJourFormeEnglobante();
+		teleportationFaite_ = true;
+	}
+*/
+	return false;
 }
 
 
@@ -568,7 +547,7 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 		EnginSon::obtenirInstance()->jouerCollision(COLLISION_COIN_SON);
 		// On calcule les composantes de la collision.
 		table_->effacer(piece);
-		profil_->setPiece(profil_->obtenirPieces() + 1);
+		//profil_->setPiece(profil_->obtenirPieces() + 1);
 	}
 	// Le poteau n'est pas en intersection et il se trouvait en collision.
 	else // if (!enIntersection)
@@ -590,10 +569,16 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourCapteurs()
 {
-	suiveurLigne_->mettreAJourCapteurs(positionRelative_, angleRotation_);
+	if (suiveurLigne_)
+	{
+		suiveurLigne_->mettreAJourCapteurs( physics_.relativePosition,
+											physics_.rotation.z);
+	}
+
 	for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
 	{
-		capteursDistance_->at(i).mettreAJour(positionRelative_, angleRotation_);
+		capteursDistance_->at(i).mettreAJour(physics_.relativePosition,
+										     physics_.rotation.z);
 	}
 }
 
@@ -608,10 +593,10 @@ void NoeudRobot::mettreAJourCapteurs()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::mettreAJourPosition(const float& dt)
+void NoeudRobot::mettreAJourPosition(float dt)
 {
-    dernierePositionRelative_ = positionRelative_;
-    dernierAngleRotation_ = angleRotation_;
+	dernierePositionRelative_ = physics_.relativePosition;
+    dernierAngleRotation_ = physics_.rotation.z;
 
 	float vitesseDroiteTemp = vitesseDroite_, vitesseGaucheTemp = vitesseGauche_;
 		//Calcul de la différence entre les vitesses de gauche et droite
@@ -705,12 +690,14 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
         }
     }
 
-	angleRotation_ -= dt * vitesseRotationCourante_;
-	positionRelative_.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(angleRotation_));
-	positionRelative_.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(angleRotation_));
-    positionCourante_ = positionRelative_;
+	physics_.rotation.z -= dt * vitesseRotationCourante_;
+	physics_.relativePosition.x += dt * relativeGaucheDroite / 10 * cos(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	physics_.relativePosition.y += dt * relativeGaucheDroite / 10 * sin(utilitaire::DEG_TO_RAD(physics_.rotation.z));
+	physics_.absolutePosition = physics_.relativePosition;
 	vitesseDroite_ = vitesseDroiteTemp;
 	vitesseGauche_ = vitesseGaucheTemp;
+	mettreAJourFormeEnglobante();
+	mettreAJourCapteurs();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -724,9 +711,9 @@ void NoeudRobot::mettreAJourPosition(const float& dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::reinitialiserPosition()
 {
-    positionRelative_ = dernierePositionRelative_;
-    positionCourante_ = positionRelative_;
-    angleRotation_ = dernierAngleRotation_;
+	physics_.relativePosition = { dernierePositionRelative_.x, dernierePositionRelative_.y, dernierePositionRelative_.z };
+	physics_.absolutePosition = physics_.relativePosition;
+	physics_.rotation.z = dernierAngleRotation_;
 
     mettreAJourFormeEnglobante();
 
@@ -746,7 +733,7 @@ void NoeudRobot::reinitialiserPosition()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::mettreAJourFormeEnglobante()
 {
-    positionCourante_ = positionRelative_;
+	physics_.absolutePosition = physics_.relativePosition;
 
     // On obtient les dimensions de la boite.
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
@@ -758,13 +745,13 @@ void NoeudRobot::mettreAJourFormeEnglobante()
     glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
     // On effectue une rotation du centre. (Au cas où la boite n'est pas centrée avec le modèle).
-    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, angleRotation_);
+    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, physics_.rotation.z);
 
     // Effectuer la translation de la position.
-    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoite.x, positionCourante_.y + positionBoite.y, 0.0 };
+    glm::dvec3 positionRectangle = { physics_.absolutePosition.x + positionBoite.x, physics_.absolutePosition.y + positionBoite.y, 0.0 };
 
     // Mettre à jour les attributs du rectangle.
-    rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
+    rectangleEnglobant_.mettreAJour(positionRectangle, physics_.rotation.z, hauteur, largeur);
 }
 
 
@@ -780,69 +767,58 @@ void NoeudRobot::mettreAJourFormeEnglobante()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudRobot::effectuerCollision(const double& dt)
+void NoeudRobot::effectuerCollision(double dt)
 {
-	if (!teleporteurCollision_)
+	if (!estEnCollision_) return;
+
+	// Ajouter les vitesses de collision aux vitesses du moteur.    
+	double vitesseAngulaire = 0.0;
+	glm::dvec3 vitesseTranslation = { 0.0, 0.0, 0.0 };
+
+	//calculerComposantesVitesseCourante(vitesseTranslation, vitesseAngulaire);
+	vitesseTranslation += vitesseTranslationCollision_;
+	vitesseAngulaire += vitesseAngulaireCollision_;
+
+	// Appliquer la vitesse de collision en fonction du temps
+	physics_.relativePosition += vitesseTranslation * dt / 10.0;
+	physics_.rotation.z += vitesseAngulaire * dt;
+
+	// La force frottement est toujours dans le sens inverse du déplacement.
+	glm::dvec3 frottementTranslation = -glm::normalize(vitesseTranslationCollision_);
+	frottementTranslation *= acceleration_;
+	double frottementRotation = acceleration_ * -glm::sign(vitesseAngulaireCollision_);
+
+	// Appliquer la force de frottement sur la vitesse en translation tant qu'on se trouve en translation.
+	glm::dvec3 origine = { 0.0, 0.0, 0.0 };
+	glm::dvec3 dV = frottementTranslation * dt;
+
+	// Si la vitesse est plus petite que différence de vitesse, celle-ci devient nulle et le robot n'est plus en translation.
+	bool enTranslation = glm::length(dV) < glm::length(vitesseTranslationCollision_);
+	if (enTranslation)
 	{
-		// Ajouter les vitesses de collision aux vitesses du moteur.    
-		double vitesseAngulaire = 0.0;
-		glm::dvec3 vitesseTranslation = { 0.0, 0.0, 0.0 };
-
-		//calculerComposantesVitesseCourante(vitesseTranslation, vitesseAngulaire);
-		vitesseTranslation += vitesseTranslationCollision_;
-		vitesseAngulaire += vitesseAngulaireCollision_;
-
-		// Appliquer la vitesse de collision en fonction du temps
-		positionRelative_ += vitesseTranslation * dt / 10.0;
-		angleRotation_ += vitesseAngulaire * dt;
-
-		// La force frottement est toujours dans le sens inverse du déplacement.
-		glm::dvec3 frottementTranslation = -glm::normalize(vitesseTranslationCollision_);
-		frottementTranslation *= acceleration_;
-		double frottementRotation = acceleration_ * -glm::sign(vitesseAngulaireCollision_);
-
-		// Appliquer la force de frottement sur la vitesse en translation tant qu'on se trouve en translation.
-		glm::dvec3 origine = { 0.0, 0.0, 0.0 };
-		glm::dvec3 dV = frottementTranslation * dt;
-
-		// Si la vitesse est plus petite que différence de vitesse, celle-ci devient nulle et le robot n'est plus en translation.
-		bool enTranslation = glm::length(dV) < glm::length(vitesseTranslationCollision_);
-		if (enTranslation)
-		{
-			vitesseTranslationCollision_ += dV;
-		}
-		else
-		{
-			vitesseTranslationCollision_ = { 0.0, 0.0, 0.0 };
-		}
-
-		// Appliquer la force de frottement sur la vitesse de rotation tant qu'on se trouve en rotation. 
-		double dVR = frottementRotation * dt;
-		bool enRotation = glm::abs(dVR) < glm::abs(vitesseAngulaireCollision_);
-		if (enRotation)
-		{
-			vitesseAngulaireCollision_ += dVR;
-		}
-		else
-		{
-			vitesseAngulaireCollision_ = 0.0;
-		}
-
-		// On se trouve toujours en collision si on se trouve en translation ou en rotation.
-		estEnCollision_ = (enTranslation || enRotation);
+		vitesseTranslationCollision_ += dV;
 	}
 	else
 	{
-		if (teleportationFaite_ == false)
-		{
-			positionCourante_.x = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante().x;
-			positionCourante_.y = teleporteurCourant_->obtenirProchainTeleporteur()->obtenirPositionCourante().y;
-			positionRelative_ = positionCourante_;
-			mettreAJourPosition(dt);
-			mettreAJourFormeEnglobante();
-			teleportationFaite_ = true;
-		}
+		vitesseTranslationCollision_ = { 0.0, 0.0, 0.0 };
 	}
+
+	// Appliquer la force de frottement sur la vitesse de rotation tant qu'on se trouve en rotation. 
+	double dVR = frottementRotation * dt;
+	bool enRotation = glm::abs(dVR) < glm::abs(vitesseAngulaireCollision_);
+	if (enRotation)
+	{
+		vitesseAngulaireCollision_ += dVR;
+	}
+	else
+	{
+		vitesseAngulaireCollision_ = 0.0;
+	}
+
+	// On se trouve toujours en collision si on se trouve en translation ou en rotation.
+	estEnCollision_ = (enTranslation || enRotation);
+
+	mettreAJourFormeEnglobante();
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -859,12 +835,10 @@ void NoeudRobot::effectuerCollision(const double& dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::positionnerRoues()
 {
-	roueGauche_->assignerAngleRotation(angleRotation_);
-
+	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
 
-	roueDroite_->assignerAngleRotation(angleRotation_);
-
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
 }
 
@@ -954,6 +928,7 @@ std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
 
 ////////////////////////////////////////////////////////////////////////
 ///
+
 /// @fn RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante()
 ///
 /// Cette fonction permet d'obtenir la forme englobante pour le robot.
@@ -965,9 +940,64 @@ RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante()
 {
 	return &rectangleEnglobant_;
 }
+/// @fn void NoeudRobot::initialisationCouleurs(float* roues, float* modele)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues et du modele
+///
+/// @param[in] float* de couleurs des roues et du modele
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::initialisationCouleurs(int* roues, int* modele)
+{
+
+	couleur_[0] = (float)modele[0] / (float)255;
+	couleur_[1] = (float)modele[1] / (float)255;
+	couleur_[2] = (float)modele[2] / (float)255;
+	couleur_[3] = (float)modele[3] / (float)255;
+	roueDroite_->initialisationCouleurs(roues);
+	roueGauche_->initialisationCouleurs(roues);
+}
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn NoeudTeleporteur* NoeudRobot::getTeleporteurCourant()
+///
+/// Cette fonction retourne teleporteur courant
+///
+/// @param[in]
+///
+/// @return teleporteur courant
+///
+////////////////////////////////////////////////////////////////////////
+NoeudTeleporteur* NoeudRobot::getTeleporteurCourant()
+{
+
+	return teleporteurCourant_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::setTeleporteurCourant(NoeudTeleporteur* teleporteur)
+///
+/// Cette fonction set le teleporteur courant
+///
+/// @param[in] teleporteur courant
+///
+/// @return 
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::setTeleporteurCourant(NoeudTeleporteur* teleporteur)
+{
+
+	teleporteurCourant_ = teleporteur;
+
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+
 /// @fn const RectangleEnglobant* NoeudPiece::obtenirFormeEnglobante() const
 ///
 /// Cette fonction permet d'obtenir la forme englobante pour le robot.
@@ -978,6 +1008,49 @@ RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante()
 const RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante() const
 {
 	return &rectangleEnglobant_;
+}
+
+
+/// @fn bool NoeudRobot::getTeleportationFaite()
+///
+/// Cette fonction retourne si la teleportation a ete faite
+///
+/// @param[in]
+///
+/// @return teleportationFaite
+///
+////////////////////////////////////////////////////////////////////////
+bool NoeudRobot::getTeleportationFaite()
+{
+
+	return teleportationFaite_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudRobot::setTeleportationFaite(bool teleportationFaite);
+///
+/// Cette fonction set si la teleportation a ete faite
+///
+/// @param[in] teleportationFaite
+///
+/// @return 
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudRobot::setTeleportationFaite(bool teleportationFaite)
+{
+
+	teleportationFaite_ = teleportationFaite;
+}
+
+void NoeudRobot::assignerControleurLumiere(ControleurLumiere* controleur)
+{
+	controleurLumiere_ = controleur;
+}
+
+ControleurLumiere* NoeudRobot::obtenirControleurLumiere()
+{
+	return controleurLumiere_;
 }
 
 

@@ -6,6 +6,7 @@
 ////////////////////////////////////////////////
 using System;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ui
@@ -40,7 +41,11 @@ namespace ui
             chatListBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
             chatListBox.MeasureItem += chatBox_MeasureItem;
             chatListBox.DrawItem += chatBox_DrawItem;
+        }
 
+        public string[] getChannelList()
+        {
+            return ChannelListBox.Items.OfType<string>().ToArray();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -205,20 +210,12 @@ namespace ui
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void userButton_Click(object sender, EventArgs e)
-        ///
-        /// Arrete d'envoyer des actions au modele. Si la touche est "enter"
-        /// le message est envoyé
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param PreviewKeyDownEventArgs e: evenement d'une keydown
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void chatTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        private void chatTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-
+            if (e.KeyChar.ToString() == "\r")
+            {
+                sendText();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -234,7 +231,6 @@ namespace ui
         private void sendButton_Click_1(object sender, EventArgs e)
         {
             sendText();
-            chatTextBox.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -250,9 +246,10 @@ namespace ui
             if (!System.Text.RegularExpressions.Regex.Replace(chatTextBox.Text, "\n|\t| |\r", "").Equals(""))
             {
                 string tmp = "cm" + parent_.userName + ";" + name_ + ";" + DateTime.Now.ToString("HH:mm:ss;yyyy-MM-dd;") + chatTextBox.Text;
-                FonctionsNatives.sendMessage(tmp, tmp.Length);
+                FonctionsNatives.sendMessage(tmp);
                 chatTextBox.Clear();
             }
+            chatTextBox.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -267,6 +264,19 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         private void createButton_Click(object sender, EventArgs e)
+        {
+            createChannel();
+        }
+
+        private void addChannelTextBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.ToString() == "\r")
+            {
+                createChannel();
+            }
+        }
+
+        private void createChannel()
         {
             warningLabel.Visible = false;
 
@@ -353,7 +363,7 @@ namespace ui
                 else
                 {
                     string tmp = "cq" + channel;
-                    FonctionsNatives.sendMessage(tmp, tmp.Length);
+                    FonctionsNatives.sendMessage(tmp);
                 }
             }
             else
@@ -408,11 +418,6 @@ namespace ui
             userListBox.Items.Clear();
             for (int i = 1; i < users.Length; i++)
                 userListBox.Items.Add(users[i]);
-        }
-
-        private void addChannelTextBox_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
-        {
-
         }
 
         private void chatTextBox_Enter(object sender, EventArgs e)

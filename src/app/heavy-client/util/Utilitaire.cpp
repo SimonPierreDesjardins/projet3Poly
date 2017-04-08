@@ -250,8 +250,8 @@ namespace utilitaire {
 	bool fichierExiste(const std::string& nomDuFichier)
 	{
 		std::ifstream ficin;
-		ficin.open(nomDuFichier.c_str());
-		bool fail{ ficin.fail() };
+		ficin.open(nomDuFichier);
+		bool fail = ficin.fail();
 
 		if (!fail)
 			ficin.close();

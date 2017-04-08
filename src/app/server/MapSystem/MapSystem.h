@@ -15,6 +15,7 @@ class MapEntry
 {
 public:
 	MapInfo* Info;
+	MapFileEntry* File;
 
 	MapEntry(MapInfo* info, MapFileEntry* mapFile);
 	void GetSerializedInfo(std::string& message) const;
@@ -25,6 +26,7 @@ public:
 	char getSessionType() const;
 	char getNumberOfUsers() const;
 	void AddUser(User* user);
+	void SendMap(User* user);
 
 private:
 	std::unique_ptr<AbstractMapRoom> currentSession_;
@@ -67,8 +69,8 @@ private:
 
 	void HandleMapDeleteMessage(User* user, const std::string& message);
 
-	void HandleMapGraphRequestMessage(User* user, const std::string& message);
-
+	void HandleMapRequestMessage(User* user, const std::string& message);
+	
 	void HandleMapTransferMessage(User* user, const std::string& message);
 
 	void HandleCancelMapTransferMessage(User* user, const std::string& message);

@@ -73,6 +73,8 @@ public:
 	
 	virtual void visiter(NoeudLigneCourseAbstrait* noeud);
 
+	virtual void visiter(NoeudPaireTeleporteurs* noeud);
+
 private:
 
 	std::unordered_set<NoeudTeleporteur*> teleporteursDejaSauves;

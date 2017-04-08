@@ -2,7 +2,9 @@
 #include <ios>
 #include <fstream>
 
+#include "NetworkStandard.h"
 #include "NetworkManager.h"
+#include "EventHandler.h"
 
 namespace client_network
 {
@@ -11,6 +13,7 @@ NetworkManager::NetworkManager(event_handler::EventHandler* eventHandler)
 	: dispatcher_(eventHandler)
 {
 	connection_.setOnMessageReceivedHandler(&MessageDispatcher::handleReceivedMessage, &dispatcher_);
+	connection_.setOnConnectionLostHandler(&event_handler::EventHandler::onUserDisconnected, eventHandler);
 	dispatcher_.startDispatching();
 }
 
@@ -22,7 +25,8 @@ void NetworkManager::authenticate(const std::string& username)
 {
 	std::string message;
 	serializer_.serialize(uint32_t(username.size() + 6), message);
-	message.append("ul" + username);
+	message.append("ul");
+	message.append(username);
 	connection_.sendMessage(message);
 }
 
@@ -85,8 +89,10 @@ void NetworkManager::uploadMap(const std::string& filePath) {
 void NetworkManager::requestMapCreation(const std::string& mapName, const std::string& password, uint8_t mapType, uint8_t isPrivate)
 {
 	std::string message;
+	uint32_t messageBaseSize = isPrivate ? 9 : 8;
+
 	// on rajoute isPrivate à la taille pour symboliser l'ajout du ; entre le nom et le mot de passe
-	serializer_.serialize((uint32_t)(mapName.size() + password.size() + 8 + isPrivate), message);
+	serializer_.serialize((uint32_t)(mapName.size() + password.size() + messageBaseSize + isPrivate), message);
 	message.append("mc");
 	serializer_.serialize(mapType, message);
 	serializer_.serialize(isPrivate, message);
@@ -98,12 +104,26 @@ void NetworkManager::requestMapCreation(const std::string& mapName, const std::s
 	connection_.sendMessage(message);
 }
 
-void NetworkManager::requestToJoinMapSession(uint32_t mapId)
+void NetworkManager::requestMapPermissionChange(const uint32_t mapId, uint8_t permission, const std::string & password)
 {
 	std::string message;
-	serializer_.serialize(uint32_t(10), message);
+	serializer_.serialize(uint32_t(11 + password.size()), message);
+	message.append("mp");
+	serializer_.serialize(mapId, message);
+	serializer_.serialize(permission, message);
+	message.append(password);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestToJoinMapSession(uint32_t mapId, const std::string & password)
+{
+	std::string message;
+	serializer_.serialize(uint32_t(10 + password.size()), message);
 	message.append("mj");
 	serializer_.serialize(mapId, message);
+	if (password.size() > 0) {
+		message.append(password);
+	}
 	connection_.sendMessage(message);
 }
 

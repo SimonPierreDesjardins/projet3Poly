@@ -66,6 +66,7 @@ public:
 
 	/// Assigne le chemin du fichier sélectionné par l'utilisateur
 	void assignerCheminFichierZone(std::string chemin);
+	std::string obtenirCheminFichierZone();
 	
 	/// Retourne un pointeur vers le fichier sélectionné par l'utilisateur
 	FILE* obtenirFichierZone(std::string mode);

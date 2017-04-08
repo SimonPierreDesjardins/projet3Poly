@@ -58,7 +58,7 @@ ControleurLumiere::~ControleurLumiere()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleurLumiere::afficherLumiereAmbianteGlobale()
+void ControleurLumiere::afficherLumiereAmbianteGlobale() const
 {
 	if (lumiereAmbiante_)
 	{
@@ -82,7 +82,7 @@ void ControleurLumiere::afficherLumiereAmbianteGlobale()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleurLumiere::afficherLumiereDirectionnelle()
+void ControleurLumiere::afficherLumiereDirectionnelle() const
 {
 	// Positionner la lumière.
 	glm::vec4 position{ 1, 1, 1, 0 };
@@ -112,7 +112,7 @@ void ControleurLumiere::afficherLumiereDirectionnelle()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleurLumiere::afficherLumiereSpotGyro()
+void ControleurLumiere::afficherLumiereSpotGyro() const
 {
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
 	glm::vec4 contributionMaximale{ 1.0, 0.0, 0.0, 1.0 };
@@ -145,7 +145,7 @@ void ControleurLumiere::afficherLumiereSpotGyro()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void ControleurLumiere::afficherLumiereSpotRobot()
+void ControleurLumiere::afficherLumiereSpotRobot() const
 {
 	// Positionner la lumière.
 	glm::vec3 direction = { 0.2, 0, -1.0 };

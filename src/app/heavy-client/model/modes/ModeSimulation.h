@@ -1,6 +1,6 @@
 ///////////////////////////////////////////////////////////////////////////
 /// @file ModeSimulation.h
-/// @author Frédéric Grégoire
+/// @author Frï¿½dï¿½ric Grï¿½goire
 /// @date 2016-02-02
 /// @version 1.0
 ///
@@ -13,9 +13,8 @@
 
 #include <memory>
 #include "glm\glm.hpp"
-#include "ModeAbstrait.h"
+#include "OnlineMapMode.h"
 #include "ControleRobot.h"
-#include "FacadeModele.h"
 #include "VisiteurDetectionRobot.h"
 #include <unordered_map>
 #include <array>
@@ -24,43 +23,27 @@ class ProfilUtilisateur;
 class AffichageTexte;
 class ControleurLumiere;
 
+namespace engine {
+	class SimulationEngine;
+}
+
 //////////////////////////////////////////////////////////////////////////
 /// @class ModeSimulation
-/// @brief Classe qui représente le mode simulation de notre machine à modes
+/// @brief Classe qui reprï¿½sente le mode simulation de notre machine ï¿½ modes
 ///
-///        Cette classe s'occupe d'implémenter les fonctions du mode simulation
+///        Cette classe s'occupe d'implï¿½menter les fonctions du mode simulation
 ///
 /// @author Simon-Pierre Desjardins
 /// @date 2016-02-14
 ///////////////////////////////////////////////////////////////////////////
-class ModeSimulation : public ModeAbstrait 
+class ModeSimulation : public OnlineMapMode
 {
-private:
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ProfilUtilisateur* profil_{ nullptr };
-	static std::array<char, 11> touchesNonConfigurable_;
-    std::array<bool, 5> actionsAppuyees_;
-
-	bool lumiereAmbiante { true };
-	bool lumiereDirectionnelle { true };
-	bool lumiereSpot { true };
-
-	VisiteurDetectionRobot visiteur_;
-
-    AffichageTexte* affichageTexte_{ nullptr };
-
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
-	ArbreRenduINF2990* arbre_{ nullptr };
-
-	bool modeEnPause{ false };
-
 public:
-	//Constructeur par défaut
-	ModeSimulation();
+	ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session);
+
 	//Destructeur
 	virtual ~ModeSimulation();
-	//Gestion des entrées utilisateur
+	//Gestion des entrï¿½es utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
 	void inverserLumiereAmbiante();
@@ -70,11 +53,28 @@ public:
 	void preChangementDeProfil();
 	void postChangementDeProfil();
 
-	virtual void postAnimer();
+	virtual void postAnimer(float dt);
 
 	inline static std::array<char, 11>* getTouchesNonConfigurable();
 
+private:
+	ControleRobot controleRobot_;
+	RobotPhysics robotPhysics_;
+	ProfilUtilisateur* profil_{ nullptr };
+	static std::array<char, 11> touchesNonConfigurable_;
+    std::array<bool, 5> actionsAppuyees_;
+
+	bool modeEnPause = false;
+	bool lumiereAmbiante { true };
+	bool lumiereDirectionnelle { true };
+	bool lumiereSpot { true };
+
+    AffichageTexte* affichageTexte_{ nullptr };
+	ControleurLumiere* controleurLumiere_{ nullptr };
+	
+	//Constructeur par dï¿½faut
 	bool obtenirModeEnPause();
+	ModeSimulation() = delete;
 };
 
 std::array<char, 11>* ModeSimulation::getTouchesNonConfigurable()

@@ -192,6 +192,10 @@ extern "C"
 		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZoneDefaut().c_str());
 	}
 
+	__declspec(dllexport) void __cdecl obtenirCheminFichierZone(char* chemin, int longueur) {
+		strcpy_s(chemin, longueur, FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->obtenirCheminFichierZone().c_str());
+	}
+
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn __declspec(dllexport) int __cdecl obtenirAffichagesParSeconde()
@@ -845,7 +849,10 @@ extern "C"
 	__declspec(dllexport) void __cdecl setUsingDefaultMaterialForPiece(int piece, bool value)
 	{
 		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->setCouleurParDefaut(piece, value);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->setCouleurDefault(piece,value);
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot() != nullptr)
+		{
+			FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot()->setCouleurDefault(piece, value);
+		}
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -859,8 +866,14 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl changePieceColor(int piece, int a, int r, int g, int b)
 	{	
-		FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->assignerCouleur(piece, a, r, g, b);
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->getModele())->assignerCouleurs(piece,a,r,g,b);
+		ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+		ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+		
+		profil->assignerCouleur(piece, a, r, g, b);
+		if (FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot() != nullptr)
+		{
+			FacadeModele::obtenirInstance()->obtenirMode()->obtenirRobot()->assignerCouleurs(piece, a, r, g, b);
+		}
 	}
 
 
@@ -875,15 +888,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) int* __cdecl getPieceColor(int piece)
 	{
-		float* couleurPieceFloat = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurs(piece);
-		int couleurPieceInt[4];
-		
-		couleurPieceInt[0] = (int)(couleurPieceFloat[0] * 255);
-		couleurPieceInt[1] = (int)(couleurPieceFloat[1] * 255);
-		couleurPieceInt[2] = (int)(couleurPieceFloat[2] * 255);
-		couleurPieceInt[3] = (int)(couleurPieceFloat[3] * 255);
-
-		return couleurPieceInt;
+		return FacadeModele::obtenirInstance()->obtenirProfilUtilisateur()->obtenirCouleurs(piece);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -897,17 +902,25 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl setModele(char *modele)
 	{
+
+
 		ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 		ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+		ModeAbstrait* mode = FacadeModele::obtenirInstance()->obtenirMode();
+
 		if (profil->getModele() != modele)
 		{
 			arbre->effacer(arbre->chercher(profil->getModele()));
 			profil->setModele(std::string(modele));
 			profil->setCouleurParDefaut(BODY, true);
 			profil->setCouleurParDefaut(WHEELS, true);
-			FacadeModele::obtenirInstance()->obtenirMode()->creerControleRobot();
-			arbre->chercher(profil->getModele())->setCouleurDefault(BODY, true);
-			arbre->chercher(profil->getModele())->setCouleurDefault(WHEELS, true);
+
+			
+			NoeudRobot* robot = mode->creerRobot(arbre,profil);
+
+			robot->setCouleurDefault(BODY, true);
+			robot->setCouleurDefault(WHEELS, true);
+
 		}
 		
 	}
@@ -973,9 +986,14 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapCreation(std::string(mapName, mapNameSize), std::string(password, passwordSize), mapType, isPrivate);
 	}
 
-	__declspec(dllexport) void __cdecl joinMap(int mapId)
+	void changeMapPermission(int mapId, char permission, char * password, int size)
 	{
-		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(mapId);
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestMapPermissionChange(mapId, permission, std::string(password, size));
+	}
+
+	__declspec(dllexport) void __cdecl joinMap(int mapId, char* password, int size)
+	{
+		FacadeModele::obtenirInstance()->getNetworkManager()->requestToJoinMapSession(mapId, std::string(password, size));
 	}
 
 	__declspec(dllexport) void __cdecl leaveMap()
@@ -983,6 +1001,27 @@ extern "C"
 		FacadeModele::obtenirInstance()->getNetworkManager()->requestToQuitMapSession();
 	}
 
+	CallbackMapConnection callbackMapConnection = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapConnection(CallbackMapConnection fn)
+	{
+		callbackMapConnection = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapConnect(int mapId, int action)
+	{
+		callbackMapConnection(mapId, action);
+	}
+
+	CallbackMapPermission callbackMapPermission = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForMapPermission(CallbackMapPermission fn)
+	{
+		callbackMapPermission = fn;
+	}
+
+	__declspec(dllexport) void __cdecl mapPermission(int mapId, int action)
+	{
+		callbackMapPermission(mapId, action);
+	}
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -1109,6 +1148,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl connectionWasFail()
 	{
 		ConnectionFailHandler();
+	}
+
+	CallbackAuthentification callbackAuthentification = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForAuthentification(CallbackAuthentification fn)
+	{
+		callbackAuthentification = fn;
+	}
+
+	__declspec(dllexport) void __cdecl authentification(int action)
+	{
+		callbackAuthentification(action);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -1262,10 +1312,10 @@ extern "C"
 		AddNewMap = addNewMap;
 	}
 
-	__declspec(dllexport) void __cdecl AddMap(const std::string& name, bool isPrivate, bool connectionState, int mode, int nbPlayers, int id)
+	__declspec(dllexport) void __cdecl AddMap(const std::string& name, int isPrivate, int connectionState, int mode, int nbPlayers, int isAdmin, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
-		AddNewMap(bytes, name.size(), connectionState, mode, nbPlayers, id);
+		AddNewMap(bytes, name.size(), (int)connectionState, mode, nbPlayers, (int)isAdmin, id, (int)isPrivate);
 	}
 
 	__declspec(dllexport) void __cdecl LoadApplicationSettings()
@@ -1276,6 +1326,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl SaveApplicationSettings()
 	{
 		FacadeModele::obtenirInstance()->getApplicationSettings()->save();
+	}
+
+	CallbackLoading callBackLoading = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForLoading(CallbackLoading handler)
+	{
+		callBackLoading = handler;
+	}
+
+	__declspec(dllexport) void __cdecl Loading(int action)
+	{
+		callBackLoading(action);
 	}
 }
 

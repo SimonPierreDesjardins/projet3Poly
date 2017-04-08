@@ -122,7 +122,7 @@ void EtatDuplication::gererMouvementSouris(const int& x, const int& y)
 	
 	gererPositionCurseur(currentPosition);
 
-	visiteurDeplacement_.assignerPositionRelative(currentPosition - duplication_->obtenirPositionCourante());
+	visiteurDeplacement_.assignerPositionRelative(currentPosition - duplication_->getPhysicsComponent().relativePosition);
 	duplication_->accepterVisiteur(&visiteurDeplacement_);
 }
 

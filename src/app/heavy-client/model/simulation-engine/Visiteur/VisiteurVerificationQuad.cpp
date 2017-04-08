@@ -63,7 +63,7 @@ void VisiteurVerificationQuad::visiter(ArbreRendu* arbre)
 {
     // Mettre à jour l'arbre de rendu avant de faire la vérification.
     arbre->animer(0.0);
-	facteurMiseAEchelle_ = arbre->chercher("table")->obtenirFacteurMiseAEchelle();
+	facteurMiseAEchelle_ = arbre->chercher("table")->getPhysicsComponent().scale.x;
 	arbre->chercher("table")->accepterVisiteur(this);
 	
 }
@@ -243,6 +243,13 @@ bool VisiteurVerificationQuad::verifierPointEstSurTable(glm::dvec3 point)
 	const double MAX_Y =  24.0*facteurMiseAEchelle_;
 
 	return (MIN_X <= point.x && point.x <= MAX_X && MIN_Y <= point.y && point.y <= MAX_Y);
+}
+
+void VisiteurVerificationQuad::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants() && objetsDansZoneSimulation_; i++) {
+		noeud->chercher(i)->accepterVisiteur(this);
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

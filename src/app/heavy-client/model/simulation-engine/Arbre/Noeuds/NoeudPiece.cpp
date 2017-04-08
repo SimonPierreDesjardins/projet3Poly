@@ -40,9 +40,10 @@ NoeudPiece::NoeudPiece(uint32_t id, const std::string& typeNoeud)
 	: NoeudAbstrait{ id, typeNoeud }
 {
 	type_ = COIN_ENTITY;
-	positionCourante_.z = 1;
-	positionRelative_.z = 1;
+	physics_.absolutePosition.z = 1.0;
+	physics_.relativePosition.z = 1.0;
 }
+
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -58,13 +59,13 @@ void NoeudPiece::mettreAJourFormeEnglobante()
 {
 	double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
 	double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
-	rectangleEnglobant_.mettreAJour(positionCourante_, angleRotation_, hauteur, largeur);
+	rectangleEnglobant_.mettreAJour(physics_.absolutePosition, physics_.rotation.z, hauteur, largeur);
 
 	hauteur = glm::abs(boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x);
 	largeur = glm::abs(boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y);
 	double rayon = hauteur > largeur ? hauteur : largeur;
 	rayon = 11;
-	cercleEnglobant_.mettreAJour(positionCourante_, rayon);
+	cercleEnglobant_.mettreAJour(physics_.absolutePosition, rayon);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -167,7 +168,7 @@ void NoeudPiece::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotated(angleRotation_, 0, 0, 1);
+	glRotated(physics_.rotation.z, 0, 0, 1);
 	
 	// Affichage du modèle.
 	vbo_->dessiner();

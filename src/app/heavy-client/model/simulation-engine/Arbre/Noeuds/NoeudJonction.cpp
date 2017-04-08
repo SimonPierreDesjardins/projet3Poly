@@ -111,7 +111,7 @@ void NoeudJonction::mettreAJourFormeEnglobante()
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
     double rayon = hauteur > largeur ? largeur : hauteur;
     rayon /= 2;
-    cercleEnglobant_.mettreAJour(positionCourante_, rayon);
+	cercleEnglobant_.mettreAJour({ physics_.absolutePosition.x, physics_.absolutePosition.y, physics_.absolutePosition.z }, rayon);
 }
 
 ////////////////////////////////////////////////////////////////////////

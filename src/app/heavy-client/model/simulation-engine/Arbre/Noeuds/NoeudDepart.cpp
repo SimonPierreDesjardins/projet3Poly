@@ -102,7 +102,7 @@ void NoeudDepart::afficherConcret() const
 		glColor4f(selectionColor_.x, selectionColor_.y, selectionColor_.z, selectionColor_.w);
         glEnable(GL_COLOR_MATERIAL);
 	}
-	glRotated(angleRotation_, 0, 0, 1);
+	glRotated(physics_.rotation.z, 0, 0, 1);
 
 	// Affichage du modèle.
 	vbo_->dessiner();
@@ -110,7 +110,7 @@ void NoeudDepart::afficherConcret() const
 	// Restauration de la matrice.
 	glPopMatrix();
 
-    //rectangleEnglobant_.afficher(positionCourante_);
+    //rectangleEnglobant_.afficher(physics_.absolutePosition);
 }
 
 
@@ -140,7 +140,9 @@ void NoeudDepart::animer(float dt)
 ////////////////////////////////////////////////////////////////////////
 void NoeudDepart::mettreAJourFormeEnglobante()
 {
-	positionCourante_ = positionRelative_;
+
+	physics_.absolutePosition = physics_.relativePosition;
+
     double hauteur = boiteEnglobanteModele_.coinMax.y - boiteEnglobanteModele_.coinMin.y;
     double largeur = boiteEnglobanteModele_.coinMax.x - boiteEnglobanteModele_.coinMin.x;
 
@@ -148,10 +150,10 @@ void NoeudDepart::mettreAJourFormeEnglobante()
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
     glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
-    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, angleRotation_);
-    glm::dvec3 positionRectangle = { positionCourante_.x + positionBoite.x, positionCourante_.y + positionBoite.y, 0.0 };
+    utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, physics_.rotation.z);
+    glm::dvec3 positionRectangle = { physics_.absolutePosition.x + positionBoite.x, physics_.absolutePosition.y + positionBoite.y, 0.0 };
 
-    rectangleEnglobant_.mettreAJour(positionRectangle, angleRotation_, hauteur, largeur);
+    rectangleEnglobant_.mettreAJour(positionRectangle, physics_.rotation.z, hauteur, largeur);
 }
 
 ////////////////////////////////////////////////////////////////////////

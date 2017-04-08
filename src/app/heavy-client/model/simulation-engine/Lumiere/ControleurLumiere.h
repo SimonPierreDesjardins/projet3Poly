@@ -31,10 +31,10 @@ public:
 	ControleurLumiere();
 	~ControleurLumiere();
 
-	void afficherLumiereAmbianteGlobale();
-	void afficherLumiereDirectionnelle();
-	void afficherLumiereSpotGyro();
-	void afficherLumiereSpotRobot();
+	void afficherLumiereAmbianteGlobale() const;
+	void afficherLumiereDirectionnelle() const;
+	void afficherLumiereSpotGyro() const;
+	void afficherLumiereSpotRobot() const;
 
 	void animer(const glm::dvec3& positionRobot, float dt);
 

@@ -27,6 +27,8 @@ public:
 	inline void setMapSessionManager(client_network::MapSessionManager* entityTree);
 	inline void setEntityTree(ArbreRendu* entityTree);
 
+	void onUserDisconnected();
+
 	virtual void onEntityCreated();
 
 	// Map edition
@@ -38,10 +40,11 @@ public:
 	void onEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId);
 
 	// Map system
-	void onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, std::string& name);
+	void onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, uint32_t admin, std::string& name);
 	void onUserJoinedMap(char result, uint32_t mapId, uint32_t userId);
 	void onUserLeftCurrentMapSession(uint32_t userId);
 	void onUserAuthentified(uint32_t userId);
+	void onMapReady(uint32_t mapId);
 
 	// Entity properties
 	void onEntityPropertyUpdated(uint32_t entityId, char propertyType, const glm::vec3& propertyValue);
@@ -52,6 +55,8 @@ private:
 	client_network::MapSession* currentSession_ = nullptr;
 
 	ArbreRendu* entityTree_ = nullptr;
+
+	uint32_t userId_;
 };
 
 inline void EventHandler::setNetworkManager(client_network::NetworkManager* networkManager)
@@ -68,6 +73,8 @@ inline void EventHandler::setEntityTree(ArbreRendu* entityTree)
 {
 	entityTree_ = entityTree;
 }
+
+
 
 }
 

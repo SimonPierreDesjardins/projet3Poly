@@ -75,9 +75,12 @@ void VisiteurCreationLigne::visiter(ArbreRendu* noeud)
 void VisiteurCreationLigne::visiter(NoeudTable* noeud)
 {
 	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
-	nouveauNoeud->assignerPositionRelative(positionRelative_);
-	noeud->ajouter(nouveauNoeud);
 	referenceNoeud_ = nouveauNoeud.get();
+
+	PhysicsComponent& physics = nouveauNoeud->getPhysicsComponent();
+	physics.relativePosition = positionRelative_;
+	physics.absolutePosition = positionRelative_;
+	noeud->ajouter(nouveauNoeud);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

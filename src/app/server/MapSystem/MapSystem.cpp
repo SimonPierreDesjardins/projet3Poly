@@ -2,6 +2,7 @@
 #include "TypeSerializerDeserializer.h"
 #include "../Database/IdGenerator.h"
 #include "EditionRoom.h"
+#include "SimulationRoom.h"
 
 #include "MapSystem.h"
 
@@ -9,7 +10,7 @@ namespace server
 {
 
 MapEntry::MapEntry(MapInfo* info, MapFileEntry* mapFile)
-	: Info(info)
+	: Info(info), File(mapFile)
 {
 	updateSessionType();
 }
@@ -19,11 +20,12 @@ void MapEntry::updateSessionType()
 	switch (Info->mapType)
 	{
 	case SIMULATION_MAP:
-		currentSession_ = std::make_unique<EditionRoom>(Info);
+		currentSession_ = std::make_unique<SimulationRoom>(Info, File);
 		break;
 
 	case EDITION_MAP:
-		currentSession_ = std::make_unique<EditionRoom>(Info);
+	default:
+		currentSession_ = std::make_unique<EditionRoom>(Info, File);
 		break;
 	}
 }
@@ -34,6 +36,7 @@ void MapEntry::GetSerializedInfo(std::string& message) const
 	message.append(1, getSessionType());
 	message.append(1, getNumberOfUsers());
 	message.append(1, Info->isPrivate ? 0x01:0x00);
+	Networking::serialize(Info->Admin, message);
 	message.append(Info->mapName);
 }
 
@@ -50,6 +53,39 @@ char MapEntry::getNumberOfUsers() const
 void MapEntry::AddUser(User * user)
 {
 	currentSession_->AddUser(user);
+}
+
+void MapEntry::SendMap(User * user)
+{
+	std::thread([this, user]() {
+		// open file
+		std::string mapFile = File->MapData;
+
+		// start reading through the memblock, segmenting into packets and sending them
+
+		std::vector<std::string> packets;
+
+		int maxPacketSize = 256;
+		int bytesLeft = mapFile.size();
+		int currentByte = 0;
+
+		while (bytesLeft > 0) {
+			// add to an array of messages to send;
+			auto packetSize = (maxPacketSize < bytesLeft) ? maxPacketSize : bytesLeft;
+			packets.push_back(std::move(mapFile.substr(currentByte, packetSize)));
+			currentByte += packetSize;
+			bytesLeft -= packetSize;
+		}
+
+		char numberOfPackets = packets.size();
+		for (char i = 0; i < numberOfPackets; ++i) {
+			std::string message("mt");
+			message += i + 1;
+			message += numberOfPackets;
+			message += packets[i];
+			user->ForwardMessage(Networking::MessageStandard::AddMessageLengthHeader(message));
+		}
+	}).detach();
 }
 
 MapSystem::MapSystem(MapInfoDatabase * mapInfoDB, MapFileDatabase * mapFileDB)
@@ -95,9 +131,9 @@ void MapSystem::TreatUserMessage(User * user, const std::string & message)
 		HandleMapDeleteMessage(user, message);
 		break;
 
-	case 'g':
+	case 'f':
 		// get map's graph
-		HandleMapGraphRequestMessage(user, message);
+		HandleMapRequestMessage(user, message);
 		break;
 
 	case 't':
@@ -202,7 +238,7 @@ void MapSystem::HandleMapCreationMessage(User * user, const std::string & messag
 	MapInfo* info = new MapInfo();
 	info -> mapName = name;
 	info -> mapType = type;
-	info->isPrivate = isPrivate;
+	info->isPrivate = isPrivate != 0;
 	info->password = password;
 	info->Admin = user->Info.GetId();
 	info->MapId = mapFile->GetId();
@@ -247,7 +283,7 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 			std::string password = message.substr(Networking::MessageStandard::DATA_START + 4);
 			if (password != mapIt->second.Info->password) {
 				// send error message
-				response[10] = 'd';
+				response[6] = 'd';
 				user->ForwardMessage(response);
 				return;
 			}
@@ -304,9 +340,12 @@ void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)
 	_mapList.erase(Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START));
 }
 
-void MapSystem::HandleMapGraphRequestMessage(User * user, const std::string & message)
+void MapSystem::HandleMapRequestMessage(User * user, const std::string & message)
 {
 	// eventually implement start sending the map data
+	unsigned int mapId = Networking::deserializeInteger(message.c_str() + Networking::MessageStandard::DATA_START);
+
+	_mapList.at(mapId).SendMap(user);
 }
 
 void MapSystem::HandleMapTransferMessage(User * user, const std::string & message)
@@ -360,7 +399,7 @@ void MapSystem::HandleMapPermissionChange(User * user, const std::string & messa
 		}
 
 		// tell user everything went as planned
-		user->ForwardMessage(reply);
+		broadcastMessage(reply);
 	}
 }
 

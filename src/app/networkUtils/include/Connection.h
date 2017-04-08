@@ -24,7 +24,7 @@ public:
 
 	///<summary>Sends the string of bytes through the connection</summary>
 	///<param name='data'>The string of bytes to send.</param>
-	void SendData(std::string data);
+	void SendData(const std::string& data);
 
 	template<class F, class T>
 	void hookOnReceivedMessage(F&& handler, T&& instance);
@@ -46,7 +46,7 @@ private:
 	void Start();
 
 	// Constructor taking a functionnal socket
-	Connection(asio::ip::tcp::socket* socket) { _socket = socket; _sendQueue = std::queue<std::string>(); }
+	Connection(asio::ip::tcp::socket* socket) { _socket = socket; }
 
 	// Connection closer
 	void CloseConnection();
@@ -55,14 +55,10 @@ private:
 
 	void ReadData();
 
-	void WriteData();
-
 	asio::ip::tcp::socket* _socket; // A reference to the currently used network socket
 
 	// Buffer used to store data received from the client.
 	char _buffer[Networking::MessageStandard::BUFFER_SIZE];
-
-	std::queue<std::string> _sendQueue;
 
 	static std::mutex _connectionLock;
 	bool _inDeletionProcess = false;

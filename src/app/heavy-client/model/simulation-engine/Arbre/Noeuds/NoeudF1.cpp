@@ -53,22 +53,27 @@ NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud)
     : NoeudRobot { id, typeNoeud }
 {
 	type_ = F1_ENTITY;
-	profil_->setModele("f1");
+	//profil_->setModele("f1");
 	positionDepart();
 
 	std::shared_ptr<NoeudAbstrait> roueGauche2 = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
 	std::shared_ptr<NoeudAbstrait> roueDroite2 = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
-
 
 	ajouter(roueGauche2);
 	ajouter(roueDroite2);
 
 	roueGauche2_ = std::static_pointer_cast<NoeudRoues>(roueGauche2).get();
 	roueDroite2_ = std::static_pointer_cast<NoeudRoues>(roueDroite2).get();
-	roueDroite_->assignerPositionRelative({ 2.2, 0.2, 0.58 });
-	roueGauche_->assignerPositionRelative({ 2.2, -0.2, 0.58 });
-	roueGauche2_->assignerPositionRelative({ -2.2, -0.2, 0.58 });
-	roueDroite2_->assignerPositionRelative({ -2.2, 0.2, 0.58 });
+
+
+	roueGauche_->getPhysicsComponent().relativePosition = { 2.2, -0.2, 0.58 };;
+	roueGauche_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
+	roueGauche2_->getPhysicsComponent().relativePosition = { -2.2, -0.2, 0.58 };
+	roueGauche2_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
+	roueDroite_->getPhysicsComponent().relativePosition = { 2.2, 0.2, 0.58 };
+	roueDroite_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
+	roueDroite2_->getPhysicsComponent().relativePosition = { -2.2, 0.2, 0.58 };
+	roueDroite2_->getPhysicsComponent().scale = { 0.6f, 0.8f, 0.75f };
 
 	roueGauche2_->setRightWheel(false);
 	roueDroite2_->setRightWheel(true);
@@ -132,13 +137,15 @@ void NoeudF1::afficherConcret() const
 		glEnable(GL_COLOR_MATERIAL);
 	}
 
-	glRotatef(angleRotation_, 0.0, 0.0, 1.0);
+	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
-	controleurLumiere_->afficherLumiereSpotRobot();
-	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)  //empêche lumiere spot
+
+	//controleurLumiere_->afficherLumiereSpotRobot();
+	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot
+
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
-	}
+	}*/
 
 	// Affichage du modï¿½le.
 	vbo_->dessiner();
@@ -146,7 +153,10 @@ void NoeudF1::afficherConcret() const
 	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
-	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)
+
+	/*
+	if (mode_ != PERSONALIZE && mode_ != PIECES)
+
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
@@ -157,6 +167,7 @@ void NoeudF1::afficherConcret() const
 			}
 		}
 	}
+	*/
 
 	// Restauration de la matrice.
 	glPopMatrix();
@@ -172,9 +183,8 @@ void NoeudF1::afficherConcret() const
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void NoeudF1::suivreCamera()
+void NoeudF1::suivreCamera(vue::Vue* vue)
 {
-	vue::Vue* vue = FacadeModele::obtenirInstance()->obtenirVue();
 
 	if (vue->estPremierePersonne())
 	{
@@ -183,10 +193,12 @@ void NoeudF1::suivreCamera()
 
 		camera->assignerPosition(positionRectangle + glm::dvec3{ 0.0, 0.0, 4.0 });
 
-		glm::dvec3 positionVise{ cos(angleRotation_* PI / 180), sin(angleRotation_* PI / 180), 2.0 };
+		glm::dvec3 positionVise{ cos(physics_.rotation.z * PI / 180),
+			                     sin(physics_.rotation.z * PI / 180), 2.0 };
 		camera->assignerPointVise(positionRectangle + positionVise);
 
-		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(angleRotation_* PI / 180) * 4, sin(angleRotation_* PI / 180) * 4, -2.0 });
+		camera->assignerPosition(positionRectangle - glm::dvec3{ cos(physics_.rotation.z * PI / 180) * 4, 
+			                                                     sin(physics_.rotation.z * PI / 180) * 4, -2.0 });
 	}
 }
 
@@ -204,16 +216,16 @@ void NoeudF1::suivreCamera()
 ////////////////////////////////////////////////////////////////////////
 void NoeudF1::positionnerRoues()
 {
-	roueGauche_->assignerAngleRotation(angleRotation_);
-	roueGauche2_->assignerAngleRotation(angleRotation_);
-
+	roueGauche_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueGauche_->setVitesseCourante(vitesseCouranteGauche_);
+
+	roueGauche2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueGauche2_->setVitesseCourante(vitesseCouranteGauche_);
 
-	roueDroite_->assignerAngleRotation(angleRotation_);
-	roueDroite2_->assignerAngleRotation(angleRotation_);
-
+	roueDroite_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueDroite_->setVitesseCourante(vitesseCouranteDroite_);
+
+	roueDroite2_->getPhysicsComponent().rotation.z = physics_.rotation.z;
 	roueDroite2_->setVitesseCourante(vitesseCouranteDroite_);
 }
 
@@ -272,6 +284,29 @@ void NoeudF1::setCouleurDefault(int piece, bool default)
 		estCouleurDefaut_ = default;
 	}
 
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void NoeudF1::initialisationCouleurs(float* roues, float* modele)
+///
+/// Cette fonction permet dinitialiser les couleurs des roues et du modele
+///
+/// @param[in] float* de couleurs des roues et du modele
+///
+/// @return Aucun
+///
+////////////////////////////////////////////////////////////////////////
+void NoeudF1::initialisationCouleurs(int* roues, int* modele)
+{
+	couleur_[0] = (float)modele[0] / (float)255;
+	couleur_[1] = (float)modele[1] / (float)255;
+	couleur_[2] = (float)modele[2] / (float)255;
+	couleur_[3] = (float)modele[3] / (float)255;
+	roueDroite_->initialisationCouleurs(roues);
+	roueDroite2_->initialisationCouleurs(roues);
+	roueGauche_->initialisationCouleurs(roues);
+	roueGauche2_->initialisationCouleurs(roues);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -120,9 +120,9 @@ void VisiteurRotation::visiter(NoeudPoteau* noeud)
 void VisiteurRotation::visiter(NoeudMur* noeud)
 {
 	// Assigner le nouvel angle de rotation.
-	double angle = noeud->obtenirAngleRotation() + angleRotation_;
-	noeud->assignerAngleRotation(angle);
-	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(0, 0, angle));
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	physics.rotation.z += angleRotation_;
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(physics.rotation));
 	assignerNouvellePositionRelative(noeud);
 }
 
@@ -140,8 +140,9 @@ void VisiteurRotation::visiter(NoeudMur* noeud)
 void VisiteurRotation::visiter(NoeudTeleporteur* noeud)
 {
 	// Assigner le nouvel angle de rotation.
-	double angle = noeud->obtenirAngleRotation() + angleRotation_;
-	noeud->assignerAngleRotation(angle);
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	physics.rotation.z += angleRotation_;
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(physics.rotation));
 	assignerNouvellePositionRelative(noeud);
 }
 
@@ -159,8 +160,8 @@ void VisiteurRotation::visiter(NoeudTeleporteur* noeud)
 void VisiteurRotation::visiter(NoeudLigneCourseAbstrait* noeud)
 {
 	// Assigner le nouvel angle de rotation.
-	double angle = noeud->obtenirAngleRotation() + angleRotation_;
-	noeud->assignerAngleRotation(angle);
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	physics.rotation.z += angleRotation_;
 	assignerNouvellePositionRelative(noeud);
 }
 
@@ -180,9 +181,9 @@ void VisiteurRotation::visiter(NoeudLigneCourseAbstrait* noeud)
 void VisiteurRotation::visiter(NoeudDepart* noeud)
 {
 	// Assigner le nouvel angle de rotation.
-	double angle = noeud->obtenirAngleRotation() + angleRotation_;
-	noeud->assignerAngleRotation(angle);
-	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(0, 0, angle));
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	physics.rotation.z += angleRotation_;
+	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(physics.rotation));
 	assignerNouvellePositionRelative(noeud);
 }
 
@@ -200,27 +201,27 @@ void VisiteurRotation::visiter(NoeudDepart* noeud)
 void VisiteurRotation::visiter(NoeudLigne* ligne)
 {
 	assignerNouvellePositionRelative(ligne);
-	glm::dvec3 lineAbsolutePosition = ligne->obtenirPositionCourante();
+	PhysicsComponent& linePhysics = ligne->getPhysicsComponent();
 	for (unsigned int i = 0; i < ligne->obtenirNombreEnfants(); i++) 
     {
 		NoeudAbstrait* enfant = ligne->chercher(i);
+		PhysicsComponent& childPhysics = enfant->getPhysicsComponent();
 
 		glm::dvec3 updatedChildRelativePosition{ 0.0, 0.0, 0.0 };
-		utilitaire::calculerPositionApresRotation(enfant->obtenirPositionRelative(), updatedChildRelativePosition, angleRotation_);
-		enfant->assignerPositionRelative(updatedChildRelativePosition);
-		mapSession_->localEntityPropertyUpdated(enfant, Networking::RELATIVE_POSITION, glm::vec3(updatedChildRelativePosition));
+		utilitaire::calculerPositionApresRotation(childPhysics.relativePosition, updatedChildRelativePosition, angleRotation_);
 
-		glm::dvec3 updatedChildAbsolutePosition = lineAbsolutePosition + updatedChildRelativePosition;
-		enfant->assignerPositionCourante(updatedChildAbsolutePosition);
-		mapSession_->localEntityPropertyUpdated(enfant, Networking::ABSOLUTE_POSITION, glm::vec3(updatedChildAbsolutePosition));
+		childPhysics.relativePosition = updatedChildRelativePosition;
+		mapSession_->localEntityPropertyUpdated(enfant, Networking::RELATIVE_POSITION, glm::vec3(childPhysics.relativePosition));
+
+		childPhysics.absolutePosition = updatedChildRelativePosition + linePhysics.absolutePosition;
+		mapSession_->localEntityPropertyUpdated(enfant, Networking::ABSOLUTE_POSITION, glm::vec3(childPhysics.absolutePosition));
 		
-		double updatedRotation = enfant->obtenirAngleRotation() + angleRotation_;
-		enfant->assignerAngleRotation(updatedRotation);
-		mapSession_->localEntityPropertyUpdated(enfant, Networking::ROTATION, glm::vec3(0.0, 0.0, updatedRotation));
+		childPhysics.rotation.z += angleRotation_;
+		mapSession_->localEntityPropertyUpdated(enfant, Networking::ROTATION, glm::vec3(childPhysics.rotation));
 	}
-    double angleLigne = ligne->obtenirAngleRotation() + angleRotation_;
-    ligne->assignerAngleRotation(angleLigne);
-	mapSession_->localEntityPropertyUpdated(ligne, Networking::ROTATION, glm::vec3(0.0, 0.0, angleLigne));
+
+	linePhysics.rotation.z += angleRotation_;
+	mapSession_->localEntityPropertyUpdated(ligne, Networking::ROTATION, glm::vec3(linePhysics.rotation));
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -242,7 +243,6 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 
 	// Initialiser les minimums et les maximums 
     NoeudAbstrait* enfant = noeud->chercher(0);
-    glm::dvec3 positionInitiale = enfant->obtenirPositionCourante();
 
     double minX = 0;
     double maxX = 0;
@@ -259,25 +259,25 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 		if (enfant != nullptr && enfant->estSelectionne() &&
 			enfant->getOwnerId() == mapSession_->getThisUserId())
 		{
-            glm::dvec3 positionCourante = enfant->obtenirPositionCourante();
+			PhysicsComponent& childPhysics = enfant->getPhysicsComponent();
 
             // Trier en x.
-			if (positionCourante.x > maxX || premierEnSelection) 
+			if (childPhysics.absolutePosition.x > maxX || premierEnSelection) 
             {
-				maxX = positionCourante.x;
+				maxX = childPhysics.absolutePosition.x;
 			}
-			if (positionCourante.x < minX || premierEnSelection) 
+			if (childPhysics.absolutePosition.x < minX || premierEnSelection) 
             {
-				minX = positionCourante.x;
+				minX = childPhysics.absolutePosition.x;
 			}
             // Trier en y.
-			if (positionCourante.y > maxY || premierEnSelection)
+			if (childPhysics.absolutePosition.y > maxY || premierEnSelection)
             {
-				maxY = positionCourante.y; 
+				maxY = childPhysics.absolutePosition.y; 
 			}
-			if (positionCourante.y < minY || premierEnSelection)
+			if (childPhysics.absolutePosition.y < minY || premierEnSelection)
             {
-				minY = positionCourante.y;
+				minY = childPhysics.absolutePosition.y;
 			}
             
             // Toggle l'initialisation du min / max.
@@ -304,14 +304,33 @@ void VisiteurRotation::calculerCentreSelection(NoeudAbstrait* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurRotation::assignerNouvellePositionRelative(NoeudAbstrait* noeud)
 {
-	glm::dvec3 distanceCentreSelection = noeud->obtenirPositionRelative() - centreSelection_;
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+
+	glm::dvec3 distanceCentreSelection = physics.relativePosition - centreSelection_;
 	glm::dvec3 updatedPosition = { 0.0, 0.0, 0.0 };
+
 	utilitaire::calculerPositionApresRotation(distanceCentreSelection, updatedPosition, angleRotation_);
 	updatedPosition += centreSelection_;
-	noeud->assignerPositionRelative(updatedPosition);
-	noeud->assignerPositionCourante(updatedPosition);
+
+	physics.relativePosition = updatedPosition;
+	physics.absolutePosition = updatedPosition;
+
 	mapSession_->localEntityPropertyUpdated(noeud, Networking::ABSOLUTE_POSITION, glm::vec3(updatedPosition));
 	mapSession_->localEntityPropertyUpdated(noeud, Networking::RELATIVE_POSITION, glm::vec3(updatedPosition));
+}
+
+void VisiteurRotation::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	calculerCentreSelection(noeud);
+	NoeudAbstrait* enfant = nullptr;
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++) {
+		enfant = noeud->chercher(i);
+		// Child has to be selected by me.
+		if (enfant != nullptr && enfant->estSelectionne() &&
+			enfant->getOwnerId() == mapSession_->getThisUserId()) {
+			enfant->accepterVisiteur(this);
+		}
+	}
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

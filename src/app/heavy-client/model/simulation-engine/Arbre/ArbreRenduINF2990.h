@@ -87,9 +87,13 @@ public:
 
 	static const std::string NOM_PIECE;
 
+
 	static const std::string NOM_LIGNEARRIVEE;
 
 	static const std::string NOM_CHECKPOINT;
+
+	static const std::string NOM_PAIRTELEPORT;
+
 
 private:
 	/// Charge une zone selon le fichier binaire qu'on lui passe en paramètre

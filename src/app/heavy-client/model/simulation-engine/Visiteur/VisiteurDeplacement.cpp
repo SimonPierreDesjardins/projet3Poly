@@ -80,13 +80,12 @@ void VisiteurDeplacement::visiter(NoeudTable* table)
 
 void VisiteurDeplacement::visiter(NoeudDuplication* duplication)
 {
-	glm::dvec3 relativePosition = duplication->obtenirPositionRelative() + positionRelative_;
-	duplication->assignerPositionRelative(relativePosition);
-	mapSession_->localEntityPropertyUpdated(duplication, Networking::RELATIVE_POSITION, glm::vec3(relativePosition));
-	
-	glm::dvec3 absolutePosition = duplication->obtenirParent()->obtenirPositionCourante() + relativePosition;
-	duplication->assignerPositionCourante(absolutePosition);
-	mapSession_->localEntityPropertyUpdated(duplication, Networking::ABSOLUTE_POSITION, glm::vec3(absolutePosition));
+	PhysicsComponent& physics = duplication->getPhysicsComponent();
+	physics.relativePosition += positionRelative_;
+	physics.absolutePosition = duplication->obtenirParent()->getPhysicsComponent().absolutePosition + physics.relativePosition;
+
+	mapSession_->localEntityPropertyUpdated(duplication, Networking::ABSOLUTE_POSITION, glm::vec3(physics.absolutePosition));
+	mapSession_->localEntityPropertyUpdated(duplication, Networking::RELATIVE_POSITION, glm::vec3(physics.relativePosition));
 
 	// Update the relative position of all the children and push them in the queue.
 	std::queue<NoeudAbstrait*> entitiesToMove;
@@ -108,12 +107,11 @@ void VisiteurDeplacement::visiter(NoeudDuplication* duplication)
 		NoeudAbstrait* parent = entityToUpdate->obtenirParent();
 
 		// Update the absolute position (absolute from parent + child relative position)
-		glm::dvec3 updatedAbsolutePosition = entityToUpdate->obtenirPositionRelative() +
-											 parent->obtenirPositionCourante();
-		entityToUpdate->assignerPositionCourante(updatedAbsolutePosition);
+		PhysicsComponent& physics = entityToUpdate->getPhysicsComponent();
+		physics.absolutePosition = physics.relativePosition + parent->getPhysicsComponent().absolutePosition;
 
 		mapSession_->localEntityPropertyUpdated(entityToUpdate, Networking::ABSOLUTE_POSITION, 
-												glm::vec3(updatedAbsolutePosition));
+												glm::vec3(physics.absolutePosition));
 
 		// Push the children in the queue.
 		uint32_t nChildren = entityToUpdate->obtenirNombreEnfants();
@@ -135,10 +133,9 @@ void VisiteurDeplacement::moveSelectedChildren(NoeudAbstrait* entity)
 		if (child->estSelectionne() && child->getOwnerId() == mapSession_->getThisUserId()) 
 		{
 			entitiesToMove.push(child);
-			glm::dvec3 positionRelative = child->obtenirPositionRelative();
-			positionRelative += positionRelative_;
-			child->assignerPositionRelative(positionRelative);
-			mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, glm::vec3(positionRelative));
+			PhysicsComponent& physics = child->getPhysicsComponent();
+			physics.relativePosition += positionRelative_;
+			mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, glm::vec3(physics.relativePosition));
 		}
 	}
 
@@ -151,13 +148,10 @@ void VisiteurDeplacement::moveSelectedChildren(NoeudAbstrait* entity)
 
 		NoeudAbstrait* parent = entityToUpdate->obtenirParent();
 
-		// Update the absolute position (absolute from parent + child relative position)
-		glm::dvec3 updatedAbsolutePosition = entityToUpdate->obtenirPositionRelative() +
-											 parent->obtenirPositionCourante();
-		entityToUpdate->assignerPositionCourante(updatedAbsolutePosition);
-
+		PhysicsComponent& physics = entityToUpdate->getPhysicsComponent();
+		physics.absolutePosition = physics.relativePosition + parent->getPhysicsComponent().absolutePosition;
 		mapSession_->localEntityPropertyUpdated(entityToUpdate, Networking::ABSOLUTE_POSITION, 
-												glm::vec3(updatedAbsolutePosition));
+												glm::vec3(physics.absolutePosition));
 
 		// Push the children in the queue.
 		uint32_t nChildren = entityToUpdate->obtenirNombreEnfants();

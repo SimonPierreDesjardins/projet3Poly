@@ -20,7 +20,6 @@
 #include <unordered_map>
 #include <array>
 
-
 class ProfilUtilisateur;
 class AffichageTexte;
 class ControleurLumiere;
@@ -37,25 +36,12 @@ class ControleurLumiere;
 
 class ModePersonalize : public ModeAbstrait
 {
-private:
-	ProfilUtilisateur* profil_{ nullptr };
-
-	bool lumiereAmbiante{ true };
-	bool lumiereDirectionnelle{ true };
-	bool lumiereSpot{ true };
-	std::unique_ptr<ControleRobot> controleRobot_;
-	ControleurLumiere* controleurLumiere_{ nullptr };
-
 public:
-
 	//Constructeur par défaut
-	ModePersonalize();
+	ModePersonalize(engine::SimulationEngine* engine, ProfilUtilisateur* profil);
+
 	//Destructeur
 	virtual ~ModePersonalize();
-	/*
-	void gererMouvementSouris(const int & x, const int & y);*/
-
-
 
 	void gererMoletteSouris(const int & delta);
 
@@ -66,8 +52,21 @@ public:
 	//Gestion des entrées utilisateur
 	void gererMessage(UINT msg, WPARAM wParam, LPARAM lParam);
 
-	void creerControleRobot();
-	
+	virtual NoeudRobot* obtenirRobot();
+
+
+private:
+	ProfilUtilisateur* profil_{ nullptr };
+
+	ArbreRendu* tree_{ nullptr };
+	ControleRobot controleRobot_;
+
+	bool lumiereAmbiante{ true };
+	bool lumiereDirectionnelle{ true };
+	bool lumiereSpot{ true };
+
+	ControleurLumiere* controleurLumiere_{ nullptr };
+
 };
 
 #endif /// MODE_PERSONALIZE_H

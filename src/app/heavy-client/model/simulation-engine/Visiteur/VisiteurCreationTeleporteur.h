@@ -33,6 +33,11 @@ public:
 	virtual void visiter(ArbreRendu* noeud);
 	/// Creation de poteau sur la table.
 	virtual void visiter(NoeudTable* noeud);
+
+	virtual std::shared_ptr<NoeudAbstrait> obtenirReferenceNoeud();
+
+private: 
+	std::shared_ptr<NoeudAbstrait> referenceNoeud_{ nullptr };
 };
 
 #endif // VISITEUR_CREATION_TELEPORTEUR_H

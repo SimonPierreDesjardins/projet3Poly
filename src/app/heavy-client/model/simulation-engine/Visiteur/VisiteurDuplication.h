@@ -49,6 +49,7 @@ public:
 	virtual void visiter(NoeudJonction* noeud);
 	virtual void visiter(NoeudTeleporteur* noeud);
 
+
 private:
 
 	VisiteurDuplication() = delete;
@@ -60,6 +61,8 @@ private:
 	bool enDuplication_{ false };
 	NoeudAbstrait* nouvelleLigne_{ nullptr };
 	NoeudAbstrait* duplication_{ nullptr };
+
+	void copyChildren(NoeudAbstrait* entity, NoeudAbstrait* copy);
 };
 
 ////////////////////////////////////////////////////////////////////////
