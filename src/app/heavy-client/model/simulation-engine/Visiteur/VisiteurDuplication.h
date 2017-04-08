@@ -13,7 +13,7 @@
 
 #include "VisiteurAbstrait.h"
 
-namespace client_network
+namespace engine
 {
 	class MapSession;
 }
@@ -30,7 +30,7 @@ class VisiteurDuplication : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurDuplication(client_network::MapSession* mapSession);
+	VisiteurDuplication(engine::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurDuplication();
@@ -55,7 +55,7 @@ private:
 
 	VisiteurDuplication() = delete;
 
-	client_network::MapSession* mapSession_;
+	engine::MapSession* mapSession_;
 
 	void calculerCentreSelection(NoeudAbstrait* noeud);
 	glm::dvec3 centreSelection_{ 0.0, 0.0, 0.0 };

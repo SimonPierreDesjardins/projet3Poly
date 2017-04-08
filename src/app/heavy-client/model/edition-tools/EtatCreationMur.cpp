@@ -22,7 +22,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationMur::EtatCreationMur(client_network::MapSession* mapSession)
+EtatCreationMur::EtatCreationMur(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(CREATION_MUR);

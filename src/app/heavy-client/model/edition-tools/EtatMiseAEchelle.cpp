@@ -20,7 +20,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatMiseAEchelle::EtatMiseAEchelle(client_network::MapSession* mapSession)
+EtatMiseAEchelle::EtatMiseAEchelle(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(MISE_A_ECHELLE);

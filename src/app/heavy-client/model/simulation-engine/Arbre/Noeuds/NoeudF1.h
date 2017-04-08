@@ -34,7 +34,7 @@ class NoeudF1 : public NoeudRobot
 public:
 
 	/// Constructeur à partir du type du noeud.
-	NoeudF1(uint32_t id, const std::string& typeNoeud);
+	NoeudF1(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre);
 	/// Destructeur.
 	~NoeudF1();
 

@@ -44,7 +44,7 @@ const int VK_KEY_O = 'O';
 /// Ne fait qu'initialiser les variables membres de la classe.
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeTutorialEdition::ModeTutorialEdition(client_network::MapSession * mapSession)
+ModeTutorialEdition::ModeTutorialEdition(client_network::ClientMapSession * mapSession)
 	: OnlineMapMode(mapSession),
 	  visiteurSuppression_(mapSession)
 {

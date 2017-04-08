@@ -204,8 +204,22 @@ void SimulationEngine::resumeRendering()
 	isRendering_ = true;
 }
 
+void SimulationEngine::setAnimating(bool isAnimating)
+{
+	isAnimating_ = isAnimating;
+}
+
+bool SimulationEngine::isAnimating()
+{
+	return isAnimating_;
+}
+
 void SimulationEngine::animate(double dt)
 {
+	if (!isAnimating_) {
+		return;
+	}
+
 	tree_.animer(dt);
 	view_->animer(dt);
 }

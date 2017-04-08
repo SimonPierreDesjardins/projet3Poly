@@ -25,7 +25,7 @@
 class EtatCreationPoteau : public OnlineTool
 {
 public:
-	EtatCreationPoteau(client_network::MapSession* mapSession);
+	EtatCreationPoteau(client_network::ClientMapSession* mapSession);
 	virtual ~EtatCreationPoteau();
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);

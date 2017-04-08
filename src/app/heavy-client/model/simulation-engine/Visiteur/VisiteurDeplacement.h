@@ -13,7 +13,7 @@
 
 #include "VisiteurAbstrait.h"
 
-namespace client_network
+namespace engine
 {
 	class MapSession;
 }
@@ -29,7 +29,7 @@ class VisiteurDeplacement : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurDeplacement(client_network::MapSession* mapSession);
+	VisiteurDeplacement(engine::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurDeplacement();
@@ -40,7 +40,7 @@ public:
 
 private:
 	VisiteurDeplacement() = delete;
-	client_network::MapSession* mapSession_;
+	engine::MapSession* mapSession_;
 
 	void moveSelectedChildren(NoeudAbstrait* entity);
 

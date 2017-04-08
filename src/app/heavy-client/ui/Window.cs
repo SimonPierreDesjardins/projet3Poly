@@ -617,32 +617,30 @@ namespace ui
         public void verificationDuNombreElementChoisi()
         {
             int mode = FonctionsNatives.obtenirMode();
-            if (!(mode == (int)ModeEnum.Mode.EDITION || mode == (int)ModeEnum.Mode.TUTORIAL_EDITION))
-                return;
+            EditModifPanel modifPanel;
+            switch(mode)
+            {
+                case (int)ModeEnum.Mode.EDITION:
+                    modifPanel = editionModificationPanel;
+                    break;
+
+                case (int)ModeEnum.Mode.TUTORIAL_EDITION:
+                    modifPanel = editionTutorielModificationPanel;
+                    break;
+
+                default:
+                    return;
+            }
 
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            if (mode == (int)ModeEnum.Mode.EDITION)
+            int nbEnfant = FonctionsNatives.obtenirNombreSelection();
+            if (nbEnfant == 1)
             {
-                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-                if (nbEnfant == 1)
-                {
-                    editionModificationPanel.mettreAJourInformation();
-                    editionModificationPanel.Visible = true;
-                }
-                else
-                    editionModificationPanel.Visible = false;
+                modifPanel.mettreAJourInformation();
+                modifPanel.Visible = true;
             }
             else
-            {
-                int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-                if (nbEnfant == 1)
-                {
-                    editionTutorielModificationPanel.mettreAJourInformation();
-                    editionTutorielModificationPanel.Visible = true;
-                }
-                else
-                    editionTutorielModificationPanel.Visible = false;
-            }
+                modifPanel.Visible = false;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -659,23 +657,6 @@ namespace ui
         {
             verificationDuNombreElementChoisi();
             viewPort.Focus();
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void viewPort__MouseMove(object sender, MouseEventArgs e)
-        ///
-        /// Vérifie le nombre d'objet sélectionné, s'il en a seulement un et que le clique
-        /// gauche est appuyé il met a jour les info dans le panneau d'opération
-        ///
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement de la souris
-        /// 
-        ////////////////////////////////////////////////////////////////////////
-        private void viewPort__MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-                verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -833,7 +814,6 @@ namespace ui
                                                     viewPort.Height / 2 - simulationTutorial.Height / 2);
 
             simulationTutorial.Anchor = AnchorStyles.None;
-
             viewPort.Controls.Add(simulationTutorial);
 
             simulationTutorial.BringToFront();
@@ -867,8 +847,6 @@ namespace ui
 
             Program.peutAfficher = true;
             viewPort.Refresh();
-
-            FonctionsNatives.assignerMode(ModeEnum.Mode.PIECES);
         }
 
         public void goOnlineRace()
@@ -884,9 +862,6 @@ namespace ui
 
             Program.peutAfficher = true;
             viewPort.Refresh();
-
-            //Todo change for race
-            FonctionsNatives.assignerMode(ModeEnum.Mode.COURSE);
         }
 
         private void loadMap(String path, ModeEnum.Mode mode)
@@ -930,7 +905,7 @@ namespace ui
                 path_ = path;
                 mode_ = mode;
             }
-            // This method will be called when the thread is started.
+            
             public void DoWork()
             {
                 FonctionsNatives.assignerCheminFichierZone(path_);
@@ -1020,6 +995,7 @@ namespace ui
                 disconnectedWarning = new DisconnetedPanel(this);
                 disconnectedWarning.Location = new Point(viewPort.Width / 2 - disconnectedWarning.Width / 2,
                                                          viewPort.Height / 2 - disconnectedWarning.Height / 2);
+                disconnectedWarning.Anchor = AnchorStyles.None;
                 viewPort.Controls.Add(disconnectedWarning);
             });
         }
@@ -1041,7 +1017,6 @@ namespace ui
         }
 
         private delegate void CallbackLoading(int action);
-        private bool loading = false;
         private CallbackLoading loadingHandler;
         private void LoadingHandler(int action)
         {

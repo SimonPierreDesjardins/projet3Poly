@@ -25,7 +25,7 @@
 class EtatCreationMur : public OnlineTool
 {
 public:
-	EtatCreationMur(client_network::MapSession* mapSession);
+	EtatCreationMur(client_network::ClientMapSession* mapSession);
 	virtual ~EtatCreationMur();
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);

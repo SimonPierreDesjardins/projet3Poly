@@ -11,7 +11,7 @@
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -43,7 +43,7 @@ VisiteurRotation::~VisiteurRotation()
 {
 }
 
-void VisiteurRotation::rotateSelectedObjects(ArbreRendu* tree, client_network::MapSession* mapSession)
+void VisiteurRotation::rotateSelectedObjects(ArbreRendu* tree, engine::MapSession* mapSession)
 {
 	mapSession_ = mapSession;
 	tree->accepterVisiteur(this);

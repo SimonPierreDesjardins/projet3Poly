@@ -40,7 +40,7 @@ class ControleurLumiere;
 class ModeTest : public OnlineMapMode
 {
 public:
-	ModeTest(client_network::MapSession* mapSession);
+	ModeTest(client_network::ClientMapSession* mapSession);
 
 	//Destructeur
 	virtual ~ModeTest();
@@ -67,7 +67,6 @@ private:
 
 	ProfilUtilisateur* profil_{ nullptr };
     AffichageTexte* affichageTexte_{ nullptr };
-	VisiteurDetectionRobot visiteur_;
 
 	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;

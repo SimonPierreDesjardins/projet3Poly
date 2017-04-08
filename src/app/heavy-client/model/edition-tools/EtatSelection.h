@@ -27,7 +27,7 @@ class FacadeModele;
 class EtatSelection : public OnlineTool
 {
 public:
-	EtatSelection(client_network::MapSession* mapSession);
+	EtatSelection(client_network::ClientMapSession* mapSession);
 	virtual ~EtatSelection();
 
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

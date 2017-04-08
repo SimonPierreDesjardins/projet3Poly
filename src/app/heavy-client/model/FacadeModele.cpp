@@ -225,10 +225,12 @@ void FacadeModele::reinitialiser()
 void FacadeModele::animer(float temps)
 {
 	engine_.animate(temps);
-	mode_->postAnimer(temps);
+	if (engine_.isAnimating()) {
+		mode_->postAnimer(temps);
+	}
 }
 
-void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSession)
+void FacadeModele::setOnlineMapMode(Mode mode, client_network::ClientMapSession* mapSession)
 {
 	switch (mode)
 	{
@@ -352,8 +354,3 @@ void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
 	horizontal = desktop.right;
 	vertical = desktop.bottom;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-/// @}
-///////////////////////////////////////////////////////////////////////////////
-

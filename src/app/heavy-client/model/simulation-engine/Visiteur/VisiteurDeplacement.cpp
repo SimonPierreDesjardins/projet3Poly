@@ -9,7 +9,7 @@
 ///////////////////////////////////////////////////////////////////////////
 #include <queue>
 
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
 
@@ -26,7 +26,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDeplacement::VisiteurDeplacement(client_network::MapSession * mapSession)
+VisiteurDeplacement::VisiteurDeplacement(engine::MapSession * mapSession)
 	: mapSession_(mapSession)
 {
 }

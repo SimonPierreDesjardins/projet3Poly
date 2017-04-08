@@ -16,6 +16,7 @@
 
 class SuiveurLigne;
 class CapteurDistance;
+class ProfilUtilisateur;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDetectionLigne
