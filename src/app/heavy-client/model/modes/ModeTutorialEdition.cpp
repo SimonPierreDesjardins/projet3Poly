@@ -391,6 +391,7 @@ int ModeTutorialEdition::getNomberOfObjects(std::string TypeOfObject)
 	int numberOfObject = 0;
 	for (int i = 0; i < objects; i++)
 	{
+		//table_->chercher(i)-> 2 teleporteurs 
 		if (table_->chercher(i)->obtenirNom() == TypeOfObject)
 		{
 			numberOfObject++;
@@ -489,7 +490,7 @@ void ModeTutorialEdition::leftClickUpWithCurrentTool(LPARAM lParam)
 			EtatCreationTeleporteur* creationTeleportorTool(static_cast<EtatCreationTeleporteur*>(etat_.get()));
 			if (!creationTeleportorTool->isInCreation())
 			{
-				if (numberOfObjects_ != getNomberOfObjects("teleporteur"))
+				if (numberOfObjects_ != getNomberOfObjects("paireteleporteurs"))
 					ChangeEditionTutorialState();
 			}
 		}
