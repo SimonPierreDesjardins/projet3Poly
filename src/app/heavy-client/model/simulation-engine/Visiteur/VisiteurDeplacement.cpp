@@ -132,10 +132,25 @@ void VisiteurDeplacement::moveSelectedChildren(NoeudAbstrait* entity)
 		// If the node is selected and the owner is me.
 		if (child->estSelectionne() && child->getOwnerId() == mapSession_->getThisUserId()) 
 		{
-			entitiesToMove.push(child);
-			PhysicsComponent& physics = child->getPhysicsComponent();
-			physics.relativePosition += positionRelative_;
-			mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, glm::vec3(physics.relativePosition));
+			if (child->getType() == PAIRTELEPORT_ENTITY)
+			{
+				entitiesToMove.push(child->chercher(0));
+				entitiesToMove.push(child->chercher(1));
+				PhysicsComponent& physics1 = child->chercher(0)->getPhysicsComponent();
+				PhysicsComponent& physics2 = child->chercher(1)->getPhysicsComponent();
+				physics1.relativePosition += positionRelative_;
+				physics2.relativePosition += positionRelative_;
+				mapSession_->localEntityPropertyUpdated(child->chercher(0), Networking::RELATIVE_POSITION, glm::vec3(physics1.relativePosition));
+				mapSession_->localEntityPropertyUpdated(child->chercher(1), Networking::RELATIVE_POSITION, glm::vec3(physics2.relativePosition));
+			}
+			else 
+			{
+				entitiesToMove.push(child);
+				PhysicsComponent& physics = child->getPhysicsComponent();
+				physics.relativePosition += positionRelative_;
+				mapSession_->localEntityPropertyUpdated(child, Networking::RELATIVE_POSITION, glm::vec3(physics.relativePosition));
+			}
+			
 		}
 	}
 

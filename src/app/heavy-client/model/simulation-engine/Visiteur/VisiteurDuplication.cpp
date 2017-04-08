@@ -156,7 +156,9 @@ void VisiteurDuplication::visiter(NoeudTeleporteur* noeud)
 	copyPhysics.relativePosition = copyPhysics.relativePosition - centreSelection_;
 
 	duplication_->ajouter(copy);
+
 	// TODO server notification here.
+	mapSession_->localEntityCreated(copy.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -391,6 +393,31 @@ void VisiteurDuplication::calculerCentreSelection(NoeudAbstrait* noeud)
 	}
 	// Calculer et assigner la position relative à la ligne
 	centreSelection_= { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0.0 };
+}
+
+void VisiteurDuplication::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	/*ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_PAIRTELEPORT);
+
+	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+
+	copyPhysics.scale = physics.scale;
+	copyPhysics.absolutePosition = physics.absolutePosition;
+	copyPhysics.relativePosition = physics.relativePosition - centreSelection_;
+
+	copy->assignerSelection(noeud->estSelectionne());
+
+	nouvelleLigne_ = copy.get();
+	duplication_->ajouter(copy);
+	mapSession_->localEntityCreated(copy.get());
+
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	{
+		noeud->chercher(i)->accepterVisiteur(this);
+	}*/
+	//voir si on veut faire duplication ou non, ceci ne marche pas pour l'instant
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}
