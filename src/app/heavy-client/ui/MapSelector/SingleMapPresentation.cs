@@ -65,10 +65,10 @@ namespace ui
                     ModeLabel.Text = "Collection Pièces";
                     break;
 
-                case (int)ModeEnum.Mode.COURSE:
-                    ModeLabel.Text = "Course";
-                    break;
 
+                /*case (int)ModeEnum.Mode.COURSE:
+                    ModeLabel.Text = "Course";
+                    break;*/
 
                 default:
                     ModeLabel.Text = "Edition / Simulation";
@@ -245,9 +245,6 @@ namespace ui
 
         private void loadOnlinePieceMode()
         {
-            FonctionsNatives.assignerCheminFichierZone(pathToFile_);
-            FonctionsNatives.charger();
-
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             parent_.mapMenu.defaultView();
 
@@ -257,8 +254,6 @@ namespace ui
 
         private void loadOnlineRaceMode()
         {
-            FonctionsNatives.assignerCheminFichierZone(pathToFile_);
-            FonctionsNatives.charger();
 
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             parent_.mapMenu.defaultView();

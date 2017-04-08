@@ -131,6 +131,12 @@
     <Compile Include="Loading\loadingPanel.Designer.cs">
       <DependentUpon>loadingPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="MainMenu\PlaceHolder.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MainMenu\PlaceHolder.Designer.cs">
+      <DependentUpon>PlaceHolder.cs</DependentUpon>
+    </Compile>
     <Compile Include="OnlinePieces\OnlinePiecesMenuStrip.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -325,6 +331,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Loading\loadingPanel.resx">
       <DependentUpon>loadingPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu\PlaceHolder.resx">
+      <DependentUpon>PlaceHolder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OnlinePieces\OnlinePiecesMenuStrip.resx">
       <DependentUpon>OnlinePiecesMenuStrip.cs</DependentUpon>

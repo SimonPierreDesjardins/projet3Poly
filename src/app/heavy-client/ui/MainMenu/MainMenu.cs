@@ -15,6 +15,7 @@ namespace ui
     {
         Window parent_;
         ConnectToServer connectOptions_;
+        PlaceHolder pictureControl;
 
         ////////////////////////////////////////////////////////////////////////
         ///
@@ -30,7 +31,7 @@ namespace ui
             InitializeComponent();
             parent_ = parent;
 
-            Program.peutAfficher = false;
+            Program.peutAfficher = true;
             parent_.viewPort.Refresh();
 
             if (FonctionsNatives.isConnected())
@@ -44,6 +45,10 @@ namespace ui
 
             this.Width = 0;
             ShowMenuTimer.Start();
+
+            pictureControl = new PlaceHolder();
+            pictureControl.Dock = DockStyle.Fill;
+            parent_.viewPort.Controls.Add(pictureControl);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -135,8 +140,6 @@ namespace ui
             animationChangingMenu();
             connectOptions_ = new ConnectToServer(parent_);
             parent_.viewPort.Controls.Add(connectOptions_);
-            connectOptions_.Location = new Point( (parent_.viewPort.Width + parent_.mainMenu.Width) / 2 - connectOptions_.Width / 2,
-                                                   parent_.viewPort.Height / 2 - connectOptions_.Height / 2);
             connectOptions_.Dock = DockStyle.Fill;
         }
 
@@ -173,6 +176,7 @@ namespace ui
                 Application.DoEvents();
             }
             parent_.viewPort.Controls.Remove(parent_.mainMenu);
+            parent_.viewPort.Controls.Remove(pictureControl);
         }
 
         ////////////////////////////////////////////////////////////////////////

@@ -109,7 +109,7 @@ namespace ui
             viewPort.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
 
-            Program.peutAfficher = false;
+            //Program.peutAfficher = false;
 
             InitialiserAnimation();
             configuration = new Configure(this);
@@ -157,8 +157,7 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         public void initializeServerConnection(String hostName, String port)
-        {
-        }
+        {}
 
         ////////////////////////////////////////////////////////////////////////
         ///
