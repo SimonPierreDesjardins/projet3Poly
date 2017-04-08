@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 
 namespace ui
 {
-    public partial class TutorialEditionModificationPanel : UserControl
+    public partial class TutorialEditionModificationPanel : EditModifPanel
     {
         Window parent_;
 
@@ -23,53 +23,11 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public TutorialEditionModificationPanel(Window parent)
+        public TutorialEditionModificationPanel(Window parent) : base()
         {
             InitializeComponent();
+            init(textboxDimension_, textBoxRotation_, textBoxPositionX_, textBoxPositionY_);
             parent_ = parent;
-
-            textboxDimension_.GotFocus += OnFocus;
-            textboxDimension_.LostFocus += OnDefocus;
-
-            textBoxRotation_.GotFocus += OnFocus;
-            textBoxRotation_.LostFocus += OnDefocus;
-
-            textBoxPositionX_.GotFocus += OnFocus;
-            textBoxPositionX_.LostFocus += OnDefocus;
-
-            textBoxPositionY_.GotFocus += OnFocus;
-            textBoxPositionY_.LostFocus += OnDefocus;
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void OnFocus(object sender, MeasureItemEventArgs e)
-        ///
-        /// Evenement quand le control est utiliser
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void OnFocus(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(false);
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn private void OnDefocus(object sender, MeasureItemEventArgs e)
-        ///
-        /// Evenement quand le control n'est plus utiliser
-        /// 
-        /// @param objet sender: control qui gère l'action
-        /// @param EventArgs e: evenement du clique
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        private void OnDefocus(object sender, EventArgs e)
-        {
-            FonctionsNatives.assignerAutorisationInputClavier(true);
-            mettreAJourInformation();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -86,20 +44,12 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textboxDimension__KeyDown(object sender, KeyEventArgs e)
         {
-            string tmp = textboxDimension_.Text;
             if (e.KeyCode == Keys.Enter)
             {
-                double donnee = 0.0;
-                if (!double.TryParse(textboxDimension_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirFacteurGrandeur();
-                }
-                FonctionsNatives.assignerFacteurGrandeur(donnee);
-                mettreAJourInformation();
+                string tmp = textboxDimension_.Text;
+                base.dimension_keyDown();
                 if (tmp.Equals(textboxDimension_.Text))
                     parent_.editionTutorielInstructions.nextState();
-                textboxDimension_.Select(textboxDimension_.Text.Length, 0);
             }
         }
 
@@ -117,20 +67,12 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textBoxRotation__KeyDown(object sender, KeyEventArgs e)
         {
-            string tmp = textBoxRotation_.Text;
             if (e.KeyCode == Keys.Enter)
             {
-                double donnee = 0.0;
-                if (!double.TryParse(textBoxRotation_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirAngleRotation();
-                }
-                FonctionsNatives.assignerAngleRotation(donnee);
-                mettreAJourInformation();
+                string tmp = textBoxRotation_.Text;
+                base.rotation_keyDown();
                 if (tmp.Equals(textBoxRotation_.Text))
                     parent_.editionTutorielInstructions.nextState();
-                textBoxRotation_.Select(textBoxRotation_.Text.Length, 0);
             }
         }
 
@@ -148,27 +90,12 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionX__KeyDown(object sender, KeyEventArgs e)
         {
-            string tmp = textBoxPositionX_.Text;
             if (e.KeyCode == Keys.Enter)
             {
-                double donnee = 0.0;
-                if (!double.TryParse(textBoxPositionX_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirPositionRelativeX();
-                }
-
-                if (!(donnee < -47 || donnee > 47))
-                {
-                    FonctionsNatives.assignerPositionRelativeX(donnee);
-                }   
-                else
-                    textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-
-                mettreAJourInformation();
+                string tmp = textBoxPositionX_.Text;
+                base.Xposition_keyDown();
                 if (tmp.Equals(textBoxPositionX_.Text))
                     parent_.editionTutorielInstructions.nextState();
-                textBoxPositionX_.Select(textBoxPositionX_.Text.Length, 0);
             }
         }
 
@@ -186,43 +113,13 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionY__KeyDown(object sender, KeyEventArgs e)
         {
-            string tmp = textBoxPositionY_.Text;
             if (e.KeyCode == Keys.Enter)
             {
-                double donnee = 0.0;
-                if (!double.TryParse(textBoxPositionY_.Text, out donnee))
-                {
-                    //handle bad input
-                    donnee = FonctionsNatives.obtenirPositionRelativeY();
-                }
-
-                if (!(donnee < -23 || donnee > 23))
-                {
-                    FonctionsNatives.assignerPositionRelativeY(donnee);
-                }  
-                else
-                    textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
-
-                mettreAJourInformation();
+                string tmp = textBoxPositionY_.Text;
+                base.Yposition_keyDown();
                 if (tmp.Equals(textBoxPositionY_.Text))
                     parent_.editionTutorielInstructions.nextState();
-                textBoxPositionY_.Select(textBoxPositionY_.Text.Length, 0);
             }
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn public void mettreAJourInformation()
-        ///
-        /// Met à jour les informations dans le panneau d'opération
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public void mettreAJourInformation()
-        {
-            textboxDimension_.Text = FonctionsNatives.obtenirFacteurGrandeur().ToString();
-            textBoxRotation_.Text = FonctionsNatives.obtenirAngleRotation().ToString();
-            textBoxPositionX_.Text = FonctionsNatives.obtenirPositionRelativeX().ToString();
-            textBoxPositionY_.Text = FonctionsNatives.obtenirPositionRelativeY().ToString();
         }
 
         ////////////////////////////////////////////////////////////////////////

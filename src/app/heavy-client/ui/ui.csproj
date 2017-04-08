@@ -114,6 +114,12 @@
     <Compile Include="Edition\EditMenuStrip.Designer.cs">
       <DependentUpon>EditMenuStrip.cs</DependentUpon>
     </Compile>
+    <Compile Include="Edition\EditModifPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Edition\EditModifPanel.Designer.cs">
+      <DependentUpon>EditModifPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="enum\Authentification.cs" />
     <Compile Include="enum\EditionTutorialState.cs" />
     <Compile Include="enum\MapJoin.cs" />
