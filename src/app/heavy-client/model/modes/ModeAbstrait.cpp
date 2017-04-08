@@ -262,7 +262,6 @@ NoeudRobot* ModeAbstrait::creerRobot(ArbreRenduINF2990* arbre, ProfilUtilisateur
 	NoeudAbstrait* table = arbre->chercher(0);
 	table->ajouter(robot);
 	NoeudRobot* robotPtr = static_cast<NoeudRobot*>(robot.get());
-	robot_ = robotPtr;
 	robotPtr->initialisationCouleurs(profil->obtenirCouleurs(WHEELS), profil->obtenirCouleurs(BODY));
 	robotPtr->setCouleurDefault(WHEELS, profil->obtenirCouleurParDefaut(WHEELS));
 	robotPtr->setCouleurDefault(BODY, profil->obtenirCouleurParDefaut(BODY));

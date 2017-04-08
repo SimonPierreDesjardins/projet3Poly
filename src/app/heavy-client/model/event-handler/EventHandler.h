@@ -52,7 +52,6 @@ public:
 private:
 	client_network::NetworkManager* networkManager_ = nullptr;
 	client_network::MapSessionManager* mapSessionManager_ = nullptr;
-	client_network::MapSession* currentSession_ = nullptr;
 
 	ArbreRendu* entityTree_ = nullptr;
 

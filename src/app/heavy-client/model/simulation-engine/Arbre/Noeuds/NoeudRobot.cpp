@@ -322,6 +322,7 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, NoeudRo
     vitesseTranslationCollision_.x = glm::clamp(vitesseTranslationCollision_.x, -50.0, 50.0);
     vitesseTranslationCollision_.y = glm::clamp(vitesseTranslationCollision_.y, -50.0, 50.0);
     vitesseAngulaireCollision_ = glm::clamp(vitesseAngulaireCollision_, -50.0, 50.0);
+	/*
 
 	std::cout << "this linear speed: " << physics_.linearVelocity.x << ", " << physics_.linearVelocity.y << " m: " << physics_.mass << std::endl;
 	//std::cout << "this velocity: " << thisVelocity << std::endl;
@@ -336,6 +337,7 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, NoeudRo
 	//std::cout << "momentumCoefficient: " << momentumCoefficient << std::endl;
 	std::cout << "this collision speed: " << vitesseTranslationCollision_.x << ", " << vitesseTranslationCollision_.y << " r: " << vitesseAngulaireCollision_ << std::endl;
 	std::cout << std::endl;
+	*/
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -359,6 +361,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     // Le poteau est en intersection et il ne se trouve pas déjà en collision.
     if (enIntersection)
     {
+
 		if (!enCollision)
 		{
 			EnginSon::obtenirInstance()->jouerCollision(COLLISION_POTEAU_SON);
@@ -551,6 +554,12 @@ bool NoeudRobot::verifierCollision(NoeudRobot* robot)
     // Le robot est en intersection et il ne se trouve pas déjà en collision.
     if (enIntersection)
     {
+		std::cout << "this position : " << physics_.absolutePosition.x << ", " << physics_.absolutePosition.y << std::endl;
+		std::cout << "other position : " << physics_.absolutePosition.x << ", " << physics_.absolutePosition.y << std::endl;
+		//std::cout << "this velocity: " << thisVelocity << std::endl;
+		//std::cout << "this momentum: " << thisMomentum << std::endl;
+		std::cout << "_____________________________________________" << std::endl;
+
 		// La collision a déjà été appliqué.
 		if (!enCollision)
 		{
@@ -565,6 +574,10 @@ bool NoeudRobot::verifierCollision(NoeudRobot* robot)
 
 			enCollision = rectangleEnglobant_.calculerIntersection(rectangle);
 			rectangle.assignerEnCollision(enCollision);
+		}
+		else
+		{
+			std::cout << "Should not be here" << std::endl;
 		}
     }
     // Le poteau n'est pas en intersection et il se trouvait en collision.

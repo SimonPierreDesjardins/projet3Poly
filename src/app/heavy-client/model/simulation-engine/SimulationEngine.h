@@ -1,6 +1,8 @@
 #ifndef SIMULATION_ENGINE_H
 #define SIMULATION_ENGINE_H
 
+#include <windows.h>
+
 #include "Vue.h"
 #include "Camera.h"
 #include "OpenGL_Programme.h"

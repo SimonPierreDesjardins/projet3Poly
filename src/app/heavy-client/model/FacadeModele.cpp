@@ -57,7 +57,7 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 
 /// Constructeur par défaut.
 FacadeModele::FacadeModele()
-	: network_(&eventHandler_), mapSessionManager_(engine_.getEntityTree(), &network_), saves_(&profil_)
+	: network_(&eventHandler_), mapSessionManager_(&engine_, &network_), saves_(&profil_)
 {
 }
 
@@ -221,10 +221,13 @@ void FacadeModele::reinitialiser()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void FacadeModele::animer(float temps)
+void FacadeModele::animer(float dt)
 {
-	engine_.animate(temps);
-	mode_->postAnimer(temps);
+	client_network::MapSession* session = mapSessionManager_.getCurrentMapSession();
+	if (session)
+	{
+		session->synchronizedAnimate(dt, mode_.get());
+	}
 }
 
 void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSession)
@@ -253,45 +256,38 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerMode(Mode mode)
 {
+	client_network::MapSession* currentSession = mapSessionManager_.getCurrentMapSession();
 	switch (mode) 
 	{
 		case MENU_PRINCIPAL:
-			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
 			break;
 
 		case SIMULATION:
-			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
+			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, currentSession);
 			break;
 
 		case EDITION:
-			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeEdition>(&engine_, mapSessionManager_.getLocalMapSession());
+			mode_ = std::make_unique<ModeEdition>(&engine_, currentSession);
 			break;
 
 		case CONFIGURE:
-			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeConfigure>();
 			break;
 
 		case TEST:
-			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
+			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, currentSession);
 			break;
 
 		case PERSONALIZE:
-			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePersonalize>(&engine_, &profil_);
 			break;
 
 		case TUTORIAL_EDITION:
-			mode_.reset(nullptr);
-			mode_ = std::make_unique<ModeTutorialEdition>(mapSessionManager_.getLocalMapSession());
+			mode_ = std::make_unique<ModeTutorialEdition>(currentSession);
 			break;
 		
 		case PIECES:
-			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePieces>(&engine_, &profil_);
 			break;
 

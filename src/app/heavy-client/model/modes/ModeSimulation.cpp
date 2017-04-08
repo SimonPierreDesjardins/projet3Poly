@@ -45,10 +45,10 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
 	  : controleRobot_(creerRobot(engine->getEntityTree(), profil)), OnlineMapMode(session)
 {
-	NoeudRobot* robot = controleRobot_.obtenirNoeud();
-	robot->assignerSelection(true);
-	session->localEntityCreated(robot);
-	robotPhysics_.init(robot, engine, session);
+	robot_ = controleRobot_.obtenirNoeud();
+	robot_->assignerSelection(true);
+	session->localEntityCreated(robot_);
+	robotPhysics_.init(robot_, engine, session);
 
 	typeMode_ = SIMULATION;
 	profil_ = profil;
@@ -85,10 +85,13 @@ ModeSimulation::~ModeSimulation()
     affichageTexte_->assignerTempsEstAffiche(false);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->pauseChrono();
+
 	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+
+	mapSession_->deleteLocalEntity(robot_);
 }
 
 ////////////////////////////////////////////////////////////////////////

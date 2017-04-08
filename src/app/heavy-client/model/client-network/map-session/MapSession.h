@@ -7,14 +7,20 @@
 #include <mutex>
 #include "glm/glm.hpp"
 #include "NetworkStandard.h"
-#include "NetworkManager.h"
 
 class ArbreRendu;
 class NoeudAbstrait;
 class PhysicsComponent;
+class ModeAbstrait;
+
+namespace engine {
+	class SimulationEngine;
+}
 
 namespace client_network
 {
+
+class NetworkManager;
 
 class MapSession
 {
@@ -37,10 +43,14 @@ public:
 
 	SessionInfo info;
 
-	MapSession(ArbreRendu* tree, NetworkManager* network);
+	MapSession(engine::SimulationEngine* engine, NetworkManager* network);
 	virtual ~MapSession() = default;
 
-	inline uint32_t getThisUserId() const;
+	uint32_t getThisUserId() const;
+
+	void synchronizedAnimate(double dt, ModeAbstrait* mode);
+
+	void mapReady(ModeAbstrait* mode);
 
 	// Entity created
 	void localEntityCreated(NoeudAbstrait* entity);
@@ -57,6 +67,7 @@ public:
 	void updateSelectionStateLocalEntityAndChildren(NoeudAbstrait* entity, bool isSelected);
 	void serverEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId);
 
+	// Property update
 	void serverEntityPropertyUpdated(uint32_t entityId, Networking::PropertyType, const glm::vec3& updatedProperty);
 	void localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType, const glm::vec3& updatedProperty);
 
@@ -71,10 +82,13 @@ public:
 
 private:
 	
-	std::mutex pendingQueueLock_;
+	std::mutex sessionLock_;
 
+	ModeAbstrait* currentMode_ = nullptr;
+	engine::SimulationEngine* engine_;
 	ArbreRendu* entityTree_;
 	NetworkManager* network_;
+
 	bool isOnline_ = false;
 
 	std::stack<glm::vec4> selectionColors;
@@ -92,10 +106,6 @@ private:
 	MapSession() = delete;
 };
 
-inline uint32_t MapSession::getThisUserId() const
-{
-	return network_->getUserId();
-}
 
 }
 

@@ -1,22 +1,42 @@
 #include <iostream>
 
-#include "MapSession.h"
-
+#include "SimulationEngine.h"
 #include "NetworkManager.h"
-#include "ArbreRendu.h"
+#include "ModeAbstrait.h"
+#include "MapSession.h"
 
 namespace client_network
 {
 
-MapSession::MapSession(ArbreRendu* tree, NetworkManager* network)
-	: entityTree_(tree), network_(network)
+MapSession::MapSession(engine::SimulationEngine* engine, NetworkManager* network)
+	: engine_(engine), network_(network)
 {
+	entityTree_ = engine->getEntityTree();
 	isOnline_ = network_->isConnected();
 	confirmedEntities_.insert(std::make_pair(0, entityTree_));
 	selectionColors.push({ 1.0, 1.0, 0.0, 1.0 });
 	selectionColors.push({ 0.5, 0.0, 1.0, 1.0 });
 	selectionColors.push({ 0.0, 0.75, 1.0, 1.0 });
 	selectionColors.push({ 1.0, 0.2, 0.0, 1.0 });
+}
+
+void MapSession::mapReady(ModeAbstrait* mode)
+{
+	currentMode_ = mode;
+}
+
+uint32_t MapSession::getThisUserId() const
+{
+	return network_->getUserId();
+}
+
+void MapSession::synchronizedAnimate(double dt, ModeAbstrait* currentMode)
+{
+	engine_->animate(dt);
+	if (currentMode)
+	{
+		currentMode->postAnimer(dt);
+	}
 }
 
 void MapSession::setIsOnlineSession(bool isOnline)
@@ -27,7 +47,7 @@ void MapSession::setIsOnlineSession(bool isOnline)
 
 void MapSession::localEntityCreated(NoeudAbstrait* entity)
 {
-	pendingQueueLock_.lock();
+	sessionLock_.lock();
 
 	entity->setOwnerId(network_->getUserId());
 
@@ -40,7 +60,7 @@ void MapSession::localEntityCreated(NoeudAbstrait* entity)
 	}
 
 	pendingEntityCreationRequests_.push(entity);
-	pendingQueueLock_.unlock();
+	sessionLock_.unlock();
 }
 
 void MapSession::createServerEntity(const PhysicsComponent& properties, uint8_t type, uint32_t entityId, uint32_t parentId, uint32_t userId)
@@ -130,7 +150,7 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 	std::cout << "Server entity creation message from server : " <<
 		" id : " << entityId << "owner id : " << userId << " my id: " << network_->getUserId() << std::endl;
 
-	pendingQueueLock_.lock();
+	sessionLock_.lock();
 	// If this is a new object from another user.
 	if (userId != network_->getUserId())
 	{
@@ -153,7 +173,7 @@ void MapSession::serverEntityCreated(uint8_t type, uint32_t parentId,
 			createServerEntity(properties, type, entityId, parentId, userId);
 		}
 	}
-	pendingQueueLock_.unlock();
+	sessionLock_.unlock();
 }
 
 void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
@@ -173,7 +193,7 @@ void MapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 
 void MapSession::deleteLocalEntity(NoeudAbstrait* entity)
 {
-	pendingQueueLock_.lock();
+	sessionLock_.lock();
 	std::stack<NoeudAbstrait*> toDeleteStack;
 	toDeleteStack.push(entity);
 
@@ -203,12 +223,12 @@ void MapSession::deleteLocalEntity(NoeudAbstrait* entity)
 			}
 		}
 	}
-	pendingQueueLock_.unlock();
+	sessionLock_.unlock();
 }
 
 void MapSession::serverEntityDeleted(uint32_t entityId)
 {
-	pendingQueueLock_.lock();
+	sessionLock_.lock();
 	auto entityIt = confirmedEntities_.find(entityId);
 	if (entityIt != confirmedEntities_.end())
 	{
@@ -216,7 +236,7 @@ void MapSession::serverEntityDeleted(uint32_t entityId)
 		entityToDelete->obtenirParent()->effacer(entityToDelete);
 		confirmedEntities_.erase(entityIt);
 	}
-	pendingQueueLock_.unlock();
+	sessionLock_.unlock();
 }
 
 void MapSession::updateSelectionStateLocalEntityAndChildren(NoeudAbstrait* entity, bool isSelected)
@@ -274,7 +294,7 @@ void MapSession::serverEntitySelected(uint32_t entityId, bool isSelected, uint32
 
 void MapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking::PropertyType type, const glm::vec3& updatedProperty)
 {
-	pendingQueueLock_.lock();
+	sessionLock_.lock();
 	auto it = confirmedEntities_.find(entityId);
 	if (it != confirmedEntities_.end())
 	{
@@ -307,18 +327,18 @@ void MapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking::Prop
 		}
 		it->second->mettreAJourFormeEnglobante();
 	}
-	pendingQueueLock_.unlock();
+	sessionLock_.unlock();
 }
 
 void MapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType type, const glm::vec3& updatedProperty)
 {
-	pendingQueueLock_.lock();
+	sessionLock_.lock();
 	uint32_t entityId = entity->getId();
 	if (entityId != 0 && confirmedEntities_.find(entityId) != confirmedEntities_.end())
 	{
 		network_->requestEntityPropertyUpdate(entity->getId(), (char)(type), updatedProperty);
 	}
-	pendingQueueLock_.unlock();
+	sessionLock_.unlock();
 }
 
 void MapSession::requestToLeaveMapSession()
@@ -331,6 +351,7 @@ void MapSession::requestToLeaveMapSession()
 
 void MapSession::serverUserLeftMapSession(uint32_t userId)
 {
+	sessionLock_.lock();
 	// Another user left the room.
 	if (userId != network_->getUserId())
 	{
@@ -346,7 +367,9 @@ void MapSession::serverUserLeftMapSession(uint32_t userId)
 	else
 	{
 		clearMapSession();
+		currentMode_ = nullptr;
 	}
+	sessionLock_.unlock();
 }
 
 void MapSession::clearMapSession()
@@ -356,6 +379,7 @@ void MapSession::clearMapSession()
 	confirmedEntities_.clear();
 	users_.clear();
 	entityTree_->vider();
+	currentMode_ = nullptr;
 }
 
 

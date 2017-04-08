@@ -99,8 +99,6 @@ protected:
 	int typeMode_;
 	bool clicDroitEnfonce_{ false };
 	static glm::ivec2 currentPosition_;
-	NoeudRobot* robot_{ nullptr };
-
 };
 
 ////////////////////////////////////////////////////////////////////////

@@ -60,6 +60,9 @@ public:
 private:
 	ControleRobot controleRobot_;
 	RobotPhysics robotPhysics_;
+
+	NoeudRobot* robot_ = nullptr;
+
 	ProfilUtilisateur* profil_{ nullptr };
 	static std::array<char, 11> touchesNonConfigurable_;
     std::array<bool, 5> actionsAppuyees_;
