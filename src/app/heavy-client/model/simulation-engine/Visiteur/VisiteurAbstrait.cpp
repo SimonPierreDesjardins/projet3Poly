@@ -210,6 +210,20 @@ void VisiteurAbstrait::visiter(NoeudPiece* noeud)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn  VisiteurAbstrait::visiter(NoeudLigneCourseAbstrait* noeud)
+///
+/// Fonction virtuelle pour les classes dérivées donnant accès au noeud ligne course passé en paramètre.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+
+void VisiteurAbstrait::visiter(NoeudLigneCourseAbstrait* noeud)
+{
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn  VisiteurAbstrait::visiter(NoeudPaireTeleporteurs* noeud)
 ///
 /// Fonction virtuelle pour les classes dérivées donnant accès au noeud piece passé en paramètre.
@@ -218,6 +232,7 @@ void VisiteurAbstrait::visiter(NoeudPiece* noeud)
 ///
 ////////////////////////////////////////////////////////////////////////
 void VisiteurAbstrait::visiter(NoeudPaireTeleporteurs* noeud)
+
 {
 }
 

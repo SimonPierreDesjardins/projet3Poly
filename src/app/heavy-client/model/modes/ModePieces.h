@@ -48,7 +48,7 @@ class ModePieces : public OnlineMapMode
 {
 public:
 	//Constructeur par défaut
-	ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session);
+	ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session);
 	//Destructeur
 	virtual ~ModePieces();
 	//Gestion des entrées utilisateur
@@ -93,7 +93,6 @@ private:
 	glm::dvec3 positionNoeudCourant;
 
 	bool modeEnPause{ false };
-	VisiteurDetectionRobot visiteur_;
 
 	Minuterie minuterie_;
 

@@ -13,7 +13,7 @@
 
 namespace client_network
 {
-	class MapSession;
+	class ClientMapSession;
 }
 
 #include "EtatAbstrait.h"
@@ -31,11 +31,11 @@ namespace client_network
 class OnlineTool : public EtatAbstrait
 {
 public:
-	OnlineTool(client_network::MapSession* mapSession);
+	OnlineTool(client_network::ClientMapSession* mapSession);
 	virtual ~OnlineTool() = 0;
 
 protected:
-	client_network::MapSession* mapSession_;
+	client_network::ClientMapSession* mapSession_;
 
 	OnlineTool() = delete;
 };

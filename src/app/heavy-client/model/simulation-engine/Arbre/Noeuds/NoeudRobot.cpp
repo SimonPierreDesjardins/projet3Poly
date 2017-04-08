@@ -62,15 +62,12 @@ const double MINIMUM_REBOND = 5;\
 // @return Aucune (constructeur).
 //
 ////////////////////////////////////////////////////////////////////////
-NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
+NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
     : NoeudComposite{ id, typeNoeud }
 {
 	type_ = ROBOT_ENTITY;
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	arbre_ = arbre;
 	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
-
-    // À modifier avec le merge du profile.
-    visiteur_ = std::make_unique<VisiteurDetectionRobot>(this);
 	
 	
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -160,8 +157,10 @@ void NoeudRobot::afficherConcret() const
     //controleurLumiere_->afficherLumiereSpotRobot();
     
 
+
 	/*	
 	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
@@ -175,6 +174,7 @@ void NoeudRobot::afficherConcret() const
 
 	/*
 	if (mode_ != PERSONALIZE && mode_ != PIECES)
+
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
@@ -925,6 +925,18 @@ std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
 
 ////////////////////////////////////////////////////////////////////////
 ///
+
+/// @fn RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante()
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le robot.
+///
+/// @return Pointeur sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
+RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante()
+{
+	return &rectangleEnglobant_;
+}
 /// @fn void NoeudRobot::initialisationCouleurs(float* roues, float* modele)
 ///
 /// Cette fonction permet dinitialiser les couleurs des roues et du modele
@@ -977,10 +989,25 @@ void NoeudRobot::setTeleporteurCourant(NoeudTeleporteur* teleporteur)
 {
 
 	teleporteurCourant_ = teleporteur;
+
 }
 
 ////////////////////////////////////////////////////////////////////////
 ///
+
+/// @fn const RectangleEnglobant* NoeudPiece::obtenirFormeEnglobante() const
+///
+/// Cette fonction permet d'obtenir la forme englobante pour le robot.
+///
+/// @return Pointeur const  sur un rectangle englobant.
+///
+////////////////////////////////////////////////////////////////////////
+const RectangleEnglobant* NoeudRobot::obtenirFormeEnglobante() const
+{
+	return &rectangleEnglobant_;
+}
+
+
 /// @fn bool NoeudRobot::getTeleportationFaite()
 ///
 /// Cette fonction retourne si la teleportation a ete faite
@@ -1022,6 +1049,7 @@ ControleurLumiere* NoeudRobot::obtenirControleurLumiere()
 {
 	return controleurLumiere_;
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

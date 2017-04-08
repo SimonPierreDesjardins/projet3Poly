@@ -22,6 +22,8 @@
 #include <stack>
 #include "Vue.h"
 
+class ArbreRendu;
+
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
 /// @brief Classe qui représente le robot du premier projet intégrateur.
@@ -45,7 +47,7 @@ public:
     using ConteneurCapteursDistance = std::array<CapteurDistance, N_CAPTEURS_DISTANCE>;
 
 	/// Constructeur à partir du type du noeud.
-	NoeudRobot(uint32_t id, const std::string& typeNoeud);
+	NoeudRobot(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre);
 	/// Destructeur.
 	~NoeudRobot();
 
@@ -102,6 +104,11 @@ public:
 
 	std::stack <NoeudAbstrait*> tableauCoins;
 
+
+	virtual RectangleEnglobant* obtenirFormeEnglobante();
+	virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
+
+
 	virtual void initialisationCouleurs(int* roues, int* modele);
 
 	void reinitialiserPosition();
@@ -116,6 +123,7 @@ public:
 	void assignerControleurLumiere(ControleurLumiere* controleur);
 
 	ControleurLumiere* obtenirControleurLumiere();
+
 
 
 protected:
@@ -146,7 +154,6 @@ protected:
     SuiveurLigne* suiveurLigne_{ nullptr };
     ConteneurCapteursDistance* capteursDistance_{ nullptr };
 
-    std::unique_ptr<VisiteurDetectionRobot> visiteur_{ nullptr };
     ArbreRendu* arbre_{ nullptr };
 
     // Mise à jour des attributs du robot.

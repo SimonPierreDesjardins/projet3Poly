@@ -54,7 +54,7 @@ namespace engine {
 class ModeEdition : public OnlineMapMode
 {
 public:
-	ModeEdition(engine::SimulationEngine* engine, client_network::MapSession* mapSession);
+	ModeEdition(engine::SimulationEngine* engine, client_network::ClientMapSession* mapSession);
 
 	//Destructeur
 	virtual ~ModeEdition();

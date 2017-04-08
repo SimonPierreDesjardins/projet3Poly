@@ -13,7 +13,7 @@
 
 #include "VisiteurAbstrait.h"
 
-namespace client_network
+namespace engine
 {
 	class MapSession;
 }
@@ -34,7 +34,7 @@ public:
 	/// Destructeur.
 	virtual ~VisiteurRotation();
 
-	void rotateSelectedObjects(ArbreRendu* tree, client_network::MapSession* mapSession);
+	void rotateSelectedObjects(ArbreRendu* tree, engine::MapSession* mapSession);
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
@@ -43,11 +43,15 @@ public:
 	virtual void visiter(NoeudLigne* noeud);
 	virtual void visiter(NoeudDepart* noeud);
 	virtual void visiter(NoeudTeleporteur* noeud);
+
+	virtual void visiter(NoeudLigneCourseAbstrait* noeud);
+
 	virtual void visiter(NoeudPaireTeleporteurs* noeud);
+
 
 private:
 
-	client_network::MapSession* mapSession_{ nullptr };
+	engine::MapSession* mapSession_{ nullptr };
 
 	void assignerNouvellePositionRelative(NoeudAbstrait* noeud);
 	

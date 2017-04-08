@@ -48,8 +48,17 @@ set(NOEUDS_SRC
     simulation-engine/Arbre/Noeuds/NoeudAudi.cpp
     simulation-engine/Arbre/Noeuds/NoeudPiece.h
     simulation-engine/Arbre/Noeuds/NoeudPiece.cpp
+
+    simulation-engine/Arbre/Noeuds/NoeudLigneCourseAbstrait.cpp
+    simulation-engine/Arbre/Noeuds/NoeudLigneCourseAbstrait.h
+    simulation-engine/Arbre/Noeuds/NoeudLigneArrivee.h
+    simulation-engine/Arbre/Noeuds/NoeudLigneArrivee.cpp
+    simulation-engine/Arbre/Noeuds/NoeudCheckpoint.h
+    simulation-engine/Arbre/Noeuds/NoeudCheckpoint.cpp
+
     simulation-engine/Arbre/Noeuds/NoeudPaireTeleporteurs.h
     simulation-engine/Arbre/Noeuds/NoeudPaireTeleporteurs.cpp
+
 )
 
 set(USINES_SRC
@@ -103,6 +112,11 @@ set(LUMIERE_SRC
     simulation-engine/Lumiere/ControleurLumiere.cpp
 )
 
+set(MAP_SESSION_SRC
+    simulation-engine/map-session/MapSession.h
+    simulation-engine/map-session/MapSession.cpp
+)
+
 set(MACHINE_A_ETATS_SRC
     edition-tools/EtatAbstrait.h
     edition-tools/EtatAbstrait.cpp
@@ -143,6 +157,8 @@ set(MODES_SRC
     modes/ModeSimulation.h
     modes/ModeSimulation.cpp
     modes/ModePieces.h
+    modes/ModeCourse.cpp
+    modes/ModeCourse.h
     modes/ModePieces.cpp
     modes/ModeTest.h
     modes/ModeTest.cpp
@@ -200,9 +216,9 @@ set(VISITEUR_SRC
 
 )
 
-set(MAP_SESSION_SRC
-	client-network/map-session/MapSession.h
-	client-network/map-session/MapSession.cpp
+set(CLIENT_MAP_SESSION_SRC
+	client-network/map-session/ClientMapSession.h
+	client-network/map-session/ClientMapSession.cpp
 	client-network/map-session/MapSessionManager.h
 	client-network/map-session/MapSessionManager.cpp
 )
@@ -248,26 +264,14 @@ set(SIMULATION_ENGINE_SRC
 )
 source_group("simulation-engine" FILES ${SIMULATION_ENGINE_SRC})
 
+
+
 # Permettre d'inclure les .h sans spécifier le path complet
 include_directories(
     ${CMAKE_SOURCE_DIR}/ext/Eigen/include
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
 	.
-    simulation-engine
-    simulation-engine/AffichageTexte
-    simulation-engine/ProfilUtilisateur
-    simulation-engine/Arbre
-    simulation-engine/Arbre/Noeuds
-    simulation-engine/Arbre/Usines
-    simulation-engine/robot-control
-    simulation-engine/robot-control/commands
-    simulation-engine/robot-control/behaviors
-    simulation-engine/robot-control/physics
-    simulation-engine/robot-control/physics/bounding-shapes
-    simulation-engine/robot-control/sensors
-    simulation-engine/EnginSon
-    simulation-engine/Lumiere
-    simulation-engine/Visiteur
+    
     Configuration
     event-handler
     client-network
@@ -315,8 +319,8 @@ source_group("simulation-engine\\user-profile"
              REGULAR_EXPRESSION 
              simulation-engine/ProfilUtilisateur/*)
 
-# Compiler les fichiers sources dans une dll
-add_library(model SHARED
+# Compiler l'engin dans une librairie statique
+add_library(simulation_engine
     ${AFFICHAGE_TEXTE_SRC}
     ${ARBRE_SRC}
     ${NOEUDS_SRC}
@@ -324,23 +328,49 @@ add_library(model SHARED
     ${CONFIGURATION_SRC}
     ${ROBOT_CONTROL_SRC}
     ${ENGIN_SON_SRC}
-    ${INTERFACE_SRC}
     ${LUMIERE_SRC}
-    ${MACHINE_A_ETATS_SRC}
-    ${MODES_SRC}
     ${PROFIL_UTILISATEUR_SRC}
     ${VISITEUR_SRC}
+    ${SIMULATION_ENGINE_SRC}
+    ${MAP_SESSION_SRC}
+)
+
+target_link_libraries(simulation_engine util)
+
+#inclusion permettant aux utilisateurs de la librairie d'inclure dependances
+target_include_directories(simulation_engine PUBLIC
+    util
+    simulation-engine
+    simulation-engine/AffichageTexte
+    simulation-engine/ProfilUtilisateur
+    simulation-engine/Arbre
+    simulation-engine/Arbre/Noeuds
+    simulation-engine/Arbre/Usines
+    simulation-engine/robot-control
+    simulation-engine/robot-control/commands
+    simulation-engine/robot-control/behaviors
+    simulation-engine/robot-control/physics
+    simulation-engine/robot-control/physics/bounding-shapes
+    simulation-engine/robot-control/sensors
+    simulation-engine/EnginSon
+    simulation-engine/Lumiere
+    simulation-engine/Visiteur
+)
+
+# Compiler les fichiers sources dans une dll
+add_library(model SHARED
+    ${MACHINE_A_ETATS_SRC}
+    ${MODES_SRC}
     ${EVENT_HANDLER_SRC}
 	${UI_INTERFACE_SRC}
-    ${MAP_SESSION_SRC}
+    ${CLIENT_MAP_SESSION_SRC}
 	${CLIENT_NETWORK_SRC}
 	${MODEL_SRC}
-    ${SIMULATION_ENGINE_SRC}
     CMakelists.txt
 )
 
 # Linker les librairies externes avec la dll
-target_link_libraries(model util networkUtils ${EXTERNAL_LIBRARIES})
+target_link_libraries(model util networkUtils simulation_engine)
 
 # Ajouter des define lors du preprocessing pour correctement faire les liens de certaines librairies (glew et ftgl)
 target_compile_definitions(model 
@@ -349,4 +379,5 @@ target_compile_definitions(model
     _USRDLL 
     FTGL_LIBRARY_STATIC)
 
+set_property(TARGET simulation_engine PROPERTY FOLDER "app/heavy-client")
 set_property(TARGET model PROPERTY FOLDER "app/heavy-client")

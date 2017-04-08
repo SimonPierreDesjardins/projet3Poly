@@ -903,6 +903,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl setModele(char *modele)
 	{
 
+
 		ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 		ArbreRenduINF2990* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 		ModeAbstrait* mode = FacadeModele::obtenirInstance()->obtenirMode();
@@ -913,11 +914,13 @@ extern "C"
 			profil->setModele(std::string(modele));
 			profil->setCouleurParDefaut(BODY, true);
 			profil->setCouleurParDefaut(WHEELS, true);
+
 			
 			NoeudRobot* robot = mode->creerRobot(arbre,profil);
 
 			robot->setCouleurDefault(BODY, true);
 			robot->setCouleurDefault(WHEELS, true);
+
 		}
 		
 	}

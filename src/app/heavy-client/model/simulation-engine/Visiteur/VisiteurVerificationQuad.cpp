@@ -63,7 +63,9 @@ void VisiteurVerificationQuad::visiter(ArbreRendu* arbre)
 {
     // Mettre à jour l'arbre de rendu avant de faire la vérification.
     arbre->animer(0.0);
+	facteurMiseAEchelle_ = arbre->chercher("table")->getPhysicsComponent().scale.x;
 	arbre->chercher("table")->accepterVisiteur(this);
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -120,7 +122,7 @@ void VisiteurVerificationQuad::visiter(NoeudDuplication* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 {
-    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
+    objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX*facteurMiseAEchelle_, coinMaxX*facteurMiseAEchelle_, coinMinY*facteurMiseAEchelle_, coinMaxY*facteurMiseAEchelle_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -136,7 +138,23 @@ void VisiteurVerificationQuad::visiter(NoeudPoteau* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudTeleporteur* noeud)
 {
-	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX*facteurMiseAEchelle_, coinMaxX*facteurMiseAEchelle_, coinMinY*facteurMiseAEchelle_, coinMaxY*facteurMiseAEchelle_);
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn VisiteurVerificationQuad::visiter(NoeudLigneCourseAbstrait* noeud)
+///
+/// Fonction qui vérifie que le NoeudLigneCourseAbstrait passé en paramètre se trouve dans les limites de la table.
+///
+/// @param[in] noeud : Le noeud NoeudLigneCourseAbstrait sur lequel on veut effectuer la vérication.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurVerificationQuad::visiter(NoeudLigneCourseAbstrait* noeud)
+{
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX*facteurMiseAEchelle_, coinMaxX*facteurMiseAEchelle_, coinMinY*facteurMiseAEchelle_, coinMaxY*facteurMiseAEchelle_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -152,7 +170,7 @@ void VisiteurVerificationQuad::visiter(NoeudTeleporteur* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 {
-	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX*facteurMiseAEchelle_, coinMaxX*facteurMiseAEchelle_, coinMinY*facteurMiseAEchelle_, coinMaxY*facteurMiseAEchelle_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -168,7 +186,7 @@ void VisiteurVerificationQuad::visiter(NoeudMur* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudDepart* noeud)
 {
-	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX*facteurMiseAEchelle_, coinMaxX*facteurMiseAEchelle_, coinMinY*facteurMiseAEchelle_, coinMaxY*facteurMiseAEchelle_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -202,7 +220,7 @@ void VisiteurVerificationQuad::visiter(NoeudLigne* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 {
-	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX, coinMaxX, coinMinY, coinMaxY);
+	objetsDansZoneSimulation_ = noeud->obtenirFormeEnglobante()->calculerEstDansLimites(coinMinX*facteurMiseAEchelle_, coinMaxX*facteurMiseAEchelle_, coinMinY*facteurMiseAEchelle_, coinMaxY*facteurMiseAEchelle_);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -219,10 +237,10 @@ void VisiteurVerificationQuad::visiter(NoeudSegment* noeud)
 bool VisiteurVerificationQuad::verifierPointEstSurTable(glm::dvec3 point)
 {
 	// Les valeurs maximales de la table.
-	const double MIN_X = -48.0;
-	const double MAX_X =  48.0;
-	const double MIN_Y = -24.0;
-	const double MAX_Y =  24.0;
+	const double MIN_X = -48.0*facteurMiseAEchelle_;
+	const double MAX_X =  48.0*facteurMiseAEchelle_;
+	const double MIN_Y = -24.0*facteurMiseAEchelle_;
+	const double MAX_Y =  24.0*facteurMiseAEchelle_;
 
 	return (MIN_X <= point.x && point.x <= MAX_X && MIN_Y <= point.y && point.y <= MAX_Y);
 }

@@ -65,6 +65,7 @@ namespace ui
                     ModeLabel.Text = "Collection Pièces";
                     break;
 
+
                 /*case (int)ModeEnum.Mode.COURSE:
                     ModeLabel.Text = "Course";
                     break;*/
@@ -250,8 +251,10 @@ namespace ui
             parent_.goOnlineCoin();
         }
 
+
         private void loadOnlineRaceMode()
         {
+
             parent_.viewPort.Controls.Remove(parent_.mapMenu);
             parent_.mapMenu.defaultView();
 
@@ -276,6 +279,7 @@ namespace ui
             label1.Visible = false;
             settingsPanel.Visible = false;
             privatePanel.Visible = true;
+
         }
 
         private void publicCheckBox_Click(object sender, EventArgs e)

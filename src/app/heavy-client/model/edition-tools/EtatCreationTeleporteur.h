@@ -26,7 +26,7 @@
 class EtatCreationTeleporteur : public OnlineTool
 {
 public:
-	EtatCreationTeleporteur(client_network::MapSession* mapSession);
+	EtatCreationTeleporteur(client_network::ClientMapSession* mapSession);
 	virtual ~EtatCreationTeleporteur();
 
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);

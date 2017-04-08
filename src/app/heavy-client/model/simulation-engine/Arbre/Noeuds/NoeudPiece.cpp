@@ -40,44 +40,11 @@ NoeudPiece::NoeudPiece(uint32_t id, const std::string& typeNoeud)
 	: NoeudAbstrait{ id, typeNoeud }
 {
 	type_ = COIN_ENTITY;
+	physics_.absolutePosition.z = 1.0;
+	physics_.relativePosition.z = 1.0;
 }
 
-///////////////////////////////////////////////////////////////////////
-///
-/// @fn void NoeudPiece::animer(float dt)
-///
-/// Cette fonction permet d'appeler la mise a jour lors de l'animation.
-///
-/// param[in] dt : intervalle de temps en float
-///
-/// @return Aucune.
-///
-////////////////////////////////////////////////////////////////////////
 
-void NoeudPiece::animer(float dt)
-{
-	if(!FacadeModele::obtenirInstance()->obtenirMode()->obtenirModeEnPause())
-	{
-		if (compteurHauteurTeleporteur <= 0.02)
-			versLeHaut = true;
-
-		if (compteurHauteurTeleporteur >= 1.5)
-			versLeHaut = false;
-
-		if (versLeHaut)
-			compteurHauteurTeleporteur = compteurHauteurTeleporteur + 0.02;
-
-		if (!versLeHaut)
-			compteurHauteurTeleporteur = compteurHauteurTeleporteur - 0.02;
-
-		physics_.absolutePosition = physics_.relativePosition;
-		physics_.absolutePosition.z = compteurHauteurTeleporteur;
-		physics_.relativePosition.z = compteurHauteurTeleporteur;
-		mettreAJourFormeEnglobante();
-	}
-
-	
-}
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void NoeudPiece::mettreAJourFormeEnglobante()

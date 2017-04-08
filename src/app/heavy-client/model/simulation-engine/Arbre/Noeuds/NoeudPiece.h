@@ -39,7 +39,6 @@ public:
 	virtual CercleEnglobant* obtenirCercleEnglobante();
 	virtual const CercleEnglobant* obtenirCercleEnglobante() const;
      
-    virtual void animer(float dt);
 	/// Affiche la table.
 	virtual void afficherConcret() const;
 	virtual void accepterVisiteur(VisiteurAbstrait* visiteur);
@@ -50,9 +49,6 @@ private:
     CercleEnglobant cercleEnglobant_;
     virtual void mettreAJourFormeEnglobante();
 	RectangleEnglobant rectangleEnglobant_;
-	double compteurHauteurTeleporteur{0.0};
-	bool versLeHaut{ true };
-
 	
 };
  

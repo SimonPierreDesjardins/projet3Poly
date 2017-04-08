@@ -59,7 +59,10 @@ enum EntityType
 	AUDI_ENTITY,
 	TELEPORT_ENTITY,
 	COIN_ENTITY,
+	FINISHLINE_ENTITY,
+	CHECKPOINT_ENTITY,
 	PAIRTELEPORT_ENTITY
+
 };
 
 ///////////////////////////////////////////////////////////////////////////

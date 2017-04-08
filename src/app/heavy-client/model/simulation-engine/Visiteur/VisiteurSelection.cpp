@@ -19,7 +19,7 @@
 #include "Utilitaire.h"
 #include "Modele3D.h"
 #include "FormeEnglobanteAbstraite.h"
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -64,7 +64,7 @@ VisiteurSelection::~VisiteurSelection()
 /// @param[in] fin : L'itérateur qui pointe sur la fin du vecteur de selection.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSelection::selectionner(Iterateur debut, Iterateur fin, client_network::MapSession* mapSession)
+void VisiteurSelection::selectionner(Iterateur debut, Iterateur fin, engine::MapSession* mapSession)
 {
     debut_ = debut;
     fin_ = fin;

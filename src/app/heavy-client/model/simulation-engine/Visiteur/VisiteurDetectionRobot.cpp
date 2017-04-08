@@ -51,9 +51,8 @@ VisiteurDetectionRobot::VisiteurDetectionRobot()
 VisiteurDetectionRobot::VisiteurDetectionRobot(NoeudRobot* robot)
     : robot_(robot)
 {
-    ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
-    suiveurLigne_ = profil->obtenirSuiveurLigne();
-    capteursDistance_ = profil->obtenirCapteursDistance();
+    suiveurLigne_ = robot->obtenirSuiveurLigne();
+    capteursDistance_ = robot->obtenirCapteursDistance();
 }
 
 
@@ -282,6 +281,53 @@ void VisiteurDetectionRobot::visiter(NoeudPiece* piece)
 
 ////////////////////////////////////////////////////////////////////////
 ///
+/// @fn void VisiteurDetectionRobot::visiter(NoeudCheckpoint* checkpoint)
+///
+/// Fonction qui vérifie si le robot est en collision avec un checkpoint
+///
+/// @param[in] checkpoint:  Pointeur sur un noeud checkpoint.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurDetectionRobot::visiter(NoeudLigneCourseAbstrait* checkpoint)
+{
+	RectangleEnglobant* rectangleRobot = robot_->obtenirFormeEnglobante(); //a voir si je dois faire un obtenir rectangle englobant dans noeudRobot afin dobtenir un rectangle
+	RectangleEnglobant* rectangleCheckpoint = checkpoint->obtenirFormeEnglobante();
+	bool intersection = rectangleRobot->calculerIntersection(*rectangleCheckpoint);
+	NoeudAbstrait* table = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
+	ProfilUtilisateur* profil = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
+	bool estTerminee = true;
+		if (intersection && !checkpoint->estSelectionne() && checkpoint->obtenirNom() == "checkpoint")
+		{
+			//EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON); //mettre un son pour les checkpoints
+			checkpoint->assignerSelection(true);
+		}
+		else if (intersection && checkpoint->obtenirNom() == "lignearrivee")
+		{
+			for (unsigned int i = 0; i < table->obtenirNombreEnfants() && estTerminee; i++)
+			{
+				if (table->chercher(i)->obtenirNom() == "checkpoint")
+				{
+					if (!table->chercher(i)->estSelectionne())
+					{
+						estTerminee = false;
+					}
+				}
+			}
+			if (estTerminee)
+			{
+				profil->assignerCourseTerminee(true);
+			}
+		}
+	if (!estEnCollision_)
+	{
+		estEnCollision_ = false;
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
 /// @fn bool VisiteurDetectionRobot::collisionTeleporteur(NoeudTeleporteur* teleporteur)
 ///
 /// Fonction qui vérifie si le teleporteur ou on se teleporte est en collision avec quelque chose
@@ -352,6 +398,7 @@ void VisiteurDetectionRobot::visiter(NoeudPaireTeleporteurs* noeud)
 		noeud->chercher(i)->accepterVisiteur(this);
 	}
 }
+
 
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

@@ -11,7 +11,7 @@
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -43,7 +43,7 @@ VisiteurRotation::~VisiteurRotation()
 {
 }
 
-void VisiteurRotation::rotateSelectedObjects(ArbreRendu* tree, client_network::MapSession* mapSession)
+void VisiteurRotation::rotateSelectedObjects(ArbreRendu* tree, engine::MapSession* mapSession)
 {
 	mapSession_ = mapSession;
 	tree->accepterVisiteur(this);
@@ -145,6 +145,27 @@ void VisiteurRotation::visiter(NoeudTeleporteur* noeud)
 	mapSession_->localEntityPropertyUpdated(noeud, Networking::ROTATION, glm::vec3(physics.rotation));
 	assignerNouvellePositionRelative(noeud);
 }
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void VisiteurRotation::visiter(NoeudLigneCourseAbstrait* noeud)
+///
+/// Fonction qui modifie la position et l'angle de rotation du noeud ligne de course passé en paramètre selon la rotation effectuée.
+///
+/// @param[in] noeud : Le noeud ligne de course auquel ont veut appliquer une rotation.
+///
+/// @return Aucune.
+///
+////////////////////////////////////////////////////////////////////////
+void VisiteurRotation::visiter(NoeudLigneCourseAbstrait* noeud)
+{
+	// Assigner le nouvel angle de rotation.
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+	physics.rotation.z += angleRotation_;
+	assignerNouvellePositionRelative(noeud);
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////
 ///
