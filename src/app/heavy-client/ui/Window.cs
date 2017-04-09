@@ -17,6 +17,7 @@ namespace ui
     {
         public Configure configuration;
 
+        public ChatWindow chatWindow_;
         public UserTabChat userChat;
         public string userName = "";
 
@@ -1006,6 +1007,9 @@ namespace ui
                 estEnPause = false;
                 Program.peutAfficher = false;
 
+                if (chatWindow_ != null)
+                    chatWindow_.Hide();
+
                 //Remove everything on viewPort
                 viewPort.Controls.Clear();
                 viewPort.Controls.Add(picturePause);
@@ -1019,6 +1023,7 @@ namespace ui
                                                          viewPort.Height / 2 - disconnectedWarning.Height / 2);
                 disconnectedWarning.Anchor = AnchorStyles.None;
                 viewPort.Controls.Add(disconnectedWarning);
+                disconnectedWarning.BringToFront();
             });
         }
 

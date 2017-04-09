@@ -118,8 +118,17 @@ namespace ui
 
             if (continuConnexion)
             {
+                //Parse Ip to remove extra 0. This is a shit fix
+                String[] ip = IPTextBox.Text.Split('.');
+                string tmp = "";
+                for (int i = 0; i < ip.Length; i++)
+                {
+                    tmp += removeExtraNumbers(ip[i]) + ".";
+                }
+                tmp = tmp.Substring(0, tmp.Length - 1);
+
                 parent_.userChat = new UserTabChat(parent_);
-                if (FonctionsNatives.connectToServer(IPTextBox.Text, "5000"))
+                if (FonctionsNatives.connectToServer(tmp, "5000"))
                 {
                     ConnectionSuccessHandler();
                 }
@@ -128,6 +137,19 @@ namespace ui
                     ConnectionFailHandler();
                 }
             }
+        }
+
+        private string removeExtraNumbers(string ip)
+        {
+            string tmp = ip;
+            for (int i = 0; i < ip.Length -1 ; i++)
+            {
+                if (ip[i].Equals('0'))
+                    tmp = ip.Substring(i + 1);
+                else
+                    return tmp;
+            }
+            return tmp;
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -423,13 +445,13 @@ namespace ui
         /// Enleve le chat de l'application.
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void removeChat()
+        public void removeChat()
         {
             parent_.userName = "";
             if (parent_.userChat.inMainWindow)
                 parent_.viewPort.Controls.Remove(parent_.userChat);
             else
-                parent_.userChat.chatWindow_.Dispose();
+                parent_.chatWindow_.Hide();
         }
 
         ////////////////////////////////////////////////////////////////////////

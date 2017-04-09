@@ -394,6 +394,19 @@ namespace ui
             label1.Visible = false;
         }
 
+        public void defaultView()
+        {
+            privatePanel.Visible = true;
+            settingsPanel.Visible = false;
+
+            passwordBox.Clear();
+            newPasswordBox.Clear();
+
+            //Warning labels
+            label1.Visible = false;
+            label2.Visible = false;
+        }
+
         public void changeToPublic()
         {
             parent_.Invoke((MethodInvoker)delegate

@@ -17,7 +17,6 @@ namespace ui
     public partial class UserTabChat : UserControl
     {
         Window parent_;
-        public ChatWindow chatWindow_;
         Dictionary<string, UserChatChannel> channels_;
 
         public Boolean inMainWindow = true;
@@ -158,10 +157,15 @@ namespace ui
             else if (parent_.viewPort.Controls.Contains(parent_.userChat))
                 parent_.viewPort.Controls.Remove(parent_.userChat);
 
-            chatWindow_ = new ChatWindow(parent_);
-            chatWindow_.Controls.Add(parent_.userChat);
+            // Validate form not disposed before using. Initialize as needed. 
+            if (parent_.chatWindow_ == null || parent_.chatWindow_.IsDisposed)
+            {
+                parent_.chatWindow_ = new ChatWindow(parent_);
+            }
+            parent_.chatWindow_.Controls.Add(parent_.userChat);
             parent_.userChat.Dock = DockStyle.Fill;
-            chatWindow_.Show();
+            parent_.chatWindow_.Show();
+            parent_.chatWindow_.Activate();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -179,8 +183,8 @@ namespace ui
             minMaxButton.Visible = true;
             panel.BackColor = Color.FromArgb(0, 102, 204);
 
-            chatWindow_.Controls.Remove(parent_.userChat);
-            chatWindow_.Dispose();
+            parent_.chatWindow_.Controls.Remove(parent_.userChat);
+            parent_.chatWindow_.Hide();
 
             parent_.userChat.Size = new Size(265, 280);
             parent_.userChat.Location = new Point(parent_.viewPort.Width - parent_.userChat.Width,

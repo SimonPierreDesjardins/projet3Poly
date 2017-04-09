@@ -69,7 +69,6 @@
             // mapButton
             // 
             this.mapButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(26)))), ((int)(((byte)(32)))), ((int)(((byte)(40)))));
-            this.mapButton.Controls.Add(this.privatePanel);
             this.mapButton.Controls.Add(this.privacyLabel);
             this.mapButton.Controls.Add(this.customLabel99);
             this.mapButton.Controls.Add(this.connectionLabel);
@@ -80,6 +79,7 @@
             this.mapButton.Controls.Add(this.customLabel3);
             this.mapButton.Controls.Add(this.customLabel2);
             this.mapButton.Controls.Add(this.customLabel1);
+            this.mapButton.Controls.Add(this.privatePanel);
             this.mapButton.Controls.Add(this.settingsPanel);
             this.mapButton.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapButton.Location = new System.Drawing.Point(0, 0);
