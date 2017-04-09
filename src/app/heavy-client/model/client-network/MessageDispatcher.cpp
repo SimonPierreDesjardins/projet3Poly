@@ -7,6 +7,7 @@
 #include "MessageDispatcher.h"
 #include "Authentification.cs"
 #include "MapPermission.cs"
+#include "MapJoin.cs"
 
 namespace client_network
 {
@@ -163,7 +164,7 @@ void MessageDispatcher::handleMapCreationMessage(const std::string& message)
 	char permission = message[Networking::MessageStandard::DATA_START + 6];
 	uint32_t adminId = message[Networking::MessageStandard::DATA_START + 7];
 	std::string name = message.substr(Networking::MessageStandard::DATA_START + 11);
-	eventHandler_->onNewMapCreated(mapId, type, mapId, permission, adminId, name);
+	eventHandler_->onNewMapCreated(mapId, type, nUsers, permission, adminId, name);
 }
 
 void MessageDispatcher::handleMapJoinMessage(const std::string& message)
@@ -172,12 +173,14 @@ void MessageDispatcher::handleMapJoinMessage(const std::string& message)
 	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 1]);
 	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 5]);
 	eventHandler_->onUserJoinedMap(result, mapId, userId);
+	mapConnect(mapId, USER_JOINED);
 }
 
 void MessageDispatcher::handleMapQuitMessage(const std::string& message)
 {
 	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
 	eventHandler_->onUserLeftCurrentMapSession(userId);
+	//mapConnect(mapId, USER_LEFT);
 }
 
 void MessageDispatcher::handleMapListMessage(const std::string& message)
@@ -267,7 +270,6 @@ void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 	default:
 		std::cout << "Unexpected message received" << message << std::endl;
 		break;
-
 	}
 }
 

@@ -618,14 +618,17 @@ namespace ui
         {
             int mode = FonctionsNatives.obtenirMode();
             EditModifPanel modifPanel;
+            EditSideMenu sideMenu;
             switch(mode)
             {
                 case (int)ModeEnum.Mode.EDITION:
                     modifPanel = editionModificationPanel;
+                    sideMenu = editionSideMenu;
                     break;
 
                 case (int)ModeEnum.Mode.TUTORIAL_EDITION:
                     modifPanel = editionTutorielModificationPanel;
+                    sideMenu = editionTutorielSideMenu;
                     break;
 
                 default:
@@ -640,7 +643,16 @@ namespace ui
                 modifPanel.Visible = true;
             }
             else
+            {
                 modifPanel.Visible = false;
+            }
+
+            if (nbEnfant > 0)
+                sideMenu.enableDuplication();
+            else
+                sideMenu.disableDuplication();
+
+
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -657,6 +669,11 @@ namespace ui
         {
             verificationDuNombreElementChoisi();
             viewPort.Focus();
+        }
+
+        private void viewPort_MouseMove(object sender, MouseEventArgs e)
+        {
+            verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////

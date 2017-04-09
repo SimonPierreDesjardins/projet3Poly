@@ -73,7 +73,6 @@ public:
 	void assignerEtat(Tool etat);
 
 protected:
-
 	ArbreRendu* tree_;
 
 	//Visiteur pour la suppression d'un noeud
