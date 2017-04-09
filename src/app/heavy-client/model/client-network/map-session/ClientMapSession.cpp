@@ -316,6 +316,7 @@ void ClientMapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking
 			physics.angularVelocity = updatedProperty;
 			break;
 		}
+		it->second->mettreAJourFormeEnglobante();
 	}
 	pendingQueueLock_.unlock();
 }
