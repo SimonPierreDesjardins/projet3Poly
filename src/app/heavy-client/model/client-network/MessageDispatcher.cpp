@@ -178,9 +178,10 @@ void MessageDispatcher::handleMapJoinMessage(const std::string& message)
 
 void MessageDispatcher::handleMapQuitMessage(const std::string& message)
 {
-	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 4]);
 	eventHandler_->onUserLeftCurrentMapSession(userId);
-	//mapConnect(mapId, USER_LEFT);
+	mapConnect(mapId, USER_LEFT);
 }
 
 void MessageDispatcher::handleMapListMessage(const std::string& message)

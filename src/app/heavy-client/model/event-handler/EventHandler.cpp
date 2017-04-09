@@ -114,7 +114,6 @@ void EventHandler::onUserLeftCurrentMapSession(uint32_t userId)
 		}
 		else
 		{
-			FacadeModele::obtenirInstance()->assignerMode(MENU_PRINCIPAL);
 			mapSessionManager_->quitCurrentMapSession();
 		}
 	}
