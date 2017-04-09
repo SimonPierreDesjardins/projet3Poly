@@ -325,6 +325,23 @@ void ClientMapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking
 	pendingQueueLock_.unlock();
 }
 
+void ClientMapSession::serverEntityPropertyUpdated(uint32_t entityId, const PhysicsComponent& properties)
+{
+	pendingQueueLock_.lock();
+	auto it = confirmedEntities_.find(entityId);
+	if (it != confirmedEntities_.end())
+	{
+		PhysicsComponent& physics = it->second->getPhysicsComponent();
+		physics.relativePosition = properties.relativePosition;
+		physics.absolutePosition = properties.absolutePosition;
+		physics.rotation = properties.rotation;
+		physics.linearVelocity = properties.linearVelocity;
+		physics.angularVelocity = properties.angularVelocity;
+		it->second->mettreAJourFormeEnglobante();
+	}
+	pendingQueueLock_.unlock();
+}
+
 void ClientMapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType type, const glm::vec3& updatedProperty)
 {
 	pendingQueueLock_.lock();
@@ -332,6 +349,16 @@ void ClientMapSession::localEntityPropertyUpdated(NoeudAbstrait* entity, Network
 	if (entityId != 0 && confirmedEntities_.find(entityId) != confirmedEntities_.end())
 	{
 		network_->requestEntityPropertyUpdate(entity->getId(), (char)(type), updatedProperty);
+	}
+	pendingQueueLock_.unlock();
+}
+
+void ClientMapSession::localEntityPropertiesUpdated(NoeudAbstrait * entity)
+{
+	pendingQueueLock_.lock();
+	if (entity)
+	{
+		network_->requestStackedPropertyUpdate(entity->getId(), entity->getPhysicsComponent());
 	}
 	pendingQueueLock_.unlock();
 }

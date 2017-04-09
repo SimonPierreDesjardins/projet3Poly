@@ -29,6 +29,9 @@ protected:
 	virtual void TreatUserMessage(User* sender, const std::string& message);
 
 	virtual void handlePhysicMessage(User* sender, const std::string& message);
+	virtual void handleSinglePropertyMessage(User* sender, const std::string& message);
+	virtual void handleStackedPropertyMessage(User* sender, const std::string& message);
+
 	virtual void handleMapEditionMessage(User* sender, const std::string& message);
 
 	virtual void handleEntityCreationMessage(User* sender, const std::string& message);

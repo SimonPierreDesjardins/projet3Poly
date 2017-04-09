@@ -28,7 +28,7 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 {
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
-
+	user->addSystemObserver(this, GAME_MESSAGE);
 
 	// Send user list to the new User.
 	for (auto it = _connectedUserList.begin(); it != _connectedUserList.end(); ++it)
@@ -121,6 +121,21 @@ void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& messa
 {
 	assert(message[4] == PHYSIC_MESSAGE);
 
+	if (message[Networking::MessageStandard::COMMAND] == 'e')
+	{
+		handleStackedPropertyMessage(sender, message);
+	}
+	else
+	{
+		handleSinglePropertyMessage(sender, message);
+	}
+
+	// TODO: check if entity is worth noting dirty map for
+	mapFileLoader_->SetMapDirty();
+}
+
+void AbstractMapRoom::handleSinglePropertyMessage(User* sender, const std::string& message)
+{
 	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
 	Entity* updatedEntity = tree_.findEntity(entityId);
 
@@ -140,9 +155,34 @@ void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& messa
 		// Update other users.
 		broadcastMessage(sender, message);
 	}
+}
 
-	// TODO: check if entity is worth noting dirty map for
-	mapFileLoader_->SetMapDirty();
+void AbstractMapRoom::handleStackedPropertyMessage(User* sender, const std::string& message)
+{
+	assert(message.size() == 70);
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	Entity* updatedEntity = tree_.findEntity(entityId);
+
+	// If the entity id exists and it is selected by this user.
+	if (updatedEntity && updatedEntity->userId_ == sender->Info.GetId())
+	{
+		char const* data = message.data() + Networking::MessageStandard::DATA_START + 4;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::RELATIVE_POSITION));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::ABSOLUTE_POSITION));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::ROTATION));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::LINEAR_VELOCITY));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::ANGULAR_VELOCITY));
+
+		broadcastMessage(sender, message);
+	}
 }
 
 void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& message)

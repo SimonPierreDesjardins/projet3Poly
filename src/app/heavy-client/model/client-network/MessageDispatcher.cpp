@@ -1,3 +1,4 @@
+#include "TypeSerializerDeserializer.h"
 #include "NetworkStandard.h"
 
 #include "EventHandler.h"
@@ -79,13 +80,50 @@ void MessageDispatcher::lookupMessage()
 
 void MessageDispatcher::handlePhysicMessage(const std::string& message)
 {
+	if (message[Networking::MessageStandard::COMMAND == 'e'])
+	{
+		handleStackedPhysicsMessage(message);
+	}
+	else
+	{
+		handleSinglePhysicMessage(message);
+	}
+}
+
+void MessageDispatcher::handleSinglePhysicMessage(const std::string& message)
+{
 	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
 	char propertyType = message[Networking::MessageStandard::COMMAND];
 	glm::vec3 updatedProperty;
 	updatedProperty.x = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 4);
 	updatedProperty.y = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 8);
 	updatedProperty.z = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 12);
+
 	eventHandler_->onEntityPropertyUpdated(entityId, propertyType, updatedProperty);
+}
+
+void MessageDispatcher::handleStackedPhysicsMessage(const std::string& message)
+{
+	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+
+	PhysicsComponent update;
+		
+	char const* data = message.data() + Networking::MessageStandard::DATA_START + 4;
+	Networking::deserialize(data, update.relativePosition);
+
+	data += 12;
+	Networking::deserialize(data, update.absolutePosition);
+
+	data += 12;
+	Networking::deserialize(data, update.rotation);
+
+	data += 12;
+	Networking::deserialize(data, update.linearVelocity);
+
+	data += 12;
+	Networking::deserialize(data, update.angularVelocity);
+
+	eventHandler_->onStackedPropertiesUpdate(entityId, update);
 }
 
 void MessageDispatcher::handleEntityCreationMessage(const std::string& message)

@@ -53,4 +53,25 @@ uint8_t deserializeChar(char data)
 	return *deserialized;
 }
 
+void deserialize(char const* data, Eigen::Vector3f& prop)
+{
+	prop.x() = deserializeFloat(data);
+	prop.y() = deserializeFloat(data + 4);
+	prop.z() = deserializeFloat(data + 8);
+}
+
+void deserialize(char const* data, glm::vec3& prop)
+{
+	prop.x = deserializeFloat(data);
+	prop.y = deserializeFloat(data + 4);
+	prop.z = deserializeFloat(data + 8);
+}
+
+void deserialize(char const* data, glm::dvec3& prop)
+{
+	prop.x = deserializeFloat(data);
+	prop.y = deserializeFloat(data + 4);
+	prop.z = deserializeFloat(data + 8);
+}
+
 }

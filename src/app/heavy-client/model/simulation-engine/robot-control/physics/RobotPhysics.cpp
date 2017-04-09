@@ -29,11 +29,15 @@ void RobotPhysics::applyPhysicsEffects(float dt)
     robot_->mettreAJourPosition(dt);
 
 	physics_ = robot_->getPhysicsComponent();
+	mapSession_->localEntityPropertiesUpdated(robot_);
+
+	/*
 	mapSession_->localEntityPropertyUpdated(robot_, Networking::ABSOLUTE_POSITION, glm::vec3(physics_.absolutePosition));
 	mapSession_->localEntityPropertyUpdated(robot_, Networking::RELATIVE_POSITION, glm::vec3(physics_.relativePosition));
 	mapSession_->localEntityPropertyUpdated(robot_, Networking::ROTATION, glm::vec3(physics_.rotation));
 	mapSession_->localEntityPropertyUpdated(robot_, Networking::LINEAR_VELOCITY, glm::vec3(physics_.linearVelocity));
 	mapSession_->localEntityPropertyUpdated(robot_, Networking::ANGULAR_VELOCITY, glm::vec3(physics_.angularVelocity));
+	*/
 
 	tree_->accepterVisiteur(&collisionDetection_);
 

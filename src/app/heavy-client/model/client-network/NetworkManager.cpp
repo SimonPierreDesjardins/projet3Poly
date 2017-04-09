@@ -3,6 +3,9 @@
 #include <fstream>
 
 #include "NetworkStandard.h"
+#include "TypeSerializerDeserializer.h"
+
+#include "PhysicsComponent.h"
 #include "NetworkManager.h"
 #include "EventHandler.h"
 
@@ -178,6 +181,25 @@ void NetworkManager::requestEntityPropertyUpdate(uint32_t entityId, char propert
 	message.append(1, propertyType);
 	serializer_.serialize(entityId, message);
 	serializer_.serialize(propertyValue, message);
+	connection_.sendMessage(message);
+}
+
+void NetworkManager::requestStackedPropertyUpdate(uint32_t entityId, const PhysicsComponent& properties)
+{
+	std::string message;
+	Networking::serialize(uint32_t(0), message);
+	message.append(1, 'p');
+	message.append(1, 'e');
+	Networking::serialize(entityId, message);
+
+	Networking::serialize(glm::vec3(properties.relativePosition), message);
+	Networking::serialize(glm::vec3(properties.absolutePosition), message);
+	Networking::serialize(glm::vec3(properties.rotation), message);
+	Networking::serialize(glm::vec3(properties.linearVelocity), message);
+	Networking::serialize(glm::vec3(properties.angularVelocity), message);
+
+	Networking::MessageStandard::UpdateLengthHeader(message);
+
 	connection_.sendMessage(message);
 }
 

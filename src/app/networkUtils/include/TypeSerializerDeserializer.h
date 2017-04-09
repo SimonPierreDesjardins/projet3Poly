@@ -16,6 +16,10 @@ namespace Networking
 	uint32_t deserializeInteger(char const* data);
 	float deserializeFloat(char const* data);
 	uint8_t deserializeChar(char data);
+
+	void deserialize(char const* data, Eigen::Vector3f& prop);
+	void deserialize(char const* data, glm::vec3& prop);
+	void deserialize(char const* data, glm::dvec3& prop);
 }
 
 #endif // CLIENT_NETWORK_NETWORK_MANAGER_H

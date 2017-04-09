@@ -135,4 +135,13 @@ void EventHandler::onEntityPropertyUpdated(uint32_t entityId, char propertyType,
 	}
 }
 
+void EventHandler::onStackedPropertiesUpdate(uint32_t entityId, const PhysicsComponent& properties)
+{
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	if (currentSession)
+	{
+		currentSession->serverEntityPropertyUpdated(entityId, properties);
+	}
+}
+
 }

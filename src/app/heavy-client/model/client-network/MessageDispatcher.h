@@ -48,6 +48,8 @@ private:
 
 	// Physic message
 	void handlePhysicMessage(const std::string& message);
+	void handleSinglePhysicMessage(const std::string& message);
+	void handleStackedPhysicsMessage(const std::string& message);
 
 	// Map idition message
 	void handleMapEditionMessage(const std::string& message);

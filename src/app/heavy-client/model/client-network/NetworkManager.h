@@ -8,6 +8,8 @@
 
 #include "glm/glm.hpp"
 
+class PhysicsComponent;
+
 namespace event_handler
 {
 	class EventHandler;
@@ -47,6 +49,7 @@ public:
 	void requestEntitySelection(uint32_t entityId, char selectionState);
 
 	void requestEntityPropertyUpdate(uint32_t entityId, char propertyType, const::glm::vec3& propertyValue);
+	void requestStackedPropertyUpdate(uint32_t entityId, const PhysicsComponent& properties);
 
 	inline void sendMessage(const std::string& message);
 	void sendSizePrefixedMessage(std::string& message);

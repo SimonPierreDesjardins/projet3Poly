@@ -49,6 +49,7 @@ public:
 	virtual void deleteLocalEntity(NoeudAbstrait* entity) = 0;
 
 	virtual void localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType, const glm::vec3& updatedProperty) = 0;
+	virtual void localEntityPropertiesUpdated(NoeudAbstrait* entity) = 0;
 
 	virtual void updateSelectionStateLocalEntityAndChildren(NoeudAbstrait* entity, bool isSelected) = 0;
 
