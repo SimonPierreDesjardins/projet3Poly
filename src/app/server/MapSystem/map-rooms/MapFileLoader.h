@@ -23,9 +23,8 @@ public:
 
 private:
 	void PopulateTreeFromJSON(const std::string& json);
-	void CreateEntities(rapidjson::Value::ConstValueIterator jsonNode, Entity* parent);
-	void setEntityValues(Entity* target, const rapidjson::Value::ConstValueIterator jsonNode);
-	void LoadTeleporters(const rapidjson::Value& jsonNode, Entity* parent);
+	void CreateEntities(const rapidjson::Value& jsonNode, Entity* parent);
+	void setEntityValues(Entity* target, const rapidjson::Value& jsonNode);
 
 	void StartSaveThread();
 	void StopSaveThread();
@@ -34,7 +33,7 @@ private:
 
 	void VisiterMethod(Entity* entity, rapidjson::Writer<rapidjson::StringBuffer> * writer);
 	void SaveEntityToJSON(Entity* entity, rapidjson::Writer<rapidjson::StringBuffer> * writer);
-	bool EntitySavesNormally(char entityType);
+	bool ShouldSave(char entityType);
 
 	// have thread that does saving
 	std::thread _mapSavingThread;

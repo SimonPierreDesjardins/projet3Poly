@@ -36,82 +36,53 @@ void server::MapFileLoader::PopulateTreeFromJSON(const std::string& json)
 	rapidjson::Document doc;
 	doc.ParseStream(stream);
 
-	Entity* table = _entityTree->createEntity(0, 0); // create the table
-
-	if (!doc["table"].HasMember("noeudsEnfants")) {
-		return;
-	}
-	const rapidjson::Value& enfantsTable = doc["table"]["noeudsEnfants"];
-	for (rapidjson::Value::ConstValueIterator itr = enfantsTable.Begin();
-		itr != enfantsTable.End(); ++itr) {
-		CreateEntities(itr, table);
-	}
+	const rapidjson::Value& tableJson = doc["table"];
+	CreateEntities(tableJson, _entityTree->findEntity(0));
 }
 
-void server::MapFileLoader::CreateEntities(rapidjson::Value::ConstValueIterator jsonNode, Entity* parent) {
-	if (jsonNode->HasMember("PaireTeleporteurs"))
-	{
-		LoadTeleporters(jsonNode->FindMember("PaireTeleporteurs")->value, parent);
-		return;
-	}
+void server::MapFileLoader::CreateEntities(const rapidjson::Value& jsonNode, Entity* parent) {
 
-	Entity* newEntity = _entityTree->createEntity(EntityTree::GetEntityType(jsonNode->FindMember("type")->value.GetString()), parent->entityId_);
-	setEntityValues(newEntity, jsonNode);
+	Entity* newEntity = _entityTree->createEntity(EntityTree::GetEntityType(jsonNode.FindMember("type")->value.GetString()), parent->entityId_);
 	parent->addChild(newEntity);
-	if (!jsonNode->HasMember("noeudsEnfants")) {
+	setEntityValues(newEntity, jsonNode);
+	if (!jsonNode.HasMember("noeudsEnfants")) {
 		return;
 	}
-	const rapidjson::Value& children = jsonNode->FindMember("noeudsEnfants")->value;
+	const rapidjson::Value& children = jsonNode.FindMember("noeudsEnfants")->value;
 	for (rapidjson::Value::ConstValueIterator itr = children.Begin();
 		itr != children.End(); ++itr) {
-		CreateEntities(itr, newEntity);
+		CreateEntities(*itr, newEntity);
 	}
 }
 
-void server::MapFileLoader::setEntityValues(Entity * target, const rapidjson::Value::ConstValueIterator jsonNode)
+void server::MapFileLoader::setEntityValues(Entity * target, const rapidjson::Value& jsonNode)
 {
 	// quick loading from iteration
-	rapidjson::Value::ConstMemberIterator itr = jsonNode->MemberBegin() + 1;
+	rapidjson::Value::ConstMemberIterator itr = jsonNode.MemberBegin() + 1;
 
 	//Set relative position
-	Eigen::Vector3f* relPos = target->getProperty(Networking::RELATIVE_POSITION);
-	relPos->x() = itr->value.GetDouble(); 
+	auto relPos = target->getProperty(Networking::RELATIVE_POSITION);
+	relPos->x = itr->value.GetDouble(); 
 	itr++;
-	relPos->y() = itr->value.GetDouble(); 
+	relPos->y = itr->value.GetDouble(); 
 	itr++;
-	relPos->z() = itr->value.GetDouble(); 
+	relPos->z = itr->value.GetDouble(); 
 	itr++;
 
 	//Set Absolute Position
-	Eigen::Vector3f* absPos = target->getProperty(Networking::ABSOLUTE_POSITION);
-	Eigen::Vector3f* parentAbsPos = target->getParent()->getProperty(Networking::ABSOLUTE_POSITION);
+	auto absPos = target->getProperty(Networking::ABSOLUTE_POSITION);
+	auto parentAbsPos = target->getParent()->getProperty(Networking::ABSOLUTE_POSITION);
 	*absPos = *parentAbsPos + *relPos;
 
-	target->getProperty(Networking::ROTATION)->z() = itr->value.GetDouble();
+	target->getProperty(Networking::ROTATION)->z = itr->value.GetDouble();
 	itr++;
 
 	auto scaleValue = itr->value.GetDouble();
-	Eigen::Vector3f* scale = target->getProperty(Networking::SCALE);
-	scale->x() = scaleValue;
-	scale->y() = scaleValue;
-	scale->z() = scaleValue;
+	auto scale = target->getProperty(Networking::SCALE);
+	scale->x = scaleValue;
+	scale->y = scaleValue;
+	scale->z = scaleValue;
 
-}
-
-void server::MapFileLoader::LoadTeleporters(const rapidjson::Value& jsonNode, Entity* parent)
-{
-	auto jsonItr = jsonNode.Begin();
-
-	Entity* tp1 = _entityTree->createEntity(EntityTree::GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
-	parent->addChild(tp1);
-	setEntityValues(tp1, jsonItr);
-
-	jsonItr++;
-
-	Entity* tp2 = _entityTree->createEntity(EntityTree::GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
-	parent->addChild(tp2);
-	setEntityValues(tp2, jsonItr);
-	
 }
 
 void server::MapFileLoader::StartSaveThread()
@@ -152,7 +123,7 @@ void server::MapFileLoader::VisiterMethod(Entity * entity, rapidjson::Writer<rap
 {
 	auto entityType = entity->entityType_;
 	// check for teleporter, otherwise save normally
-	if (EntitySavesNormally(entityType) && entityType != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
+	if (ShouldSave(entityType) && entityType != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
 		SaveEntityToJSON(entity, writer);
 	}
 	// Teleporter saving methodology
@@ -181,24 +152,24 @@ void server::MapFileLoader::SaveEntityToJSON(Entity * entity, rapidjson::Writer<
 
 	// get type
 	writer->Key("type");
-	writer->String(EntityTree::GetEntityType(entity->entityType_).c_str());
+	writer->String(entity->getTreeNode()->obtenirNom().c_str());
 
 	//get positons
 	auto pos = entity->getProperty(Networking::RELATIVE_POSITION);
 	writer->Key("posX");
-	writer->Double(pos->x());
+	writer->Double(pos->x);
 	writer->Key("posY");
-	writer->Double(pos->y());
+	writer->Double(pos->y);
 	writer->Key("posZ");
-	writer->Double(pos->z());
+	writer->Double(pos->z);
 	// get rotation
 	auto rot = entity->getProperty(Networking::ROTATION);
 	writer->Key("angleRotation");
-	writer->Double(rot->z());
+	writer->Double(rot->z);
 	// get scale
 	auto scale = entity->getProperty(Networking::SCALE);
 	writer->Key("facteurEchelle");
-	writer->Double(scale->x());
+	writer->Double(scale->x);
 	//get children
 	if (entity->getChildCount() > 0) {
 		writer->Key("noeudsEnfants");
@@ -213,10 +184,10 @@ void server::MapFileLoader::SaveEntityToJSON(Entity * entity, rapidjson::Writer<
 	writer->EndObject();
 }
 
-bool server::MapFileLoader::EntitySavesNormally(char entityType)
+bool server::MapFileLoader::ShouldSave(char entityType)
 {
-	if (entityType < Networking::MessageStandard::ItemTypes::WHEEL_ENTITY
-		&& entityType != Networking::MessageStandard::ItemTypes::DUPLICATION_ENTITY) {
+	if ((entityType < EntityType::WHEEL_ENTITY && entityType != EntityType::DUPLICATION_ENTITY) ||
+		(entityType > EntityType::AUDI_ENTITY && entityType != COIN_ENTITY)) {
 		return true;
 	}
 	return false;

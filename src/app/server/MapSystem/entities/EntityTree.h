@@ -28,12 +28,11 @@ public:
 	inline EntityContainer::iterator end();
 
 	static char GetEntityType(const std::string& itemType);
-	static std::string GetEntityType(char itemType);
 
 private:
 	EntityContainer entities_;
 	uint32_t nextEntityId_{ 1 };
-	ArbreRenduINF2990* physicsTree_;
+	std::shared_ptr<ArbreRenduINF2990> physicsTree_;
 };
 
 inline EntityTree::EntityContainer::iterator EntityTree::begin()

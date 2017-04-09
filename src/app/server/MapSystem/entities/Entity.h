@@ -1,14 +1,18 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <Eigen/Dense>
 #include <unordered_map>
 #include "NetworkStandard.h"
+#include "NoeudAbstrait.h"
 
 class NoeudAbstrait;
 
 namespace server
 {
+
+class EntityProperty {
+	// contains reference to the entity and the node's physics component's equivalent property
+};
 
 class Entity
 {
@@ -19,8 +23,7 @@ public:
 	uint32_t userId_{ 0 };
 	uint32_t entityId_{ 0 };
 
-	Entity();
-	Entity(NoeudAbstrait* node);
+	Entity(std::shared_ptr<NoeudAbstrait> node);
 	~Entity() = default;
 
 	inline void setParent(Entity* parent);
@@ -32,15 +35,15 @@ public:
 	inline ChildrenContainer::iterator begin();
 	inline ChildrenContainer::iterator end();
 
-	inline void updatePhysicProperty(Networking::PropertyType propertyType, const Eigen::Vector3f& propertyValue);
-	inline Eigen::Vector3f* getProperty(Networking::PropertyType propertyType);
+	inline void updatePhysicProperty(Networking::PropertyType propertyType, const glm::dvec3& propertyValue);
+	inline glm::dvec3* getProperty(Networking::PropertyType propertyType);
+	inline std::shared_ptr<NoeudAbstrait>& getTreeNode();
 
 private:
 	void SetupInitialProperties();
 	Entity* parent_{ nullptr };
 	std::unordered_map<uint32_t, Entity*> children_;
-	std::unordered_map<Networking::PropertyType, Eigen::Vector3f> properties_;
-	NoeudAbstrait* treeNode_;
+	std::shared_ptr<NoeudAbstrait> treeNode_ = nullptr;
 };
 
 inline void Entity::setParent(Entity* parent)
@@ -55,6 +58,8 @@ inline Entity* Entity::getParent()
 
 inline void Entity::addChild(Entity* child)
 {
+	child->setParent(this);
+	treeNode_->ajouter(child->getTreeNode());
 	children_.insert(std::make_pair(child->entityId_, child));
 }
 
@@ -78,24 +83,34 @@ inline Entity::ChildrenContainer::iterator Entity::end()
 	return children_.end();
 }
 
-inline void Entity::updatePhysicProperty(Networking::PropertyType propertyType, const Eigen::Vector3f& propertyValue)
+inline void Entity::updatePhysicProperty(Networking::PropertyType propertyType, const glm::dvec3& propertyValue)
 {
-	auto it = properties_.find(propertyType);
-	if (it != properties_.end())
-	{
-		it->second = propertyValue;
+	*(getProperty(propertyType)) = propertyValue;
+}
+
+inline glm::dvec3* Entity::getProperty(Networking::PropertyType propertyType)
+{
+	switch (propertyType) {
+	case Networking::PropertyType::ABSOLUTE_POSITION:
+		return &treeNode_->getPhysicsComponent().absolutePosition;
+	case Networking::PropertyType::RELATIVE_POSITION:
+		return &treeNode_->getPhysicsComponent().relativePosition;
+	case Networking::PropertyType::ANGULAR_VELOCITY:
+		return &treeNode_->getPhysicsComponent().angularVelocity;
+	case Networking::PropertyType::LINEAR_VELOCITY:
+		return &treeNode_->getPhysicsComponent().linearVelocity;
+	case Networking::PropertyType::ROTATION:
+		return &treeNode_->getPhysicsComponent().rotation;
+	case Networking::PropertyType::SCALE:
+		return &treeNode_->getPhysicsComponent().scale;
+	default:
+		return nullptr;
 	}
 }
 
-inline Eigen::Vector3f* Entity::getProperty(Networking::PropertyType propertyType)
+inline std::shared_ptr<NoeudAbstrait>& Entity::getTreeNode()
 {
-	Eigen::Vector3f* property = nullptr;
-	auto it = properties_.find(propertyType);
-	if (it != properties_.end())
-	{
-		property = &it->second;
-	}
-	return property;
+	return treeNode_;
 }
 
 }
