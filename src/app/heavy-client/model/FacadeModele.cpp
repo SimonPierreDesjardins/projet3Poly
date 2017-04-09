@@ -58,8 +58,7 @@ const std::string FacadeModele::FICHIER_CONFIGURATION{ "configuration.xml" };
 /// Constructeur par défaut.
 FacadeModele::FacadeModele()
 	: network_(&eventHandler_), mapSessionManager_(&engine_, &network_), saves_(&profil_)
-{
-}
+{}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -345,4 +344,162 @@ void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
 	// (horizontal, vertical)
 	horizontal = desktop.right;
 	vertical = desktop.bottom;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerAngleRotation(double angle)
+///
+/// Cette fonction assigne un angle de rotation à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: l'angle a assigner a l'objet
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerAngleRotation(const double& angle)
+{
+	NoeudAbstrait* table = engine_.getEntityTree()->chercher(0);
+	if (table)
+	{
+		std::unique_ptr<VisiteurRotation> visiteurRotation = std::make_unique <VisiteurRotation>(mapSessionManager_.getCurrentMapSession());
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
+
+		unsigned int nEnfants = table->obtenirNombreEnfants();
+		for (unsigned int i = 0; i < nEnfants; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne())
+			{
+				double angleAvantChangement = enfant->getPhysicsComponent().rotation.z;
+				visiteurRotation->assignerAngleRotation(angle - angleAvantChangement);
+				visiteurRotation->rotateSelectedObjects(engine_.getEntityTree());
+
+				engine_.getEntityTree()->accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+				if (!positionValide)
+				{
+					visiteurRotation->assignerAngleRotation(angleAvantChangement - angle);
+					visiteurRotation->rotateSelectedObjects(engine_.getEntityTree());
+				}
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerFacteurGrandeur(double facteurMiseAEchelle)
+///
+/// Cette fonction assigne un facteur de mise à échelle à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: facteur de mise à échelle
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle)
+{
+	NoeudAbstrait* table = engine_.getEntityTree()->chercher(0);
+	if (table)
+	{
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
+
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne())
+			{
+				// Assigner le nouveau facteur de mise à échelle.
+				PhysicsComponent& physics = enfant->getPhysicsComponent();
+				double facteurAvantChangement = physics.scale.x;
+				physics.scale.x = facteurMiseAEchelle;
+
+				// Vérifier la nouvelle position du noeud.
+				engine_.getEntityTree()->accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+				if (!positionValide)
+				{
+					physics.scale.x = facteurAvantChangement;
+				}
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerPositionRelativeX(double positionRelativeX)
+///
+/// Cette fonction assigne une position en X à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: position en X de l'objet
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerPositionRelativeX(const double& positionRelativeX)
+{
+	NoeudAbstrait* table = engine_.getEntityTree()->chercher(0);
+	if (table)
+	{
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
+		unsigned int nEnfants = table->obtenirNombreEnfants();
+		for (unsigned int i = 0; i < nEnfants; i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne())
+			{
+				PhysicsComponent& physics = enfant->getPhysicsComponent();
+
+				// Ajuster la position du noeud et garder la dernière position.
+				double positionXAvantChangement = physics.relativePosition.x;
+				physics.relativePosition.x = positionRelativeX;
+
+				// Verifier la position du noeud.
+				engine_.getEntityTree()->accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+
+				// Replacer le noeud.
+				if (!positionValide)
+				{
+					physics.relativePosition.x = positionXAvantChangement;
+				}
+			}
+		}
+	}
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn void FacadeModele::assignerPositionRelativeY(double positionRelativeY)
+///
+/// Cette fonction assigne une position en Y à un noeud seulement s'il est
+/// encore sur la table
+///
+/// @param double angle: position en Y de l'objet
+///
+////////////////////////////////////////////////////////////////////////
+void FacadeModele::assignerPositionRelativeY(const double& positionRelativeY)
+{
+	NoeudAbstrait* table = engine_.getEntityTree()->chercher(0);
+	if (table)
+	{
+		std::unique_ptr<VisiteurVerificationQuad> visiteurVerification = std::make_unique <VisiteurVerificationQuad>();
+		for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {
+			NoeudAbstrait* enfant = table->chercher(i);
+			if (enfant->estSelectionne())
+			{
+				PhysicsComponent& physics = enfant->getPhysicsComponent();
+
+				// Ajuster la position du noeud et garder la dernière position.
+				double positionYAvantChangement = physics.relativePosition.y;
+				physics.relativePosition.y = positionRelativeY;
+
+				// Vérifier que la position est valide.
+				engine_.getEntityTree()->accepterVisiteur(visiteurVerification.get());
+				bool positionValide = visiteurVerification->objetsDansZoneSimulation();
+
+				// Replacer le noeud.
+				if (!positionValide)
+				{
+					physics.relativePosition.y = positionYAvantChangement;
+				}
+			}
+		}
+	}
 }
