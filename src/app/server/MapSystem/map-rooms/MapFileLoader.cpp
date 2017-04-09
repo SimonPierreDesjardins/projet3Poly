@@ -125,6 +125,10 @@ void server::MapFileLoader::SaveTree() {
 
 void server::MapFileLoader::SaveEntityToJSON(Entity * entity, rapidjson::Writer<rapidjson::StringBuffer>* writer)
 {
+	if (! ShouldSave(entity->entityType_)) {
+		return;
+	}
+
 	writer->StartObject();
 
 	// get type
