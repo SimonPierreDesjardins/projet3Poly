@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include "NetworkStandard.h"
 
+class NoeudAbstrait;
+
 namespace server
 {
 
@@ -18,6 +20,7 @@ public:
 	uint32_t entityId_{ 0 };
 
 	Entity();
+	Entity(NoeudAbstrait* node);
 	~Entity() = default;
 
 	inline void setParent(Entity* parent);
@@ -33,9 +36,11 @@ public:
 	inline Eigen::Vector3f* getProperty(Networking::PropertyType propertyType);
 
 private:
+	void SetupInitialProperties();
 	Entity* parent_{ nullptr };
 	std::unordered_map<uint32_t, Entity*> children_;
 	std::unordered_map<Networking::PropertyType, Eigen::Vector3f> properties_;
+	NoeudAbstrait* treeNode_;
 };
 
 inline void Entity::setParent(Entity* parent)

@@ -76,7 +76,7 @@ void SimulationEngine::initializeRendering(HWND hWnd, ProfilUtilisateur* userPro
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
 	// l'arbre après avoir créé le contexte OpenGL.
-	tree_.initialiser();
+	tree_.initialiser(true);
 
 	// On crée une vue par défaut. 
 	view_ = std::make_unique<vue::VueOrtho>(vue::Camera(

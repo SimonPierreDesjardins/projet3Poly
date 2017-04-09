@@ -2,9 +2,18 @@
 
 namespace server
 {
-
 Entity::Entity()
 {
+	SetupInitialProperties();
+}
+
+	Entity::Entity(NoeudAbstrait* node)
+{
+	treeNode_ = node;
+	SetupInitialProperties();
+}
+
+void Entity::SetupInitialProperties() {
 	properties_.insert(std::make_pair(Networking::ABSOLUTE_POSITION, std::move(Eigen::Vector3f(0.0, 0.0, 0.0))));
 	properties_.insert(std::make_pair(Networking::RELATIVE_POSITION, std::move(Eigen::Vector3f(0.0, 0.0, 0.0))));
 	properties_.insert(std::make_pair(Networking::ROTATION, std::move(Eigen::Vector3f(0.0, 0.0, 0.0))));

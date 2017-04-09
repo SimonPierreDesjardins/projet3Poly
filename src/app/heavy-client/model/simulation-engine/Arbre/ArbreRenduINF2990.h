@@ -38,7 +38,7 @@ public:
 	virtual ~ArbreRenduINF2990();
 
 	/// Initialise l'arbre de rendu à son état initial.
-	void initialiser();
+	void initialiser(bool withOpenGL);
 
 	/// Charge le fichier de sauvegarde présentement assigné à l'arbre de rendu
 	void chargerZone();

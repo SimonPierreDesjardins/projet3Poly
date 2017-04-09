@@ -84,12 +84,15 @@ public:
    virtual std::shared_ptr<NoeudAbstrait> creerNoeud() const override;
 
    /// Constructeur qui prend le nom associé à l'usine.
-	UsineNoeud(const std::string& nomUsine, const std::string& nomModele) 
+	UsineNoeud(const std::string& nomUsine, const std::string& nomModele, bool withGL) 
 		: UsineAbstraite{ nomUsine }
 	{
-		modele_.charger(nomModele);
-		vbo_ = opengl::VBO{ &modele_ };
-		vbo_.charger();
+		withGL_ = withGL;
+		if (withGL) {
+			modele_.charger(nomModele);
+			vbo_ = opengl::VBO{ &modele_ };
+			vbo_.charger();
+		}
 	}
 
 protected:
@@ -97,6 +100,8 @@ protected:
    modele::Modele3D modele_;
    /// Storage pour le dessin du modèle
    opengl::VBO vbo_;
+
+   bool withGL_ = false;
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -131,17 +136,22 @@ std::shared_ptr<NoeudAbstrait> UsineNoeud<T>::creerNoeud() const
 template <typename Noeud>
 class UsineNoeudRobot: public UsineAbstraite{
 public:
-	UsineNoeudRobot(const std::string& nomUsine, const std::string& nomModele, ArbreRendu* arbre):UsineAbstraite(nomUsine) {
-		modele_.charger(nomModele);
-		vbo_ = opengl::VBO{ &modele_ };
-		vbo_.charger();
+	UsineNoeudRobot(const std::string& nomUsine, const std::string& nomModele, ArbreRendu* arbre, bool withGL):UsineAbstraite(nomUsine) {
+		withGL_ = withGL;
+		if (withGL) {
+			modele_.charger(nomModele);
+			vbo_ = opengl::VBO{ &modele_ };
+			vbo_.charger();
+		}
 		_arbre = arbre;
 	}
 
 	virtual std::shared_ptr<NoeudAbstrait> creerNoeud() const override {
 		static_assert(std::is_base_of<NoeudAbstrait, Noeud>::value, R"(Une usine de noeuds ne peut creer que des types de noeuds dérivant de NoeudAbstrait.)");
 		std::shared_ptr<NoeudAbstrait> noeud = std::make_shared<Noeud>(nextId_, obtenirNom(), _arbre);
-		noeud->assignerObjetRendu(&modele_, &vbo_);
+		if (withGL_) {
+			noeud->assignerObjetRendu(&modele_, &vbo_);
+		}
 		return noeud;
 	}
 
@@ -151,6 +161,8 @@ protected:
 	modele::Modele3D modele_;
 	/// Storage pour le dessin du modèle
 	opengl::VBO vbo_;
+	/// This is a rendered factory
+	bool withGL_ = false;
 };
 
 #endif // __ARBRE_USINES_USINENOEUD_H__

@@ -55,7 +55,7 @@ void server::MapFileLoader::CreateEntities(rapidjson::Value::ConstValueIterator 
 		return;
 	}
 
-	Entity* newEntity = _entityTree->createEntity(GetEntityType(jsonNode->FindMember("type")->value.GetString()), parent->entityId_);
+	Entity* newEntity = _entityTree->createEntity(EntityTree::GetEntityType(jsonNode->FindMember("type")->value.GetString()), parent->entityId_);
 	setEntityValues(newEntity, jsonNode);
 	parent->addChild(newEntity);
 	if (!jsonNode->HasMember("noeudsEnfants")) {
@@ -102,72 +102,16 @@ void server::MapFileLoader::LoadTeleporters(const rapidjson::Value& jsonNode, En
 {
 	auto jsonItr = jsonNode.Begin();
 
-	Entity* tp1 = _entityTree->createEntity(GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
+	Entity* tp1 = _entityTree->createEntity(EntityTree::GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
 	parent->addChild(tp1);
 	setEntityValues(tp1, jsonItr);
 
 	jsonItr++;
 
-	Entity* tp2 = _entityTree->createEntity(GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
+	Entity* tp2 = _entityTree->createEntity(EntityTree::GetEntityType(jsonItr->FindMember("type")->value.GetString()), parent->entityId_);
 	parent->addChild(tp2);
 	setEntityValues(tp2, jsonItr);
 	
-}
-
-char server::MapFileLoader::GetEntityType(const std::string & itemType)
-{
-	if (itemType == "poteau") {
-		return Networking::MessageStandard::ItemTypes::POST_ENTITY;
-	}
-	if (itemType == "depart") {
-		return Networking::MessageStandard::ItemTypes::START_ENTITY;
-	}
-	if (itemType == "ligneNoire") {
-		return Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY;
-	}
-	if (itemType == "segment") {
-		return Networking::MessageStandard::ItemTypes::SEGMENT_ENTITY;
-	}
-	if (itemType == "jonction") {
-		return Networking::MessageStandard::ItemTypes::JUNCTION_ENTITY;
-	}
-	if (itemType == "mur") {
-		return Networking::MessageStandard::ItemTypes::WALL_ENTITY;
-	}
-	if (itemType == "teleporteur") {
-		return Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY;
-	}
-	return -1;
-}
-
-std::string server::MapFileLoader::GetEntityType(char itemType)
-{
-	//TODO: Implement this
-	if (itemType == Networking::MessageStandard::ItemTypes::TABLE_ENTITY) {
-		return "table";
-	}
-	if (itemType == Networking::MessageStandard::ItemTypes::POST_ENTITY) {
-		return "poteau";
-	}
-	if (itemType == Networking::MessageStandard::ItemTypes::START_ENTITY) {
-		return "depart";
-	}
-	if (itemType == Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY) {
-		return "ligneNoire";
-	}
-	if (itemType == Networking::MessageStandard::ItemTypes::SEGMENT_ENTITY) {
-		return "segment";
-	}
-	if (itemType == Networking::MessageStandard::ItemTypes::JUNCTION_ENTITY) {
-		return "jonction";
-	}
-	if (itemType == Networking::MessageStandard::ItemTypes::WALL_ENTITY) {
-		return "mur";
-	}
-	if (itemType == Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
-		return "teleporteur";
-	}
-	return "";
 }
 
 void server::MapFileLoader::StartSaveThread()
@@ -237,7 +181,7 @@ void server::MapFileLoader::SaveEntityToJSON(Entity * entity, rapidjson::Writer<
 
 	// get type
 	writer->Key("type");
-	writer->String(GetEntityType(entity->entityType_).c_str());
+	writer->String(EntityTree::GetEntityType(entity->entityType_).c_str());
 
 	//get positons
 	auto pos = entity->getProperty(Networking::RELATIVE_POSITION);
