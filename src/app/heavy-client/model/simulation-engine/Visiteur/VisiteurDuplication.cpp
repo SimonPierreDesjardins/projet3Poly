@@ -302,31 +302,35 @@ void VisiteurDuplication::copyChildren(NoeudAbstrait* entity, NoeudAbstrait* cop
 void VisiteurDuplication::copyDuplicatedObjects(NoeudAbstrait* duplication)
 {
 	NoeudAbstrait* table = arbre_->chercher(0);
-	glm::dvec3 duplicationRelativePosition = duplication->getPhysicsComponent().relativePosition;
-
-	// Iterate over the duplication children
-	uint32_t nDuplicationChildren = duplication->obtenirNombreEnfants();
-	for (uint32_t i = 0; i < nDuplicationChildren; i++) 
+	if (duplication->getType() != PAIRTELEPORT_ENTITY)
 	{
-		NoeudAbstrait* child = duplication->chercher(i);
+		glm::dvec3 duplicationRelativePosition = duplication->getPhysicsComponent().relativePosition;
 
-		// Copy the properties.
-		std::shared_ptr<NoeudAbstrait> childCopy = arbre_->creerNoeud(child->getType());
+		// Iterate over the duplication children
+		uint32_t nDuplicationChildren = duplication->obtenirNombreEnfants();
+		for (uint32_t i = 0; i < nDuplicationChildren; i++)
+		{
+			NoeudAbstrait* child = duplication->chercher(i);
 
-		PhysicsComponent& childPhysics = child->getPhysicsComponent();
-		PhysicsComponent& copyPhysics = childCopy->getPhysicsComponent();
+			// Copy the properties.
+			std::shared_ptr<NoeudAbstrait> childCopy = arbre_->creerNoeud(child->getType());
 
-		copyPhysics.rotation = childPhysics.rotation;
-		copyPhysics.scale = childPhysics.scale;
-		copyPhysics.absolutePosition = childPhysics.absolutePosition;
-		copyPhysics.relativePosition = childPhysics.relativePosition + duplicationRelativePosition;
+			PhysicsComponent& childPhysics = child->getPhysicsComponent();
+			PhysicsComponent& copyPhysics = childCopy->getPhysicsComponent();
 
-		copyChildren(child, childCopy.get());		
+			copyPhysics.rotation = childPhysics.rotation;
+			copyPhysics.scale = childPhysics.scale;
+			copyPhysics.absolutePosition = childPhysics.absolutePosition;
+			copyPhysics.relativePosition = childPhysics.relativePosition + duplicationRelativePosition;
 
-		// Add to table and notify the server.
-		table->ajouter(childCopy);
-		mapSession_->localEntityCreated(childCopy.get());
+			copyChildren(child, childCopy.get());
+
+			// Add to table and notify the server.
+			table->ajouter(childCopy);
+			mapSession_->localEntityCreated(childCopy.get());
+		}
 	}
+	
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -383,8 +387,7 @@ void VisiteurDuplication::calculerCentreSelection(NoeudAbstrait* noeud)
 
 void VisiteurDuplication::visiter(NoeudPaireTeleporteurs* noeud)
 {
-	/*ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_PAIRTELEPORT);
+	/*std::shared_ptr<NoeudAbstrait> copy = arbre_->creerNoeud(ArbreRenduINF2990::NOM_PAIRTELEPORT);
 
 	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
 	PhysicsComponent& physics = noeud->getPhysicsComponent();

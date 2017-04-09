@@ -9,7 +9,7 @@ void server::MultiUserSystem::AddUser(User * user)
 
 bool server::MultiUserSystem::RemoveUser(User* user)
 {
-	uint32_t nErased = _connectedUserList.erase(user->Info.GetId());
+	uint32_t nErased = (uint32_t)_connectedUserList.erase(user->Info.GetId());
 	bool userFound = nErased != 0;
 	if (userFound)
 	{
