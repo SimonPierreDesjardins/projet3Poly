@@ -66,7 +66,7 @@ private:
 	bool lumiereSpot{ true };
 
 	ControleurLumiere* controleurLumiere_{ nullptr };
-	NoeudRobot* robot_ = nullptr;
+	NoeudRobot* robot_{ nullptr };
 };
 
 #endif /// MODE_PERSONALIZE_H

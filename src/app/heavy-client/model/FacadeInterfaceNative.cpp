@@ -912,8 +912,7 @@ extern "C"
 			profil->setCouleurParDefaut(BODY, true);
 			profil->setCouleurParDefaut(WHEELS, true);
 
-			
-			NoeudRobot* robot = mode->creerRobot(arbre,profil);
+			NoeudRobot* robot = mode->creerRobot(arbre, profil);
 
 			robot->setCouleurDefault(BODY, true);
 			robot->setCouleurDefault(WHEELS, true);

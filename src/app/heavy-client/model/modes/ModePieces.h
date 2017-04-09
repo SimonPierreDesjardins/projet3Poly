@@ -87,6 +87,7 @@ private:
 
 	ArbreRenduINF2990* arbre_{nullptr};
 	NoeudAbstrait* table_{ nullptr };
+	NoeudRobot* robot_{ nullptr };
 	ControleurLumiere* controleurLumiere_{ nullptr };
 
     AffichageTexte* affichageTexte_{ nullptr };

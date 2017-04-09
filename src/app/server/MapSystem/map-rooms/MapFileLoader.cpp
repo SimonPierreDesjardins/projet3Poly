@@ -198,7 +198,11 @@ void server::MapFileLoader::SaveTree() {
 
 	writer->StartObject();
 	writer->Key("table");
+
+	_entityTree->lock();
 	SaveEntityToJSON(_entityTree->findEntity(1), writer);
+	_entityTree->unlock();
+
 	writer->EndObject();
 
 	_mapFile->MapData = buffer.GetString();
@@ -208,11 +212,13 @@ void server::MapFileLoader::VisiterMethod(Entity * entity, rapidjson::Writer<rap
 {
 	auto entityType = entity->entityType_;
 	// check for teleporter, otherwise save normally
-	if (EntitySavesNormally(entityType) && entityType != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
+	if (EntitySavesNormally(entityType) && entityType != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY)
+	{
 		SaveEntityToJSON(entity, writer);
 	}
 	// Teleporter saving methodology
-	else {
+	else if (entityType == Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY)
+	{
 		if (previousTeleporter_ == nullptr) {
 			// save to previous teleporter
 			previousTeleporter_ = entity;

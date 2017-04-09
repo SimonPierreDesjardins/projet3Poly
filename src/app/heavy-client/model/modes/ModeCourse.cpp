@@ -40,8 +40,8 @@ std::array<char, 11> ModeCourse::touchesNonConfigurable_ = { { '+', '-', '\b', '
 ////////////////////////////////////////////////////////////////////////
 ModeCourse::ModeCourse()
 {
-
 	typeMode_ = COURSE; //COURSE
+
 	controleRobot_ = std::make_unique<ControleRobot>();
 	profil_ = FacadeModele::obtenirInstance()->obtenirProfilUtilisateur();
 	controleRobot_->assignerVecteurComportements(profil_->obtenirVecteurComportements());
