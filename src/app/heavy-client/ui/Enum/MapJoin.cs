@@ -17,7 +17,9 @@ enum Response
     {
         MAP_JOINED,
         MAP_FULL,
-        MAP_WRONG_PASSWORD
+        MAP_WRONG_PASSWORD,
+        USER_JOINED,
+        USER_LEFT
     };
 
 #if !__LINE__

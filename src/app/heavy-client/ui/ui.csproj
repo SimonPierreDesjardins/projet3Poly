@@ -120,6 +120,12 @@
     <Compile Include="Edition\EditModifPanel.Designer.cs">
       <DependentUpon>EditModifPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Edition\EditSideMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Edition\EditSideMenu.Designer.cs">
+      <DependentUpon>EditSideMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="enum\Authentification.cs" />
     <Compile Include="enum\EditionTutorialState.cs" />
     <Compile Include="enum\MapJoin.cs" />

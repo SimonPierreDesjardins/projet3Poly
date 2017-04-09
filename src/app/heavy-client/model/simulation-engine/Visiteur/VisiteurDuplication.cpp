@@ -30,8 +30,7 @@
 ////////////////////////////////////////////////////////////////////////
 VisiteurDuplication::VisiteurDuplication(engine::MapSession* mapSession)
 	: mapSession_(mapSession)
-{
-}
+{}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -45,8 +44,7 @@ VisiteurDuplication::VisiteurDuplication(engine::MapSession* mapSession)
 ///
 ////////////////////////////////////////////////////////////////////////
 VisiteurDuplication::~VisiteurDuplication()
-{
-}
+{}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -323,12 +321,11 @@ void VisiteurDuplication::copyDuplicatedObjects(NoeudAbstrait* duplication)
 		copyPhysics.absolutePosition = childPhysics.absolutePosition;
 		copyPhysics.relativePosition = childPhysics.relativePosition + duplicationRelativePosition;
 
-		copyChildren(child, childCopy.get());
+		copyChildren(child, childCopy.get());		
 
 		// Add to table and notify the server.
 		table->ajouter(childCopy);
 		mapSession_->localEntityCreated(childCopy.get());
-
 	}
 }
 
