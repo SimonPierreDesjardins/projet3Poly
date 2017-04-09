@@ -185,19 +185,19 @@ void ControleurLumiere::afficherLumiereSpotRobot() const
 ////////////////////////////////////////////////////////////////////////
 void ControleurLumiere::animer(const glm::dvec3& positionRobot, float dt)
 {
-	positionSpotGyro_[0] = positionRobot.x;
-	positionSpotGyro_[1] = positionRobot.y;
-	positionSpotGyro_[2] = positionRobot.z + 5.0;
-	positionSpotGyro_[3] = 1.0;
+	positionSpotGyro_[0] = (GLfloat)positionRobot.x;
+	positionSpotGyro_[1] = (GLfloat)positionRobot.y;
+	positionSpotGyro_[2] = (GLfloat)(positionRobot.z + 5.0);
+	positionSpotGyro_[3] = GLfloat(1.0);
 
 	if (!estEnPause_)
 	{
-		compteur_ += dt * 720;
+		compteur_ += (int)(dt * 720);
 		compteur_ = compteur_ % 360;
 	}
 	
-	orientationSpotGyro_[0] = glm::cos(utilitaire::DEG_TO_RAD(compteur_));
-	orientationSpotGyro_[1] = glm::sin(utilitaire::DEG_TO_RAD(compteur_));
+	orientationSpotGyro_[0] = (GLfloat)glm::cos(utilitaire::DEG_TO_RAD(compteur_));
+	orientationSpotGyro_[1] = (GLfloat)glm::sin(utilitaire::DEG_TO_RAD(compteur_));
 }
 
 

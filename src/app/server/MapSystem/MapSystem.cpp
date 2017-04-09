@@ -61,7 +61,7 @@ char MapEntry::getSessionType() const
 
 char MapEntry::getNumberOfUsers() const
 {
-	return currentSession_->GetNumberOfUsers();
+	return (char)currentSession_->GetNumberOfUsers();
 }
 
 void MapEntry::AddUser(User * user)
@@ -80,7 +80,7 @@ void MapEntry::SendMap(User * user)
 		std::vector<std::string> packets;
 
 		int maxPacketSize = 256;
-		int bytesLeft = mapFile.size();
+		int bytesLeft = (int)mapFile.size();
 		int currentByte = 0;
 
 		while (bytesLeft > 0) {
@@ -91,7 +91,7 @@ void MapEntry::SendMap(User * user)
 			bytesLeft -= packetSize;
 		}
 
-		char numberOfPackets = packets.size();
+		char numberOfPackets = (int)packets.size();
 		for (char i = 0; i < numberOfPackets; ++i) {
 			std::string message("mt");
 			message += i + 1;

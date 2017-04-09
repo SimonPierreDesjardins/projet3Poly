@@ -214,7 +214,7 @@ void ClientMapSession::deleteLocalEntity(NoeudAbstrait* entity)
 		// If the top node has children, push them in the stack.
 		else
 		{
-			for	(int i = 0; i < todelete->obtenirNombreEnfants(); ++i)
+			for	(unsigned int i = 0; i < todelete->obtenirNombreEnfants(); ++i)
 			{
 				toDeleteStack.push(todelete->chercher(i));
 			}
@@ -267,7 +267,7 @@ void ClientMapSession::updateSelectionStateLocalEntityAndChildren(NoeudAbstrait*
 
 		// Push children in the queue.
 		uint32_t nChildren = toSelect->obtenirNombreEnfants();
-		for (int i = 0; i < nChildren; ++i)
+		for (unsigned int i = 0; i < nChildren; ++i)
 		{
 			selectionQueue.push(toSelect->chercher(i));
 		}

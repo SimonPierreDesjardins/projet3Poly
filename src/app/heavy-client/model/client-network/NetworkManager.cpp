@@ -76,7 +76,7 @@ void NetworkManager::uploadMap(const std::string& filePath) {
 		bytesLeft -= packetSize;
 	}
 
-	char numberOfPackets = packets.size();
+	char numberOfPackets = (char)packets.size();
 	for (char i = 0; i < numberOfPackets; ++i) {
 		std::string message("");
 		serializer_.serialize(uint32_t(packets[i].size() + 8), message);

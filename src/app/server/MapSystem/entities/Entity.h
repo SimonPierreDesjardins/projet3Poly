@@ -71,7 +71,7 @@ inline void Entity::removeChild(Entity* child)
 
 inline int Entity::getChildCount()
 {
-	return children_.size();
+	return (int)children_.size();
 }
 
 inline Entity::ChildrenContainer::iterator Entity::begin()
