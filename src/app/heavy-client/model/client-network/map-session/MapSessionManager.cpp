@@ -60,6 +60,7 @@ bool MapSessionManager::joinMapSession(uint32_t mapId)
 
 void MapSessionManager::quitCurrentMapSession()
 {
+	currentMapSession_->quitMapSession();
 	currentMapSession_ = &localMapSession_;
 }
 
