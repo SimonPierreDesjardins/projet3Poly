@@ -51,7 +51,7 @@ private:
 
 	bool isInitialized_{ false };
 	bool isRendering_{ false };
-	bool isAnimating_{ false };
+	bool isAnimating_{ true };
 	/// Poignée ("handle") vers la fenêtre où l'affichage se fait.
 	HWND  hWnd_{ nullptr };
 	/// Poignée ("handle") vers le contexte OpenGL.
