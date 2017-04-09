@@ -32,6 +32,7 @@ public:
 	inline void updatePhysicProperty(Networking::PropertyType propertyType, const Eigen::Vector3f& propertyValue);
 	inline Eigen::Vector3f* getProperty(Networking::PropertyType propertyType);
 
+
 private:
 	Entity* parent_{ nullptr };
 	std::unordered_map<uint32_t, Entity*> children_;

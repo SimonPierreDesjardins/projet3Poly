@@ -8,9 +8,9 @@
 namespace server
 {
 
-AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo, MapFileEntry* mapFile)
+AbstractMapRoom::AbstractMapRoom(MapInfo* info, MapFileEntry* mapFile)
 {
-	mapInfo_ = mapInfo;
+	mapInfo = info;
 	// load up the tree from the file
 	mapFileLoader_ = new MapFileLoader(&tree_, mapFile);
 }
@@ -38,7 +38,7 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 			// Send joined response to new user.
 			std::string userEntry(4, '\0');
 			userEntry.append("mjs");
-			Networking::serialize(mapInfo_->GetId(), userEntry);
+			Networking::serialize(mapInfo->GetId(), userEntry);
 			Networking::serialize(it->second->Info.GetId(), userEntry);
 			userEntry.append(it->second->Info.UserName);
 			Networking::MessageStandard::UpdateLengthHeader(userEntry);
@@ -73,7 +73,7 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	std::string mapReadyMessage;
 	Networking::serialize(uint32_t(0), mapReadyMessage);
 	mapReadyMessage.append("mr");
-	Networking::serialize(mapInfo_->GetId(), mapReadyMessage);
+	Networking::serialize(mapInfo->GetId(), mapReadyMessage);
 	Networking::MessageStandard::UpdateLengthHeader(mapReadyMessage);
 	user->ForwardMessage(mapReadyMessage);
 }
@@ -229,16 +229,16 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	// update mapinfo with new Item
 	switch (entityType) {
 	case Networking::MessageStandard::ItemTypes::POST_ENTITY:
-		mapInfo_->nbPoteaux++;
+		mapInfo->nbPoteaux++;
 		break;
 	case Networking::MessageStandard::ItemTypes::WALL_ENTITY:
-		mapInfo_->nbMurs++;
+		mapInfo->nbMurs++;
 		break;
 	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
-		mapInfo_->nbLignes++;
+		mapInfo->nbLignes++;
 		break;
 	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
-		mapInfo_->nbTeleporteurs++;
+		mapInfo->nbTeleporteurs++;
 		break;
 	}
 
@@ -257,16 +257,16 @@ void AbstractMapRoom::handleEntityRemovalMessage(User* sender, const std::string
 
 	switch (deletedEntity->entityType_) {
 	case Networking::MessageStandard::ItemTypes::POST_ENTITY:
-		mapInfo_->nbPoteaux--;
+		mapInfo->nbPoteaux--;
 		break;
 	case Networking::MessageStandard::ItemTypes::WALL_ENTITY:
-		mapInfo_->nbMurs--;
+		mapInfo->nbMurs--;
 		break;
 	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
-		mapInfo_->nbLignes--;
+		mapInfo->nbLignes--;
 		break;
 	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
-		mapInfo_->nbTeleporteurs--;
+		mapInfo->nbTeleporteurs--;
 		break;
 	}
 

@@ -338,11 +338,15 @@ void MapSystem::HandleMapQuitMessage(User* user, const std::string& message)
 	}
 
 	// Send Reply to every user in the mapSession.
-	std::string reply(message);
-	Networking::serialize(user->Info.GetId(), reply);
-	Networking::MessageStandard::UpdateLengthHeader(reply);
-	foundMapSession->broadcastMessage(reply);
-	foundMapSession->RemoveUser(user);
+	if (foundMapSession)
+	{
+		std::string reply(message);
+		Networking::serialize(foundMapSession->mapInfo->GetId(), reply);
+		Networking::serialize(user->Info.GetId(), reply);
+		Networking::MessageStandard::UpdateLengthHeader(reply);
+		broadcastMessage(reply);
+		foundMapSession->RemoveUser(user);
+	}
 }
 
 void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)

@@ -12,8 +12,11 @@ namespace server
 class AbstractMapRoom : public MultiUserSystem
 {
 public:	
-	AbstractMapRoom(MapInfo* mapInfo, MapFileEntry* mapFile);
+	AbstractMapRoom(MapInfo* info, MapFileEntry* mapFile);
 	virtual ~AbstractMapRoom() = 0;
+
+	// reference to the current map info
+	MapInfo* mapInfo = nullptr;
 
 protected:
 	EntityTree tree_;
@@ -37,8 +40,6 @@ protected:
 	virtual void buildEntityCreationMessage(Entity* entity, std::string& message);
 	void buildEntitySelectedMessage(Entity* entity, std::string& message);
 
-	// reference to the current map info
-	MapInfo* mapInfo_ = nullptr;
 
 	MapFileLoader* mapFileLoader_;
 

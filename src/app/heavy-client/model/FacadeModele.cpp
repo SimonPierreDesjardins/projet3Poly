@@ -257,8 +257,8 @@ void FacadeModele::assignerMode(Mode mode)
 	switch (mode) 
 	{
 		case MENU_PRINCIPAL:
-			mapSessionManager_.requestToLeaveCurrentMapSession();
 			mode_ = std::make_unique<ModeMenuPrincipal>();
+			mapSessionManager_.requestToLeaveCurrentMapSession();
 			break;
 
 		case SIMULATION:

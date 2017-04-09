@@ -18,6 +18,7 @@ EntityTree::~EntityTree()
 
 Entity* EntityTree::createEntity(char entityType, uint32_t parentId)
 {
+	treeLock_.lock();
 	Entity* newEntityPtr = nullptr;
 	EntityContainer::iterator it = entities_.find(parentId);
 	if (it != entities_.end())
@@ -35,11 +36,13 @@ Entity* EntityTree::createEntity(char entityType, uint32_t parentId)
 		}
 		it->second.addChild(newEntityPtr);
 	}
+	treeLock_.unlock();
 	return newEntityPtr;
 }
 
 bool EntityTree::deleteEntity(uint32_t entityToDelete)
 {
+	treeLock_.lock();
 	bool success = false;
 	EntityContainer::iterator it = entities_.find(entityToDelete);
 	if(it != entities_.end())
@@ -49,6 +52,7 @@ bool EntityTree::deleteEntity(uint32_t entityToDelete)
 		entities_.erase(it);
 		success = true;
 	}
+	treeLock_.unlock();
 	return success;
 }
 
