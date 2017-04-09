@@ -179,8 +179,8 @@ void SimulationEngine::render()
 	EnginSon::obtenirInstance()->obtenirSystemeSon()->update();
 	//Affiche la lumière directionnelle
 	lightController_.afficherLumiereDirectionnelle();
-	//controleurLumiere_->afficherLumiereSpotGyro();
-	//controleurLumiere_->afficherLumiereSpotRobot();
+	lightController_.afficherLumiereSpotGyro();
+	lightController_.afficherLumiereSpotRobot();
 
 	// Afficher la scène.
 	tree_.afficher(-1);

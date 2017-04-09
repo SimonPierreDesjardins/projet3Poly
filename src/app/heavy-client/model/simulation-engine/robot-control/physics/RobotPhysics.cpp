@@ -44,9 +44,12 @@ void RobotPhysics::applyPhysicsEffects(float dt)
 	vue_ = engine_->getView();
 
 	robot_->suivreCamera(vue_);
-	
-	controleurLumiere_->animer(robot_->getPhysicsComponent().relativePosition, dt);
+
 	robot_->assignerControleurLumiere(controleurLumiere_);
+	controleurLumiere_->animer(robot_->getPhysicsComponent().relativePosition, dt);
+	
+
+	
 
 }
 
