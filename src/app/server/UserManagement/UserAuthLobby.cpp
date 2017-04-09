@@ -72,7 +72,7 @@ void UserAuthLobby::handleCreateUsernameRequest(ConnectionWrapper* wrapper, std:
 
 void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string message)
 {
-	std::string username(message.begin() + Networking::MessageStandard::DATA_START, message.end());
+	std::string username(message.begin() + Networking::MessageStandard::DATA_START+1, message.end());
 	
 	std::cout << "Received login request with username: " << username << "." << std::endl;
 
@@ -88,8 +88,8 @@ void UserAuthLobby::handleLoginRequest(ConnectionWrapper* wrapper, std::string m
 		}
 		else {
 			// Assign connection to its user
-			User* authedUser = _users.at(username);
 			connectingUser->AssignConnection(wrapper->GetConnection());
+			connectingUser->EstClientLourd(message[Networking::MessageStandard::DATA_START] == 1);
 
 			reply += 's';
 			Networking::serialize(connectingUser->Info.GetId(), reply);

@@ -27,8 +27,9 @@ void NetworkManager::handleServerMessage(const std::string& message)
 void NetworkManager::authenticate(const std::string& username)
 {
 	std::string message;
-	serializer_.serialize(uint32_t(username.size() + 6), message);
+	serializer_.serialize(uint32_t(username.size() + 7), message);
 	message.append("ul");
+	message += (char)1; // signifie qu'on se log avec un client lourd.
 	message.append(username);
 	connection_.sendMessage(message);
 }

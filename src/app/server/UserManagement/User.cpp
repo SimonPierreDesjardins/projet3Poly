@@ -45,6 +45,14 @@ void User::OnConnectionLost()
 	notifyDisconnected(this);
 }
 
+bool User::EstClientLourd() {
+	return estClientLourd_;
+}
+
+void User::EstClientLourd(bool clientLourd) {
+	estClientLourd_ = clientLourd;
+}
+
 void User::StartMessageReadThread()
 {
 

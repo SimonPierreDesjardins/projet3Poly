@@ -23,6 +23,10 @@ public:
 
 	void ForwardMessage(const std::string& message);
 
+	bool EstClientLourd();
+	void EstClientLourd(bool estClientLourd);
+
+
 private:
 	void HookToConnection(Networking::Connection* connectionToListenTo);
 
@@ -30,6 +34,8 @@ private:
 	void OnConnectionLost();
 
 	Networking::Connection* _connection;
+
+	bool estClientLourd_ = false;
 
 	static void StartMessageReadThread();
 	static void StopMessageReadThread();
