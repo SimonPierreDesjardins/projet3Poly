@@ -25,7 +25,6 @@
 #include "NoeudTable.h"
 
 #include "VisiteurAbstrait.h"
-#include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
 #include "RectangleEnglobant.h"
@@ -49,8 +48,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud)
-    : NoeudRobot { id, typeNoeud }
+NoeudF1::NoeudF1(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
+    : NoeudRobot { id, typeNoeud, arbre }
 {
 	type_ = F1_ENTITY;
 	//profil_->setModele("f1");
@@ -139,8 +138,10 @@ void NoeudF1::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
+
 	//controleurLumiere_->afficherLumiereSpotRobot();
 	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot
+
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}*/
@@ -151,8 +152,10 @@ void NoeudF1::afficherConcret() const
 	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
+
 	/*
 	if (mode_ != PERSONALIZE && mode_ != PIECES)
+
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{

@@ -25,7 +25,7 @@
 class EtatMiseAEchelle : public OnlineTool
 {
 public:
-	EtatMiseAEchelle(client_network::MapSession* mapSession);
+	EtatMiseAEchelle(client_network::ClientMapSession* mapSession);
 	virtual ~EtatMiseAEchelle();
 	virtual void gererClicGaucheEnfonce(const int& x, const int& y);
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

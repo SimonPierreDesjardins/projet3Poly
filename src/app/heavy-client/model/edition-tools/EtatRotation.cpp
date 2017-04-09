@@ -20,7 +20,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatRotation::EtatRotation(client_network::MapSession* mapSession)
+EtatRotation::EtatRotation(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(ROTATION);

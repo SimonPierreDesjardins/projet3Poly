@@ -1,28 +1,4 @@
-﻿
-
-
-
-# Permettre d'inclure des fichiers d'entêtes des librairies externes sans spécifier le path complet
-include_directories(
-    ${CMAKE_SOURCE_DIR}/ext/boost
-    ${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/include
-    ${CMAKE_SOURCE_DIR}/ext/mongo-c-driver/include
-    ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
-	${CMAKE_SOURCE_DIR}/ext/Eigen/include
-	${CMAKE_SOURCE_DIR}/ext/glm/include
-    ${CMAKE_SOURCE_DIR}/ext/rapidJSON/include
-    ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
-	chat-management
-	MapSystem
-	MapSystem/map-rooms
-	MapSystem/map-rooms/game-rooms
-	MapSystem/entities
-	UserManagement
-	message-dispatcher
-	.
-)
-
-# Trouve les librairies
+﻿# Trouve les librairies
 find_library(libbsoncxx_LIB 
 libbsoncxx
 ${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/lib)
@@ -165,7 +141,7 @@ add_executable(Server
 )
 
 target_link_libraries(Server 
-PRIVATE networkUtils
+PRIVATE networkUtils simulation_engine
 ${MONGO_LIBS}
 )
 
@@ -179,4 +155,24 @@ target_compile_definitions(Server
     _WINSOCK_DEPRECATED_NO_WARNINGS
 	MONGOCXX_STATIC
 	BSONCXX_STATIC
+)
+
+# Permettre d'inclure des fichiers d'entêtes des librairies externes sans spécifier le path complet
+target_include_directories(Server PUBLIC
+    simulation_engine
+    ${CMAKE_SOURCE_DIR}/ext/boost
+    ${CMAKE_SOURCE_DIR}/ext/mongo-cxx-3-1-1/include
+    ${CMAKE_SOURCE_DIR}/ext/mongo-c-driver/include
+    ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
+	${CMAKE_SOURCE_DIR}/ext/Eigen/include
+	${CMAKE_SOURCE_DIR}/ext/glm/include
+    ${CMAKE_SOURCE_DIR}/ext/rapidJSON/include
+    ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
+	chat-management
+	MapSystem
+	MapSystem/map-rooms
+	MapSystem/entities
+	UserManagement
+	message-dispatcher
+	.
 )

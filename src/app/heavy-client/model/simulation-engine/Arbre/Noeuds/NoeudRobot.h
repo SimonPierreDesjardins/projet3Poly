@@ -22,10 +22,11 @@
 #include <stack>
 #include "Vue.h"
 
+class ArbreRendu;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class NoeudRobot
-/// @brief Classe qui représente le robot du premier projet intégrateur.
+/// @brief Classe qui reprï¿½sente le robot du premier projet intï¿½grateur.
 ///
 /// @author Martin Paradis
 /// @date 2015-08-30
@@ -71,8 +72,8 @@ public:
 
     using ConteneurCapteursDistance = std::array<CapteurDistance, N_CAPTEURS_DISTANCE>;
 
-	/// Constructeur à partir du type du noeud.
-	NoeudRobot(uint32_t id, const std::string& typeNoeud);
+	/// Constructeur ï¿½ partir du type du noeud.
+	NoeudRobot(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre);
 	/// Destructeur.
 	~NoeudRobot();
 
@@ -85,7 +86,7 @@ public:
 	virtual void animer(float dt);
 	virtual void suivreCamera(vue::Vue* vue);
 
-    /// Méthode permettant au robot de vérifier la collision avec un noeud.
+    /// Mï¿½thode permettant au robot de vï¿½rifier la collision avec un noeud.
     bool verifierCollision(NoeudPoteau* poteau);
     bool verifierCollision(NoeudMur* noeud);
     bool verifierCollision(NoeudTable* noeud);
@@ -93,7 +94,7 @@ public:
 	bool verifierCollision(NoeudPiece* piece);
 	bool verifierCollision(NoeudRobot* robot);
 
-	// Permet de modifier les paramètres du robot
+	// Permet de modifier les paramï¿½tres du robot
 	inline void assignerVitesseRotation(float vitesse);
 
 	//Permet de positionner les roues
@@ -108,7 +109,7 @@ public:
 
 	inline void assignerEstEnCollision(bool collision);
     
-	// Retourne l'états des capeurs du robot.
+	// Retourne l'ï¿½tats des capeurs du robot.
     inline SuiveurLigne* obtenirSuiveurLigne();
     inline ConteneurCapteursDistance* obtenirCapteursDistance();
 	inline RectangleEnglobant& getBoundingBox();
@@ -118,6 +119,9 @@ public:
 	std::stack <NoeudAbstrait*> getTableauCoins();
 
 	std::stack <NoeudAbstrait*> tableauCoins;
+
+	virtual RectangleEnglobant* obtenirFormeEnglobante();
+	virtual const RectangleEnglobant* obtenirFormeEnglobante() const;
 
 	virtual void initialisationCouleurs(int* roues, int* modele);
 
@@ -131,6 +135,7 @@ public:
 
 	void assignerControleurLumiere(ControleurLumiere* controleur);
 
+	ControleurLumiere* obtenirControleurLumiere();
 
 protected:
 
@@ -153,7 +158,7 @@ protected:
 
     ArbreRendu* arbre_{ nullptr };
 
-    // Mise à jour des attributs du robot.
+    // Mise ï¿½ jour des attributs du robot.
 	void mettreAJourCapteurs();
 
 	bool estEnCollision_{ false };
@@ -184,7 +189,7 @@ protected:
 ///
 /// @fn inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
 ///
-/// Cette fonction retourne une référence sur le suiveur de ligne.
+/// Cette fonction retourne une rï¿½fï¿½rence sur le suiveur de ligne.
 ///
 /// @param[in] Aucune.
 ///
@@ -200,7 +205,7 @@ inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
 ///
 /// @fn inline SuiveurLigne* NoeudRobot::obtenirSuiveurLigne()
 ///
-/// Cette fonction retourne une référence le conteneur de capteurs de distance.
+/// Cette fonction retourne une rï¿½fï¿½rence le conteneur de capteurs de distance.
 ///
 /// @param[in] Aucune.
 ///
@@ -218,7 +223,7 @@ inline NoeudRobot::ConteneurCapteursDistance* NoeudRobot::obtenirCapteursDistanc
 ///
 /// Cette modifie la vitesse de rotation angulaire.
 ///
-/// @param[in] vitesse : vitesse que l'on souhaite assigner à l'attribut vitesseRotation_.
+/// @param[in] vitesse : vitesse que l'on souhaite assigner ï¿½ l'attribut vitesseRotation_.
 ///
 /// @return Aucune.
 ///

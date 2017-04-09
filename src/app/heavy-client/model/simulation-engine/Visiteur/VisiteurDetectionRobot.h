@@ -16,11 +16,12 @@
 
 class SuiveurLigne;
 class CapteurDistance;
+class ProfilUtilisateur;
 
 ///////////////////////////////////////////////////////////////////////////
 /// @class VisiteurDetectionLigne
-/// @brief Visiteur permettant à un capteur optique 
-///		   de détecter une ligne à une certaine position. 
+/// @brief Visiteur permettant ï¿½ un capteur optique 
+///		   de dï¿½tecter une ligne ï¿½ une certaine position. 
 ///
 /// @author Olivier St-Amour
 /// @date 2016-02-26
@@ -28,10 +29,10 @@ class CapteurDistance;
 class VisiteurDetectionRobot : public VisiteurAbstrait
 {
 public:
-	/// Désactiver le constructeur par défaut.
+	/// Dï¿½sactiver le constructeur par dï¿½faut.
 	VisiteurDetectionRobot();
     
-    /// Constructeur par paramètres.
+    /// Constructeur par paramï¿½tres.
     VisiteurDetectionRobot(NoeudRobot* robot);
 
 	/// Destructeur.
@@ -55,9 +56,12 @@ public:
 
 	virtual void visiter(NoeudRobot* robot);
 
+	virtual void visiter(NoeudLigneCourseAbstrait* checkpoint);
+
 	virtual void visiter(NoeudPaireTeleporteurs* noeud);
 
 	bool collisionTeleporteur(NoeudTeleporteur* teleporteur);
+
 
 private:
     NoeudRobot* robot_{ nullptr };

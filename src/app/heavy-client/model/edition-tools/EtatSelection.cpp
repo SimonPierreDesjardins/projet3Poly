@@ -27,7 +27,7 @@
 /// Constructeur par défault. Assigne arbre_ à arbre courant
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatSelection::EtatSelection(client_network::MapSession* mapSession)
+EtatSelection::EtatSelection(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(SELECTION);
@@ -130,7 +130,7 @@ void EtatSelection::gererClicGauche(const int& x, const int& y)
 {
 	visiteurSelection_->assignerEstDrag(false);
     chercherSelection(x, y, 1.0, 1.0);
-    visiteurSelection_->selectionner(selection_.begin(), selection_.end(), mapSession_);
+    visiteurSelection_->selectionner(selection_.begin(), selection_.end(), mapSession_, arbre_);
 }
 
 
@@ -155,7 +155,7 @@ void EtatSelection::gererDragGauche(const int& xAvant, const int& yAvant, const 
     int x = xAvant + dx / 2;
     int y = yAvant + dy / 2;
     chercherSelection(x, y, glm::abs(dx), glm::abs(dy));
-    visiteurSelection_->selectionner(selection_.begin(), selection_.end(), mapSession_);
+    visiteurSelection_->selectionner(selection_.begin(), selection_.end(), mapSession_, arbre_);
 }
 
 

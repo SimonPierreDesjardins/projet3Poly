@@ -10,7 +10,7 @@
 
 #include "OnlineTool.h"
 
-OnlineTool::OnlineTool(client_network::MapSession* mapSession)
+OnlineTool::OnlineTool(client_network::ClientMapSession* mapSession)
 	: mapSession_(mapSession)
 {
 }

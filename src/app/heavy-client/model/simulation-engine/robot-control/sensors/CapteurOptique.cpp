@@ -12,7 +12,6 @@
 #include <glm/glm.hpp>
 
 #include "Utilitaire.h"
-#include "FacadeModele.h"
 #include "NoeudLigne.h"
 
 const double CapteurOptique::RAYON_CERCLE_ENGLOBANT = 0.4;

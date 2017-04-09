@@ -24,7 +24,8 @@ enum Mode
         TEST,
         PERSONALIZE,
         TUTORIAL_EDITION,
-        PIECES
+        PIECES,
+        COURSE
     };
 
 #if !__LINE__

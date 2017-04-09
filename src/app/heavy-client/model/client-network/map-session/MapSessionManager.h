@@ -3,7 +3,7 @@
 
 #include <memory>
 
-#include "MapSession.h"
+#include "ClientMapSession.h"
 
 class ArbreRendu;
 
@@ -22,22 +22,22 @@ public:
 	MapSessionManager(engine::SimulationEngine* engine, NetworkManager* network);
 	~MapSessionManager() = default;
 
-	inline MapSession* getLocalMapSession();
-	MapSession* getServerSession(uint32_t mapId);
+	inline ClientMapSession* getLocalMapSession();
+	ClientMapSession* getServerSession(uint32_t mapId);
 
-	MapSession* createServerSession(uint32_t mapId, char mapType, const std::string& mapName);
+	ClientMapSession* createServerSession(uint32_t mapId, char mapType, const std::string& mapName);
 	void deleteServerSession(uint32_t mapid);
 
 	bool joinMapSession(uint32_t);
 	void quitCurrentMapSession();
 
-	inline MapSession* getCurrentMapSession();
+	inline ClientMapSession* getCurrentMapSession();
 
 private:
-	std::unordered_map<uint32_t, MapSession> serverMapSessions_;
-	MapSession localMapSession_;
+	std::unordered_map<uint32_t, ClientMapSession> serverMapSessions_;
+	ClientMapSession localMapSession_;
 
-	MapSession* currentMapSession_ = &localMapSession_;
+	ClientMapSession* currentMapSession_ = &localMapSession_;
 
 	engine::SimulationEngine* engine_;
 	NetworkManager* network_;
@@ -45,12 +45,12 @@ private:
 	MapSessionManager() = delete;
 };
 
-inline MapSession* MapSessionManager::getLocalMapSession()
+inline ClientMapSession* MapSessionManager::getLocalMapSession()
 {
 	return &localMapSession_;
 }
 
-inline MapSession* MapSessionManager::getCurrentMapSession()
+inline ClientMapSession* MapSessionManager::getCurrentMapSession()
 {
 	if (currentMapSession_ == nullptr)
 	{

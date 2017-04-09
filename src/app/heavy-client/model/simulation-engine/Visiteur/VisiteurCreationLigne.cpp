@@ -8,12 +8,10 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "FacadeModele.h"
 #include "Vue.h"
 #include "VisiteurCreationLigne.h"
 #include "ArbreRenduINF2990.h"
 #include "NoeudTypes.h"
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -58,6 +56,7 @@ VisiteurCreationLigne::~VisiteurCreationLigne()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurCreationLigne::visiter(ArbreRendu* noeud)
 {
+	arbre_ = noeud;
 	noeud->chercher(0)->accepterVisiteur(this);
 }
 
@@ -74,7 +73,7 @@ void VisiteurCreationLigne::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurCreationLigne::visiter(NoeudTable* noeud)
 {
-	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
 	referenceNoeud_ = nouveauNoeud.get();
 
 	PhysicsComponent& physics = nouveauNoeud->getPhysicsComponent();

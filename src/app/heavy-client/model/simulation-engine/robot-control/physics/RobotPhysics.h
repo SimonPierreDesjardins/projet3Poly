@@ -16,7 +16,7 @@
 #include "Camera.h"
 #include "Vue.h"
 
-namespace client_network {
+namespace engine {
 	class MapSession;
 }
 
@@ -35,7 +35,8 @@ public:
 	RobotPhysics() = default;
 	~RobotPhysics() = default;
 
-	void init(NoeudRobot* robot, engine::SimulationEngine* engine, client_network::MapSession* mapSession);
+
+	void init(NoeudRobot* robot, engine::SimulationEngine* engine, engine::MapSession* mapSession);
 
     // Mise à jour des attributs du robot.
 	void applyPhysicsEffects(float dt);
@@ -46,7 +47,7 @@ private:
 
 	NoeudRobot* robot_ = nullptr;
 	ArbreRendu* tree_ = nullptr;
-	client_network::MapSession* mapSession_ = nullptr;
+	engine::MapSession* mapSession_ = nullptr;
 
 	VisiteurDetectionRobot collisionDetection_;
 

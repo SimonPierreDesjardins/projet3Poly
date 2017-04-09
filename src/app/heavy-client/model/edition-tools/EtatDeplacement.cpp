@@ -20,7 +20,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatDeplacement::EtatDeplacement(client_network::MapSession* mapSession)
+EtatDeplacement::EtatDeplacement(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession),
 	  visiteurDeplacement_(mapSession)
 {

@@ -21,7 +21,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationPoteau::EtatCreationPoteau(client_network::MapSession* mapSession)
+EtatCreationPoteau::EtatCreationPoteau(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(CREATION_POTEAU);

@@ -19,8 +19,6 @@
 
 #include "VisiteurAbstrait.h"
 
-#include "FacadeModele.h"
-
 #define coinMinX -48
 #define coinMaxX  48
 #define coinMinY -24
@@ -59,23 +57,21 @@ NoeudTeleporteur::NoeudTeleporteur(uint32_t id, const std::string& typeNoeud)
 
 void NoeudTeleporteur::animer(float dt)
 {
-	if (!FacadeModele::obtenirInstance()->obtenirMode()->obtenirModeEnPause())
-	{
-		if (compteurHauteurTeleporteur <= 0.02)
-			versLeHaut = true;
+	if (compteurHauteurTeleporteur <= 0.02)
+		versLeHaut = true;
 
-		if (compteurHauteurTeleporteur >= 1.5)
-			versLeHaut = false;
+	if (compteurHauteurTeleporteur >= 1.5)
+		versLeHaut = false;
 
-		if (versLeHaut)
-			compteurHauteurTeleporteur = compteurHauteurTeleporteur + 0.02;
+	if (versLeHaut)
+		compteurHauteurTeleporteur = compteurHauteurTeleporteur + 0.02;
 
-		if (!versLeHaut)
-			compteurHauteurTeleporteur = compteurHauteurTeleporteur - 0.02;
+	if (!versLeHaut)
+		compteurHauteurTeleporteur = compteurHauteurTeleporteur - 0.02;
 
-        physics_.absolutePosition.z = compteurHauteurTeleporteur;
-        physics_.relativePosition.z = compteurHauteurTeleporteur;
-	}
+    physics_.absolutePosition.z = compteurHauteurTeleporteur;
+    physics_.relativePosition.z = compteurHauteurTeleporteur;
+
 	physics_.absolutePosition = physics_.relativePosition;
 	mettreAJourFormeEnglobante();
 }
@@ -216,11 +212,11 @@ void NoeudTeleporteur::afficherConcret() const
 	glPopMatrix();
 
     //rectangleEnglobant_.afficher(positionCourante_);
-	int mode = FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
+	/*int mode = FacadeModele::obtenirInstance()->obtenirMode()->obtenirTypeMode();
 	if (mode == EDITION || mode == TUTORIAL_EDITION) //montre les cercles des teleporteurs si dans le mode edition
 	{
 		cercleEnglobant_.afficher(physics_.absolutePosition);
-	}
+	}*/
 	
 }
 

@@ -19,7 +19,7 @@
 #include "CommandeRobot.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
-#include "MapSession.h"
+#include "map-session/ClientMapSession.h"
 
 #include <iostream>
 
@@ -33,7 +33,6 @@
 
 #include "ModeSimulation.h"
 
-std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b', '1', '2', '3', 'J', 'K', 'L', 'B', 'T' } };
   
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -42,7 +41,8 @@ std::array<char, 11> ModeSimulation::touchesNonConfigurable_ = { { '+', '-', '\b
 /// Constructeur par d�faut pour le mode simulation
 ///
 ////////////////////////////////////////////////////////////////////////
-ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::MapSession* session)
+
+ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session)
 	  : controleRobot_(creerRobot(engine->getEntityTree(), profil)), OnlineMapMode(session)
 {
 	robot_ = controleRobot_.obtenirNoeud();
@@ -68,6 +68,8 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
 	controleurLumiere_->assignerLumiereSpotGyro(true);
 	controleurLumiere_->assignerLumiereSpotRobot(true);
 	controleurLumiere_->setEnPause(false);
+
+	engine_ = engine;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -269,6 +271,7 @@ void ModeSimulation::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
             controleRobot_.setEnPause(!estEnPause);
 			controleurLumiere_->setEnPause(!estEnPause);
 			modeEnPause = !modeEnPause;
+			engine_->setAnimating(estEnPause);
             if (estEnPause)
             {
                 affichageTexte_->demarrerChrono();      

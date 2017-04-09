@@ -70,6 +70,8 @@ public:
 	virtual void visiter(NoeudRobot* noeud);
 
 	virtual void visiter(NoeudTeleporteur* noeud);
+	
+	virtual void visiter(NoeudLigneCourseAbstrait* noeud);
 
 	virtual void visiter(NoeudPaireTeleporteurs* noeud);
 

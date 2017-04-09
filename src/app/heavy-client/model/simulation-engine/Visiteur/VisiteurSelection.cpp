@@ -11,7 +11,6 @@
 #include <iterator>
 #include <unordered_set>
 
-#include "FacadeModele.h"
 #include "Vue.h"
 #include "VisiteurSelection.h"
 #include "ArbreRenduINF2990.h"
@@ -19,7 +18,7 @@
 #include "Utilitaire.h"
 #include "Modele3D.h"
 #include "FormeEnglobanteAbstraite.h"
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -64,12 +63,13 @@ VisiteurSelection::~VisiteurSelection()
 /// @param[in] fin : L'itérateur qui pointe sur la fin du vecteur de selection.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurSelection::selectionner(Iterateur debut, Iterateur fin, client_network::MapSession* mapSession)
+void VisiteurSelection::selectionner(Iterateur debut, Iterateur fin, engine::MapSession* mapSession, ArbreRendu* arbre)
 {
+	
     debut_ = debut;
     fin_ = fin;
 	mapSession_ = mapSession;
-    FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->accepterVisiteur(this);
+    arbre->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////

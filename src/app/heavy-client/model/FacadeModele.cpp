@@ -221,16 +221,15 @@ void FacadeModele::reinitialiser()
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void FacadeModele::animer(float dt)
+void FacadeModele::animer(float temps)
 {
-	client_network::MapSession* session = mapSessionManager_.getCurrentMapSession();
-	if (session)
-	{
-		session->synchronizedAnimate(dt, mode_.get());
+	engine_.animate(temps);
+	if (engine_.isAnimating()) {
+		mode_->postAnimer(temps);
 	}
 }
 
-void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSession)
+void FacadeModele::setOnlineMapMode(Mode mode, client_network::ClientMapSession* mapSession)
 {
 	switch (mode)
 	{
@@ -256,39 +255,46 @@ void FacadeModele::setOnlineMapMode(Mode mode, client_network::MapSession* mapSe
 ////////////////////////////////////////////////////////////////////////
 void FacadeModele::assignerMode(Mode mode)
 {
-	client_network::MapSession* currentSession = mapSessionManager_.getCurrentMapSession();
 	switch (mode) 
 	{
 		case MENU_PRINCIPAL:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeMenuPrincipal>();
 			break;
 
 		case SIMULATION:
-			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, currentSession);
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		case EDITION:
-			mode_ = std::make_unique<ModeEdition>(&engine_, currentSession);
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeEdition>(&engine_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		case CONFIGURE:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModeConfigure>();
 			break;
 
 		case TEST:
-			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, currentSession);
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeSimulation>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		case PERSONALIZE:
+			mode_.reset(nullptr);
 			mode_ = std::make_unique<ModePersonalize>(&engine_, &profil_);
 			break;
 
 		case TUTORIAL_EDITION:
-			mode_ = std::make_unique<ModeTutorialEdition>(currentSession);
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModeTutorialEdition>(mapSessionManager_.getLocalMapSession());
 			break;
 		
 		case PIECES:
-			mode_ = std::make_unique<ModePieces>(&engine_, &profil_);
+			mode_.reset(nullptr);
+			mode_ = std::make_unique<ModePieces>(&engine_, &profil_, mapSessionManager_.getLocalMapSession());
 			break;
 
 		default:
@@ -347,7 +353,3 @@ void FacadeModele::getDesktopResolution(int& horizontal, int& vertical)
 	horizontal = desktop.right;
 	vertical = desktop.bottom;
 }
-
-///////////////////////////////////////////////////////////////////////////////
-/// @}
-///////////////////////////////////////////////////////////////////////////////

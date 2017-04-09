@@ -25,7 +25,6 @@
 #include "NoeudTable.h"
 
 #include "VisiteurAbstrait.h"
-#include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
 #include "RectangleEnglobant.h"
@@ -49,8 +48,8 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud)
-	: NoeudRobot{ id, typeNoeud }
+NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
+	: NoeudRobot{ id, typeNoeud, arbre }
 {
 	//profil_->setModele("audi");
 	positionDepart();
@@ -136,8 +135,10 @@ void NoeudAudi::afficherConcret() const
 
 	glRotatef(physics_.rotation.z, 0.0, 0.0, 1.0);
 
+
 	//controleurLumiere_->afficherLumiereSpotRobot();
 	/*if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}*/
@@ -150,7 +151,7 @@ void NoeudAudi::afficherConcret() const
 
 	/*
 	// Débugage des capteurs de distance.
-	if (mode_ != PERSONALIZE && mode_ != PIECES)
+	if (mode_ != PERSONALIZE && mode_ != PIECES && mode_ != COURSE)
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{

@@ -1,12 +1,16 @@
-#ifndef MAP_SESSION
-#define MAP_SESSION
+#ifndef CLIENT_MAP_SESSION
+#define CLIENT_MAP_SESSION
 
 #include <unordered_map>
 #include <queue>
 #include <stack>
 #include <mutex>
+
 #include "glm/glm.hpp"
 #include "NetworkStandard.h"
+#include "NetworkManager.h"
+
+#include "MapSession.h"
 
 class ArbreRendu;
 class NoeudAbstrait;
@@ -20,9 +24,7 @@ namespace engine {
 namespace client_network
 {
 
-class NetworkManager;
-
-class MapSession
+class ClientMapSession : public engine::MapSession
 {
 public:
 	struct UserInfo
@@ -30,7 +32,6 @@ public:
 		uint32_t userId;
 		std::string userName;
 		glm::vec4 selectionColor;
-		// TODO: handle permissions here.
 	};
 
 	struct SessionInfo
@@ -38,38 +39,35 @@ public:
 		char mapType;
 		uint32_t mapId;
 		std::string mapName;
-		// TODO: handle permissions here.
 	};
 
 	SessionInfo info;
 
-	MapSession(engine::SimulationEngine* engine, NetworkManager* network);
-	virtual ~MapSession() = default;
+	ClientMapSession(engine::SimulationEngine* engine, NetworkManager* network);
+	virtual ~ClientMapSession() = default;
 
-	uint32_t getThisUserId() const;
+	uint32_t getThisUserId() override;
 
 	void synchronizedAnimate(double dt, ModeAbstrait* mode);
-
 	void mapReady(ModeAbstrait* mode);
 
 	// Entity created
-	void localEntityCreated(NoeudAbstrait* entity);
+	virtual void localEntityCreated(NoeudAbstrait* entity) override;
 	void serverEntityCreated(uint8_t type, uint32_t parentId,
 		const glm::vec3& relPos, const glm::vec3& absPos,
 		const glm::vec3& rotation, const glm::vec3& scale,
 		uint32_t entityId, uint32_t userId);
 
 	// Entity deleted
-	void deleteLocalEntity(NoeudAbstrait* entity);
+	virtual void deleteLocalEntity(NoeudAbstrait* entity) override;
 	void serverEntityDeleted(uint32_t entityId);
 
 	// Entity selection
-	void updateSelectionStateLocalEntityAndChildren(NoeudAbstrait* entity, bool isSelected);
+	virtual void updateSelectionStateLocalEntityAndChildren(NoeudAbstrait* entity, bool isSelected) override;
 	void serverEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId);
 
-	// Property update
 	void serverEntityPropertyUpdated(uint32_t entityId, Networking::PropertyType, const glm::vec3& updatedProperty);
-	void localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType, const glm::vec3& updatedProperty);
+	virtual void localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType, const glm::vec3& updatedProperty) override;
 
 	void setIsOnlineSession(bool isOnline);
 
@@ -82,13 +80,11 @@ public:
 
 private:
 	
-	std::mutex sessionLock_;
+	std::mutex pendingQueueLock_;
 
-	ModeAbstrait* currentMode_ = nullptr;
-	engine::SimulationEngine* engine_;
 	ArbreRendu* entityTree_;
 	NetworkManager* network_;
-
+	ModeAbstrait* currentMode_ = nullptr;
 	bool isOnline_ = false;
 
 	std::stack<glm::vec4> selectionColors;
@@ -103,10 +99,9 @@ private:
 	void confirmLocalEntity(NoeudAbstrait* entity, uint32_t entityId);
 
 
-	MapSession() = delete;
+	ClientMapSession() = delete;
 };
-
 
 }
 
-#endif // MAP_SESSION
+#endif // CLIENT_MAP_SESSION

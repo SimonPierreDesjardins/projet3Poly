@@ -1,10 +1,4 @@
 ﻿# Permettre d'inclure des fichiers d'entêtes des librairies externes sans spécifier le path complet
-include_directories(
-    ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
-    ${CMAKE_SOURCE_DIR}/ext/glm/include
-    ${CMAKE_SOURCE_DIR}/ext/Eigen/include
-    ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
-)
 
 add_library(networkUtils
     include/Networking.h
@@ -26,6 +20,12 @@ add_library(networkUtils
 
 set_property(TARGET networkUtils PROPERTY FOLDER "app/network")
 
+target_include_directories(networkUtils PUBLIC
+    ${CMAKE_SOURCE_DIR}/ext/asio-1.10.8/include
+    ${CMAKE_SOURCE_DIR}/ext/glm/include
+    ${CMAKE_SOURCE_DIR}/ext/Eigen/include
+    ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
+)
 
 target_compile_definitions(networkUtils
     PRIVATE

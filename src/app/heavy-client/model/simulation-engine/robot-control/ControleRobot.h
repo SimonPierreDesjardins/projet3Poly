@@ -101,7 +101,7 @@ private:
 
 	ProfilUtilisateur* profil_{ nullptr };
     ControleurLumiere* controleurLumiere_{ nullptr };
-	client_network::MapSession* mapSession_{ nullptr };
+	engine::MapSession* mapSession_{ nullptr };
 
 	// pointeur vers le noeud du robot
 	// Pointeur sur un profil

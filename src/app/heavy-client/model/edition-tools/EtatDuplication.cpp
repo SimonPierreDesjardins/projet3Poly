@@ -21,7 +21,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatDuplication::EtatDuplication(client_network::MapSession* mapSession)
+EtatDuplication::EtatDuplication(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession), 
 	  visiteurDeplacement_(mapSession),
 	  visiteurDuplication_(mapSession),

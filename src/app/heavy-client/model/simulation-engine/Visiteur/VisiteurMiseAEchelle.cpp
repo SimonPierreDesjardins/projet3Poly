@@ -10,7 +10,7 @@
 #include "VisiteurMiseAEchelle.h"
 #include "ArbreRendu.h"
 #include "NoeudTypes.h"
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -42,7 +42,7 @@ VisiteurMiseAEchelle::~VisiteurMiseAEchelle()
 {
 }
 
-void VisiteurMiseAEchelle::resizeSelectedEntities(ArbreRendu* tree, client_network::MapSession* mapSession)
+void VisiteurMiseAEchelle::resizeSelectedEntities(ArbreRendu* tree, engine::MapSession* mapSession)
 {
 	mapSession_ = mapSession;
 	tree->accepterVisiteur(this);
@@ -82,7 +82,7 @@ void VisiteurMiseAEchelle::initialiser(ArbreRendu* noeud)
 /// @return Aucune.
 ///
 ////////////////////////////////////////////////////////////////////////
-void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud, client_network::MapSession* mapSession)
+void VisiteurMiseAEchelle::reinitialiser(ArbreRendu* noeud, engine::MapSession* mapSession)
 {
 	NoeudAbstrait* table = noeud->chercher("table");
 	for (unsigned int i = 0; i < table->obtenirNombreEnfants(); i++) {

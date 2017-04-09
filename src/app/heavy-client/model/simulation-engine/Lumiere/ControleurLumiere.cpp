@@ -8,12 +8,12 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-
-#include "ControleurLumiere.h"
-#include "FacadeModele.h"
 #include <iostream>
+#include "Utilitaire.h"
+#include "ControleurLumiere.h"
 
 using namespace std;
+
 ////////////////////////////////////////////////////////////////////////
 ///
 /// @fn void ControleurLumiere::ControleurLumiere()

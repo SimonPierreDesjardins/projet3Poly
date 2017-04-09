@@ -13,7 +13,6 @@
 #include "VisiteurAbstrait.h"
 #include "VisiteurTypes.h"
 #include "Projection.h"
-#include "EventHandler.h"
 
 #include "GL/glew.h"
 

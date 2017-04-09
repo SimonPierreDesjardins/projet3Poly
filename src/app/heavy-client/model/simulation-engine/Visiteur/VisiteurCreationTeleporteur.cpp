@@ -8,7 +8,6 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "FacadeModele.h"
 #include "Vue.h"
 #include "VisiteurCreationTeleporteur.h"
 #include "ArbreRenduINF2990.h"
@@ -57,6 +56,7 @@ VisiteurCreationTeleporteur::~VisiteurCreationTeleporteur()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurCreationTeleporteur::visiter(ArbreRendu* noeud)
 {
+	arbre_ = noeud;
 	noeud->chercher(0)->accepterVisiteur(this);
 }
 
@@ -73,7 +73,7 @@ void VisiteurCreationTeleporteur::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurCreationTeleporteur::visiter(NoeudTable* noeud)
 {
-	std::shared_ptr<NoeudAbstrait> nouveauNoeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->creerNoeud(ArbreRenduINF2990::NOM_TELEPORTEUR);
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_TELEPORTEUR);
 	PhysicsComponent& physics = nouveauNoeud->getPhysicsComponent();
 	physics.relativePosition = positionRelative_;
 	physics.absolutePosition = positionRelative_;

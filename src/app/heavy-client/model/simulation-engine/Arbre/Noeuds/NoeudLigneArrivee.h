@@ -1,0 +1,45 @@
+///////////////////////////////////////////////////////////////////////////
+/// @file NoeudLigneArrivee.h
+/// @author Simon-Pierre Desjardins
+/// @date 2017-03-08
+/// @version 1.0
+///
+/// @addtogroup inf2990 INF2990
+/// @{
+///////////////////////////////////////////////////////////////////////////
+
+#ifndef __ARBRE_NOEUDS_NOEUDLIGNEARRIVEE_H__
+#define __ARBRE_NOEUDS_NOEUDLIGNEARRIVEE_H__
+
+#include "NoeudLigneCourseAbstrait.h"
+#include "CercleEnglobant.h"
+#include "RectangleEnglobant.h"
+#include "GL/glew.h"
+#include "VisiteurAbstrait.h"
+
+///////////////////////////////////////////////////////////////////////////
+/// @class NoeudLigneArrivee
+/// @brief Noeud des lignes darrivee
+///
+/// @author Simon-Pierre Desjardins
+/// @date 2017-03-08
+///////////////////////////////////////////////////////////////////////////
+class NoeudLigneArrivee : public NoeudLigneCourseAbstrait
+{
+
+public:
+	/// Constructeur
+	NoeudLigneArrivee(uint32_t id, const std::string& typeNoeud);
+	/// Destructeur.
+	~NoeudLigneArrivee();
+
+private:
+	
+};
+ 
+
+#endif
+
+///////////////////////////////////////////////////////////////////////////////
+/// @}
+///////////////////////////////////////////////////////////////////////////////

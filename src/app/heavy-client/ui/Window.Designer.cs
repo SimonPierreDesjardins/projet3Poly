@@ -48,7 +48,6 @@
             this.viewPort.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.viewPort.Size = new System.Drawing.Size(799, 536);
             this.viewPort.TabIndex = 0;
-            this.viewPort.MouseMove += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseMove);
             this.viewPort.MouseUp += new System.Windows.Forms.MouseEventHandler(this.viewPort__MouseUp);
             this.viewPort.Resize += new System.EventHandler(this.viewPort_Resize);
             // 

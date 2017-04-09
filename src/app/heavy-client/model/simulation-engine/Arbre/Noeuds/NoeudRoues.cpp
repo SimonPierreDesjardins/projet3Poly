@@ -10,7 +10,6 @@
 #include "NoeudRoues.h"
 #include "Utilitaire.h"
 #include "VisiteurAbstrait.h"
-#include "FacadeModele.h"
 
 #include "GL/glew.h"
 #include <cmath>

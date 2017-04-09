@@ -27,7 +27,7 @@
 class EtatDuplication : public OnlineTool
 {
 public:
-	EtatDuplication(client_network::MapSession* mapSession);
+	EtatDuplication(client_network::ClientMapSession* mapSession);
 
 	virtual ~EtatDuplication();
 	virtual void gererClicGaucheRelache(const int& x, const int& y);

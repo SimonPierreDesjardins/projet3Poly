@@ -25,7 +25,7 @@ void EventHandler::onEntityCreated(uint8_t entityType, uint32_t parentId,
 	const glm::vec3& rotation, const glm::vec3& scale,
 	uint32_t entityId, uint32_t userId)
 {
-	client_network::MapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
 	if (currentSession != nullptr)
 	{
 		currentSession->serverEntityCreated(entityType, parentId, absPos, relPos, rotation, scale, entityId, userId);
@@ -34,7 +34,7 @@ void EventHandler::onEntityCreated(uint8_t entityType, uint32_t parentId,
 
 void EventHandler::onEntityDeleted(uint32_t entityId)
 {
-	client_network::MapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
 	if (currentSession != nullptr)
 	{
 		currentSession->serverEntityDeleted(entityId);
@@ -43,7 +43,7 @@ void EventHandler::onEntityDeleted(uint32_t entityId)
 
 void EventHandler::onEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId)
 {
-	client_network::MapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
 	if (currentSession != nullptr)
 	{
 		currentSession->serverEntitySelected(entityId, isSelected, userId);
@@ -63,7 +63,7 @@ void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 	{
 	case 's':
 		{
-			client_network::MapSession* currentSession = mapSessionManager_->getServerSession(mapId);
+			client_network::ClientMapSession* currentSession = mapSessionManager_->getServerSession(mapId);
 			// The map exists on the client.
 			if (currentSession)
 			{
@@ -95,7 +95,7 @@ void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 
 void EventHandler::onMapReady(uint32_t mapId)
 {
-	client_network::MapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
 	if (currentSession && currentSession->info.mapId == mapId)
 	{
 		FacadeModele::obtenirInstance()->assignerMode((Mode)(currentSession->info.mapType));
@@ -105,7 +105,7 @@ void EventHandler::onMapReady(uint32_t mapId)
 
 void EventHandler::onUserLeftCurrentMapSession(uint32_t userId)
 {
-	client_network::MapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
 	if (currentSession)
 	{
 		currentSession->serverUserLeftMapSession(userId);
@@ -125,7 +125,7 @@ void EventHandler::onUserAuthentified(uint32_t userId)
 
 void EventHandler::onEntityPropertyUpdated(uint32_t entityId, char propertyType, const glm::vec3& propertyValue)
 {
-	client_network::MapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
 	if (currentSession)
 	{
 		currentSession->serverEntityPropertyUpdated(entityId, (Networking::PropertyType)(propertyType), propertyValue);

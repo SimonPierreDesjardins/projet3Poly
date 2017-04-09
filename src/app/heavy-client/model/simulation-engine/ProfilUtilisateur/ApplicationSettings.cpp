@@ -18,7 +18,6 @@
 #include <windowsx.h>
 #include <fstream>
 #include <sstream>
-#include "FacadeModele.h"
 
 ////////////////////////////////////////////////////////////////////////
 ///

@@ -11,10 +11,9 @@
 #include <queue>
 #include <memory>
 
-#include "MapSession.h"
-#include "FacadeModele.h"
+#include "map-session\MapSession.h"
 #include "NoeudTypes.h"
-#include "ArbreRendu.h"
+#include "ArbreRenduINF2990.h"
 
 #include "VisiteurDuplication.h"
 
@@ -29,11 +28,9 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurDuplication::VisiteurDuplication(client_network::MapSession* mapSession)
+VisiteurDuplication::VisiteurDuplication(engine::MapSession* mapSession)
 	: mapSession_(mapSession)
 {
-	NoeudAbstrait* noeud = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->chercher(0);
-	calculerCentreSelection(noeud);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -64,7 +61,8 @@ VisiteurDuplication::~VisiteurDuplication()
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(ArbreRendu* noeud)
 {
-	noeud->chercher("table")->accepterVisiteur(this);
+	arbre_ = noeud;
+	noeud->chercher(0)->accepterVisiteur(this);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -80,8 +78,9 @@ void VisiteurDuplication::visiter(ArbreRendu* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudTable* noeud)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre->creerNoeud(ArbreRenduINF2990::NOM_DUPLICATION);
+	calculerCentreSelection(noeud);
+
+	std::shared_ptr<NoeudAbstrait> nouveauNoeud = arbre_->creerNoeud(ArbreRenduINF2990::NOM_DUPLICATION);
 
 	PhysicsComponent& physics = nouveauNoeud->getPhysicsComponent();
 	physics.absolutePosition = centreSelection_;
@@ -116,8 +115,7 @@ void VisiteurDuplication::visiter(NoeudTable* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudPoteau* post)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
+	std::shared_ptr<NoeudAbstrait> copy = arbre_->creerNoeud(ArbreRenduINF2990::NOM_POTEAU);
 
 	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
 	PhysicsComponent& postPhysics = post->getPhysicsComponent();
@@ -145,8 +143,7 @@ void VisiteurDuplication::visiter(NoeudPoteau* post)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudTeleporteur* noeud)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_TELEPORTEUR);
+	std::shared_ptr<NoeudAbstrait> copy = arbre_->creerNoeud(ArbreRenduINF2990::NOM_TELEPORTEUR);
 
 	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
 	PhysicsComponent& physics = noeud->getPhysicsComponent();
@@ -156,7 +153,9 @@ void VisiteurDuplication::visiter(NoeudTeleporteur* noeud)
 	copyPhysics.relativePosition = copyPhysics.relativePosition - centreSelection_;
 
 	duplication_->ajouter(copy);
+
 	// TODO server notification here.
+	mapSession_->localEntityCreated(copy.get());
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -172,8 +171,7 @@ void VisiteurDuplication::visiter(NoeudTeleporteur* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudMur* noeud)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_MUR);
+	std::shared_ptr<NoeudAbstrait> copy = arbre_->creerNoeud(ArbreRenduINF2990::NOM_MUR);
 
 	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
 	PhysicsComponent& physics = noeud->getPhysicsComponent();
@@ -203,8 +201,7 @@ void VisiteurDuplication::visiter(NoeudMur* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudLigne* noeud)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
+	std::shared_ptr<NoeudAbstrait> copy = arbre_->creerNoeud(ArbreRenduINF2990::NOM_LIGNENOIRE);
 
 	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
 	PhysicsComponent& physics = noeud->getPhysicsComponent();
@@ -238,10 +235,8 @@ void VisiteurDuplication::visiter(NoeudLigne* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudSegment* noeud)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-
 	// Creer le nouveau segment et copier les attributs du segment.
-	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);	
+	std::shared_ptr<NoeudAbstrait> copy = arbre_->creerNoeud(ArbreRenduINF2990::NOM_SEGMENT);	
 
 	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
 	PhysicsComponent& physics = noeud->getPhysicsComponent();
@@ -270,10 +265,8 @@ void VisiteurDuplication::visiter(NoeudSegment* noeud)
 ////////////////////////////////////////////////////////////////////////
 void VisiteurDuplication::visiter(NoeudJonction* noeud)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	
 	// Creer la nouvelle jonction et copier la position relative.
-	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
+	std::shared_ptr<NoeudAbstrait> copy = arbre_->creerNoeud(ArbreRenduINF2990::NOM_JONCTION);
 
 	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
 	PhysicsComponent& physics = noeud->getPhysicsComponent();
@@ -289,12 +282,11 @@ void VisiteurDuplication::visiter(NoeudJonction* noeud)
 void VisiteurDuplication::copyChildren(NoeudAbstrait* entity, NoeudAbstrait* copy)
 {
 	// We need to copy all the children (probably only if this is a line).
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
 	uint32_t nChildren = entity->obtenirNombreEnfants();
 	for (uint32_t j = 0; j < nChildren; ++j)
 	{
 		NoeudAbstrait* child = entity->chercher(j);
-		std::shared_ptr<NoeudAbstrait> childCopy = arbre->creerNoeud(child->getType());
+		std::shared_ptr<NoeudAbstrait> childCopy = arbre_->creerNoeud(child->getType());
 
 		PhysicsComponent& childPhysics = child->getPhysicsComponent();
 		PhysicsComponent& copyPhysics = childCopy->getPhysicsComponent();
@@ -311,8 +303,7 @@ void VisiteurDuplication::copyChildren(NoeudAbstrait* entity, NoeudAbstrait* cop
 
 void VisiteurDuplication::copyDuplicatedObjects(NoeudAbstrait* duplication)
 {
-	ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
-	NoeudAbstrait* table = arbre->chercher(0);
+	NoeudAbstrait* table = arbre_->chercher(0);
 	glm::dvec3 duplicationRelativePosition = duplication->getPhysicsComponent().relativePosition;
 
 	// Iterate over the duplication children
@@ -322,7 +313,7 @@ void VisiteurDuplication::copyDuplicatedObjects(NoeudAbstrait* duplication)
 		NoeudAbstrait* child = duplication->chercher(i);
 
 		// Copy the properties.
-		std::shared_ptr<NoeudAbstrait> childCopy = arbre->creerNoeud(child->getType());
+		std::shared_ptr<NoeudAbstrait> childCopy = arbre_->creerNoeud(child->getType());
 
 		PhysicsComponent& childPhysics = child->getPhysicsComponent();
 		PhysicsComponent& copyPhysics = childCopy->getPhysicsComponent();
@@ -391,6 +382,31 @@ void VisiteurDuplication::calculerCentreSelection(NoeudAbstrait* noeud)
 	}
 	// Calculer et assigner la position relative à la ligne
 	centreSelection_= { (minX + maxX) / 2.0, (minY + maxY) / 2.0, 0.0 };
+}
+
+void VisiteurDuplication::visiter(NoeudPaireTeleporteurs* noeud)
+{
+	/*ArbreRendu* arbre = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	std::shared_ptr<NoeudAbstrait> copy = arbre->creerNoeud(ArbreRenduINF2990::NOM_PAIRTELEPORT);
+
+	PhysicsComponent& copyPhysics = copy->getPhysicsComponent();
+	PhysicsComponent& physics = noeud->getPhysicsComponent();
+
+	copyPhysics.scale = physics.scale;
+	copyPhysics.absolutePosition = physics.absolutePosition;
+	copyPhysics.relativePosition = physics.relativePosition - centreSelection_;
+
+	copy->assignerSelection(noeud->estSelectionne());
+
+	nouvelleLigne_ = copy.get();
+	duplication_->ajouter(copy);
+	mapSession_->localEntityCreated(copy.get());
+
+	for (unsigned int i = 0; i < noeud->obtenirNombreEnfants(); i++)
+	{
+		noeud->chercher(i)->accepterVisiteur(this);
+	}*/
+	//voir si on veut faire duplication ou non, ceci ne marche pas pour l'instant
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

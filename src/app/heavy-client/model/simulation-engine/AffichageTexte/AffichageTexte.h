@@ -52,6 +52,9 @@ public:
 
 	void assignerPiecesEstAfficher(bool estAffiche);
 	void assignerFinModePiecesEstAfficher(bool estAffiche);
+	void assignerAvantDebutCourse(bool estAffiche);
+	void assignerTempsFinal(bool estAffiche);
+	bool obtenirTempsFinal();
 
 private:
     const char* FONT_PATH{"./media/font/Consolas.ttf"};
@@ -70,6 +73,8 @@ private:
 	bool piecesEstAffiche_{ false };
 	bool finModePieces_{ false };
     bool enPause_{ true };
+	bool avantDebutCourse_{ false };
+	bool tempsFinal_{ false };
 
 	double duree_{ 0.0 };
 

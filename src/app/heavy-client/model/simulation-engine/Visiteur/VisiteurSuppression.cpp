@@ -8,7 +8,6 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-#include "FacadeModele.h"
 #include "Vue.h"
 #include <iostream>
 
@@ -16,7 +15,7 @@
 #include "NoeudTypes.h"
 #include "Utilitaire.h"
 #include "Modele3D.h"
-#include "MapSession.h"
+#include "map-session\MapSession.h"
 
 #include "VisiteurSuppression.h"
 
@@ -31,7 +30,7 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurSuppression::VisiteurSuppression(client_network::MapSession * mapSession)
+VisiteurSuppression::VisiteurSuppression(engine::MapSession * mapSession)
 	: mapSession_(mapSession)
 {
 }

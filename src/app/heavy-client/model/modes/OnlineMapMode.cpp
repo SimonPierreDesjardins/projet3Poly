@@ -1,8 +1,8 @@
-#include "MapSession.h"
+#include "map-session/ClientMapSession.h"
 
 #include "OnlineMapMode.h"
 
-OnlineMapMode::OnlineMapMode(client_network::MapSession* mapSession)
+OnlineMapMode::OnlineMapMode(client_network::ClientMapSession* mapSession)
 	: mapSession_(mapSession)
 {
 	mapSession_->mapReady(this);

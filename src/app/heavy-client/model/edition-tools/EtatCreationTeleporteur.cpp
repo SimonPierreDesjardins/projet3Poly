@@ -22,7 +22,7 @@
 /// Constructeur par défault
 ///
 ////////////////////////////////////////////////////////////////////////
-EtatCreationTeleporteur::EtatCreationTeleporteur(client_network::MapSession* mapSession)
+EtatCreationTeleporteur::EtatCreationTeleporteur(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(CREATION_TELEPORTOR);

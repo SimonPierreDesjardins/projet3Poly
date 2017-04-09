@@ -17,7 +17,7 @@
 #include <vector>
 #include <iterator>
 
-namespace client_network
+namespace engine
 {
 	class MapSession;
 }
@@ -41,7 +41,7 @@ public:
 	virtual ~VisiteurSelection();
 	
     // Initialiser la sélection.
-    void selectionner(Iterateur debut, Iterateur fin, client_network::MapSession* mapSession);
+    void selectionner(Iterateur debut, Iterateur fin, engine::MapSession* mapSession, ArbreRendu* arbre);
 
 	/// Parcours du noeudTable.
 	virtual void visiter(ArbreRendu* noeud);
@@ -53,7 +53,7 @@ public:
 private:
 	bool ctrlAppuye_ = false;
     Iterateur debut_, fin_;
-	client_network::MapSession* mapSession_;
+	engine::MapSession* mapSession_;
 };
 
 ////////////////////////////////////////////////////////////////////////

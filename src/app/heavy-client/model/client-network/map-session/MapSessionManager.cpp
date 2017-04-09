@@ -12,9 +12,9 @@ MapSessionManager::MapSessionManager(engine::SimulationEngine* engine, NetworkMa
 	localMapSession_.setIsOnlineSession(false);
 }
 
-MapSession* MapSessionManager::getServerSession(uint32_t mapId)
+ClientMapSession* MapSessionManager::getServerSession(uint32_t mapId)
 {
-	MapSession* mapSessionFound = nullptr;
+	ClientMapSession* mapSessionFound = nullptr;
 	auto it = serverMapSessions_.find(mapId);
 	if (it != serverMapSessions_.end())
 	{
@@ -23,14 +23,14 @@ MapSession* MapSessionManager::getServerSession(uint32_t mapId)
 	return mapSessionFound;
 }
 
-MapSession* MapSessionManager::createServerSession(uint32_t mapId, char mapType, const std::string& mapName)
+ClientMapSession* MapSessionManager::createServerSession(uint32_t mapId, char mapType, const std::string& mapName)
 {
 	// Build the map inplace because move and copy contructor are deleted.
 	auto pair = serverMapSessions_.emplace(std::piecewise_construct,
 										   std::forward_as_tuple(mapId),
 		                                   std::forward_as_tuple(engine_, network_));
 
-	MapSession* newMapSession = nullptr;
+	ClientMapSession* newMapSession = nullptr;
 	if (pair.second)
 	{
 		newMapSession = &pair.first->second;

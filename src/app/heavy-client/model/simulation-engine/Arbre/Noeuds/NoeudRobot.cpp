@@ -27,7 +27,6 @@
 #include "NoeudPiece.h"
 
 #include "VisiteurAbstrait.h"
-#include "FacadeModele.h"
 #include "ArbreRenduINF2990.h"
 
 #include "RectangleEnglobant.h"
@@ -53,7 +52,7 @@ const double MINIMUM_REBOND = 5;\
 // @fn NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 //
 // Ce constructeur ne fait qu'appeler la version de la classe et base
-// et donner des valeurs par défaut aux variables membres.
+// et donner des valeurs par dï¿½faut aux variables membres.
 //
 // @param[in] id :        L'identifiant du noeud.
 // @param[in] typeNoeud : Le type du noeud.
@@ -61,11 +60,11 @@ const double MINIMUM_REBOND = 5;\
 // @return Aucune (constructeur).
 //
 ////////////////////////////////////////////////////////////////////////
-NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
+NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
     : NoeudComposite{ id, typeNoeud }
 {
 	type_ = ROBOT_ENTITY;
-	arbre_ = FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990();
+	arbre_ = arbre;
 	table_ = arbre_->chercher(ArbreRenduINF2990::NOM_TABLE);
 
 	std::shared_ptr<NoeudAbstrait> roueGauche = arbre_->creerNoeud(ArbreRenduINF2990::NOM_ROUES);
@@ -87,8 +86,6 @@ NoeudRobot::NoeudRobot(uint32_t id, const std::string& typeNoeud)
 
 	updateEnginesRadius();
 	positionnerRoues();
-
-	controleurLumiere_ = FacadeModele::obtenirInstance()->obtenirControleurLumiere();
 }
 
 void NoeudRobot::updateEnginesRadius()
@@ -128,7 +125,7 @@ NoeudRobot::~NoeudRobot()
 /// @fn NoeudRobot::NoeudRobot(const std::string& typeNoeud)
 ///
 /// Ce constructeur ne fait qu'appeler la version de la classe et base
-/// et donner des valeurs par défaut aux variables membres.
+/// et donner des valeurs par dï¿½faut aux variables membres.
 ///
 /// @param[in] typeNoeud : Le type du noeud.
 ///
@@ -146,7 +143,7 @@ void NoeudRobot::positionDepart()
 ///
 /// @fn void NoeudRobot::afficherConcret() const
 ///
-/// Cette fonction effectue le véritable rendu de l'objet.
+/// Cette fonction effectue le vï¿½ritable rendu de l'objet.
 ///
 /// @return Aucune.
 ///
@@ -169,16 +166,16 @@ void NoeudRobot::afficherConcret() const
     
 
 	/*	
-	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empêche lumiere spot et capteurs pour personnaliser
+	if (mode_ != PERSONALIZE && mode_ != PIECES)  //empï¿½che lumiere spot et capteurs pour personnaliser
 	{
 		controleurLumiere_->afficherLumiereSpotGyro();
 	}
 	*/
 
-	// Affichage du modèle.
+	// Affichage du modï¿½le.
 	vbo_->dessiner();
 	
-	// Appel à la version de la classe de base pour l'affichage des enfants.
+	// Appel ï¿½ la version de la classe de base pour l'affichage des enfants.
 	NoeudComposite::afficherConcret();
 
 	/*
@@ -186,7 +183,7 @@ void NoeudRobot::afficherConcret() const
 	{
 		if (profil_->obtenirOptionDebogage(DEBOGAGE_CAPTEURS))
 		{
-			// Débugage des capteurs de distance.
+			// Dï¿½bugage des capteurs de distance.
 			for (int i = 0; i < N_CAPTEURS_DISTANCE; i++)
 			{
 				capteursDistance_->at(i).afficher();
@@ -203,10 +200,10 @@ void NoeudRobot::afficherConcret() const
 ///
 /// @fn void NoeudRobot::accepterVisiteur(VisiteurAbstrait* visiteur)
 ///
-/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse déléguer
-/// sa tâche à la méthode qui se charge de ce type de noeud.
+/// Cette fonction prend le pointeur de ce noeud et le passe au visiteur pour que ce dernier puisse dï¿½lï¿½guer
+/// sa tï¿½che ï¿½ la mï¿½thode qui se charge de ce type de noeud.
 ///
-/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour déléguer au concret après)
+/// @param[in] visiteur: le pointeur au visiteur abstrait. (pour dï¿½lï¿½guer au concret aprï¿½s)
 ///
 /// @return Aucune.
 ///
@@ -237,7 +234,7 @@ void NoeudRobot::animer(float dt)
 ///
 /// void NoeudRobot::calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslation, double& vitesseAngulaire) const
 ///
-/// Cette méthode retourne les composantes du vitesse de collision en fonction
+/// Cette mï¿½thode retourne les composantes du vitesse de collision en fonction
 /// d'une normale de collision.
 ///
 /// @param[in] normale : La normale de collision avec laquelle calculer la collision.
@@ -252,14 +249,14 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale)
 	glm::dvec3 orientationTangentielle, orientationCentripete;
     rectangleEnglobant_.calculerVecteursOrientation(orientationCentripete, orientationTangentielle);
 
-    // La nouvelle vitesse de translation en collision est la réflexion de la vitesse en translation courante.
+    // La nouvelle vitesse de translation en collision est la rï¿½flexion de la vitesse en translation courante.
     vitesseTranslationCollision_ = glm::reflect(physics_.linearVelocity, normale) * FACTEUR_ATTENUATION;
 
     // La vitesse angulaire de collision est l'inverse de la vitesse angulaire courante.
-    // La vitesse en translation ajoute sa projection sur l'orientation de la vitesse engulaire également.
+    // La vitesse en translation ajoute sa projection sur l'orientation de la vitesse engulaire ï¿½galement.
     vitesseAngulaireCollision_ = (- physics_.angularVelocity.z - glm::dot(vitesseTranslationCollision_, orientationCentripete)) * FACTEUR_ATTENUATION;    
 
-    // S'assurer que la vitesse de collision reste à l'intérieur d'une certaine limite.
+    // S'assurer que la vitesse de collision reste ï¿½ l'intï¿½rieur d'une certaine limite.
     vitesseTranslationCollision_.x = glm::clamp(vitesseTranslationCollision_.x, -50.0, 50.0);
     vitesseTranslationCollision_.y = glm::clamp(vitesseTranslationCollision_.y, -50.0, 50.0);
     vitesseAngulaireCollision_ = glm::clamp(vitesseAngulaireCollision_, -50.0, 50.0);
@@ -269,7 +266,7 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale)
 ///
 /// void NoeudRobot::calculerComposantesVitesseCourante(glm::dvec3& vitesseTranslation, double& vitesseAngulaire) const
 ///
-/// Cette méthode retourne les composantes du vitesse de collision en fonction
+/// Cette mï¿½thode retourne les composantes du vitesse de collision en fonction
 /// d'une normale de collision.
 ///
 /// @param[in] normale : La normale de collision avec laquelle calculer la collision.
@@ -310,15 +307,15 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, NoeudRo
 	//glm::dvec3 totalMomentum = thisMomentum + otherMomentum;
 
 
-    // La nouvelle vitesse de translation en collision est la réflexion de la vitesse en translation courante.
+    // La nouvelle vitesse de translation en collision est la rï¿½flexion de la vitesse en translation courante.
     //vitesseTranslationCollision_ = glm::reflect(physics_.linearVelocity, normale) * momentumCoefficient;
 
     // La vitesse angulaire de collision est l'inverse de la vitesse angulaire courante.
-    // La vitesse en translation ajoute sa projection sur l'orientation de la vitesse engulaire également.
+    // La vitesse en translation ajoute sa projection sur l'orientation de la vitesse engulaire ï¿½galement.
     //vitesseAngulaireCollision_ = (- physics_.angularVelocity.z - glm::dot(vitesseTranslationCollision_, orientationCentripete)) * momentumCoefficient;    
 
 
-    // S'assurer que la vitesse de collision reste à l'intérieur d'une certaine limite.
+    // S'assurer que la vitesse de collision reste ï¿½ l'intï¿½rieur d'une certaine limite.
     vitesseTranslationCollision_.x = glm::clamp(vitesseTranslationCollision_.x, -50.0, 50.0);
     vitesseTranslationCollision_.y = glm::clamp(vitesseTranslationCollision_.y, -50.0, 50.0);
     vitesseAngulaireCollision_ = glm::clamp(vitesseAngulaireCollision_, -50.0, 50.0);
@@ -344,9 +341,9 @@ void NoeudRobot::calculerComposantesCollision(const glm::dvec3& normale, NoeudRo
 ///
 /// @fn void NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 ///
-/// Cette fonction vérifie s'il y a une collision avec le robot et un poteau
+/// Cette fonction vï¿½rifie s'il y a une collision avec le robot et un poteau
 ///
-/// @param[in] noeud: Prend le NoeudPoteau en paramètre ce qui correspond aux poteaux.
+/// @param[in] noeud: Prend le NoeudPoteau en paramï¿½tre ce qui correspond aux poteaux.
 ///
 /// @return Aucune.
 ///
@@ -358,7 +355,7 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
     CercleEnglobant* cercle = poteau->obtenirFormeEnglobante();
     bool enIntersection = rectangleEnglobant_.calculerIntersection(*cercle);
     bool enCollision = cercle->obtenirEnCollision();
-    // Le poteau est en intersection et il ne se trouve pas déjà en collision.
+    // Le poteau est en intersection et il ne se trouve pas dï¿½jï¿½ en collision.
     if (enIntersection)
     {
 
@@ -369,10 +366,10 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 			glm::dvec3 normaleCollision = cercle->calculerNormaleCollision(rectangleEnglobant_);
 			calculerComposantesCollision(normaleCollision);
 
-			// On replace le poteau à la dernière position.
+			// On replace le poteau ï¿½ la derniï¿½re position.
 			reinitialiserPosition();
 				
-			// Si le robot est toujours en collision après être réinitialisé, 
+			// Si le robot est toujours en collision aprï¿½s ï¿½tre rï¿½initialisï¿½, 
 			// on n'applique plus la collision sur ce poteau.
 			enCollision = rectangleEnglobant_.calculerIntersection(*cercle);
 			cercle->assignerEnCollision(enCollision);
@@ -391,9 +388,9 @@ bool NoeudRobot::verifierCollision(NoeudPoteau* poteau)
 ///
 /// @fn void NoeudRobot::verifierCollision(NoeudMur* noeud)
 ///
-/// Cette fonction vérifie s'il y a une collision avec le robot et un mur.
+/// Cette fonction vï¿½rifie s'il y a une collision avec le robot et un mur.
 ///
-/// @param[in] noeud: Prend le NoeudMur en paramètre ce qui correspond aux murs.
+/// @param[in] noeud: Prend le NoeudMur en paramï¿½tre ce qui correspond aux murs.
 ///
 /// @return Aucune.
 ///
@@ -405,7 +402,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
     bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
     bool enCollision = rectangle->obtenirEnCollision();
 
-    // Le poteau est en intersection et il ne se trouve pas déjà en collision.
+    // Le poteau est en intersection et il ne se trouve pas dï¿½jï¿½ en collision.
     if (enIntersection)
     {
 		EnginSon::obtenirInstance()->jouerCollision(COLLISION_MUR_SON);
@@ -417,7 +414,7 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
 
         reinitialiserPosition();
 
-		// Si le robot est toujours en collision après être réinitialisé, 
+		// Si le robot est toujours en collision aprï¿½s ï¿½tre rï¿½initialisï¿½, 
 		// on n'applique plus la collision sur ce mur.
 		enCollision = rectangleEnglobant_.calculerIntersection(*rectangle);
         rectangle->assignerEnCollision(enCollision);
@@ -435,9 +432,9 @@ bool NoeudRobot::verifierCollision(NoeudMur* mur)
 ///
 /// @fn void NoeudRobot::verifierCollision(NoeudTable* noeud)
 ///
-/// Cette fonction vérifie s'il y a une collision avec le robot et la table.
+/// Cette fonction vï¿½rifie s'il y a une collision avec le robot et la table.
 ///
-/// @param[in] noeud: Prend le noeudTable en paramètre ce qui correspond à la table.
+/// @param[in] noeud: Prend le noeudTable en paramï¿½tre ce qui correspond ï¿½ la table.
 ///
 /// @return Aucune.
 ///
@@ -466,7 +463,7 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
 	bool enCollision = rectangle->obtenirEnCollision();
     normaleCollision = glm::normalize(normaleCollision);
 
-    // La table est en intersection et elle ne se trouve pas déjà en collision.
+    // La table est en intersection et elle ne se trouve pas dï¿½jï¿½ en collision.
     if (enIntersection)
     {
 		if (!enCollision)
@@ -478,8 +475,8 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
 			reinitialiserPosition();
 			rectangleEnglobant_.calculerPositionCoins(coins);
 
-			// Si on se trouve toujours en intersection après avoir réinitialiser la position,
-			// on considère que la table est déjà en collision et on applique plus la collision.
+			// Si on se trouve toujours en intersection aprï¿½s avoir rï¿½initialiser la position,
+			// on considï¿½re que la table est dï¿½jï¿½ en collision et on applique plus la collision.
 			for (unsigned i = 0; i < 4 && !enCollision; i++)
 			{
 				if (!rectangle->calculerEstDansForme(coins[i]))
@@ -503,9 +500,9 @@ bool NoeudRobot::verifierCollision(NoeudTable* table)
 ///
 /// @fn bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 ///
-/// Cette fonction vérifie s'il y a une collision avec le robot et une piece
+/// Cette fonction vï¿½rifie s'il y a une collision avec le robot et une piece
 ///
-/// @param[in] noeud: Prend le NoeudPiece en paramètre ce qui correspond aux pieces.
+/// @param[in] noeud: Prend le NoeudPiece en paramï¿½tre ce qui correspond aux pieces.
 ///
 /// @return Aucune.
 ///
@@ -516,7 +513,7 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 	RectangleEnglobant* rectangle = piece->obtenirFormeEnglobante();
 	bool enIntersection = rectangleEnglobant_.calculerIntersection(*rectangle);
 	bool enCollision = false;
-	// Le piece est en intersection et il ne se trouve pas déjà en collision.
+	// Le piece est en intersection et il ne se trouve pas dï¿½jï¿½ en collision.
 	if (enIntersection)
 	{
 		EnginSon::obtenirInstance()->jouerCollision(COLLISION_COIN_SON);
@@ -537,9 +534,9 @@ bool NoeudRobot::verifierCollision(NoeudPiece* piece)
 ///
 /// @fn bool NoeudRobot::verifierCollision(NoeudRobot* robot)
 ///
-/// Cette fonction vérifie s'il y a une collision entre ce robot et un autre.
+/// Cette fonction vï¿½rifie s'il y a une collision entre ce robot et un autre.
 ///
-/// @param[in] noeud: Prend le NoeudPiece en paramètre ce qui correspond aux pieces.
+/// @param[in] noeud: Prend le NoeudPiece en paramï¿½tre ce qui correspond aux pieces.
 ///
 /// @return Aucune.
 ///
@@ -551,7 +548,7 @@ bool NoeudRobot::verifierCollision(NoeudRobot* robot)
     bool enIntersection = rectangleEnglobant_.calculerIntersection(rectangle);
     bool enCollision = rectangle.obtenirEnCollision();
 
-    // Le robot est en intersection et il ne se trouve pas déjà en collision.
+    // Le robot est en intersection et il ne se trouve pas dï¿½jï¿½ en collision.
     if (enIntersection)
     {
 		std::cout << "this position : " << physics_.absolutePosition.x << ", " << physics_.absolutePosition.y << std::endl;
@@ -560,7 +557,7 @@ bool NoeudRobot::verifierCollision(NoeudRobot* robot)
 		//std::cout << "this momentum: " << thisMomentum << std::endl;
 		std::cout << "_____________________________________________" << std::endl;
 
-		// La collision a déjà été appliqué.
+		// La collision a dï¿½jï¿½ ï¿½tï¿½ appliquï¿½.
 		if (!enCollision)
 		{
 			EnginSon::obtenirInstance()->jouerCollision(COLLISION_TABLE_SON);
@@ -593,7 +590,7 @@ bool NoeudRobot::verifierCollision(NoeudRobot* robot)
 ///
 /// @fn void NoeudRobot::mettreAJourCapteurs()
 ///
-/// Cette fonction met à jour les capteurs de distance selon leur position et leur angle.
+/// Cette fonction met ï¿½ jour les capteurs de distance selon leur position et leur angle.
 ///
 /// @return Aucune.
 ///
@@ -617,7 +614,7 @@ void NoeudRobot::mettreAJourCapteurs()
 ///
 /// @fn void NoeudRobot::mettreAJourPosition(const float& dt)
 ///
-/// Cette fonction met à jour la position du robot selon sa vitesse et son accélération.
+/// Cette fonction met ï¿½ jour la position du robot selon sa vitesse et son accï¿½lï¿½ration.
 ///
 /// @param[in] dt: difference de temps entre deux animations (autour de 0,0166)
 ///
@@ -662,7 +659,7 @@ void NoeudRobot::mettreAJourPosition(float dt)
 ///
 /// @fn void NoeudRobot::mettreAJourCapteurs()
 ///
-/// Cette fonction permet de réinitialiser la position du robot.
+/// Cette fonction permet de rï¿½initialiser la position du robot.
 ///
 /// @return Aucune.
 ///
@@ -686,7 +683,7 @@ void NoeudRobot::reinitialiserPosition()
 ///
 /// @fn void NoeudRobot::mettreAJourRectangleEnglobant()
 ///
-/// Cette fonction permet de mettre à jour le rectangle englobant du robot avec un cercle.
+/// Cette fonction permet de mettre ï¿½ jour le rectangle englobant du robot avec un cercle.
 ///
 /// @return Aucune.
 ///
@@ -704,13 +701,13 @@ void NoeudRobot::mettreAJourFormeEnglobante()
     double positionBoiteY = boiteEnglobanteModele_.coinMin.y + hauteur / 2.0;
     glm::dvec3 positionBoite = { positionBoiteX, positionBoiteY, 0.0 };
 
-    // On effectue une rotation du centre. (Au cas où la boite n'est pas centrée avec le modèle).
+    // On effectue une rotation du centre. (Au cas oï¿½ la boite n'est pas centrï¿½e avec le modï¿½le).
     utilitaire::calculerPositionApresRotation(positionBoite, positionBoite, physics_.rotation.z);
 
     // Effectuer la translation de la position.
     glm::dvec3 positionRectangle = { physics_.absolutePosition.x + positionBoite.x, physics_.absolutePosition.y + positionBoite.y, 0.0 };
 
-    // Mettre à jour les attributs du rectangle.
+    // Mettre ï¿½ jour les attributs du rectangle.
     rectangleEnglobant_.mettreAJour(positionRectangle, physics_.rotation.z, hauteur, largeur);
 }
 
@@ -719,8 +716,8 @@ void NoeudRobot::mettreAJourFormeEnglobante()
 ///
 /// @fn void NoeudRobot::effectuerCollision()
 ///
-/// Cette fonction permet d'effectuer la collision lorsque celle-ci est détectée.
-/// Les vitesses sont changées selon les vecteurs résultants de la collision.
+/// Cette fonction permet d'effectuer la collision lorsque celle-ci est dï¿½tectï¿½e.
+/// Les vitesses sont changï¿½es selon les vecteurs rï¿½sultants de la collision.
 ///
 /// @param[in] dt: difference de temps entre deux animations (autour de 0,0166)
 /// 
@@ -729,13 +726,13 @@ void NoeudRobot::mettreAJourFormeEnglobante()
 ////////////////////////////////////////////////////////////////////////
 void NoeudRobot::effectuerCollision(double dt)
 {
-	// La force frottement est toujours dans le sens inverse du déplacement.
+	// La force frottement est toujours dans le sens inverse du dï¿½placement.
 	glm::dvec3 frottementTranslation = rightEngine.getLinearFriction() * -glm::normalize(vitesseTranslationCollision_);
 	double frottementRotation = rightEngine.getAngularFriction() * -glm::sign(vitesseAngulaireCollision_);
 
 	glm::dvec3 dV = frottementTranslation * dt;
 
-	// Si la vitesse est plus petite que différence de vitesse, celle-ci devient nulle et le robot n'est plus en translation.
+	// Si la vitesse est plus petite que diffï¿½rence de vitesse, celle-ci devient nulle et le robot n'est plus en translation.
 	bool enTranslation = glm::length(dV) < glm::length(vitesseTranslationCollision_);
 	if (enTranslation)
 	{
@@ -769,7 +766,7 @@ void NoeudRobot::effectuerCollision(double dt)
 ///
 /// @fn void NoeudRobot::positionnerRoues()
 ///
-/// Cette fonctione permet de faire tourner les roues du robot par rapport à
+/// Cette fonctione permet de faire tourner les roues du robot par rapport ï¿½
 /// son angle de rotation et sa vitesse.
 ///
 /// @param[in] Aucun
@@ -807,7 +804,7 @@ void NoeudRobot::assignerMode(int mode)
 ///
 /// void NoeudRobot::suivreCamera()
 ///
-/// Cette méthode positionne la caméra première personne en fonction de la 
+/// Cette mï¿½thode positionne la camï¿½ra premiï¿½re personne en fonction de la 
 /// position courante du robot
 ///
 /// @return Aucune.
@@ -834,9 +831,9 @@ void NoeudRobot::suivreCamera(vue::Vue* vue)
 ///
 /// @fn bool NoeudRobot::verifierCollision(NoeudTeleporteur* noeud)
 ///
-/// Cette fonction vérifie s'il y a une collision avec le robot et un teleporteur
+/// Cette fonction vï¿½rifie s'il y a une collision avec le robot et un teleporteur
 ///
-/// @param[in] noeud: Prend le NoeudTeleporteur en paramètre ce qui correspond aux teleporteurs.
+/// @param[in] noeud: Prend le NoeudTeleporteur en paramï¿½tre ce qui correspond aux teleporteurs.
 ///
 /// @return bool qui indique s'il y a colision.
 ///
@@ -885,6 +882,16 @@ void NoeudRobot::setCouleurDefault(int piece,bool default)
 std::stack<NoeudAbstrait*> NoeudRobot::getTableauCoins()
 {
 	return tableauCoins;
+}
+
+RectangleEnglobant * NoeudRobot::obtenirFormeEnglobante()
+{
+	return &rectangleEnglobant_;
+}
+
+const RectangleEnglobant * NoeudRobot::obtenirFormeEnglobante() const
+{
+	return &rectangleEnglobant_;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -1008,6 +1015,11 @@ void NoeudRobot::setTeleportationFaite(bool teleportationFaite)
 void NoeudRobot::assignerControleurLumiere(ControleurLumiere* controleur)
 {
 	controleurLumiere_ = controleur;
+}
+
+ControleurLumiere * NoeudRobot::obtenirControleurLumiere()
+{
+	return controleurLumiere_;
 }
 
 void NoeudRobot::Engine::updateVelocity(float dt)
