@@ -93,7 +93,7 @@ ModeSimulation::~ModeSimulation()
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
 
-	mapSession_->deleteLocalEntity(robot_);
+	//mapSession_->deleteLocalEntity(robot_);
 }
 
 ////////////////////////////////////////////////////////////////////////
