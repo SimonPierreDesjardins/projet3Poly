@@ -80,9 +80,7 @@ public:
 	inline bool obtenirAutorisationInputSouris() const; 
 	// Assigne si le modèle est autorisé à recevoir des entrées utilisateurs. 
 	inline void assignerAutorisationInputSouris(const bool& autorisation);
-
 	inline bool obtenirAutorisationInputClavier() const;
-
 	inline void assignerAutorisationInputClavier(const bool& autorisation);
 
 	/// Retourne la vue courante.
@@ -110,6 +108,11 @@ public:
 	inline client_network::NetworkManager* getNetworkManager();
 	// Retourne le gestionnaire d'evenements
 	inline event_handler::EventHandler* getEventHandler();
+
+	void assignerAngleRotation(const double& angle);
+	void assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle);
+	void assignerPositionRelativeX(const double& positionRelativeX);
+	void assignerPositionRelativeY(const double& positionRelativeY);
 
 	/// Réinitialise la scène.
 	void reinitialiser();

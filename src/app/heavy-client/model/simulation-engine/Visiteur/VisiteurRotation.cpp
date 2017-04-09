@@ -24,8 +24,9 @@
 /// @return Aucune (constructeur).
 ///
 ////////////////////////////////////////////////////////////////////////
-VisiteurRotation::VisiteurRotation()
+VisiteurRotation::VisiteurRotation(engine::MapSession* mapSession)
 {
+	mapSession_ = mapSession;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -40,12 +41,10 @@ VisiteurRotation::VisiteurRotation()
 ///
 ////////////////////////////////////////////////////////////////////////
 VisiteurRotation::~VisiteurRotation()
-{
-}
+{}
 
-void VisiteurRotation::rotateSelectedObjects(ArbreRendu* tree, engine::MapSession* mapSession)
+void VisiteurRotation::rotateSelectedObjects(ArbreRendu* tree)
 {
-	mapSession_ = mapSession;
 	tree->accepterVisiteur(this);
 }
 
@@ -164,8 +163,6 @@ void VisiteurRotation::visiter(NoeudLigneCourseAbstrait* noeud)
 	physics.rotation.z += angleRotation_;
 	assignerNouvellePositionRelative(noeud);
 }
-
-
 
 ////////////////////////////////////////////////////////////////////////
 ///
