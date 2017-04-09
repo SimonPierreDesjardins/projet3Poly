@@ -8,6 +8,8 @@
 
 #include "ClientMapSession.h"
 
+#include "FacadeInterfaceNative.h"
+
 namespace client_network {
 
 ClientMapSession::ClientMapSession(engine::SimulationEngine* engine, NetworkManager* network)
@@ -258,6 +260,7 @@ void ClientMapSession::updateSelectionStateLocalEntityAndChildren(NoeudAbstrait*
 			toSelect->setOwnerId(0);
 			toSelect->assignerSelection(isSelected);
 			toSelect->setSelectionColor({ 1.0, 0.2, 0.0, 1.0 });
+			SelectingObject();
 		}
 			
 
@@ -278,11 +281,13 @@ void ClientMapSession::serverEntitySelected(uint32_t entityId, bool isSelected, 
 	{
 		entityIt->second->setOwnerId(userId);
 		entityIt->second->assignerSelection(isSelected);
+		SelectingObject();
 
 		auto userIt = users_.find(userId);
 		if (userIt != users_.end())
 		{
 			entityIt->second->setSelectionColor(userIt->second.selectionColor);
+			//if (userId == network_->getUserId()) {}
 		}
 	}
 }

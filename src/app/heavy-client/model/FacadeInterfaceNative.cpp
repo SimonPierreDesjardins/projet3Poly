@@ -1334,6 +1334,17 @@ extern "C"
 	{
 		callBackLoading(action);
 	}
+
+	CallbackSelection callbackSelection = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForSelection(CallbackSelection handler)
+	{
+		callbackSelection = handler;
+	}
+
+	__declspec(dllexport) void __cdecl SelectingObject()
+	{
+		callbackSelection();
+	}
 }
 
 ///////////////////////////////////////////////////////////////////////////////

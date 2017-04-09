@@ -109,7 +109,7 @@ namespace ui
             viewPort.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
 
-            //Program.peutAfficher = false;
+            Program.peutAfficher = false;
 
             InitialiserAnimation();
             configuration = new Configure(this);
@@ -130,6 +130,10 @@ namespace ui
             //Set callback for loading
             loadingHandler = new CallbackLoading(LoadingHandler);
             SetCallbackForLoading(loadingHandler);
+
+            //Set callback for selection
+            selectionHandler = new CallbackSelection(SelectionHandler);
+            SetCallbackForSelection(selectionHandler);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -955,6 +959,7 @@ namespace ui
                 onlineLoadingPanel.stop();
                 this.Controls.Remove(onlineLoadingPanel);
 
+                verificationDuNombreElementChoisi();
                 FonctionsNatives.assignerAutorisationInputClavier(true);
                 FonctionsNatives.assignerAutorisationInputSouris(true);
             });
@@ -1057,6 +1062,32 @@ namespace ui
 
         [DllImport("model.dll")]
         private static extern void Loading(int action);
+
+        public void Test3()
+        {
+            SelectingObject();
+        }
+
+        private delegate void CallbackSelection();
+        private CallbackSelection selectionHandler;
+        private void SelectionHandler()
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.verificationDuNombreElementChoisi();
+            });
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForSelection(CallbackSelection fn);
+
+        [DllImport("model.dll")]
+        private static extern void SelectingObject();
     }
 
     ////////////////////////////////////////////////////////////////////////
