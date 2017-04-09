@@ -8,6 +8,8 @@
 
 #include "ClientMapSession.h"
 
+#include "FacadeInterfaceNative.h"
+
 namespace client_network {
 
 ClientMapSession::ClientMapSession(engine::SimulationEngine* engine, NetworkManager* network)
@@ -212,7 +214,7 @@ void ClientMapSession::deleteLocalEntity(NoeudAbstrait* entity)
 		// If the top node has children, push them in the stack.
 		else
 		{
-			for	(int i = 0; i < todelete->obtenirNombreEnfants(); ++i)
+			for	(unsigned int i = 0; i < todelete->obtenirNombreEnfants(); ++i)
 			{
 				toDeleteStack.push(todelete->chercher(i));
 			}
@@ -258,13 +260,14 @@ void ClientMapSession::updateSelectionStateLocalEntityAndChildren(NoeudAbstrait*
 			toSelect->setOwnerId(0);
 			toSelect->assignerSelection(isSelected);
 			toSelect->setSelectionColor({ 1.0, 0.2, 0.0, 1.0 });
+			SelectingObject();
 		}
 			
 
 
 		// Push children in the queue.
 		uint32_t nChildren = toSelect->obtenirNombreEnfants();
-		for (int i = 0; i < nChildren; ++i)
+		for (unsigned int i = 0; i < nChildren; ++i)
 		{
 			selectionQueue.push(toSelect->chercher(i));
 		}
@@ -278,11 +281,13 @@ void ClientMapSession::serverEntitySelected(uint32_t entityId, bool isSelected, 
 	{
 		entityIt->second->setOwnerId(userId);
 		entityIt->second->assignerSelection(isSelected);
+		SelectingObject();
 
 		auto userIt = users_.find(userId);
 		if (userIt != users_.end())
 		{
 			entityIt->second->setSelectionColor(userIt->second.selectionColor);
+			//if (userId == network_->getUserId()) {}
 		}
 	}
 }

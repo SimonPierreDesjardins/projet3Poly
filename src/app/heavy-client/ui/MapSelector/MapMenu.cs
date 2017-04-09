@@ -89,6 +89,7 @@ namespace ui
                 pair.Value.Size = new Size(this.mapPanel.Width, pair.Value.Height);
                 pair.Value.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
                 pair.Value.Location = new Point(0, numberOfMaps_++ * 150);
+                pair.Value.defaultView();
                 mapPanel.Controls.Add(pair.Value);
             }
             foreach (KeyValuePair<string, MapPresentator> pair in offlineMaps_)
@@ -96,6 +97,7 @@ namespace ui
                 pair.Value.Size = new Size(this.mapPanel.Width, pair.Value.Height);
                 pair.Value.Anchor = (AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
                 pair.Value.Location = new Point(0, numberOfMaps_++ * 150);
+                pair.Value.defaultView();
                 mapPanel.Controls.Add(pair.Value);
             }
             verifyMapsAttributes();

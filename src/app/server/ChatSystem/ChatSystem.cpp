@@ -95,7 +95,7 @@ std::string server::ChatSystem::GetChannelListMessage()
 {
 	std::string channelList = "cl";
 
-	int i = 0, count = _chatSessions.size();
+	int i = 0, count = (int)_chatSessions.size();
 	for each (auto sessionNamePair in  _chatSessions) {
 		channelList += sessionNamePair.first;
 		if (i < count - 1) {

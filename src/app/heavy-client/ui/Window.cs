@@ -17,6 +17,7 @@ namespace ui
     {
         public Configure configuration;
 
+        public ChatWindow chatWindow_;
         public UserTabChat userChat;
         public string userName = "";
 
@@ -109,7 +110,7 @@ namespace ui
             viewPort.Controls.Add(mainMenu);
             mainMenu.Dock = DockStyle.Left;
 
-            //Program.peutAfficher = false;
+            Program.peutAfficher = false;
 
             InitialiserAnimation();
             configuration = new Configure(this);
@@ -130,6 +131,10 @@ namespace ui
             //Set callback for loading
             loadingHandler = new CallbackLoading(LoadingHandler);
             SetCallbackForLoading(loadingHandler);
+
+            //Set callback for selection
+            selectionHandler = new CallbackSelection(SelectionHandler);
+            SetCallbackForSelection(selectionHandler);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -618,17 +623,14 @@ namespace ui
         {
             int mode = FonctionsNatives.obtenirMode();
             EditModifPanel modifPanel;
-            EditSideMenu sideMenu;
             switch(mode)
             {
                 case (int)ModeEnum.Mode.EDITION:
                     modifPanel = editionModificationPanel;
-                    sideMenu = editionSideMenu;
                     break;
 
                 case (int)ModeEnum.Mode.TUTORIAL_EDITION:
                     modifPanel = editionTutorielModificationPanel;
-                    sideMenu = editionTutorielSideMenu;
                     break;
 
                 default:
@@ -637,20 +639,27 @@ namespace ui
 
             FonctionsNatives.assignerAutorisationInputClavier(true);
             int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-            if (nbEnfant == 1)
+            if (nbEnfant > 0)
             {
-                modifPanel.mettreAJourInformation();
-                modifPanel.Visible = true;
+                if (nbEnfant == 1)
+                {
+                    modifPanel.mettreAJourInformation();
+                    modifPanel.Visible = true;
+                }
+                else
+                {
+                    modifPanel.Visible = false;
+                }
+
+                if (mode == (int)ModeEnum.Mode.EDITION)
+                    editionSideMenu.enableDuplication();
             }
             else
             {
                 modifPanel.Visible = false;
+                if (mode == (int)ModeEnum.Mode.EDITION)
+                    editionSideMenu.disableDuplication();
             }
-
-            if (nbEnfant > 0)
-                sideMenu.enableDuplication();
-            else
-                sideMenu.disableDuplication();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -951,6 +960,7 @@ namespace ui
                 onlineLoadingPanel.stop();
                 this.Controls.Remove(onlineLoadingPanel);
 
+                verificationDuNombreElementChoisi();
                 FonctionsNatives.assignerAutorisationInputClavier(true);
                 FonctionsNatives.assignerAutorisationInputSouris(true);
             });
@@ -997,6 +1007,9 @@ namespace ui
                 estEnPause = false;
                 Program.peutAfficher = false;
 
+                if (chatWindow_ != null)
+                    chatWindow_.Hide();
+
                 //Remove everything on viewPort
                 viewPort.Controls.Clear();
                 viewPort.Controls.Add(picturePause);
@@ -1010,6 +1023,7 @@ namespace ui
                                                          viewPort.Height / 2 - disconnectedWarning.Height / 2);
                 disconnectedWarning.Anchor = AnchorStyles.None;
                 viewPort.Controls.Add(disconnectedWarning);
+                disconnectedWarning.BringToFront();
             });
         }
 
@@ -1053,6 +1067,32 @@ namespace ui
 
         [DllImport("model.dll")]
         private static extern void Loading(int action);
+
+        public void Test3()
+        {
+            SelectingObject();
+        }
+
+        private delegate void CallbackSelection();
+        private CallbackSelection selectionHandler;
+        private void SelectionHandler()
+        {
+            this.Invoke((MethodInvoker)delegate
+            {
+                this.verificationDuNombreElementChoisi();
+            });
+        }
+
+        ////////////////////////////////////////////////////////////////////////
+        ///
+        /// Fonction permettant le callback entre le c++ et le c#
+        ///
+        ////////////////////////////////////////////////////////////////////////
+        [DllImport("model.dll")]
+        private static extern void SetCallbackForSelection(CallbackSelection fn);
+
+        [DllImport("model.dll")]
+        private static extern void SelectingObject();
     }
 
     ////////////////////////////////////////////////////////////////////////

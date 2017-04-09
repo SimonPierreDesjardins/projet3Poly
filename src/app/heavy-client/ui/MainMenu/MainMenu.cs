@@ -14,7 +14,7 @@ namespace ui
     public partial class MainMenu : UserControl
     {
         Window parent_;
-        ConnectToServer connectOptions_;
+        public ConnectToServer connectOptions_;
         PlaceHolder pictureControl;
 
         ////////////////////////////////////////////////////////////////////////

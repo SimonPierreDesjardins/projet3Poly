@@ -53,7 +53,7 @@ void EventHandler::onEntitySelected(uint32_t entityId, bool isSelected, uint32_t
 void EventHandler::onNewMapCreated(uint32_t mapId, char mapType, char nUsers, char permissions, uint32_t adminId, std::string& name)
 {
 	mapSessionManager_->createServerSession(mapId, mapType, name);
-	AddMap(name, (bool)(permissions), true, mapType, nUsers, adminId == userId_, mapId);
+	AddMap(name, (int)(permissions), true, mapType, nUsers, adminId == userId_, mapId);
 }
 
 void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
@@ -76,6 +76,7 @@ void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 					mapConnect(mapId, MAP_JOINED);
 				}
 			}
+			mapConnect(mapId, USER_JOINED);
 		}
 		break;
 

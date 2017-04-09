@@ -176,6 +176,11 @@ extern "C"
 	typedef void(__stdcall * CallbackLoading)(int action);
 	__declspec(dllexport) void __cdecl SetCallbackForLoading(CallbackLoading handler);
 	__declspec(dllexport) void __cdecl Loading(int action);
+
+	//Online Edition
+	typedef void(__stdcall * CallbackSelection)();
+	__declspec(dllexport) void __cdecl SetCallbackForSelection(CallbackSelection handler);
+	__declspec(dllexport) void __cdecl SelectingObject();
 }
 
 #endif // __FACADE_INTERFACE_NATIVE_H__

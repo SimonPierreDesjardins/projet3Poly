@@ -107,6 +107,14 @@ namespace ui
             newPasswordBox.PasswordChar = '\u25CF';
         }
 
+        private void passwordBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.ToString() == "\r")
+            {
+                connect();
+            }
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn private void mapButton_Click(object sender, MeasureItemEventArgs e)
@@ -120,6 +128,11 @@ namespace ui
         ///
         ////////////////////////////////////////////////////////////////////////
         private void mapButton_Click(object sender, EventArgs e)
+        {
+            connect();
+        }
+
+        public void connect()
         {
             privatePanel.Visible = true;
             settingsPanel.Visible = false;
@@ -139,6 +152,7 @@ namespace ui
             if (connectionState_)
             {
                 FonctionsNatives.joinMap(mapId_, passwordBox.Text, passwordBox.Text.Length);
+                passwordBox.Clear();
             }
             else
             {
@@ -378,6 +392,19 @@ namespace ui
             privatePanel.Visible = true;
 
             label1.Visible = false;
+        }
+
+        public void defaultView()
+        {
+            privatePanel.Visible = true;
+            settingsPanel.Visible = false;
+
+            passwordBox.Clear();
+            newPasswordBox.Clear();
+
+            //Warning labels
+            label1.Visible = false;
+            label2.Visible = false;
         }
 
         public void changeToPublic()

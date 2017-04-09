@@ -117,8 +117,8 @@ void ControleurLumiere::afficherLumiereSpotGyro() const
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
 	glm::vec4 contributionMaximale{ 1.0, 0.0, 0.0, 1.0 };
 
-	glm::vec4 position{0.0, 0.0, 5.0, 1.0};
-	glLightfv(GL_LIGHT2, GL_POSITION, glm::value_ptr(position));
+	//glm::vec4 position{0.0, 0.0, 5.0, 1.0};
+	glLightfv(GL_LIGHT2, GL_POSITION, positionSpotGyro_);
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
 	glLightfv(GL_LIGHT2, GL_AMBIENT, glm::value_ptr(zeroContribution));
 	// On sature les objets de lumière
@@ -148,10 +148,10 @@ void ControleurLumiere::afficherLumiereSpotGyro() const
 void ControleurLumiere::afficherLumiereSpotRobot() const
 {
 	// Positionner la lumière.
-	glm::vec3 direction = { 0.2, 0, -1.0 };
-	glm::vec4 position{0.0, 0.0, 15.0, 1.0};
+	glm::vec3 direction = { 0.0, 0, -1.0 };
+	//glm::vec4 position{0.0, 0.0, 15.0, 1.0};
 	glLightfv(GL_LIGHT1, GL_SPOT_DIRECTION, glm::value_ptr(direction));
-    glLightfv(GL_LIGHT1, GL_POSITION, glm::value_ptr(position));
+    glLightfv(GL_LIGHT1, GL_POSITION, positionSpotRobot_);
 
 	glm::vec4 zeroContribution{ 0.0f, 0.0f, 0.0f, 1 };
 	glm::vec4 contributionMaximale{ 0.5, 0.5, 0.5, 1.0 };
@@ -185,19 +185,24 @@ void ControleurLumiere::afficherLumiereSpotRobot() const
 ////////////////////////////////////////////////////////////////////////
 void ControleurLumiere::animer(const glm::dvec3& positionRobot, float dt)
 {
-	positionSpotGyro_[0] = positionRobot.x;
-	positionSpotGyro_[1] = positionRobot.y;
-	positionSpotGyro_[2] = positionRobot.z + 5.0;
-	positionSpotGyro_[3] = 1.0;
+	positionSpotGyro_[0] = (GLfloat)positionRobot.x;
+	positionSpotGyro_[1] = (GLfloat)positionRobot.y;
+	positionSpotGyro_[2] = (GLfloat)(positionRobot.z + 5.0);
+	positionSpotGyro_[3] = GLfloat(1.0);
+	positionSpotRobot_[0] = (GLfloat)positionRobot.x;
+	positionSpotRobot_[1] = (GLfloat)positionRobot.y;
+	positionSpotRobot_[2] = (GLfloat)(positionRobot.z + 15.0);
+	positionSpotRobot_[3] = GLfloat(1.0);
 
 	if (!estEnPause_)
 	{
-		compteur_ += dt * 720;
+		compteur_ += (int)(dt * 720);
 		compteur_ = compteur_ % 360;
 	}
 	
-	orientationSpotGyro_[0] = glm::cos(utilitaire::DEG_TO_RAD(compteur_));
-	orientationSpotGyro_[1] = glm::sin(utilitaire::DEG_TO_RAD(compteur_));
+	orientationSpotGyro_[0] = (GLfloat)glm::cos(utilitaire::DEG_TO_RAD(compteur_));
+	orientationSpotGyro_[1] = (GLfloat)glm::sin(utilitaire::DEG_TO_RAD(compteur_));
+
 }
 
 

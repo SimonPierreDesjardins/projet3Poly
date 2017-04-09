@@ -447,7 +447,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		FacadeModele::obtenirInstance()->obtenirMode()->gererMessage(msg, wParam, lParam);
+		FacadeModele::obtenirInstance()->repartirMessage(msg, wParam, lParam);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -1299,7 +1299,7 @@ extern "C"
 	{
 		message = message.substr(5);
 		const unsigned char* bytes = (const unsigned char*)message.data();
-		Handler(bytes, message.size());
+		Handler(bytes, (int)message.size());
 	}
 
 	CallbackForNewMap AddNewMap = 0;
@@ -1311,7 +1311,7 @@ extern "C"
 	__declspec(dllexport) void __cdecl AddMap(const std::string& name, int isPrivate, int connectionState, int mode, int nbPlayers, int isAdmin, int id)
 	{
 		const unsigned char* bytes = (const unsigned char*)name.data();
-		AddNewMap(bytes, name.size(), (int)connectionState, mode, nbPlayers, (int)isAdmin, id, (int)isPrivate);
+		AddNewMap(bytes, (int)name.size(), (int)connectionState, mode, nbPlayers, (int)isAdmin, id, (int)isPrivate);
 	}
 
 	__declspec(dllexport) void __cdecl LoadApplicationSettings()
@@ -1333,6 +1333,17 @@ extern "C"
 	__declspec(dllexport) void __cdecl Loading(int action)
 	{
 		callBackLoading(action);
+	}
+
+	CallbackSelection callbackSelection = 0;
+	__declspec(dllexport) void __cdecl SetCallbackForSelection(CallbackSelection handler)
+	{
+		callbackSelection = handler;
+	}
+
+	__declspec(dllexport) void __cdecl SelectingObject()
+	{
+		callbackSelection();
 	}
 }
 

@@ -144,7 +144,7 @@ void NoeudPoteau::afficherConcret() const
 	}
 
 	// Effectuer la mise à échelle.
-	glScaled(physics_.scale.x, physics_.scale.x, 1.0);
+	glScaled(physics_.scale.x, physics_.scale.x, 1.0); 
 	
 	// Affichage du modèle.
 	vbo_->dessiner();
