@@ -463,6 +463,8 @@ namespace ui
             postObjectButton.BackColor = Color.Transparent;
             wallObjectButton.BackColor = Color.Transparent;
             teleportorObjectButton.BackColor = Color.Transparent;
+
+            parent_.verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////

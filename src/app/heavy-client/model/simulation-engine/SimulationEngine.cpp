@@ -232,7 +232,7 @@ void SimulationEngine::setOrthoView()
 			glm::dvec3(0, 0, 10), glm::dvec3(0, 0, 0),
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionOrtho{
-			0, 500, 0, 500,
+			0, 300, 0, 300,
 			1, 1000, 80, 105, 1.25,
 			-50, 50, -50, 50, false });
 	textDisplay_->assignerVue(view_.get());
@@ -243,7 +243,7 @@ void SimulationEngine::setOrbitalView()
 {
 	view_ = std::make_unique<vue::VueOrbite>(
 		vue::Camera(
-			glm::dvec3(0, 0, 170), glm::dvec3(0, 0, 0),
+			glm::dvec3(0, 0, 300), glm::dvec3(0, 0, 0),
 			glm::dvec3(0, 10, 0), glm::dvec3(0, 0, 1)), 
 		vue::ProjectionPerspective{
 			0, 500, 0, 500,

@@ -472,6 +472,8 @@ namespace ui
 
             currentToolButton.BackColor = Color.Transparent;
             currentToolButton.Visible = false;
+
+            parent_.verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////

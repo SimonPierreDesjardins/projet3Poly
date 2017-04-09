@@ -651,8 +651,6 @@ namespace ui
                 sideMenu.enableDuplication();
             else
                 sideMenu.disableDuplication();
-
-
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -669,11 +667,6 @@ namespace ui
         {
             verificationDuNombreElementChoisi();
             viewPort.Focus();
-        }
-
-        private void viewPort_MouseMove(object sender, MouseEventArgs e)
-        {
-            verificationDuNombreElementChoisi();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -718,9 +711,6 @@ namespace ui
 
         public void goOfflineEdition(String pathToFile)
         {
-            loadMap(pathToFile, ModeEnum.Mode.EDITION);
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
             estEnPause = false;
             picturePause.Visible = false;
 
@@ -740,15 +730,15 @@ namespace ui
             editionModificationPanel.Visible = false;
             viewPort.Controls.Add(editionModificationPanel);
 
+            loadMap(pathToFile, ModeEnum.Mode.EDITION);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
             viewPort.Refresh();
             verificationDuNombreElementChoisi();
         }
 
         public void goOfflineEditionTutorial()
         {
-            loadMap(PathToDefaultZone_, ModeEnum.Mode.TUTORIAL_EDITION);
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
             editionTutorielSideMenu = new EditionTutorielSideMenu(this);
             editionTutorielMenuStrip = new EditionTutorielMenuStrip(this);
             editionTutorielInstructions = new EditionTutorielInstructions(this);
@@ -772,7 +762,11 @@ namespace ui
             viewPort.Controls.Add(editionTutorielInstructions);
             editionTutorielInstructions.BringToFront();
 
+            loadMap(PathToDefaultZone_, ModeEnum.Mode.TUTORIAL_EDITION);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
             viewPort.Refresh();
+            verificationDuNombreElementChoisi();
         }
 
         public void goOnlineEdition()
@@ -805,23 +799,20 @@ namespace ui
 
         public void goOfflineSimulation(String pathToFile)
         {
-            loadMap(pathToFile, ModeEnum.Mode.SIMULATION);
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
             simulationMenuStrip = new SimulationMenuStrip(this);
             configuration.populerToolStripProfils(simulationMenuStrip.profilsToolStripMenuItem);
 
             simulationMenuStrip.Dock = DockStyle.Top;
             viewPort.Controls.Add(simulationMenuStrip);
 
+            loadMap(pathToFile, ModeEnum.Mode.SIMULATION);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
             viewPort.Refresh();
         }
 
         public void goOfflineSimulationTutorial()
         {
-            loadMap(PathToDefaultZone_, ModeEnum.Mode.SIMULATION);
-            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
-
             simulationMenuStrip = new SimulationMenuStrip(this);
             simulationMenuStrip.Dock = DockStyle.Top;
             viewPort.Controls.Add(simulationMenuStrip);
@@ -834,6 +825,11 @@ namespace ui
             viewPort.Controls.Add(simulationTutorial);
 
             simulationTutorial.BringToFront();
+
+            loadMap(PathToDefaultZone_, ModeEnum.Mode.SIMULATION);
+            FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
+
+            viewPort.Refresh();
         }
 
         public void goOnlineSimulation()
