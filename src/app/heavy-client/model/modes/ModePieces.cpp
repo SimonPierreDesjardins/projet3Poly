@@ -44,10 +44,10 @@ std::array<char, 11> ModePieces::touchesNonConfigurable_ = { { '+', '-', '\b', '
 ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* profil, client_network::ClientMapSession* session)
 	: controleRobot_(creerRobot(engine->getEntityTree(), profil)), OnlineMapMode(session)
 {
-	NoeudRobot* robot = controleRobot_.obtenirNoeud();
-	robot->assignerSelection(true);
-	session->localEntityCreated(robot);
-	robotPhysics_.init(robot, engine, session);
+	robot_ = controleRobot_.obtenirNoeud();
+	robot_->assignerSelection(true);
+	session->localEntityCreated(robot_);
+	robotPhysics_.init(robot_, engine, session);
 
 	typeMode_ = PIECES;
 	profil_ = profil;
@@ -90,16 +90,20 @@ ModePieces::ModePieces(engine::SimulationEngine* engine, ProfilUtilisateur* prof
 ModePieces::~ModePieces()
 {
 	profil_->setPiece(0);
+
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
 	affichageTexte_->assignerPiecesEstAfficher(false);
 	affichageTexte_->assignerFinModePiecesEstAfficher(false);
     affichageTexte_->reinitialiserChrono();
     affichageTexte_->pauseChrono();
+
 	controleurLumiere_->assignerLumiereAmbianteGlobale(true);
 	controleurLumiere_->assignerLumiereDirectionnelle(true);
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
+
+	mapSession_->deleteLocalEntity(robot_);
 }
 
 ////////////////////////////////////////////////////////////////////////

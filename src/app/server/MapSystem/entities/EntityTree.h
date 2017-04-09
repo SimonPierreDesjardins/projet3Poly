@@ -1,6 +1,7 @@
 #ifndef ENTITY_TREE_H
 #define ENTITY_TREE_H
 
+#include <mutex>
 #include <unordered_map>
 #include "Entity.h"
 
@@ -28,8 +29,12 @@ public:
 	inline EntityContainer::iterator end();
 
 	static char GetEntityType(const std::string& itemType);
+	inline void lock();
+	inline void unlock();
 
 private:
+	std::mutex treeLock_;
+
 	EntityContainer entities_;
 	uint32_t nextEntityId_{ 1 };
 	std::shared_ptr<ArbreRenduINF2990> physicsTree_;
@@ -43,6 +48,16 @@ inline EntityTree::EntityContainer::iterator EntityTree::begin()
 inline EntityTree::EntityContainer::iterator EntityTree::end()
 {
 	return entities_.end();
+}
+
+inline void EntityTree::lock()
+{
+	treeLock_.lock();
+}
+
+inline void EntityTree::unlock()
+{
+	treeLock_.unlock();
 }
 
 }

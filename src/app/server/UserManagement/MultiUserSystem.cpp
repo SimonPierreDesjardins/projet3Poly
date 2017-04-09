@@ -19,6 +19,11 @@ bool server::MultiUserSystem::RemoveUser(User* user)
 	return userFound;
 }
 
+bool server::MultiUserSystem::containsUser(User* user)
+{
+	return (_connectedUserList.find(user->Info.GetId()) != _connectedUserList.end());
+}
+
 void server::MultiUserSystem::onUserDisconnected(User * user)
 {
 	_connectedUserList.erase(user->Info.GetId());

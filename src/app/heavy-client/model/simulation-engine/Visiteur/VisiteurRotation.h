@@ -29,12 +29,12 @@ class VisiteurRotation : public VisiteurAbstrait
 {
 public:
 	/// Constructeur par défaut.
-	VisiteurRotation();
+	VisiteurRotation(engine::MapSession* mapSession);
 
 	/// Destructeur.
 	virtual ~VisiteurRotation();
 
-	void rotateSelectedObjects(ArbreRendu* tree, engine::MapSession* mapSession);
+	void rotateSelectedObjects(ArbreRendu* tree);
 
 	virtual void visiter(ArbreRendu* noeud);
 	virtual void visiter(NoeudTable* noeud);
@@ -45,9 +45,7 @@ public:
 	virtual void visiter(NoeudTeleporteur* noeud);
 
 	virtual void visiter(NoeudLigneCourseAbstrait* noeud);
-
 	virtual void visiter(NoeudPaireTeleporteurs* noeud);
-
 
 private:
 

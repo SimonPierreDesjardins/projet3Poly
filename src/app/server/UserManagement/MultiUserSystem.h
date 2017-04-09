@@ -17,6 +17,7 @@ public:
 
 	void AddUser(User* user);
 	bool RemoveUser(User* user);
+	bool containsUser(User* user);
 
 	inline size_t GetNumberOfUsers() const;
 

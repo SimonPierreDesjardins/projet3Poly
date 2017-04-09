@@ -1,3 +1,4 @@
+#include "TypeSerializerDeserializer.h"
 #include "NetworkStandard.h"
 
 #include "EventHandler.h"
@@ -7,6 +8,7 @@
 #include "MessageDispatcher.h"
 #include "Authentification.cs"
 #include "MapPermission.cs"
+#include "MapJoin.cs"
 
 namespace client_network
 {
@@ -79,13 +81,50 @@ void MessageDispatcher::lookupMessage()
 
 void MessageDispatcher::handlePhysicMessage(const std::string& message)
 {
+	if (message[Networking::MessageStandard::COMMAND == 'e'])
+	{
+		handleStackedPhysicsMessage(message);
+	}
+	else
+	{
+		handleSinglePhysicMessage(message);
+	}
+}
+
+void MessageDispatcher::handleSinglePhysicMessage(const std::string& message)
+{
 	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
 	char propertyType = message[Networking::MessageStandard::COMMAND];
 	glm::vec3 updatedProperty;
 	updatedProperty.x = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 4);
 	updatedProperty.y = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 8);
 	updatedProperty.z = serializer_.deserializeFloat(message.data() + Networking::MessageStandard::DATA_START + 12);
+
 	eventHandler_->onEntityPropertyUpdated(entityId, propertyType, updatedProperty);
+}
+
+void MessageDispatcher::handleStackedPhysicsMessage(const std::string& message)
+{
+	uint32_t entityId = serializer_.deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+
+	PhysicsComponent update;
+		
+	char const* data = message.data() + Networking::MessageStandard::DATA_START + 4;
+	Networking::deserialize(data, update.relativePosition);
+
+	data += 12;
+	Networking::deserialize(data, update.absolutePosition);
+
+	data += 12;
+	Networking::deserialize(data, update.rotation);
+
+	data += 12;
+	Networking::deserialize(data, update.linearVelocity);
+
+	data += 12;
+	Networking::deserialize(data, update.angularVelocity);
+
+	eventHandler_->onStackedPropertiesUpdate(entityId, update);
 }
 
 void MessageDispatcher::handleEntityCreationMessage(const std::string& message)
@@ -163,7 +202,7 @@ void MessageDispatcher::handleMapCreationMessage(const std::string& message)
 	char permission = message[Networking::MessageStandard::DATA_START + 6];
 	uint32_t adminId = message[Networking::MessageStandard::DATA_START + 7];
 	std::string name = message.substr(Networking::MessageStandard::DATA_START + 11);
-	eventHandler_->onNewMapCreated(mapId, type, mapId, permission, adminId, name);
+	eventHandler_->onNewMapCreated(mapId, type, nUsers, permission, adminId, name);
 }
 
 void MessageDispatcher::handleMapJoinMessage(const std::string& message)
@@ -172,12 +211,15 @@ void MessageDispatcher::handleMapJoinMessage(const std::string& message)
 	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 1]);
 	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 5]);
 	eventHandler_->onUserJoinedMap(result, mapId, userId);
+	mapConnect(mapId, USER_JOINED);
 }
 
 void MessageDispatcher::handleMapQuitMessage(const std::string& message)
 {
-	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START]);
+	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 4]);
 	eventHandler_->onUserLeftCurrentMapSession(userId);
+	mapConnect(mapId, USER_LEFT);
 }
 
 void MessageDispatcher::handleMapListMessage(const std::string& message)
@@ -267,7 +309,6 @@ void MessageDispatcher::handleMapSystemMessage(const std::string& message)
 	default:
 		std::cout << "Unexpected message received" << message << std::endl;
 		break;
-
 	}
 }
 

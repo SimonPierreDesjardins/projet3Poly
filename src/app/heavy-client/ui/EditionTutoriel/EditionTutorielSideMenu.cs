@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ui
 {
-    public partial class EditionTutorielSideMenu : UserControl
+    public partial class EditionTutorielSideMenu : EditSideMenu
     {
         Window parent_;
 
@@ -23,9 +23,10 @@ namespace ui
         /// @param Window parent: reference a la fenetre principal du programme
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public EditionTutorielSideMenu(Window parent)
+        public EditionTutorielSideMenu(Window parent) : base()
         {
             InitializeComponent();
+            init(duplicatePictureBox, DuplicateToolButton);
             parent_ = parent;
 
             setToolTips();
@@ -199,6 +200,9 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         public void duplicateTool()
         {
+            if (FonctionsNatives.obtenirNombreSelection() <= 0)
+                return;
+
             hideObjectMenu();
             setDefaultUnselectedColors();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
@@ -548,37 +552,6 @@ namespace ui
             postObjectButton.toolTip.SetToolTip(postObjectPicture, "Objet poteau [P]");
             wallObjectButton.toolTip.SetToolTip(wallObjectPicture, "Objet mur [M]");
             teleportObjectButton.toolTip.SetToolTip(teleportorPictureBox, "Objet téléporteur []");
-        }
-
-        ////////////////////////////////////////////////////////////////////////
-        ///
-        /// @fn public Bitmap ChangeColor(Bitmap scrBitmap, Color newColor)
-        ///
-        /// Change la couleur d'un image par une nouvelle couleur.
-        /// 
-        /// @param Bitmap scrBitmap: le bitmap de l'image qui doit être modifié
-        /// @param Color newColor: La nouvelle couleur de l'image
-        ///
-        ////////////////////////////////////////////////////////////////////////
-        public Bitmap ChangeColor(Bitmap scrBitmap, Color newColor)
-        {
-            Color actualColor;
-            //make an empty bitmap the same size as scrBitmap
-            Bitmap newBitmap = new Bitmap(scrBitmap.Width, scrBitmap.Height);
-            for (int i = 0; i < scrBitmap.Width; i++)
-            {
-                for (int j = 0; j < scrBitmap.Height; j++)
-                {
-                    //get the pixel from the scrBitmap image
-                    actualColor = scrBitmap.GetPixel(i, j);
-                    // > 150 because.. Images edges can be of low pixel colr. if we set all pixel color to new then there will be no smoothness left.
-                    if (actualColor.A > 100)
-                        newBitmap.SetPixel(i, j, newColor);
-                    //else
-                        //newBitmap.SetPixel(i, j, actualColor);
-                }
-            }
-            return newBitmap;
         }
 
         ////////////////////////////////////////////////////////////////////////

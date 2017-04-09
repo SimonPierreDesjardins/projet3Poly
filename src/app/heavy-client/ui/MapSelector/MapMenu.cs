@@ -780,6 +780,14 @@ namespace ui
                     tmp.wrongPassword();
                     break;
 
+                case (int)MapJoin.Response.USER_JOINED:
+                    tmp.incPlayers();
+                    break;
+
+                case (int)MapJoin.Response.USER_LEFT:
+                    tmp.decPlayers();
+                    break;
+
                 default:
                     System.Console.WriteLine("Unexpected command on map connection. MapId: " + mapId + ".");
                     break;

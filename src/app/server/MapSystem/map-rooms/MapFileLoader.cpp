@@ -113,37 +113,14 @@ void server::MapFileLoader::SaveTree() {
 
 	writer->StartObject();
 	writer->Key("table");
+
+	_entityTree->lock();
 	SaveEntityToJSON(_entityTree->findEntity(1), writer);
+	_entityTree->unlock();
+
 	writer->EndObject();
 
 	_mapFile->MapData = buffer.GetString();
-}
-
-void server::MapFileLoader::VisiterMethod(Entity * entity, rapidjson::Writer<rapidjson::StringBuffer> * writer)
-{
-	auto entityType = entity->entityType_;
-	// check for teleporter, otherwise save normally
-	if (ShouldSave(entityType) && entityType != Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY) {
-		SaveEntityToJSON(entity, writer);
-	}
-	// Teleporter saving methodology
-	else {
-		if (previousTeleporter_ == nullptr) {
-			// save to previous teleporter
-			previousTeleporter_ = entity;
-		}
-		else {
-			//save both items in pairTeleporteurs
-			writer->StartObject();
-			writer->Key("PaireTeleporteurs");
-			writer->StartArray();
-			SaveEntityToJSON(previousTeleporter_, writer);
-			SaveEntityToJSON(entity, writer);
-			writer->EndArray();
-			writer->EndObject();
-			previousTeleporter_ = nullptr;
-		}
-	}
 }
 
 void server::MapFileLoader::SaveEntityToJSON(Entity * entity, rapidjson::Writer<rapidjson::StringBuffer>* writer)
@@ -176,7 +153,7 @@ void server::MapFileLoader::SaveEntityToJSON(Entity * entity, rapidjson::Writer<
 		writer->StartArray();
 		for each (auto child in *entity)
 		{
-			VisiterMethod(child.second, writer);
+			SaveEntityToJSON(child.second, writer);
 		}
 		writer->EndArray();
 	}

@@ -8,7 +8,6 @@
 /// @{
 ///////////////////////////////////////////////////////////////////////////
 
-
 #include <math.h>
 
 #include "Utilitaire.h"
@@ -32,7 +31,6 @@
 #include "SimulationEngine.h"
 
 #include "ModeSimulation.h"
-
   
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -94,7 +92,7 @@ ModeSimulation::~ModeSimulation()
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
 
-	//mapSession_->deleteLocalEntity(robot_);
+	mapSession_->deleteLocalEntity(robot_);
 }
 
 ////////////////////////////////////////////////////////////////////////

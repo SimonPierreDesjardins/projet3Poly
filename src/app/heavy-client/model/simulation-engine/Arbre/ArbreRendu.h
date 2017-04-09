@@ -88,16 +88,6 @@ public:
 	double obtenirPositionRelativeX();
 	// Obtient la position relative en Y du noeud selectionné.
 	double obtenirPositionRelativeY();
-	// Assigne l'angle de rotaion du noeud selectionné. 
-	void assignerAngleRotation(const double& angle);
-	// Assigne le facteur de mise à échelle du noeud selectionné.
-	void assignerFacteurMiseAEchelle(const double& facteurMiseAEchelle);
-	// Assigne la position relative en x du noeud sélectionné.
-	void assignerPositionRelativeX(const double& positionRelativeX);
-	// Assigne la position relative en x du noeud sélectionné. 
-	void assignerPositionRelativeY(const double& positionRelativeY);
-
-	
 
 protected:
 	// Retourne un pointeur vers le fichier de structure de base
@@ -111,8 +101,6 @@ protected:
 
 	// Chemin vers le fichier de zone sélectionné par l'utilisateur
 	std::string cheminFichierZone;
-
-
 
 private:
     /// Définition du type pour l'association du nom d'un type vers l'usine

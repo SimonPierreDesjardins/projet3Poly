@@ -8,9 +8,9 @@
 namespace server
 {
 
-AbstractMapRoom::AbstractMapRoom(MapInfo* mapInfo, MapFileEntry* mapFile)
+AbstractMapRoom::AbstractMapRoom(MapInfo* info, MapFileEntry* mapFile)
 {
-	mapInfo_ = mapInfo;
+	mapInfo = info;
 	// load up the tree from the file
 	mapFileLoader_ = new MapFileLoader(&tree_, mapFile);
 }
@@ -28,7 +28,7 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 {
 	// Subscribe to physic and map edition messages.
 	user->addSystemObserver(this, MAP_EDITION_MESSAGE);
-
+	user->addSystemObserver(this, GAME_MESSAGE);
 
 	// Send user list to the new User.
 	for (auto it = _connectedUserList.begin(); it != _connectedUserList.end(); ++it)
@@ -38,7 +38,7 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 			// Send joined response to new user.
 			std::string userEntry(4, '\0');
 			userEntry.append("mjs");
-			Networking::serialize(mapInfo_->GetId(), userEntry);
+			Networking::serialize(mapInfo->GetId(), userEntry);
 			Networking::serialize(it->second->Info.GetId(), userEntry);
 			userEntry.append(it->second->Info.UserName);
 			Networking::MessageStandard::UpdateLengthHeader(userEntry);
@@ -48,10 +48,6 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 
 	std::queue<Entity*> sendingQueue;
 	Entity* table = tree_.findEntity(1);
-
-	// Create an arrow for the new user.
-	Entity* start = tree_.createEntity(1, table->entityId_);
-	start->userId_ = user->Info.GetId();
 
 	if (table)
 	{
@@ -77,7 +73,7 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	std::string mapReadyMessage;
 	Networking::serialize(uint32_t(0), mapReadyMessage);
 	mapReadyMessage.append("mr");
-	Networking::serialize(mapInfo_->GetId(), mapReadyMessage);
+	Networking::serialize(mapInfo->GetId(), mapReadyMessage);
 	Networking::MessageStandard::UpdateLengthHeader(mapReadyMessage);
 	user->ForwardMessage(mapReadyMessage);
 }
@@ -120,6 +116,21 @@ void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& messa
 {
 	assert(message[4] == PHYSIC_MESSAGE);
 
+	if (message[Networking::MessageStandard::COMMAND] == 'e')
+	{
+		handleStackedPropertyMessage(sender, message);
+	}
+	else
+	{
+		handleSinglePropertyMessage(sender, message);
+	}
+
+	// TODO: check if entity is worth noting dirty map for
+	mapFileLoader_->SetMapDirty();
+}
+
+void AbstractMapRoom::handleSinglePropertyMessage(User* sender, const std::string& message)
+{
 	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
 	Entity* updatedEntity = tree_.findEntity(entityId);
 
@@ -137,9 +148,34 @@ void AbstractMapRoom::handlePhysicMessage(User* sender, const std::string& messa
 		// Update other users.
 		broadcastMessage(sender, message);
 	}
+}
 
-	// TODO: check if entity is worth noting dirty map for
-	mapFileLoader_->SetMapDirty();
+void AbstractMapRoom::handleStackedPropertyMessage(User* sender, const std::string& message)
+{
+	assert(message.size() == 70);
+	uint32_t entityId = Networking::deserializeInteger(message.data() + Networking::MessageStandard::DATA_START);
+	Entity* updatedEntity = tree_.findEntity(entityId);
+
+	// If the entity id exists and it is selected by this user.
+	if (updatedEntity && updatedEntity->userId_ == sender->Info.GetId())
+	{
+		char const* data = message.data() + Networking::MessageStandard::DATA_START + 4;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::RELATIVE_POSITION));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::ABSOLUTE_POSITION));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::ROTATION));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::LINEAR_VELOCITY));
+
+		data += 12;
+		Networking::deserialize(data, *updatedEntity->getProperty(Networking::ANGULAR_VELOCITY));
+
+		broadcastMessage(sender, message);
+	}
 }
 
 void AbstractMapRoom::handleMapEditionMessage(User* sender, const std::string& message)
@@ -227,16 +263,16 @@ void AbstractMapRoom::handleEntityCreationMessage(User* sender, const std::strin
 	// update mapinfo with new Item
 	switch (entityType) {
 	case Networking::MessageStandard::ItemTypes::POST_ENTITY:
-		mapInfo_->nbPoteaux++;
+		mapInfo->nbPoteaux++;
 		break;
 	case Networking::MessageStandard::ItemTypes::WALL_ENTITY:
-		mapInfo_->nbMurs++;
+		mapInfo->nbMurs++;
 		break;
 	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
-		mapInfo_->nbLignes++;
+		mapInfo->nbLignes++;
 		break;
 	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
-		mapInfo_->nbTeleporteurs++;
+		mapInfo->nbTeleporteurs++;
 		break;
 	}
 
@@ -255,16 +291,16 @@ void AbstractMapRoom::handleEntityRemovalMessage(User* sender, const std::string
 
 	switch (deletedEntity->entityType_) {
 	case Networking::MessageStandard::ItemTypes::POST_ENTITY:
-		mapInfo_->nbPoteaux--;
+		mapInfo->nbPoteaux--;
 		break;
 	case Networking::MessageStandard::ItemTypes::WALL_ENTITY:
-		mapInfo_->nbMurs--;
+		mapInfo->nbMurs--;
 		break;
 	case Networking::MessageStandard::ItemTypes::BLACK_LINE_ENTITY:
-		mapInfo_->nbLignes--;
+		mapInfo->nbLignes--;
 		break;
 	case Networking::MessageStandard::ItemTypes::TELEPORT_ENTITY:
-		mapInfo_->nbTeleporteurs--;
+		mapInfo->nbTeleporteurs--;
 		break;
 	}
 

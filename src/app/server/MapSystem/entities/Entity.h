@@ -39,6 +39,7 @@ public:
 	inline glm::dvec3* getProperty(Networking::PropertyType propertyType);
 	inline std::shared_ptr<NoeudAbstrait>& getTreeNode();
 
+
 private:
 	void SetupInitialProperties();
 	Entity* parent_{ nullptr };

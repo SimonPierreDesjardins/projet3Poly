@@ -51,9 +51,7 @@ ModeEdition::ModeEdition(engine::SimulationEngine* engine, client_network::Clien
 ///
 ////////////////////////////////////////////////////////////////////////
 ModeEdition::~ModeEdition()
-{
-	mapSession_->requestToLeaveMapSession();
-}
+{}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -65,8 +63,7 @@ ModeEdition::~ModeEdition()
 ///
 ////////////////////////////////////////////////////////////////////////
 void ModeEdition::gererToucheT()
-{
-}
+{}
 
 ////////////////////////////////////////////////////////////////////////
 ///
@@ -206,7 +203,8 @@ void ModeEdition::gererMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 				break;
 
 			case VK_KEY_C:
-				assignerEtat(DUPLICATION);
+				if (tree_->obtenirNombreSelection() > 0)
+					assignerEtat(DUPLICATION);
 				break;
 
 			case VK_KEY_Z:

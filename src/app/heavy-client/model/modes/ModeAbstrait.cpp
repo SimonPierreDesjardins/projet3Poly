@@ -258,16 +258,16 @@ void ModeAbstrait::gererMoletteSouris(const int & delta){
 ////////////////////////////////////////////////////////////////////////
 NoeudRobot* ModeAbstrait::creerRobot(ArbreRenduINF2990* arbre, ProfilUtilisateur* profil)
 {
-	std::shared_ptr<NoeudAbstrait> robot = arbre->creerNoeud(profil->getModele());
+	std::shared_ptr<NoeudRobot> robot = std::static_pointer_cast<NoeudRobot>(arbre->creerNoeud(profil->getModele()));
 	NoeudAbstrait* table = arbre->chercher(0);
 	table->ajouter(robot);
-	NoeudRobot* robotPtr = static_cast<NoeudRobot*>(robot.get());
-	robotPtr->initialisationCouleurs(profil->obtenirCouleurs(WHEELS), profil->obtenirCouleurs(BODY));
-	robotPtr->setCouleurDefault(WHEELS, profil->obtenirCouleurParDefaut(WHEELS));
-	robotPtr->setCouleurDefault(BODY, profil->obtenirCouleurParDefaut(BODY));
-	robotPtr->giveSensors(profil->obtenirCapteursDistance(), profil->obtenirSuiveurLigne());
 
-	return robotPtr;
+	robot->initialisationCouleurs(profil->obtenirCouleurs(WHEELS), profil->obtenirCouleurs(BODY));
+	robot->setCouleurDefault(WHEELS, profil->obtenirCouleurParDefaut(WHEELS));
+	robot->setCouleurDefault(BODY, profil->obtenirCouleurParDefaut(BODY));
+	robot->giveSensors(profil->obtenirCapteursDistance(), profil->obtenirSuiveurLigne());
+
+	return robot.get();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

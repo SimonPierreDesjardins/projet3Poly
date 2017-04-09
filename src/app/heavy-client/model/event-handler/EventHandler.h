@@ -48,6 +48,7 @@ public:
 
 	// Entity properties
 	void onEntityPropertyUpdated(uint32_t entityId, char propertyType, const glm::vec3& propertyValue);
+	void onStackedPropertiesUpdate(uint32_t entityId, const PhysicsComponent& properties);
 
 private:
 	client_network::NetworkManager* networkManager_ = nullptr;

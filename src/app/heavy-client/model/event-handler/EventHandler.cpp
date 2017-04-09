@@ -114,7 +114,6 @@ void EventHandler::onUserLeftCurrentMapSession(uint32_t userId)
 		}
 		else
 		{
-			FacadeModele::obtenirInstance()->assignerMode(MENU_PRINCIPAL);
 			mapSessionManager_->quitCurrentMapSession();
 		}
 	}
@@ -132,6 +131,15 @@ void EventHandler::onEntityPropertyUpdated(uint32_t entityId, char propertyType,
 	if (currentSession)
 	{
 		currentSession->serverEntityPropertyUpdated(entityId, (Networking::PropertyType)(propertyType), propertyValue);
+	}
+}
+
+void EventHandler::onStackedPropertiesUpdate(uint32_t entityId, const PhysicsComponent& properties)
+{
+	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
+	if (currentSession)
+	{
+		currentSession->serverEntityPropertyUpdated(entityId, properties);
 	}
 }
 

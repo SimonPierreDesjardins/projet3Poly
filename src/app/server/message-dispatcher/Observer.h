@@ -16,7 +16,8 @@ enum SystemType
 	CHAT_MESSAGE = 'c',
 	MAP_MESSAGE = 'm',
 	PHYSIC_MESSAGE = 'p',
-	MAP_EDITION_MESSAGE = 'e'
+	MAP_EDITION_MESSAGE = 'e',
+	GAME_MESSAGE = 'g'
 };
 
 class Observer

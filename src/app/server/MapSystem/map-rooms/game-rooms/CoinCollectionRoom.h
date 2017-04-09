@@ -10,6 +10,7 @@ class CoinCollectionRoom : public GameRoom
 public:
 	CoinCollectionRoom(MapInfo* mapInfo, MapFileEntry* mapFile);
 	virtual ~CoinCollectionRoom() = default;
+
 };
 
 }

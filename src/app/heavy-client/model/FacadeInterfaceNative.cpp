@@ -64,8 +64,6 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl libererOpenGL()
 	{
-		FacadeModele::obtenirInstance()->libererOpenGL();
-
 		// Désinitialisation de la façade.  Le fait de le faire après la
 		// désinitialisation du contexte OpenGL aura pour conséquence que la
 		// libération des listes d'affichages, par exemple, sera faite une fois que
@@ -85,7 +83,6 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl dessinerOpenGL()
 	{
-		
 		// Affiche la scène.
 		FacadeModele::obtenirInstance()->afficher();
 
@@ -387,7 +384,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void assignerAngleRotation(double angle)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerAngleRotation(angle);
+		FacadeModele::obtenirInstance()->assignerAngleRotation(angle);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -401,7 +398,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerFacteurGrandeur(double facteurMiseAEchelle)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
+		FacadeModele::obtenirInstance()->assignerFacteurMiseAEchelle(facteurMiseAEchelle);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -415,7 +412,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerPositionRelativeX(double positionRelativeX)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerPositionRelativeX(positionRelativeX);
+		FacadeModele::obtenirInstance()->assignerPositionRelativeX(positionRelativeX);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -429,7 +426,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl assignerPositionRelativeY(double positionRelativeY)
 	{
-		FacadeModele::obtenirInstance()->obtenirArbreRenduINF2990()->assignerPositionRelativeY(positionRelativeY);
+		FacadeModele::obtenirInstance()->assignerPositionRelativeY(positionRelativeY);
 	}
 
 	////////////////////////////////////////////////////////////////////////
@@ -915,8 +912,7 @@ extern "C"
 			profil->setCouleurParDefaut(BODY, true);
 			profil->setCouleurParDefaut(WHEELS, true);
 
-			
-			NoeudRobot* robot = mode->creerRobot(arbre,profil);
+			NoeudRobot* robot = mode->creerRobot(arbre, profil);
 
 			robot->setCouleurDefault(BODY, true);
 			robot->setCouleurDefault(WHEELS, true);

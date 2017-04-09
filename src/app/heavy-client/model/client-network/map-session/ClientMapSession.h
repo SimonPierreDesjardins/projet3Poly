@@ -66,10 +66,14 @@ public:
 	virtual void updateSelectionStateLocalEntityAndChildren(NoeudAbstrait* entity, bool isSelected) override;
 	void serverEntitySelected(uint32_t entityId, bool isSelected, uint32_t userId);
 
+	void serverEntityPropertyUpdated(uint32_t entityId, const PhysicsComponent& properties);
 	void serverEntityPropertyUpdated(uint32_t entityId, Networking::PropertyType, const glm::vec3& updatedProperty);
+
 	virtual void localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType, const glm::vec3& updatedProperty) override;
+	virtual void localEntityPropertiesUpdated(NoeudAbstrait* entity) override;
 
 	void setIsOnlineSession(bool isOnline);
+	inline bool isOnline() const;
 
 	void requestToLeaveMapSession();
 	void quitMapSession();
@@ -101,6 +105,11 @@ private:
 
 	ClientMapSession() = delete;
 };
+
+inline bool ClientMapSession::isOnline() const
+{
+	return isOnline_;
+}
 
 }
 

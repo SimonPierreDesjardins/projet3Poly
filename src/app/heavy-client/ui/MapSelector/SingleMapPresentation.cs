@@ -195,6 +195,24 @@ namespace ui
             });
         }
 
+        public void incPlayers()
+        {
+            numberOfPlayers_++;
+            parent_.Invoke((MethodInvoker)delegate
+            {
+                numberOfPlayersLabel.Text = numberOfPlayers_.ToString();
+            });
+        }
+
+        public void decPlayers()
+        {
+            numberOfPlayers_--;
+            parent_.Invoke((MethodInvoker)delegate
+            {
+                numberOfPlayersLabel.Text = numberOfPlayers_.ToString();
+            });
+        }
+
         ////////////////////////////////////////////////////////////////////////
         ///
         /// @fn internal void setPath(string path)
