@@ -47,6 +47,7 @@
             // 
             // c
             // 
+            this.c.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.c.AutoSize = true;
             this.c.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.c.ForeColor = System.Drawing.Color.Silver;
@@ -58,6 +59,7 @@
             // 
             // h
             // 
+            this.h.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.h.AutoSize = true;
             this.h.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.h.ForeColor = System.Drawing.Color.Silver;
@@ -69,6 +71,7 @@
             // 
             // g
             // 
+            this.g.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.g.AutoSize = true;
             this.g.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.g.ForeColor = System.Drawing.Color.Silver;
@@ -80,6 +83,7 @@
             // 
             // r
             // 
+            this.r.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.r.AutoSize = true;
             this.r.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.r.ForeColor = System.Drawing.Color.Silver;
@@ -91,6 +95,7 @@
             // 
             // a
             // 
+            this.a.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.a.AutoSize = true;
             this.a.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.a.ForeColor = System.Drawing.Color.Silver;
@@ -102,6 +107,7 @@
             // 
             // E1
             // 
+            this.E1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.E1.AutoSize = true;
             this.E1.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.E1.ForeColor = System.Drawing.Color.Silver;
@@ -113,6 +119,7 @@
             // 
             // m
             // 
+            this.m.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.m.AutoSize = true;
             this.m.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.m.ForeColor = System.Drawing.Color.Silver;
@@ -124,6 +131,7 @@
             // 
             // E2
             // 
+            this.E2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.E2.AutoSize = true;
             this.E2.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.E2.ForeColor = System.Drawing.Color.Silver;
@@ -135,6 +143,7 @@
             // 
             // N
             // 
+            this.N.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.N.AutoSize = true;
             this.N.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.N.ForeColor = System.Drawing.Color.Silver;
@@ -146,6 +155,7 @@
             // 
             // t
             // 
+            this.t.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.t.AutoSize = true;
             this.t.Font = new System.Drawing.Font("Century Gothic", 36F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.t.ForeColor = System.Drawing.Color.Silver;
@@ -157,6 +167,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(387, 250);
             this.pictureBox1.Name = "pictureBox1";

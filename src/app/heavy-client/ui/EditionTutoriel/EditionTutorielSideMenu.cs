@@ -47,6 +47,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectToolButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
             selectTool();
         }
 
@@ -64,7 +65,6 @@ namespace ui
             setDefaultUnselectedColors();
             selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -82,6 +82,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void MoveToolButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
             moveTool();
         }
 
@@ -99,7 +100,6 @@ namespace ui
             setDefaultUnselectedColors();
             MoveToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_MOVE_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -117,6 +117,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void RotateToolButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
             rotateTool();
         }
 
@@ -134,7 +135,6 @@ namespace ui
             setDefaultUnselectedColors();
             RotateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_ROTATION_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -152,6 +152,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void ScaleToolButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
             scaleTool();
         }
 
@@ -169,7 +170,6 @@ namespace ui
             setDefaultUnselectedColors();
             ScaleToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_SCALE_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -187,6 +187,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void DuplicateToolButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
             duplicateTool();
         }
 
@@ -207,7 +208,6 @@ namespace ui
             setDefaultUnselectedColors();
             DuplicateToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_DUPLICATE_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -245,6 +245,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void zoomToolButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
             zoomTool();
         }
 
@@ -262,7 +263,6 @@ namespace ui
             setDefaultUnselectedColors();
             zoomToolButton.BackColor = Color.FromArgb(0, 102, 204);
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -277,6 +277,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void deleteToolButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
             deleteTool();
         }
 
@@ -290,7 +291,6 @@ namespace ui
         public void deleteTool()
         {
             FonctionsNatives.assignerAutorisationInputClavier(true);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
             parent_.verificationDuNombreElementChoisi();
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.DELETE_TOOL)
@@ -309,6 +309,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void lineObjectButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
             lineObject();
         }
 
@@ -326,7 +327,6 @@ namespace ui
             setDefaultUnselectedColors();
             lineObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(lineObjectPicture);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_LINE_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -344,6 +344,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void postObjectButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_P, (IntPtr)1638401);
             postObject();
         }
 
@@ -361,7 +362,6 @@ namespace ui
             setDefaultUnselectedColors();
             postObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(postObjectPicture);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_P, (IntPtr)1638401);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_POST_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -379,6 +379,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void wallObjectButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
             wallObject();
         }
 
@@ -396,7 +397,6 @@ namespace ui
             setDefaultUnselectedColors();
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(wallObjectPicture);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_WALL_TOOL)
                 parent_.editionTutorielInstructions.nextState();
@@ -414,6 +414,7 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void teleportObjectButton_Click(object sender, EventArgs e)
         {
+            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_O, (IntPtr)3276801);
             teleportorObjet();
         }
 
@@ -423,7 +424,6 @@ namespace ui
             setDefaultUnselectedColors();
             wallObjectButton.BackColor = Color.FromArgb(0, 102, 204);
             setCurrentObjet(teleportorPictureBox);
-            FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_O, (IntPtr)3276801);
 
             if (parent_.editionTutorielInstructions.GetState() == (int)EditionTutorial.State.SELECT_TELEPORTOR)
                 parent_.editionTutorielInstructions.nextState();

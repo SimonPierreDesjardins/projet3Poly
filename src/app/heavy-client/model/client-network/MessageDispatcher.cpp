@@ -211,7 +211,6 @@ void MessageDispatcher::handleMapJoinMessage(const std::string& message)
 	uint32_t mapId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 1]);
 	uint32_t userId = serializer_.deserializeInteger(&message[Networking::MessageStandard::DATA_START + 5]);
 	eventHandler_->onUserJoinedMap(result, mapId, userId);
-	mapConnect(mapId, USER_JOINED);
 }
 
 void MessageDispatcher::handleMapQuitMessage(const std::string& message)

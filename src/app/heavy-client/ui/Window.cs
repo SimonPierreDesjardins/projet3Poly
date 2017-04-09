@@ -618,17 +618,14 @@ namespace ui
         {
             int mode = FonctionsNatives.obtenirMode();
             EditModifPanel modifPanel;
-            EditSideMenu sideMenu;
             switch(mode)
             {
                 case (int)ModeEnum.Mode.EDITION:
                     modifPanel = editionModificationPanel;
-                    sideMenu = editionSideMenu;
                     break;
 
                 case (int)ModeEnum.Mode.TUTORIAL_EDITION:
                     modifPanel = editionTutorielModificationPanel;
-                    sideMenu = editionTutorielSideMenu;
                     break;
 
                 default:
@@ -637,20 +634,27 @@ namespace ui
 
             FonctionsNatives.assignerAutorisationInputClavier(true);
             int nbEnfant = FonctionsNatives.obtenirNombreSelection();
-            if (nbEnfant == 1)
+            if (nbEnfant > 0)
             {
-                modifPanel.mettreAJourInformation();
-                modifPanel.Visible = true;
+                if (nbEnfant == 1)
+                {
+                    modifPanel.mettreAJourInformation();
+                    modifPanel.Visible = true;
+                }
+                else
+                {
+                    modifPanel.Visible = false;
+                }
+
+                if (mode == (int)ModeEnum.Mode.EDITION)
+                    editionSideMenu.enableDuplication();
             }
             else
             {
                 modifPanel.Visible = false;
+                if (mode == (int)ModeEnum.Mode.EDITION)
+                    editionSideMenu.disableDuplication();
             }
-
-            if (nbEnfant > 0)
-                sideMenu.enableDuplication();
-            else
-                sideMenu.disableDuplication();
         }
 
         ////////////////////////////////////////////////////////////////////////

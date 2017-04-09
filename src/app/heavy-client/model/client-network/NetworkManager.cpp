@@ -93,10 +93,9 @@ void NetworkManager::uploadMap(const std::string& filePath) {
 void NetworkManager::requestMapCreation(const std::string& mapName, const std::string& password, uint8_t mapType, uint8_t isPrivate)
 {
 	std::string message;
-	uint32_t messageBaseSize = isPrivate ? 9 : 8;
 
 	// on rajoute isPrivate à la taille pour symboliser l'ajout du ; entre le nom et le mot de passe
-	serializer_.serialize((uint32_t)(mapName.size() + password.size() + messageBaseSize + isPrivate), message);
+	serializer_.serialize((uint32_t)(mapName.size() + password.size() + 8 + isPrivate), message);
 	message.append("mc");
 	serializer_.serialize(mapType, message);
 	serializer_.serialize(isPrivate, message);

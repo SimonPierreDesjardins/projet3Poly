@@ -76,6 +76,7 @@ void EventHandler::onUserJoinedMap(char result, uint32_t mapId, uint32_t userId)
 					mapConnect(mapId, MAP_JOINED);
 				}
 			}
+			mapConnect(mapId, USER_JOINED);
 		}
 		break;
 
