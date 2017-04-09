@@ -64,4 +64,16 @@ void MapSessionManager::quitCurrentMapSession()
 	currentMapSession_ = &localMapSession_;
 }
 
+void MapSessionManager::requestToLeaveCurrentMapSession()
+{
+	if (currentMapSession_->isOnline())
+	{
+		currentMapSession_->requestToLeaveMapSession();
+	}
+	else
+	{
+		quitCurrentMapSession();
+	}
+}
+
 }

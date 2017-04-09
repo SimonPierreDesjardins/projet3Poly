@@ -49,10 +49,6 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 	std::queue<Entity*> sendingQueue;
 	Entity* table = tree_.findEntity(1);
 
-	// Create an arrow for the new user.
-	Entity* start = tree_.createEntity(1, table->entityId_);
-	start->userId_ = user->Info.GetId();
-
 	if (table)
 	{
 		sendingQueue.push(table);

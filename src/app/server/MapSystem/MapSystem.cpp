@@ -332,7 +332,7 @@ void MapSystem::HandleMapQuitMessage(User* user, const std::string& message)
 		AbstractMapRoom* mapSession = it->second.getCurrentSession();
 		if (mapSession)
 		{
-			isMapSessionFound = mapSession->RemoveUser(user);
+			isMapSessionFound = mapSession->containsUser(user);
 			foundMapSession = mapSession;
 		}
 	}
@@ -342,6 +342,7 @@ void MapSystem::HandleMapQuitMessage(User* user, const std::string& message)
 	Networking::serialize(user->Info.GetId(), reply);
 	Networking::MessageStandard::UpdateLengthHeader(reply);
 	foundMapSession->broadcastMessage(reply);
+	foundMapSession->RemoveUser(user);
 }
 
 void MapSystem::HandleMapDeleteMessage(User * user, const std::string & message)

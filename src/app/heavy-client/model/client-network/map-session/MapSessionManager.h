@@ -28,8 +28,10 @@ public:
 	ClientMapSession* createServerSession(uint32_t mapId, char mapType, const std::string& mapName);
 	void deleteServerSession(uint32_t mapid);
 
-	bool joinMapSession(uint32_t);
+	bool joinMapSession(uint32_t mapSession);
+
 	void quitCurrentMapSession();
+	void requestToLeaveCurrentMapSession();
 
 	inline ClientMapSession* getCurrentMapSession();
 

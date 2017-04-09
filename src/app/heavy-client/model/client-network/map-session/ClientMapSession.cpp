@@ -43,7 +43,6 @@ void ClientMapSession::localEntityCreated(NoeudAbstrait* entity)
 
 	entity->setOwnerId(network_->getUserId());
 
-
 	// If the session is online and the pending queue is empty, send the request now.
 	if (isOnline_ && pendingEntityCreationRequests_.empty())
 	{
@@ -173,7 +172,7 @@ void ClientMapSession::sendEntityCreationRequest(NoeudAbstrait* entity)
 		NoeudAbstrait* parent = entity->obtenirParent();
 		uint32_t parentId = 1;
 		if (parent) {
-			uint32_t parendId = parent->getId();
+			parentId = parent->getId();
 		}
 
 		network_->requestEntityCreation(entity->getType(),
@@ -338,6 +337,10 @@ void ClientMapSession::requestToLeaveMapSession()
 	{
 		network_->requestToQuitMapSession();
 	}
+	else
+	{
+		quitMapSession();
+	}
 }
 
 void ClientMapSession::serverUserLeftMapSession(uint32_t userId)
@@ -357,19 +360,15 @@ void ClientMapSession::serverUserLeftMapSession(uint32_t userId)
 
 void ClientMapSession::quitMapSession()
 {
+	pendingQueueLock_.lock();
 	while (!pendingEntityCreationRequests_.empty())
 		pendingEntityCreationRequests_.pop();
 
-	auto it = users_.find(network_->getUserId());
-	if (it != users_.end())
-	{
-		UserInfo* leavingUser = &it->second;
-		selectionColors.push(leavingUser->selectionColor);
-	}
-
-	users_.clear();
+	clearUsers();
 	confirmedEntities_.clear();
+	confirmedEntities_.insert(std::make_pair(0, entityTree_));
 	entityTree_->vider();
+	pendingQueueLock_.unlock();
 }
 
 
@@ -401,8 +400,8 @@ void ClientMapSession::clearUsers()
 	for (auto it = users_.begin(); it != users_.end(); ++it)
 	{
 		selectionColors.push(it->second.selectionColor);
-		users_.erase(it);
 	}
+	users_.clear();
 }
 
 }

@@ -70,6 +70,7 @@ public:
 	virtual void localEntityPropertyUpdated(NoeudAbstrait* entity, Networking::PropertyType, const glm::vec3& updatedProperty) override;
 
 	void setIsOnlineSession(bool isOnline);
+	inline bool isOnline() const;
 
 	void requestToLeaveMapSession();
 	void quitMapSession();
@@ -101,6 +102,11 @@ private:
 
 	ClientMapSession() = delete;
 };
+
+inline bool ClientMapSession::isOnline() const
+{
+	return isOnline_;
+}
 
 }
 
