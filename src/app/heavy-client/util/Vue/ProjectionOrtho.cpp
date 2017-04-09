@@ -64,7 +64,6 @@ namespace vue {
 		ajusterRapportAspect();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionOrtho::zoomerIn()
@@ -91,7 +90,6 @@ namespace vue {
 		}
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionOrtho::zoomerOut()
@@ -117,7 +115,6 @@ namespace vue {
 			currentZoom_ += incrementZoom_;
 		}
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -167,7 +164,6 @@ namespace vue {
 		mettreAJourProjection();
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionOrtho::appliquer() const
@@ -185,7 +181,6 @@ namespace vue {
 			yMinFenetre_, yMaxFenetre_,
 			zAvant_, zArriere_);
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -241,7 +236,6 @@ namespace vue {
 		xMinFenetre_ += decalageX;
 		xMaxFenetre_ = xMinFenetre_ + W;
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -313,7 +307,6 @@ namespace vue {
 		xMaxFenetre_ = xMinFenetre_ + W;
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionOrtho::translater( double deplacementX, double deplacementY )
@@ -334,7 +327,6 @@ namespace vue {
 			yMinFenetre_ += deplacementY;
 			yMaxFenetre_ += deplacementY;
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///
@@ -361,7 +353,6 @@ namespace vue {
 		translater(deplacementX, deplacementY);
 	}
 
-
 	////////////////////////////////////////////////////////////////////////
 	///
 	/// @fn void ProjectionOrtho::centrerSurPoint( const glm::ivec2& pointCentre )
@@ -379,7 +370,6 @@ namespace vue {
 	{
 		// À IMPLANTER.
 	}
-
 
 	////////////////////////////////////////////////////////////////////////
 	///

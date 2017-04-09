@@ -17,7 +17,6 @@
 
 namespace vue {
 
-
 	////////////////////////////////////////////////////////////////////////
 	/// @class ProjectionOrtho
 	/// @brief Classe implantant une projection orthogonale.
@@ -44,7 +43,6 @@ namespace vue {
 			double yMinFenetre, double yMaxFenetre,
 			bool perspective);
 
-
 		/// Zoom in, c'est-à-dire un agrandissement.
 		virtual void zoomerIn();
 		/// Zoom out, c'est-à-dire un rapetissement.
@@ -54,7 +52,6 @@ namespace vue {
 			const glm::ivec2& coinMax);
 		/// Application de la projection.
 		virtual void appliquer() const;
-
 
 		/// Zoom out élastique, sur un rectangle.
 		void zoomerOut(const glm::ivec2& coin1, const glm::ivec2& coin2);

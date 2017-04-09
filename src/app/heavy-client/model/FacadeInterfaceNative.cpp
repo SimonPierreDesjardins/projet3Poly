@@ -447,7 +447,7 @@ extern "C"
 	////////////////////////////////////////////////////////////////////////
 	__declspec(dllexport) void __cdecl repartirMessage(UINT msg, WPARAM wParam, LPARAM lParam)
 	{
-		FacadeModele::obtenirInstance()->obtenirMode()->gererMessage(msg, wParam, lParam);
+		FacadeModele::obtenirInstance()->repartirMessage(msg, wParam, lParam);
 	}
 
 	////////////////////////////////////////////////////////////////////////

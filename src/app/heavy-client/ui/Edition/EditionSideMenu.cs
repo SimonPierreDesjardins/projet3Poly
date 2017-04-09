@@ -31,7 +31,9 @@ namespace ui
 
             setToolTips();
             editionObjectMenu.Width = 0;
-            selectTool();
+
+            //Selection tool
+            selectToolButton.BackColor = Color.FromArgb(0, 102, 204);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -59,7 +61,7 @@ namespace ui
         /// qui correspond à l'état, sélection
         /// 
         ////////////////////////////////////////////////////////////////////////
-        public void selectTool()
+        public virtual void selectTool()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -93,7 +95,7 @@ namespace ui
         /// qui correspond à l'état, déplacement.
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void moveTool()
+        public virtual void moveTool()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -127,7 +129,7 @@ namespace ui
         /// qui correspond à l'état, rotation
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void rotateTool()
+        public virtual void rotateTool()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -161,7 +163,7 @@ namespace ui
         /// qui correspond à l'état, mise à échelle
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void scaleTool()
+        public virtual void scaleTool()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -195,7 +197,7 @@ namespace ui
         /// qui correspond à l'état, duplication
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void duplicateTool()
+        public virtual void duplicateTool()
         {
             if (FonctionsNatives.obtenirNombreSelection() <= 0)
                 return;
@@ -252,7 +254,7 @@ namespace ui
         /// qui correspond à l'état, zoom
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void zoomTool()
+        public virtual void zoomTool()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -285,7 +287,7 @@ namespace ui
         /// Supprime tous les objets sélectionnés
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void deleteTool()
+        public virtual void deleteTool()
         {
             FonctionsNatives.assignerAutorisationInputClavier(true);
             parent_.verificationDuNombreElementChoisi();
@@ -316,7 +318,7 @@ namespace ui
         /// qui correspond à l'état, creation ligne noire
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void lineObject()
+        public virtual void lineObject()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -349,7 +351,7 @@ namespace ui
         /// qui correspond à l'état, creation poteau
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void postObject()
+        public virtual void postObject()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -382,7 +384,7 @@ namespace ui
         /// qui correspond à l'état, creation mur
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void wallObject()
+        public virtual void wallObject()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -415,7 +417,7 @@ namespace ui
         /// qui correspond à l'état, creation teleporteur mur
         ///
         ////////////////////////////////////////////////////////////////////////
-        public void teleportorObjet()
+        public virtual void teleportorObjet()
         {
             hideObjectMenu();
             setDefaultUnselectedColors();
@@ -447,7 +449,7 @@ namespace ui
         /// d'outil et le menu de création d'objet.
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void setDefaultUnselectedColors()
+        public virtual void setDefaultUnselectedColors()
         {
             //Tools
             selectToolButton.BackColor = Color.Transparent;
@@ -489,7 +491,7 @@ namespace ui
         /// @param PictureBox objectPicture: L'image à insérer
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void setCurrentObjet(PictureBox objectPicture)
+        public virtual void setCurrentObjet(PictureBox objectPicture)
         {
             currentToolButton.BackColor = Color.FromArgb(0, 102, 204);
             currentObjectPicture.Image = objectPicture.Image;
@@ -541,7 +543,7 @@ namespace ui
         /// Initialise tous les tooltip pour les controles présents dans les menus
         ///
         ////////////////////////////////////////////////////////////////////////
-        private void setToolTips()
+        public virtual void setToolTips()
         {
             //Tools
             selectToolButton.toolTip.SetToolTip(selectPictureBox, "Outil de sélection [S]");
