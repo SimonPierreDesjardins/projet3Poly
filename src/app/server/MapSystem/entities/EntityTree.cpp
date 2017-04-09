@@ -69,6 +69,11 @@ Entity* EntityTree::findEntity(uint32_t entityId)
 	return foundEntity;
 }
 
+inline ArbreRenduINF2990 * EntityTree::getPhysicsTree()
+{
+	return physicsTree_.get();
+}
+
 
 char server::EntityTree::GetEntityType(const std::string & itemType)
 {

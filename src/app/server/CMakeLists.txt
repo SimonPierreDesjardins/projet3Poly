@@ -68,6 +68,8 @@ set(MAP_ROOMS_SRC
 	MapSystem/map-rooms/EditionRoom.cpp
 	MapSystem/map-rooms/AbstractMapRoom.h
 	MapSystem/map-rooms/AbstractMapRoom.cpp
+	MapSystem/map-rooms/ServerMapSession.h
+	MapSystem/map-rooms/ServerMapSession.cpp
 )
 source_group("MapSystem\\MapRooms" FILES ${MAP_ROOMS_SRC})
 

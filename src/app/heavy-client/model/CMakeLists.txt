@@ -323,6 +323,7 @@ target_link_libraries(simulation_engine util)
 target_include_directories(simulation_engine PUBLIC
     ${CMAKE_SOURCE_DIR}/src/app/networkUtils/include
     util
+    ${CMAKE_SOURCE_DIR}/src/app/heavy-client/ui/enum
     simulation-engine
     simulation-engine/map-session
     simulation-engine/AffichageTexte

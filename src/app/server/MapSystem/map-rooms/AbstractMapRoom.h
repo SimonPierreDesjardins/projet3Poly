@@ -5,6 +5,7 @@
 #include "EntityTree.h"
 #include "Database\MapDatabase.h"
 #include "MapFileLoader.h"
+#include "ServerMapSession.h"
 
 namespace server
 {
@@ -45,6 +46,9 @@ protected:
 	MapFileLoader* mapFileLoader_;
 
 	AbstractMapRoom() = delete;
+
+	// Contains map sessions mapped to user id;
+	std::unordered_map<uint32_t, ServerMapSession> userMapSessions_;
 };
 
 }

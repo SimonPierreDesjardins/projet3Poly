@@ -1,6 +1,4 @@
 ﻿
-include_directories(
-    ui/enum)
 
 # Ajout de la librairie utilitaire
 add_subdirectory(util)

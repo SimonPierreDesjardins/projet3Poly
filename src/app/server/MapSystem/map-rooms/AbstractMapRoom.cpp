@@ -70,6 +70,9 @@ void AbstractMapRoom::TreatUserJoin(User* user)
 		}
 	}
 	
+	// Create a MapSession for the user
+	//userMapSessions_.insert(std::make_pair( user->Info.GetId(), ServerMapSession(user, (ArbreRendu*)tree_.getPhysicsTree(), this)));
+
 	std::string mapReadyMessage;
 	Networking::serialize(uint32_t(0), mapReadyMessage);
 	mapReadyMessage.append("mr");

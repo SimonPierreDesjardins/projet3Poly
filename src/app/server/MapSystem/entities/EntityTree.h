@@ -25,6 +25,8 @@ public:
 	bool deleteEntity(uint32_t entityToDelete);
 	Entity* findEntity(uint32_t entityId);
 
+	inline ArbreRenduINF2990* getPhysicsTree();
+
 	inline EntityContainer::iterator begin();
 	inline EntityContainer::iterator end();
 
