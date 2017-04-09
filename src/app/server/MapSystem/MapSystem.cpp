@@ -303,7 +303,7 @@ void MapSystem::HandleMapJoinMessage(User * user, const std::string & message)
 			}
 		}
 
-		user->ForwardMessage(response);
+		broadcastMessage(response);
 
 		mapIt->second.AddUser(user);
 
