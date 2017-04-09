@@ -27,7 +27,6 @@ void MapEntry::updateSessionType()
 		break;
 
 	case EDITION_MAP:
-	default:
 		currentSession_ = std::make_unique<EditionRoom>(Info, File);
 		break;
 

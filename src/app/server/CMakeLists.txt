@@ -171,6 +171,7 @@ target_include_directories(Server PUBLIC
 	chat-management
 	MapSystem
 	MapSystem/map-rooms
+    MapSystem/map-rooms/game-rooms
 	MapSystem/entities
 	UserManagement
 	message-dispatcher
