@@ -47,8 +47,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void selectToolButton_Click(object sender, EventArgs e)
         {
-            selectTool();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_S, (IntPtr)2031617);
+            selectTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -82,8 +82,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void MoveToolButton_Click(object sender, EventArgs e)
         {
-            moveTool();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_D, (IntPtr)2097153);
+            moveTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -117,8 +117,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void RotateToolButton_Click(object sender, EventArgs e)
         {
-            rotateTool();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_R, (IntPtr)1245185);
+            rotateTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -152,8 +152,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void ScaleToolButton_Click(object sender, EventArgs e)
         {
-            scaleTool();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_E, (IntPtr)1179649);
+            scaleTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -187,8 +187,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void DuplicateToolButton_Click(object sender, EventArgs e)
         {
-            duplicateTool();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_C, (IntPtr)3014657);
+            duplicateTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -245,8 +245,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void zoomToolButton_Click(object sender, EventArgs e)
         {
-            zoomTool();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Z, (IntPtr)2883585);
+            zoomTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -277,8 +277,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void deleteToolButton_Click(object sender, EventArgs e)
         {
-            deleteTool();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_Del, (IntPtr)22216705);
+            deleteTool();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -309,8 +309,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void lineObjectButton_Click(object sender, EventArgs e)
         {
-            lineObject();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_L, (IntPtr)2490368);
+            lineObject();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -344,8 +344,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void postObjectButton_Click(object sender, EventArgs e)
         {
-            postObject();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_P, (IntPtr)1638401);
+            postObject();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -379,8 +379,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void wallObjectButton_Click(object sender, EventArgs e)
         {
-            wallObject();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_M, (IntPtr)3276801);
+            wallObject();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -414,8 +414,8 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void teleportObjectButton_Click(object sender, EventArgs e)
         {
-            teleportorObjet();
             FonctionsNatives.repartirMessage((int)256, (IntPtr)Constants.Key_O, (IntPtr)3276801);
+            teleportorObjet();
         }
 
         public void teleportorObjet()

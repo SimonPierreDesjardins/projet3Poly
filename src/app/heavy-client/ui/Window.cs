@@ -651,7 +651,9 @@ namespace ui
             }
             else
             {
-                editionSideMenu.disableDuplication();
+                modifPanel.Visible = false;
+                if (mode == (int)ModeEnum.Mode.EDITION)
+                    editionSideMenu.disableDuplication();
             }
         }
 
