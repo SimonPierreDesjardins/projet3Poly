@@ -24,7 +24,7 @@ EtatRotation::EtatRotation(client_network::ClientMapSession* mapSession)
 	: OnlineTool(mapSession)
 {
 	setType(ROTATION);
-	visiteurRotation_ = std::make_unique<VisiteurRotation>();
+	visiteurRotation_ = std::make_unique<VisiteurRotation>(mapSession);
 	visiteurVerificationQuad_ = std::make_unique<VisiteurVerificationQuad>();
 }
 
@@ -98,7 +98,7 @@ void EtatRotation::gererMouvementSouris(const int& x, const int& y)
 	EtatAbstrait::gererMouvementSouris(x, y);
 	if (clicGaucheEnfonce_) {
 		visiteurRotation_->assignerAngleRotation((double)(y - dernierePositionY_));
-		visiteurRotation_->rotateSelectedObjects(arbre_, mapSession_);
+		visiteurRotation_->rotateSelectedObjects(arbre_);
 		dernierePositionY_ = y;
 	}
 }
@@ -113,7 +113,7 @@ void EtatRotation::gererMouvementSouris(const int& x, const int& y)
 void EtatRotation::reinitialiser()
 {
 	visiteurRotation_->assignerAngleRotation((double)(positionInitialeY_- dernierePositionY_));
-	visiteurRotation_->rotateSelectedObjects(arbre_, mapSession_);
+	visiteurRotation_->rotateSelectedObjects(arbre_);
 }
 ///////////////////////////////////////////////////////////////////////////////
 /// @}

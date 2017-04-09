@@ -83,7 +83,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionX__KeyDown(object sender, KeyEventArgs e)
         {
-            base.Xposition_keyDown();
+            if (e.KeyCode == Keys.Enter)
+            {
+                base.Xposition_keyDown();
+            }
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -100,7 +103,10 @@ namespace ui
         ////////////////////////////////////////////////////////////////////////
         private void textBoxPositionY__KeyDown(object sender, KeyEventArgs e)
         {
-            base.Yposition_keyDown();
+            if (e.KeyCode == Keys.Enter)
+            {
+                base.Yposition_keyDown();
+            }
         }
     }
 }
