@@ -82,6 +82,7 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::~ModeSimulation()
 {
+	engine_->setAnimating(true);
 	EnginSon::obtenirInstance()->stopMusique();
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);

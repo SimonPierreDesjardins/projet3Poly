@@ -72,6 +72,7 @@ public:
 	void setIsOnlineSession(bool isOnline);
 
 	void requestToLeaveMapSession();
+	void quitMapSession();
 	void serverUserLeftMapSession(uint32_t userId);
 
 	void addUser(uint32_t userId, const std::string& userName = "");
@@ -93,7 +94,6 @@ private:
 	std::queue<NoeudAbstrait*> pendingEntityCreationRequests_;
 
 	void sendEntityCreationRequest(NoeudAbstrait* entity);
-	void clearMapSession();
 
 	void createServerEntity(const PhysicsComponent& physics, uint8_t type, uint32_t entityId, uint32_t parendId, uint32_t userId);
 	void confirmLocalEntity(NoeudAbstrait* entity, uint32_t entityId);

@@ -108,11 +108,14 @@ void EventHandler::onUserLeftCurrentMapSession(uint32_t userId)
 	client_network::ClientMapSession* currentSession = mapSessionManager_->getCurrentMapSession();
 	if (currentSession)
 	{
-		currentSession->serverUserLeftMapSession(userId);
-		if (userId == networkManager_->getUserId())
+		if (userId != networkManager_->getUserId())
 		{
-			mapSessionManager_->quitCurrentMapSession();
+			currentSession->serverUserLeftMapSession(userId);
+		}
+		else
+		{
 			FacadeModele::obtenirInstance()->assignerMode(MENU_PRINCIPAL);
+			mapSessionManager_->quitCurrentMapSession();
 		}
 	}
 }
