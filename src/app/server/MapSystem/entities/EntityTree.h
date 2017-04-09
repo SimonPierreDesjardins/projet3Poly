@@ -21,6 +21,7 @@ public:
 
 	// Create a new entity with initial position, parentId and entity Type.
 	Entity* createEntity(char entityType, uint32_t parentId);
+	Entity* createEntity(const std::string& entityType, uint32_t parentId);
 
 	bool deleteEntity(uint32_t entityToDelete);
 	Entity* findEntity(uint32_t entityId);
@@ -30,11 +31,11 @@ public:
 	inline EntityContainer::iterator begin();
 	inline EntityContainer::iterator end();
 
-	static char GetEntityType(const std::string& itemType);
 	inline void lock();
 	inline void unlock();
 
 private:
+
 	std::mutex treeLock_;
 
 	EntityContainer entities_;

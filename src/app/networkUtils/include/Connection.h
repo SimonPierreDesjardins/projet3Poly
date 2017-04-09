@@ -65,6 +65,11 @@ private:
 
 	std::function<void(const std::string&)> onReceivedMessage_;
 	std::function<void(void)> onConnectionLost_;
+
+	unsigned int lengthBytesLeft_ = 4;
+	char lengthBytes_[4];
+	unsigned int messageBytesLeft_ = 0;
+	std::string currentMessage_ = "";
 };
 
 template<class F, class T>

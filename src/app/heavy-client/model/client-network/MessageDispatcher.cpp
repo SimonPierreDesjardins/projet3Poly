@@ -23,17 +23,42 @@ MessageDispatcher::~MessageDispatcher()
 	stopDispatching();
 }
 
-void MessageDispatcher::handleReceivedMessage(const char* buffer, uint32_t size)
+void MessageDispatcher::handleReceivedMessage(const char* buffer, uint32_t bytesLeft)
 {
-	uint32_t iCurrentMessage = 0;
-	// Parse the buffer.
-	while (iCurrentMessage < size)
-	{
-		const char* message = buffer + iCurrentMessage;
-		uint32_t currentMessageSize = serializer_.deserializeInteger(message);
-		pushMessage(std::string(message, currentMessageSize));
-		iCurrentMessage += currentMessageSize;
+
+	unsigned int currentIndex = 0;
+	unsigned int bytesToWrite = 0;
+
+	while (bytesLeft > 0) {
+		if (lengthBytesLeft_ > 0) {
+			//we have length bytes to read
+			bytesToWrite = (bytesLeft < lengthBytesLeft_) ? bytesLeft : lengthBytesLeft_;
+
+			// write to length bytes
+			memcpy(lengthBytes_, buffer + currentIndex, bytesToWrite);
+
+			if ((lengthBytesLeft_ -= bytesToWrite) == 0) {
+				// if length bytes full, produce message size
+				currentMessage_ = std::string(lengthBytes_, 4); // Start new message with size header
+				messageBytesLeft_ = serializer_.deserializeInteger(lengthBytes_) - 4;
+			}
+		}
+		else if (messageBytesLeft_ > 0) {
+			bytesToWrite = (bytesLeft < messageBytesLeft_) ? bytesLeft : messageBytesLeft_;
+
+			// append bytes to current message;
+			currentMessage_ += std::string(buffer + currentIndex, bytesToWrite);
+
+			// if no bytes left, perform message callback
+			if ((messageBytesLeft_ -= bytesToWrite) == 0) {
+				pushMessage(std::move(currentMessage_));
+				lengthBytesLeft_ = 4; // we are now waiting for the next message length
+			}
+		}
+		currentIndex += bytesToWrite;
+		bytesLeft -= bytesToWrite;
 	}
+	// read next buffer entry
 }
 
 void MessageDispatcher::pushMessage(const std::string& message)

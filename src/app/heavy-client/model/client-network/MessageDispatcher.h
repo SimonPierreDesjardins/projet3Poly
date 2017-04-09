@@ -72,6 +72,11 @@ private:
 	void handleMapPermissionMessage(const std::string& message);
 
 	MessageDispatcher() = delete;
+
+	unsigned int lengthBytesLeft_ = 4;
+	char lengthBytes_[4];
+	unsigned int messageBytesLeft_ = 0;
+	std::string currentMessage_ = "";
 };
 
 }

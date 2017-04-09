@@ -27,20 +27,46 @@ void Connection::Start() {
 void Connection::ReadData()
 {
 	_socket -> async_receive(asio::buffer(_buffer),
-	[this](std::error_code ec, std::size_t length)
+	[this](std::error_code ec, std::size_t bytesLeft)
 	{
 		if (_inDeletionProcess)
 			return;
 
 		if (!ec)
 		{
-			unsigned int messageStartIndex = 0;
-			while (messageStartIndex < length) {
-				uint32_t msgLength = Networking::deserializeInteger(_buffer + messageStartIndex);
-				std::string data(_buffer + messageStartIndex, msgLength);
-				onReceivedMessage_(data);
-				messageStartIndex += msgLength;
+			unsigned int currentIndex = 0;
+			unsigned int bytesToWrite = 0;
+
+			while (bytesLeft > 0) {
+				if (lengthBytesLeft_ > 0) {
+					//we have length bytes to read
+					bytesToWrite = (bytesLeft < lengthBytesLeft_) ? bytesLeft : lengthBytesLeft_;
+
+					// write to length bytes
+					memcpy(lengthBytes_, _buffer + currentIndex, bytesToWrite);
+
+					if ((lengthBytesLeft_ -= bytesToWrite) == 0) {
+						// if length bytes full, produce message size
+						currentMessage_ = std::string(lengthBytes_, 4); // Start new message with size header
+						messageBytesLeft_ = Networking::deserializeInteger(lengthBytes_) - 4;
+					}
+				}
+				else if (messageBytesLeft_ > 0) {
+					bytesToWrite = (bytesLeft < messageBytesLeft_) ? bytesLeft : messageBytesLeft_;
+
+					// append bytes to current message;
+					currentMessage_ += std::string(_buffer + currentIndex, bytesToWrite);
+
+					// if no bytes left, perform message callback
+					if ((messageBytesLeft_ -= bytesToWrite) == 0) {
+						onReceivedMessage_(std::move(currentMessage_));
+						lengthBytesLeft_ = 4; // we are now waiting for the next message length
+					}
+				}
+				currentIndex += bytesToWrite;
+				bytesLeft -= bytesToWrite;
 			}
+			// read next buffer entry
 			ReadData();
 		}
 		else 

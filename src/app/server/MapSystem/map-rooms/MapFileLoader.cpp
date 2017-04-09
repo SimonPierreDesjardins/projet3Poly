@@ -42,8 +42,7 @@ void server::MapFileLoader::PopulateTreeFromJSON(const std::string& json)
 
 void server::MapFileLoader::CreateEntities(const rapidjson::Value& jsonNode, Entity* parent) {
 
-	Entity* newEntity = _entityTree->createEntity(EntityTree::GetEntityType(jsonNode.FindMember("type")->value.GetString()), parent->entityId_);
-	parent->addChild(newEntity);
+	Entity* newEntity = _entityTree->createEntity(jsonNode.FindMember("type")->value.GetString(), parent->entityId_);
 	setEntityValues(newEntity, jsonNode);
 	if (!jsonNode.HasMember("noeudsEnfants")) {
 		return;
