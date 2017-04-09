@@ -23,7 +23,12 @@ ClientMapSession::ClientMapSession(engine::SimulationEngine* engine, NetworkMana
 
 uint32_t ClientMapSession::getThisUserId()
 {
-	return network_->getUserId();
+	uint32_t userId = 0;
+	if (isOnline_)
+	{
+		userId = network_->getUserId();
+	}
+	return userId;
 }
 
 void ClientMapSession::setIsOnlineSession(bool isOnline)
