@@ -82,6 +82,7 @@ ModeSimulation::ModeSimulation(engine::SimulationEngine* engine, ProfilUtilisate
 ////////////////////////////////////////////////////////////////////////
 ModeSimulation::~ModeSimulation()
 {
+	engine_->setAnimating(true);
 	EnginSon::obtenirInstance()->stopMusique();
     affichageTexte_->assignerProfilEstAffiche(false);
     affichageTexte_->assignerTempsEstAffiche(false);
@@ -93,7 +94,7 @@ ModeSimulation::~ModeSimulation()
 	controleurLumiere_->assignerLumiereSpotGyro(false);
 	controleurLumiere_->assignerLumiereSpotRobot(false);
 
-	mapSession_->deleteLocalEntity(robot_);
+	//mapSession_->deleteLocalEntity(robot_);
 }
 
 ////////////////////////////////////////////////////////////////////////

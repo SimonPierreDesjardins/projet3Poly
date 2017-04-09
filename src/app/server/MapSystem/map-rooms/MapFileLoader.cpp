@@ -12,6 +12,7 @@ server::MapFileLoader::MapFileLoader(EntityTree* tree, MapFileEntry * mapFile)
 	}
 	else {
 		Entity* table = tree -> createEntity(0, 0); // create the table
+		*table->getProperty(Networking::SCALE) = { 2.0, 2.0, 1.0 };
 		Entity* start = tree -> createEntity(1, table->entityId_); // create the start point
 	}
 

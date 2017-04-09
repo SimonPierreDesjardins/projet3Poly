@@ -316,6 +316,7 @@ void ClientMapSession::serverEntityPropertyUpdated(uint32_t entityId, Networking
 			physics.angularVelocity = updatedProperty;
 			break;
 		}
+		it->second->mettreAJourFormeEnglobante();
 	}
 	pendingQueueLock_.unlock();
 }
@@ -352,19 +353,22 @@ void ClientMapSession::serverUserLeftMapSession(uint32_t userId)
 			users_.erase(it);
 		}
 	}
-	// I left the room.
-	else
-	{
-		clearMapSession();
-	}
 }
 
-void ClientMapSession::clearMapSession()
+void ClientMapSession::quitMapSession()
 {
 	while (!pendingEntityCreationRequests_.empty())
 		pendingEntityCreationRequests_.pop();
-	confirmedEntities_.clear();
+
+	auto it = users_.find(network_->getUserId());
+	if (it != users_.end())
+	{
+		UserInfo* leavingUser = &it->second;
+		selectionColors.push(leavingUser->selectionColor);
+	}
+
 	users_.clear();
+	confirmedEntities_.clear();
 	entityTree_->vider();
 }
 
