@@ -56,27 +56,21 @@ void server::MapFileLoader::CreateEntities(const rapidjson::Value& jsonNode, Ent
 
 void server::MapFileLoader::setEntityValues(Entity * target, const rapidjson::Value& jsonNode)
 {
-	// quick loading from iteration
-	rapidjson::Value::ConstMemberIterator itr = jsonNode.MemberBegin() + 1;
 
 	//Set relative position
 	auto relPos = target->getProperty(Networking::RELATIVE_POSITION);
-	relPos->x = itr->value.GetDouble(); 
-	itr++;
-	relPos->y = itr->value.GetDouble(); 
-	itr++;
-	relPos->z = itr->value.GetDouble(); 
-	itr++;
+	relPos->x = jsonNode["posX"].GetDouble();
+	relPos->y = jsonNode["posY"].GetDouble();
+	relPos->z = jsonNode["posZ"].GetDouble();
 
 	//Set Absolute Position
 	auto absPos = target->getProperty(Networking::ABSOLUTE_POSITION);
 	auto parentAbsPos = target->getParent()->getProperty(Networking::ABSOLUTE_POSITION);
 	*absPos = *parentAbsPos + *relPos;
 
-	target->getProperty(Networking::ROTATION)->z = itr->value.GetDouble();
-	itr++;
+	target->getProperty(Networking::ROTATION)->z = jsonNode["angleRotation"].GetDouble();
 
-	auto scaleValue = itr->value.GetDouble();
+	auto scaleValue = jsonNode["facteurEchelle"].GetDouble();
 	auto scale = target->getProperty(Networking::SCALE);
 	scale->x = scaleValue;
 	scale->y = scaleValue;
