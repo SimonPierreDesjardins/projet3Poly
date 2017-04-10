@@ -51,6 +51,7 @@
 NoeudAudi::NoeudAudi(uint32_t id, const std::string& typeNoeud, ArbreRendu* arbre)
 	: NoeudRobot{ id, typeNoeud, arbre }
 {
+	type_ = AUDI_ENTITY;
 	//profil_->setModele("audi");
 	positionDepart();
 

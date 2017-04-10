@@ -232,8 +232,8 @@ void ArbreRenduINF2990::chargerZone(rapidjson::Value::ConstValueIterator noeudJS
 	}
 
 	std::shared_ptr<NoeudAbstrait> noeud = { creerNoeud(noeudJSON->FindMember("type")->value.GetString()) };
-	noeud->fromJson(noeudJSON);
 	parent->ajouter(noeud);
+	noeud->fromJson(noeudJSON);
 	if (!noeudJSON->HasMember("noeudsEnfants")) {
 		return;
 	}
