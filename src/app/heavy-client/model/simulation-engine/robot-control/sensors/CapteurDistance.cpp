@@ -227,7 +227,7 @@ void CapteurDistance::verifierDetection(NoeudTable* table)
 
     glm::dvec3 coinsSecuritaire[N_COINS];
     zoneSecuritaire_.calculerPositionCoins(coinsSecuritaire);
-    
+	etat_ = AUCUNE_DETECTION;
     bool danger = false;
     bool securitaire = false;
     for (int i = 0; i < N_COINS; i++)
@@ -311,7 +311,7 @@ void CapteurDistance::mettreAJour(const glm::dvec3& positionRobot, const double&
     zoneDanger_.mettreAJour(positionDanger, angleCourant_, HAUTEUR, largeurDanger_);
     zoneSecuritaire_.mettreAJour(positionSecuritaire, angleCourant_, HAUTEUR, largeurSecuritaire_);
 
-    etat_ = AUCUNE_DETECTION;
+    //etat_ = AUCUNE_DETECTION;
 }
 
 
@@ -349,7 +349,12 @@ void CapteurDistance::afficher() const
     double hauteurSecuritaire = zoneSecuritaire_.obtenirHauteur();
 
     //Dessiner la zone sécuritaire.
-    glColor3f(0.0, 1.0, 0.0);
+	if (etat_ == DETECTION_ZONE_DANGER)
+	{
+		glColor3f(1.0, 0.0, 0.0);
+	}
+	else
+		glColor3f(0.0, 1.0, 0.0);
 
 	glTranslated(largeurDanger, 0.0, 0.0);
 

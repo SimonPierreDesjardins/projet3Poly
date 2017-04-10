@@ -183,10 +183,12 @@ void SimulationEngine::render()
 	lightController_.afficherLumiereDirectionnelle();
 	lightController_.afficherLumiereSpotGyro();
 	lightController_.afficherLumiereSpotRobot();
-	for (int i = 0; i < 3; i++)
+
+	//apparait dans edition a changer sinon tout est beau
+	/*for (int i = 0; i < 3; i++)
 	{
 		profil_->obtenirCapteursDistance()->at(i).afficher();
-	}
+	}*/
 
 	// Afficher la scène.
 	tree_.afficher(-1);
