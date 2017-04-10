@@ -744,6 +744,7 @@ namespace ui
 
             viewPort.Refresh();
             verificationDuNombreElementChoisi();
+            editionMenuStrip.crochetPourVue();
         }
 
         public void goOfflineEditionTutorial()
@@ -776,6 +777,7 @@ namespace ui
 
             viewPort.Refresh();
             verificationDuNombreElementChoisi();
+            editionTutorielMenuStrip.crochetPourVue();
         }
 
         public void goOnlineEdition()
@@ -804,6 +806,7 @@ namespace ui
             Program.peutAfficher = true;
             viewPort.Refresh();
             verificationDuNombreElementChoisi();
+            onlineEditionMenuStrip.crochetPourVue();
         }
 
         public void goOfflineSimulation(String pathToFile)
@@ -818,6 +821,7 @@ namespace ui
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             viewPort.Refresh();
+            simulationMenuStrip.crochetPourVue();
         }
 
         public void goOfflineSimulationTutorial()
@@ -839,6 +843,7 @@ namespace ui
             FonctionsNatives.redimensionnerFenetre(viewPort.Width, viewPort.Height);
 
             viewPort.Refresh();
+            simulationMenuStrip.crochetPourVue();
         }
 
         public void goOnlineSimulation()
@@ -854,6 +859,7 @@ namespace ui
 
             Program.peutAfficher = true;
             viewPort.Refresh();
+            onlineSimulationMenuStrip.crochetPourVue();
         }
 
         public void goOnlineCoin()
@@ -869,6 +875,7 @@ namespace ui
 
             Program.peutAfficher = true;
             viewPort.Refresh();
+            onlinePiecesMenuStrip.crochetPourVue();
         }
 
         public void goOnlineRace()
@@ -884,6 +891,7 @@ namespace ui
 
             Program.peutAfficher = true;
             viewPort.Refresh();
+            onlineRaceMenuStrip.crochetPourVue();
         }
 
         private void loadMap(String path, ModeEnum.Mode mode)

@@ -170,7 +170,7 @@ namespace ui
         /// Gère l'évènement de changement de visibilité de la barre de menu édition.
         /// 
         ////////////////////////////////////////////////////////////////////////
-        private void crochetPourVue()
+        public void crochetPourVue()
         {
             switch (FonctionsNatives.obtenirTypeVue())
             {
