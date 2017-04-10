@@ -166,6 +166,8 @@ namespace ui
             authenticatePanel.Visible = true;
             newAccountWarningLabel.Visible = false;
             existingAccountWarningLabel.Visible = false;
+
+            newAccountTextBox.Focus();
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -246,6 +248,13 @@ namespace ui
         {
             existingAccountWarningLabel.Visible = false;
             newAccountWarningLabel.Visible = false;
+
+            if (newAccountTextBox.Text.Length.Equals(0))
+            {
+                newAccountWarningLabel.Visible = true;
+                newAccountWarningLabel.Text = "Doit envoyer un nom";
+                return;
+            }
 
             FonctionsNatives.createProfile(newAccountTextBox.Text);
             parent_.userName = newAccountTextBox.Text;
@@ -331,6 +340,13 @@ namespace ui
         {
             existingAccountWarningLabel.Visible = false;
             newAccountWarningLabel.Visible = false;
+
+            if (newAccountTextBox.Text.Length.Equals(0))
+            {
+                existingAccountWarningLabel.Visible = true;
+                existingAccountWarningLabel.Text = "Doit envoyer un nom";
+                return;
+            }
 
             FonctionsNatives.authenticate(ExistingAccountTextBox.Text);
             parent_.userName = ExistingAccountTextBox.Text;
