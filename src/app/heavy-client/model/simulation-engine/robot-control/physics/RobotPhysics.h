@@ -16,6 +16,7 @@
 #include "Camera.h"
 #include "Vue.h"
 
+
 namespace engine {
 	class MapSession;
 }
@@ -47,6 +48,7 @@ private:
 
 	NoeudRobot* robot_ = nullptr;
 	ArbreRendu* tree_ = nullptr;
+	ProfilUtilisateur* profil_ = nullptr;
 	engine::MapSession* mapSession_ = nullptr;
 
 	VisiteurDetectionRobot collisionDetection_;
@@ -56,6 +58,7 @@ private:
 	vue::Vue* vue_ = nullptr;
 
 	PhysicsComponent physics_;
+
 
 	ControleurLumiere* controleurLumiere_ = nullptr;
 

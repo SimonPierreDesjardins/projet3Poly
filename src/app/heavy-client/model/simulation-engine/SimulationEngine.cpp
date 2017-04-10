@@ -73,6 +73,8 @@ void SimulationEngine::initializeRendering(HWND hWnd, ProfilUtilisateur* userPro
 	// La plupart des modèles exportés n'ont pas de composante ambiante. (Ka dans les matériaux .mtl)
 	lightController_.afficherLumiereAmbianteGlobale();
 
+	profil_ = userProfile;
+
 	// Création de l'arbre de rendu.  À moins d'être complètement certain
 	// d'avoir une bonne raison de faire autrement, il est plus sage de créer
 	// l'arbre après avoir créé le contexte OpenGL.
@@ -181,6 +183,10 @@ void SimulationEngine::render()
 	lightController_.afficherLumiereDirectionnelle();
 	lightController_.afficherLumiereSpotGyro();
 	lightController_.afficherLumiereSpotRobot();
+	for (int i = 0; i < 3; i++)
+	{
+		profil_->obtenirCapteursDistance()->at(i).afficher();
+	}
 
 	// Afficher la scène.
 	tree_.afficher(-1);

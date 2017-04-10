@@ -301,15 +301,15 @@ void CapteurDistance::mettreAJour(const glm::dvec3& positionRobot, const double&
     positionDanger.x = (largeurDanger_ / 2.0);
     positionSecuritaire.x = (largeurDanger_ + largeurSecuritaire_ / 2.0);
 
-    double angleCourant = angleRelatif_ + angleRotationRobot;
-    utilitaire::calculerPositionApresRotation(positionDanger, positionDanger, angleCourant);
-    utilitaire::calculerPositionApresRotation(positionSecuritaire, positionSecuritaire, angleCourant);
+    angleCourant_ = angleRelatif_ + angleRotationRobot;
+    utilitaire::calculerPositionApresRotation(positionDanger, positionDanger, angleCourant_);
+    utilitaire::calculerPositionApresRotation(positionSecuritaire, positionSecuritaire, angleCourant_);
 
     positionDanger += positionCapteur_;
     positionSecuritaire += positionCapteur_;
 
-    zoneDanger_.mettreAJour(positionDanger, angleCourant, HAUTEUR, largeurDanger_);
-    zoneSecuritaire_.mettreAJour(positionSecuritaire, angleCourant, HAUTEUR, largeurSecuritaire_);
+    zoneDanger_.mettreAJour(positionDanger, angleCourant_, HAUTEUR, largeurDanger_);
+    zoneSecuritaire_.mettreAJour(positionSecuritaire, angleCourant_, HAUTEUR, largeurSecuritaire_);
 
     etat_ = AUCUNE_DETECTION;
 }
@@ -335,8 +335,8 @@ void CapteurDistance::afficher() const
     glPushMatrix();
     glColor3f(1.0, 1.0, 0.0);
 
-	glTranslated(positionRelative_.x, positionRelative_.y, 0.0);        
-    glRotated(angleRelatif_, 0.0, 0.0, 1.0);
+	glTranslated(positionCapteur_.x, positionCapteur_.y, 0.0);
+    glRotated(angleCourant_, 0.0, 0.0, 1.0);
 
 	glBegin(GL_QUADS);
 	glVertex3d(largeurDanger, hauteurDanger / 2.0, 0.05);

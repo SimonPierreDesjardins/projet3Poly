@@ -20,6 +20,7 @@ void RobotPhysics::init(NoeudRobot* robot, engine::SimulationEngine* engine, eng
 	controleurLumiere_ = engine->getLightController();
 	mapSession_ = mapSession;
 	isInitialized_ = true;
+	profil_ = engine_->getProfil();
 }
 
 void RobotPhysics::applyPhysicsEffects(float dt)
@@ -47,7 +48,10 @@ void RobotPhysics::applyPhysicsEffects(float dt)
 
 	robot_->assignerControleurLumiere(controleurLumiere_);
 	controleurLumiere_->animer(robot_->getPhysicsComponent().relativePosition, dt);
-	
+	for (int i = 0; i < 3; i++)
+	{
+		profil_->obtenirCapteursDistance()->at(i).mettreAJour(physics_.absolutePosition, physics_.rotation.z);
+	}
 
 	
 

@@ -116,6 +116,7 @@ private:
     
     glm::dvec3 positionRelative_;
     double angleRelatif_;
+	double angleCourant_;
 };
 
 

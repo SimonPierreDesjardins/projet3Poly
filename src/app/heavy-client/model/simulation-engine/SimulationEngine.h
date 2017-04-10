@@ -12,6 +12,7 @@
 #include "BoiteEnvironnement.h"
 #include "AffichageTexte.h"
 #include "ControleurLumiere.h"
+#include "ProfilUtilisateur.h"
 
 namespace engine
 {
@@ -37,6 +38,7 @@ public:
 	inline AffichageTexte* getTextDisplay();
 	inline ControleurLumiere* getLightController();
 	inline vue::Vue* getView();
+	inline ProfilUtilisateur* getProfil();
 
 	void getDesktopResolution(int& horizontal, int& vertical);
 
@@ -70,6 +72,8 @@ private:
 	std::unique_ptr<AffichageTexte> textDisplay_{ nullptr };
 	// Le controle de l'affichage des lumières.
 	ControleurLumiere lightController_;
+	ProfilUtilisateur* profil_;
+	
 };
 
 ////////////////////////////////////////////////////////////////////////
@@ -128,6 +132,20 @@ inline AffichageTexte* SimulationEngine::getTextDisplay()
 inline ControleurLumiere* SimulationEngine::getLightController()
 {
 	return &lightController_;
+}
+
+////////////////////////////////////////////////////////////////////////
+///
+/// @fn inline ControleurLumiere* SimulationEngine::obtenirControleurLumiere() const
+///
+/// Cette fonction retourne le module qui gère l<affichage de la lumiere
+///
+/// @return le controleur de lumiere.
+///
+////////////////////////////////////////////////////////////////////////
+inline ProfilUtilisateur* SimulationEngine::getProfil()
+{
+	return profil_;
 }
 
 }
