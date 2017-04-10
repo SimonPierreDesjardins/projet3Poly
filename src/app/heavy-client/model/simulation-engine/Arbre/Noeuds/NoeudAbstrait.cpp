@@ -550,6 +550,11 @@ void NoeudAbstrait::fromJson(rapidjson::Value::ConstValueIterator noeudJSON)
 	physics_.relativePosition.y = y;
 	physics_.relativePosition.z = z;
 
+	physics_.absolutePosition.x = obtenirParent()->getPhysicsComponent().absolutePosition.x + x;
+	physics_.absolutePosition.y = obtenirParent()->getPhysicsComponent().absolutePosition.y + y;
+	physics_.absolutePosition.z = obtenirParent()->getPhysicsComponent().absolutePosition.z + z;
+
+
 	physics_.rotation.z = itr->value.GetDouble();
 	itr++;
 	physics_.scale.x = itr->value.GetDouble();

@@ -150,10 +150,13 @@ void NoeudSegment::afficherConcret() const
 	glRotated(physics_.rotation.z, 0, 0, 1);
 	glScaled(physics_.scale.x, 1, 1);
 
+
 	// Affichage du modèle.
 	vbo_->dessiner();
 	// Restauration de la matrice.
 	glPopMatrix();
+
+	//rectangleEnglobant_.afficher(physics_.absolutePosition);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
